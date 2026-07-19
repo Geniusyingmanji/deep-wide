@@ -1,24 +1,30 @@
-# Entropy-DeepWide 研究与实施计划
+# OWIC-DeepWide 研究与实施计划
 
-> 版本：2.0
+> 版本：3.0
 >
 > 更新：2026-07-19
 >
-> 状态：**基线已完成；核心方法尚未实现；下一阶段是信号可行性验证。**
+> 状态：**基线与文献审计已完成；controller 与 credit 方法尚未实现；下一阶段是信号和干预式 credit 可行性验证。**
 >
 > 负责人：待指定（研究负责人、系统实现、实验/统计、人工标注至少明确一名 owner）
 
 ## 0. 决策摘要
 
-项目暂定题目：
+若只完成推理时 controller，题目暂定为：
 
 > **Entropy-DeepWide: Calibrated Hierarchical Belief Reduction for Open-World Deep-and-Wide Search**
 
-中心假设不是“熵可以用于搜索”，而是：
+若训练时 credit 通过独立门禁，题目升级为：
+
+> **OWIC-DeepWide: Open-World Information Credit for Deep-and-Wide Search**
+
+中心假设不是“熵可以用于搜索”或“熵降越大 credit 越高”，而是两个需要分开验证的命题：
 
 > DeepWide 的错误来自四个相互依赖、但损失结构不同的信念层：隐藏核心实体 $A$、未见实体质量/剩余集合 $M$、候选行资格 $R_e$、单元格语义值 $Y_{e,c}$。若这些信念可被校准，则按单位成本的期望任务风险下降路由 `resolve_anchor / discover / test_row / fill / falsify / audit / stop`，可能比固定流程、主观 planner 和相同动作空间的 heuristic controller 更有效。
 
-这个假设必须先通过信号预测和校准实验，才值得实现完整 controller。文献边界、直接近邻和 non-claims 见 [survey.md](survey.md)。
+> 对训练时 credit，四层任务风险变化提供方向，task-relevant information gain 提供 epistemic progress，同状态干预估计贡献，evidence provenance 区分发现、验证与综合。只有同时通过结果对齐和干预验证的信息信号，才获得正 credit。
+
+两个命题共享 belief/evidence 基础设施，但证据不能互相替代。controller 提分不能证明 credit 定位正确；credit 与干预贡献相关也不能证明在线路由更好。二者必须分别过 Gate 2A/3A 和 Gate 2B/3B。文献边界、直接近邻和 non-claims 见 [survey.md](survey.md)。
 
 ## 1. 当前真实进度
 
@@ -58,15 +64,18 @@
 - row eligibility 与 cell semantic belief。
 - 校准器、EIG 或 task-risk estimator。
 - 动态 controller、反证搜索和组合停止规则。
+- step-credit estimator、同状态干预 runner、provenance credit 与 RL 训练。
 - 与 WebSwarm、SearchOS、A-MapReduce、TaS 的可比实验。
 
-因此，当前项目不可描述为“已经实现 U-DeepWide/Entropy-DeepWide”。
+因此，当前项目不可描述为“已经实现 U-DeepWide、Entropy-DeepWide 或 OWIC-DeepWide”。
 
 ## 2. 明确不主张什么
 
 除非后续检索或实验证据改变，论文不得声称：
 
 - 首次把 entropy、semantic entropy、information gain 或 EER 用于 RAG/搜索代理；
+- 首次按 entropy reduction、posterior contraction 或 gold-answer likelihood 给 tool/turn 分配 credit；
+- 首次提出 epistemic credit、belief-conditioned reward、leave-one-turn attribution 或 provenance-guided credit；
 - 首次用不确定性控制工具调用、检索预算、证据选择或停止；
 - 首次动态切换 deep/wide 搜索；
 - 首次把 table、coverage map 或 evidence graph 作为搜索状态；
@@ -78,6 +87,10 @@
 允许的初始表述是：
 
 > “我们研究 DeepWide 特有的分层开放世界信念，并检验校准后的期望任务风险下降能否改善搜索预算分配。”
+
+credit 分支在 Gate 2B 之前只允许表述为：
+
+> “我们检验四层任务风险、信息增益、反事实贡献和 evidence provenance 能否共同定位有用的 DeepWide 步骤。”
 
 ## 3. 研究问题与可否证假设
 
@@ -102,13 +115,25 @@
 
 在完全相同的模型、工具、动作空间和预算下，分层控制器是否改善质量–成本 Pareto？
 
-**H3**：Entropy-DeepWide 相对同动作空间 heuristic controller，在预注册主指标上达到统计上与实际意义上都非劣/更优的 Pareto 结果，而不是只比 fixed pipeline 好。
+**H3**：推理时分层风险 controller 相对同动作空间 heuristic controller，在预注册主指标上达到统计上与实际意义上都非劣/更优的 Pareto 结果，而不是只比 fixed pipeline 好。
 
 ### RQ4：机制与边界
 
 收益来自 anchor、unseen mass、row、cell 哪一层？是否只在 Deep2Wide、未知集合或高行数任务上成立？
 
 **H4**：anchor 模块主要改善 Deep2Wide CE Accuracy；unseen-mass 模块主要改善 Row Recall/停止；cell 模块主要改善 Item Precision 和 risk–coverage。若不出现该机制对应关系，需警惕总体分数由别的系统改动造成。
+
+### RQ5：epistemic signal 是否等于 task credit
+
+步骤的 entropy/log-score 变化是否能预测从同一状态执行干预后的最终任务价值差？
+
+**H5**：校准的四层 task-risk change 比 raw token entropy drop、semantic entropy drop 和 gold-answer log-prob gain 更准确地预测 signed counterfactual contribution；加入 evidence provenance 后，top-k pivotal-step recall 进一步提高。
+
+### RQ6：credit 是否改善训练
+
+在相同 rollout、终局 reward、训练 tokens 和 optimizer 下，OWIC advantage modulation 是否优于 outcome-only 与现有 turn-credit 基线？
+
+**H6**：OWIC 相对 outcome-only GRPO 和最强可复现 turn-credit baseline，提高 held-out DeepWide 质量或降低达到同质量所需训练/推理成本；收益在移除 same-state contribution 或 provenance 后下降。
 
 ## 4. 方法定义
 
@@ -207,6 +232,49 @@ priority = missing_required_cell
 5. 证据 provenance 完整且 calibration audit 通过。
 
 预算耗尽是独立的 `forced_stop`，不能与 epistemic sufficiency 合并统计。
+
+### 4.6 Credit 定义：信息量只负责 epistemic 部分
+
+对第 $t$ 个动作同时记录以下信号，禁止把它们都命名为 information gain：
+
+\[
+\begin{aligned}
+c_t^{H} &= H(B_t)-H(B_{t+1}),\\
+c_t^{\log} &= \log p_{t+1}(z^*)-\log p_t(z^*),\\
+c_t^{\mathrm{risk}} &= L(B_t)-L(B_{t+1}),\\
+c_t^{\mathrm{cf},k} &=
+\mathbb E_{\tau_{>t}\sim\mu}[V(h_t,a_t,\tau_{>t})-
+V(h_t,g_k(a_t),\tau_{>t})].
+\end{aligned}
+\]
+
+- $c_t^H$ 是实现后的熵差，可为负；它不是 expected information gain。
+- $c_t^{\log}$ 需要训练真值，仅作 supervised credit baseline，禁止进入 label-blind inference。
+- $c_t^{\mathrm{risk}}$ 以四层 proper score/task loss 判断方向；反证可以熵升而 risk 降。
+- $c_t^{\mathrm{cf},k}$ 分别对 `no_op / equal_cost_sibling / semantic_substitution / evidence_substitution / tool_output_perturbation` 报告，不把不同干预平均后伪装成唯一因果效应。
+- continuation policy $\mu$ 固定并记录版本。估计值只解释为相对于该干预和 $\mu$ 的贡献，不声称是未来任意 policy 下的 total causal effect。
+
+第一版 OWIC 为：
+
+\[
+c_t^{\mathrm{OWIC}}=
+c_t^{\mathrm{risk}}
++\lambda\operatorname{RelIG}_t
++\beta\widehat c_t^{\mathrm{cf}}
++\rho c_t^{\mathrm{prov}}
+-\eta C_t.
+\]
+
+$\operatorname{RelIG}$ 只计算与 $A,M,R,Y$ 有关的信息，$c_t^{\mathrm{prov}}$ 区分 discovery、independent verification、contradiction resolution 和 synthesis。镜像来源先聚类，不能重复获 credit。
+
+### 4.7 Advantage 注入与安全约束
+
+第一阶段不端到端训练，先离线验证 credit。通过 Gate 2B 后比较两种注入：
+
+1. **Potential shaping**：$\Phi(B)=-L(B)$，使用 $\gamma\Phi(B_{t+1})-\Phi(B_t)$，检查 telescoping 与 policy-invariance 条件。
+2. **Sign-preserving modulation**：终局 advantage 决定主方向，OWIC 只在有界范围内放大正轨迹的高贡献步骤、减轻负轨迹中经反事实验证的有用步骤惩罚，参考 STAMP 的安全结构。
+
+不得让 raw entropy bonus 覆盖 terminal task reward。所有 credit 需要 clipping、group normalization audit、effective-step ratio 和 reward-hacking 检查；若 credit 与终局方向冲突，保留原始值用于诊断，但训练是否采用由预注册 gate 决定。
 
 ## 5. 数据、隔离与污染控制
 
@@ -328,7 +396,40 @@ priority = missing_required_cell
 
 评测：gain regression MAE、Spearman、best-action accuracy、NDCG@k、regret、gain-per-cost calibration。若 estimator 只会预测“更贵动作 gain 更大”，必须做 cost residual 与等成本分层。
 
-### 6.4 Phase D：在线 controller pilot
+### 6.4 Phase C2：干预式 step-credit audit set
+
+从 Phase C 状态中选择至少 300 个有效步骤，按 `anchor / discover / row-test / fill / falsify / verify / synthesize` 分层。每个步骤保存原始 history，并构造：
+
+- `no_op`；
+- 同动作类型、相同 token/tool 预算的 sibling；
+- 语义保留但证据不同的 query/action；
+- supporting evidence 替换、冲突 evidence 注入；
+- tool output perturbation；
+- LOTAPO-style `[DELETE]`，仅作 attribution baseline。
+
+每个 intervention 至少用 3 个固定 continuation seeds；记录 intervention validity、state overlap、OOD rate、最终四层 loss、Item/Row/CE 变化和成本。credit baseline 至少包括：
+
+1. raw token/segment entropy drop；
+2. semantic entropy drop；
+3. gold-class log-score gain；
+4. IGPO / TRACE-style forward TD；
+5. LOTAPO deletion；
+6. STAMP first-exposure provenance；
+7. RICE-PO local counterfactual；
+8. CVT-RL-style fixed-continuation contribution；
+9. OWIC full 与各组件。
+
+主指标是 signed contribution accuracy、Spearman、top-20% pivotal-step recall、AUROC（有益/有害）、Brier/ECE 和单位 counterfactual rollout 成本。单列六类压力样本：无关新奇、重复错误、熵升纠错、延迟显效、两步协同、删除 OOD。
+
+对人工标为“单步不可充分解释”的 discovery–verification 与 evidence–synthesis 对，额外估计
+
+\[
+I_{ij}=v(\{i,j\})-v(\{i\})-v(\{j\})+v(\varnothing).
+\]
+
+只有当 held-out 样本中显著正/负交互的比例超过 dev 预注册阈值时，下一阶段才加入 permutation-sampling Shapley；精确全轨迹 Shapley 不进入第一版预算。
+
+### 6.5 Phase D1：在线 controller pilot
 
 从 dev/validation 固定 50 题、两个随机 seed；future-method holdout 与 confirmatory set 不参与调参。比较：
 
@@ -342,9 +443,25 @@ priority = missing_required_cell
 8. ECR-style finite-hypothesis controller；
 9. TASR-style answer-stability stopping。
 
-只有 Phase D 过门后才跑全量。
+只有 Phase D1 过门后才跑 controller 全量。
 
-### 6.5 Phase E：主实验与系统比较
+### 6.6 Phase D2：受控 credit-training pilot
+
+只有 Gate 2B 通过才启动。先在 closed/replay web 环境训练小规模模型，避免 live-web 漂移与训练成本掩盖 credit 机制。所有方法共享初始化、rollouts、terminal reward、batch、optimizer、训练 tokens 和 tool corpus：
+
+1. outcome-only GRPO；
+2. uniform turn advantage；
+3. TEPO/InfoReasoner-style entropy credit；
+4. IGPO 或 TRACE-style gold-log-score credit；
+5. STAMP provenance credit；
+6. strongest feasible counterfactual baseline；
+7. OWIC-risk only；
+8. OWIC full；
+9. OWIC 去 counterfactual / 去 provenance / 去 unseen mass。
+
+先用 1.5B–4B backbone、固定 20–30K train trajectories、3 seeds 做 pilot。主比较是 OWIC full vs 同训练预算下最强 credit baseline，不允许只和 outcome-only 比。除 held-out task metrics 外，报告训练 sample efficiency、gradient/advantage variance、credit sparsity、effective-step ratio、KL、OOD intervention rate 和 reward hacking。
+
+### 6.7 Phase E：主实验与系统比较
 
 先在锁定的 future-method holdout 运行一次主实验；若可获得，再在 confirmatory set 复核。所有决策冻结后可运行完整 DeepWideSearch 作为 literature-comparability result，并明确其中含已用于 dev/validation 的样本。分别报告 Deep2Wide、Wide2Deep、语言与行数 bins。系统级外部比较至少讨论/复现可用版本：
 
@@ -378,12 +495,15 @@ Column F1 易被格式/列解析影响，保留但不作为唯一主指标。
 - anchor recovery after initial miss；
 - new valid rows per 1k tokens。
 
+credit 分支另报：signed contribution accuracy、pivotal-step recall、credit calibration、intervention validity/OOD、credit compute overhead、训练 sample efficiency 与 gradient variance。最终任务分数仍是主结果，credit proxy 不能替代它。
+
 ### 7.3 统计方案
 
 - 所有内部方法对同一任务、seed、预算配对；
 - task-level stratified bootstrap 95% CI；
 - 多 seed 报均值、标准差和 task-paired distribution；
 - 主比较预先限定为 full vs heuristic controller，避免多重比较挑结果；
+- credit 主比较预先限定为 OWIC full vs 最强同预算 credit baseline；controller 与 credit 分支分别校正，不混成一个 family；
 - 次要 pairwise tests 做 Holm correction；
 - 同时报 effect size 与原始分数，不只报显著性。
 
@@ -439,6 +559,22 @@ Column F1 易被格式/列解析影响，保留但不作为唯一主指标。
 
 若估计仅在把镜像当独立样本时成立，判定为伪信号。
 
+### 8.4 Credit 专项消融与反例
+
+- raw entropy drop vs task-risk change；
+- expected IG vs realized entropy change vs Bayesian surprise；
+- gold log-score vs label-free semantic potential；
+- 无 `OTHER` / unseen mass；
+- 不做 same-state branching、改为同 turn-index 比较；
+- fixed continuation vs current/evolving continuation；
+- deletion vs equal-cost sibling vs evidence substitution；
+- first exposure only vs discovery + verification + synthesis provenance；
+- additive reward vs potential shaping vs sign-preserving modulation；
+- 单步 credit vs pairwise interaction credit（选取高协同子集）；
+- 无 outcome gate、无 intervention-validity gate、无 source dedup。
+
+任何声称“因果”的结果都必须附 intervention definition、overlap/validity diagnostics 和 continuation-policy scope；否则统一称 attribution 或 credit surrogate。
+
 ## 9. Go/No-Go 门禁
 
 阈值在 dev 阶段预注册；下列数值是启动建议，可在第一次 pilot 前修改一次并写入变更日志，之后冻结。
@@ -468,7 +604,7 @@ Column F1 易被格式/列解析影响，保留但不作为唯一主指标。
 - 若只有 heuristic 有效：项目改为 calibrated heuristic DeepWide controller，不把 entropy 作为主创新；
 - 若任何信号都无效：停止 controller 开发，转为 benchmark/failure-analysis 工作。
 
-### Gate 2：动作价值
+### Gate 2A：动作价值
 
 通过条件：
 
@@ -479,7 +615,22 @@ Column F1 易被格式/列解析影响，保留但不作为唯一主指标。
 
 失败处理：使用规则控制器；EIG 仅作为分析指标，不进入标题。
 
-### Gate 3：在线 pilot
+### Gate 2B：credit 定位
+
+通过条件：
+
+- audit set 至少含 300 个有效步骤，且六类压力样本每类至少 30 个；阈值在 validation 冻结，最终只在 held-out intervention set 评一次；
+- OWIC 对 intervention-defined task contribution 的 Spearman ≥ 0.30 且 95% CI 不跨 0；
+- signed contribution accuracy ≥ 0.65，且显著高于 raw entropy、gold-log-score 和 deletion baseline；
+- top-20% pivotal-step recall 相对最强非反事实 baseline 至少提高 10% relative；
+- 在“熵升但纠错”和“重复错误导致熵降”两个压力子集中方向准确率均高于 0.60；
+- intervention validity ≥ 90%，OOD rate、overlap 和不同 continuation-policy 敏感性完整报告；invalid intervention 不计主估计但进入失败率，不能静默丢弃；
+- gold、reference evidence graph 或 evaluator-only 字段只能用于训练/离线 oracle baseline；所有方法另报 privileged-information budget，确保收益不是更多特权监督造成；
+- 去除 counterfactual 或 provenance 至少有一个产生预期方向的显著退化，否则不得把它们写成贡献。
+
+失败处理：不启动 credit RL。若 task-risk change 有效但 causal component 无效，方法降级为 outcome-aligned potential shaping；若只有 entropy 有效，降级为 epistemic diagnostic，不使用 causal/credit 标题。
+
+### Gate 3A：在线 controller pilot
 
 通过条件：
 
@@ -492,6 +643,18 @@ Column F1 易被格式/列解析影响，保留但不作为唯一主指标。
 
 失败处理：不跑昂贵全量；检查估计器与 action model，最多允许一次预注册修订。
 
+### Gate 3B：credit-training pilot
+
+通过条件：
+
+- 3-seed closed/replay pilot 中，OWIC full 相对最强同预算 credit baseline 的 held-out Item F1 或 Row F1 平均至少 +2 个绝对点，且 task-cluster bootstrap 95% CI 不支持实质性负效应；或达到同质量所需训练 trajectories 至少减少 15%；seed 只是重复测量，不能把同一任务的多个 seed 当独立样本；
+- CE Accuracy 不下降超过 1 个点，unsupported/contradicted rate 不恶化；
+- credit overhead 在预注册上限内，且结果不是更多 rollout 或 privileged evidence 单独造成；
+- counterfactual/provenance 消融与 RQ5/RQ6 机制预测一致；
+- 无 gold/evaluator 信息进入 inference runtime。
+
+失败处理：论文保留 inference controller 分支（若 Gate 3A 通过），credit assignment 降为离线分析或负结果。
+
 ### Gate 4：论文主张
 
 通过条件：
@@ -500,6 +663,7 @@ Column F1 易被格式/列解析影响，保留但不作为唯一主指标。
 - 至少两个机制消融符合 RQ4 预测；
 - 人工 evidence audit 不显示 precision 明显恶化；
 - 系统级讨论覆盖 WebSwarm、SearchOS、ECR、TaS、A-MapReduce。
+- 若标题包含 credit/causal，Gate 2B 与 3B 必须同时通过，且讨论 ECHO、TRACE、LOTAPO、STAMP、RICE-PO、SIOP、CVT-RL。
 
 失败处理：按证据降级为 UQ diagnostic、negative result 或 engineering report；不得保留过强标题/摘要。
 
@@ -513,10 +677,13 @@ Column F1 易被格式/列解析影响，保留但不作为唯一主指标。
 | M1 | 严格 runtime/eval 隔离与正文 evidence pipeline | TBD | 1 周 | TBD | `src/runtime`、`src/evaluation`、no-leak tests | 未开始 |
 | M2 | 表格/evidence state 与 replay | TBD | 1 周 | TBD | state schema、20-task replay pack | 未开始 |
 | M3 | 四层信号数据与校准 | TBD | 2 周 | TBD | signal dataset、calibration report | 未开始 |
-| M4 | Counterfactual action-value pilot | TBD | 1–2 周 | TBD | action set、gain report | 未开始 |
-| M5 | Heuristic 与 EIG controller | TBD | 1 周 | TBD | controllers、unit tests | 未开始 |
-| M6 | 50-task online pilot / Gate 3 | TBD | 1 周 | TBD | paired report、Pareto plots | 未开始 |
-| M7 | 强基线、消融、全量 test | TBD | 2 周 | TBD | frozen runs、aggregate artifacts | 未开始 |
+| M4A | Counterfactual action-value pilot | TBD | 1–2 周 | TBD | action set、gain report | 未开始 |
+| M4B | Step-credit intervention audit set | TBD | 2 周 | TBD | 300-step interventions、credit report | 未开始 |
+| M5A | Heuristic 与 EIG controller | TBD | 1 周 | TBD | controllers、unit tests | 未开始 |
+| M5B | OWIC estimator 与 advantage modulation | TBD | 1–2 周 | TBD | credit module、intervention tests | 未开始 |
+| M6A | 50-task online controller pilot / Gate 3A | TBD | 1 周 | TBD | paired report、Pareto plots | 未开始 |
+| M6B | 3-seed credit-training pilot / Gate 3B | TBD | 2 周 | TBD | checkpoints、learning curves、credit audit | 未开始 |
+| M7 | 强基线、消融、全量 test | TBD | 2–3 周 | TBD | frozen runs、aggregate artifacts | 未开始 |
 | M8 | 论文写作与审计 | TBD | 1–2 周 | TBD | manuscript、claim/evidence ledger | 未开始 |
 
 ### M1 推荐目录
@@ -539,10 +706,17 @@ src/entropy_deepwide/
       fixed.py
       heuristic.py
       entropy.py
+    credit/
+      signals.py
+      interventions.py
+      counterfactual.py
+      provenance.py
+      modulation.py
   evaluation/
     deepwide_official.py
     calibration.py
     action_value.py
+    credit_assignment.py
   safety/
     no_leak.py
     contamination.py
@@ -552,6 +726,9 @@ tests/
   test_evidence_provenance.py
   test_belief_updates.py
   test_stopping.py
+  test_intervention_validity.py
+  test_credit_telescoping.py
+  test_no_gold_at_inference.py
 ```
 
 ## 11. 运行记录与可复现性
@@ -568,13 +745,16 @@ outputs/runs/<run_id>/
   evidence_manifest.jsonl
   belief_timeseries.jsonl
   action_scores.jsonl
+  step_credit.jsonl
+  interventions.jsonl
+  provenance_roles.jsonl
   costs.json
   contamination_report.json
   metrics.json
   report.md
 ```
 
-必须记录：模型精确版本、prompt hash、search/page API、日期、并发、seed、token/tool/page/time/USD、每步 belief、候选动作分数、选择原因、forced/normal stop。API keys 和原始凭证永不写入 config/trace/Git。
+必须记录：模型精确版本、prompt hash、search/page API、日期、并发、seed、token/tool/page/time/USD、每步 belief、候选动作分数、选择原因、forced/normal stop。credit run 另记录每种信号的原始值、干预类型、validity/overlap、continuation checkpoint、终局差值、credit clipping/normalization 与注入后的 advantage。API keys 和原始凭证永不写入 config/trace/Git。
 
 正式结果需导出一个可提交的小型 artifact 到 `results/`：只含 frozen config、aggregate metrics、任务级匿名分数、bootstrap 与图表数据；原始网页内容按版权与隐私规则处理。
 
@@ -587,6 +767,11 @@ outputs/runs/<run_id>/
 | 搜索样本非 i.i.d. | unseen estimator 偏置 | source/query block sensitivity | block capture features + held-out calibration |
 | 镜像/SEO 伪多数 | 虚假 entropy drop | content hash/domain graph | source dependence correction |
 | 反证使 entropy 上升 | controller 拒绝有益动作 | contradiction stress | 优化 task risk，不要求单调 entropy |
+| 无关/对抗内容产生高 surprise | 奖励噪声步骤 | relevance + intervention audit | RelIG、outcome gate、harm penalty |
+| 删除 turn 产生 OOD history | 虚假 attribution | intervention validity/OOD | same-state sibling、语义/证据替换、固定 continuation |
+| 多步骤协同被单步边际遗漏 | early/verification credit 错配 | pair intervention subset | provenance role + pairwise interaction audit |
+| gold-answer credit 泄漏到推理 | test invalid | no-gold inference test | train/runtime 物理隔离、仅训练 oracle baseline |
+| credit proxy reward hacking | 分数涨但任务/evidence 变差 | counterfactual outcome + human audit | terminal anchor、sign-preserving modulation、constraints |
 | EIG 估计过贵 | 得不偿失 | gain/cost logging | two-stage pruning、cached rollouts、heuristic fallback |
 | 强系统已覆盖工程点 | novelty 不足 | 持续更新 survey | 只主张四层开放世界校准机制 |
 | benchmark 泄漏/污染 | 分数无效 | no-leak/STC scanner | 进程隔离、污染样本 quarantine |
@@ -601,11 +786,13 @@ outputs/runs/<run_id>/
 |---|---|---|
 | 四层开放世界 DeepWide belief formulation | 明确定义、与 ECR/SearchOS/WebSwarm 差异 | 理论草案 |
 | 校准的 unseen-mass/coverage posterior | Gate 1 coverage 指标 | 无实现 |
-| 风险加权 EIG/cost controller | Gate 2 + Gate 3 | 无实现 |
+| 风险加权 EIG/cost controller | Gate 2A + Gate 3A | 无实现 |
 | 同预算质量–成本改进 | 全量 paired test | 无结果 |
 | 机制解释 | 对应消融与轨迹案例 | 无结果 |
+| 开放世界、结果对齐的 step credit | Gate 2B 干预定位指标 | 无实现 |
+| credit 改善训练而非只拟合 proxy | Gate 3B 同预算 3-seed pilot | 无结果 |
 
-在最后两行没有证据前，摘要只能写“we propose/ask/evaluate”，不能写“improves/outperforms/demonstrates”。
+在相应证据行未完成前，摘要只能写“we propose/ask/evaluate”，不能写“improves/outperforms/demonstrates”。若 Gate 2B 未过，不得在题目或摘要使用 causal credit。
 
 ## 14. 接下来 72 小时的具体任务
 
@@ -615,7 +802,9 @@ outputs/runs/<run_id>/
 4. 建立最小 persistent state：anchor hypotheses、rows、cells、evidence、operation log、cost。
 5. 从现有 220 题结果按“anchor 对/错 × Deep2Wide/Wide2Deep × 中/英”抽取 20–30 题，生成 Phase B 标注清单；不得把 subset label 暴露给 runtime。
 6. 先做 anchor semantic entropy + `OTHER` 与 simple baselines 的离线可分性实验；通过小型 sanity 后再做 coverage estimator。
-7. 在完成 M1 前不实现完整 controller，不运行新的全量付费实验。
+7. 从 10 个可重放任务抽 30–50 个步骤，先做 `original / no-op / equal-cost sibling` 的微型 credit audit；比较 raw entropy、risk change 和 fixed-continuation task contribution。
+8. 为 discovery、independent verification、contradiction resolution、synthesis 定义 provenance schema，并人工标 50 步检查一致性。
+9. 在完成 M1 和微型 credit sanity 前不实现完整 controller 或 RL credit，不运行新的全量付费实验。
 
 ## 15. 完成定义
 
@@ -624,7 +813,8 @@ outputs/runs/<run_id>/
 - 方法、代码、数据边界与主张一致；
 - 测试集未参与校准/路由，联网污染已审计；
 - 四层信号与 controller 均有 same-action、same-budget 对照；
+- 若主张 credit，step score 已通过同状态干预审计，并有相同 rollouts/terminal reward/training budget 的强 credit baseline；
 - 主结果有 paired uncertainty interval、成本和人工 evidence audit；
 - 所有精确数字能追溯到 frozen artifact；
-- 文献与 non-claims 覆盖 2026-07-19 的直接近邻；
+- 文献与 non-claims 覆盖 2026-07-19 的直接近邻，包括 ECHO、TRACE、LOTAPO、STAMP、RICE-PO、SIOP、CVT-RL；
 - 失败 gate 被如实报告，标题和摘要按证据强度降级。

@@ -29,15 +29,29 @@
 | TASR (2606.13814) | 答案正确概率 | isotonic-calibrated logit margin + answer stability | 训练免检索停止 | 否（需校准） | 否 | 强停止基线；口头 confidence 会塌缩 |
 | Know Before You Fetch (2606.29959) | 答案正确概率 | 校准 sequence log-prob/prefix-logit 信号 | k=0/1/5/abstain 预算分配 | 否（需校准） | 否 | 核心贡献是校准概率接口而非 raw entropy；新计划需同样校准 |
 | IGRPO (2607.06223) | 中间状态 informativeness | IG 驱动预算感知树 rollout | RL rollout 分配 | 是 | 否 | 最新训练时近邻 |
+| ECHO (2606.29745) | 有限潜变量的显式 posterior | 每 turn candidate elimination / posterior-sensitive reward；同深度 group normalization | epistemic turn credit | 是 | 否；固定有限候选集 | “posterior 收缩即 epistemic credit”已被直接提出；真实 web 的近似 belief、噪声来源与开放动作是其明确限制 |
+| TRACE (2607.13988) | prefix 对 gold answer 的 readiness | frozen reference gold-answer log-prob gap 的 TD 差，具 telescoping 结构 | turn-level RL credit | 是 | 否；需短且可验证 gold | outcome-aligned 强基线；不能用于无 gold 推理，长结构输出的 value proxy 未验证 |
+| SIOP (2605.04984) | 自生成 final-answer semantic outcome modes | reliability-aware potential difference | 无 verifier 的 turn credit | 是 | 否 | label-free potential credit 已存在；self-induced mode 可能把共识错误当可靠目标 |
+| LOTAPO (2607.13501) | 完整轨迹中一个 search turn | 删除 turn 后 gold-answer likelihood 变化 + sign gate | retrospective turn attribution | 是 | 否 | 保留后续上下文可捕捉延迟显效；作者明确称非正式识别 causal effect，删除上下文可能 OOD |
+| STAMP (2607.11172) | supporting document 的首次暴露步骤 | training evidence graph 验证引用 + citation provenance + sign-preserving advantage | deep-search step credit | 是 | 否；参考 evidence graph 有限 | 强 provenance baseline；首次暴露偏向 discovery，后续独立验证/综合需另建模 |
+| RICE-PO (2605.26352) | executable retrieval action 与前置 reasoning span | 高不确定点触发同 history 局部分支；influence/residual-stability gate | local counterfactual credit | 是 | 否 | 支持 same-state branching 与 validity gate；固定 retriever、局部有界干预 |
+| CVT-RL (2606.05263) | 指定 intervention 下的动作贡献 | deletion/semantic/evidence/tool perturbation + frozen continuation + doubly robust PCCC | verifiable causal-credit surrogate | 是 | 非 DeepWide open-set | 最明确的干预式 baseline；作者限定为相对干预与 continuation 的 surrogate，计算昂贵且依赖 verifier/overlap 假设 |
+| CRAFT (2606.29476); BiPACE (2606.25556) | sibling token/近似行为状态下的 action | 复用 sibling rollouts；行为等价聚类与 action-conditioned baseline | counterfactual fine credit | 是 | 否 | 说明同 turn index 不等于同状态；比较单元必须尽量状态匹配 |
+| ACPO (2607.03126); HAPO (2604.11056) | token 的局部 entropy / hindsight capacity | entropy-aware advantage reweighting | token-level implicit credit | 是 | 否 | entropy 可表示“哪里可更新”，不自动给出任务贡献方向 |
+| EMPG (2509.09265) | step-wise policy entropy 与终局 outcome | entropy-modulated policy gradient；future-clarity bonus | long-horizon agent update calibration | 是 | 否 | entropy-aware long-horizon gradient 已有；它调更新幅度，不识别任务贡献 |
+| AMR-SD (2605.18529); PGPO (2604.01840) | teacher/student 或 visual/text-only predictive distribution | likelihood ratio / KL 被命名为 Causal Information Gain | token advantage modulation | 是 | 否 | “causal information gain”术语已占用且未必是 intervention effect；本项目应避免靠命名声称因果 |
+| PBSD (2606.09348); PiCA (2605.09287) | verified-answer evidence ratio / history-dependent success potential | privileged teacher Bayes ratio；PBRS pivot reward | turn/process credit | 是 | 否 | 结果对齐的 likelihood/potential credit 已密集覆盖；依赖 gold/teacher 校准 |
+| RUDDER (1806.07857); HCA (1912.02503); COMA (1705.08926) | delayed return contribution / future-conditioned action / agent action | return redistribution；hindsight probability；counterfactual baseline | 经典 temporal/structural credit | 是 | 取决于环境 | 说明 credit 的核心是 return contribution、variance 与 counterfactual comparison，不是信息量本身 |
+| Shapley (1953) | 合作集合中个体的平均边际贡献 | 对加入顺序取平均的公理化 attribution | 结构/团队 credit | 否 | 取决于 coalition 定义 | 能处理顺序与协同的公平分配，但精确成本指数级；网页步骤 coalition 还需有效性约束 |
 | Good (1953); Efron–Thisted (1976); Chao–Jost (2012) | 尚未观察到的物种/质量与样本覆盖 | Good–Turing、unseen-species、coverage extrapolation | 估计开放集合遗漏风险 | 否 | 是 | 仅看已知行熵不够；width 必须含 unseen mass/coverage posterior |
 | Golovin & Krause (2011) | 部分观测下的随机状态 | adaptive submodularity | 自适应贪心动作选择 | 否 | 取决于先验/观测模型 | 只在假设成立时给近似保证；不得宣称普遍最优 |
 
 ## 综述写作分级
 
-- **必须深度讨论**：WebSwarm、SearchOS、Table-as-Search、ECR、Semantic Entropy、Conformal Information Pursuit、TASR、Good–Turing/coverage。
-- **方法对照**：A-MapReduce、Web2BigTable、CuriosiTree、InfoReasoner、IG-Search、TEPO、SIGHT、Know Before You Fetch、QuCo-RAG。
+- **必须深度讨论**：WebSwarm、SearchOS、Table-as-Search、ECR、Semantic Entropy、ECHO、TRACE、LOTAPO、STAMP、RICE-PO、CVT-RL、Good–Turing/coverage。
+- **方法对照**：A-MapReduce、Web2BigTable、CuriosiTree、InfoReasoner、IGPO、IG-Search、TEPO、SIGHT、SIOP、PBSD、ACPO、Know Before You Fetch、QuCo-RAG。
 - **背景引用**：FLARE、Self-RAG、Dartboard、SePer、InfoTree、IGPO、IGRPO、WebUncertainty。
 
 ## 矩阵结论
 
-现有工作已覆盖表格状态、动态 deep/wide 路由、熵下降、EIG-per-cost、校准停止和覆盖图。当前仍可能成立、但需要实验证明的缺口是：在隐藏 anchor 与未知结果集大小并存的 DeepWide 任务中，用一个**校准的分层开放世界信念**同时表示 anchor、未见质量、行资格与单元格值，并以期望任务风险下降/成本路由动作。该判断是检索截止日下的 novelty hypothesis，不是首创证明。
+现有工作已覆盖表格状态、动态 deep/wide 路由、熵下降、EIG-per-cost、校准停止、posterior-sensitive turn credit、gold-answer likelihood credit、删除 attribution、证据 provenance 和局部反事实 credit。当前仍可能成立、但需要实验证明的缺口是：在隐藏 anchor 与未知结果集大小并存的 DeepWide 任务中，用一个**校准的分层开放世界信念**同时表示 anchor、未见质量、行资格与单元格值；推理时按期望任务风险下降/成本路由动作，训练时再以同状态反事实和 provenance 验证哪些风险变化应转成 credit。该判断是检索截止日下的 novelty hypothesis，不是首创证明。
