@@ -1,0 +1,65 @@
+{
+  "artifact_version": 1,
+  "status": "diagnostic_baseline_not_paper_ready",
+  "predictions_generated_at_utc": "2026-06-21",
+  "evaluated_at_utc": "2026-06-23",
+  "documented_at_utc": "2026-07-19",
+  "generation_run": "outputs/deepwide_full/deepwide_full_20260621_072017",
+  "official_evaluation_run": "outputs/deepwide_official_eval/full_gpt55_20260623_115822",
+  "generation_config": {
+    "model": "gpt-5.5",
+    "search_provider": "Tavily",
+    "queries_per_task": 6,
+    "max_results_per_query": 6,
+    "followup": false,
+    "raw_page_content": false,
+    "attempts_per_task": 1
+  },
+  "evaluator": {
+    "implementation": "official DeepWideSearch evaluator via scripts/run_official_eval_local.py",
+    "judge_model": "gpt-5.5",
+    "errors": 0,
+    "judge_calls": 722
+  },
+  "metrics": {
+    "all": {
+      "n": 220,
+      "successes": 5,
+      "success_rate": 0.022727272727272728,
+      "core_entity_accuracy": 0.6772727272727272,
+      "row_f1": 0.19483141065069157,
+      "item_f1": 0.3414306996924852,
+      "column_f1": 0.41033276469069624
+    },
+    "deep2wide": {
+      "n": 85,
+      "successes": 0,
+      "success_rate": 0.0,
+      "core_entity_accuracy": 0.4470588235294118,
+      "row_f1": 0.048946367181661295,
+      "item_f1": 0.11693234359324325,
+      "column_f1": 0.15745868742408536
+    },
+    "wide2deep": {
+      "n": 135,
+      "successes": 5,
+      "success_rate": 0.037037037037037035,
+      "core_entity_accuracy": 0.8222222222222222,
+      "row_f1": 0.28668495653859943,
+      "item_f1": 0.48278151649571177,
+      "column_f1": 0.5695497763030064
+    }
+  },
+  "provenance": {
+    "full_summary_source": "outputs/deepwide_official_eval/full_gpt55_20260623_115822/summary.json",
+    "split_method": "Offline grouping of completed official_eval_results.jsonl by instance-id prefix; no split field was used by model prompts.",
+    "verification_command": "Recompute arithmetic from official_eval_results.jsonl and compare all/all-subset weighted averages."
+  },
+  "limitations": [
+    "Generation and approximate local evaluation currently share one script and task object; the model prompts receive only the visible question, but the process boundary is not yet hardened.",
+    "Search-time contamination was not scanned in this historical run.",
+    "The run uses snippets and Tavily answers rather than raw page content.",
+    "The run has one attempt per task and is not directly comparable to Avg@4 or Pass@4 results.",
+    "Raw outputs are excluded from Git because they may contain large third-party web content and operational metadata."
+  ]
+}
