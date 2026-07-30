@@ -1,0 +1,165 @@
+{
+  "artifact_version": 1,
+  "role": "v24190_tie_aware_gate2a_consumer_preregistration",
+  "protocol_id": "v24190_tie_aware_true_continuation_gate2a_consumer_v1",
+  "created_at_unix": 1785386884,
+  "label_blind_before_source_terminal": true,
+  "parents": {
+    "results/v24161_strict_gate2a_consumer_preregistration_v1_20260729.json": {
+      "sha256": "b5c1174d8a02bb3d3719d6e212c76ff690d87e4e5d85320ed3b38c5c13d67023"
+    },
+    "results/v24162_canonical_gate2a_consumer_preregistration_v1_20260729.json": {
+      "sha256": "98f2405ce41ca140c9d486040611cc65952306eae85ff0a6ab1b16ea1e4d85b6"
+    },
+    "results/v24162_canonical_gate2a_consumer_activation_audit_v1_20260729.json": {
+      "sha256": "af1ea8f03cf1171cb3353a01982003e6f288a62332085de25d582b82d3141122"
+    },
+    "src/deepwide_agent/v24161_strict_gate2a.py": {
+      "sha256": "dc870de1db1184a86f18f2606fabaf9d50947f02b82c96f847b8fa3ec63208d3"
+    },
+    "scripts/watch_v24162_canonical_gate2a_consumer.py": {
+      "sha256": "cb7e41a6912674b9154415aa2dc9096fec8cb8f5fb6e38e046873f9b356585b9"
+    },
+    "results/v24187_phase_liveness_preregistration_v1_20260730.json": {
+      "sha256": "873f42369f6f5ac7d1b619510257f8cc7c932140b734dd14d23c4a5c6e45d34c"
+    },
+    "results/v24187_phase_liveness_activation_audit_v1_20260730.json": {
+      "sha256": "b57bdc1fbcce3911111f9c571c77dd37f1d1ecbf1030b1658638c0062cbaa4b2"
+    },
+    "scripts/watch_v24187_phase_liveness.py": {
+      "sha256": "83789b1cc2eb1e6e87969894409b09039028e0e13b53ba8de90776171bf567d3"
+    }
+  },
+  "scientific_defect": {
+    "v24161_random_top2_baseline_fixed_at_two_thirds": true,
+    "fixed_baseline_is_wrong_when_terminal_best_actions_tie": true,
+    "v24161_prediction_top2_uses_action_order_for_boundary_ties": true,
+    "deterministic_tie_order_can_create_or_remove_apparent_hit": true,
+    "true_continuation_contribution_is_rounded_and_can_tie": true,
+    "v24161_v24162_frozen_bytes_modified": false,
+    "source_true_continuation_forward_or_evaluator_changed": false
+  },
+  "tie_aware_contract": {
+    "settings": {
+      "minimum_comparable_checkpoints": 30,
+      "minimum_rank_evaluable_checkpoints": 30,
+      "minimum_independent_task_clusters": 12,
+      "minimum_valid_records_per_active_action": 5,
+      "maximum_invalid_rate": 0.1,
+      "equal_cost_tolerance_fraction": 0.05,
+      "within_checkpoint_spearman_minimum": 0.3,
+      "within_checkpoint_spearman_ci_lower_strictly_positive": true,
+      "full_top2_advantage_over_random_ci_lower_strictly_positive": true,
+      "full_minus_no_entropy_top2_ci_lower_strictly_positive": true,
+      "full_minus_same_action_heuristic_top2_ci_lower_strictly_positive": true,
+      "entropy_incremental_mae_improvement_ci_lower_strictly_positive": true,
+      "minimum_entropy_increase_risk_decrease_bundles": 3,
+      "minimum_entropy_increase_risk_decrease_task_clusters": 3,
+      "entropy_increase_risk_decrease_direction_accuracy_minimum": 0.6,
+      "entropy_increase_risk_decrease_ci_lower_strictly_positive": true,
+      "bootstrap_seed": 24161,
+      "bootstrap_resamples": 10000
+    },
+    "settings_sha256": "4929ba8f8097148f504ab0cc4daa7653cfaecf8493908ebd32e8ca82570c6ecf",
+    "rank_and_non_top2_conditions_inherited_from_v24161": true,
+    "rank_unit": "complete_same_checkpoint_three_action_group",
+    "bootstrap_unit": "task_cluster_ref_sha256",
+    "true_best_tie_policy": "all actions exactly tied at rounded maximum contribution",
+    "model_top2_boundary_tie_policy": "uniform sampling without replacement within cutoff score tier",
+    "random_top2_baseline": "one minus C(action_count-best_count,2)/C(action_count,2)",
+    "action_declaration_order_for_ties": false,
+    "paired_full_minus_random_required": true,
+    "paired_full_minus_no_entropy_required": true,
+    "paired_full_minus_fixed_heuristic_required": true,
+    "all_three_cluster_bootstrap_ci_lowers_strictly_positive": true,
+    "parent_v24161_v24162_result_diagnostic_only": true,
+    "canonical_module_identity_checked_before_wait_and_evaluation": true
+  },
+  "source_release_gate": {
+    "source_state_path": "outputs/v24159_true_continuation_reachability_state_v1_20260729.json",
+    "required_source_status": "audit_terminal",
+    "authoritative_phase_state_path": "outputs/v24187_phase_liveness_watcher_state_v1_20260730.json",
+    "authoritative_phase_watcher_marker": "scripts/watch_v24187_phase_liveness.py",
+    "retired_v24160_process_required": false,
+    "parent_state_path": "outputs/v24162_canonical_gate2a_consumer_state_v1_20260729.json",
+    "parent_report_path": "results/v24162_canonical_strict_true_continuation_gate2a_report_v1_20260729.json",
+    "parent_v24162_terminal_report_required": true,
+    "parent_report_may_not_authorize_controller_without_v24190": true,
+    "activation_required_before_scientific_inputs_opened": true,
+    "all_manifest_predictions_and_aggregates_live_replayed": true,
+    "no_manifest_prediction_or_outcome_opened_before_source_audit_terminal": true,
+    "preterminal_boundary": {
+      "source_status": "waiting_for_p12_trial2_exact220_release",
+      "source_truth_fields_all_false": true,
+      "source_runner_exactly_one": true,
+      "authoritative_phase_liveness_exactly_one": true,
+      "authoritative_phase_state_safe": true,
+      "v24162_parent_consumer_exactly_one": true,
+      "v24190_consumer_absent_before_freeze": true,
+      "parent_and_successor_reports_absent": true,
+      "successor_state_and_activation_absent": true
+    }
+  },
+  "execution": {
+    "python_flags": [
+      "-I",
+      "-B"
+    ],
+    "poll_seconds": 60,
+    "proc_root": "/proc",
+    "consumer_marker": "scripts/watch_v24190_tie_aware_gate2a.py",
+    "state_path": "outputs/v24190_tie_aware_gate2a_consumer_state_v1_20260730.json",
+    "report_path": "results/v24190_tie_aware_true_continuation_gate2a_report_v1_20260730.json",
+    "activation_path": "results/v24190_tie_aware_gate2a_consumer_activation_audit_v1_20260730.json",
+    "canonical_module_names": [
+      "deepwide_agent.v24121_continuation",
+      "deepwide_agent.v24123_release",
+      "deepwide_agent.v24161_strict_gate2a",
+      "deepwide_agent.v24190_tie_aware_gate2a"
+    ]
+  },
+  "source_policy": {
+    "preterminal_safe_source_and_parent_state_envelopes_only": true,
+    "post_terminal_sealed_manifest_predictions_and_aggregates_only": true,
+    "direct_mapping_gold_category_question_type_read": false,
+    "raw_question_prediction_evidence_url_answer_or_score_emitted": false,
+    "credential_value_or_keyring_read": false,
+    "network_model_search_fetch_or_evaluator_api_called": false
+  },
+  "authorization": {
+    "read_only_waiter_and_post_terminal_offline_consumer": true,
+    "source_or_parent_process_signal_restart_resume_rerun_skip": false,
+    "active_r1_p12_schema76_schema77_avg4_or_quality_chain_mutation": false,
+    "forward_code_prompt_model_search_budget_or_threshold_change": false,
+    "controller_design_only_after_tie_aware_gate_pass": true,
+    "controller_implementation_or_pilot_launch": false,
+    "training_credit": false,
+    "full220_controller_launch": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "control_surface": {
+    "file_count": 7,
+    "manifest": {
+      "src/deepwide_agent/v24190_tie_aware_gate2a.py": "8295feda84a6689b82a62ae1db062701bb679cafa616b5be40cf4ed033afb268",
+      "scripts/preregister_v24190_tie_aware_gate2a.py": "9775fd6d52e0b988f3127036cd52314e1b078f8158166f1a30a5587e1944479b",
+      "scripts/watch_v24190_tie_aware_gate2a.py": "6d1d797ece6950b3b742f5a496366fe84ff8b48e96236cc3981dcce8489325de",
+      "scripts/audit_v24190_tie_aware_gate2a_activation.py": "bfe743babb0235085ebea86ea998a9b4975fb3be59b283b8512daf44eaf4a3ef",
+      "tests/test_v24190_tie_aware_gate2a.py": "f51265ec779e0a61f8ee51dafa8961365795031a7069ef7c9ecafad027c51af8",
+      "tests/test_v24190_tie_aware_consumer.py": "c3cbca54299e9f5ec4a510e98361fca56011d2ec3e607f2063c752d9a40fe8d3",
+      "tests/test_v24190_tie_aware_activation.py": "18bd993ecbef97a3ea4fe639fbdbddca60401c73e47d5b851eb5ae90caa2339e"
+    },
+    "manifest_sha256": "8a1debc3014941f8480f1a142f4014f381a77d8ca8aabd3ecdb9b401429251cc",
+    "must_remain_absent": [
+      "scripts/__init__.py",
+      "sitecustomize.py",
+      "usercustomize.py"
+    ]
+  },
+  "claims": {
+    "tie_aware_gate2a_result_available": false,
+    "entropy_action_value_identified": false,
+    "controller_or_training_enabled": false,
+    "benchmark_score_or_sota": false
+  },
+  "decision_contract_sha256": "d163fef4e47a69d4decb411cf4e88f56b77eb38becacf24159bfe37caf65570a"
+}
