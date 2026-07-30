@@ -1,0 +1,193 @@
+{
+  "artifact_version": 1,
+  "role": "v24191_policy_value_gate2a_consumer_preregistration",
+  "protocol_id": "v24191_policy_value_true_continuation_gate2a_consumer_v1",
+  "created_at_unix": 1785389050,
+  "label_blind_before_parent_terminal": true,
+  "parents": {
+    "results/v24190_tie_aware_gate2a_consumer_preregistration_v1_20260730.json": {
+      "sha256": "e978988b6a7617bba702ced578cf1eb47fc0392a32fc7298ae136add922927ac"
+    },
+    "results/v24190_tie_aware_gate2a_consumer_activation_audit_v1_20260730.json": {
+      "sha256": "c3166f1d08c535945e58130d941d39b33fc9b48aeca1eeef00f4ed1c9e416449"
+    },
+    "src/deepwide_agent/v24190_tie_aware_gate2a.py": {
+      "sha256": "8295feda84a6689b82a62ae1db062701bb679cafa616b5be40cf4ed033afb268"
+    },
+    "scripts/watch_v24190_tie_aware_gate2a.py": {
+      "sha256": "6d1d797ece6950b3b742f5a496366fe84ff8b48e96236cc3981dcce8489325de"
+    },
+    "src/deepwide_agent/v24123_release.py": {
+      "sha256": "49838bbcd450e995e9bbfbf0f0de9414bf98ef876945bd6830e0a79b38f21ed7"
+    },
+    "results/v2413_gate3a_controller_design_preregistration_v1_20260727.json": {
+      "sha256": "c71303fb04208733b4786dc60d1f1db7fd86be3345cc75461fdb0b82af51a338"
+    },
+    "results/v24187_phase_liveness_preregistration_v1_20260730.json": {
+      "sha256": "873f42369f6f5ac7d1b619510257f8cc7c932140b734dd14d23c4a5c6e45d34c"
+    },
+    "results/v24187_phase_liveness_activation_audit_v1_20260730.json": {
+      "sha256": "b57bdc1fbcce3911111f9c571c77dd37f1d1ecbf1030b1658638c0062cbaa4b2"
+    },
+    "scripts/watch_v24187_phase_liveness.py": {
+      "sha256": "83789b1cc2eb1e6e87969894409b09039028e0e13b53ba8de90776171bf567d3"
+    }
+  },
+  "scientific_defect": {
+    "v24190_top2_hit_is_not_executed_policy_value": true,
+    "v24190_can_pass_while_argmax_policy_is_worse_than_random": true,
+    "v24190_does_not_apply_stop_at_nonpositive_prediction": true,
+    "v24190_does_not_replay_gain_per_predicted_cost_ranking": true,
+    "v24123_prediction_seal_serializes_only_full_branch_cost": true,
+    "no_entropy_cost_must_be_replayed_from_frozen_preoutcome_model": true,
+    "v24190_frozen_bytes_modified": false,
+    "source_true_continuation_forward_or_evaluator_changed": false
+  },
+  "policy_value_contract": {
+    "parent_settings": {
+      "minimum_comparable_checkpoints": 30,
+      "minimum_rank_evaluable_checkpoints": 30,
+      "minimum_independent_task_clusters": 12,
+      "minimum_valid_records_per_active_action": 5,
+      "maximum_invalid_rate": 0.1,
+      "equal_cost_tolerance_fraction": 0.05,
+      "within_checkpoint_spearman_minimum": 0.3,
+      "within_checkpoint_spearman_ci_lower_strictly_positive": true,
+      "full_top2_advantage_over_random_ci_lower_strictly_positive": true,
+      "full_minus_no_entropy_top2_ci_lower_strictly_positive": true,
+      "full_minus_same_action_heuristic_top2_ci_lower_strictly_positive": true,
+      "entropy_incremental_mae_improvement_ci_lower_strictly_positive": true,
+      "minimum_entropy_increase_risk_decrease_bundles": 3,
+      "minimum_entropy_increase_risk_decrease_task_clusters": 3,
+      "entropy_increase_risk_decrease_direction_accuracy_minimum": 0.6,
+      "entropy_increase_risk_decrease_ci_lower_strictly_positive": true,
+      "bootstrap_seed": 24161,
+      "bootstrap_resamples": 10000
+    },
+    "parent_settings_sha256": "4929ba8f8097148f504ab0cc4daa7653cfaecf8493908ebd32e8ca82570c6ecf",
+    "settings": {
+      "minimum_comparable_checkpoints": 30,
+      "minimum_independent_task_clusters": 12,
+      "bootstrap_seed": 24191,
+      "bootstrap_resamples": 10000,
+      "simultaneous_lower_quantile": 0.025,
+      "require_parent_v24190_pass": true,
+      "require_all_predicted_and_actual_action_costs_strictly_positive": true,
+      "require_simultaneous_value_advantage_ci_lower_strictly_positive": true
+    },
+    "settings_sha256": "440daa17ad50e10a96858bb070e2709b554482e77e58b40a5fefc9b54d6f191f",
+    "parent_v24190_pass_required": true,
+    "deployment_ranking_rule": "strictly-positive predicted contribution divided by branch-specific predicted action tokens",
+    "deployment_tie_break": [
+      "larger predicted contribution",
+      "lower predicted action tokens",
+      "preregistered context action order"
+    ],
+    "stop_when_all_predictions_nonpositive": true,
+    "stop_actual_value": 0.0,
+    "one_action_per_checkpoint": true,
+    "gate3a_maximum_actions_per_task_diagnostic": 3,
+    "full_cost_source": "serialized full-model prediction seal",
+    "no_entropy_cost_source": "live replay of frozen pre-outcome no-entropy model branch",
+    "heuristic_cost_source": "same no-entropy cost branch; full entropy cost forbidden",
+    "actual_selected_value_from_sealed_terminal_contribution": true,
+    "single_checkpoint_decision_rule_replayed_exactly": true,
+    "multi_context_closed_loop_policy_effect_requires_gate3a": true,
+    "policy_value_advantage_family": [
+      "full_selected_value_over_stop",
+      "full_minus_uniform_random_action_value",
+      "full_minus_no_entropy_policy_value",
+      "full_minus_same_action_heuristic_policy_value"
+    ],
+    "shared_cluster_bootstrap_minimum_lower_strictly_positive": true,
+    "task_clusters_equal_weighted": true,
+    "oracle_regret_top1_and_gain_per_cost_reported": true,
+    "parent_v24190_result_diagnostic_only_without_v24191": true,
+    "canonical_module_identity_checked_before_wait_and_evaluation": true
+  },
+  "source_release_gate": {
+    "parent_state_path": "outputs/v24190_tie_aware_gate2a_consumer_state_v1_20260730.json",
+    "required_parent_terminal": true,
+    "required_parent_evaluated": true,
+    "parent_report_path": "results/v24190_tie_aware_true_continuation_gate2a_report_v1_20260730.json",
+    "authoritative_phase_state_path": "outputs/v24187_phase_liveness_watcher_state_v1_20260730.json",
+    "authoritative_phase_watcher_marker": "scripts/watch_v24187_phase_liveness.py",
+    "activation_required_before_scientific_inputs_opened": true,
+    "all_manifest_model_predictions_and_aggregates_live_replayed": true,
+    "no_manifest_model_prediction_or_outcome_opened_before_parent_terminal": true,
+    "preterminal_boundary": {
+      "parent_status": "waiting_for_true_continuation_audit_terminal",
+      "parent_source_status": "waiting_for_p12_trial2_exact220_release",
+      "parent_source_truth_fields_all_false": true,
+      "parent_activation_ready": true,
+      "source_runner_exactly_one": true,
+      "authoritative_phase_liveness_exactly_one": true,
+      "authoritative_phase_state_safe": true,
+      "v24190_parent_consumer_exactly_one": true,
+      "v24191_consumer_absent_before_freeze": true,
+      "parent_and_successor_reports_absent": true,
+      "successor_state_and_activation_absent": true
+    }
+  },
+  "execution": {
+    "python_flags": [
+      "-I",
+      "-B"
+    ],
+    "poll_seconds": 60,
+    "proc_root": "/proc",
+    "consumer_marker": "scripts/watch_v24191_policy_value_gate2a.py",
+    "state_path": "outputs/v24191_policy_value_gate2a_consumer_state_v1_20260730.json",
+    "report_path": "results/v24191_policy_value_true_continuation_gate2a_report_v1_20260730.json",
+    "activation_path": "results/v24191_policy_value_gate2a_consumer_activation_audit_v1_20260730.json",
+    "canonical_module_names": [
+      "deepwide_agent.v24123_release",
+      "deepwide_agent.v24190_tie_aware_gate2a",
+      "deepwide_agent.v24191_policy_value_gate2a"
+    ]
+  },
+  "source_policy": {
+    "preterminal_safe_parent_and_phase_state_envelopes_only": true,
+    "post_terminal_sealed_manifest_model_predictions_and_aggregates_only": true,
+    "direct_mapping_gold_category_question_type_read": false,
+    "raw_question_prediction_evidence_url_answer_or_score_emitted": false,
+    "credential_value_or_keyring_read": false,
+    "network_model_search_fetch_or_evaluator_api_called": false
+  },
+  "authorization": {
+    "read_only_waiter_and_post_terminal_offline_consumer": true,
+    "source_or_parent_process_signal_restart_resume_rerun_skip": false,
+    "active_r1_p12_schema76_schema77_avg4_or_quality_chain_mutation": false,
+    "forward_code_prompt_model_search_budget_or_threshold_change": false,
+    "controller_design_only_after_v24191_gate_pass": true,
+    "controller_implementation_or_pilot_launch": false,
+    "training_credit": false,
+    "full220_controller_launch": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "control_surface": {
+    "file_count": 7,
+    "manifest": {
+      "src/deepwide_agent/v24191_policy_value_gate2a.py": "fc0bf3b3c1ff9f266bd5c4edaba970ca81cba7e78c4ee6629a8363729d28a2e0",
+      "scripts/preregister_v24191_policy_value_gate2a.py": "200249f38b02e940102db89125c3725c26b196004493088ec94d7fd481fa032b",
+      "scripts/watch_v24191_policy_value_gate2a.py": "261032fa7a8882c7b42faaf8d865281470fafcabb3b0f20275afc35e7d4a3448",
+      "scripts/audit_v24191_policy_value_gate2a_activation.py": "7a1fa4e8e3166e9af9bb9b11ddc4cbbbe83c0bbaf83066da0d281a8b6d430f7e",
+      "tests/test_v24191_policy_value_gate2a.py": "4387186d8222a84c13b955a2642002f145b0c630edc524d75cba1c7d36d5ecc3",
+      "tests/test_v24191_policy_value_consumer.py": "b9a11b2cd756472c10c7bf249cad274373a623c79f8209bbef47191ff8cf750a",
+      "tests/test_v24191_policy_value_activation.py": "7921fded83994196a0976aea19ca23f7be7a24b4aa098ad7690e886b1299f3f1"
+    },
+    "manifest_sha256": "1f3f822a5d6421d60f58188203c1a7109ab3216ca5ee71b28cf11c164cfc6269",
+    "must_remain_absent": [
+      "scripts/__init__.py",
+      "sitecustomize.py",
+      "usercustomize.py"
+    ]
+  },
+  "claims": {
+    "policy_value_gate2a_result_available": false,
+    "entropy_action_value_identified": false,
+    "controller_or_training_enabled": false,
+    "benchmark_score_or_sota": false
+  },
+  "decision_contract_sha256": "31687e84d6797dc8b0ab1d872922c42c9db8bf9f6c2b0388543322f44d21806e"
+}
