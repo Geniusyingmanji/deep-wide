@@ -16,10 +16,24 @@ __pycache__/
 .mypy_cache/
 .ruff_cache/
 
+# Local implementation tree is ignored by default; selected reviewed files
+# may be force-added explicitly.
+src/
+tests/
+scripts/*
+!scripts/run_deepwide_smoke.py
+!scripts/run_official_eval_local.py
+
 # Generated benchmark artifacts
 outputs/
 *.log
 *.pid
+
+# Generated or local benchmark material
+results/
+!results/baseline_gpt55_20260623.json
+configs/
+implementation_plan.md
 
 # Third-party source mirrors (re-clone from their upstream repositories)
 external/

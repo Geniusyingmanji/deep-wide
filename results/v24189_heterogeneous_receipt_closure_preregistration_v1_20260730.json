@@ -1,0 +1,70 @@
+{
+  "artifact_version": 1,
+  "role": "v24189_heterogeneous_receipt_closure_preregistration",
+  "protocol_id": "v24189_heterogeneous_receipt_parent_closure_v1",
+  "created_at_unix": 1785385253,
+  "label_blind": true,
+  "parents": {
+    "results/v24187_phase_liveness_preregistration_v1_20260730.json": {
+      "sha256": "873f42369f6f5ac7d1b619510257f8cc7c932140b734dd14d23c4a5c6e45d34c",
+      "role": "v24187_phase_liveness_preregistration"
+    },
+    "results/v24187_phase_liveness_activation_audit_v1_20260730.json": {
+      "sha256": "b57bdc1fbcce3911111f9c571c77dd37f1d1ecbf1030b1658638c0062cbaa4b2",
+      "role": "v24187_phase_liveness_activation_audit"
+    },
+    "results/v24188_parent_control_closure_preregistration_v1_20260730.json": {
+      "sha256": "cc0bb822281b6f4dd3727cc07c207842a1d907496f8056cc9c361fc92eda3bde",
+      "role": "v24188_parent_control_closure_preregistration"
+    }
+  },
+  "disposition": {
+    "v24187_overbroad_parent_control_wording_superseded": true,
+    "v24188_protocol_remains_immutable": true,
+    "v24188_audit_result_absent": true,
+    "v24188_failure_stage": "v24183_receipt_format_validation_before_output_publication",
+    "v24188_benchmark_content_network_api_or_process_mutation_before_failure": false,
+    "v24188_invalid_assumption": "all three handoff receipts have standalone receipt_payload_sha256"
+  },
+  "audit_contract": {
+    "v24183_receipt_contract": "content-addressed exact SHA bound by sealed activation; no standalone payload seal",
+    "v24185_v24186_receipt_contract": "content-addressed exact SHA plus standalone receipt_payload_sha256",
+    "all_activation_payload_seals_validated": true,
+    "all_supported_parent_manifests_live_replayed": true,
+    "all_frozen_dependency_and_activation_control_records_live_validated": true,
+    "read_only_create_exclusive_one_shot": true,
+    "runtime_state_task_question_answer_evidence_prediction_mapping_gold_category_evaluator_score_read": false,
+    "credential_or_network_access": false
+  },
+  "control_surface": {
+    "file_count": 4,
+    "manifest": {
+      "scripts/preregister_v24189_heterogeneous_receipt_closure.py": "db075aa6693c749ad85e1e9166aa12553b24cbb08deca0c329ada12c82162463",
+      "scripts/audit_v24189_heterogeneous_receipt_closure.py": "5e0f8ae397e4a06564a4a08a138a9433432496195ff9c9a63d11fc35c985cf77",
+      "tests/test_preregister_v24189_heterogeneous_receipt_closure.py": "203ebbec5ce93a4e759ecda318fd8329a53e98699339d705e70a16866ddbdc51",
+      "tests/test_audit_v24189_heterogeneous_receipt_closure.py": "eb20113902d02d01860709288fa24f4abbaae2762722ff75db4f089c1c682323"
+    },
+    "manifest_sha256": "494ecc07bb33b8bcc6173b68cf4deb6212c0e389df65c074b4101aceedef48bf",
+    "must_remain_absent": [
+      "scripts/__init__.py",
+      "sitecustomize.py",
+      "usercustomize.py"
+    ]
+  },
+  "authorization": {
+    "v24187_or_v24188_source_or_protocol_modification": false,
+    "process_signal_restart_resume_rerun_skip_or_launch": false,
+    "forward_code_prompt_model_search_budget_gate_threshold_or_controller_change": false,
+    "benchmark_model_search_fetch_evaluator_or_api_call": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "claims": {
+    "benchmark_score_available": false,
+    "benchmark_improvement_observed": false,
+    "avg_at_4_available": false,
+    "entropy_or_credit_effect_observed": false,
+    "leaderboard_submission_performed": false,
+    "sota": false
+  },
+  "decision_contract_sha256": "2112c649681042e158df206ef31c3b9e21d190acd2960b636aa28c0a35663d77"
+}

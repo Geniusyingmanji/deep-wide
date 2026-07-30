@@ -1,14 +1,14 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
-> 检索截止：2026-07-19
+> 检索截止：2026-07-21；项目证据更新：2026-07-25
 >
 > 结论强度：这是基于公开文献的 novelty audit，不是“没有任何相关工作”的证明。2026 年文献多为尚未同行评审的 arXiv 预印本，文中将预印本结果视为作者报告，而非独立复现事实。
 
 ## 摘要
 
-“把信息熵用于搜索代理”或“给熵降大的步骤更多 credit”都不能作为本项目的核心首创主张。Semantic Entropy 已将自由文本答案聚类为语义等价类并用熵预测错误；FLARE、Self-RAG、TASR 和 Know Before You Fetch 已用置信或校准概率控制检索与停止；CuriosiTree、Conformal Information Pursuit 和 ECR 已用期望信息增益或期望熵下降选择下一动作；InfoReasoner、IGPO、IG-Search、SIGHT、TEPO 和 IGRPO 已把信息量用于搜索代理训练或 rollout 分配。更直接地，ECHO 已把后验收缩称为 epistemic credit，TRACE、LOTAPO、STAMP、RICE-PO 等分别用真值答案似然、删除干预、证据 provenance 和同状态局部分支定位 turn credit。DeepWide 侧也已出现 Table-as-Search、A-MapReduce、Web2BigTable、WebSwarm 与 SearchOS，分别覆盖持久表格状态、横向并行、递归 deep/wide 路由和 coverage-aware 调度。
+“把信息熵用于搜索代理”或“给熵降大的步骤更多 credit”都不能作为本项目的核心首创主张。Semantic Entropy 已将自由文本答案聚类为语义等价类并用熵预测错误；FLARE、Self-RAG、TASR 和 Know Before You Fetch 已用置信或校准概率控制检索与停止；CuriosiTree、Conformal Information Pursuit 和 ECR 已用期望信息增益或期望熵下降选择下一动作；InfoReasoner、IGPO、IG-Search、SIGHT、TEPO 和 IGRPO 已把信息量用于搜索代理训练或 rollout 分配。更直接地，ECHO 已把后验收缩称为 epistemic credit，TRACE、LOTAPO、STAMP、RICE-PO 等分别用真值答案似然、删除干预、证据 provenance 和同状态局部分支定位 turn credit。DeepWide 侧也已出现 Table-as-Search、A-MapReduce、Web2BigTable、WebSwarm 与 SearchOS，分别覆盖持久表格状态、横向并行、递归 deep/wide 路由和 coverage-aware 调度。Forage V2 又直接研究完成边界未知时的 denominator blindness，Shared Discovery Paradox 则证明更准确的共享 posterior 若被压成重复的单一动作，可能降低群体发现覆盖。[72,73]
 
-仍有一个可验证、也可被否证的研究缺口：这些线索尚未在 DeepWide 的**分层开放世界信念**与**结果对齐的反事实 credit**中统一。DeepWide 不只有“最终答案是否确定”，还同时包含隐藏核心实体（anchor）是谁、结果集中还有多少未见质量、候选行是否满足约束、每个单元格的语义值是什么。有限候选集上的低 Shannon 熵不代表开放集合完整，甚至可能是在错误 anchor 上过度确信。因此，本综述建议将创新假设收窄为：用校准的 anchor、unseen-mass、row-eligibility、cell-semantic 四层信念估计任务风险变化，再通过同状态干预和 evidence provenance 判断这次变化是否由该步骤造成、是否支持最终任务。信息量在这里是 epistemic signal，而不是自动成立的 causal credit。
+在本次检索范围内，仍有一个可验证、也可被否证的候选缺口：这些线索尚未在 DeepWide 的**分层开放世界信念**与**结果对齐的反事实 credit**中统一。DeepWide 不只有“最终答案是否确定”，还同时包含隐藏核心实体（anchor）是谁、结果集中还有多少未见质量、候选行是否满足约束、每个单元格的语义值是什么。有限候选集上的低 Shannon 熵不代表开放集合完整，甚至可能是在错误 anchor 上过度确信。因此，本综述建议将创新假设收窄为：用校准的 anchor、unseen-mass、row-eligibility、cell-semantic 四层信念估计任务风险变化，再通过同状态干预和 evidence provenance 判断这次变化是否由该步骤造成、是否支持最终任务。信息量在这里是 epistemic signal，而不是自动成立的 causal credit。当前代码与实验尚未实现或验证这一方法；截至 V2.40.3 的改动仍是 evidence continuity、证据边界、开放集合覆盖、输出契约、列公平查询、alias 呈现、attribute/membership 隔离和失败观测工程，不能归因于 entropy。
 
 ## 1. 范围、问题与检索方法
 
@@ -24,11 +24,14 @@
 
 ### 1.2 检索过程
 
-检索在 2026-07-19 进行，采用三层策略：
+检索在 2026-07-19 至 2026-07-21 进行，采用三层策略：
 
 - 精确追踪用户给出的 WebSwarm（arXiv:2607.08662），并沿其 related work 核对 DeepWideSearch、Table-as-Search、A-MapReduce、Web2BigTable、SearchOS、TreeSeeker 等系统。
 - 在 arXiv API 以 `entropy`、`information gain`、`expected entropy reduction`、`retrieval`、`search agent`、`open set`、`unseen mass`、`capture-recapture` 等组合查询，各抓取按提交日期排序的前 100 条，共 300 条记录、去重后 297 条，再按标题与摘要筛选直接相关工作。
 - 针对 credit assignment 追加检索 `epistemic credit`、`entropy reduction + credit assignment`、`information gain + process/turn/step reward`、`causal/counterfactual credit + language agent`，并反向核对 ECHO、TRACE、LOTAPO、STAMP、RICE-PO、CVT-RL、SIOP 等论文的 related work；关键结论以 PDF 公式与 limitation 原文为准。
+- 2026-07-20 再检索 `credit assignment AND (information gain OR entropy) AND agent/search` 与 `open world AND uncertainty AND agent/search`，核对新增近邻 PivoARL、InfoPO、AEM、SELAUR、STRIDE 与 APPO；使用 arXiv API 逐条验证标题、作者、版本和摘要。
+- 2026-07-21 补充检索 denominator blindness、shared discovery、turn-group information gain 和 uncertainty-guided exploration，核对 Forage V2、Shared Discovery Paradox、A²TGPO 与 T²PO 的 arXiv 元数据与原文。
+- 2026-07-21 做提交日期增量检索，并读取 Forage V2、Shared Discovery Paradox 与 A²TGPO 的 PDF。该轮新增了未知 denominator、belief–coverage 分离、gold-conditioned turn IG 和 uncertainty-guided resampling 的直接近邻。[72–75] 截至该范围仍未找到把 DeepWide 的 anchor、未见质量、行资格、单元格值四层同时概率化并用于 task-risk control/credit 的工作，但这只是限定语料与日期下的缺口判断。
 - 对经典信息论与覆盖估计文献用 Crossref/OpenAlex/DOI 核验元数据；对关键 2023–2026 论文读取 arXiv 原文而不只依赖摘要。
 
 纳入标准是：方法直接控制检索、证据选择、工具调用、搜索树、停止或开放集合覆盖；或者直接定义 DeepWide/table-search 的系统与评测边界。排除纯推荐、视觉检索、物理导航等仅共享“entropy/search”词面但不能约束本研究设计的工作。检索记录的高密度比较版见 [.research/literature_matrix.md](.research/literature_matrix.md)。
@@ -46,6 +49,10 @@ Table-as-Search 把搜索过程外化为表格：行是候选实体，列是约�
 2026 年 7 月的 WebSwarm 进一步削弱了“动态深/宽切换”本身的新颖性。它在推理中渐进构造递归委派树，每个节点选择 atom、deep、wide 或 entity_collect 模式；Web-Probing 先判断相关信息在网页上集中还是分散，同质兄弟节点之间复用轨迹经验。在 DeepWideSearch-EN、同为 GLM-4.5 骨干时，WebSwarm 报告 SR 6.58、Row F1 29.64、Item F1 58.40，相对 ReAct 分别提高 2.63、9.56、11.77 个百分点。[5] 这些数字证明的是该论文设置中的受控差值，不能直接与本项目的 GPT-5.5 全量中英混合单次运行比较。
 
 SearchOS-V1 则把开放域信息搜寻建模为带引用的 relational schema completion，并用 Frontier Task、Evidence Graph、Coverage Map、Failure Memory 和 middleware 管理状态、覆盖与停滞。其案例明确指出“已知行的 cell coverage 达到 100%”仍可能漏掉大量应有行，因此还要独立做 row-scope audit。[6] 这正是本项目需要继承而不是重新宣称的洞见：已知单元格饱和与开放集合完整性是两个问题。
+
+Forage V2 对开放集合给出更直接的命名：当完成边界没有预先给出时，代理会系统性低估 denominator，并可能对自己发现的小集合报告 100% coverage。它把 Planner 与独立 Evaluator 隔离，让两者分别收集对象和发现“完整意味着什么”，再把 denominator 修订经验跨 run 迁移。[72] 这占据了“首次发现分母盲区”或“首次让代理同时搜索答案和完成边界”的主张。它仍不是本项目拟议的概率层：每个 run 使用自己发现的 denominator，论文明确指出这些 coverage 百分比不能跨 run 直接比较，也没有给出未见质量的校准 posterior。
+
+Shared Discovery Paradox 提供了另一个必要反例。在其有限 Bayesian 搜索模型中，汇总线索提高了最佳单一推荐的准确率，但若八个搜索者都执行该推荐，发现率从去中心化搜索的 0.8322 降到 0.3835；对同一 pooled reports 分配 top-eight posterior portfolio 则达到 0.8594。[73] 这不是 DeepWide 实证结果，却解析性地说明 belief quality 与 coverage policy 是两个变量。即使四层 posterior 完全正确，若 controller 没有对重复动作、来源相关性和边际覆盖去重，信息集中仍可能伤害 width。
 
 由此，当前系统缺口不是“有没有表格状态、coverage map 或 deep/wide routing”，而是这些控制决策是否由一个经过校准、显式包含开放集遗漏质量的信念模型驱动，并在相同动作空间和预算下带来更低任务风险。
 
@@ -106,6 +113,8 @@ CuriosiTree 在临床诊断模拟中以树搜索估计每个信息获取动作�
 ### 4.5 训练奖励与 rollout 分配
 
 InfoReasoner 用语义聚类后的 entropy reduction 构造 dense semantic information-gain reward；TEPO 奖励工具调用前后的 token-segment entropy 下降；SIGHT 用信息增益定位分支、去重或反思时机；IGPO 用 gold-answer probability 的逐轮增量训练多轮搜索代理；IGRPO 用中间状态 informativeness 分配树状 rollout 预算。[23–27] InfoTree/RIFB 还从固定训练预算下的 submodular rollout informativeness 推导 UUCB。[28]
+
+A²TGPO 继续使用每 turn 后 ground-truth answer probability 的变化，并把同一 prompt、同一 turn index 的 IG 放在一起归一，再用 IG 调节累计 advantage 与 clipping 范围；论文明确把依赖 ground-truth answer 列为限制。[74] T²PO 则以 token/turn uncertainty dynamics 触发 thinking intervention 和 turn resampling。[75] 因此，“IG 大的 turn 获得更多更新空间”与“低信息 turn 重新采样”也已有方法；本项目只有在 label-blind 的四层 task-risk 信号上优于这些一般 uncertainty/IG baseline，才有新增价值。
 
 IG-Search 的术语尤其值得谨慎。其公式是“真实检索上下文相对随机文档上下文的 gold-answer log-likelihood ratio”；作者脚注明确说明这不是 Shannon information gain，只共享“正值提高 gold-answer confidence”的直觉。[29] 因此，本项目必须把 Shannon entropy、mutual information、pointwise log-likelihood ratio、semantic perplexity reduction 和启发式 utility 分开命名。
 
@@ -192,10 +201,17 @@ ECR 同时暴露了可延伸的边界：
 | CVT-RL (2606.05263) | 删除、语义/证据替换、工具扰动后的 verified success | verifier、outcome model、frozen continuation | 是，且列出识别假设；只称 PCCC surrogate | 最明确的干预式 baseline；计算昂贵且非开放世界 DeepWide 专用 |
 | CRAFT / BiPACE (2606.29476 / 2606.25556) | sibling rollout 或近似同状态 action-conditioned baseline | 轨迹 outcome | 近似 | 说明 credit 的比较单元应尽量共享状态，而非同一 turn index |
 | ACPO (2607.03126) / HAPO (2604.11056) / EMPG (2509.09265) | token entropy 用作可更新容量或不确定性权重 | 终局 outcome | 否 | entropy 在这里决定“哪里可学”，不决定“方向是否正确” [49,63,64] |
+| A²TGPO (2605.06200) / T²PO (2605.02178) | gold-answer IG 的 turn-group credit/clipping；token/turn uncertainty progress 的 intervention/resampling | A²TGPO 需 gold；T²PO 用 outcome RL | 否 | IG/uncertainty 已直接控制 credit 与探索强度；不处理开放 denominator [74,75] |
 
 ECHO 的范围最值得正面说明。它在 Clue Selector Game 中有均匀有限候选集、真实 oracle、确定性过滤和精确 posterior，主 reward 是候选集合的分数式收缩；实验只到 1.5B、约 10 turns。论文将近似信念、噪声或对抗来源、开放工具动作和 web search 明确列为未解决限制。[43] 这恰好留下 DeepWide 的工程与统计难点，但不留下“首次提出 epistemic credit”这一概念空白。TRACE、LOTAPO、STAMP、RICE-PO、SIOP、CVT-RL、CRAFT、BiPACE、ACPO、PBSD 和 PiCA 又分别覆盖 gold-readiness TD、删除 attribution、provenance、局部分支、label-free potential、显式干预、sibling counterfactual、state-matched baseline、entropy reweighting 与 privileged likelihood credit。[44–54]
 
+2026-07-20 至 21 日的补充检索进一步收紧了 novelty。InfoPO 用 masked-feedback counterfactual 衡量一次用户反馈对后续动作分布的改变，再以 outcome gate 融合任务方向；AEM 在 response 粒度用 uncertainty proxy 重缩放 advantage；SELAUR 将 entropy、least confidence 与 margin 注入失败轨迹奖励。[66–68] STRIDE 把 outcome-discriminative pattern 与 saliency entropy 结合，APPO 则明确报告 token entropy 本身不能可靠定位影响最终结果的决策点。[69,70] PivoARL 从失败轨迹中定位 pivotal turn 并只从该状态重试，以 information-gain 视角解释信号集中。[71] A²TGPO 与 T²PO 又分别把 turn IG 用于归一/clipping，把 uncertainty dynamics 用于 intervention/resampling。[74,75] 因而，“信息增益 + counterfactual + outcome gate”“response-level entropy credit”“pivotal retry”与“uncertainty-guided resampling”均已有直接近邻。可辩护的范围只能落在 DeepWide 的四层开放世界任务变量、未见质量，以及 evidence provenance 与任务风险的联合验证上。
+
 另一些相邻路线不直接用 entropy。GraphGPO 把多条 rollout 聚成状态转移图，以到目标的图距离变化分配 edge credit；ReBel 用 belief consistency 与 belief-aware grouping；OASES 学习一个随 search policy 共同更新、由终局 outcome 对齐的 state evaluator。[58–60] 它们要求 OWIC 证明“信息论表示”比图距离、belief consistency 或 learned progress evaluator 带来额外价值，而不能只证明任何稠密过程信号都比终局 reward 好。
+
+Forage V2 使“未知完成边界”的 novelty 范围进一步收窄。它明确命名 denominator blindness，通过独立 Evaluator/Planner、共演 evaluation 和跨 run 组织记忆学习完成标准。[72] 因此本项目不能声称首次识别开放世界 denominator 问题。它仍留下的可检验差异是：是否能对未见质量与 premature-stop risk 给出校准概率，并与 anchor、row 和 cell 任务损失共同决策，而不是只通过组织审计学习 denominator。
+
+Shared Discovery Paradox 表明“信念更准”与“覆盖更高”可以反向变化。在其可解的 16-box/8-searcher 基准中，pooling 将单个最佳建议的准确率从 0.20 提高到 0.3835，但 8 人重复该动作的群体发现率只有 0.3835，低于分散线索跟随的 0.8322；对 pooled posterior 做 8 动作 portfolio 可达 0.8594。[73] 这些理论数字不是 DeepWide 实验结果，但它们对 controller 提出直接约束：路由器必须联合 posterior、动作组合、来源依赖与多样性，不能将所有 worker 都派到同一个最高 posterior 或最高 entropy 项。
 
 ### 5.3 为什么“熵降越大，credit 越高”不可靠
 
@@ -247,7 +263,7 @@ c_t = \underbrace{L(B_t)-L(B_{t+1})}_{\text{task-risk change}}
 
 | 版本 | 可行性 | 新颖性 | 建议 |
 |---|---|---|---|
-| token entropy 低/熵降大就多给 credit | 中，容易实现 | 很低；EMPG、TEPO、ACPO 等已覆盖 | 仅作消融 |
+| token/response entropy 低或熵降大就多给 credit | 中，容易实现 | 很低；EMPG、TEPO、ACPO、AEM、SELAUR 等已覆盖 | 仅作消融 |
 | semantic entropy reduction 作为 turn reward | 中 | 很低；InfoReasoner、ECHO 直接覆盖 | 强基线，不作主贡献 |
 | gold-answer log-prob gain / TD credit | 高，训练信号稳定 | 低；IGPO、TRACE、PBSD、IG-Search 已密集覆盖 | 训练 oracle baseline |
 | leave-one-turn 或首次证据 attribution | 中高 | 低到中；LOTAPO、STAMP 已覆盖 | provenance / retrospective baseline |
@@ -259,6 +275,8 @@ c_t = \underbrace{L(B_t)-L(B_{t+1})}_{\text{task-risk change}}
 
 Good–Turing 估计用低频事件，尤其 singleton 的比例，推断尚未观察事件的总概率质量。Efron–Thisted 将 unseen-species 思想用于估计 Shakespeare 未见词汇；Chao–Jost 以 sample completeness 而不是 sample size 组织 rarefaction/extrapolation。[31–33] 数据库研究也曾用样本发现频率估计 aggregate query 中 unknown unknowns 的影响。[34]
 
+Forage V2 进一步表明 denominator 本身可能随定义与证据演化，Shared Discovery Paradox 则表明同一 posterior 下的动作相关性会改变覆盖。[72,73] 因此，coverage 层不只需要一个“还有多少没见”的标量，还需要记录 denominator 定义不确定性、查询/来源依赖和重复动作造成的有效通道数。
+
 这些方法不能原样套到网页搜索。经典估计通常假设样本来自稳定分布或可解释的重复捕获过程，而搜索引擎排序、查询改写、站点重复、SEO 与语言过滤都会造成强烈且依赖动作的选择偏差。可行做法是：
 
 - 把不同 query family/source family 当成有记录的采样机制，不把同源镜像当成独立捕获；
@@ -267,7 +285,7 @@ Good–Turing 估计用低频事件，尤其 singleton 的比例，推断尚未�
 - 对已知有限名录、未知开放集合、网页不稳定三种任务分别报告；
 - 用 synthetic hide-and-seek 和已知全集任务检查“预测剩余行数/质量”是否与真实遗漏相关。
 
-最小开放世界信念应为 $M$，表示“下一轮仍能发现的有效实体质量/剩余集合规模”，而不是把 OTHER 粗暴设成一个固定类别。若观测到的新实体都是 singleton，低 anchor/cell entropy 也不能触发停止。
+最小开放世界信念应为 $M$，表示“下一轮仍能发现的有效实体质量/剩余集合规模”，而不是把 OTHER 粗暴设成一个固定类别。若观测到的新实体都是 singleton，低 anchor/cell entropy 也不能触发停止；若多个 worker 重复同一高 posterior 动作，名义并行度也不能当作有效覆盖。
 
 ## 7. 跨论文比较与 novelty verdict
 
@@ -276,9 +294,12 @@ Good–Turing 估计用低频事件，尤其 singleton 的比例，推断尚未�
 | Semantic Entropy、SePer | 答案语义类/生成器信念 | 推理评估 | 通常否 | 否 | 语义熵估计器已有 |
 | FLARE、Self-RAG、TASR、Know Before You Fetch | 下一 token 或答案正确性 | 推理控制 | 触发/停止/预算档位 | 否 | adaptive retrieval 与校准停止已有 |
 | CuriosiTree、C-IP、ECR | 决策/标签/答案假设 | 推理控制 | 是，按 EIG/EER | 通常固定有限集 | EIG 动作选择与熵停止已有 |
+| Forage V2、Shared Discovery Paradox | 自发现 denominator；pooled posterior 与动作组合 | 覆盖审计/分配 | 是 | 是，但前者为自定义 denominator，后者为有限原子空间 | 分母盲区和 belief–coverage 分离已有；四层方法还需概率校准与 web 选择偏差验证 |
 | InfoReasoner、IGPO、IG-Search、SIGHT、TEPO、IGRPO | gold-answer、语义答案或 rollout | 训练 | 学习后间接控制 | 否 | IG/entropy 训练奖励已有 |
 | ECHO、TRACE、SIOP | 显式后验、gold-answer readiness 或自生成 outcome modes | turn-level RL credit | 是 | 否 | epistemic/potential/TD turn credit 已有 |
 | LOTAPO、STAMP、RICE-PO、CVT-RL | 删除 attribution、证据 provenance、同状态局部分支或验证后的干预效应 | step/turn credit | 是 | 通常否 | attribution 与 causal baseline 已形成，裸 entropy 不够 |
+| InfoPO、AEM、SELAUR、STRIDE、APPO、PivoARL | masked-feedback counterfactual、response entropy、uncertainty reward、outcome-discriminative pattern、pivotal retry | turn/token/response credit 与局部重试 | 是 | 否 | 信息信号与结果门控、反事实或 pivotal state 的组合也已有；四层任务变量才可能构成差异 |
+| A²TGPO、T²PO | gold-answer IG 与 token/turn uncertainty dynamics | credit/clipping、intervention/resampling | 是 | 否 | IG/uncertainty 控制训练与探索已有；label-blind 分层 task risk 才可能构成差异 |
 | TaS、A-MapReduce、Web2BigTable | 行、格、横向子任务 | 推理系统 | 是 | 启发式覆盖 | 表格状态与大规模宽搜已有 |
 | WebSwarm、SearchOS | 搜索节点、网页结构、coverage/gaps | 推理系统 | 是 | 定性 open-set / scope audit | 动态 deep/wide 与覆盖驱动调度已有 |
 | Good–Turing、coverage、capture–recapture | 未见事件质量/种类数 | 统计估计 | 不直接 | 是 | 提供 width posterior，但需处理搜索偏差 |
@@ -312,7 +333,7 @@ Good–Turing 估计用低频事件，尤其 singleton 的比例，推断尚未�
 4. **校准与可否证验证。** 分别证明各信号能预测 anchor、遗漏、行和格错误，并在同动作空间、同预算下优于 heuristic uncertainty；否则放弃 entropy-controller 的主张。
 5. **credit 不等于熵差。** 训练时用 task-risk/proper-score change 确定方向，用同状态 counterfactual 检查任务贡献，用 provenance 区分发现、验证和综合。
 
-检索到的文献中，没有一篇同时满足以上五点。但这只是截至检索日的**候选空白**；SearchOS 的 scope audit、ECR 的有限假设 EER、C-IP 的校准、CuriosiTree 的 EIG/cost、ECHO 的 epistemic credit、STAMP 的 provenance 和 CVT-RL 的反事实贡献已覆盖各个相邻部分。论文必须正面比较这些近邻，不能靠改名构造差异。
+检索到的文献中，没有一篇同时满足以上五点。但这只是截至检索日的**候选空白**；Forage V2 的 denominator audit、Shared Discovery Paradox 的 belief–coverage 分离、SearchOS 的 scope audit、ECR 的有限假设 EER、C-IP 的校准、CuriosiTree 的 EIG/cost、ECHO 的 epistemic credit、STAMP 的 provenance 和 CVT-RL 的反事实贡献已覆盖各个相邻部分。论文必须正面比较这些近邻，不能靠改名构造差异。
 
 ## 8. 建议的分层开放世界熵框架
 
@@ -402,19 +423,77 @@ Search-Time Contamination 研究指出，联网 agent 可能检索到公开 benc
 
 ## 10. 对当前项目的直接诊断
 
-当前仓库已完成的是基线，不是 Entropy-DeepWide：`run_deepwide_smoke.py` 由模型一次生成 6 个搜索 query，每个 query 调 Tavily，`include_raw_content=False`，只保留 Tavily answer/snippet；默认不启用 follow-up；最后把截断 evidence 一次性输入 GPT-5.5 生成表格。系统没有页面正文 reader、持久 table state、anchor hypothesis set、unseen-mass estimator、row/cell belief、反证循环或动态 controller。
+当前仓库已推进到 V2.39.9 的可恢复 staged runtime，但仍不是完整 Entropy-DeepWide。runtime 只读取 `{opaque_id, question}`，支持 Tavily、Azure hosted 和 Anthropic hosted search、持久 JSON state、开放集 anchor/`OTHER`、scope/candidate discovery、mention recall、逐行/逐格查询、cell-level provenance、行级 quarantine、单位尺度审计和确定性表格渲染。V2.20.1–V2.39.5 逐步加入 anchor evidence、闭合/混合行域、named-node bridge、rank-slot occupant、目录遍历、URL quarantine、日期/人名 canonicalization 与 post-verification publishable coverage。V2.39.6 把 logical request、成功/失败 response 和 HTTP attempt 分开持久化，并将 candidate reservation 从 32K 降到 20K。V2.39.7 又把 launch capacity envelope 改为 400KB UTF-8 bytes×20K，记录无内容的 request-size ledger，增加只改属性不改 membership 的 confirmed-member unknown-cell recovery，并支持公元 1–9999 年和中文事件时间列。V2.39.8 把固定槽位中已有页面证据的实体属性加入后续缺格查询并修正 fixed-row unknown 统计；V2.39.9 收紧目录人口证明、修正中文证据句柄，并在严格 provenance 条件下恢复 reviewer 遗漏序列化的结构化身份边。尚未实现的仍是经过开发集校准的四层概率信念、unseen-mass posterior、entropy/EIG/task-risk controller、同状态干预 credit 和 RL 训练。
+
+V2.31–V2.33 的 validation smoke 依次为 1/2、1/2 和 0/2 completed。V2.32 唯一完成的 50 行任务得到 Entity 1.00、Row F1 0.76、Item F1 0.90、Column F1 1.00，但同批另一题失败且整表 score 为 0；一个完成任务不能支持聚合改进或 SOTA。V2.33 的两个失败分别是 32/60 coverage 与 bridge unresolved。V2.35 consumed-task replay 得到 60/60 rank slots、60/60 query routes 和真实候选页 reserve，但不运行 reviewer、搜索、预测或 evaluator，因此不估计质量。机器证据分别见 [`results/validation_smoke_v232_20260722.json`](results/validation_smoke_v232_20260722.json)、[`results/validation_smoke_v233_20260722.json`](results/validation_smoke_v233_20260722.json) 与 [`results/v235_structural_boundaries_replay_20260722.json`](results/v235_structural_boundaries_replay_20260722.json)。
+
+V2.35 随后的两题 validation cold-start 为 1/2 completed。完成题的固定财政年度行与列结构正确，但 Row F1 为 0、Item F1 为 0.4167，10/10 行至少一格错误；另一题因行级 membership provenance 错误升级成批级异常而失败。保守两题 Item F1 为 0.2083，整表 score 仍为 0。V2.36 随后进行了新的两题严格 cold-start，但为 0/2 completed：一题 post-freeze gold 有 1,037 行，而冻结 runtime 容量仅 250 且只发现 13 行；另一题 bridge confidence 0.68，downstream search 为 0。两题消耗 4,966,036 system tokens、52 次模型调用和 168 次 logical search，搜索 logical failure 为 0。没有表格预测，Entity/Row/Item/Column 指标未定义。V2.37 的 partitioned bulk 与 graph inversion 目前只有 258 项测试证据，尚无 fresh 分数，不能宣称性能改善。机器结果见 [`results/validation_smoke_v235_20260722.json`](results/validation_smoke_v235_20260722.json) 与 [`results/validation_smoke_v236_20260722.json`](results/validation_smoke_v236_20260722.json)。
+
+V2.37 随后的两题 validation cold-start 仍为 0/2 completed。制药题验证了 4 个页面 pivot，但 bridge 仍 unresolved；学科题把真实 55×3=165 行错估为 171，只保留 12 行并触发 coverage gate。两题消耗 4,834,235 system tokens、47 次模型调用和 202 次 logical search。V2.38 在该已消费学科题的离线诊断中从官方目录得到 55 个成员、55/55 成员页和 165/165 rank slots，并把 85 个唯一学校压缩为 43 条属性查询；该结果只验证确定性机制，不估计 F1。V2.38 随后 fresh smoke 为 1/2 completed：完成题 Entity 1.00，但 Row F1 0、Item F1 0.0867、Column F1 0.1786，50 个 gold 实体只匹配 5 个且 cell uncertainty 为 96%；另一题被英文范围 validator 拒绝。V2.39.1 针对这两个通用机制增加英文范围、occupant-first attestation 与独立 post-occupant attribute pass，已有 282 项测试证据但尚无 fresh 分数，不能宣称性能改善或 SOTA。机器结果见 [`results/validation_smoke_v237_20260722.json`](results/validation_smoke_v237_20260722.json) 与 [`results/validation_smoke_v238_20260722.json`](results/validation_smoke_v238_20260722.json)。
+
+V2.39.2 的两题 fresh smoke 为 1/2 completed。失败题以 `28<45` fail closed，运行账本精确一致；完成题输出 25 行但每行都有 unknown，并有 6 组中间名/后缀别名。官方 evaluator 将 25 行多对一映射到 21 个键后返回 Column Recall 1.1905、F1 1.087，严格 wrapper 拒绝该越界结果，因此 `valid_n=0`、质量指标未定义。V2.39.3 的 consumed-task 零调用 replay 把 25 行压到 19 行并重新以 `19<21` fail closed，同时把旧 renderer 的英文日期恢复为题面要求的 ISO。它只验证边界修复，不证明 F1 提升。该结果不是全集、held-out test 或 SOTA 证据。结构证据见 [`results/v2393_visible_format_person_alias_replay_20260723.json`](results/v2393_visible_format_person_alias_replay_20260723.json)。
+
+V2.39.3 随后的两题 fresh smoke 为 0/2 completed：作品枚举止于 `44<54`，国家×年份任务止于 `6<12`。没有可评预测，`valid_n=0`，所有质量指标均为 `null`；57 次模型调用、192 次 logical search、1,629 次 fetch 和 5,469,273 system tokens 的账本完全一致。终态后才确认第二题的 6 行是成员 seed 而非最终成员×年份行。V2.39.4 的零调用 replay 将其展开为 24 行并使结构 coverage 通过，但不能说明值格正确；V2.39.5 的 post-verification gate 进一步防止 unresolved、无 membership evidence 或别名重复行在最终完成度中充数。机器证据见 [`results/validation_smoke_v2393_20260723.json`](results/validation_smoke_v2393_20260723.json) 与 [`results/v2394_mixed_row_domain_replay_20260723.json`](results/v2394_mixed_row_domain_replay_20260723.json)。当前仍无全集、held-out test 或 SOTA 证据。
+
+V2.39.5 随后的两题 fresh cold-start 同样为 0/2 completed，但这次不能归因于 coverage 算法：两个 32K candidate extraction 请求都连续 8 次收到 GPT-5.6 429。短模型 probe 与 Anthropic search probe 启动前均为 2/2，说明短健康检查不能代表大输入/大 output reservation 的真实容量。搜索侧 69 次 logical calls、555 次 fetch 账本一致；模型进程有 20 个成功响应和 60 次 attempts，state 仅保存 18/40，因此 observability 失败。V2.39.6 的 20K candidate cap 基于 735 个历史 trace（p95 7,019，p99 9,902，max 18,134），并新增 120K 字符非 benchmark 输入×20K reservation 的连续容量探针与单 candidate worker。机器证据见 [`results/validation_smoke_v2395_20260723.json`](results/validation_smoke_v2395_20260723.json)。当前仍无全集、held-out test 或 SOTA 证据。
+
+V2.39.6 的两题 fresh cold-start 为 1/2 completed。完成题的 6 个实体全部匹配 gold，官方 Entity 1.00、Row F1 0.6667、Item F1 0.7778、Column F1 1.00，但整表 score 仍为 0；另一题在 belief 请求连续 8 次 429 后失败。运行精确记录 35 个 logical requests = 34 successes + 1 failure、58 HTTP attempts、101 次 logical search、811 次 fetch 与 3,387,703 system tokens，process/task/state 完全相等。该证据支持容量与 failure-observability contract，却仍不支持 entropy、credit、全集或 SOTA 主张。机器证据见 [`results/validation_smoke_v2396_20260723.json`](results/validation_smoke_v2396_20260723.json)。
+
+V2.39.7 的两题 fresh cold-start 均完成，官方 evaluator 为 `valid_n=2, errors=0`。iPhone 题 Entity 1.00、Row F1 0.2703、Item F1 0.7243、Column F1 0.9189；车辆题 Entity 1.00、Row F1 0、Item F1 0.3214、Column F1 1.00；两题均值为 Row F1 0.1351、Item F1 0.5229、Column F1 0.9595，整表成功仍为 0/2。iPhone 题输出 34/40 gold 实体，134/200 个评分格通过、10 行全对；车辆题命中 4/4 实体，却只有 18/56 个评分格通过且没有全对行。91/91 logical model calls、135 HTTP attempts、378 search calls、487 hosted tool calls 和 3,073 fetches 的账本完全一致。该证据说明 completion 与 component metrics 可以同时改善而整表仍失败，也表明 fixed row 的值填充是独立瓶颈；它仍不支持 entropy、credit、全集或 SOTA 主张。机器证据见 [`results/validation_smoke_v2397_20260723.json`](results/validation_smoke_v2397_20260723.json)。
+
+V2.39.8 针对车辆诊断中可见的通用机制，只提升 fixed-membership 行里 `supported/corrected` 且带地址化 evidence ID 的实体属性，使后续缺格查询同时绑定槽位与已验证对象；它不改 row key、`search_identity`、eligibility 或 membership。已消费 state 的零模型、零搜索、零 evaluator 回放生成 38 条查询，38/38 都含相应 make/model/year，并将 V2.39.7 漏报的 fixed unknown 行从 0 重算为 4。随后两题 fresh cold-start 终态为 0/2 completed：一题把 Wikipedia 普通文章的 `/wiki/*` 导航云误当 104 个目录成员并 fail closed；另一题的正确概率 leader 始终是春节联欢晚会，但 reviewer 将 C02/C03/C04 的引证写进 `supported_clues` 而未填 `identity_support`，最终错误候选因残留结构化 edge 占优。11/11 model calls、19 attempts、70 search calls、87 hosted tool calls 和 766 fetches 账本一致；没有预测，官方质量指标为 `null`，不能把保守 failure-as-zero 诊断称作官方分数。机器证据见 [`results/validation_smoke_v2398_20260723.json`](results/validation_smoke_v2398_20260723.json)。
+
+V2.39.9 将这两个失败抽象为通用证据边界。目录 fast path 现在要求独立正行数尺度、源 URL 为成员 URL 的严格祖先，并阻止站点根页借用深层内容流作为人口证明；`E0001直接记载` 这类中文紧邻句柄使用 ASCII 标识符边界解析。若 reviewer 只在 `supported_clues` 声明支持，sanitizer 仅在 clue ID 属于计划中的判别 clue、`E####` 当前 stage 可见并在 candidate direct support 中、且该页真实命名候选或验证别名时恢复结构化 edge。概率、自然语言声明或页面只命名候选均不能单独创造 credit。347/347 tests 与静态审计通过；两个已消费 state 的零模型/搜索/scoring 回放关闭错误目录 fast path，并让终审正确概率 leader 恢复 C02/C03/C04 后由原有 noisy-premise gate 选为 provisional。该 artifact 的 `quality_metrics=null`、`quality_claim_allowed=false`，不证明后续表格完成、F1、held-out 或 SOTA，见 [`results/v2399_boundary_replay_v2398_20260723.json`](results/v2399_boundary_replay_v2398_20260723.json)。
+
+V2.39.9 随后的两题 fresh cold-start 为 1/2 completed。唯一有效预测覆盖 runtime 预期的 35 行，但只有 4 行全格完整，31 行仍有 unknown；released evaluator 得到 Entity 1.00、Row F1 0.0328、Item F1 0.4836、Column F1 0.8197，整表 score 为 0。outer join 中 25 个实体匹配、10 个 gold-only、1 个 prediction-only，144 个评分格通过 59 个且只有 1 行全对；其中英文名称与中文名称各通过 25 格，票房通过 8 格，日期仅通过 1 格。另一题的 candidate response 用满 20K output tokens，两次 repair 又各用满 4K，最终仍为 `JSONDecodeError`。把该 failure 计零的两题保守 Row/Item/Column F1 为 0.0164/0.2418/0.4098，整表成功 0/2。87/87 logical model calls、116 attempts、236 searches、294 hosted tool calls、2,077 fetches和 5,862,488 system tokens 的账本完全一致。该两题结果不支持 entropy、credit、全集或 SOTA 主张，见 [`results/validation_smoke_v2399_20260724.json`](results/validation_smoke_v2399_20260724.json)。
+
+V2.40.0 只针对这次终态后可见的两个通用输出边界。JSON client 现在记录无内容的 `output_truncated` 布尔标记；若且仅若前一响应达到输出上限，下一次 parse repair 才继承原 stage token reservation，普通 malformed JSON 仍保留 4K 上限。日期规范器只从可见的 format token 或紧邻示例识别中文日期约定，并区分 `YYYY年MM月DD日` 与 `xxxx年x月x日`；裸截止日期不会改变默认格式。354/354 freeze tests、静态审计和 GPT-5.6 短请求、400KB×20K capacity、Anthropic 搜索各 2/2 preflight 通过。随后的两个 fresh validation opaque ID 均失败，因此 V2.40.0 没有 completed prediction 或官方质量分数，也不能把 V2.39.9 日期格的离线可修复性当作得分提升。
+
+V2.40.0 的两题 fresh smoke 随后终态为 0/2 completed。中文体育荣誉题已检索到一页包含完整 31 个冠军记录的列表，但该页使用 `男团/男单/男双/混团/世乒赛` 等源 surface，candidate worker 输出规范化后的复合键；现有 gate 要求每个规范化键字段都在 membership page 中精确可见，因此 discovery、recovery 和 final coverage 共隔离大量本可进入 verifier 的行，最终仅 1 行通过且以 `1<30` fail closed。英文职位题形成 5 个候选，官方 DOJ/USAJOBS 页面分别支持 title、control number、appointment type、deadline 等字段，但没有可地址化的跨页 scope-predicate 合取；row verifier 后 5/5 行仍 unresolved，renderer 为 0 行，output contract fail closed。两题共 79/79 logical model calls、83 attempts、223 searches、273 hosted tool calls、1,836 fetches和 6,785,857 system tokens，process/task/trace 账本完全一致。没有 completed prediction，released evaluator 未运行；V2.40.0 没有质量分数，见 [`results/validation_smoke_v2400_20260724.json`](results/validation_smoke_v2400_20260724.json)。
+
+这两个 failure 将下一版的证据边界分成两类。对同页结构化列表，原文 record 与最终 canonical value 必须分开：逐行 ledger 应保存 page ID、verbatim record 和每个 identity column 的 source surface；若 surface 与 canonical value 不同，该行只能以 unresolved 进入 verifier，不能直接获得 eligible membership。对 predicate-defined population，多个页面可以分别支持不同资格条件，但必须先由 visible question 产生结构化 predicate catalog，再逐谓词绑定 page evidence；任一必需谓词缺失时行仍 unresolved。简单把 exact gate 从 `all` 改成 `any` 会允许 sibling borrowing 和泛列表建行，因此不属于可接受修复。
+
+V2.40.1 已把上述设计落实为 schema 58：普通与 bulk candidate 都携带逐行原文 membership record，source surface 与 canonical key 分开；scope 只由可见问题生成 `P01...` catalog，逐行 predicate ledger 可以跨页合取，但每页必须局部包含该行 canonical key 或已验证 source surface，且单隐藏主体必须同页可见。verifier 前保留当前上下文实际可见的 ledger ID，普通 value refinement 后增加 bounded membership-gap recovery；renderer 对缺谓词或零发布行 fail closed。366/366 tests 与已消费 V2.40.0 state 的零调用回放通过。该回放只证明结构机制，没有 fresh 分数，也不能支持 entropy、credit、全集或 SOTA 主张。
+
+V2.40.1 随后的两题 strict cold-start 均在 `row_refinement` 失败。第一题跨 sibling source item 借用 identity surface，并遗漏 record/predicate page IDs 到 membership ledger 的闭合；第二题返回非对象 membership record，把未局部包含精确行身份的同一页面绑定到 P01–P05，并同样遗漏 predicate IDs。两题共 238 次模型调用、259 attempts、344 次搜索、10,514,365 system tokens 与 14,119.09 秒任务墙钟，过程账本全部通过。没有 completed prediction，released evaluator 未运行；保守全零只用于把 forward failure 明确纳入分母，不能称为官方质量结果。该结果支持“refinement 的属性更新权与 membership ledger 必须隔离”这一工程诊断，不支持信息熵或 credit 假设。
+
+V2.40.2（schema 59）据此将普通 refinement 限制为 attribute-only。prompt 不再暴露 membership/identity ledger，越界的 eligibility、membership、predicate 和 alias 输出被丢弃，原 membership ledger 只读保留；record/predicate page IDs 确定性并入 membership/evidence union。malformed record 与非局部 predicate page 仍被严格 validator 拒绝，无效 delta 则逐行 quarantine，保留原 unresolved 行。普通 refinement batch 从 1 提到 4。Python 3.12 共发现 373 项测试，372 通过、1 项因 released evaluator 可选依赖缺失而跳过；compile、diff、secret 与 label-blind audit 通过。
+
+已消费 V2.40.1 两题的 V2.40.2 离线回放没有调用模型、搜索或 evaluator，源 state hash 与调用账本不变。历史 refinement 分别消耗 20 与 135 次模型调用；在所有风险行均可单遍处理的条件下，batch=4 的调用下界为 2 与 13。这个反事实下界没有运行新的模型，也没有观察真实 retry、质量或延迟，因而只能作为机制/成本规划证据，不能写成成本下降或性能改进。后续 V2.40.2 fresh 结果必须与该机制回放分开报告，entropy 与 credit 仍为 shadow-only。
+
+V2.40.2 随后消费了 validation inventory 的最后两个 ID。两题均完成，released evaluator `valid_n=2, errors=0`，但整表 score 都为 0；聚合 Entity Accuracy、Row F1、Item F1、Column F1 为 0.50、0、0.147619、0.50。SIPRI 题的 30 个主键全部匹配，但 210 个评分格只有 62 个通过。国家和年份各贡献 30 格，GDP 贡献 2 格，全球排名、军费、总统、国防部长没有通过格。三轮属性查询几乎都选择 GDP source family，150 个 residual unknown 只恢复 2 个。Fortune 题内部输出 10 行全格完整，但 caption 只显示英文 canonical subject，遗漏 anchor review 已页面验证的中文 alias `世界500强`，官方 entity gate 因此短路为全 0。这个结果说明“正确搜索状态”和“benchmark 可见主体 surface”属于不同的任务风险项，也说明查询数量不等于跨列信息覆盖。权威机器证据为 [`results/validation_smoke_v2402_20260725.json`](results/validation_smoke_v2402_20260725.json)。
+
+V2.40.3 将上述两个边界写成 label-blind 机制。cell template 同时按目标列与行实体排序，最多保留 12 个 planner template；固定行网格超预算时先给每个缺失列预算，再在列内分块行。每条 query 显式写入目标列，并保留精确 `query_to_rows`。可见 caption 只从被选 anchor candidate 的 `verified_aliases` 取与题面语言一致的 surface，canonical subject 仍是内部检索与证据 key。Python 3.12 的 379 项测试中 378 项通过，1 项因 released evaluator 可选依赖缺失而跳过。
+
+已消费状态的 V2.40.3 零调用 replay 将 Fortune caption 变为 `2025 Fortune Global 500（世界500强）`，10 行仍通过输出契约。SIPRI 的 148 个风险 `(row, column)` 在 72-query initial plan 与 96-query refinement plan 中均全覆盖；五列的 query 份额分别为 15/15/14/14/14 与 20/19/19/19/19。这个 artifact 没有调用模型、搜索、mapping 或 evaluator，因此只证明规划与呈现契约，不证明页面 yield、格值正确率、成本下降或 entropy/credit 效果。40/40 validation ID 已消费，后续 V2.40.3 只能先做未消费 public-dev 工程 smoke，不能称为 fresh validation、held-out 或 SOTA。机器证据为 [`results/v2403_column_fair_caption_replay_v2402_20260725.json`](results/v2403_column_fair_caption_replay_v2402_20260725.json)。
+
+V2.24 的两题开发 smoke 已冻结并经官方 evaluator 检查，机器证据见 [`results/dev_smoke_v240_20260721.json`](results/dev_smoke_v240_20260721.json)。一题因 anchor unresolved 失败；完成题的 Entity Accuracy 为 1.0，Row F1 为 0.3636，Item F1 为 0.7078，Column F1 为 0.9610，整表 score 为 0。把失败题计 0 后，两题保守 Entity Accuracy、Row F1、Item F1、Column F1 分别为 0.50、0.1818、0.3539、0.4805。完成题预期 40 行却只输出 37 行，且 row query 丢失逐行年份并错误复用类别模板。V2.25 的无模型、无搜索、无 evaluator 结构回放把 37 行补为 40 行，并让 40/40 行都获得含自身年份和类别的查询；证据见 [`results/v250_closed_domain_replay_zh094_20260721.json`](results/v250_closed_domain_replay_zh094_20260721.json)。该回放只证明结构缺陷被修复，不证明任何线上 F1 或排行榜提升，已看过 gold 的 V2.24 题也不会重跑后冒充 held-out。
+
+V2.25 还在 12 个无历史 forward artifact 的 dev opaque ID 中按字典序盲选了 2 题，选择过程不读问题、instance ID 或 gold。GPT-5.6 与 Anthropic search preflight 均连续 2/2 成功，但正式 cold-start 是 0/2 completed。一题走 open-domain route，在 mention-gap merge 中因决定性行资格缺页面证据而严格失败；另一题 anchor unresolved。总计 308 个 logical search calls、0 search failures、持久化 system-token 合计 5,465,863 与 2,477.414 秒 wall time。进程实际记录 41 次模型调用，task state 却只持久化 24 次，因为失败的并发 worker traces 在 future 抛异常前未合并。因此上述 token 数低估了 17 次失败 worker 调用。没有冻结预测，官方 Entity/Row/Item/Column 指标未定义，不是 0；也不执行选择性 evaluator。机器证据见 [`results/dev_smoke_v250_20260721.json`](results/dev_smoke_v250_20260721.json)。
+
+V2.26 在剩余 10 个无历史 forward artifact 的 dev opaque ID 中继续按字典序盲选 2 题。两题均完成，16 个 targeted mention workers 的真实运行没有再因局部 semantic-invalid output 使整题失败。进程与 task 账本的 109 次模型调用、118 次 attempts 和 token 数逐项相等；运行还使用 751 次 logical search、14,113,270 system tokens 和 7,067.670 秒，search failure 为 0。官方两题均值为 Entity 0.50、Row F1 0.07965、Item F1 0.23009、Column F1 0.28319，SR 0。机器证据见 [`results/dev_smoke_v260_20260721.json`](results/dev_smoke_v260_20260721.json)。
+
+这两题把四层风险的边界显示得更清楚。第一题的 visible row set 没有 anchor 错误，但只输出 34 行；官方 parser 得到 32 行，对 81 个 gold 行漏 50 行。冻结 state 的 final shadow snapshot 同时给出 0.95 的未校准 unseen-mass proxy 和 6 个 missing partitions。这一单题不能校准 posterior，却说明已知行的 cell 状态与开放集 denominator 必须分开。第二题的 anchor review 用 5 条辨识线索验证 Salvador Dalí，scope plan 正确指向西班牙 17 个自治区，但最终表格没有显式“西班牙”，官方 entity gate 因而短路为全 0；同一表格还把 17 个规范行和 17 个 alias/重复行并成 34 行。这不是新的第五层 epistemic uncertainty，而是 belief-to-output contract 与 canonicalization 的接口错误。若不单列该接口损失，训练标签会把 renderer 失败错误归因给 anchor entropy 或搜索步骤。
+
+因此，V2.26 只支持“failure observability 和 completion boundary 生效”。它没有支持 entropy、controller 或 credit，也没有支持扩大运行规模。更具体地，它要求未来 credit audit 区分三类贡献：获取新事实、校正/合并规范身份，以及把已知 scope 正确呈现在最终答案。第三类可能提高官方结果，却没有带来 epistemic information gain；若把它奖励为熵降，会混淆搜索 credit 与输出接口 credit。
 
 官方 evaluator 对现有 220 题单次预测的结果为：SR 2.27%（5/220）、Core Entity Accuracy 67.73%、Row F1 19.48%、Item F1 34.14%、Column F1 41.03%。按 instance-id 前缀做预测后离线分组，Deep2Wide 85 题为 0/85 成功、Entity Accuracy 44.71%、Row F1 4.89%；Wide2Deep 135 题为 5/135 成功、Entity Accuracy 82.22%、Row F1 28.67%。这些值可追溯到 [`results/baseline_gpt55_20260623.json`](results/baseline_gpt55_20260623.json) 及其所列原始输出。该历史 run 未做 search-time contamination 扫描，因此是工程诊断而非投稿级结果。
 
-这个差异支持“anchor 是当前首要瓶颈”的工程优先级，但还不能证明 entropy 能解决它。先做信号验证比直接搭完整 controller 更重要。
+旧全量差异支持“anchor 是 Deep2Wide 的优先瓶颈”，单个 Wide2Deep 压力题则暴露了候选保留与证据连续性问题。V2.18 真冷启动在 `wide2deep_ws_zh_003` 上输出 41 行，命中 36/60 个 gold 主键，Row F1 为 33.66%，Item F1 为 58.75%；它使用 568 次搜索和 1,075,958 tokens。冻结该预测后的 trace audit 发现，多所实体已经有目标专业、年份和值局部共现的页面，却因 scope adjudicator 保持 unresolved 而在 reducer 被删除；另一些候选的正确页面没有稳定进入后续 bounded verifier prompt。
 
-泄漏审计还发现，现有 smoke 脚本把生成与本地近似 gold evaluation 放在同一进程，task object 同时携带 `evaluation` 元数据；虽然生成 prompt 实际只使用 `question`，该边界仍不够硬。正式实验必须把 runtime manifest 限制为 `{opaque_id, question}`，预测完成后再由独立 evaluator 读取 evaluation、subset label 和 gold table。
+V2.19 针对这两个 label-blind 机制做了 evidence-continuity 修复。它的 stage-reuse diagnostic 只复用 V2.18 已有 runtime evidence 与 mention adjudication，清空并重跑行级 verifier，本进程新增搜索调用为 0。该诊断输出 44 行，命中 42/60 个 gold 主键，Row F1 为 50.00%，Item F1 为 70.51%，Column F1 为 80.77%。随后从空目录运行的 V2.19 输出 52 行，同样命中 42/60 个 gold 主键，Row F1 为 46.43%，Item F1 为 65.48%，Column F1 为 75.00%；相对 V2.18 cold-start，Row F1 与 Item F1 分别提高 12.77 和 6.73 个绝对点，搜索调用从 568 降到 546。该单题结果只支持进入固定 8 题 pilot；它不能证明跨题泛化、不能当作排行榜成绩，也不能证明 entropy 有效。
+
+固定 8 题 patched pilot 的证据在 [`results/patched_dev8_v2191_20260720.json`](results/patched_dev8_v2191_20260720.json)。其中 7 题是 V2.19 cold-start，1 题是 V2.19.1 的 label-blind checkpoint resume，因此不是完整冷启动榜单。严格把 evaluator-invalid 汽车题计 0 后，SR 为 12.50%，Core Entity Accuracy 37.50%，Row F1 18.53%，Item F1 25.30%，Column F1 28.08%；总成本为 5,273,797 tokens、2,918 次 search calls、112 次 search failures 和 10,762.026 秒累计 wall time。只看 7 个 valid evaluator 任务会得到更高均值，但不能隐藏第八题的 evaluator 缺陷。该结果没有支持扩到 40 题。
+
+两道 Deep2Wide 失败题又进行了四轮 anchor-only stage-reuse。汇总 artifact 为 [`results/anchor_replay_dev2_v2201_v2204_20260721.json`](results/anchor_replay_dev2_v2201_v2204_20260721.json)。V2.20.1–V2.20.4 每轮 Core Entity Accuracy 都是 0/2。V2.20.1、V2.20.2 和 V2.20.4 的 post-search official-candidate recall 是 2/2，V2.20.3 是 1/2；这说明候选可见性通常不是充分条件，合取身份线索的证据绑定和选择仍然失败。V2.20.4 让两题在证据不足时保持 unresolved，阻止错误主体继续扩表，但没有提高准确率。四轮合计 298,303 tokens、24 个新搜索 query、86 次 HTTP search attempts、6 次失败和 509.437 秒。所有 replay 均标为 `cold_start:false`，且这些公开 dev 题的 official entity 已在预测冻结后用于工程诊断；任何后续同题结果都不能当作 held-out 或排行榜证据。
+
+泄漏审计发现旧 smoke 脚本曾把生成与本地近似 gold evaluation 放在同一进程。新 runtime manifest 已限制为 `{opaque_id, question}`，预测完成后再由独立 evaluator 读取 instance ID、subset label 和 gold table；现有 162 项测试包含 manifest 边界、anchor replay provenance、identity support、闭合行域防伪、通用 verifier、Tavily key 轮换、历史迁移版本、evidence continuity、checkpoint drift、evaluator retry、targeted no-op 和并发故障 trace 检查。本地免 key GPT-5.6 proxy 与 Anthropic server-side search 在 V2.26 preflight 均 2/2 成功；正式 run 的 109 次模型调用与 118 次 attempts 也全部完成。Azure hosted search 历史偶发 429。正式投稿仍需补 search-time contamination scanner、精确 span、output-contract tests 和跨进程文件权限审计。
 
 ## 11. 结论
 
-信息熵适合作为这项工作的理论主线，但不能作为孤立 novelty。已有文献已经覆盖语义熵、信息增益奖励、EIG 动作选择、熵驱动证据选择、校准停止、表格状态、动态深宽搜索，以及 posterior-sensitive turn credit。可辩护的新问题是：DeepWide 的隐藏 anchor 与开放集合遗漏是否需要一个不同于有限答案 QA 的分层信念模型，以及这个模型能否在同预算下比简单 heuristic 更准确地分配搜索；若进一步训练策略，分层风险变化能否在同状态反事实与 evidence provenance 下定位真正改善最终任务的步骤。
+信息熵适合作为这项工作的理论主线，但不能作为孤立 novelty。已有文献已经覆盖语义熵、信息增益奖励、EIG 动作选择、熵驱动证据选择、校准停止、表格状态、动态深宽搜索、未知 denominator 审计、belief–coverage 分离，以及 posterior-sensitive turn credit。可辩护的新问题是：DeepWide 的隐藏 anchor、开放集合遗漏、行资格和格值是否需要一个统一但不简单相加的分层信念模型，以及这个模型能否在同预算下比简单 heuristic 更准确地分配搜索；若进一步训练策略，分层风险变化能否在同状态反事实与 evidence provenance 下定位真正改善最终任务的步骤。
 
-新的 `plan.md` 因此采用证据门控顺序：先隔离评测与复现基线，再验证四类信号和干预式 step credit，再验证动作价值预测，最后才实现完整 controller 或 RL credit。若 anchor/coverage/cell entropy 不能校准，若 step score 不能预测 counterfactual task contribution，或同动作空间下不改善任务风险–成本 Pareto，则“熵作为核心创新”应降级为诊断工具。
+新的 `plan.md` 因此采用证据门控顺序：先隔离评测、稳定 evidence pipeline 并复现基线，再验证四类信号和干预式 step credit，再验证动作价值预测，最后才实现完整 controller 或 RL credit。V2.40.2 的 2/2 completion、0/2 整表成功与 V2.40.3 的零调用回放说明项目仍处于第一阶段；completion 和 query-plan coverage 都不能替代值正确率。若 anchor/coverage/row/cell signal 不能校准，若 step score 不能预测 counterfactual task contribution，或同动作空间下不改善任务风险–成本 Pareto，则“熵作为核心创新”应降级为诊断工具。
 
 ## 参考文献
 
@@ -483,3 +562,13 @@ Search-Time Contamination 研究指出，联网 agent 可能检索到公开 benc
 63. He, Y. et al. **Where Hindsight Credit Can Reside: A Signed-Capacity View of Token Updates in RLVR.** arXiv:2604.11056 (2026). https://arxiv.org/abs/2604.11056
 64. Wang, J. et al. **Harnessing Uncertainty: Entropy-Modulated Policy Gradients for Long-Horizon LLM Agents.** arXiv:2509.09265 (2025). https://arxiv.org/abs/2509.09265
 65. Shapley, L. S. **A Value for n-Person Games.** In *Contributions to the Theory of Games II*, 307–318 (1953). https://doi.org/10.1515/9781400881970-018
+66. Kong, F. et al. **InfoPO: Information-Driven Policy Optimization for User-Centric Agents.** arXiv:2603.00656 (2026). https://arxiv.org/abs/2603.00656
+67. Zhao, H. et al. **AEM: Adaptive Entropy Modulation for Multi-Turn Agentic Reinforcement Learning.** arXiv:2605.00425 (2026). https://arxiv.org/abs/2605.00425
+68. Zhang, D. et al. **SELAUR: Self Evolving LLM Agent via Uncertainty-aware Rewards.** arXiv:2602.21158 (2026). https://arxiv.org/abs/2602.21158
+69. Zhao, Q. et al. **STRIDE: Strategic Trajectory Reasoning via Discriminative Estimation for Verifiable Reinforcement Learning.** arXiv:2606.15866 (2026). https://arxiv.org/abs/2606.15866
+70. Wang, X. et al. **APPO: Agentic Procedural Policy Optimization.** arXiv:2606.12384 (2026). https://arxiv.org/abs/2606.12384
+71. Guo, W. et al. **Agent Reinforcement Learning via Pivotal-Aware Self-Feedback Retry.** arXiv:2607.03702 (2026). https://arxiv.org/abs/2607.03702
+72. Xie, H. **Forage V2: Knowledge Evolution and Transfer in Autonomous Agent Organizations.** arXiv:2604.19837 (2026). https://arxiv.org/abs/2604.19837
+73. Nakajima, Y. **The Shared Discovery Paradox: How a One-Answer Rule Turns Better Information into Worse Search.** arXiv:2607.18045 (2026). https://arxiv.org/abs/2607.18045
+74. Chen, D. et al. **A²TGPO: Agentic Turn-Group Policy Optimization with Adaptive Turn-level Clipping.** arXiv:2605.06200 (2026). https://arxiv.org/abs/2605.06200
+75. Wang, H. et al. **T²PO: Uncertainty-Guided Exploration Control for Stable Multi-Turn Agentic Reinforcement Learning.** ICML 2026 Spotlight; arXiv:2605.02178. https://arxiv.org/abs/2605.02178

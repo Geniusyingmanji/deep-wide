@@ -1,0 +1,76 @@
+{
+  "artifact_version": 1,
+  "role": "v24188_parent_control_closure_preregistration",
+  "protocol_id": "v24188_parent_control_closure_correction_v1",
+  "created_at_unix": 1785385113,
+  "label_blind": true,
+  "parents": {
+    "v24187_protocol": {
+      "path": "results/v24187_phase_liveness_preregistration_v1_20260730.json",
+      "sha256": "873f42369f6f5ac7d1b619510257f8cc7c932140b734dd14d23c4a5c6e45d34c",
+      "role": "v24187_phase_liveness_preregistration"
+    },
+    "v24187_activation": {
+      "path": "results/v24187_phase_liveness_activation_audit_v1_20260730.json",
+      "sha256": "b57bdc1fbcce3911111f9c571c77dd37f1d1ecbf1030b1658638c0062cbaa4b2",
+      "role": "v24187_phase_liveness_activation_audit"
+    }
+  },
+  "correction_contract": {
+    "v24187_parent_artifact_sha_and_role_live_validation_is_real": true,
+    "v24187_own_control_manifest_live_validation_is_real": true,
+    "v24187_parent_control_manifest_live_replay_is_not_implemented": true,
+    "v24187_activation_control_bytes_wording_is_overbroad": true,
+    "v24187_phase_state_and_process_observation_claims_remain_unchanged": true,
+    "v24188_supersedes_only_the_overbroad_control_bytes_wording": true
+  },
+  "audit_contract": {
+    "read_only_one_shot_create_exclusive": true,
+    "replay_supported_manifest_formats": [
+      "control_surface.manifest",
+      "stable_manifest",
+      "control_manifest",
+      "frozen_dependencies",
+      "sealed_activation_control_records"
+    ],
+    "validate_all_v24187_parent_artifact_sha_and_roles": true,
+    "validate_all_available_parent_manifest_entries_and_absence_guards": true,
+    "validate_v24183_v24185_v24186_activation_and_handoff_payload_seals": true,
+    "validate_v24187_protocol_manifest_and_activation_payload_seal": true,
+    "runtime_state_task_question_answer_evidence_prediction_mapping_gold_category_evaluator_score_read": false,
+    "credential_or_network_access": false,
+    "process_signal_restart_resume_rerun_skip_or_launch": false
+  },
+  "control_surface": {
+    "file_count": 4,
+    "manifest": {
+      "scripts/preregister_v24188_parent_closure.py": "21b2e14e4729c2b282e8fd24d6ff2b3b07ecfa24dfef0811d5360a1cd76a4676",
+      "scripts/audit_v24188_parent_closure.py": "a6557af9ce7f8ad50a57003fc8345aa73416d917b414a2f7eae08bbc62260988",
+      "tests/test_preregister_v24188_parent_closure.py": "fb6c49fcb2d698cf44a030dec3b273f47b3da97571387f3217f338109e86f86f",
+      "tests/test_audit_v24188_parent_closure.py": "0fe6364c7beb30dabde0b49d0055aaf40f267dba9a737bfc690fac2e866a011c"
+    },
+    "manifest_sha256": "22e677c6725512de9c129e641ab9a90ca6806cf1dc2ce96210c41b9183b2f6fa",
+    "must_remain_absent": [
+      "scripts/__init__.py",
+      "sitecustomize.py",
+      "usercustomize.py"
+    ]
+  },
+  "authorization": {
+    "v24187_source_or_protocol_modification": false,
+    "active_watcher_signal_or_restart": false,
+    "forward_code_prompt_model_search_budget_gate_threshold_or_controller_change": false,
+    "benchmark_model_search_fetch_evaluator_or_api_call": false,
+    "candidate_prepare_or_downstream_launch": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "claims": {
+    "benchmark_score_available": false,
+    "benchmark_improvement_observed": false,
+    "avg_at_4_available": false,
+    "entropy_or_credit_effect_observed": false,
+    "leaderboard_submission_performed": false,
+    "sota": false
+  },
+  "decision_contract_sha256": "8826d01886ad61916110f438433399454bde0a2ccfa278e276328e84cdb78548"
+}

@@ -1,6 +1,6 @@
 # DeepWide × 信息熵文献比较矩阵
 
-检索截止：2026-07-19。矩阵只纳入对研究设计有直接约束的核心工作；完整检索范围、方法和引用见 `survey.md`。
+检索截止：2026-07-21。矩阵只纳入对研究设计有直接约束的核心工作；完整检索范围、方法和引用见 `survey.md`。
 
 | 工作 | 被建模的随机变量/状态 | 估计器或核心机制 | 控制用途 | 是否训练 | 开放集覆盖 | 对本项目的约束 |
 |---|---|---|---|---|---|---|
@@ -10,6 +10,8 @@
 | Web2BigTable (2604.27221) | 大表构建子任务 | 双层多智能体搜索与抽取 | 宽搜、聚合 | 否 | 面向大规模表，但无遗漏后验 | 宽搜强基线 |
 | WebSwarm (2607.08662) | 递归搜索节点、局部模式、网页结构 | progressive delegation；atom/deep/wide/entity_collect | 动态深宽切换 | 否 | 处理 open-set enumeration，但为 LLM 定性判断 | “动态深宽路由”不是新颖点；可作为执行器 |
 | SearchOS (2607.15257) | Frontier、Evidence Graph、Coverage Map、Failure Memory | 持久共享状态、middleware、scope audit | 覆盖驱动调度与停滞恢复 | 否 | 显式区分 cell saturation 与 row scope | “coverage map/持久状态”不是新颖点；需比较遗漏风险而非已知格覆盖 |
+| Forage V2 (2604.19837) | 自主发现的 completion criterion 与 denominator | 独立 Evaluator/Planner、co-evolving evaluation、跨 run 组织记忆 | 覆盖审计、停止、经验迁移 | 否 | 是，直接研究 denominator blindness | 高，必须深度讨论；“未知完成边界/分母盲区”已有直接工作，其 denominator 是自发现定义且跨 run coverage 不可直接比较，仍未给出校准 unseen-mass posterior |
+| Shared Discovery Paradox (2607.18045) | 有限目标位置的 pooled posterior 与多搜索者动作组合 | 可解 Bayesian benchmark、top-L posterior portfolio、source-correlation model | 覆盖动作分配与激励 | 否 | 是，有限原子空间的发现概率 | 高，必须深度讨论；更准 shared belief 可因动作重复而降低 coverage，controller 必须联合 posterior、动作多样性与来源依赖 |
 | Semantic Entropy (2302.09664；Nature 2024) | 自由文本答案的语义等价类 | 多样本语义聚类后的熵 | 被动错误/幻觉检测 | 否 | 有限采样答案集 | 提供 cell/anchor 语义熵候选估计器，不提供 controller |
 | FLARE (2305.06983) | 下一句 token 置信度 | 低置信 token 阈值 | 触发检索 | 否 | 否 | 低成本 heuristic baseline |
 | Self-RAG (2310.11511) | 是否检索、证据相关性与支持性 | 学得的 reflection tokens | 检索、生成、批判 | 是 | 否 | adaptive retrieval 基线，不等同熵 |
@@ -29,6 +31,8 @@
 | TASR (2606.13814) | 答案正确概率 | isotonic-calibrated logit margin + answer stability | 训练免检索停止 | 否（需校准） | 否 | 强停止基线；口头 confidence 会塌缩 |
 | Know Before You Fetch (2606.29959) | 答案正确概率 | 校准 sequence log-prob/prefix-logit 信号 | k=0/1/5/abstain 预算分配 | 否（需校准） | 否 | 核心贡献是校准概率接口而非 raw entropy；新计划需同样校准 |
 | IGRPO (2607.06223) | 中间状态 informativeness | IG 驱动预算感知树 rollout | RL rollout 分配 | 是 | 否 | 最新训练时近邻 |
+| A²TGPO (2605.06200) | 每 turn 对 ground-truth answer 的预测概率变化 | 同 prompt/turn-index 的 IG 分组归一、方差缩放累计、自适应 clipping | turn credit 与更新幅度 | 是 | 否；依赖 gold answer | 高，credit 方法对照；“IG 大的 turn 多给 credit/更宽 clipping”已有，但不能作为 label-blind runtime credit |
+| T²PO (2605.02178) | token 与 turn 的 uncertainty dynamics | 边际 uncertainty 变化触发 thinking intervention 与 turn resampling | 探索控制、训练稳定 | 是 | 否 | 高，controller/credit 方法对照；“低信息动作重采样/不确定性控制探索”已有，必须证明四层 task risk 的额外价值 |
 | ECHO (2606.29745) | 有限潜变量的显式 posterior | 每 turn candidate elimination / posterior-sensitive reward；同深度 group normalization | epistemic turn credit | 是 | 否；固定有限候选集 | “posterior 收缩即 epistemic credit”已被直接提出；真实 web 的近似 belief、噪声来源与开放动作是其明确限制 |
 | TRACE (2607.13988) | prefix 对 gold answer 的 readiness | frozen reference gold-answer log-prob gap 的 TD 差，具 telescoping 结构 | turn-level RL credit | 是 | 否；需短且可验证 gold | outcome-aligned 强基线；不能用于无 gold 推理，长结构输出的 value proxy 未验证 |
 | SIOP (2605.04984) | 自生成 final-answer semantic outcome modes | reliability-aware potential difference | 无 verifier 的 turn credit | 是 | 否 | label-free potential credit 已存在；self-induced mode 可能把共识错误当可靠目标 |
@@ -38,6 +42,10 @@
 | CVT-RL (2606.05263) | 指定 intervention 下的动作贡献 | deletion/semantic/evidence/tool perturbation + frozen continuation + doubly robust PCCC | verifiable causal-credit surrogate | 是 | 非 DeepWide open-set | 最明确的干预式 baseline；作者限定为相对干预与 continuation 的 surrogate，计算昂贵且依赖 verifier/overlap 假设 |
 | CRAFT (2606.29476); BiPACE (2606.25556) | sibling token/近似行为状态下的 action | 复用 sibling rollouts；行为等价聚类与 action-conditioned baseline | counterfactual fine credit | 是 | 否 | 说明同 turn index 不等于同状态；比较单元必须尽量状态匹配 |
 | ACPO (2607.03126); HAPO (2604.11056) | token 的局部 entropy / hindsight capacity | entropy-aware advantage reweighting | token-level implicit credit | 是 | 否 | entropy 可表示“哪里可更新”，不自动给出任务贡献方向 |
+| InfoPO (2603.00656) | 用户反馈对后续动作分布的影响 | masked-feedback counterfactual IG + outcome variance gate | turn credit | 是 | 否 | “information gain + counterfactual + outcome gate”已有；本项目须证明四层 DeepWide risk 的额外价值 |
+| AEM (2605.00425); SELAUR (2602.21158) | response/token uncertainty | response-level entropy dynamics；entropy/least-confidence/margin reward | advantage modulation / dense reward | 是 | 否 | response-level entropy credit 与失败轨迹 uncertainty reward 已有 |
+| STRIDE (2606.15866); APPO (2606.12384) | outcome-discriminative patterns / sequence decision points | success-failure contrast + saliency entropy；uncertainty + continuation likelihood gain | fine-grained RL credit | 是 | 否 | token entropy 不能单独代表最终影响；必须有 outcome-discriminative 或 intervention evidence |
+| PivoARL (2607.03702) | 失败轨迹的 pivotal erroneous turn | structured reflection + local retry from pivotal state | retry 与 prefix/suffix credit | 是 | 否 | pivotal-state 重试和 IG 解释已有；不是四层开放世界 belief |
 | EMPG (2509.09265) | step-wise policy entropy 与终局 outcome | entropy-modulated policy gradient；future-clarity bonus | long-horizon agent update calibration | 是 | 否 | entropy-aware long-horizon gradient 已有；它调更新幅度，不识别任务贡献 |
 | AMR-SD (2605.18529); PGPO (2604.01840) | teacher/student 或 visual/text-only predictive distribution | likelihood ratio / KL 被命名为 Causal Information Gain | token advantage modulation | 是 | 否 | “causal information gain”术语已占用且未必是 intervention effect；本项目应避免靠命名声称因果 |
 | PBSD (2606.09348); PiCA (2605.09287) | verified-answer evidence ratio / history-dependent success potential | privileged teacher Bayes ratio；PBRS pivot reward | turn/process credit | 是 | 否 | 结果对齐的 likelihood/potential credit 已密集覆盖；依赖 gold/teacher 校准 |
@@ -48,10 +56,10 @@
 
 ## 综述写作分级
 
-- **必须深度讨论**：WebSwarm、SearchOS、Table-as-Search、ECR、Semantic Entropy、ECHO、TRACE、LOTAPO、STAMP、RICE-PO、CVT-RL、Good–Turing/coverage。
-- **方法对照**：A-MapReduce、Web2BigTable、CuriosiTree、InfoReasoner、IGPO、IG-Search、TEPO、SIGHT、SIOP、PBSD、ACPO、Know Before You Fetch、QuCo-RAG。
+- **必须深度讨论**：WebSwarm、SearchOS、Forage V2、Shared Discovery Paradox、Table-as-Search、ECR、Semantic Entropy、ECHO、TRACE、LOTAPO、STAMP、RICE-PO、CVT-RL、Good–Turing/coverage。
+- **方法对照**：A-MapReduce、Web2BigTable、CuriosiTree、InfoReasoner、IGPO、A²TGPO、T²PO、IG-Search、TEPO、SIGHT、SIOP、PBSD、ACPO、Know Before You Fetch、QuCo-RAG。
 - **背景引用**：FLARE、Self-RAG、Dartboard、SePer、InfoTree、IGPO、IGRPO、WebUncertainty。
 
 ## 矩阵结论
 
-现有工作已覆盖表格状态、动态 deep/wide 路由、熵下降、EIG-per-cost、校准停止、posterior-sensitive turn credit、gold-answer likelihood credit、删除 attribution、证据 provenance 和局部反事实 credit。当前仍可能成立、但需要实验证明的缺口是：在隐藏 anchor 与未知结果集大小并存的 DeepWide 任务中，用一个**校准的分层开放世界信念**同时表示 anchor、未见质量、行资格与单元格值；推理时按期望任务风险下降/成本路由动作，训练时再以同状态反事实和 provenance 验证哪些风险变化应转成 credit。该判断是检索截止日下的 novelty hypothesis，不是首创证明。
+现有工作已覆盖表格状态、动态 deep/wide 路由、未知 denominator 的独立审计、belief–coverage 分离、熵下降、EIG-per-cost、校准停止、posterior-sensitive turn credit、gold-answer likelihood credit、删除 attribution、证据 provenance 和局部反事实 credit。当前仍可能成立、但需要实验证明的缺口是：在隐藏 anchor 与未知结果集大小并存的 DeepWide 任务中，用一个**校准的分层开放世界信念**同时表示 anchor、未见质量、行资格与单元格值；推理时联合期望任务风险下降、成本、动作组合与来源依赖来路由，训练时再以同状态反事实和 provenance 验证哪些风险变化应转成 credit。该判断是检索截止日下的 novelty hypothesis，不是首创证明。
