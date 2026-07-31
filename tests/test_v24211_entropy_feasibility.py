@@ -82,8 +82,26 @@ class V24211EntropyFeasibilityTests(unittest.TestCase):
             self.assertEqual(row["required_gate2a_status"], "replicate_aware_gate2a_pass")
             self.assertTrue(row["model_sha256_must_bind_publication"])
             self.assertTrue(row["job_manifest_sha256_must_bind_model_and_publication"])
+            self.assertFalse(
+                row[
+                    "parent_forward_closure_contains_real_state_transition_adapters"
+                ]
+            )
+            self.assertFalse(
+                row["parent_forward_closure_contains_entropy_controller_kernel"]
+            )
+            self.assertFalse(
+                row[
+                    "parent_forward_closure_contains_entropy_controller_runner_hook"
+                ]
+            )
+            self.assertTrue(
+                row["historical_adapters_are_not_parent_bytes"]
+            )
             self.assertTrue(row["real_state_transition_adapters_required"])
             self.assertFalse(row["projection_only_action_arm_allowed"])
+            self.assertFalse(row["static_candidate_rebase_currently_feasible"])
+            self.assertEqual(len(row["static_candidate_rebase_blockers"]), 4)
             self.assertFalse(row["controller_candidate_bytes_built_or_materialized"])
             self.assertFalse(row["benchmark_forward_or_full220_launch_allowed"])
 

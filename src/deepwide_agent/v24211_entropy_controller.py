@@ -176,14 +176,17 @@ def _validate_branch(
     if value.get("feature_keys") != list(expected_feature_keys):
         raise ValueError("V2.42.11 model feature order drifted")
     models = value.get("models")
-    if not isinstance(models, dict) or tuple(models) != tuple(CONTEXT_ACTIONS):
-        raise ValueError("V2.42.11 model context order drifted")
+    if not isinstance(models, dict) or set(models) != set(CONTEXT_ACTIONS):
+        raise ValueError("V2.42.11 model context set drifted")
 
     width = len(expected_feature_keys) + 1
     for context, actions in CONTEXT_ACTIONS.items():
         context_models = models.get(context)
-        if not isinstance(context_models, dict) or tuple(context_models) != actions:
-            raise ValueError("V2.42.11 model action order drifted")
+        if (
+            not isinstance(context_models, dict)
+            or set(context_models) != set(actions)
+        ):
+            raise ValueError("V2.42.11 model action set drifted")
         for action in actions:
             action_model = context_models[action]
             if not isinstance(action_model, dict) or set(action_model) != ACTION_MODEL_KEYS:
@@ -201,9 +204,9 @@ def _validate_branch(
             calibrators = action_model.get("affine_calibrators")
             if (
                 not isinstance(raw, dict)
-                or tuple(raw) != MODEL_OUTPUTS
+                or set(raw) != set(MODEL_OUTPUTS)
                 or not isinstance(calibrators, dict)
-                or tuple(calibrators) != MODEL_OUTPUTS
+                or set(calibrators) != set(MODEL_OUTPUTS)
             ):
                 raise ValueError("V2.42.11 action-model output schema drifted")
             for output in MODEL_OUTPUTS:
@@ -282,8 +285,8 @@ def validate_action_model(
 def project_four_layer_features(signals: object) -> dict[str, float]:
     """Project five same-pass signals into the frozen ten-coordinate schema."""
 
-    if not isinstance(signals, Mapping) or tuple(signals) != SIGNAL_KEYS:
-        raise ValueError("V2.42.11 signal schema or order drifted")
+    if not isinstance(signals, Mapping) or set(signals) != set(SIGNAL_KEYS):
+        raise ValueError("V2.42.11 signal schema drifted")
 
     clean: dict[str, float | None] = {}
     for key in SIGNAL_KEYS:
@@ -451,7 +454,7 @@ def validate_decision_receipt(receipt: object) -> dict[str, Any]:
         "predicted_action_system_tokens",
         "predicted_contribution_per_system_token",
     }
-    if not isinstance(predictions, dict) or tuple(predictions) != actions:
+    if not isinstance(predictions, dict) or set(predictions) != set(actions):
         raise ValueError("V2.42.11 receipt prediction slate drifted")
     for action in actions:
         prediction = predictions[action]

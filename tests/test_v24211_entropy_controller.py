@@ -161,14 +161,13 @@ class V24211EntropyControllerTests(unittest.TestCase):
         self.assertEqual(value["anchor_normalized_entropy"], 0.0)
         self.assertEqual(value["anchor_entropy_available"], 0.0)
 
-    def test_projection_rejects_extra_reordered_and_out_of_range_signals(self) -> None:
+    def test_projection_rejects_extra_and_out_of_range_signals(self) -> None:
         extra = signals()
         extra["question_type"] = 0.0
         with self.assertRaisesRegex(ValueError, "signal schema"):
             project_four_layer_features(extra)
         reordered = {key: signals()[key] for key in reversed(SIGNAL_KEYS)}
-        with self.assertRaisesRegex(ValueError, "signal schema"):
-            project_four_layer_features(reordered)
+        self.assertEqual(tuple(project_four_layer_features(reordered)), FEATURE_KEYS)
         with self.assertRaisesRegex(ValueError, "outside"):
             project_four_layer_features(signals(coverage_risk_proxy=1.1))
 
