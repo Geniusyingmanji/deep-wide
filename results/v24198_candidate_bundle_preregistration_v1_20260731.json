@@ -1,0 +1,177 @@
+{
+  "artifact_version": 1,
+  "role": "v24198_candidate_bundle_preregistration",
+  "protocol_id": "v24198_selected_candidate_bundle_compiler_v1",
+  "created_at_unix": 1785482372,
+  "label_blind": true,
+  "parent": {
+    "protocol": {
+      "path": "results/v24197_parallel_all220_preregistration_v1_20260731.json",
+      "sha256": "768b787d8b092f9416ab0a9f4a795423d46b060dba558f743454d0d2a0086b4d"
+    },
+    "activation": {
+      "path": "results/v24197_parallel_all220_activation_v1_20260731.json",
+      "sha256": "00e0915ed34020a602f2ae609f4ffe18a1a413e708120abb6c74a3a4f053dce3"
+    },
+    "wait_audit": {
+      "path": "results/v24197_parallel_all220_wait_activation_audit_v1_20260731.json",
+      "sha256": "6748e559b85e1339bc83e8d83af9052d2a837c498c3afe06f706c95c46b0bba7"
+    }
+  },
+  "selection_contract": {
+    "selector_protocol_path": "results/v24198_selected_candidate_selector_preregistration_v1_20260731.json",
+    "quality_chain_terminal_receipt_path": "results/v24198_selected_candidate_terminal_receipt_v1_20260731.json",
+    "selected_candidate_handoff_path": "results/v24198_selected_candidate_handoff_v1_20260731.json",
+    "selector_protocol_must_be_frozen_before_quality_outcomes": true,
+    "entire_quality_chain_terminal_required": true,
+    "selection_rule_live_replay_required": true,
+    "candidate_publication_and_method_contract_hash_bound": true,
+    "compiler_has_no_candidate_selection_discretion": true
+  },
+  "capacity_contract": {
+    "report_path": "results/v24196_capacity_ladder_report_v1_20260731.json",
+    "freeze_path": "results/v24196_next_fresh_all220_capacity_freeze_v1_20260731.json",
+    "parent_protocol_sha256": "e413f85dab40c65fee6202f84df2cf45c333cef4a10e81d22950c1c3b528e4d0",
+    "live_replay_with_v24197_validator_required": true,
+    "capacity_no_go_is_terminal_no_bundle": true
+  },
+  "compilation_contract": {
+    "go_receipt_path": "results/v24198_candidate_quality_go_receipt_v1_20260731.json",
+    "bundle_path": "results/v24197_fresh_all220_execution_bundle_v1_20260731.json",
+    "four_canonical_shards": [
+      "test_s01",
+      "test_s02",
+      "test_s03",
+      "devval"
+    ],
+    "shard_counts": [
+      52,
+      52,
+      52,
+      64
+    ],
+    "exact_disjoint_all220_required": true,
+    "same_pipeline_code_prompt_search_budget_threshold_required": true,
+    "capacity_workers_copied_exactly": true,
+    "fresh_output_roots_required": true,
+    "forward_failures_scored_as_zero": true,
+    "resume_or_selective_rerun_allowed": false,
+    "go_receipt_and_bundle_keep_launch_false": true,
+    "v24197_live_candidate_replay_required_after_publication": true
+  },
+  "safe_wait_boundary": {
+    "all_future_inputs_and_outputs_absent": true,
+    "protected_processes": {
+      "r1_launcher": {
+        "marker": "scripts/launch_frozen_deepwide.py",
+        "pid": 1344451,
+        "start_ticks": 741535641,
+        "python_isolated_no_bytecode_required": false,
+        "command_line_emitted": false
+      },
+      "r1_forward": {
+        "marker": "scripts/run_deepwide_agent.py",
+        "pid": 1350579,
+        "start_ticks": 741557746,
+        "python_isolated_no_bytecode_required": false,
+        "command_line_emitted": false
+      },
+      "v24187_phase_watcher": {
+        "marker": "scripts/watch_v24187_phase_liveness.py",
+        "pid": 3204072,
+        "start_ticks": 733230314,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24193_gate2a_watcher": {
+        "marker": "scripts/watch_v24193_replicate_aware_gate2a.py",
+        "pid": 1486117,
+        "start_ticks": 741782930,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24194_capacity_watcher": {
+        "marker": "scripts/watch_v24194_capacity_ladder.py",
+        "pid": 1582182,
+        "start_ticks": 742119955,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24195_compatibility_watcher": {
+        "marker": "scripts/watch_v24195_lease_owner_compatibility.py",
+        "pid": 1638839,
+        "start_ticks": 742337902,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24196_capacity_executor": {
+        "marker": "scripts/watch_v24196_capacity_executor.py",
+        "pid": 1659284,
+        "start_ticks": 742415197,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24197_parallel_planner": {
+        "marker": "scripts/watch_v24197_parallel_all220.py",
+        "pid": 1758071,
+        "start_ticks": 742773881,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      }
+    }
+  },
+  "execution": {
+    "python_flags": [
+      "-I",
+      "-B"
+    ],
+    "poll_seconds": 60,
+    "watcher_marker": "scripts/watch_v24198_candidate_bundle.py",
+    "state_path": "outputs/v24198_candidate_bundle_watcher_state_v1_20260731.json",
+    "activation_path": "results/v24198_candidate_bundle_activation_v1_20260731.json",
+    "wait_audit_path": "results/v24198_candidate_bundle_wait_activation_audit_v1_20260731.json"
+  },
+  "source_policy": {
+    "safe_file_existence_and_parent_metadata_only_before_all_inputs_exist": true,
+    "selector_protocol_terminal_receipt_handoff_and_freezes_opened_only_after_capacity_pair": true,
+    "candidate_manifest_bytes_hash_only_never_parsed_or_emitted": true,
+    "benchmark_question_answer_evidence_prediction_or_url_values_parsed_or_emitted": false,
+    "mapping_gold_category_question_type_evaluator_score_read": false,
+    "credential_value_or_keyring_read": false,
+    "network_model_search_fetch_evaluator_or_api_called": false,
+    "process_command_lines_or_environment_emitted": false
+  },
+  "authorization": {
+    "wait_only_candidate_bundle_compiler": true,
+    "selected_go_receipt_and_bundle_publish_after_all_inputs_validate": true,
+    "candidate_selection_or_gate_evaluation": false,
+    "shared_api_lease_acquire": false,
+    "network_model_search_fetch_evaluator_or_api_call": false,
+    "benchmark_forward_or_full220_launch": false,
+    "process_signal_restart_resume_rerun_skip_or_selective_retry": false,
+    "future_executor_requires_separate_preregistration_and_activation": true,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "control_surface": {
+    "file_count": 10,
+    "manifest": {
+      "src/deepwide_agent/v24198_candidate_bundle.py": "a1ba3bc7ab2b02cc1099f63b82321c13dadb9977fe891ddbc46a361109a56515",
+      "scripts/preregister_v24198_candidate_bundle.py": "8d7909d29d3a2b79cc35da73c4447db9698645bb723bab76426ebf7c0a53e134",
+      "scripts/watch_v24198_candidate_bundle.py": "da8ec6aeff4085f557e561489ff92394420d5947e53b17109c63bc299b0a456e",
+      "scripts/activate_v24198_candidate_bundle.py": "1449889c85242e092923b243785da01e23df85f1ace3830d808c739c576b6785",
+      "scripts/audit_v24198_candidate_bundle_wait_activation.py": "d75339ce173c78adc642ab439592a184b7c7d8c067ae6c850924a48922707e92",
+      "tests/test_v24198_candidate_bundle.py": "3c8dda533c0cc82dc24ce2709c20e5486bc2b5de769983e220ddce6efc11f5af",
+      "tests/test_preregister_v24198_candidate_bundle.py": "dbae720abc87ae43669a26946920695dd40db950a5e2cb028b269f9baf1ccc3d",
+      "tests/test_watch_v24198_candidate_bundle.py": "8134c3111c29981f731bb7e5f80889f2129f0925f2788ffa746dec983124ce5e",
+      "tests/test_activate_v24198_candidate_bundle.py": "5b72f30c6dc5349998fe008c058fed2c0e6421980e5a119bf5ee4b65b8854b7b",
+      "tests/test_audit_v24198_candidate_bundle_wait_activation.py": "2e308c775648bdeb315f5c74cc3199517f4d230d0719346b7982f7860ed915c0"
+    },
+    "manifest_sha256": "ee413da57057a314f892dcd8fdcb1a6848c09c5d878665f35d54c3ea0225bbde",
+    "must_remain_absent": [
+      "scripts/__init__.py",
+      "sitecustomize.py",
+      "usercustomize.py"
+    ]
+  },
+  "decision_contract_sha256": "0cb185372f8f90a92373d8217137a25ad4da3223e889dd80231d7f1dcfa52bd7"
+}
