@@ -1,6 +1,6 @@
 # DeepWide × 信息熵文献比较矩阵
 
-检索截止：2026-07-21。矩阵只纳入对研究设计有直接约束的核心工作；完整检索范围、方法和引用见 `survey.md`。
+检索截止：2026-07-31。矩阵只纳入对研究设计有直接约束的核心工作；完整检索范围、方法和引用见 `survey.md`。
 
 | 工作 | 被建模的随机变量/状态 | 估计器或核心机制 | 控制用途 | 是否训练 | 开放集覆盖 | 对本项目的约束 |
 |---|---|---|---|---|---|---|
@@ -10,6 +10,13 @@
 | Web2BigTable (2604.27221) | 大表构建子任务 | 双层多智能体搜索与抽取 | 宽搜、聚合 | 否 | 面向大规模表，但无遗漏后验 | 宽搜强基线 |
 | WebSwarm (2607.08662) | 递归搜索节点、局部模式、网页结构 | progressive delegation；atom/deep/wide/entity_collect | 动态深宽切换 | 否 | 处理 open-set enumeration，但为 LLM 定性判断 | “动态深宽路由”不是新颖点；可作为执行器 |
 | SearchOS (2607.15257) | Frontier、Evidence Graph、Coverage Map、Failure Memory | 持久共享状态、middleware、scope audit | 覆盖驱动调度与停滞恢复 | 否 | 显式区分 cell saturation 与 row scope | “coverage map/持久状态”不是新颖点；需比较遗漏风险而非已知格覆盖 |
+| AREX (2607.21461) | verified findings、unresolved constraints、rejected candidates、confidence | inner research + outer refine/restart；autonomous context update；key-step bonus | 定向 follow-up、停止与训练 | 是 | 否 | 约束级递归改进、状态压缩与关键步骤训练不是新颖点；需比较校准四层风险的增量价值 |
+| Delegation Intelligence (2607.23524) | search decision 与 synthesis/verification 两类能力 | controllable document composition 与 tool access | 解耦诊断 | 否 | 否 | 端到端分数不能定位搜索决策；实验需将 routing 和 synthesis/verification 分开报告 |
+| EviBack (2607.23955) | all-zero rollout group 的 evidence sufficiency 与 answer refinement | evidence-constrained teacher backoff | RL 辅助监督 | 是 | 否 | all-zero credit 已有 teacher baseline；不能作为本项目 novelty，且需防 reference 覆盖 evidence-insufficiency 判断 |
+| RARG (2607.24223) | document/excerpt relevance 与 corpus-interaction position | document order、entry-point initialization、match reranking | corpus execution prior | 否 | 否 | relevance 不只用于 top-k；作为检索执行顺序基线，但依赖 embedding quality 且有串行延迟 |
+| Filesystem-Based Memory (2607.26637) | 文件树形状、store health 与检索轨迹 | agent-organized hierarchy、verbatim dump、chunk retrieval | 长期记忆管理与检索 | 否 | 随 stream 增长，但非结果集遗漏 | 组织主要节省检索成本，原文未观察到组织本身改善答案；memory shape 不得替代质量证据 |
+| Harness-G (2607.27652) | evidence/entity/answer 有限菜单与 evidence-set equivalence | graph interface；frontier alternatives；Structured Non-myopic Credit | 检索与 step credit | 是 | 否 | retrieval-equivalence collapse 与非近视 credit 已有；必须做 evidence overlap 诊断并纳入 SNC 基线 |
+| Baikal (2607.27726) | semantic region、visit/reward posterior、finding quality | clustering；random/LLM/Bayesian $\epsilon$-greedy/Bayes-UCB | 区域覆盖与探索—利用 | 否 | region coverage，不估计未知结果集质量 | semantic-region bandit 已有；候选差异只能是与四层风险/evidence equivalence 的联合控制 |
 | Forage V2 (2604.19837) | 自主发现的 completion criterion 与 denominator | 独立 Evaluator/Planner、co-evolving evaluation、跨 run 组织记忆 | 覆盖审计、停止、经验迁移 | 否 | 是，直接研究 denominator blindness | 高，必须深度讨论；“未知完成边界/分母盲区”已有直接工作，其 denominator 是自发现定义且跨 run coverage 不可直接比较，仍未给出校准 unseen-mass posterior |
 | Shared Discovery Paradox (2607.18045) | 有限目标位置的 pooled posterior 与多搜索者动作组合 | 可解 Bayesian benchmark、top-L posterior portfolio、source-correlation model | 覆盖动作分配与激励 | 否 | 是，有限原子空间的发现概率 | 高，必须深度讨论；更准 shared belief 可因动作重复而降低 coverage，controller 必须联合 posterior、动作多样性与来源依赖 |
 | Semantic Entropy (2302.09664；Nature 2024) | 自由文本答案的语义等价类 | 多样本语义聚类后的熵 | 被动错误/幻觉检测 | 否 | 有限采样答案集 | 提供 cell/anchor 语义熵候选估计器，不提供 controller |
@@ -56,10 +63,10 @@
 
 ## 综述写作分级
 
-- **必须深度讨论**：WebSwarm、SearchOS、Forage V2、Shared Discovery Paradox、Table-as-Search、ECR、Semantic Entropy、ECHO、TRACE、LOTAPO、STAMP、RICE-PO、CVT-RL、Good–Turing/coverage。
+- **必须深度讨论**：WebSwarm、SearchOS、AREX、Harness-G、Baikal、Forage V2、Shared Discovery Paradox、Table-as-Search、ECR、Semantic Entropy、ECHO、TRACE、LOTAPO、STAMP、RICE-PO、CVT-RL、Good–Turing/coverage。
 - **方法对照**：A-MapReduce、Web2BigTable、CuriosiTree、InfoReasoner、IGPO、A²TGPO、T²PO、IG-Search、TEPO、SIGHT、SIOP、PBSD、ACPO、Know Before You Fetch、QuCo-RAG。
 - **背景引用**：FLARE、Self-RAG、Dartboard、SePer、InfoTree、IGPO、IGRPO、WebUncertainty。
 
 ## 矩阵结论
 
-现有工作已覆盖表格状态、动态 deep/wide 路由、未知 denominator 的独立审计、belief–coverage 分离、熵下降、EIG-per-cost、校准停止、posterior-sensitive turn credit、gold-answer likelihood credit、删除 attribution、证据 provenance 和局部反事实 credit。当前仍可能成立、但需要实验证明的缺口是：在隐藏 anchor 与未知结果集大小并存的 DeepWide 任务中，用一个**校准的分层开放世界信念**同时表示 anchor、未见质量、行资格与单元格值；推理时联合期望任务风险下降、成本、动作组合与来源依赖来路由，训练时再以同状态反事实和 provenance 验证哪些风险变化应转成 credit。该判断是检索截止日下的 novelty hypothesis，不是首创证明。
+现有工作已覆盖表格状态、动态 deep/wide 路由、约束级递归跟进、semantic-region bandit、evidence-equivalence menu、未知 denominator 的独立审计、belief–coverage 分离、熵下降、EIG-per-cost、校准停止、posterior-sensitive/non-myopic turn credit、gold-answer likelihood credit、删除 attribution、证据 provenance 和局部反事实 credit。当前仍可能成立、但需要实验证明的缺口是：在隐藏 anchor 与未知结果集大小并存的 DeepWide 任务中，用一个**校准的分层开放世界信念**同时表示 anchor、未见质量、行资格与单元格值；推理时在证据等价类和 semantic regions 上联合期望任务风险下降、成本、动作组合与来源依赖来路由，训练时再以同状态反事实和 provenance 验证哪些风险变化应转成 credit。该判断是检索截止日下的 novelty hypothesis，不是首创证明。

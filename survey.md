@@ -1,14 +1,14 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
-> 检索截止：2026-07-21；项目证据更新：2026-07-25
+> 检索截止：2026-07-31；项目证据更新：2026-07-31
 >
 > 结论强度：这是基于公开文献的 novelty audit，不是“没有任何相关工作”的证明。2026 年文献多为尚未同行评审的 arXiv 预印本，文中将预印本结果视为作者报告，而非独立复现事实。
 
 ## 摘要
 
-“把信息熵用于搜索代理”或“给熵降大的步骤更多 credit”都不能作为本项目的核心首创主张。Semantic Entropy 已将自由文本答案聚类为语义等价类并用熵预测错误；FLARE、Self-RAG、TASR 和 Know Before You Fetch 已用置信或校准概率控制检索与停止；CuriosiTree、Conformal Information Pursuit 和 ECR 已用期望信息增益或期望熵下降选择下一动作；InfoReasoner、IGPO、IG-Search、SIGHT、TEPO 和 IGRPO 已把信息量用于搜索代理训练或 rollout 分配。更直接地，ECHO 已把后验收缩称为 epistemic credit，TRACE、LOTAPO、STAMP、RICE-PO 等分别用真值答案似然、删除干预、证据 provenance 和同状态局部分支定位 turn credit。DeepWide 侧也已出现 Table-as-Search、A-MapReduce、Web2BigTable、WebSwarm 与 SearchOS，分别覆盖持久表格状态、横向并行、递归 deep/wide 路由和 coverage-aware 调度。Forage V2 又直接研究完成边界未知时的 denominator blindness，Shared Discovery Paradox 则证明更准确的共享 posterior 若被压成重复的单一动作，可能降低群体发现覆盖。[72,73]
+“把信息熵用于搜索代理”或“给熵降大的步骤更多 credit”都不能作为本项目的核心首创主张。Semantic Entropy 已将自由文本答案聚类为语义等价类并用熵预测错误；FLARE、Self-RAG、TASR 和 Know Before You Fetch 已用置信或校准概率控制检索与停止；CuriosiTree、Conformal Information Pursuit 和 ECR 已用期望信息增益或期望熵下降选择下一动作；InfoReasoner、IGPO、IG-Search、SIGHT、TEPO 和 IGRPO 已把信息量用于搜索代理训练或 rollout 分配。更直接地，ECHO 已把后验收缩称为 epistemic credit，TRACE、LOTAPO、STAMP、RICE-PO 等分别用真值答案似然、删除干预、证据 provenance 和同状态局部分支定位 turn credit。DeepWide 侧也已出现 Table-as-Search、A-MapReduce、Web2BigTable、WebSwarm 与 SearchOS，分别覆盖持久表格状态、横向并行、递归 deep/wide 路由和 coverage-aware 调度。Forage V2 又直接研究完成边界未知时的 denominator blindness，Shared Discovery Paradox 则说明更准确的共享 posterior 若被压成重复的单一动作，可能降低群体发现覆盖。[72,73] 2026 年 7 月下旬的 AREX、Harness-G 与 Baikal 又分别覆盖“已验证约束/未解决约束”驱动的递归跟进、检索等价坍缩与非近视 credit、semantic-region bandit coverage。[76,81,82]
 
-在本次检索范围内，仍有一个可验证、也可被否证的候选缺口：这些线索尚未在 DeepWide 的**分层开放世界信念**与**结果对齐的反事实 credit**中统一。DeepWide 不只有“最终答案是否确定”，还同时包含隐藏核心实体（anchor）是谁、结果集中还有多少未见质量、候选行是否满足约束、每个单元格的语义值是什么。有限候选集上的低 Shannon 熵不代表开放集合完整，甚至可能是在错误 anchor 上过度确信。因此，本综述建议将创新假设收窄为：用校准的 anchor、unseen-mass、row-eligibility、cell-semantic 四层信念估计任务风险变化，再通过同状态干预和 evidence provenance 判断这次变化是否由该步骤造成、是否支持最终任务。信息量在这里是 epistemic signal，而不是自动成立的 causal credit。当前代码与实验尚未实现或验证这一方法；截至 V2.40.3 的改动仍是 evidence continuity、证据边界、开放集合覆盖、输出契约、列公平查询、alias 呈现、attribute/membership 隔离和失败观测工程，不能归因于 entropy。
+在本次检索范围内，仍有一个可验证、也可被否证的候选缺口：尚未找到工作在 DeepWide 表格任务中同时校准隐藏 anchor、未见结果质量、行资格和格值，并把这四类风险变化与结果对齐的同状态反事实 credit 联合验证。有限候选集上的低 Shannon 熵不代表开放集合完整，甚至可能是在错误 anchor 上过度确信。因此，本综述建议将创新假设收窄为：用校准的四层信念估计任务风险变化；用 evidence-set equivalence 防止同义查询反复取回相同证据；再通过同状态干预和 provenance 判断风险变化是否由该步骤造成、是否支持最终任务。信息量在这里是 epistemic signal，而不是自动成立的 causal credit。当前代码与实验尚未验证这一整套方法；已实现的 V2.41.93 只是等待 sealed continuation 数据的 replicate-aware Gate-2A，真实 report 尚未产生，不能视为 controller、credit 或 benchmark 提升证据。
 
 ## 1. 范围、问题与检索方法
 
@@ -32,6 +32,7 @@
 - 2026-07-20 再检索 `credit assignment AND (information gain OR entropy) AND agent/search` 与 `open world AND uncertainty AND agent/search`，核对新增近邻 PivoARL、InfoPO、AEM、SELAUR、STRIDE 与 APPO；使用 arXiv API 逐条验证标题、作者、版本和摘要。
 - 2026-07-21 补充检索 denominator blindness、shared discovery、turn-group information gain 和 uncertainty-guided exploration，核对 Forage V2、Shared Discovery Paradox、A²TGPO 与 T²PO 的 arXiv 元数据与原文。
 - 2026-07-21 做提交日期增量检索，并读取 Forage V2、Shared Discovery Paradox 与 A²TGPO 的 PDF。该轮新增了未知 denominator、belief–coverage 分离、gold-conditioned turn IG 和 uncertainty-guided resampling 的直接近邻。[72–75] 截至该范围仍未找到把 DeepWide 的 anchor、未见质量、行资格、单元格值四层同时概率化并用于 task-risk control/credit 的工作，但这只是限定语料与日期下的缺口判断。
+- 2026-07-31 对 2026-07-21 至 07-31 的 arXiv 新增记录做增量筛选，并逐页核对 WebSwarm、AREX、Delegation Intelligence、EviBack、RARG、Filesystem-Based Memory、Harness-G 与 Baikal 的 PDF，而非只引用摘要。[5,76–82] 这一轮把 novelty 边界进一步收窄到四层风险的校准与联合验证：递归 follow-up、语义区域覆盖、同义检索去重和结构化非近视 credit 都已有直接近邻。
 - 对经典信息论与覆盖估计文献用 Crossref/OpenAlex/DOI 核验元数据；对关键 2023–2026 论文读取 arXiv 原文而不只依赖摘要。
 
 纳入标准是：方法直接控制检索、证据选择、工具调用、搜索树、停止或开放集合覆盖；或者直接定义 DeepWide/table-search 的系统与评测边界。排除纯推荐、视觉检索、物理导航等仅共享“entropy/search”词面但不能约束本研究设计的工作。检索记录的高密度比较版见 [.research/literature_matrix.md](.research/literature_matrix.md)。
@@ -49,6 +50,14 @@ Table-as-Search 把搜索过程外化为表格：行是候选实体，列是约�
 2026 年 7 月的 WebSwarm 进一步削弱了“动态深/宽切换”本身的新颖性。它在推理中渐进构造递归委派树，每个节点选择 atom、deep、wide 或 entity_collect 模式；Web-Probing 先判断相关信息在网页上集中还是分散，同质兄弟节点之间复用轨迹经验。在 DeepWideSearch-EN、同为 GLM-4.5 骨干时，WebSwarm 报告 SR 6.58、Row F1 29.64、Item F1 58.40，相对 ReAct 分别提高 2.63、9.56、11.77 个百分点。[5] 这些数字证明的是该论文设置中的受控差值，不能直接与本项目的 GPT-5.5 全量中英混合单次运行比较。
 
 SearchOS-V1 则把开放域信息搜寻建模为带引用的 relational schema completion，并用 Frontier Task、Evidence Graph、Coverage Map、Failure Memory 和 middleware 管理状态、覆盖与停滞。其案例明确指出“已知行的 cell coverage 达到 100%”仍可能漏掉大量应有行，因此还要独立做 row-scope audit。[6] 这正是本项目需要继承而不是重新宣称的洞见：已知单元格饱和与开放集合完整性是两个问题。
+
+WebSwarm 的消融给出一个直接工程教训。去掉 Web-Probing 后，WideSearch 与 DeepWideSearch 的 Item F1 没有下降，但 web-tool 调用分别从 137.03 增至 239.90、从 203.73 增至 331.39；去掉 sibling experience reuse 才出现较明显的质量下降。[5] 因而，网页结构探测首先应作为成本控制与动作选择基线，不能被当作质量机制本身。我们的 semantic-region 与 evidence-equivalence 诊断也必须分别报告质量和工具成本。
+
+AREX 让“递归核对未解决约束”本身也不再是空白。它在内层研究循环之外增加 outer self-improvement loop，以结构化 answer/evidence/confidence 判断 accept、refine 或 restart；`update_context` 保留 verified findings、source IDs、unresolved constraints、rejected candidates 与 next plan。训练阶段又用关键步骤标注给 turn-level advantage 加 bonus。[76] 这与四层概率风险不同，但它是 constraint-wise follow-up、状态压缩和 key-step credit 的强基线。新增方法必须证明校准风险比自报 confidence 或关键步骤标注提供额外预测价值。
+
+Harness-G 从策略—环境接口解释了“query 很多但信息不增”的另一来源：不同自然语言查询逐渐产生高度重叠的累计 evidence set，即 retrieval-equivalence collapse。它把自由查询改成有限菜单，动作是 evidence sentence、entity 或 answer，再用冻结 answer scorer 比较 frontier alternatives，并沿 entity dependency graph 把下游增益回传给使其可达的早期动作。论文在六个 QA 数据集、1.5B 与 3B 模型上报告相对 Graph-R1 的平均 F1 分别提高 10.74 与 3.98；在固定 graph、outcome reward 与训练预算下，菜单相对 free-query 的提升超过 17 F1，而去掉 SNC 在三个多跳数据集上分别下降 3.08、4.55、2.88。[81] 这些是论文设置内的结果，但足以要求本项目加入 evidence-set overlap/query-equivalence 诊断，并把 SNC 纳入 credit 强基线。
+
+Baikal 把 data lake 聚成 semantic regions，并把 region selection 写成有预算的 bandit。它比较 random、LLM policy、Bayesian $\epsilon$-greedy 与 Bayes-UCB，按 finding groundedness、relevance、distinctness 和 utility 更新区域价值。在每个数据湖仅 15 个 query、由 GPT-5-mini 评分的设置下，作者报告最佳配置相对最强基线提高 28% 和 36%；但消融也表明 semantic regions 加随机选择已经贡献大部分收益，且没有 LLM prior 时 $\epsilon$-greedy 的优势消失。[82] 因此 semantic-region coverage 与 UCB 都不是本项目的新颖点。合理扩展是让区域调度接受四层风险和 evidence-equivalence 输入，并用官方表格指标而非仅 LLM rubric 验证。
 
 Forage V2 对开放集合给出更直接的命名：当完成边界没有预先给出时，代理会系统性低估 denominator，并可能对自己发现的小集合报告 100% coverage。它把 Planner 与独立 Evaluator 隔离，让两者分别收集对象和发现“完整意味着什么”，再把 denominator 修订经验跨 run 迁移。[72] 这占据了“首次发现分母盲区”或“首次让代理同时搜索答案和完成边界”的主张。它仍不是本项目拟议的概率层：每个 run 使用自己发现的 denominator，论文明确指出这些 coverage 百分比不能跨 run 直接比较，也没有给出未见质量的校准 posterior。
 
@@ -300,6 +309,9 @@ Forage V2 进一步表明 denominator 本身可能随定义与证据演化，Sha
 | LOTAPO、STAMP、RICE-PO、CVT-RL | 删除 attribution、证据 provenance、同状态局部分支或验证后的干预效应 | step/turn credit | 是 | 通常否 | attribution 与 causal baseline 已形成，裸 entropy 不够 |
 | InfoPO、AEM、SELAUR、STRIDE、APPO、PivoARL | masked-feedback counterfactual、response entropy、uncertainty reward、outcome-discriminative pattern、pivotal retry | turn/token/response credit 与局部重试 | 是 | 否 | 信息信号与结果门控、反事实或 pivotal state 的组合也已有；四层任务变量才可能构成差异 |
 | A²TGPO、T²PO | gold-answer IG 与 token/turn uncertainty dynamics | credit/clipping、intervention/resampling | 是 | 否 | IG/uncertainty 控制训练与探索已有；label-blind 分层 task risk 才可能构成差异 |
+| AREX | verified/unresolved constraints、结构化 confidence、context update | 递归 refine/restart 与训练 | 是 | 否 | 约束级 follow-up、状态压缩与 key-step bonus 已有 |
+| Harness-G | evidence/entity/answer 菜单、evidence equivalence、dependency graph | 推理接口与非近视 credit | 是 | 否 | 查询等价坍缩与结构化非近视 credit 已有；必须纳入强基线 |
+| Baikal | semantic regions 与 finding-quality posterior | 区域 bandit 调度 | 是 | 区域覆盖，但不估计未知结果集质量 | semantic-region coverage、$\epsilon$-greedy 与 UCB 已有 |
 | TaS、A-MapReduce、Web2BigTable | 行、格、横向子任务 | 推理系统 | 是 | 启发式覆盖 | 表格状态与大规模宽搜已有 |
 | WebSwarm、SearchOS | 搜索节点、网页结构、coverage/gaps | 推理系统 | 是 | 定性 open-set / scope audit | 动态 deep/wide 与覆盖驱动调度已有 |
 | Good–Turing、coverage、capture–recapture | 未见事件质量/种类数 | 统计估计 | 不直接 | 是 | 提供 width posterior，但需处理搜索偏差 |
@@ -310,6 +322,9 @@ Forage V2 进一步表明 denominator 本身可能随定义与证据演化，Sha
 - 首次用 entropy reduction、posterior contraction 或 gold-answer likelihood 给 turn/tool step 分配 credit。
 - 首次提出 epistemic credit、belief-conditioned turn reward、leave-one-turn attribution 或 evidence provenance credit。
 - 首次做 uncertainty-aware web agent、双层不确定性或动态 deep/wide routing。
+- 首次用 semantic regions、UCB 或 $\epsilon$-greedy 平衡 deep-research coverage。
+- 首次发现不同 query 收敛到相同 evidence set，或首次用结构化菜单做 non-myopic search credit。
+- 首次用 verified/unresolved constraints 递归 follow-up、压缩研究状态或突出关键步骤训练。
 - 首次把表格、coverage map 或 evidence graph 作为搜索状态。
 - 低熵等于正确、完整或有充分证据。
 - Good–Turing/capture–recapture 在搜索引擎偏置下自动给出无偏全集估计。
@@ -325,15 +340,17 @@ Forage V2 进一步表明 denominator 本身可能随定义与证据演化，Sha
 
 > **OWIC-DeepWide: Open-World Information Credit for Deep-and-Wide Search**
 
-候选贡献不是使用熵，而是四个必须同时成立的设计：
+候选贡献不是使用熵，而是七个必须联合成立的设计：
 
 1. **DeepWide 特有的分层随机变量。** $A$：隐藏 anchor；$M$：未见质量/剩余集合；$R_e$：候选行资格；$Y_{e,c}$：单元格语义值。
 2. **开放世界 width。** 将有限候选 anchor/row 分布与 OTHER/unseen-mass posterior 联合，避免低已知行熵造成假完整。
 3. **风险与成本耦合。** 动作按期望任务损失下降/成本路由，而不是把所有 entropy bit 等价相加。
 4. **校准与可否证验证。** 分别证明各信号能预测 anchor、遗漏、行和格错误，并在同动作空间、同预算下优于 heuristic uncertainty；否则放弃 entropy-controller 的主张。
 5. **credit 不等于熵差。** 训练时用 task-risk/proper-score change 确定方向，用同状态 counterfactual 检查任务贡献，用 provenance 区分发现、验证和综合。
+6. **证据等价感知。** 对 query intent、URL/claim set 与 source dependency 做等价类聚合；只返回已有证据类的动作不给 discovery credit，并与 Harness-G 的菜单/SNC 做比较。[81]
+7. **风险条件化的区域组合。** 以 Baikal 式 semantic region 作为动作先验，再由 anchor/coverage/row/cell 风险分配区域与搜索模式；与 random region、LLM policy、Bayes-UCB 和不分区 controller 做同预算比较。[82]
 
-检索到的文献中，没有一篇同时满足以上五点。但这只是截至检索日的**候选空白**；Forage V2 的 denominator audit、Shared Discovery Paradox 的 belief–coverage 分离、SearchOS 的 scope audit、ECR 的有限假设 EER、C-IP 的校准、CuriosiTree 的 EIG/cost、ECHO 的 epistemic credit、STAMP 的 provenance 和 CVT-RL 的反事实贡献已覆盖各个相邻部分。论文必须正面比较这些近邻，不能靠改名构造差异。
+检索到的文献中，没有一篇同时满足以上七点。但这只是截至检索日的**候选空白**；Forage V2 的 denominator audit、Shared Discovery Paradox 的 belief–coverage 分离、SearchOS 的 scope audit、ECR 的有限假设 EER、C-IP 的校准、CuriosiTree 的 EIG/cost、AREX 的递归约束核对、Harness-G 的 evidence-equivalence/SNC、Baikal 的区域 bandit、ECHO 的 epistemic credit、STAMP 的 provenance 和 CVT-RL 的反事实贡献已覆盖各个相邻部分。论文必须正面比较这些近邻，不能靠改名构造差异。
 
 ## 8. 建议的分层开放世界熵框架
 
@@ -403,7 +420,7 @@ L(B_t)=w_A\Pr(A\neq A^*)+w_M\mathbb E[\text{missed mass}]
 
 ### 9.2 controller 是否真的由信号获益
 
-所有 controller 比较必须共享模型、搜索/浏览工具、动作集合、最大 token、tool call、wall-clock 和重试次数。必须包含：当前 retrieve-then-generate、fixed wide→deep、fixed deep→wide、TaS/no-entropy planner、相同 controller 加 heuristic uncertainty、oracle one-step value（仅分析）、WebSwarm/SearchOS/A-MapReduce 系统级比较。只和 ReAct 比不够。
+所有 controller 比较必须共享模型、搜索/浏览工具、动作集合、最大 token、tool call、wall-clock 和重试次数。必须包含：当前 retrieve-then-generate、fixed wide→deep、fixed deep→wide、TaS/no-entropy planner、相同 controller 加 heuristic uncertainty、oracle one-step value（仅分析）、WebSwarm/SearchOS/A-MapReduce 系统级比较，以及 Harness-G 式 evidence-equivalence/menu 与 Baikal 式 random/Bayes-UCB region policy。credit 实验另含 AREX key-step bonus 与 SNC。只和 ReAct 比不够。
 
 ### 9.3 低熵错收敛
 
@@ -491,7 +508,7 @@ V2.19 针对这两个 label-blind 机制做了 evidence-continuity 修复。它�
 
 ## 11. 结论
 
-信息熵适合作为这项工作的理论主线，但不能作为孤立 novelty。已有文献已经覆盖语义熵、信息增益奖励、EIG 动作选择、熵驱动证据选择、校准停止、表格状态、动态深宽搜索、未知 denominator 审计、belief–coverage 分离，以及 posterior-sensitive turn credit。可辩护的新问题是：DeepWide 的隐藏 anchor、开放集合遗漏、行资格和格值是否需要一个统一但不简单相加的分层信念模型，以及这个模型能否在同预算下比简单 heuristic 更准确地分配搜索；若进一步训练策略，分层风险变化能否在同状态反事实与 evidence provenance 下定位真正改善最终任务的步骤。
+信息熵适合作为这项工作的理论主线，但不能作为孤立 novelty。已有文献已经覆盖语义熵、信息增益奖励、EIG 动作选择、熵驱动证据选择、校准停止、表格状态、动态深宽搜索、未知 denominator 审计、belief–coverage 分离、semantic-region bandit、evidence-equivalence control，以及 posterior-sensitive/non-myopic turn credit。可辩护的新问题只剩下：DeepWide 的隐藏 anchor、开放集合遗漏、行资格和格值能否形成一个经校准且不简单相加的任务风险模型；该模型能否在相同动作菜单、区域、预算和证据等价约束下改善完整 all-220；若进一步训练策略，分层风险变化能否在同状态反事实与 provenance 下定位真正改善最终任务的步骤。
 
 新的 `plan.md` 因此采用证据门控顺序：先隔离评测、稳定 evidence pipeline 并复现基线，再验证四类信号和干预式 step credit，再验证动作价值预测，最后才实现完整 controller 或 RL credit。V2.40.2 的 2/2 completion、0/2 整表成功与 V2.40.3 的零调用回放说明项目仍处于第一阶段；completion 和 query-plan coverage 都不能替代值正确率。若 anchor/coverage/row/cell signal 不能校准，若 step score 不能预测 counterfactual task contribution，或同动作空间下不改善任务风险–成本 Pareto，则“熵作为核心创新”应降级为诊断工具。
 
@@ -572,3 +589,10 @@ V2.19 针对这两个 label-blind 机制做了 evidence-continuity 修复。它�
 73. Nakajima, Y. **The Shared Discovery Paradox: How a One-Answer Rule Turns Better Information into Worse Search.** arXiv:2607.18045 (2026). https://arxiv.org/abs/2607.18045
 74. Chen, D. et al. **A²TGPO: Agentic Turn-Group Policy Optimization with Adaptive Turn-level Clipping.** arXiv:2605.06200 (2026). https://arxiv.org/abs/2605.06200
 75. Wang, H. et al. **T²PO: Uncertainty-Guided Exploration Control for Stable Multi-Turn Agentic Reinforcement Learning.** ICML 2026 Spotlight; arXiv:2605.02178. https://arxiv.org/abs/2605.02178
+76. Lu, S. et al. **AREX: Towards a Recursively Self-Improving Agent for Deep Research.** arXiv:2607.21461v2 (2026). https://arxiv.org/abs/2607.21461
+77. Yao, X. et al. **Delegation Intelligence in Deep Search: A Controllable Framework for Disentangled Capability Diagnosis.** arXiv:2607.23524 (2026). https://arxiv.org/abs/2607.23524
+78. Ma, X. et al. **EviBack: Search-Agent Reinforcement Learning via Evidence-Constrained Teacher Backoff.** arXiv:2607.23955v2 (2026). https://arxiv.org/abs/2607.23955
+79. Li, J. et al. **A New Role for Relevance: Guiding Corpus Interaction in Agentic Search.** arXiv:2607.24223 (2026). https://arxiv.org/abs/2607.24223
+80. Zhou, S. et al. **Filesystem-Based Memory for LLM Agents: Organization, Evolution, and Sustainability.** arXiv:2607.26637 (2026). https://arxiv.org/abs/2607.26637
+81. Hou, Y. et al. **Harness-G: A Graph-Structured Harness for Search Agents.** arXiv:2607.27652 (2026). https://arxiv.org/abs/2607.27652
+82. Agarwal, D. et al. **Baikal: Structured Search for Deep Research over Data Lakes.** arXiv:2607.27726 (2026). https://arxiv.org/abs/2607.27726

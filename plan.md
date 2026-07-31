@@ -1,8 +1,8 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.09
+> 版本：5.10
 >
-> 更新：2026-07-31 04:00 UTC
+> 更新：2026-07-31 04:14 UTC
 >
 > 状态：**截至 2026-07-31 04:00 UTC，fresh V2.41.18 finalization watchdog 是当前权威安全聚合：按五段全集拓扑计入不可补跑的首题infra-zero，R1 为 `156/220 = 31 completed + 125 failed`、剩余64，internal-test 156 已全部终态；冻结队列已自然进入最后的dev+validation S04，活动Python PID`1350579`/start ticks`741557746`，未signal/restart/resume/rerun/skip。旧 `full220_v2403_r1_status.json` 发布器仍滞后，不能覆盖fresh finalizer。V2.41.87 phase-aware监控仍唯一权威阶段监控，当前为`r1_full220`、state fresh、`critical=[]`；同步taxonomy为`119 mapped + 1 excluded + 5 surface-uncovered`，`new_p13=false`且不授权活动策略变化。R1 result/final seal、P12 trial-2、schema76 paired result、trials1/3/4、Avg@4、schema77/search-yield/markdown/scope-open及OWIC结果均未产生，因此仍没有正式DeepWideBench分数、榜单提升或SOTA。主结果定义继续固定为**同一 all-220 全集**；dev64只可作为预注册安全/质量门，不能替代全集结果或用于选择性报告。当前冻结R1并发和所有forward参数不得热改；下一次全新sealed rollout若获GO，必须先对GPT-5.6/9878做不含benchmark内容的容量阶梯探针，把连续成功且无排队/限流异常的最高安全并发写入新freeze，再以该固定大并发跑完整220，失败仍计0且禁止选择性补跑。不可逆顺序固定为：`R1 exact220/release → P12/schema76 → official Avg@4 → schema77 paired dev64 → V2.41.80 search-yield immutable terminal → V2.41.03 markdown paired dev64 → 条件式V2.41.05 scope-open terminal → OWIC capture/Gate-1 → V2.41.90 → V2.41.91 → V2.41.92 → V2.41.93 replicate-aware Gate-2A`。**
 
@@ -11,6 +11,12 @@
 > append-only [`src/deepwide_agent/v24193_replicate_aware_gate2a.py`](src/deepwide_agent/v24193_replicate_aware_gate2a.py) 逐字重放V2.41.92及其冻结action/stop/abstain决策，然后做两层bootstrap：外层有放回抽opaque task cluster，内层对每个action bundle的三条`replicate_signed_task_contribution`独立有放回抽三次并重算action outcome；同一内层action draw在full/no-entropy/heuristic/random/stop四项比较中共享，禁止重拟合或改变已冻结policy selection。观察点估计必须逐项精确重放V2.41.92；全checkpoint和full-signal-available子集的四项shared-minimum 95%下界都必须严格大于0，且父V2.41.92必须pass。稳定正例`[0.8,0.9,1.0]`仍通过，noisy反例被拒绝。
 >
 > create-exclusive协议 [`results/v24193_replicate_aware_gate2a_consumer_preregistration_v1_20260731.json`](results/v24193_replicate_aware_gate2a_consumer_preregistration_v1_20260731.json) SHA`9b2fcf67...6031`、decision SHA`94834689...e971`、7-file manifest SHA`39b0f078...d427`；scrubbed `python -I -B` tmux `deepwide-v24193-replicate-aware-gate2a-v1`、Python PID`1486117`/start ticks`741782930`唯一。首个state在activation前为`activation_ready=false`且未打开manifest/model/prediction/aggregate/outcome；activation [`results/v24193_replicate_aware_gate2a_consumer_activation_audit_v1_20260731.json`](results/v24193_replicate_aware_gate2a_consumer_activation_audit_v1_20260731.json) SHA`5a34c68c...aceb`、payload seal`5ec619f1...7ec7`有效。当前state已接受activation但仍未打开科学输入，全部controller/training/full220/benchmark权限false；R1和V2.41.90/91/92 PID/start-ticks不变，无kill/quarantine/restart/重复启动。V2.41.21→93发布后精确父链`127/127`，compile/diff/secret/label-blind审计通过。V2.41.93真实report尚未产生，不构成entropy-credit、DeepWideBench提分或SOTA证据。**
+
+> **5.10 2026-07-31 文献边界、证据等价与全集容量策略：PDF 原文增量核对加入 AREX、Delegation Intelligence、EviBack、RARG、Filesystem-Based Memory、Harness-G 与 Baikal。由此明确三项不能再作为首创：verified/unresolved constraints 驱动的递归 follow-up 与 key-step bonus，semantic-region 的 $\epsilon$-greedy/UCB 覆盖调度，以及 retrieval-equivalence collapse 与 Structured Non-myopic Credit。候选创新收窄为四层开放世界任务风险的校准、evidence-equivalence/semantic-region 条件下的联合控制，以及同状态反事实与 provenance 对 task contribution 的结果对齐验证。
+>
+> 下一轮策略新增两个不改变当前 R1 的 shadow 组件。第一，计算 query-intent、URL、claim/evidence-set 与 source-dependency overlap；只产生新字符串却落入已有 evidence equivalence class 的动作不计 discovery yield 或 credit。第二，把可见搜索空间分成 semantic regions，比较 random region、LLM policy、Bayes-UCB 与风险条件化 region portfolio。两者均须使用可见问题和本轮检索 trace，禁止读取 benchmark category、split label、gold、evaluator 或 score。Delegation Intelligence 的解耦诊断也进入结果报告：search decision、evidence acquisition 与 synthesis/verification 分开计量，避免把 renderer 或验证失败归因给 entropy。
+>
+> 全集执行约束不变且更具体：当前 R1 的并发、worker 和 watcher全部保留；9878 正被 R1 使用时不得发容量探针。V2.41.94 只能是 wait-only controller，在 R1 exact-terminal 220 与 released pair 均验证后、shared API lease 可取得时，才用不含 benchmark 内容的固定请求做并发阶梯。每档必须连续成功、无429/5xx、无请求超时且队列/延迟不越过预注册界限；最高连续安全档写入下一次全新 freeze。随后以一个固定并发跑同一 all-220，四个新输出分片无 resume/选择性补跑，失败计0。dev64仅是预注册 gate，不能替代 all-220 主结果。**
 
 > **5.08 V2.41.92 missing-signal abstain闭包、双估计量policy-value门与安全激活（2026-07-31 03:40 UTC）：V2.41.91虽精确重放Gate-3A的positive-gain、value-per-token排序、stop与branch-specific成本，却仍遗漏同一冻结策略的missing-signal `abstain`。V2.41.22按stage捕获context而不调用online `eligible_contexts()`，V2.41.23又合法接受availability bit为0的canonical feature，因此“被捕获”不等于“可部署”。构造anchor entropy缺失的same-checkpoint反例时，V2.41.91仍可`pass`并为full选择正值动作；真实Gate-3A full分支必须abstain、即时贡献为0。故V2.41.91也只能作父诊断，不能独立授权controller design。
 >
@@ -576,6 +582,9 @@ V2.26 随后从剩余 10 个无历史 forward artifact 的 dev opaque ID 中按�
 - 首次提出 epistemic credit、belief-conditioned reward、leave-one-turn attribution 或 provenance-guided credit；
 - 首次用不确定性控制工具调用、检索预算、证据选择或停止；
 - 首次动态切换 deep/wide 搜索；
+- 首次用 semantic regions、UCB 或 $\epsilon$-greedy 平衡 deep-research coverage；
+- 首次发现 query string 不同但 evidence set 等价，或首次用结构化菜单做 non-myopic search credit；
+- 首次用 verified/unresolved constraints 做递归 follow-up、研究状态压缩或 key-step bonus；
 - 首次把 table、coverage map 或 evidence graph 作为搜索状态；
 - 低熵意味着正确、证据充分或集合完整；
 - Good–Turing/capture–recapture 在搜索引擎偏置下给出无偏全集估计；
@@ -657,6 +666,13 @@ B_t=\{p(A),\ p(M\mid \mathcal D_t),\ p(R_e),\ p(Y_{e,c})\}_{e,c}.
 - 输出至少包括：预测剩余有效行数区间、unseen probability mass、`Pr(row recall < target)`。
 - 搜索结果不是 i.i.d.；估计器名称必须写成 “coverage-risk proxy/calibrated posterior”，除非偏置假设得到验证。
 
+#### 证据等价与 semantic regions
+
+- 对 query intent、规范 URL、claim/evidence set 和 source-dependency 建立等价类；新 query string 若只返回已有等价类，不增加 discovery credit，也不重复降低 unseen risk。
+- semantic region 只能由可见问题、已检索文本与 embedding/cluster 产生，禁止使用 benchmark category、split label、gold、evaluator 或 score。
+- region selection 至少比较 random、LLM policy、Bayesian $\epsilon$-greedy、Bayes-UCB 与四层风险条件化 portfolio；若 region reachability 已漏真值，单独报告上界，不能把 controller 失败归因于 entropy。
+- 这些机制继承 Harness-G 与 Baikal；候选贡献仅是与四层开放世界任务风险的联合建模和 DeepWide 表格指标验证。
+
 #### 行资格 $R_e$
 
 - 对每个约束维护 support / contradict / unknown 命题与来源。
@@ -698,6 +714,7 @@ $L_{output}$ 不是第五个 epistemic belief layer。它是从四层信念到 b
 | `fill_cell(e,c)` | $Y_{e,c}$ | 值与直接证据 span |
 | `falsify_cell(e,c)` | $Y_{e,c}$ | 否定查询、冲突值 |
 | `read_page(url)` | 多层 | 正文、结构化表、上下文 |
+| `switch_region(r)` | $M$ 与局部 $A/R/Y$ | 新 semantic region 的证据与边际覆盖 |
 | `stop_or_abstain` | 全局 | 最终表与未决标记 |
 
 ### 4.4 控制目标
@@ -881,6 +898,8 @@ $\operatorname{RelIG}$ 只计算与 $A,M,R,Y$ 有关的信息，$c_t^{\mathrm{pr
 - unique source count/diversity；
 - recent yield、duplicate rate；
 - Good–Turing/coverage/capture features；
+- Harness-G 式 query/evidence-set equivalence、有限 action menu；
+- Baikal 式 semantic-region random、LLM、Bayes-UCB policy；
 - 组合模型与单一 LLM judge。
 
 校准器（temperature/isotonic/Platt 等）只在 dev fit；在 validation/test 冻结。用 bootstrap 95% CI 报告 paired difference，不只报单点。
@@ -927,7 +946,9 @@ $\operatorname{RelIG}$ 只计算与 $A,M,R,Y$ 有关的信息，$c_t^{\mathrm{pr
 6. STAMP first-exposure provenance；
 7. RICE-PO local counterfactual；
 8. CVT-RL-style fixed-continuation contribution；
-9. OWIC full 与各组件。
+9. Harness-G Structured Non-myopic Credit；
+10. AREX-style annotated key-step bonus；
+11. OWIC full 与各组件。
 
 主指标是 signed contribution accuracy、Spearman、top-20% pivotal-step recall、AUROC（有益/有害）、Brier/ECE 和单位 counterfactual rollout 成本。单列六类压力样本：无关新奇、重复错误、熵升纠错、延迟显效、两步协同、删除 OOD。
 
@@ -951,7 +972,10 @@ I_{ij}=v(\{i,j\})-v(\{i\})-v(\{j\})+v(\varnothing).
 6. same action space + entropy only；
 7. full hierarchical risk/EIG controller；
 8. ECR-style finite-hypothesis controller；
-9. TASR-style answer-stability stopping。
+9. TASR-style answer-stability stopping；
+10. Harness-G-style evidence-equivalence menu；
+11. Baikal random-region / Bayes-UCB；
+12. full risk controller + evidence equivalence + semantic-region portfolio。
 
 只有 Phase D1 过门后才跑 controller 全量。
 
@@ -965,9 +989,11 @@ I_{ij}=v(\{i,j\})-v(\{i\})-v(\{j\})+v(\varnothing).
 4. IGPO 或 TRACE-style gold-log-score credit；
 5. STAMP provenance credit；
 6. strongest feasible counterfactual baseline；
-7. OWIC-risk only；
-8. OWIC full；
-9. OWIC 去 counterfactual / 去 provenance / 去 unseen mass。
+7. Harness-G SNC；
+8. AREX key-step bonus；
+9. OWIC-risk only；
+10. OWIC full；
+11. OWIC 去 counterfactual / 去 provenance / 去 unseen mass / 去 evidence equivalence。
 
 先用 1.5B–4B backbone、固定 20–30K train trajectories、3 seeds 做 pilot。主比较是 OWIC full vs 同训练预算下最强 credit baseline，不允许只和 outcome-only 比。除 held-out task metrics 外，报告训练 sample efficiency、gradient/advantage variance、credit sparsity、effective-step ratio、KL、OOD intervention rate 和 reward hacking。
 
@@ -980,6 +1006,9 @@ I_{ij}=v(\{i,j\})-v(\{i\})-v(\{j\})+v(\varnothing).
 - Web2BigTable；
 - WebSwarm；
 - SearchOS。
+- AREX；
+- Harness-G；
+- Baikal。
 
 优先在相同骨干、search/page tools、并发、max tool calls、token、wall-clock、attempts 下运行。若官方系统无法复现，分成：
 
@@ -1177,7 +1206,8 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 - 至少两个机制消融符合 RQ4 预测；
 - 人工 evidence audit 不显示 precision 明显恶化；
 - 系统级讨论覆盖 WebSwarm、SearchOS、ECR、TaS、A-MapReduce。
-- 若标题包含 credit/causal，Gate 2B 与 3B 必须同时通过，且讨论 ECHO、TRACE、LOTAPO、STAMP、RICE-PO、SIOP、CVT-RL。
+- 系统级讨论还必须覆盖 AREX、Harness-G 与 Baikal，并分别报告搜索决策、evidence acquisition、synthesis/verification 和 output-contract failure。
+- 若标题包含 credit/causal，Gate 2B 与 3B 必须同时通过，且讨论 ECHO、TRACE、LOTAPO、STAMP、RICE-PO、SIOP、CVT-RL、AREX key-step bonus 与 Harness-G SNC。
 
 失败处理：按证据降级为 UQ diagnostic、negative result 或 engineering report；不得保留过强标题/摘要。
 
@@ -1187,17 +1217,17 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 
 | M | 目标 | Owner | 时间 | 预算上限 | 产物 | 状态 |
 |---|---|---|---|---:|---|---|
-| M0 | 基线、官方评测、文献/novelty audit | 当前会话 + 待确认 PI | 已完成至 2026-07-21 | 已发生，待补账 | `survey.md`、基线 scripts/results | 完成 |
+| M0 | 基线、官方评测、文献/novelty audit | 当前会话 + 待确认 PI | 已更新至 2026-07-31 | 已发生，待补账 | `survey.md`、`.research/literature_matrix.md`、基线 scripts/results | 完成（持续增量） |
 | M1 | 严格 runtime/eval 隔离与正文 evidence pipeline | 当前会话 + TBD owner | 已实现 manifest 隔离、HTML/PDF 正文、query-local citation provenance 与历史 forward preflight；精确 span/STC 待做 | TBD | `src/deepwide_agent`、evaluator、no-leak tests | 部分完成 |
 | M2 | 表格/evidence state 与 replay | 当前会话 + TBD owner | V2.29.0 schema 37、单题 checkpoint、hosted trace 去重、failure trace 持久化、anchor-only replay 和 pinned V2.25 closed-domain replay 已可运行；20-task replay pack 待做 | TBD | state schema、20-task replay pack | 部分完成 |
 | M3 | 四层信号数据与校准 | TBD | 2 周 | TBD | shadow signal dataset、calibration report、replay receipt | PAV/terminal calibrator、task-cluster split/bootstrap、provenance budget 与 replay verifier 已实现；真实匿名 development labels/bundle 尚无，Gate 1 未评估 |
 | M4A | Counterfactual action-value pilot | TBD | 1–2 周 | TBD | sealed action slates、propensity、gain report、model replay receipt | task-cluster-disjoint fitter/calibrator/audit/replay verifier 已实现；真实 prospective slate 与 equal-cost arm 数据仍为 0 |
 | M4B | Step-credit intervention audit set | TBD | 2 周 | TBD | 300-step interventions、credit report | fixed-continuation bundle/receipt contract 已实现；300 个有效 step 与六类 stress family 尚未采集 |
-| M5A | Heuristic 与 EIG controller | TBD | 1 周 | TBD | controllers、unit tests | 未开始 |
+| M5A | Heuristic、EIG、evidence-equivalence 与 region controller | TBD | 1 周 | TBD | controllers、unit tests | 未开始；Harness-G/Baikal baseline 已写入协议 |
 | M5B | OWIC estimator 与 advantage modulation | TBD | 1–2 周 | TBD | credit module、intervention tests | 未开始 |
 | M6A | 50-task online controller pilot / Gate 3A | TBD | 1 周 | TBD | paired report、Pareto plots | 未开始 |
 | M6B | 3-seed credit-training pilot / Gate 3B | TBD | 2 周 | TBD | checkpoints、learning curves、credit audit | 未开始 |
-| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact | 进行中（infra-zero 1 已封存；remaining-S01 active；S02→S03→devval 排队） |
+| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact | 进行中（internal-test 156 已终态；dev+validation S04 active；总计156/220） |
 | M8 | 论文写作与审计 | TBD | 1–2 周 | TBD | manuscript、claim/evidence ledger | 未开始 |
 
 ### M1 推荐目录
@@ -1279,6 +1309,8 @@ outputs/runs/<run_id>/
 | LLM 内部 entropy 失校准 | 低熵错停 | Brier/ECE、QuCo/TASR baseline | 外部统计、校准、`OTHER`、abstain |
 | 初始假设漏真值 | ECR 式错误收敛 | top-k coverage、open-set stress | dynamic regeneration、OTHER mass |
 | 搜索样本非 i.i.d. | unseen estimator 偏置 | source/query block sensitivity | block capture features + held-out calibration |
+| query 字符不同但 evidence set 等价 | 假探索、虚假 discovery credit | intent/URL/claim-set overlap | evidence equivalence class、有限 menu、重复动作零 discovery credit |
+| semantic-region reachability 漏真值 | bandit 无法恢复缺失区域 | gold-free reachability proxy；终态后离线上界 | 增大 retrieval depth、OTHER region、单列 reachability 上界 |
 | 镜像/SEO 伪多数 | 虚假 entropy drop | content hash/domain graph | source dependence correction |
 | 反证使 entropy 上升 | controller 拒绝有益动作 | contradiction stress | 优化 task risk，不要求单调 entropy |
 | 无关/对抗内容产生高 surprise | 奖励噪声步骤 | relevance + intervention audit | RelIG、outcome gate、harm penalty |
@@ -1300,7 +1332,9 @@ outputs/runs/<run_id>/
 
 | 候选贡献 | 所需证据 | 当前状态 |
 |---|---|---|
-| 四层开放世界 DeepWide belief formulation | 明确定义、与 ECR/SearchOS/WebSwarm 差异 | 理论草案；V2 离散状态不是概率 belief |
+| 四层开放世界 DeepWide belief formulation | 明确定义、与 ECR/SearchOS/WebSwarm/AREX/Harness-G/Baikal 差异 | 理论草案；V2 离散状态不是概率 belief |
+| evidence-equivalence + risk 联合控制 | 相对 Harness-G menu/SNC 的同预算消融 | 文献约束与接口设计已有；未实现、无结果 |
+| semantic-region + risk portfolio | 相对 random/LLM/Bayes-UCB region policy | 文献约束与动作设计已有；未实现、无结果 |
 | 校准的 unseen-mass/coverage posterior | Gate 1 coverage 指标 | V2.40.9 已实现 missingness-aware proxy calibrator 与 recent-yield baseline gate；真实 prospective Gate 1 尚未评估，不能称 posterior 已验证 |
 | 风险加权 EIG/cost controller | Gate 2A + Gate 3A | context-specific 七动作 response model 与 Gate 2A 评估器已实现；online controller 仍未设计/集成，须真实 Gate 1+2A 通过后另行预注册 |
 | 同预算质量–成本改进 | 全量 paired test | 无结果 |
