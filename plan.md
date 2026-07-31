@@ -1,10 +1,18 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.24
+> 版本：5.25
 >
-> 更新：2026-07-31 10:53 UTC
+> 更新：2026-07-31 11:02 UTC
 >
-> 当前覆盖：**V2.42.05 已在不读取 live decision/status、benchmark 内容或结果的前提下，完成 V2.42.00 全部 36 个冻结 decision 的 Markdown rebase feasibility audit：3 个 identity handoff ready，2 个 P12 历史字节路径仍需 post-decision binding，2 个 schema76/77 Markdown 路径 hook-compatible 但未 publication，2 个 Markdown+scope 路径另需零字节 namespace alias，27 个含 search/entropy 的路径继续因 implementation authority 阻塞。该审计不构建 candidate、不运行 package gate，也不授权 benchmark forward/full220。现有 R1 与 watcher 全部保留；正式 DeepWideBench 全集分数、提升或 SOTA 仍不存在。**
+> 当前覆盖：**V2.42.05 已在不读取 live decision/status、benchmark 内容或结果的前提下，完成 V2.42.00 全部 36 个冻结 decision 的 Markdown rebase feasibility audit：3 个 identity handoff ready，2 个 P12 历史字节路径仍需 post-decision binding，2 个 schema76/77 Markdown 路径 hook-compatible 但未 publication，2 个 Markdown+scope 路径另需零字节 namespace alias，27 个含 search/entropy 的路径继续因 implementation authority 阻塞。该审计不构建 candidate、不运行 package gate，也不授权 benchmark forward/full220。现有 R1 与 watcher 全部保留；最新 label-blind 安全聚合为 `166/220 = 34 completed + 132 failed`，剩余 54，正式 DeepWideBench 全集分数、提升或 SOTA 仍不存在。**
+>
+> **5.25 AdaKP、transition/agent credit 与只读工具 speculation 增量（2026-07-31 11:02 UTC）：对 07-21 至 07-31 的 agentic/recursive/parallel search、information gain、entropy、credit assignment 和 process reward 做三组日期限定查询，并对 07-30 至 07-31 的五个 CS 类别追加 500 条召回。与 survey 既有 129 篇按 arXiv ID 去重后，全文核验 AdaKP 与 Self-Speculating Agent，以一手摘要核验 TAPO 与 MARS-RA。[130–133]
+>
+> AdaKP 已直接使用 next-token entropy reduction 选择由 gold solution 抽取的 knowledge points，并以 leave-one-out answer accuracy 做训练前 Spearman gate；它支持“熵差可作低成本 selection proxy”，但 proxy 冻结在初始 policy、依赖 privileged hint pool，且不估计开放 web step contribution。TAPO 的 next-observation prediction 是 transition auxiliary objective，MARS-RA 的 pairwise rank aggregation 是 agent-level relative credit；两者也不等于同一搜索步骤的 temporal intervention。Phase C2/D2 因而新增三条非等价对照，分别记录 privileged-information budget、current-policy drift 和 credit granularity，不允许把最终平均分混写成 OWIC 机制证据。
+>
+> Self-Speculating Agent 只为 read-only tool call 提供延迟隐藏候选。其论文评测保持普通 agent trajectory，只验证预测下一 tool name/arguments 的 Hit@1 与 task compatibility，没有实际预执行预测调用，因此没有净 wall-clock、额外容量或错误请求成本证据。未来仅在 R1 自然 release、`1/2/4/8/12 × 3 waves` 容量冻结后增加独立 latency arm，记录命中、取消/浪费请求、tail latency 与质量；不得对可改变外部状态的工具 speculation，也不得接入当前冻结全集。
+>
+> 11:02 UTC 的安全状态为 R1 `166/220`、checkpoint fresh、`critical=[]`、唯一 worker PID `1350579` 继续占用 9878；V2.41.94/96 仍 `waiting_for_r1_release`，V2.41.97–99 等待 capacity freeze，V2.42.00 等待 quality chain，V2.42.04 等待 terminal decision。全部核心 PID 保留，未 signal/restart/resume/rerun，未启动重复全集或容量探针。高并发仍须等待现有 exact-220 自然终态后再按冻结阶梯选择整次固定档位。**
 >
 > **5.24 V2.42.05 Markdown rebase feasibility audit（2026-07-31 10:53 UTC）：纯 repo-local 审计从 V2.42.01 的 frozen in-memory DAG 逐 byte 重放 schema69/70/76/77，并只用 V2.42.00 已冻结的 content-free component names 分类 36 个 decision。分类计数固定为 `3/2/2/2/27`：3 个空组件 identity handoff；2 个 P12 schema69/70 历史字节路径需未来 selected-package binding；schema76/77 各有一个 Markdown-only 路径可复用生产 hook、各有一个 Markdown+scope 路径还需 namespace alias；其余 27 个组合只要含 search-yield 或 entropy 就在 publication 前 fail-closed。
 >
@@ -1073,6 +1081,8 @@ HiEviDR reference graph、标准 claim 与答案只在预测冻结后的离线 e
 20. CHILL-Harness-style intervention-relative workflow advantage；
 21. OWIC full 与各组件。
 
+另设三条不与 temporal step credit 混为一类的 comparator。AdaKP-style arm 只在离线 privileged oracle 中使用 gold-derived hint/evidence pool，并另做 label-blind candidate pool；entropy proxy 必须在 held-out intervention-defined task value 上重新过门。TAPO-style arm 只增加 action-conditioned next-observation auxiliary loss。MARS-RA-style arm 只在 multi-agent 子集中比较 pairwise agent ranking、absolute contribution score 与 Shapley approximation，并保持同一 terminal reward 与总预算。[130–132]
+
 主指标是 signed contribution accuracy、Spearman、top-20% pivotal-step recall、AUROC（有益/有害）、Brier/ECE 和单位 counterfactual rollout 成本。对 evidence step 另报 terminal delta、next-action enablement delta 与 cost delta 的分项相关和符号一致性。单列七类压力样本：无关新奇、重复错误、熵升纠错、延迟显效、bridge evidence、两步协同、删除 OOD。
 
 任何 entropy、likelihood/KL shift 或 privileged-teacher shift 只可调节 credit 幅度或不确定性，不能自行确定正负方向。正负方向由冻结 verifier/terminal outcome 决定；另做 correct-vs-incorrect opposing-outcome、null-feedback 与 surface-token substitution 审计。teacher continuation 必须从 student-reached state 出发并通过环境终局验证，否则只列为 privileged score，不计 task credit。
@@ -1112,6 +1122,8 @@ I_{ij}=v(\{i,j\})-v(\{i\})-v(\{j\})+v(\varnothing).
 
 同预算不只指相同上限。按每个方法实际消耗的生成 token 在 independent-search sampling 曲线上插值匹配，同时单列 input token、search/fetch/page reads、最大串行深度和 wall-clock；开放表格的 simple-sampling 聚合规则在结果前冻结为 evidence-equivalence 去重、canonical-row merge 和逐格 provenance vote，不能事后选聚合器。每个 adaptive 分支还报告触发率、premature-stop error、correct-intermediate-overwrite 与 source/evidence 相关修正后的 effective branch count。若 adaptive 方法不超过该简单采样 Pareto 前沿，不能把额外质量归因于 swarm/refinement/controller。[104–109]
 
+只读工具另设 Self-Speculating Agent latency arm，但必须晚于容量 freeze，且不得改变主质量 run 的 action sequence。[133] 对每个预测调用记录 exact name+arguments hit、预执行是否真正发生、取消/丢弃、额外 API 请求、排队与 tail latency；净延迟只按真实并行执行测量，离线 Hit@1 不得代替。任何具有写入、提交、状态迁移或不可逆副作用的工具均禁止 speculation。
+
 ### 6.6 Phase D2：受控 credit-training pilot
 
 只有 Gate 2B 通过才启动。先在 closed/replay web 环境训练小规模模型，避免 live-web 漂移与训练成本掩盖 credit 机制。所有方法共享初始化、rollouts、terminal reward、batch、optimizer、训练 tokens 和 tool corpus：
@@ -1133,9 +1145,12 @@ I_{ij}=v(\{i,j\})-v(\{i\})-v(\{j\})+v(\varnothing).
 15. CSCR sensitivity reallocation；
 16. Bridge Evidence/CTU-style evidence-step target；
 17. CHILL-style intervention-relative workflow advantage；
-18. OWIC-risk only；
-19. OWIC full；
-20. OWIC 去 counterfactual / 去 provenance / 去 unseen mass / 去 evidence equivalence。
+18. AdaKP-style entropy-proxy candidate selection（privileged oracle 与 label-blind pool 分开）；
+19. TAPO-style next-observation auxiliary；
+20. MARS-RA pairwise agent-ranking shaping（仅 multi-agent 子集）；
+21. OWIC-risk only；
+22. OWIC full；
+23. OWIC 去 counterfactual / 去 provenance / 去 unseen mass / 去 evidence equivalence。
 
 先用 1.5B–4B backbone、固定 20–30K train trajectories、3 seeds 做 pilot。主比较是 OWIC full vs 同训练预算下最强 credit baseline，不允许只和 outcome-only 比。除 held-out task metrics 外，报告训练 sample efficiency、gradient/advantage variance、credit sparsity、effective-step ratio、KL、OOD intervention rate 和 reward hacking。
 
@@ -1367,6 +1382,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 - 与 OVCSD 式 state-aligned outcome-verified continuation、GRSD group contrast、TTEL null-feedback contrast、CSCR sensitivity reallocation 和适用时的 SkillRise downstream-return credit 比较；
 - evidence-step 子集必须与 Bridge Evidence/CTU 对照，分开报告 terminal-task、next-action enablement 和 cost delta；CIGPO 只列为 gold-conditioned privileged training oracle，并计入 privileged-information budget。[117,118]
 - opposing-outcome shift、surface substitution 或 null-feedback stress 下，entropy/likelihood shift 不得翻转 verifier 决定的方向；无法满足时 entropy 仅作 sensitivity/uncertainty diagnostic。
+- AdaKP-style entropy proxy 必须在 held-out intervention-defined task contribution 上重新通过预注册 rank-correlation gate；gold-derived candidate/LOO gate 只列 privileged oracle。若 label-blind pool 不过门，entropy selection 降级为诊断。[130]
 
 失败处理：不启动 credit RL。若 task-risk change 有效但 causal component 无效，方法降级为 outcome-aligned potential shaping；若只有 entropy 有效，降级为 epistemic diagnostic，不使用 causal/credit 标题。
 
@@ -1409,6 +1425,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 - controller 主张必须讨论 Search as Computation Allocation，并报告 pure IG、myopic VOC 与 finite-depth dynamic VOC 的同预算差异。
 - 停止主张必须比较 CAM-DF-lite；过程可靠性必须按 HiEviDR/LEDGERMIND/LayerRAG 的 evidence、claim、answer、tool-contract、authorization 与 session 层分别报告。
 - 若标题包含 credit/causal，Gate 2B 与 3B 必须同时通过，且讨论 ECHO、TRACE、CIGPO、LOTAPO、STAMP、RICE-PO、Bridge Evidence/CTU、SIOP、CVT-RL、CHILL-Harness、AREX key-step bonus、Harness-G SNC、CAST state-value、AttriMem attribution、SkillRise、GRSD、TTEL、OVCSD 与 CSCR。
+- 训练/多智能体 credit 还须区分 AdaKP entropy selection、TAPO transition auxiliary 与 MARS-RA agent ranking；吞吐讨论须把 Self-Speculating Agent 的离线 next-call match 与真实 wall-clock/capacity 分开。[130–133]
 
 失败处理：按证据降级为 UQ diagnostic、negative result 或 engineering report；不得保留过强标题/摘要。
 
@@ -1428,7 +1445,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 | M5B | OWIC estimator 与 verifier-sign-preserving advantage modulation | TBD | 1–2 周 | TBD | credit module、intervention tests | 未开始；CIGPO/Bridge Evidence/CHILL/SkillRise/GRSD/TTEL/OVCSD/CSCR 对照已写入协议 |
 | M6A | 50-task online controller pilot / Gate 3A | TBD | 1 周 | TBD | paired report、Pareto plots | 未开始 |
 | M6B | 3-seed credit-training pilot / Gate 3B | TBD | 2 周 | TBD | checkpoints、learning curves、credit audit | 未开始 |
-| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact；下一 fresh all-220 capacity freeze、唯一继承槽与固定并行计划 | 进行中（权威聚合 164/220；dev+validation S04 active；V2.41.96 wait-only；V2.41.97/98/99 等待 capacity freeze；V2.42.00 等待六源终态） |
+| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact；下一 fresh all-220 capacity freeze、唯一继承槽与固定并行计划 | 进行中（权威聚合 166/220；dev+validation S04 active；V2.41.96 wait-only；V2.41.97/98/99 等待 capacity freeze；V2.42.00 等待六源终态） |
 | M8 | 论文写作与审计 | TBD | 1–2 周 | TBD | manuscript、claim/evidence ledger | 未开始 |
 
 ### M1 推荐目录
@@ -1533,6 +1550,7 @@ outputs/runs/<run_id>/
 | adaptive 分支不触发或错误早停 | 名义 controller 实际退化、正确中间态被覆盖 | route/round engagement、PSE、correct-intermediate overwrite | fail-closed fallback；CAM-DF/SVR/simple-sampling 对照 |
 | sibling 错误与证据高度相关 | nominal agent 数虚增有效 width | source/evidence overlap、error correlation、effective branch count | 去重/去相关 portfolio；random/round-robin fallback |
 | 吞吐并发与单题协作混淆 | wall-clock 下降被误写成质量提升 | 分离 executor concurrency 与 per-task agent count | 容量阶梯只决定吞吐；质量机制独立消融 |
+| speculative tool call 抢占容量或产生副作用 | Hit@1 上升但净延迟/成本恶化，或重复写入外部状态 | 真实预执行 hit/waste/cancel/tail-latency 账本 | 仅只读工具；容量 freeze 后独立 arm；所有写入/不可逆工具禁止 speculation |
 | stale/wrong-session/tool-contract evidence | 有引用但状态无效 | LayerRAG 式 cross-layer fault injection | active session/authorization/tool receipt；按层验收，不给通用 credit |
 | repair 放大无来源内容 | 修复阶段引入新 hallucination | repair 前后 ledger diff | typed transition 与 provenance non-amplification gate |
 | 大 likelihood/entropy shift 只是 sensitivity | 错给表面 token 正向 credit | opposing-outcome/null-feedback/substitution audit | 保留 verifier 方向；shift 只调幅或作 diagnostic |
