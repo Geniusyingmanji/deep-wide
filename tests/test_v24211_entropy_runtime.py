@@ -381,13 +381,31 @@ class V24211EntropyRuntimeTests(unittest.TestCase):
         value = sealed_model(positive_context=None)
         tampered = copy.deepcopy(value)
         tampered["model_ready"] = False
-        with self.assertRaisesRegex(ValueError, "seal or provenance"):
+        with patch(
+            "deepwide_agent.v24211_entropy_runtime.PRODUCTION_PACKAGE_AUTHORIZED",
+            True,
+        ):
+            with self.assertRaisesRegex(ValueError, "seal or provenance"):
+                V24211EntropyRuntime(
+                    Model(),
+                    Search(),
+                    RuntimeConfig(),
+                    Path("/nonexistent-v24211-constructor"),
+                    entropy_action_model=tampered,
+                    entropy_action_model_sha256=str(value["model_sha256"]),
+                    entropy_action_model_job_manifest_sha256=SHA_B,
+                    entropy_selected_parent_manifest_sha256=SHA_C,
+                )
+
+    def test_unpublished_constructor_fails_before_model_validation(self) -> None:
+        value = sealed_model(positive_context=None)
+        with self.assertRaisesRegex(RuntimeError, "sealed production package"):
             V24211EntropyRuntime(
                 Model(),
                 Search(),
                 RuntimeConfig(),
-                Path("/nonexistent-v24211-constructor"),
-                entropy_action_model=tampered,
+                Path("/nonexistent-v24211-unpublished"),
+                entropy_action_model=value,
                 entropy_action_model_sha256=str(value["model_sha256"]),
                 entropy_action_model_job_manifest_sha256=SHA_B,
                 entropy_selected_parent_manifest_sha256=SHA_C,

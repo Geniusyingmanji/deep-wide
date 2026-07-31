@@ -112,6 +112,10 @@ class V24211EntropyRuntime(V24122TrueContinuationRuntime):
         **kwargs: Any,
     ) -> None:
         super().__init__(*args, **kwargs)
+        if PRODUCTION_PACKAGE_AUTHORIZED is not True:
+            raise RuntimeError(
+                "V2.42.11 runtime requires a sealed production package"
+            )
         if (
             entropy_policy_branch not in {"full_entropy", "no_entropy"}
             or not _is_sha256(entropy_action_model_sha256)
