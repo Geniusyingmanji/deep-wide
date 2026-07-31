@@ -1,10 +1,18 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.40
+> 版本：5.41
 >
-> 更新：2026-07-31 21:00 UTC
+> 更新：2026-07-31 21:44 UTC
 >
-> 当前覆盖：**V2.42.11–13 已冻结 label-blind entropy/VOC runtime 与 selected-component 链；V2.42.14 的错误路径 namespace 已 fail closed，V2.42.15 以新 namespace 恢复 joint-package 链且仍在等待 V2.42.13。V2.42.16 已安全激活 fresh cold-start paired dev64 package gate，V2.42.17 是不修改 V2.41.94/96 的唯一 post-gate capacity successor。V2.42.18 已冻结并激活唯一 single-owner fresh exact-220 executor，目前只读 V2.42.16 安全 envelope；execution-start、四个 fresh roots、lease、preflight、model/search、forward、mapping/evaluator 与 result 均未打开。V2.42.19 已冻结并激活独立的 post-terminal search-time-contamination watcher，只读 V2.42.18 的 preterminal 安全 envelope，尚未打开 manifest/evidence 或创建审计报告。R1 和全部上游健康 watcher 保留；2026-07-31 21:00 UTC 的权威 label-blind 快照仍为 `181/220 = 35 completed + 146 failed`，剩余 39。该值只是 forward 终态进度，不是 DeepWideBench 分数；released evaluator、Avg@4、提升、entropy/credit 效果和 SOTA 仍不存在。**
+> 当前覆盖：**V2.42.11–13 已冻结 label-blind entropy/VOC runtime 与 selected-component 链；V2.42.14 的错误路径 namespace 已 fail closed，V2.42.15 以新 namespace 恢复 joint-package 链且仍在等待 V2.42.13。V2.42.16 已安全激活 fresh cold-start paired dev64 package gate，V2.42.17 是不修改 V2.41.94/96 的唯一 post-gate capacity successor。V2.42.18 已冻结并激活唯一 single-owner fresh exact-220 executor，目前只读 V2.42.16 安全 envelope；execution-start、四个 fresh roots、lease、preflight、model/search、forward、mapping/evaluator 与 result 均未打开。V2.42.19/20 已分别冻结并激活 post-terminal contamination 与 source-dependency watcher；V2.42.20 当前只读 V2.42.19 的 preterminal 安全 envelope，尚未打开 task evidence 或创建审计 detail/report。R1 和全部上游健康 watcher保留；2026-07-31 21:40 UTC 的权威 label-blind 快照为 `183/220 = 35 completed + 148 failed`，剩余 37。该值只是 forward 终态进度，不是 DeepWideBench 分数；released evaluator、Avg@4、提升、entropy/credit 效果和 SOTA 仍不存在。**
+>
+> **5.41 V2.42.20 来源依赖/镜像聚类、安全激活与相关证据近邻（2026-07-31 21:44 UTC）：V2.42.20 是 V2.42.19 之后的纯 post-terminal audit，不是第二个 benchmark executor，也不回改 V2.42.18/19 的冻结面。输入只投影同题终态 evidence 的 `{id, kind, url, source_family, title, text, fingerprint}`；question、query、prediction、renderer、mapping、gold、category、question_type、split 和 evaluator score 均不读取。只有 `kind=page` 进入宽度估计，失败题缺失 state 按零证据计，并始终保留 exact-220 分母。
+>
+> 硬依赖边包括规范 URL 相同、内容指纹相同、字符 shingle near-duplicate、redirect target 等价，以及跨 source-family 的相同路径加高内容相似；这些边的连通分量各计一次。软依赖边包括同 source family、至少 96 个规范化字符的共享 quote、共享结构化记录和跨域路径镜像信号；同 host/family **单独永不硬合并**，避免把同站独立页面误判为镜像。冻结 sensitivity 使用 `n_hard² / (n_hard + 2Σ max pairwise ρ)`，其中 same-family/shared-quote/shared-record/path-mirror 的 `ρ` 分别为 `0.20/0.45/0.30/0.25`。该公式是预注册折扣，不是来源因果谱系或 correctness 估计；公开 `results/` 只含聚合/哈希，逐题 hashed receipt 留在 `outputs/`，不输出页面正文、原始 URL、evidence ID 或 task ID，也不删除样本或重算主分数。
+>
+> protocol SHA `7297cd10…a6555`、decision SHA `63e11c55…53290`、12-file control manifest SHA `0402f617…7bf7`；activation SHA `cb3dbdc9…744c`、wait-audit SHA `e5c5f8c8…fb40`。唯一 isolated watcher PID/start ticks `3216528/748157819`，当前 `waiting_for_v24219_contamination_terminal / parent_preterminal`。冻结前专项 `26/26`，冻结后可重放 `25/25`；V2.42.18–20 稳定联合回归 `61/61`。全仓 discovery 在 900 秒上限被 timeout 收回，已观察到的非通过落在历史 live-state/pristine suites，因此不能冒充全绿；V2.42.20 新测试均通过。实现、冻结、激活提交 `8d7baf5 / 451022f / c393266` 已推送，所有原健康 benchmark/watcher 未 signal、restart、resume 或复制。
+>
+> 文献清单由 162 扩为 164。[163,164] CACD 已直接用 cross-encoder、attention-entropy New Information Score 与多候选投票做固定 RAG chunk 去重，因此“用熵识别新内容/重复内容”不是新颖点；它未建模 live-web 来源谱系，且单数据集、经验阈值和整块删除限制不能外推到 DeepWide。*The Cost of Consensus* 又在简化多智能体搜索中表明 shared belief 可一致但错误，并提出 entropy-delta communication gate；因此 sibling consensus、低 belief entropy 或少通信都不能自动获得正 credit。新增强对照为 `exact/minhash/CACD-style content dedup / V2.42.20 source graph`，并单列 belief alignment、独立来源与终局 outcome。若来源校正不能在人工谱系小集上优于纯文本去重，或 entropy gate 在相关错误来源下增加错误共识，则来源/熵主张必须降级。**
 >
 > **5.40 V2.42.19 post-terminal contamination audit、安全激活与 context/latency 近邻补漏（2026-07-31 21:00 UTC）：V2.42.19 将 Search-Time Contamination 的审计冻结在 V2.42.18 exact-220 result 与 forward barrier 都封印之后。审计器不联网、不调用模型/搜索/evaluator、不申请 shared lease，也不修改 forward、result 或 watcher。输入只有 exact `{opaque_id, question}` manifest 与同题终态 evidence 的 `{id, kind, url, source_family, title, text, fingerprint}` 投影；query、prediction、mapping、gold、category、question_type、split 和 evaluator score 均不进入检测。query 本来由可见题面生成，因此 query–question 重叠不作为污染信号。
 >
@@ -764,11 +772,11 @@ V2.26 随后从剩余 10 个无历史 forward artifact 的 dev opaque ID 中按�
   `not_evaluable`，不能据此启用 controller。
 - V2.39.1 的唯一完成题在 component metrics 上明显高于此前多数 smoke，但样本只有一题、同批 completion 仅 1/2、整表 score 为 0，且新 occupant 路径未触发。它最多证明当前固定 pipeline 在某个开放行域任务上可以恢复 10 行和 20 个内部 supported value cells，不能证明跨题泛化、版本提升或机制因果效应。
 
-### 1.4 尚未实现
+### 1.4 尚未实现或尚无终态证据
 
 - 精确 DOM/PDF evidence span 与 claim-level evidence graph；V2.21.1 能抽取正文，
   但当前仍保存截断正文块，且历史 V2.20.3/20.4 replay 未保存追加 search batch。
-- source dependency/镜像聚类；V2.42.19 scanner 已冻结，尚待 exact-220 终态报告、EAL 人工复核和整页 capture 盲区审计。
+- V2.42.20 已冻结 exact/near-duplicate 与软 source-dependency 聚类，但尚待 exact-220 后生成聚合报告；跨域真实谱系人工标注、CACD-style semantic dedup 对照、V2.42.19 EAL 人工复核和整页 capture 盲区审计仍未完成。
 - 经过真实 development/held-out 数据验证的 unseen-mass、row eligibility、cell semantic 与 terminal-risk 校准；当前实现包含 schema、proxy 和 synthetic tests，但没有可发布的实证 calibration。
 - 通过 Gate-2A 的 action-response estimator。V2.42.11 runtime 已能执行选择，但模型尚未由真实 prospective same-state/equal-cost 数据解锁。
 - selected entropy component 的双父终态 publication、V2.42.15 terminal joint package publication、独立同 dev64 package gate 和 single-owner exact-220 execution。joint-package builder/validator 已实现并冻结，但父链未终态，故真实 package 仍不存在。
@@ -1577,7 +1585,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 | M | 目标 | Owner | 时间 | 预算上限 | 产物 | 状态 |
 |---|---|---|---|---:|---|---|
 | M0 | 基线、官方评测、文献/novelty audit | 当前会话 + 待确认 PI | 已更新至 2026-07-31（156 篇） | 已发生，待补账 | `survey.md`、`.research/literature_matrix.md`、基线 scripts/results | 完成（持续增量） |
-| M1 | 严格 runtime/eval 隔离与正文 evidence pipeline | 当前会话 + TBD owner | 已实现 manifest 隔离、HTML/PDF 正文、query-local citation provenance 与历史 forward preflight；精确 span/STC 待做 | TBD | `src/deepwide_agent`、evaluator、no-leak tests | 部分完成 |
+| M1 | 严格 runtime/eval 隔离与正文 evidence pipeline | 当前会话 + TBD owner | 已实现 manifest 隔离、HTML/PDF 正文、query-local citation provenance 与历史 forward preflight；V2.42.19 scanner 已冻结，终态报告、人工 EAL 与整页精确 span 待做 | TBD | `src/deepwide_agent`、evaluator、no-leak tests | 部分完成 |
 | M2 | 表格/evidence state 与 replay | 当前会话 + TBD owner | V2.29.0 schema 37、单题 checkpoint、hosted trace 去重、failure trace 持久化、anchor-only replay 和 pinned V2.25 closed-domain replay 已可运行；20-task replay pack 待做 | TBD | state schema、20-task replay pack | 部分完成 |
 | M3 | 四层信号数据与校准 | TBD | 2 周 | TBD | shadow signal dataset、calibration report、replay receipt | PAV/terminal calibrator、task-cluster split/bootstrap、provenance budget 与 replay verifier 已实现；真实匿名 development labels/bundle 尚无，Gate 1 未评估 |
 | M4A | Counterfactual action-value pilot | TBD | 1–2 周 | TBD | sealed action slates、propensity、gain report、model replay receipt | task-cluster-disjoint fitter/calibrator/audit/replay verifier 已实现；真实 prospective slate 与 equal-cost arm 数据仍为 0 |
@@ -1586,7 +1594,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 | M5B | OWIC estimator 与 verifier-sign-preserving advantage modulation | TBD | 1–2 周 | TBD | credit module、intervention tests | 未开始；CIGPO/Bridge Evidence/CHILL/SkillRise/GRSD/TTEL/OVCSD/CSCR 对照已写入协议 |
 | M6A | 50-task online controller pilot / Gate 3A | TBD | 1 周 | TBD | paired report、Pareto plots | 未开始 |
 | M6B | 3-seed credit-training pilot / Gate 3B | TBD | 2 周 | TBD | checkpoints、learning curves、credit audit | 未开始 |
-| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact；下一 fresh all-220 package gate、capacity freeze、唯一 owner 与固定并行计划 | 进行中（最近权威安全聚合 177/220；R1 forward active；V2.41.94/96 等 R1 release；V2.42.10/13/15 等 quality、selected publication 与 recovered joint package；正式分数仍无） |
+| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact；下一 fresh all-220 package gate、capacity freeze、唯一 owner 与固定并行计划 | 进行中（最近权威安全聚合 183/220；R1 forward active；V2.41.94/96 等 R1 release；V2.42.10/13/15 等 quality、selected publication 与 recovered joint package；V2.42.19/20 等 post-terminal audit；正式分数仍无） |
 | M8 | 论文写作与审计 | TBD | 1–2 周 | TBD | manuscript、claim/evidence ledger | 未开始 |
 
 ### M1 推荐目录
@@ -1764,7 +1772,7 @@ Rollout 2 的目的，是在 R1 释放评分后验证 P0/P1/P2 的全集效果�
 3. 分别报告 internal-test 156、consumed dev+validation 64 与 all-220；报告 completed/failed、SR、Entity、Row/Item/Column P/R/F1、模型/搜索调用、tokens、fetches、墙钟及账本一致性。
 4. 将 rollout 1 与历史 GPT-5.5 单 rollout 220/220 及论文强基线比较。只有在同协议指标有竞争力且污染/证据审计通过后，才追加 rollout 2–4 并计算 Avg@4/Max@4/Pass@4；否则先修复通用失败簇。
 5. 逐列汇总 planned queries、新页面、支持格数和单位成本，验证列公平是否产生实际 evidence yield，避免把“query 覆盖”误写成“质量提升”。
-6. entropy/credit 继续 `none_shadow_only`；从本次冻结轨迹准备 30–50 个 state-matched intervention，并补 exact evidence span、source-dependency clustering、V2.42.19 post-terminal report、EAL 人工复核与整页 capture 盲区审计。
+6. entropy/credit 继续 `none_shadow_only`；从本次冻结轨迹准备 30–50 个 state-matched intervention，并补 exact evidence span、V2.42.20 source-dependency report 与人工谱系校准、V2.42.19 post-terminal report、EAL 人工复核和整页 capture 盲区审计。
 
 当前全集运行拓扑固定如下，任何后续状态汇报都必须按这五段汇总，不能把首题隐藏或补跑：
 
