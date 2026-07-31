@@ -60,9 +60,15 @@ Table-as-Search 把搜索过程外化为表格：行是候选实体，列是约�
 
 2026 年 7 月的 WebSwarm 进一步削弱了“动态深/宽切换”本身的新颖性。它在推理中渐进构造递归委派树，每个节点选择 atom、deep、wide 或 entity_collect 模式；Web-Probing 先判断相关信息在网页上集中还是分散，同质兄弟节点之间复用轨迹经验。在 DeepWideSearch-EN、同为 GLM-4.5 骨干时，WebSwarm 报告 SR 6.58、Row F1 29.64、Item F1 58.40，相对 ReAct 分别提高 2.63、9.56、11.77 个百分点。[5] 这些数字证明的是该论文设置中的受控差值，不能直接与本项目的 GPT-5.5 全量中英混合单次运行比较。
 
+WebSwarm 的公开实现进一步限制了这种比较。2026-07-18 的公开主分支 `40c9aaca...5717` 允许 `all` 或 `en_subset`，但其公开 TaskManager 默认跳过原始 core-entity gate，改用 WideSearch 表格评估；`resume_from` 的语义是重跑并覆盖已存在任务，而不是跳过已完成任务。论文结果又使用 76 题 English subset 和两轮均值，不是完整 220 题的四轮官方协议。因此，后续复现只能移植通用的四模式委派、Web-Probing 和同父 sibling experience，必须继续使用本项目冻结的 official evaluator、exact `52/52/52/64=220`、failure-as-zero、全新目录与 no-resume 合同。任何 benchmark-specific prompt、subset 名称或 evaluator 分支不得进入 forward routing。[5]
+
 SearchOS-V1 则把开放域信息搜寻建模为带引用的 relational schema completion，并用 Frontier Task、Evidence Graph、Coverage Map、Failure Memory 和 middleware 管理状态、覆盖与停滞。其案例明确指出“已知行的 cell coverage 达到 100%”仍可能漏掉大量应有行，因此还要独立做 row-scope audit。[6] 这正是本项目需要继承而不是重新宣称的洞见：已知单元格饱和与开放集合完整性是两个问题。
 
 WebSwarm 的消融给出一个直接工程教训。去掉 Web-Probing 后，WideSearch 与 DeepWideSearch 的 Item F1 没有下降，但 web-tool 调用分别从 137.03 增至 239.90、从 203.73 增至 331.39；去掉 sibling experience reuse 才出现较明显的质量下降。[5] 因而，网页结构探测首先应作为成本控制与动作选择基线，不能被当作质量机制本身。我们的 semantic-region 与 evidence-equivalence 诊断也必须分别报告质量和工具成本。
+
+递归委派还扩大了可靠性边界。FORGE 构造会连续影响后续研究计划的恶意文档链；在 25 个 query 上，五篇注入文档的 Network FORGE 达到 26.4% PRISM，并出现污染从表层 framing 向事实 premise 迁移的 depth migration。在 10-query defense subset 上，把每轮 follow-up 重新绑定 root query 的 RQA 将 PRISM 从 38.5% 降到 18.3%，但没有消除污染。[115] 这些数字只属于该攻击设置，不能外推为 DeepWide 的风险率。它们要求任何 WebSwarm-style child objective 同时保留 root scope、排除条件和 active evidence provenance，并在错误/互相支持的 sibling 组合上报告 branch contamination amplification。
+
+LLM judge 也不能只按一个总体 F1 选择。Citation Verifier 在 624 个 attribution–citation 单元上分别评估 relevance 与 factual support，共 1,248 个经人工复核的判定，其中 378 个为多 judge 分歧后人工裁决的 hard cases。GPT-5-mini 的 relevance pass-class F1 为 0.908、$\kappa=0.636$，但 factual-support 的各 judge 置信区间重叠；相近 F1 的模型仍有不同的 pass-rate drift、FPR 与 FNR。[116] 若把 judge 输出用于 controller gate 或 credit，主报告必须按维度校准并公开方向偏差，否则高 FNR 会系统性少给正确证据 credit，高 FPR 会奖励无支持证据。
 
 SciDataSailor 让“按熵自适应分支宽度”也不再是空白。它在可执行科学数据仓库上用 MCTS 合成轨迹，先以 strategy-level proposals 生成 tool probes，再把候选 prior entropy 与当前 step token entropy 归一化，映射到 $k_{min}$ 与 $k_{max}$ 之间的动态 child 数；token entropy 不可用时退回 prior entropy。[110] 该方法服务于训练数据合成而非 DeepWide 在线表格求解，且论文没有证明 entropy width 优于同预算 terminal-loss VOC。尽管任务不同，本项目必须加入固定 width、random width、SciDataSailor-style entropy width 与四层 VOC width 四个对照，并报告实际生成的分支数和去重后 evidence-set 数。
 
@@ -691,3 +697,5 @@ V2.19 针对这两个 label-blind 机制做了 evidence-continuity 修复。它�
 112. Xiong, F., Xue, L. & Lin, H. **Correcting What You Cannot See: Credit Assignment for Perception Distillation in Multimodal Reasoners.** arXiv:2607.28336 (2026). https://arxiv.org/abs/2607.28336
 113. Xu, J., Liu, M., Zhang, J., Goldstein, T. & Huang, F. **$\beta$-OPSD: Deriving with Policy Optimization, Training with Self-Distillation.** arXiv:2607.28582 (2026). https://arxiv.org/abs/2607.28582
 114. Sigillo, L. et al. **EMBL AI Librarian: Life-Sciences Knowledge Layer for AI Agents.** arXiv:2607.28229 (2026). https://arxiv.org/abs/2607.28229
+115. Pan, Y. et al. **FORGE: Research-Trajectory Hijacking Attacks on Deep Research Agents.** arXiv:2607.04718 (2026). https://arxiv.org/abs/2607.04718
+116. Leung, E., Lumer, E., Feld, C., Huber, A., Subbiah, V. K. & Paul, K. **Do You Need a Frontier Model as a Citation Verifier? Benchmarking Rubric LLMs for Deep-Research Source Attribution.** arXiv:2607.08700 (2026). https://arxiv.org/abs/2607.08700

@@ -1,10 +1,18 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.17
+> 版本：5.18
 >
-> 更新：2026-07-31 09:06 UTC
+> 更新：2026-07-31 09:34 UTC
 >
-> 当前覆盖：**V2.42.00 已 append-only 取代 V2.41.99 的平面继承规则并安全激活；V2.41.98/99/42.00 均健康。R1 权威聚合为 163/220，尚无正式 DeepWideBench 全集分数、提升或 SOTA。**
+> 当前覆盖：**V2.42.01 已从仓库内 bytes 重放 schema68→77 冻结 DAG 并逐阶段 byte-exact；V2.41.98/99/42.00 与 R1 均健康。R1 权威聚合为 163/220，尚无正式 DeepWideBench 全集分数、提升或 SOTA。**
+>
+> **5.18 V2.42.01 仓库内 DAG 重放、WebSwarm 复现边界与递归可靠性增量（2026-07-31 09:34 UTC）：新增 build-only replay 完全在内存文件图中重建 `schema68→71→72`、`68→73`、`68→74`、`72+73+74→75`、`68→69→70`、`75+70→76`、`76→77`，并与 10 个冻结 publication manifest 逐 byte 相等。它不读取 sibling candidate tree、task state、prediction、mapping/gold/category/evaluator/score，不物化候选、不联网、不调用模型/search/fetch，也无 benchmark launch 权限。create-exclusive receipt [`results/v24201_repo_local_candidate_dag_replay_v1_20260731.json`](results/v24201_repo_local_candidate_dag_replay_v1_20260731.json) SHA `cee95e89…bdb2a6f`，定向测试 `5/5`；代码/测试/收据已提交 `1c5b117` 并推送，远端逐 SHA 一致。现有 R1 与 V2.41.87/93/94/95/96/97/98/99/42.00 PID/start ticks 均未变化。
+>
+> WebSwarm 论文与公开实现复核把系统对照收紧为“移植通用原语，不移植 benchmark 口径”。可借鉴部分是 atom/deep/wide/entity_collect、Web-Probing 与同父 sibling experience；必须拒绝的部分是 benchmark/subset 名称路由、公开 TaskManager 默认跳过 core-entity gate 的 DeepWideSearch evaluator，以及 `resume_from` 的重跑覆盖语义。WebSwarm 论文为 76 题 English subset、两轮均值，不能作为本项目 exact all-220/Avg@4 的直接门槛。受控 adapter 必须继续使用 visible question/input、官方 evaluator、全新 `52/52/52/64=220`、failure-as-zero、no-resume 和冻结 aggregation；吞吐并发仍由中性 `1/2/4/8/12×3` capacity ladder 决定，单题 swarm 另做 `1/2/4/8` agent 同预算曲线。
+>
+> FORGE 与 Citation Verifier 新增两个 falsification gate。[115,116] 前者要求每个递归 child objective 继承 root scope/exclusions 和 active provenance，并在 correlated malicious sibling 上报告 branch-contamination amplification；Root Query Anchoring 是强基线但不是充分防御。后者要求 judge/evidence gate 不只报总体 F1，还按 relevance/support 报 pass-rate drift、FPR、FNR 与 hard-disagreement 子集；否则 judge 的方向偏差会污染 credit 符号。两篇工作不产生本项目质量结果，也不改变“熵只能调幅、方向由 outcome/continuation/correctability 决定”的主线。
+>
+> 09:32 UTC 的权威 label-blind watcher 仍为 `163/220 = 33 completed + 130 failed`、剩余 57，`critical=[]`、checkpoint fresh、现有 forward 健康；正式 evaluator aggregate、提升、Avg@4、entropy/credit 效果和 SOTA 全部 absent。因此本轮不抢占 GPT-5.6/9878、不重启或重复启动全集。下一不可逆顺序仍为 `R1 exact220/release → 各冻结质量链 terminal → V2.42.00 package gate → capacity freeze → 独立 single-owner exact220 executor`。**
 >
 > **5.17 V2.42.00 层级基线、package gate 与 07-30 文献增量（2026-07-31 09:06 UTC）：V2.41.99 继续作为健康诊断 watcher 运行，但不再拥有未来执行权。复核发现其 24 槽模型有三个科学缺陷：schema76 已含主线 `v24104 conservative-open-scope-fallback`，却又把 Markdown 支路的 V2.41.05 scope gate 当作同一个无命名空间 bit；schema77 只相对 schema76 做 paired dev，而 schema76 protocol 明确允许 baseline 自身为 NO-GO，因此 schema77 的局部 GO 不能越过 schema76 对 P12 的失败；search、Markdown、scope 与 entropy 分支的独立 GO 也不能证明它们的 union package 优于当前基线。V2.42.00 因而固定层级规则：schema76 NO-GO 选 P12；schema76 GO 且 schema77 NO-GO 选 schema76；二者均 GO 才选 schema77。`mainline_scope` 与 `markdown_branch_scope` 分开命名，分支 GO 只进入 eligible-component set。非空组件集合必须先确定性 build，再与选中基线做同 opaque dev64、同模型/搜索/prompt/预算/evaluator、failure-as-zero、禁止 resume 的 package-level paired gate；空组件集合是基线 identity handoff，不做不可能的“基线对自身 material improvement”，但仍需独立 all-220 freeze 与 executor。
 >
@@ -1048,7 +1056,8 @@ I_{ij}=v(\{i,j\})-v(\{i\})-v(\{j\})+v(\varnothing).
 11. Harness-G-style evidence-equivalence menu；
 12. Baikal random-region / Bayes-UCB；
 13. fixed-threshold / CAM-DF-lite cost-aware stopping；
-14. dynamic-VOC controller + evidence equivalence + semantic-region portfolio。
+14. dynamic-VOC controller + evidence equivalence + semantic-region portfolio；
+15. label-blind WebSwarm adapter，仅从 visible question/input 与本轮 evidence state 选择 atom/deep/wide/entity_collect，并固定 official evaluator、no-resume、failure-as-zero；同时运行 no-recursive、all-to-wide、all-to-deep、no-Web-Probing 与 no-sibling-experience 消融。
 
 只有 Phase D1 过门后才跑 controller 全量。
 
@@ -1231,8 +1240,10 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 - stale evidence、missing tool output、denied authorization 与 wrong-session context 四层故障；
 - compound observation 的整体验收 vs 按可信子命题选择性接受；
 - repair 前后 active ledger diff，任何无 tool-produced provenance 的新增 claim 计 amplification failure。
+- FORGE-style 单文档与 coordinated sibling-chain 注入，比较 root-query anchoring 开/关，记录污染是否沿递归深度从 framing 迁移到 factual premise；
+- judge 在 relevance 与 factual support 两维的 pass-rate drift、FPR/FNR、hard-disagreement 性能与校准后阈值，禁止用 pooled F1 掩盖方向偏差。
 
-主指标包括 false-claim adoption、独立验证召回、四层 Brier/ECE、unsupported/contradicted rate、cross-layer fault recovery、wrong-session adoption 和成本。该审计使用独立构造任务，禁止把 benchmark gold、reference evidence graph 或 category 注入 forward runtime。[87–89,99,100,103]
+主指标包括 false-claim adoption、branch-contamination amplification、独立验证召回、四层 Brier/ECE、unsupported/contradicted rate、judge directional error、cross-layer fault recovery、wrong-session adoption 和成本。该审计使用独立构造任务，禁止把 benchmark gold、reference evidence graph 或 category 注入 forward runtime。[87–89,99,100,103,115,116]
 
 ### 8.6 并发、agent 数与 topology 专项消融
 
@@ -1254,6 +1265,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 通过条件：
 
 - runtime 无法读取 gold/evaluation/category/subset；
+- WebSwarm adapter 的 forward closure 不得导入 benchmark TaskManager/evaluator、dataset version、subset 名称或官方标签；模式只由 visible prompt/input 与当前工具轨迹推断；
 - no-leak tests、secret scan、trace replay 全部通过；
 - 20 题两次基线的 evaluator 结果可复现到确定性归一化误差内；
 - 95% 以上使用的 cell claims 有可打开 URL 与正文 span。

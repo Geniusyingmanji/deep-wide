@@ -8,7 +8,9 @@
 | Table-as-Search (2602.06724) | 外部表格中的行、列、空单元格 | 表格作为持久搜索状态 | 规划、补行、补格 | 否 | 用空格表示缺口，无概率覆盖 | “表即状态”不是新颖点 |
 | A-MapReduce (2602.01331) | 横向检索子任务及经验 | 自适应 MapReduce 与经验记忆 | 大规模宽搜 | 否 | 启发式任务分解 | 强系统基线；比较相同预算和骨干 |
 | Web2BigTable (2604.27221) | 大表构建子任务 | 双层多智能体搜索与抽取 | 宽搜、聚合 | 否 | 面向大规模表，但无遗漏后验 | 宽搜强基线 |
-| WebSwarm (2607.08662) | 递归搜索节点、局部模式、网页结构 | progressive delegation；atom/deep/wide/entity_collect | 动态深宽切换 | 否 | 处理 open-set enumeration，但为 LLM 定性判断 | “动态深宽路由”不是新颖点；可作为执行器 |
+| WebSwarm (2607.08662) | 递归搜索节点、局部模式、网页结构 | progressive delegation；atom/deep/wide/entity_collect；Web-Probing；sibling experience | 动态深宽切换 | 否 | 处理 open-set enumeration，但为 LLM 定性判断 | “动态深宽路由”不是新颖点；只适合作为通用执行器。公开 TaskManager 默认跳过 entity gate，论文为 76 题 English subset/两轮，复现必须换回 official evaluator、exact-220/no-resume/failure-as-zero |
+| FORGE (2607.04718) | 递归规划链中的被感染证据、subtask 与 report claim | 两层 trajectory hijacking；PRISM；Root Query Anchoring | 攻击与规划层防御 | 否 | 否 | 递归委派会放大相关恶意来源；每个 child objective 必须保留 root scope/provenance，并测 sibling contamination amplification，RQA 只能作基线而非充分防御 |
+| Citation Verifier (2607.08700) | attribution–citation relevance/support 判定与 judge error direction | 1,248 human-reviewed decisions；pass-class F1、$\kappa$、pass-rate drift、FPR/FNR | evaluator/奖励模型校准 | 否 | 否 | scalar F1 不足以选择 judge；controller/credit 的证据 gate 必须按维度报告方向偏差，防止系统性过奖或少奖 |
 | SearchOS (2607.15257) | Frontier、Evidence Graph、Coverage Map、Failure Memory | 持久共享状态、middleware、scope audit | 覆盖驱动调度与停滞恢复 | 否 | 显式区分 cell saturation 与 row scope | “coverage map/持久状态”不是新颖点；需比较遗漏风险而非已知格覆盖 |
 | AREX (2607.21461) | verified findings、unresolved constraints、rejected candidates、confidence | inner research + outer refine/restart；autonomous context update；key-step bonus | 定向 follow-up、停止与训练 | 是 | 否 | 约束级递归改进、状态压缩与关键步骤训练不是新颖点；需比较校准四层风险的增量价值 |
 | Delegation Intelligence (2607.23524) | search decision 与 synthesis/verification 两类能力 | controllable document composition 与 tool access | 解耦诊断 | 否 | 否 | 端到端分数不能定位搜索决策；实验需将 routing 和 synthesis/verification 分开报告 |
@@ -95,8 +97,8 @@
 
 ## 综述写作分级
 
-- **必须深度讨论**：WebSwarm、SearchOS、AREX、Harness-G、Baikal、Search as Computation Allocation、HiEviDR-Bench、CAM-DF、Forage V2、Shared Discovery Paradox、Table-as-Search、ECR、Semantic Entropy、ECHO、TRACE、LOTAPO、STAMP、RICE-PO、CVT-RL、OVCSD、Good–Turing/coverage。
-- **方法对照**：A-MapReduce、Web2BigTable、Two Calls Beat Five Agents、SKIMIX、MANTA、SearchArt、CAST、AttriMem、SkillRise、GRSD、TTEL、CSCR、LEDGERMIND、LayerRAG-Bench、MisKnow-Agent、FinanceHarness、CuriosiTree、InfoReasoner、IGPO、A²TGPO、T²PO、IG-Search、TEPO、SIGHT、SIOP、PBSD、ACPO、Know Before You Fetch、QuCo-RAG。
+- **必须深度讨论**：WebSwarm、FORGE、SearchOS、AREX、Harness-G、Baikal、Search as Computation Allocation、HiEviDR-Bench、CAM-DF、Forage V2、Shared Discovery Paradox、Table-as-Search、ECR、Semantic Entropy、ECHO、TRACE、LOTAPO、STAMP、RICE-PO、CVT-RL、OVCSD、Good–Turing/coverage。
+- **方法对照**：A-MapReduce、Web2BigTable、Citation Verifier、Two Calls Beat Five Agents、SKIMIX、MANTA、SearchArt、CAST、AttriMem、SkillRise、GRSD、TTEL、CSCR、LEDGERMIND、LayerRAG-Bench、MisKnow-Agent、FinanceHarness、CuriosiTree、InfoReasoner、IGPO、A²TGPO、T²PO、IG-Search、TEPO、SIGHT、SIOP、PBSD、ACPO、Know Before You Fetch、QuCo-RAG。
 - **背景引用**：AskChem、Selective Credibility-Limited Belief Update、Thinking Under Uncertainty、FLARE、Self-RAG、Dartboard、SePer、InfoTree、IGRPO、WebUncertainty。
 
 ## 矩阵结论
