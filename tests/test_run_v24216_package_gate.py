@@ -26,7 +26,22 @@ FORWARD_FILES = {
     ),
     "src/deepwide_agent/shadow_risk.py": "",
     "scripts/run_deepwide_agent.py": "",
-    "scripts/preflight_deepwide.py": "",
+    "scripts/preflight_deepwide.py": (
+        "REQUIRED_FORWARD_CODE_PATHS = frozenset("
+        + repr(set([
+            "src/deepwide_agent/__init__.py",
+            "src/deepwide_agent/anthropic_search.py",
+            "src/deepwide_agent/clients.py",
+            "src/deepwide_agent/native_search.py",
+            "src/deepwide_agent/prompts.py",
+            "src/deepwide_agent/runtime.py",
+            "src/deepwide_agent/shadow_risk.py",
+            "scripts/run_deepwide_agent.py",
+            "scripts/preflight_deepwide.py",
+            "scripts/launch_frozen_deepwide.py",
+        ]))
+        + ")\n"
+    ),
     "scripts/launch_frozen_deepwide.py": "",
 }
 TEMPLATE = {

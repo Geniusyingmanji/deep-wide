@@ -10,6 +10,7 @@ rerun; mixed partial states fail closed.
 from __future__ import annotations
 
 import copy
+import ast
 import hashlib
 import json
 import os
@@ -50,7 +51,6 @@ from scripts.finalize_v2408_combined_dev64 import (  # noqa: E402
     _summarize_exact64,
     _validate_prepare,
 )
-from scripts.preflight_deepwide import REQUIRED_FORWARD_CODE_PATHS  # noqa: E402
 from scripts.preregister_v2408_combined_fasttrack import (  # noqa: E402
     R1_FINAL_SEAL,
     R1_FREEZES,
@@ -303,7 +303,40 @@ def build_arm_freeze(
 ) -> dict[str, Any]:
     if arm not in ARM_ROOTS:
         raise RuntimeError("V2.42.16 arm name is invalid")
-    missing = sorted(REQUIRED_FORWARD_CODE_PATHS - set(files))
+    tree = ast.parse(
+        files["scripts/preflight_deepwide.py"],
+        filename="scripts/preflight_deepwide.py",
+    )
+    assignments = [
+        node
+        for node in tree.body
+        if isinstance(node, ast.Assign)
+        and any(
+            isinstance(target, ast.Name)
+            and target.id == "REQUIRED_FORWARD_CODE_PATHS"
+            for target in node.targets
+        )
+    ]
+    if len(assignments) != 1:
+        raise RuntimeError("V2.42.16 arm forward allowlist is absent")
+    expression = assignments[0].value
+    if (
+        not isinstance(expression, ast.Call)
+        or not isinstance(expression.func, ast.Name)
+        or expression.func.id != "frozenset"
+        or len(expression.args) != 1
+        or expression.keywords
+    ):
+        raise RuntimeError("V2.42.16 arm forward allowlist schema drifted")
+    raw_required = ast.literal_eval(expression.args[0])
+    if (
+        not isinstance(raw_required, (set, list, tuple))
+        or not raw_required
+        or not all(isinstance(item, str) and item for item in raw_required)
+    ):
+        raise RuntimeError("V2.42.16 arm forward allowlist is invalid")
+    required_forward_paths = frozenset(raw_required)
+    missing = sorted(required_forward_paths - set(files))
     if missing:
         raise RuntimeError(f"V2.42.16 arm forward closure is incomplete: {missing}")
     schema, version = runtime_identity(files["src/deepwide_agent/runtime.py"])
@@ -324,7 +357,7 @@ def build_arm_freeze(
         "manifest_sha256": manifest_sha,
         "code_sha256": {
             relative: hashlib.sha256(files[relative].encode()).hexdigest()
-            for relative in sorted(REQUIRED_FORWARD_CODE_PATHS)
+            for relative in sorted(required_forward_paths)
         },
         "model": copy.deepcopy(template["model"]),
         "search": copy.deepcopy(template["search"]),
@@ -861,19 +894,83 @@ def _evaluate_arm(
     return {"value": value, "evaluator": evaluator, "barrier": barrier}
 
 
-def evaluate_pair_and_gate(
-    publication: Mapping[str, Any],
-    *,
-    root: Path = ROOT,
-    runner: Callable[..., subprocess.CompletedProcess[Any]] = subprocess.run,
-) -> dict[str, Any]:
-    """Evaluate both arms once and publish the immutable aggregate decision."""
+def _existing_arm_evaluator(arm: str, *, root: Path = ROOT) -> dict[str, Any]:
+    paths = _arm_paths(arm)
+    result_path = root / (BASELINE_RESULT if arm == "baseline" else CANDIDATE_RESULT)
+    value = read_object(result_path)
+    validate_arm_result(value, arm=arm)
+    prepare = read_object(paths["final"] / "prepare_attestation.json")
+    prediction_sha = prepare.get("official_predictions_sha256")
+    selected = prepare.get("completed_predictions_exported")
+    if (
+        not isinstance(prediction_sha, str)
+        or len(prediction_sha) != 64
+        or isinstance(selected, bool)
+        or not isinstance(selected, int)
+        or not 0 <= selected <= 64
+    ):
+        raise RuntimeError("V2.42.16 existing arm prepare drifted")
+    evaluator = validate_evaluator_contract(
+        paths["eval"] / "run_config.json",
+        expected_predictions_path=paths["final"] / "official_predictions.jsonl",
+        expected_predictions_sha256=prediction_sha,
+        expected_selected_count=selected,
+    )
+    eval_rows = read_jsonl(paths["eval"] / "official_eval_results.jsonl")
+    prediction_rows = read_jsonl(paths["final"] / "official_predictions.jsonl")
+    selected_instances = [str(row["instance_id"]) for row in prediction_rows]
+    validate_committed_eval_rows(eval_rows, selected_instances)
+    if len(eval_rows) != len(selected_instances):
+        raise RuntimeError("V2.42.16 existing evaluator is incomplete")
+    prepare = _validate_prepare(
+        paths["final"] / "prepare_attestation.json",
+        manifest=paths["root"] / "data/runtime_manifest.jsonl",
+        mapping=root / MAPPING,
+        runtime=paths["out"] / "runtime_predictions.jsonl",
+        summary=paths["out"] / "run_summary.json",
+        freeze_sha256=sha256(paths["freeze"]),
+        seal_sha256=sha256(root / PAIR_PREPARE),
+    )
+    recomputed = _summarize_exact64(
+        read_jsonl(paths["final"] / "terminal_outcomes_evaluator_joined.jsonl"),
+        eval_rows,
+    )
+    release = validate_r1_evaluator_release(root)
+    provenance = value.get("provenance") or {}
+    if (
+        provenance.get("pair_prepare_sha256") != sha256(root / PAIR_PREPARE)
+        or provenance.get("forward_barrier_sha256") != sha256(root / FORWARD_BARRIER)
+        or provenance.get("freeze_sha256") != sha256(paths["freeze"])
+        or provenance.get("runtime_predictions_sha256")
+        != sha256(paths["out"] / "runtime_predictions.jsonl")
+        or provenance.get("run_summary_sha256")
+        != sha256(paths["out"] / "run_summary.json")
+        or provenance.get("prepare_attestation_sha256")
+        != sha256(paths["final"] / "prepare_attestation.json")
+        or provenance.get("official_eval_results_sha256")
+        != sha256(paths["eval"] / "official_eval_results.jsonl")
+        or provenance.get("evaluator_run_contract_sha256")
+        != evaluator["run_contract_sha256"]
+        or provenance.get("r1_release_sha256") != release["result_sha256"]
+        or provenance.get("parent_publication_sha256")
+        != sha256(root / PARENT_PUBLICATION)
+        or value.get("metrics") != recomputed
+        or prepare.get("completed_predictions_exported") != len(prediction_rows)
+    ):
+        raise RuntimeError("V2.42.16 existing arm provenance drifted")
+    return {"value": value, "evaluator": evaluator}
 
-    targets = (root / BASELINE_RESULT, root / CANDIDATE_RESULT, root / GATE_DECISION)
-    if any(path.exists() or path.is_symlink() for path in targets):
-        raise RuntimeError("V2.42.16 aggregate/evaluator residue forbids rerun")
-    baseline = _evaluate_arm("baseline", root=root, runner=runner)
-    candidate = _evaluate_arm("candidate", root=root, runner=runner)
+
+def publish_gate_from_results(
+    publication: Mapping[str, Any], *, root: Path = ROOT
+) -> dict[str, Any]:
+    """Publish the gate after both exact arm results already exist."""
+
+    target = root / GATE_DECISION
+    if target.exists() or target.is_symlink():
+        raise FileExistsError(target)
+    baseline = _existing_arm_evaluator("baseline", root=root)
+    candidate = _existing_arm_evaluator("candidate", root=root)
     evaluator_identity = validate_paired_evaluator_identity(
         baseline["evaluator"], candidate["evaluator"]
     )
@@ -922,7 +1019,10 @@ def evaluate_pair_and_gate(
             "path": str(PARENT_PUBLICATION),
             "sha256": sha256(root / PARENT_PUBLICATION),
         },
-        "pair_prepare": {"path": str(PAIR_PREPARE), "sha256": sha256(root / PAIR_PREPARE)},
+        "pair_prepare": {
+            "path": str(PAIR_PREPARE),
+            "sha256": sha256(root / PAIR_PREPARE),
+        },
         "forward_barrier": {
             "path": str(FORWARD_BARRIER),
             "sha256": sha256(root / FORWARD_BARRIER),
@@ -937,10 +1037,94 @@ def evaluate_pair_and_gate(
         },
     }
     decision["decision_payload_sha256"] = payload_sha256(
-        {key: item for key, item in decision.items() if key != "decision_payload_sha256"}
+        {
+            key: item
+            for key, item in decision.items()
+            if key != "decision_payload_sha256"
+        }
     )
-    publish_new(root / GATE_DECISION, decision)
+    publish_new(target, decision)
     return decision
+
+
+def evaluate_pair_and_gate(
+    publication: Mapping[str, Any],
+    *,
+    root: Path = ROOT,
+    runner: Callable[..., subprocess.CompletedProcess[Any]] = subprocess.run,
+) -> dict[str, Any]:
+    """Evaluate both arms once and publish the immutable aggregate decision."""
+
+    targets = (root / BASELINE_RESULT, root / CANDIDATE_RESULT, root / GATE_DECISION)
+    if any(path.exists() or path.is_symlink() for path in targets):
+        raise RuntimeError("V2.42.16 aggregate/evaluator residue forbids rerun")
+    _evaluate_arm("baseline", root=root, runner=runner)
+    _evaluate_arm("candidate", root=root, runner=runner)
+    return publish_gate_from_results(publication, root=root)
+
+
+def validate_gate_decision(root: Path = ROOT) -> dict[str, Any]:
+    """Live-replay an existing gate without rerunning either evaluated arm."""
+
+    target = root / GATE_DECISION
+    value = read_object(target)
+    provenance = value.get("provenance")
+    if not isinstance(provenance, Mapping):
+        raise RuntimeError("V2.42.16 gate provenance is absent")
+    expected_paths = {
+        "parent_publication": PARENT_PUBLICATION,
+        "pair_prepare": PAIR_PREPARE,
+        "forward_barrier": FORWARD_BARRIER,
+        "baseline_result": BASELINE_RESULT,
+        "candidate_result": CANDIDATE_RESULT,
+    }
+    for name, relative in expected_paths.items():
+        row = provenance.get(name)
+        path = root / relative
+        if (
+            not isinstance(row, Mapping)
+            or row.get("path") != str(relative)
+            or path.is_symlink()
+            or not path.is_file()
+            or row.get("sha256") != sha256(path)
+        ):
+            raise RuntimeError("V2.42.16 gate provenance drifted")
+    publication = validate_parent_publication(root)
+    baseline_record = _existing_arm_evaluator("baseline", root=root)
+    candidate_record = _existing_arm_evaluator("candidate", root=root)
+    baseline = baseline_record["value"]
+    candidate = candidate_record["value"]
+    activation = value.get("package_activation")
+    identity = value.get("evaluator_identity")
+    if not isinstance(activation, Mapping) or not isinstance(identity, Mapping):
+        raise RuntimeError("V2.42.16 stored gate identity is absent")
+    order = publication.get("joint_package_order") or {}
+    if (
+        activation.get("eligible_component_count")
+        != len(order.get("eligible_components") or [])
+        or activation.get("identity_handoff_only") is not False
+    ):
+        raise RuntimeError("V2.42.16 stored activation drifted")
+    expected = evaluate_package_gate(
+        baseline,
+        candidate,
+        package_activation=activation,
+        evaluator_identity=identity,
+    )
+    expected["provenance"] = {
+        name: {"path": str(relative), "sha256": sha256(root / relative)}
+        for name, relative in expected_paths.items()
+    }
+    expected["decision_payload_sha256"] = payload_sha256(
+        {
+            key: item
+            for key, item in expected.items()
+            if key != "decision_payload_sha256"
+        }
+    )
+    if value != expected:
+        raise RuntimeError("V2.42.16 gate decision differs from live replay")
+    return value
 
 
 __all__ = [
@@ -956,11 +1140,13 @@ __all__ = [
     "evaluate_pair_and_gate",
     "execution_template",
     "prepare_pair",
+    "publish_gate_from_results",
     "publish_forward_barrier",
     "run_forward_arm",
     "sha256",
     "terminal_arm",
     "validate_forward_barrier",
+    "validate_gate_decision",
     "validate_pair_prepare",
     "validate_parent_publication",
     "validate_r1_evaluator_release",

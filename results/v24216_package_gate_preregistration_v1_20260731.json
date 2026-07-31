@@ -1,0 +1,357 @@
+{
+  "artifact_version": 1,
+  "role": "v24216_package_gate_preregistration",
+  "protocol_id": "v24216_joint_package_paired_cold_same_dev64_gate_v1",
+  "created_at_unix": 1785522023,
+  "label_blind": true,
+  "parent_contract": {
+    "protocol": {
+      "path": "results/v24215_selected_joint_package_recovery_preregistration_v1_20260731.json",
+      "sha256": "345015c5672ff37baa74a633f302aeba92f77d48dd392c3a5fcf38f872db2a34"
+    },
+    "activation": {
+      "path": "results/v24215_selected_joint_package_recovery_activation_v1_20260731.json",
+      "sha256": "6c2588e0bbd2dd50ac31bc8e47d5345fc03b4c814edcc6c0262f418f9470b733"
+    },
+    "wait_audit": {
+      "path": "results/v24215_selected_joint_package_recovery_wait_audit_v1_20260731.json",
+      "sha256": "5555a5df70bf82e89ad1666ccb63c6007858ac9b55182ee07e5f02c5be275e4a"
+    },
+    "state_path": "outputs/v24215_selected_joint_package_recovery_state_v1_20260731.json",
+    "publication_path": "results/v24215_selected_joint_package_recovery_publication_v1_20260731.json",
+    "safe_state_envelope_only_before_parent_terminal": true,
+    "publication_open_only_after_parent_terminal": true
+  },
+  "paired_dev64_contract": {
+    "package_gate_contract": {
+      "gate_id": "v24200_integrated_package_vs_selected_baseline_same_dev64_v1",
+      "selection_frozen_before_package_build": true,
+      "candidate_cold_start_required": true,
+      "same_opaque_dev64_ids_required": true,
+      "same_model_search_prompt_budget_threshold_required": true,
+      "candidate_and_baseline_evaluator_contract_identical": true,
+      "all_64_outcomes_required": true,
+      "forward_failure_scored_as_zero": true,
+      "resume_or_selective_rerun_allowed": false,
+      "completion_non_decrease_required": true,
+      "whole_table_non_decrease_required": true,
+      "each_quality_component_min_delta": -0.005,
+      "candidate_token_ratio_max": 1.05,
+      "strict_component_activation_required_when_nonempty": true,
+      "minimum_material_improvement_any": {
+        "completion_count_delta": 1,
+        "whole_table_count_delta": 1,
+        "quality_composite_delta": 0.001
+      },
+      "go_authorizes_only_new_all220_freeze": true,
+      "benchmark_launch_allowed": false,
+      "leaderboard_submission_or_sota_claim": false
+    },
+    "historical_baseline_result_reuse_default": false,
+    "paired_baseline_and_candidate_cold_start_required": true,
+    "same_opaque_dev64_ids_required": true,
+    "same_runtime_manifest_required": true,
+    "same_model_search_runtime_budget_and_threshold_required": true,
+    "execution_template": {
+      "model": {
+        "name": "gpt-5.6-sol",
+        "proxy_url": "http://127.0.0.1:9878/responses",
+        "reasoning_effort": "high",
+        "service_tier": "priority",
+        "timeout_seconds": 300,
+        "max_retries": 8
+      },
+      "search": {
+        "provider": "anthropic",
+        "model": "claude-haiku-4-5-20251001",
+        "timeout_seconds": 180,
+        "max_retries": 5,
+        "results_per_query": 8,
+        "max_uses": 2,
+        "max_output_tokens": 1400,
+        "fetch_pages": true,
+        "fetch_workers": 4,
+        "fetch_timeout": 45,
+        "workers": 2,
+        "query_policy": "one Messages request per logical query; web_search is forced; no cross-query evidence mapping",
+        "citation_policy": "server tool results and URL citations are query-local leads and cannot satisfy page-evidence gates",
+        "credential_policy": "ANTHROPIC_API_KEY is environment-only and may only be sent to the fixed Anthropic Messages endpoint"
+      },
+      "runtime": {
+        "initial_queries": 8,
+        "belief_queries": 8,
+        "anchor_queries": 6,
+        "anchor_conditioned_queries": 2,
+        "bridge_inversion_pivots": 6,
+        "bridge_inversion_queries": 6,
+        "bridge_intermediate_entities": 12,
+        "bridge_intermediate_queries": 8,
+        "scope_queries": 12,
+        "candidate_recovery_queries": 10,
+        "coverage_gap_queries": 8,
+        "row_query_budget": 72,
+        "row_batch_size": 8,
+        "row_model_workers": 2,
+        "candidate_query_batch_size": 6,
+        "candidate_model_workers": 1,
+        "candidate_tokens": 20000,
+        "candidate_mentions_per_worker": 160,
+        "max_rows_in_state": 2000,
+        "candidate_rows_per_worker": 180,
+        "bulk_scope_threshold": 250,
+        "directory_minimum_members": 8,
+        "directory_max_members": 300,
+        "directory_fetch_batch_size": 12,
+        "directory_fetch_attempts": 2,
+        "mention_gap_entities": 160,
+        "mention_gap_precision_entities": 120,
+        "row_refinement_query_budget": 96,
+        "membership_gap_query_budget": 128,
+        "post_occupant_attribute_query_budget": 128,
+        "unknown_cell_recovery_query_budget": 128,
+        "row_refinement_batch_size": 4,
+        "semantic_retries": 3,
+        "followup_queries": 10,
+        "audit_queries": 6
+      },
+      "launch_gates": {
+        "tests": "Python 3.12 unittest discovery: 384/384 passed",
+        "compileall": "passed",
+        "git_diff_check": "passed",
+        "secret_scan": "required before launch over the frozen experiment surface; credentials remain environment-only",
+        "label_blind_audit": "forward code reads only opaque_id and question from the runtime manifest; no instance ID, split, category, mapping, gold, answer key, evaluator result, or benchmark score enters forward; entropy and credit remain shadow-only",
+        "model_health": "two consecutive successful short non-benchmark GPT-5.6 probes required",
+        "model_capacity": "two consecutive successful 400000 UTF-8-byte mixed ASCII/CJK neutral probes with frozen 20000 output-token reservation required",
+        "search_health": "two consecutive successful non-benchmark Anthropic web-search probes with query-local URLs and fetched pages required",
+        "preflight_consecutive_successes": 2,
+        "historical_forward_scan": "waived only through the explicit consumed-online-diagnostic attestation; every selected opaque ID must actually occur in prior forward/result artifacts",
+        "preflight_max_age_seconds": 600,
+        "output_directory": "must not exist before launch"
+      }
+    },
+    "execution_template_sha256": "9e3cfe2c8c4caf2dc3e35a0b58155e7fada88f41e62d562555e35de62c32b587",
+    "both_forward_arms_exact_terminal_before_mapping_required": true,
+    "same_official_evaluator_contract_required": true,
+    "failure_as_zero": true,
+    "forward_or_evaluator_resume_allowed": false,
+    "selective_rerun_allowed": false,
+    "identity_handoff_skips_dev64_and_requires_separate_all220_freeze": true,
+    "go_authorizes_capacity_and_separate_all220_freeze_only": true,
+    "full220_launch_allowed": false
+  },
+  "capacity_priority_contract": {
+    "package_gate_precedes_neutral_capacity_measurement": true,
+    "v24194_execution_activation_must_remain_absent_before_gate_terminal": true,
+    "v24194_and_v24196_capacity_outputs_must_remain_absent_before_gate_terminal": true,
+    "healthy_v24194_or_v24196_watcher_may_not_be_signaled_restarted_or_modified": true,
+    "capacity_order_conflict_fails_closed": true
+  },
+  "lease_compatibility_contract": {
+    "owner": "v24216_joint_package_same_dev64_gate_v1",
+    "purpose": "paired_cold_dev64_joint_package_vs_selected_baseline",
+    "path": "outputs/deepwide_benchmark_api.lease.lock",
+    "old_liveness_expected_finding_during_exact_new_owner": "shared_api_lease_identity",
+    "old_v24195_expected_mode_during_exact_new_owner": "unknown_lease_owner_active",
+    "suppress_only_these_expected_findings_in_v24216_local_authority": true,
+    "preserve_and_fail_on_every_unrelated_parent_finding": true,
+    "live_owner_purpose_pid_lock_holder_protocol_activation_and_start_ticks_required": true
+  },
+  "execution": {
+    "watcher_marker": "scripts/watch_v24216_package_gate.py",
+    "python_flags": [
+      "-I",
+      "-B"
+    ],
+    "poll_seconds": 60,
+    "proc_root": "/proc",
+    "state_path": "outputs/v24216_package_gate_watcher_state_v1_20260731.json",
+    "activation_path": "results/v24216_package_gate_activation_v1_20260731.json",
+    "wait_audit_path": "results/v24216_package_gate_wait_audit_v1_20260731.json",
+    "pair_prepare_path": "results/v24216_package_gate_pair_prepare_v1_20260731.json",
+    "forward_barrier_path": "results/v24216_package_gate_forward_terminal_barrier_v1_20260731.json",
+    "baseline_result_path": "results/v24216_package_gate_baseline_dev64_v1_20260731.json",
+    "candidate_result_path": "results/v24216_package_gate_candidate_dev64_v1_20260731.json",
+    "gate_decision_path": "results/v24216_package_gate_decision_v1_20260731.json"
+  },
+  "source_policy": {
+    "before_activation_parent_state_opened": false,
+    "preterminal_parent_safe_state_envelope_only": true,
+    "runtime_forward_inputs_exactly_opaque_id_and_question": true,
+    "mapping_and_evaluator_open_only_after_both_forward_arms_terminal": true,
+    "gate_receives_aggregate_metrics_and_content_free_identity_only": true,
+    "category_question_type_split_ground_truth_answer_key_or_per_task_score_for_routing": false,
+    "credential_value_persisted_hashed_or_emitted": false
+  },
+  "authorization": {
+    "watcher_active_after_activation": true,
+    "local_pair_materialization_after_parent_terminal": true,
+    "shared_api_lease_acquire_after_parent_terminal_and_priority_recheck": true,
+    "paired_dev64_forward_and_evaluator_under_one_lease": true,
+    "process_signal_restart_resume_rerun_skip_or_selective_retry": false,
+    "capacity_measurement_before_package_gate_go": false,
+    "benchmark_forward_or_full220_launch": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "safe_wait_boundary": {
+    "future_protocol_state_activation_results_roots_absent": true,
+    "parent_receipts": {
+      "results/v24215_selected_joint_package_recovery_preregistration_v1_20260731.json": {
+        "sha256": "345015c5672ff37baa74a633f302aeba92f77d48dd392c3a5fcf38f872db2a34"
+      },
+      "results/v24215_selected_joint_package_recovery_activation_v1_20260731.json": {
+        "sha256": "6c2588e0bbd2dd50ac31bc8e47d5345fc03b4c814edcc6c0262f418f9470b733"
+      },
+      "results/v24215_selected_joint_package_recovery_wait_audit_v1_20260731.json": {
+        "sha256": "5555a5df70bf82e89ad1666ccb63c6007858ac9b55182ee07e5f02c5be275e4a"
+      }
+    },
+    "parent_preterminal": {
+      "path": "outputs/v24215_selected_joint_package_recovery_state_v1_20260731.json",
+      "status": "waiting_for_v24213_entropy_recovery_terminal",
+      "terminal": false,
+      "publication_absent": true,
+      "selected_content_opened": false,
+      "contents_emitted": false
+    },
+    "r1": {
+      "path": "outputs/v24118_r1_finalization_watchdog_state_v1_20260728.json",
+      "selected": 220,
+      "terminal": 177,
+      "completed": 35,
+      "failed": 142,
+      "remaining": 43,
+      "mapping_or_evaluator_read": false,
+      "contents_emitted": false
+    },
+    "capacity": {
+      "v24194_status": "waiting_for_r1_release",
+      "v24194_execution_activation_absent": true,
+      "v24194_report_and_freeze_absent": true,
+      "v24196_status": "waiting_for_r1_release",
+      "v24196_report_and_freeze_absent": true,
+      "v24196_blocked_by_healthy_legacy_watcher": true,
+      "v24194_watcher": {
+        "marker": "scripts/watch_v24194_capacity_ladder.py",
+        "pid": 1582182,
+        "start_ticks": 742119955,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24196_watcher": {
+        "marker": "scripts/watch_v24196_capacity_executor.py",
+        "pid": 1659284,
+        "start_ticks": 742415197,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      }
+    },
+    "shared_api_lease_absent": true,
+    "parent_watcher": {
+      "marker": "scripts/watch_v24215_joint_package_recovery.py",
+      "pid": 2808901,
+      "start_ticks": 746680268,
+      "python_isolated_no_bytecode_required": true,
+      "command_line_emitted": false
+    }
+  },
+  "control_surface": {
+    "file_count": 12,
+    "manifest": {
+      "src/deepwide_agent/v24216_package_gate.py": "82b13124127af5c38d94728b98ccc273695d3050004e877fcf8d00c075b05a90",
+      "scripts/run_v24216_package_gate.py": "1b1a985c6c70e5b5751b7532dbff9d9faaae1ad8d21c1be8fc57e18803abb76f",
+      "scripts/preregister_v24216_package_gate.py": "41bcd63db6896544c9b70dfaf42b6a1f5c609a520bf30cbeb6f5080cf670f5cf",
+      "scripts/watch_v24216_package_gate.py": "0c7f65c52cbe3336dadb5b592d68631def34f15f06ea561dcedd99957d573070",
+      "scripts/activate_v24216_package_gate.py": "dfa0a243e51c11b4569507842c6beb8bb459222c33d13fe2d9c43eccf23ddd4b",
+      "scripts/audit_v24216_package_gate_wait.py": "8b1da53f574d5e38936402dfad39f74714d880de492bfcc8d199c6dd547ce81c",
+      "tests/test_v24216_package_gate.py": "3dbbe2723809dbb594d263ad6f570ae7ee87650b44bacbdfe5e7e5bd7aa1be9d",
+      "tests/test_run_v24216_package_gate.py": "5220dfcbbb0f87469fa0383ea400cd0960c58e513d56050fe2c09748ab7f6518",
+      "tests/test_preregister_v24216_package_gate.py": "d2f2ef0b482abf7adb4d286618fa48b0497230ab8cdf9777973bf34ae9e32f94",
+      "tests/test_watch_v24216_package_gate.py": "507ef2245e62af24c6d740766b98423287cde32eedd712018d4c6ab458f9a15c",
+      "tests/test_activate_v24216_package_gate.py": "402d5224862e3e3c3ab709c91cb90b148620119f0ebbc1881dbf0c694d30d883",
+      "tests/test_audit_v24216_package_gate_wait.py": "8d9705ecbe9c92380667df35c3c10b23499062057ce7d212028af13401111bc8"
+    },
+    "manifest_sha256": "1f0b144e1b3c943b5f0a02c52eb9c48b758886b7f8994e32d2d751654e2e8e4d",
+    "must_remain_absent": [
+      "scripts/__init__.py",
+      "sitecustomize.py",
+      "usercustomize.py"
+    ],
+    "static_capability_audit": {
+      "src/deepwide_agent/v24216_package_gate.py": {
+        "sha256": "82b13124127af5c38d94728b98ccc273695d3050004e877fcf8d00c075b05a90",
+        "direct_network_imports": [],
+        "process_references": [],
+        "process_execution_authorized_only_after_terminal_activation_and_lease": false
+      },
+      "scripts/run_v24216_package_gate.py": {
+        "sha256": "1b1a985c6c70e5b5751b7532dbff9d9faaae1ad8d21c1be8fc57e18803abb76f",
+        "direct_network_imports": [],
+        "process_references": [
+          "subprocess.run"
+        ],
+        "process_execution_authorized_only_after_terminal_activation_and_lease": true
+      },
+      "scripts/preregister_v24216_package_gate.py": {
+        "sha256": "41bcd63db6896544c9b70dfaf42b6a1f5c609a520bf30cbeb6f5080cf670f5cf",
+        "direct_network_imports": [],
+        "process_references": [],
+        "process_execution_authorized_only_after_terminal_activation_and_lease": false
+      },
+      "scripts/watch_v24216_package_gate.py": {
+        "sha256": "0c7f65c52cbe3336dadb5b592d68631def34f15f06ea561dcedd99957d573070",
+        "direct_network_imports": [],
+        "process_references": [],
+        "process_execution_authorized_only_after_terminal_activation_and_lease": false
+      },
+      "scripts/activate_v24216_package_gate.py": {
+        "sha256": "dfa0a243e51c11b4569507842c6beb8bb459222c33d13fe2d9c43eccf23ddd4b",
+        "direct_network_imports": [],
+        "process_references": [],
+        "process_execution_authorized_only_after_terminal_activation_and_lease": false
+      },
+      "scripts/audit_v24216_package_gate_wait.py": {
+        "sha256": "8b1da53f574d5e38936402dfad39f74714d880de492bfcc8d199c6dd547ce81c",
+        "direct_network_imports": [],
+        "process_references": [],
+        "process_execution_authorized_only_after_terminal_activation_and_lease": false
+      },
+      "tests/test_v24216_package_gate.py": {
+        "sha256": "3dbbe2723809dbb594d263ad6f570ae7ee87650b44bacbdfe5e7e5bd7aa1be9d",
+        "direct_network_imports": [],
+        "process_references": [],
+        "process_execution_authorized_only_after_terminal_activation_and_lease": false
+      },
+      "tests/test_run_v24216_package_gate.py": {
+        "sha256": "5220dfcbbb0f87469fa0383ea400cd0960c58e513d56050fe2c09748ab7f6518",
+        "direct_network_imports": [],
+        "process_references": [],
+        "process_execution_authorized_only_after_terminal_activation_and_lease": false
+      },
+      "tests/test_preregister_v24216_package_gate.py": {
+        "sha256": "d2f2ef0b482abf7adb4d286618fa48b0497230ab8cdf9777973bf34ae9e32f94",
+        "direct_network_imports": [],
+        "process_references": [],
+        "process_execution_authorized_only_after_terminal_activation_and_lease": false
+      },
+      "tests/test_watch_v24216_package_gate.py": {
+        "sha256": "507ef2245e62af24c6d740766b98423287cde32eedd712018d4c6ab458f9a15c",
+        "direct_network_imports": [],
+        "process_references": [],
+        "process_execution_authorized_only_after_terminal_activation_and_lease": false
+      },
+      "tests/test_activate_v24216_package_gate.py": {
+        "sha256": "402d5224862e3e3c3ab709c91cb90b148620119f0ebbc1881dbf0c694d30d883",
+        "direct_network_imports": [],
+        "process_references": [],
+        "process_execution_authorized_only_after_terminal_activation_and_lease": false
+      },
+      "tests/test_audit_v24216_package_gate_wait.py": {
+        "sha256": "8d9705ecbe9c92380667df35c3c10b23499062057ce7d212028af13401111bc8",
+        "direct_network_imports": [],
+        "process_references": [],
+        "process_execution_authorized_only_after_terminal_activation_and_lease": false
+      }
+    }
+  },
+  "decision_contract_sha256": "d20b536a15a78e7090321855872165314c3bd92363d298bb1a78f632714288ab"
+}
