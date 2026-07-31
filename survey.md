@@ -12,6 +12,8 @@
 
 在本次检索范围内，仍有一个可验证、也可被否证的候选缺口：尚未找到工作在 DeepWide 表格任务中同时校准隐藏 anchor、未见结果质量、行资格和格值，并把这四类风险变化与结果对齐的同状态反事实 credit 联合验证。有限候选集上的低 Shannon 熵不代表开放集合完整，甚至可能是在错误 anchor 上过度确信。因此，本综述建议将创新假设收窄为：用校准的四层信念估计任务风险变化；用 evidence-set equivalence 防止同义查询反复取回相同证据；再通过同状态干预和 provenance 判断风险变化是否由该步骤造成、是否支持最终任务。信息量在这里是 epistemic signal，而不是自动成立的 causal credit。当前代码与实验尚未验证这一整套方法；已实现的 V2.41.93 只是等待 sealed continuation 数据的 replicate-aware Gate-2A，真实 report 尚未产生，不能视为 controller、credit 或 benchmark 提升证据。
 
+2026 年 7 月 29–31 日的增量文献进一步排除了三个宽泛主张。WebSwarm 式递归委派不能推出“更多 agent 更好”：Two Calls Beat Five Agents 与 SKIMIX 都报告了 task-dependent、非单调的 multi-agent scaling，MANTA 又把通信拓扑本身作为推理时动作。[91–93] 相关性或不确定性 score 也不能单独决定工具数；CAM-DF 直接学习“现在停止”与“最佳继续”的 payoff gap，并把异质成本纳入决策。[90] 大的模型分布变化更不自动代表 task credit。CSCR 在相反 outcome 条件下观察到大量同向 token shift，并将其解释为 counterfactual sensitivity 而非可靠的 answer-aligned direction；OVCSD 则要求 state-aligned divergence 和 outcome-verified continuation。[97,98]
+
 ## 1. 范围、问题与检索方法
 
 ### 1.1 研究问题
@@ -35,6 +37,7 @@
 - 2026-07-21 补充检索 denominator blindness、shared discovery、turn-group information gain 和 uncertainty-guided exploration，核对 Forage V2、Shared Discovery Paradox、A²TGPO 与 T²PO 的 arXiv 元数据与原文。
 - 2026-07-21 做提交日期增量检索，并读取 Forage V2、Shared Discovery Paradox 与 A²TGPO 的 PDF。该轮新增了未知 denominator、belief–coverage 分离、gold-conditioned turn IG 和 uncertainty-guided resampling 的直接近邻。[72–75] 截至该范围仍未找到把 DeepWide 的 anchor、未见质量、行资格、单元格值四层同时概率化并用于 task-risk control/credit 的工作，但这只是限定语料与日期下的缺口判断。
 - 2026-07-31 对 2026-07-21 至 07-31 的 arXiv 新增记录做增量筛选，并逐页核对 WebSwarm、AREX、Delegation Intelligence、EviBack、RARG、Filesystem-Based Memory、Harness-G、Baikal、Search as Computation Allocation、SearchArt、CAST、AttriMem、MisKnow-Agent 与 FinanceHarness 的 PDF，而非只引用摘要。[5,76–88] 这一轮把 novelty 边界进一步收窄到四层风险的校准与联合验证：递归 follow-up、语义区域覆盖、同义检索去重、结构化非近视 credit、state-value credit 和终端损失下的 metareasoning 都已有直接近邻。
+- 2026-07-31 再对 07-28 至 07-31 的 `cs.AI/cs.CL/cs.IR/cs.LG` 记录做 500 条增量召回，并以 web/research/search、swarm/delegation、coverage/evidence、credit/VOC/uncertainty 词族筛选。正文或一手 arXiv 元数据核验了 HiEviDR-Bench、CAM-DF、Two Calls Beat Five Agents、SKIMIX、MANTA、SkillRise、GRSD、TTEL、OVCSD、CSCR、LEDGERMIND、LayerRAG-Bench、Thinking Under Uncertainty、AskChem 与 Selective Credibility-Limited Belief Update。[89–103] `DeepResearch Agent System`（arXiv:2607.27562）虽然声称多项 SOTA 和大幅百分比改进，但正文是 software copyright R&D document，未提供足以复核这些数字的同协议实验链；本综述将其列为已筛选但不承载结论的低可信记录。
 - 对经典信息论与覆盖估计文献用 Crossref/OpenAlex/DOI 核验元数据；对关键 2023–2026 论文读取 arXiv 原文而不只依赖摘要。
 
 纳入标准是：方法直接控制检索、证据选择、工具调用、搜索树、停止或开放集合覆盖；或者直接定义 DeepWide/table-search 的系统与评测边界。排除纯推荐、视觉检索、物理导航等仅共享“entropy/search”词面但不能约束本研究设计的工作。检索记录的高密度比较版见 [.research/literature_matrix.md](.research/literature_matrix.md)。
@@ -74,6 +77,14 @@ Forage V2 对开放集合给出更直接的命名：当完成边界没有预先�
 Shared Discovery Paradox 提供了另一个必要反例。在其有限 Bayesian 搜索模型中，汇总线索提高了最佳单一推荐的准确率，但若八个搜索者都执行该推荐，发现率从去中心化搜索的 0.8322 降到 0.3835；对同一 pooled reports 分配 top-eight posterior portfolio 则达到 0.8594。[73] 这不是 DeepWide 实证结果，却解析性地说明 belief quality 与 coverage policy 是两个变量。即使四层 posterior 完全正确，若 controller 没有对重复动作、来源相关性和边际覆盖去重，信息集中仍可能伤害 width。
 
 由此，当前系统缺口不是“有没有表格状态、coverage map 或 deep/wide routing”，而是这些控制决策是否由一个经过校准、显式包含开放集遗漏质量的信念模型驱动，并在相同动作空间和预算下带来更低任务风险。
+
+两项新近的 multi-agent 结果要求把“并发”与“委派”拆开。Two Calls Beat Five Agents 在一个本地 7B 模型上发现，五角色 pipeline 会因格式和错误累积而落后于两次 self-refinement，且同一 refinement 在直接准确率已经很高的 HumanEval 上反而破坏性能；作者随后用 task-aware gate 才减少该退化。[91] SKIMIX 的摘要同样报告 agent-count scaling 非单调，收益主要集中在第一轮 refinement，且开放式数学与多选任务的方向不同。[92] MANTA 则允许角色、通信边、顺序、信息可见性和验证路径在推理时有界变化。[93] 因而，大并发只能解决吞吐。若把 WebSwarm 或 MANTA 式多 agent 作为质量机制，必须在相同总 token、tool call 与 wall-clock 下报告 agent count、round 和 topology 的完整曲线，并保留单 agent 与两次 refinement 对照。
+
+CAM-DF 进一步把工具取得写成真正的决策问题，而不是 ranking 后附一个阈值。其监督量是 stop-now 与 best continuation 的离线 payoff gap，符号决定停或继续，幅度表示错误决策的代价，并显式纳入异质工具成本。[90] 这与 terminal-loss VOC 的方向一致，但更接近可训练的停止头。DeepWide controller 必须加入 CAM-DF-lite、固定阈值和 oracle best-prefix 对照，并分别报告 tool ranking quality 与 stop decision regret。
+
+HiEviDR-Bench 与 LEDGERMIND 把 evidence state 的要求具体化。HiEviDR-Bench 为每题构造 evidence→intermediate claim→conclusion 的分层图，并用 report quality、traceability、citation、claim verification 与 answer correctness做 progressive gating；其 2,000 题、16 模型实验中，作者报告 evidence identification 与 intermediate claim construction 是早期瓶颈。[89] LEDGERMIND 则要求 reasoning 和 repair 只能引用 active、tool-produced ledger entries，并把 repair 写成不允许无来源内容进入的 typed transition。[99] AskChem 进一步把检索单元从 paper 改成带 DOI、verbatim quote 或 evidence locator 的原子 claim。[102] 这些工作说明 evidence graph、claim ledger 或 provenance-constrained repair 不能作为本项目的独立创新。可比较的新增部分只能是四层风险怎样在这些受约束状态上校准和决策。
+
+LayerRAG-Bench 与 Selective Credibility-Limited Belief Update 又说明“有引用”仍不够。前者把故障分成 evidence、tool contract、authorization 与 session state，作者报告 groundedness-only 评价会把 stale 或 wrong-session evidence 误判为成功。[100] 后者在形式 belief update 中允许每个 source world 只接受 compound input 的一个可信弱化版本，而不是整体纳入。[103] 对 DeepWide 而言，每条观测需拆成可接受的子命题，并记录 source、session、tool contract、被削弱或拒绝的部分。否则一个高相关页面可以在错误会话或过期状态下产生更尖锐却无效的 posterior。
 
 ## 3. 信息论基础：熵测量什么，不测量什么
 
@@ -231,6 +242,8 @@ ECHO 的范围最值得正面说明。它在 Clue Selector Game 中有均匀有�
 Forage V2 使“未知完成边界”的 novelty 范围进一步收窄。它明确命名 denominator blindness，通过独立 Evaluator/Planner、共演 evaluation 和跨 run 组织记忆学习完成标准。[72] 因此本项目不能声称首次识别开放世界 denominator 问题。它仍留下的可检验差异是：是否能对未见质量与 premature-stop risk 给出校准概率，并与 anchor、row 和 cell 任务损失共同决策，而不是只通过组织审计学习 denominator。
 
 Shared Discovery Paradox 表明“信念更准”与“覆盖更高”可以反向变化。在其可解的 16-box/8-searcher 基准中，pooling 将单个最佳建议的准确率从 0.20 提高到 0.3835，但 8 人重复该动作的群体发现率只有 0.3835，低于分散线索跟随的 0.8322；对 pooled posterior 做 8 动作 portfolio 可达 0.8594。[73] 这些理论数字不是 DeepWide 实验结果，但它们对 controller 提出直接约束：路由器必须联合 posterior、动作组合、来源依赖与多样性，不能将所有 worker 都派到同一个最高 posterior 或最高 entropy 项。
+
+SkillRise、GRSD、TTEL、OVCSD 与 CSCR 把 credit 的邻域继续压缩。SkillRise 将当前任务 outcome 分配给 solving phase，把折扣后的下游任务 outcome 分配给 skill curation，因此“memory 写入对未来任务有用”已有直接的跨任务 credit baseline。[94] GRSD 从同 prompt 的成功/失败 rollout group 提取 outcome-discriminative guidance，但仍保留 verifier 决定的 advantage 方向。[95] TTEL 用 informed feedback 相对 null feedback 的概率差定位失败轨迹的可疑 token，并从该处复用前缀、重生成 suffix；这是一种错误定位，不是正向贡献识别。[96] OVCSD 只在 student-reached state 的首次对齐分岔处蒸馏 outcome-verified teacher continuation。[97] CSCR 则发现大 likelihood shift 常集中在可替换的表面 token，且正确/错误条件可能同向改变，因此将高 sensitivity token 降权。[98] OWIC 必须分别比较 downstream-return、group-contrast、feedback-vs-null、state-aligned continuation 和 opposing-outcome sensitivity；一个步骤改变模型分布的幅度不能替代 task contribution。
 
 ### 5.3 为什么“熵降越大，credit 越高”不可靠
 
@@ -624,3 +637,18 @@ V2.19 针对这两个 label-blind 机制做了 evidence-continuity 修复。它�
 86. Li, Q. et al. **AttriMem: Attribution-Guided Process Feedback for Agent Memory Learning.** arXiv:2607.21106 (2026). https://arxiv.org/abs/2607.21106
 87. Zhu, P. et al. **Is Deep Research Reliable? Misleading Knowledge Induces False Conclusions.** arXiv:2607.20891v2 (2026). https://arxiv.org/abs/2607.20891
 88. Xiao, Y. et al. **FinanceHarness: Autonomous Financial Deep Research Framework.** arXiv:2607.27853 (2026). https://arxiv.org/abs/2607.27853
+89. Sun, Y. et al. **HiEviDR-Bench: A Benchmark for Hierarchical Evidence Aggregation in Deep Research.** arXiv:2607.25151 (2026). https://arxiv.org/abs/2607.25151
+90. Feng, Y., Zhang, Y., Cheng, Y. & Qi, W. **Scores Are Not Decisions: Cost-Aware Stopping for Tool Acquisition in LLM Agents.** arXiv:2607.27083 (2026). https://arxiv.org/abs/2607.27083
+91. Prajapati, A. & Mohite, O. **Two Calls Beat Five Agents: Evaluating Multi-Agent Pipelines Against Self-Refinement for Local Language Models.** arXiv:2607.26922 (2026). https://arxiv.org/abs/2607.26922
+92. Luo, J. **SKIMIX: Multi-Agent Harness-Time Scaling with Skill Mixture for Dynamic Harness Engineering.** arXiv:2607.27994 (2026). https://arxiv.org/abs/2607.27994
+93. Huang, M.-X. et al. **MANTA: Multi-Agent Network Topology Adaptation for Self-Evolving Multi-Agent Systems.** arXiv:2607.28527 (2026). https://arxiv.org/abs/2607.28527
+94. Yao, Z. et al. **SkillRise: Agentic Reinforcement Learning for Cross-Task Skill Evolution.** arXiv:2607.26784 (2026). https://arxiv.org/abs/2607.26784
+95. Zheng, B. et al. **Group-Reflective Self-Distillation for Agentic Reinforcement Learning.** arXiv:2607.28076 (2026). https://arxiv.org/abs/2607.28076
+96. Chitale, R. S. et al. **Test-Time Scaling via Error Localization.** arXiv:2607.21453v2 (2026). https://arxiv.org/abs/2607.21453
+97. Xia, X. et al. **From Scoring to Acting: Outcome-Verified Comparative Self-Distillation for LLM Agents.** arXiv:2607.27937 (2026). https://arxiv.org/abs/2607.27937
+98. He, Q., Wu, Z. & Wang, Z. **Not All Tokens Deserve Equal Credit: Counterfactual Sensitivity Credit Reallocation for Long-CoT Reasoning.** arXiv:2607.27888 (2026). https://arxiv.org/abs/2607.27888
+99. Du, E. et al. **LEDGERMIND: Provenance-Constrained Multimodal Agentic Reasoning with a Structured Evidence Ledger.** arXiv:2607.28374 (2026). https://arxiv.org/abs/2607.28374
+100. Shams, M. **LayerRAG-Bench: A Cross-Layer Reliability Benchmark for Agentic Retrieval-Augmented Generation.** arXiv:2607.27353 (2026). https://arxiv.org/abs/2607.27353
+101. Xiong, H.-D. et al. **Thinking Under Uncertainty: Evidence Use and Information-Seeking in Language Models.** arXiv:2607.26845 (2026). https://arxiv.org/abs/2607.26845
+102. Yan, B., Wolfe, G., Martiniani, S. & Cho, K. **AskChem: Claim-Centered Infrastructure for Chemistry Literature Synthesis.** arXiv:2607.28618 (2026). https://arxiv.org/abs/2607.28618
+103. Aravanis, T. & Koutras, C. D. **Selective Credibility-Limited Belief Update.** arXiv:2607.28523 (2026). https://arxiv.org/abs/2607.28523

@@ -1,10 +1,14 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.11
+> 版本：5.12
 >
-> 更新：2026-07-31 06:30 UTC
+> 更新：2026-07-31 05:58 UTC
 >
-> 状态：**截至 2026-07-31 06:35 UTC，fresh V2.41.18 finalization watchdog 是当前权威安全聚合：按五段全集拓扑计入不可补跑的首题infra-zero，R1 为 `160/220 = 31 completed + 129 failed`、剩余60，internal-test 156 已全部终态；冻结队列已自然进入最后的dev+validation S04，活动Python PID`1350579`/start ticks`741557746`，未signal/restart/resume/rerun/skip。旧 `full220_v2403_r1_status.json` 发布器仍滞后，不能覆盖fresh finalizer。V2.41.87 phase-aware监控仍唯一权威阶段监控，当前为`r1_full220`、state fresh、`critical=[]`；同步taxonomy为`119 mapped + 1 excluded + 5 surface-uncovered`，`new_p13=false`且不授权活动策略变化。R1 result/final seal、P12 trial-2、schema76 paired result、trials1/3/4、Avg@4、schema77/search-yield/markdown/scope-open及OWIC结果均未产生，因此仍没有正式DeepWideBench分数、榜单提升或SOTA。主结果定义继续固定为**同一 all-220 全集**；dev64只可作为预注册安全/质量门，不能替代全集结果或用于选择性报告。当前冻结R1并发和所有forward参数不得热改；下一次全新sealed rollout若获GO，必须先对GPT-5.6/9878做不含benchmark内容的容量阶梯探针，把连续成功且无排队/限流异常的最高安全并发写入新freeze，再以该固定大并发跑完整220，失败仍计0且禁止选择性补跑。不可逆顺序固定为：`R1 exact220/release → P12/schema76 → official Avg@4 → schema77 paired dev64 → V2.41.80 search-yield immutable terminal → V2.41.03 markdown paired dev64 → 条件式V2.41.05 scope-open terminal → OWIC capture/Gate-1 → V2.41.90 → V2.41.91 → V2.41.92 → V2.41.93 replicate-aware Gate-2A`。**
+> 状态：**截至 2026-07-31 05:58 UTC，fresh V2.41.87 phase-aware watcher 是当前权威 label-blind 安全聚合：按五段全集拓扑计入不可补跑的首题 infra-zero，R1 为 `161/220 = 32 completed + 129 failed`、剩余 59，internal-test 156 已全部终态；冻结队列正在最后的 dev+validation S04 自然推进，活动 Python PID `1350579`/start ticks `741557746`，未 signal/restart/resume/rerun/skip。旧 `full220_v2403_r1_status.json` 发布器仍停在 70/220，不能覆盖 fresh watcher。当前 phase 为 `r1_full220`、`critical=[]`；taxonomy 有 6 个 surface-uncovered failure，只授权人工离线审计，不授权活动策略变化。R1 released result、后续 quality chain、Avg@4、OWIC 与正式 evaluator aggregate 均未产生，因此仍没有 DeepWideBench 全集分数、榜单提升或 SOTA。主结果固定为**同一 all-220 全集**；dev64 只可作为预注册门，不能替代全集或用于选择性报告。V2.41.96 已作为 wait-only capacity executor 安全激活，protocol `e413f85d…e4d0`、activation `5c08d330…15c7`；它在 R1 exact220/release、quality chain terminal、现有 API worker 消失及旧 V2.41.94 watcher 自然退出前不会取 lease、调用 9878 或启动 benchmark。门释放后才执行 `1/2/4/8/12 × 3 waves` 中性容量阶梯，冻结最高连续安全并发，并用该固定并发从全新目录运行完整 220；失败计 0，禁止 resume、选择性补跑或热改。不可逆顺序固定为：`R1 exact220/release → P12/schema76 → official Avg@4 → schema77 paired dev64 → V2.41.80 search-yield immutable terminal → V2.41.03 markdown paired dev64 → 条件式V2.41.05 scope-open terminal → OWIC capture/Gate-1 → V2.41.90 → V2.41.91 → V2.41.92 → V2.41.93 replicate-aware Gate-2A → neutral capacity ladder → fresh all-220`。**
+
+> **5.12 最新搜索/credit 边界与全集高并发协议（2026-07-31 05:58 UTC）：07-28 至 07-31 增量文献加入 HiEviDR-Bench、CAM-DF、Two Calls Beat Five Agents、SKIMIX、MANTA、SkillRise、GRSD、TTEL、OVCSD、CSCR、LEDGERMIND、LayerRAG-Bench、Thinking Under Uncertainty、AskChem 与 Selective Credibility-Limited Belief Update。它们进一步排除“agent 越多越好”“score 可直接决定停止”“分布变化越大 credit 越高”“有 citation 即可靠”四类主张。下一版实验必须加入 CAM-DF-lite 停止头、agent-count/refinement-round/topology 同预算曲线、HiEviDR 式 evidence→claim→answer 分层指标、SkillRise/GRSD/TTEL/OVCSD/CSCR credit 基线，以及 evidence/tool-contract/authorization/session 四层故障注入。reference evidence graph、task label、gold 与 evaluator 字段只允许预测冻结后的离线诊断，绝不进入 runtime。
+>
+> 高并发只作为跨题吞吐配置，不作为单题 multi-agent 质量机制。容量档由 V2.41.96 的中性请求决定，选中后整次 fresh all-220 固定；若研究 WebSwarm/MANTA 式委派，则另做相同总 token、tool-call、wall-clock 与模型预算的 `1/2/4/8` agent、`0/1/2` refinement round 和 fixed/adaptive topology 曲线。吞吐并发与单题 agent 数必须分别记录、分别消融，不能用 wall-clock 加速冒充 Row/Item F1 提升。**
 
 > **5.09 V2.41.93 continuation-replicate测量不确定性、层级bootstrap与全集大并发约束（2026-07-31 04:00 UTC）：V2.41.92对opaque task cluster做外层bootstrap，却先把每个action仅三次continuation压成单一均值；因此task sampling uncertainty进入CI，有限replicate measurement uncertainty没有进入。构造12个独立task cluster、full均选择同一动作的反例：该动作三次sealed contribution均为`[-1.0,0.4,1.0]`，均值0.1333；V2.41.92整体`pass`，mean-only两套shared-minimum 95%下界均为`+0.088888888889`，但层级重采样下界为`-0.133333333333`。这证明旧门可能把每题都相同的有限replicate噪声误写成稳定部署价值；V2.41.92只能作父诊断，不能独立授权controller design。
 >
@@ -900,6 +904,16 @@ $\operatorname{RelIG}$ 只计算与 $A,M,R,Y$ 有关的信息，且除 log-loss 
 - selective precision/recall 与 risk–coverage；
 - 按 source family、语言、日期/数值/实体列分层。
 
+#### Evidence→Claim→Answer 分层过程指标
+
+- evidence identification precision/recall，以及独立来源覆盖；
+- evidence-to-claim support、跨来源 linking 与 unsupported intermediate-claim rate；
+- claim-to-answer entailment、citation accuracy 与 final-answer correctness；
+- progressive-gate pass rate 与首个失败层，避免用流畅 report 分数掩盖早期证据失败；
+- active-ledger citation rate、repair-time provenance amplification、stale/wrong-session evidence adoption。
+
+HiEviDR reference graph、标准 claim 与答案只在预测冻结后的离线 evaluator 使用；runtime 只能看到本轮工具产生的 active ledger。过程指标用于定位机制，不能替代 DeepWideBench 的 CE/Row/Item/Column/SR。
+
 #### 必较信号
 
 - semantic entropy；
@@ -928,6 +942,8 @@ $\operatorname{RelIG}$ 只计算与 $A,M,R,Y$ 有关的信息，且除 log-loss 
 - 新证据/新实体/纠错；
 - token、tool、page、time、USD；
 - 是否出现冲突导致 entropy 上升但错误风险下降。
+
+每个有序 action prefix 另构造 `stop_now` 与所有合法 continuation，计算离线 best-continuation payoff gap。停止基线至少包括固定调用数、校准阈值、TASR、CAM-DF-lite 与 oracle best prefix；分别报告 ranking quality、stop/continue classification、payoff-weighted regret 和异质成本分层。CAM-DF 标签只来自冻结 prefix 的离线结果，不能读取当前 benchmark 的 gold 后反馈给同一 forward pass。
 
 **强制终局 continuation 合同（V2.41.20 后新增）**：动作价值标签不得由执行动作的同一个模型直接预测，也不得把 calibrated pre/post proxy 之差命名为 actual gain。每个候选动作必须从同一个 create-exclusive predecision checkpoint 分叉；动作的真实 observation（搜索结果、页面或工具输出）必须物化进分支 state，并由 context-specific adapter 清空且仅清空受该 observation 影响的下游 suffix。`no_op` 与 action branch 使用相同 continuation policy、模型版本、seed、预算和 evaluator，执行到 terminal answer 或按预注册规则保守计失败；预测冻结后才能读取 evaluator，并以匹配分支的终局 task loss 差定义 action contribution。至少运行3个固定 continuation seeds并按 task cluster 聚合。只预测 post-action risk vector 的 arm 可作为便宜的 surrogate feature 或消融，但永远不能充当 Gate 2A/credit ground truth。
 
@@ -966,9 +982,16 @@ $\operatorname{RelIG}$ 只计算与 $A,M,R,Y$ 有关的信息，且除 log-loss 
 11. CAST-style exact/learned state-value delta；
 12. AttriMem-style answer/source-span attribution；
 13. SearchArt outcome + format + turn-efficiency process reward；
-14. OWIC full 与各组件。
+14. SkillRise-style downstream-return credit（仅用于跨任务 memory/skill curation）；
+15. GRSD-style success/failure group contrast；
+16. TTEL informed-vs-null feedback localization；
+17. OVCSD state-aligned、outcome-verified continuation；
+18. CSCR opposing-outcome sensitivity reallocation；
+19. OWIC full 与各组件。
 
 主指标是 signed contribution accuracy、Spearman、top-20% pivotal-step recall、AUROC（有益/有害）、Brier/ECE 和单位 counterfactual rollout 成本。单列六类压力样本：无关新奇、重复错误、熵升纠错、延迟显效、两步协同、删除 OOD。
+
+任何 entropy、likelihood/KL shift 或 privileged-teacher shift 只可调节 credit 幅度或不确定性，不能自行确定正负方向。正负方向由冻结 verifier/terminal outcome 决定；另做 correct-vs-incorrect opposing-outcome、null-feedback 与 surface-token substitution 审计。teacher continuation 必须从 student-reached state 出发并通过环境终局验证，否则只列为 privileged score，不计 task credit。
 
 对人工标为“单步不可充分解释”的 discovery–verification 与 evidence–synthesis 对，额外估计
 
@@ -994,9 +1017,12 @@ I_{ij}=v(\{i,j\})-v(\{i\})-v(\{j\})+v(\varnothing).
 10. TASR-style answer-stability stopping；
 11. Harness-G-style evidence-equivalence menu；
 12. Baikal random-region / Bayes-UCB；
-13. dynamic-VOC controller + evidence equivalence + semantic-region portfolio。
+13. fixed-threshold / CAM-DF-lite cost-aware stopping；
+14. dynamic-VOC controller + evidence equivalence + semantic-region portfolio。
 
 只有 Phase D1 过门后才跑 controller 全量。
+
+吞吐并发与单题协作机制分开实验。吞吐由中性容量阶梯选定并在整次 all-220 固定；WebSwarm/MANTA 式单题协作另做 `agent_count ∈ {1,2,4,8}`、`refinement_rounds ∈ {0,1,2}`、`topology ∈ {single,fixed-tree,fixed-graph,bounded-adaptive}` 的同预算曲线。先比较单 agent、two-call self-refinement 与固定拓扑，再允许 bounded-adaptive topology；报告每个点的质量、格式失败、重复 evidence、tokens、tool calls 与 wall-clock，不假设曲线单调。
 
 ### 6.6 Phase D2：受控 credit-training pilot
 
@@ -1013,9 +1039,13 @@ I_{ij}=v(\{i,j\})-v(\{i\})-v(\{j\})+v(\varnothing).
 9. CAST-style learned value delta；
 10. AttriMem-style answer attribution；
 11. SearchArt-style outcome/format/turn process reward；
-12. OWIC-risk only；
-13. OWIC full；
-14. OWIC 去 counterfactual / 去 provenance / 去 unseen mass / 去 evidence equivalence。
+12. SkillRise downstream-return（仅 memory/skill curation branch）；
+13. GRSD outcome-discriminative group modulation；
+14. OVCSD state-aligned outcome-verified distillation；
+15. CSCR sensitivity reallocation；
+16. OWIC-risk only；
+17. OWIC full；
+18. OWIC 去 counterfactual / 去 provenance / 去 unseen mass / 去 evidence equivalence。
 
 先用 1.5B–4B backbone、固定 20–30K train trajectories、3 seeds 做 pilot。主比较是 OWIC full vs 同训练预算下最强 credit baseline，不允许只和 outcome-only 比。除 held-out task metrics 外，报告训练 sample efficiency、gradient/advantage variance、credit sparsity、effective-step ratio、KL、OOD intervention rate 和 reward hacking。
 
@@ -1027,17 +1057,21 @@ I_{ij}=v(\{i,j\})-v(\{i\})-v(\{j\})+v(\varnothing).
 - A-MapReduce；
 - Web2BigTable；
 - WebSwarm；
-- SearchOS。
+- SearchOS；
 - AREX；
 - Harness-G；
-- Baikal。
+- Baikal；
+- MANTA / SKIMIX（协作拓扑与 agent-count scaling，仅同预算受控比较）；
+- Two Calls Beat Five Agents（简单 refinement 与格式故障诊断，不作跨任务榜单直接比较）；
 - SearchArt（训练系统，分数仅在同协议时比较）；
-- Search as Computation Allocation、CAST 与 AttriMem（机制对照）。
+- Search as Computation Allocation、CAM-DF、CAST 与 AttriMem（机制对照）。
 
 优先在相同骨干、search/page tools、并发、max tool calls、token、wall-clock、attempts 下运行。若官方系统无法复现，分成：
 
 - **controlled internal baselines**：支持因果机制比较；
 - **reported external systems**：只提供背景，明确模型/预算不一致，不排序宣称 SOTA。
+
+正式 DeepWideBench 结果必须来自同一冻结版本的一次完整 `all-220` execution：四个全新 output shard 覆盖精确 220 个 opaque ID，不能用 dev64、completed-only 或选择性子集替代。V2.41.96 只能在旧链自然释放后用中性请求选择最高连续安全并发；选中档位、per-shard workers 和总并发写入 freeze 后，整次运行不得改变。API/容量故障仍计保守 0，不得 resume 或只补失败题。
 
 ## 7. 指标与统计
 
@@ -1059,6 +1093,10 @@ Column F1 易被格式/列解析影响，保留但不作为唯一主指标。
 - forced-stop、premature-stop、over-search rate；
 - anchor recovery after initial miss；
 - new valid rows per 1k tokens。
+- evidence identification、evidence→claim support、claim→answer entailment 的 progressive-gate pass rate；
+- citation accuracy、active-ledger citation rate、repair provenance amplification；
+- stop/continue accuracy、payoff-weighted stop regret、oracle-best-prefix gap；
+- agent-count/round/topology 曲线中的 duplicate-evidence rate 与 format/communication failure rate。
 
 credit 分支另报：signed contribution accuracy、pivotal-step recall、credit calibration、intervention validity/OOD、credit compute overhead、训练 sample efficiency 与 gradient variance。最终任务分数仍是主结果，credit proxy 不能替代它。
 
@@ -1139,6 +1177,11 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 - additive reward vs potential shaping vs sign-preserving modulation；
 - 单步 credit vs pairwise interaction credit（选取高协同子集）；
 - 无 outcome gate、无 intervention-validity gate、无 source dedup。
+- correct-vs-incorrect opposing-outcome shift 与 informed-vs-null feedback shift；
+- state-aligned、outcome-verified teacher suffix vs 仅 teacher local score；
+- high-shift surface token、低 shift task-specific token 与语义可替换 token；
+- verifier-sign-preserving modulation vs 允许 entropy/teacher shift 翻转更新方向；
+- 当前任务 solving credit vs 折扣 downstream task 的 memory/skill curation credit，二者禁止混用。
 
 任何声称“因果”的结果都必须附 intervention definition、overlap/validity diagnostics 和 continuation-policy scope；否则统一称 attribution 或 credit surrogate。
 
@@ -1150,9 +1193,21 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 - authority-like presentation 与普通页面样式；
 - continuous evidence-entry verification、final-only verification 与二者组合；
 - fixed point-in-time snapshot vs live web；
-- search backend、tool schema 与训练时工具分布切换。
+- search backend、tool schema 与训练时工具分布切换；
+- stale evidence、missing tool output、denied authorization 与 wrong-session context 四层故障；
+- compound observation 的整体验收 vs 按可信子命题选择性接受；
+- repair 前后 active ledger diff，任何无 tool-produced provenance 的新增 claim 计 amplification failure。
 
-主指标包括 false-claim adoption、独立验证召回、四层 Brier/ECE、unsupported/contradicted rate 和成本。该审计使用独立构造任务，禁止把 benchmark gold 或 category 注入 forward runtime。[87,88]
+主指标包括 false-claim adoption、独立验证召回、四层 Brier/ECE、unsupported/contradicted rate、cross-layer fault recovery、wrong-session adoption 和成本。该审计使用独立构造任务，禁止把 benchmark gold、reference evidence graph 或 category 注入 forward runtime。[87–89,99,100,103]
+
+### 8.6 并发、agent 数与 topology 专项消融
+
+- 跨题吞吐并发：由 V2.41.96 中性 `1/2/4/8/12 × 3 waves` 容量阶梯决定，只比较吞吐、排队、429/5xx、超时与 tail latency；
+- 单题 agent 数：`1/2/4/8`，总 token、tool calls、page reads 与最大 wall-clock 预算相同；
+- refinement rounds：`0/1/2`，保留 two-call self-refinement 作为简单强基线；
+- topology：single、fixed WebSwarm-style tree、fixed graph、MANTA-style bounded adaptive；
+- 每个点同时报告 DeepWide 质量、communication/format failure、evidence overlap 与成本，检查非单调性；
+- 只有同预算质量提高可归因于协作机制，单纯 wall-clock 缩短只能称吞吐加速。
 
 ## 9. Go/No-Go 门禁
 
@@ -1194,6 +1249,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 - 等成本分层后仍有效；
 - 能识别至少一类“entropy 上升但 task risk 下降”的反证动作。
 - 在高 IG/低 value 与低 IG/高 value 反例上，terminal-loss VOC 的 top-1 regret 低于 pure IG；若该区别只在合成例成立，论文必须标为理论而非 empirical contribution。
+- stop head 相对固定阈值和 TASR 的 payoff-weighted regret 同方向改善，并与 CAM-DF-lite 比较；若只改善 tool ranking 而不改善 stop decision，不得宣称成本感知停止有效。
 
 失败处理：使用规则控制器；EIG 仅作为分析指标，不进入标题。
 
@@ -1209,6 +1265,8 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 - intervention validity ≥ 90%，OOD rate、overlap 和不同 continuation-policy 敏感性完整报告；invalid intervention 不计主估计但进入失败率，不能静默丢弃；
 - gold、reference evidence graph 或 evaluator-only 字段只能用于训练/离线 oracle baseline；所有方法另报 privileged-information budget，确保收益不是更多特权监督造成；
 - 去除 counterfactual 或 provenance 至少有一个产生预期方向的显著退化，否则不得把它们写成贡献。
+- 与 OVCSD 式 state-aligned outcome-verified continuation、GRSD group contrast、TTEL null-feedback contrast、CSCR sensitivity reallocation 和适用时的 SkillRise downstream-return credit 比较；
+- opposing-outcome shift、surface substitution 或 null-feedback stress 下，entropy/likelihood shift 不得翻转 verifier 决定的方向；无法满足时 entropy 仅作 sensitivity/uncertainty diagnostic。
 
 失败处理：不启动 credit RL。若 task-risk change 有效但 causal component 无效，方法降级为 outcome-aligned potential shaping；若只有 entropy 有效，降级为 epistemic diagnostic，不使用 causal/credit 标题。
 
@@ -1222,6 +1280,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 - CE Accuracy 不下降超过 1 个点；
 - 无新增 contamination/leakage；
 - 收益不是单一 seed 或单一 task family 驱动。
+- CAM-DF-lite/固定阈值停止和 single-agent/two-call baseline 均在相同预算下评估；若引入多 agent，至少三个 agent-count 点且非单调性完整报告。
 
 失败处理：不跑昂贵全量；检查估计器与 action model，最多允许一次预注册修订。
 
@@ -1244,10 +1303,11 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 - future-method holdout 的主比较 CI 支持预注册 non-inferiority/improvement；强泛化主张还需 confirmatory set 同方向；
 - 至少两个机制消融符合 RQ4 预测；
 - 人工 evidence audit 不显示 precision 明显恶化；
-- 系统级讨论覆盖 WebSwarm、SearchOS、ECR、TaS、A-MapReduce。
+- 系统级讨论覆盖 WebSwarm、SearchOS、ECR、TaS、A-MapReduce、Two Calls Beat Five Agents、SKIMIX 与 MANTA，并明确吞吐并发不等于单题协作质量。
 - 系统级讨论还必须覆盖 AREX、Harness-G、Baikal、SearchArt、MisKnow-Agent 与 FinanceHarness，并分别报告搜索决策、evidence acquisition、synthesis/verification、环境/时间边界和 output-contract failure。
 - controller 主张必须讨论 Search as Computation Allocation，并报告 pure IG、myopic VOC 与 finite-depth dynamic VOC 的同预算差异。
-- 若标题包含 credit/causal，Gate 2B 与 3B 必须同时通过，且讨论 ECHO、TRACE、LOTAPO、STAMP、RICE-PO、SIOP、CVT-RL、AREX key-step bonus、Harness-G SNC、CAST state-value credit 与 AttriMem attribution。
+- 停止主张必须比较 CAM-DF-lite；过程可靠性必须按 HiEviDR/LEDGERMIND/LayerRAG 的 evidence、claim、answer、tool-contract、authorization 与 session 层分别报告。
+- 若标题包含 credit/causal，Gate 2B 与 3B 必须同时通过，且讨论 ECHO、TRACE、LOTAPO、STAMP、RICE-PO、SIOP、CVT-RL、AREX key-step bonus、Harness-G SNC、CAST state-value、AttriMem attribution、SkillRise、GRSD、TTEL、OVCSD 与 CSCR。
 
 失败处理：按证据降级为 UQ diagnostic、negative result 或 engineering report；不得保留过强标题/摘要。
 
@@ -1263,11 +1323,11 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 | M3 | 四层信号数据与校准 | TBD | 2 周 | TBD | shadow signal dataset、calibration report、replay receipt | PAV/terminal calibrator、task-cluster split/bootstrap、provenance budget 与 replay verifier 已实现；真实匿名 development labels/bundle 尚无，Gate 1 未评估 |
 | M4A | Counterfactual action-value pilot | TBD | 1–2 周 | TBD | sealed action slates、propensity、gain report、model replay receipt | task-cluster-disjoint fitter/calibrator/audit/replay verifier 已实现；真实 prospective slate 与 equal-cost arm 数据仍为 0 |
 | M4B | Step-credit intervention audit set | TBD | 2 周 | TBD | 300-step interventions、credit report | fixed-continuation bundle/receipt contract 已实现；300 个有效 step 与六类 stress family 尚未采集 |
-| M5A | Heuristic、pure EIG、myopic/dynamic VOC、evidence-equivalence 与 region controller | TBD | 1–2 周 | TBD | controllers、unit tests、IG-vs-VOC counterexamples | 未开始；Search as Computation Allocation/Harness-G/Baikal baseline 已写入协议 |
-| M5B | OWIC estimator 与 advantage modulation | TBD | 1–2 周 | TBD | credit module、intervention tests | 未开始 |
+| M5A | Heuristic、pure EIG、myopic/dynamic VOC、CAM-DF stopping、evidence-equivalence 与 region controller | TBD | 1–2 周 | TBD | controllers、unit tests、IG-vs-VOC/stop counterexamples | 未开始；Search as Computation Allocation/CAM-DF/Harness-G/Baikal baseline 已写入协议 |
+| M5B | OWIC estimator 与 verifier-sign-preserving advantage modulation | TBD | 1–2 周 | TBD | credit module、intervention tests | 未开始；SkillRise/GRSD/TTEL/OVCSD/CSCR 对照已写入协议 |
 | M6A | 50-task online controller pilot / Gate 3A | TBD | 1 周 | TBD | paired report、Pareto plots | 未开始 |
 | M6B | 3-seed credit-training pilot / Gate 3B | TBD | 2 周 | TBD | checkpoints、learning curves、credit audit | 未开始 |
-| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact | 进行中（internal-test 156 已终态；dev+validation S04 active；总计156/220） |
+| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact；下一 fresh all-220 capacity freeze | 进行中（权威聚合 161/220；dev+validation S04 active；V2.41.96 wait-only） |
 | M8 | 论文写作与审计 | TBD | 1–2 周 | TBD | manuscript、claim/evidence ledger | 未开始 |
 
 ### M1 推荐目录
@@ -1367,6 +1427,11 @@ outputs/runs/<run_id>/
 | benchmark 泄漏/污染 | 分数无效 | no-leak/STC scanner | 进程隔离、污染样本 quarantine |
 | LLM judge 不可靠 | 指标偏差 | 人工分层抽检、judge disagreement | 双人审计、规则指标优先 |
 | API/网页漂移 | 难复现 | timestamp/hash、replay | 缓存允许的证据元数据、重复运行 |
+| agent 数/round 扩展非单调 | 更多通信反而累积格式与推理错误 | agent-count/round 同预算曲线 | single-agent/two-call gate；bounded topology update；不默认越多越好 |
+| 吞吐并发与单题协作混淆 | wall-clock 下降被误写成质量提升 | 分离 executor concurrency 与 per-task agent count | 容量阶梯只决定吞吐；质量机制独立消融 |
+| stale/wrong-session/tool-contract evidence | 有引用但状态无效 | LayerRAG 式 cross-layer fault injection | active session/authorization/tool receipt；按层验收，不给通用 credit |
+| repair 放大无来源内容 | 修复阶段引入新 hallucination | repair 前后 ledger diff | typed transition 与 provenance non-amplification gate |
+| 大 likelihood/entropy shift 只是 sensitivity | 错给表面 token 正向 credit | opposing-outcome/null-feedback/substitution audit | 保留 verifier 方向；shift 只调幅或作 diagnostic |
 | 内部 scope 正确但最终答案不携带 entity | 官方 entity gate 短路 | output-contract parser、scope/entity round-trip | 从可见问题生成最小显式 scope 标记；渲染前 fail closed |
 | alias/canonical row 未在 reducer 前统一 | 重复行、虚假 coverage | canonical-key 唯一性、alias graph audit | merge-before-verify、one canonical row per key |
 
@@ -1385,6 +1450,8 @@ outputs/runs/<run_id>/
 | 机制解释 | 对应消融与轨迹案例 | 无结果 |
 | 开放世界、结果对齐的 step credit | Gate 2B 干预定位指标 | 无实现 |
 | credit 改善训练而非只拟合 proxy | Gate 3B 同预算 3-seed pilot | 无结果 |
+| 多智能体协作质量 | 相同总预算下 agent-count/round/topology 曲线优于 single/two-call | 未实验；文献显示可能非单调，不能由高 executor 并发推断 |
+| 分层 evidence 可靠性 | HiEviDR 式 progressive gate + LayerRAG cross-layer stress | 指标/压力测试已写入计划；无真实结果 |
 
 在相应证据行未完成前，摘要只能写“we propose/ask/evaluate”，不能写“improves/outperforms/demonstrates”。若 Gate 2B 未过，不得在题目或摘要使用 causal credit。
 
