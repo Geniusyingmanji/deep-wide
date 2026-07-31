@@ -1,10 +1,18 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.33
+> 版本：5.34
 >
-> 更新：2026-07-31 13:46 UTC
+> 更新：2026-07-31 14:39 UTC
 >
-> 当前覆盖：**V2.42.07 已冻结并安全激活 selected branch-scope namespace-alias publisher。V2.42.08 又完成 outcome-independent search rebase 可行性审计，覆盖全部 36 个 work order 与 6 种实际父候选（P12/schema76/schema77 × baseline/Markdown），但没有发布或物化 search 组件。V2.41.80 search-yield quality gate 仍 preterminal，故 search publisher、entropy、joint package、package gate、API 与 benchmark 全部继续阻塞。现有 R1 与 watcher 全部保留；最新 label-blind 安全聚合为 `172/220 = 34 completed + 138 failed`，剩余 48，正式 DeepWideBench 全集分数、提升或 SOTA 仍不存在。该 `172/220` 是安全进度 envelope（失败也计 terminal），不是 benchmark 得分。**
+> 当前覆盖：**V2.42.10 已冻结并安全激活 selected search-component publisher。它修正 V2.42.08 的父图漏项，覆盖全部 36 个 work order、18 个 search 决策、9 个语义父分支与 7 个唯一父字节图。P12 的 Markdown+scope 分支明确以 schema70 为父并生成独立 schema86；schema76/schema77 的 scope 继续是 Markdown 父的零字节 alias。V2.42.10 当前只等待 V2.42.07 与 V2.41.80 同时终态，不拿 shared lease、不调用模型/search/evaluator、不授权 benchmark。现有 R1 与 watcher 全部保留；最新已验证的 label-blind 安全聚合仍为 `172/220 = 34 completed + 138 failed`，剩余 48，正式 DeepWideBench 全集分数、提升或 SOTA 仍不存在。该 `172/220` 是安全进度 envelope，不是 benchmark 得分。**
+>
+> **5.34 V2.42.10 search publisher、WebSwarm 复核与新增 credit/evidence 近邻（2026-07-31 14:39 UTC）：V2.42.08 将 search 父候选简化为 baseline/Markdown 六图，但 P12 的真实 `search+Markdown+scope` work order 必须接历史 schema70，而不是 schema69。新 publisher 因而把 18 个 search 决策展开为 `3 baselines × 3 semantic parents × 2 entropy choices = 18`，字节层合并 mainline 的两个零字节 scope alias 后得到 7 图。目标 schema 固定为 P12 `80/81/86`、schema76 `82/83`、schema77 `84/85`。search absent 发布 content-free no-op；V2.41.80 GO 才物化一个 selected-parent rebase，NO-GO 或 incomplete attempt 都终态退休且禁止改阈值、重跑或 selective retry。entropy 仍为未拥有 blocker。
+>
+> create-exclusive protocol [`results/v24210_selected_search_component_preregistration_v1_20260731.json`](results/v24210_selected_search_component_preregistration_v1_20260731.json) SHA `dc5a64d0…60c6f23`，activation SHA `bc927d51…188d9a8`，wait audit SHA `6203ae30…78a3a7`。schema70→86 真实隔离回归为 `65/65`，V2.42.04/06/07/08/09/10 父链回归为 `78/78`，V2.42.10 定向为 `16/16`；compile、receipt replay、secret/opaque-ID 和 AST 网络/环境/动态执行扫描通过。唯一 subprocess 只在 scrubbed environment 下以候选内 `python -I -B` 跑本地回归。watcher `deepwide-v24210-selected-search-v1`、PID `2497122` 正在 `waiting_for_scope_and_search_quality_terminal`；selected work order、Markdown/scope publication 与 search gate 均未打开，candidate/publication absent，lease/API/full220 权限全 false。提交 `4766421` 已推送。
+>
+> 07-28 至 07-31 的一手增量检索又复核 PCD、Group-Reflective Self-Distillation、AskChem、EMBL AI Librarian 与 agent-fleet audit-budget allocation，并新增 RRM。[95,102,107,112,114,156] PCD 表明仅用 downstream success 无法区分感知不足与推理困难，并用“失败 × teacher disagreement”双 witness 及 shared-perception continuations 分配 distillation；它要求 OWIC 把 anchor/evidence acquisition、reasoning、canonicalization 与 renderer credit 拆开。agent-fleet 工作则给出 confidence miscalibration 超过阈值后 confidence-ranked audit 可差于随机的反例，故 raw entropy/confidence 不得直接决定 credit、审计或并发。GRSD、RRM、AskChem 和 Librarian 分别补上 success/failure group reflection、失败驱动的 procedural retrieval memory、provenance-carrying claim 单元和 live structured search→evidence extraction。它们只改变 baseline/evidence-ledger 设计，不产生当前 DeepWideBench 分数。WebSwarm 官方仓库仍为 2026-07-18 的 `40c9aac…5717`，没有新代码可改变此前 76 题 English-subset、非官方 core-entity gate 与 resume 语义审计。survey 去重后扩为 156 篇。
+>
+> 全集高并发合同不变：当前 R1 是唯一 exact-220 owner，禁止并行启动第二个全集。待其自然 release 后，先执行冻结的 `1/2/4/8/12 × 3 waves` 容量阶梯，选最大连续安全档，再由唯一 owner 在全新 roots 上以整次固定并发执行 `52/52/52/64=220`，no-resume、failure-as-zero。单题 WebSwarm/GRSD-style 多 agent 仍是另一条同预算质量曲线，不能用跨题 executor 并发代替。**
 >
 > **5.33 HiMPO/WikiLoop/VecTree-RAG 补漏与全量实验合同收紧（2026-07-31 13:46 UTC）：对 07-28 至 07-31 的 967 条 arXiv 记录和全月按日期排序的前 2,000 条记录做去重筛选，并沿 WebSwarm/SwarmResearch 的引用邻域阅读全文核验 HiMPO、WikiLoop、VecTree-RAG、AGAO、AlloBench、DREvo 与 Living-Harness。[149–155] 前三篇进入核心矩阵；后四篇分别偏小样本描述性 orchestration pilot、工具构建投资或依赖 evaluator feedback 的跨题 harness 自演化，只保留筛选记录。WebSwarm 公开主分支仍为 2026-07-18 的 `40c9aaca…5717`，没有可据以改变既有复现审计的新 commit。
 >
@@ -1488,7 +1496,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 
 | M | 目标 | Owner | 时间 | 预算上限 | 产物 | 状态 |
 |---|---|---|---|---:|---|---|
-| M0 | 基线、官方评测、文献/novelty audit | 当前会话 + 待确认 PI | 已更新至 2026-07-31（148 篇） | 已发生，待补账 | `survey.md`、`.research/literature_matrix.md`、基线 scripts/results | 完成（持续增量） |
+| M0 | 基线、官方评测、文献/novelty audit | 当前会话 + 待确认 PI | 已更新至 2026-07-31（156 篇） | 已发生，待补账 | `survey.md`、`.research/literature_matrix.md`、基线 scripts/results | 完成（持续增量） |
 | M1 | 严格 runtime/eval 隔离与正文 evidence pipeline | 当前会话 + TBD owner | 已实现 manifest 隔离、HTML/PDF 正文、query-local citation provenance 与历史 forward preflight；精确 span/STC 待做 | TBD | `src/deepwide_agent`、evaluator、no-leak tests | 部分完成 |
 | M2 | 表格/evidence state 与 replay | 当前会话 + TBD owner | V2.29.0 schema 37、单题 checkpoint、hosted trace 去重、failure trace 持久化、anchor-only replay 和 pinned V2.25 closed-domain replay 已可运行；20-task replay pack 待做 | TBD | state schema、20-task replay pack | 部分完成 |
 | M3 | 四层信号数据与校准 | TBD | 2 周 | TBD | shadow signal dataset、calibration report、replay receipt | PAV/terminal calibrator、task-cluster split/bootstrap、provenance budget 与 replay verifier 已实现；真实匿名 development labels/bundle 尚无，Gate 1 未评估 |
@@ -1498,7 +1506,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 | M5B | OWIC estimator 与 verifier-sign-preserving advantage modulation | TBD | 1–2 周 | TBD | credit module、intervention tests | 未开始；CIGPO/Bridge Evidence/CHILL/SkillRise/GRSD/TTEL/OVCSD/CSCR 对照已写入协议 |
 | M6A | 50-task online controller pilot / Gate 3A | TBD | 1 周 | TBD | paired report、Pareto plots | 未开始 |
 | M6B | 3-seed credit-training pilot / Gate 3B | TBD | 2 周 | TBD | checkpoints、learning curves、credit audit | 未开始 |
-| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact；下一 fresh all-220 capacity freeze、唯一继承槽与固定并行计划 | 进行中（权威安全聚合 172/220；dev+validation S04 active；V2.41.94/96 wait-only；V2.41.97/98/99 等待 capacity freeze；V2.42.00 等待质量链终态） |
+| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact；下一 fresh all-220 capacity freeze、唯一继承槽与固定并行计划 | 进行中（最近已验证安全聚合 172/220；dev+validation S04 active；V2.41.94/96 wait-only；V2.41.97/98/99 等待 capacity freeze；V2.42.10 等待 scope 与 search-yield 双终态） |
 | M8 | 论文写作与审计 | TBD | 1–2 周 | TBD | manuscript、claim/evidence ledger | 未开始 |
 
 ### M1 推荐目录

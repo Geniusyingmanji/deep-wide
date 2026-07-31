@@ -10,7 +10,7 @@
 
 截至 2026-07-31，信息熵作为统一优化目标还有一个更直接的理论反例。Search as Computation Allocation 证明，mutual information 只有在终端决策为概率分布且使用 log loss 时才等于 myopic value of computation；若终端目标是零一损失或 simple regret，动作价值是 posterior best-decision improvement，也就是 knowledge-gradient 型 VOC。该文构造的有限问题中，按信息增益选中的 computation，其 VOC 可以低于最优 computation 的任意给定比例。[83] 因而，本项目更准确的核心是**以四层 DeepWide 终端损失定义 value of computation**。信息熵只在 log-loss 子问题中充当精确短视价值，在一般损失下充当诊断或代理；只有当损失有界且通过目标变量决定时，低 mutual information 才给出 myopic VOC 的单侧上界。它不能单独决定跨动作排序或 credit。
 
-在本次检索范围内，仍有一个可验证、也可被否证的候选缺口：尚未找到工作在 DeepWide 表格任务中同时校准隐藏 anchor、未见结果质量、行资格和格值，并把这四类风险变化与结果对齐的同状态反事实 credit 联合验证。有限候选集上的低 Shannon 熵不代表开放集合完整，甚至可能是在错误 anchor 上过度确信。因此，本综述建议将创新假设收窄为：用校准的四层信念估计任务风险变化；用 evidence-set equivalence 防止同义查询反复取回相同证据；再通过同状态干预和 provenance 判断风险变化是否由该步骤造成、是否支持最终任务。信息量在这里是 epistemic signal，而不是自动成立的 causal credit。当前代码与实验尚未验证这一整套方法。V2.42.07 只冻结并安全激活 selected branch-scope namespace-alias publisher；V2.42.08 只证明 36 个 work order、6 种父候选上的 search rebase 字节可构造；V2.42.09 只冻结 search-environment fingerprint 与 future prelaunch verifier。三者均未发布 search-yield、实现 entropy controller、通过 package gate 或产生 benchmark 提升证据。
+在本次检索范围内，仍有一个可验证、也可被否证的候选缺口：尚未找到工作在 DeepWide 表格任务中同时校准隐藏 anchor、未见结果质量、行资格和格值，并把这四类风险变化与结果对齐的同状态反事实 credit 联合验证。有限候选集上的低 Shannon 熵不代表开放集合完整，甚至可能是在错误 anchor 上过度确信。因此，本综述建议将创新假设收窄为：用校准的四层信念估计任务风险变化；用 evidence-set equivalence 防止同义查询反复取回相同证据；再通过同状态干预和 provenance 判断风险变化是否由该步骤造成、是否支持最终任务。信息量在这里是 epistemic signal，而不是自动成立的 causal credit。当前代码与实验尚未验证这一整套方法。V2.42.10 已冻结并安全激活 search publisher，但它只修正 V2.42.08 漏掉的 P12 schema70 父图并等待 scope/search-yield 双终态；它没有发布 search-yield、实现 entropy controller、通过 package gate 或产生 benchmark 提升证据。
 
 2026 年 7 月 29–31 日的增量文献进一步排除了三个宽泛主张。WebSwarm 式递归委派不能推出“更多 agent 更好”：Two Calls Beat Five Agents 与 SKIMIX 都报告了 task-dependent、非单调的 multi-agent scaling，MANTA 又把通信拓扑本身作为推理时动作。[91–93] 相关性或不确定性 score 也不能单独决定工具数；CAM-DF 直接学习“现在停止”与“最佳继续”的 payoff gap，并把异质成本纳入决策。[90] 大的模型分布变化更不自动代表 task credit。CSCR 在相反 outcome 条件下观察到大量同向 token shift，并将其解释为 counterfactual sensitivity 而非可靠的 answer-aligned direction；OVCSD 则要求 state-aligned divergence 和 outcome-verified continuation。[97,98]
 
@@ -67,6 +67,7 @@ DRNOISE 和 FA-SD 分别收紧可靠性与训练主张。DRNOISE 的 100 个合�
 - 2026-07-31 12:48 UTC 对 WebSwarm 相邻遗漏项做二次去重召回并全文读取 DivInit、Dr-DCI、DRNOISE 与 FA-SD。[143–146] 该轮分别补上首轮 query anchor collapse、retriever-steered dynamic workspace、误导直接证据下的 verification inertia，以及成功轨迹 self-distillation 的 decoding collapse。所有数字均由论文表格或 limitation 定位核对，只用于冻结对照和失败模式，不作为当前项目分数。
 - 2026-07-31 12:59 UTC 对 `deep research`、`agentic search`、`web search agent`、`multi-agent search`、`swarm search` 与 `deep-and-wide` 做全月日期窗去重检索，并全文核验 SwarmResearch、SimpleWikiSearch 与 Agent Harness Distillation（arXiv:2607.28147）三篇。[147,148] 前两篇分别补上 depth-varying parallelism 和可执行 search-environment contract；Agent Harness Distillation 主要研究通用 AMAS 的黑盒 harness 提取与 IP 风险，不直接约束 DeepWide 检索或四层 credit，故筛选后不纳入核心清单。本轮 PDF 精读限定为三篇。
 - 2026-07-31 13:46 UTC 对 07-28 至 07-31 的 967 条 arXiv 记录及全月按日期排序的前 2,000 条记录做去重筛选，再沿 WebSwarm/SwarmResearch 的引用邻域全文核验 HiMPO、WikiLoop、VecTree-RAG、AGAO、AlloBench、DREvo 与 Living-Harness。[149–155] 前三篇分别补上同状态 memory-write credit、带 unrelated-query guard 的 downstream edit utility 和分层结构检索。AGAO 仅有每套 8 题、每题一次的描述性 pilot；AlloBench 研究可复用工具构建投资；DREvo/Living-Harness 依赖跨题 evaluator feedback 做 harness 自演化，均只保留筛选记录而不进入核心矩阵。本轮也复核 WebSwarm 公开主分支，最新 commit 仍为 2026-07-18 的 `40c9aaca…5717`。
+- 2026-07-31 14:39 UTC 对同一日期窗做更窄的 `credit assignment / evidence retrieval / reflective memory / calibrated agent audit` 二次召回，并阅读全文复核 PCD、GRSD、AskChem、EMBL AI Librarian 与 agent-fleet audit-budget allocation，新增 RRM。[95,102,107,112,114,156] PCD 和 audit-budget 工作进入核心 novelty 边界；前者给出 reward-only stage credit 不可识别的反例，后者给出 raw confidence 排序可差于随机的反例。GRSD、RRM、AskChem 与 Librarian 分别约束 group reflection、procedural retrieval memory、claim-level provenance 和 structured live-search evidence layer。WebSwarm 官方仓库再次核验仍为 `40c9aac…5717`，没有晚于 07-18 的公开提交。
 - 对经典信息论与覆盖估计文献用 Crossref/OpenAlex/DOI 核验元数据；对关键 2023–2026 论文读取 arXiv 原文而不只依赖摘要。
 
 纳入标准是：方法直接控制检索、证据选择、工具调用、搜索树、停止或开放集合覆盖；或者直接定义 DeepWide/table-search 的系统与评测边界。排除纯推荐、视觉检索、物理导航等仅共享“entropy/search”词面但不能约束本研究设计的工作。检索记录的高密度比较版见 [.research/literature_matrix.md](.research/literature_matrix.md)。
@@ -95,7 +96,7 @@ LLM judge 也不能只按一个总体 F1 选择。Citation Verifier 在 624 个 
 
 SciDataSailor 让“按熵自适应分支宽度”也不再是空白。它在可执行科学数据仓库上用 MCTS 合成轨迹，先以 strategy-level proposals 生成 tool probes，再把候选 prior entropy 与当前 step token entropy 归一化，映射到 $k_{min}$ 与 $k_{max}$ 之间的动态 child 数；token entropy 不可用时退回 prior entropy。[110] 该方法服务于训练数据合成而非 DeepWide 在线表格求解，且论文没有证明 entropy width 优于同预算 terminal-loss VOC。尽管任务不同，本项目必须加入固定 width、random width、SciDataSailor-style entropy width 与四层 VOC width 四个对照，并报告实际生成的分支数和去重后 evidence-set 数。
 
-EMBL AI Librarian 给出一个可直接借鉴、但不占 novelty 的检索工程对照。其单一 LLM 生成七个互补的 Europe PMC fielded lexical queries，search 与 full-text worker pool 分别为 8 和 12，并按 PMID、DOI、title 分层去重，最终返回定位到约 250 词的证据片段。[114] 它仅做一轮检索，正文也把多跳与“证据不足时是否继续”列为限制。对 DeepWide 而言，这支持把 query diversification、document deduplication、evidence localization 与跨题吞吐并发拆开测量；并发只能作为速度设置，不能获得搜索质量 credit。
+EMBL AI Librarian 给出一个可直接借鉴、但不占 novelty 的检索工程对照。其单一 LLM 生成七个互补的 Europe PMC fielded lexical queries，search 与 full-text worker pool 分别为 8 和 12，并按 PMID、DOI、title 分层去重，最终返回带 source metadata 与原始 query 的定位证据片段。[114] 它仅做一轮检索，正文也把多跳与“证据不足时是否继续”列为限制。对 DeepWide 而言，这支持把 query diversification、document deduplication、evidence localization 与跨题吞吐并发拆开测量；并发只能作为速度设置，不能获得搜索质量 credit。
 
 AREX 让“递归核对未解决约束”本身也不再是空白。它在内层研究循环之外增加 outer self-improvement loop，以结构化 answer/evidence/confidence 判断 accept、refine 或 restart；`update_context` 保留 verified findings、source IDs、unresolved constraints、rejected candidates 与 next plan。训练阶段又用关键步骤标注给 turn-level advantage 加 bonus。[76] 这与四层概率风险不同，但它是 constraint-wise follow-up、状态压缩和 key-step credit 的强基线。新增方法必须证明校准风险比自报 confidence 或关键步骤标注提供额外预测价值。
 
@@ -139,13 +140,15 @@ BeyondUncertainty 与 SVR 给这个停止实验补上两个容易遗漏的成本
 
 HYSET 从工具检索侧说明组合价值也不能由逐项分数简单相加。它把一组工具作为 query-conditioned hyperedge，显式建模集合大小和工具兼容性。[109] DeepWide 的 query/agent 组合不是工具集合，但同样存在互补与冗余。四层 risk/VOC controller 应比较单动作评分、greedy marginal gain 与小规模 set-level portfolio；若多个分支落入同一 evidence equivalence class，其组合价值不能按独立增益求和。
 
-HiEviDR-Bench 与 LEDGERMIND 把 evidence state 的要求具体化。HiEviDR-Bench 为每题构造 evidence→intermediate claim→conclusion 的分层图，并用 report quality、traceability、citation、claim verification 与 answer correctness做 progressive gating；其 2,000 题、16 模型实验中，作者报告 evidence identification 与 intermediate claim construction 是早期瓶颈。[89] LEDGERMIND 则要求 reasoning 和 repair 只能引用 active、tool-produced ledger entries，并把 repair 写成不允许无来源内容进入的 typed transition。[99] AskChem 进一步把检索单元从 paper 改成带 DOI、verbatim quote 或 evidence locator 的原子 claim。[102] 这些工作说明 evidence graph、claim ledger 或 provenance-constrained repair 不能作为本项目的独立创新。可比较的新增部分只能是四层风险怎样在这些受约束状态上校准和决策。
+HiEviDR-Bench 与 LEDGERMIND 把 evidence state 的要求具体化。HiEviDR-Bench 为每题构造 evidence→intermediate claim→conclusion 的分层图，并用 report quality、traceability、citation、claim verification 与 answer correctness做 progressive gating；其 2,000 题、16 模型实验中，作者报告 evidence identification 与 intermediate claim construction 是早期瓶颈。[89] LEDGERMIND 则要求 reasoning 和 repair 只能引用 active、tool-produced ledger entries，并把 repair 写成不允许无来源内容进入的 typed transition。[99] AskChem 进一步把检索单元从 paper 改成带 DOI、verbatim quote 或 evidence locator 的原子 typed claim，并在 claim store 上同时提供 faceted taxonomy、evidence graph 与 exploratory taxonomy。[102] 这些工作说明 evidence graph、claim ledger 或 provenance-constrained repair 不能作为本项目的独立创新。可比较的新增部分只能是四层风险怎样在这些受约束状态上校准和决策。
 
 LayerRAG-Bench 与 Selective Credibility-Limited Belief Update 又说明“有引用”仍不够。前者把故障分成 evidence、tool contract、authorization 与 session state，作者报告 groundedness-only 评价会把 stale 或 wrong-session evidence 误判为成功。[100] 后者在形式 belief update 中允许每个 source world 只接受 compound input 的一个可信弱化版本，而不是整体纳入。[103] 对 DeepWide 而言，每条观测需拆成可接受的子命题，并记录 source、session、tool contract、被削弱或拒绝的部分。否则一个高相关页面可以在错误会话或过期状态下产生更尖锐却无效的 posterior。
 
 MAPD 给 WebSwarm-style 经验迁移增加了一个训练基线。它不在推理时运行 swarm，而是让离线 Orchestrator、Searcher、Repair 和 Protocolizer 生成结构化 JSON；quality gate 检查 schema、exact-match consistency、抽取式 grounding 和 oracle leakage，学生再用同一模型的 protocol-conditioned branch 做 self-distillation，并保留终局 outcome RL。[121] 论文全文明确把 ground truth、成功标签和 repair diagnosis 限制在 privileged synthesis。DeepWide 若训练 no-entropy 或 entropy controller，必须把 offline privileged protocol、runtime visible state 和 evaluator-only metadata 物理分层；任何 `task_type` 或 success-conditioned protocol 都不得进入同一题的 label-blind forward pass。实验还需比较 raw trajectory imitation、structured protocol、outcome-only RL 和 protocol-plus-outcome 四组，防止把格式蒸馏误写成 entropy credit。
 
 FA-SD 给这个训练对照增加了负向控制。成功 rollout 作为 privileged prompt 可以提高 self-teacher 的即时表现，但 KL 蒸馏仍可能退化为跨问题重复的 reasoning/search 模板；论文把这一现象称为 decoding collapse，并将不稳定性拆为 evolving model inconsistency 与 feedback prompt inconsistency。[146] fixed-reference 和 EMA teacher 改善稳定性，却需要 warm-up，且 feedback-augmented external teacher 仍可能弱于普通 external-teacher OPD。OWIC 训练不能只报 teacher–student KL、表面 trajectory diversity 或最终平均分；必须报告输入条件化的 query/action diversity、有效监督样本比例、teacher drift、warm-up regression，并比较 outcome-only、fixed teacher、EMA teacher 与无 privileged feedback。
+
+RRM 与 GRSD 补上两种经验复用对照。[95,156] RRM 把跨任务 procedural retrieval experience 与当前任务 factual evidence 分开，经验只生成 query-level guidance，最终回答仍只能条件于当前视频新取回的事实；usage、reuse feedback 与 temporal decay 控制经验生命周期。GRSD 则从同 prompt 的 on-policy success/failure rollout group 提取 outcome-discriminative reflection，并用 stop-gradient self-teacher 调幅而不翻转 verifier advantage。DeepWide 若复用 WebSwarm sibling experience 或历史失败记忆，必须保留同样的物理边界：经验可以改变搜索策略，但不能作为当前题的事实证据；其训练还要与 fixed/EMA teacher、raw trajectory imitation 和 outcome-only RL 比较。
 
 ACM 把长程上下文管理写成两个显式动作。`manage_context` 将一段历史总结后把原始消息按 ID 外置，`query_memory` 再针对该 ID 读取原文；工作上下文可以缩短，但原始信息仍可追溯。[122] 这种“lossless”只描述存储可逆性，不保证 summary、召回或后续使用无偏。其 dual-constraint teacher 会查看 reference answer，决定哪里应压缩、继续搜索或作答，因此只可作为离线 privileged action-timing baseline。DeepWide runtime 的 offload 决策必须仅依赖可见 token pressure、重复/死路证据、四层风险和成本；每次 offload 需保留 source/session/provenance，并与同状态 `continue-search`、`answer/abstain` 比较终局损失。
 
@@ -309,6 +312,9 @@ ECR 同时暴露了可延伸的边界：
 | MARS-RA (2607.27967) | 多模态模型对协作 agent 的 pairwise contribution comparison 与 rank aggregation | 依赖 multimodal comparison model | agent-level surrogate | 多 agent credit 可比较相对排序而非绝对 scalar；仅适用于 swarm arm，不能代替 temporal step intervention [132] |
 | HiMPO (2606.16285) | 同一 compressed pre-write state 下旧/新 memory 的 target-outcome recoverability 差，再以 hindsight relevance 过滤 | 是；需要可靠 target outcome，并以 sibling writes 归一 | 局部 memory-write counterfactual，非完整终局干预 | 已直接处理 memory credit 与 tool/reasoning blame leakage；OWIC 必须比较 HiMPO-style recoverability，并证明四层 task-risk、开放 denominator、bridge-step 与终局 continuation 的额外价值 [149] |
 | WikiLoop (2607.26604) | 同一 pre-edit Wiki 上候选 patch 的 frozen-Navigator before/after utility，并惩罚 unrelated-query regression | 是；训练期使用冻结 evaluator、affected/guard query sets | 编辑级同起点 paired utility；隔离 copy，不是 persistent closed-loop effect | downstream utility credit 与 guard 已有；知识/证据写入不能只按 entropy 或绝对 post-state 打分，必须加入固定消费者、负迁移 guard、edit cost 与 moving-evaluator audit [150] |
+| PCD (2607.28336) | 同一 perception prefix 下多 reasoning continuation 的失败率 × perception-span teacher/student KL | 无 perception 标签，但使用终局 verifier 与强 teacher | 否；双 witness soft-AND，只识别 teacher-correctable failure proxy | reward-only PSR 不能区分感知不足与推理困难；DeepWide 必须拆分 evidence acquisition、reasoning、canonicalization 与 renderer credit，并报告 teacher competence 假设 [112] |
+| GRSD (2607.28076) | 同一 prompt 的成功/失败 rollout group reflection；self-teacher 调制 outcome advantage | 需要 verifier 标注 group outcome；guidance 为训练期 privileged | 否；保持 verifier 给出的方向 | success/failure group contrast 已有；可作 no-entropy learned-credit baseline，但不能进入同题 label-blind runtime [95] |
+| Agent-fleet audit allocation (2607.28317) | agent self-confidence、审计预算与两级相关误差 | replay 使用已记录正确性；在线调度只见 confidence | 否；估计 confidence-ranking 何时劣于随机 | 直接否定“低熵/高置信就优先审计或扩并发”；需 calibration、correlation 与 random/round-robin fallback [107] |
 
 ECHO 的范围最值得正面说明。它在 Clue Selector Game 中有均匀有限候选集、真实 oracle、确定性过滤和精确 posterior，主 reward 是候选集合的分数式收缩；实验只到 1.5B、约 10 turns。论文将近似信念、噪声或对抗来源、开放工具动作和 web search 明确列为未解决限制。[43] 这恰好留下 DeepWide 的工程与统计难点，但不留下“首次提出 epistemic credit”这一概念空白。TRACE、LOTAPO、STAMP、RICE-PO、SIOP、CVT-RL、CRAFT、BiPACE、ACPO、PBSD 和 PiCA 又分别覆盖 gold-readiness TD、删除 attribution、provenance、局部分支、label-free potential、显式干预、sibling counterfactual、state-matched baseline、entropy reweighting 与 privileged likelihood credit。[44–54]
 
@@ -328,6 +334,10 @@ SkillRise、GRSD、TTEL、OVCSD 与 CSCR 把 credit 的邻域继续压缩。Skil
 
 AdaKP、TAPO 与 MARS-RA 给这组对照增加了三条不同的非因果路径。[130–132] AdaKP 的 entropy proxy 在其数学提示设置中先用 LOO marginal accuracy 过 Spearman gate，但 knowledge points 来自 gold solutions，proxy 还冻结在初始策略；该结果不能直接迁移成 label-blind web credit。TAPO 从 rollout 复用 next-observation targets，检验的是 transition representation 能否改善 policy。MARS-RA 用 agent 间 pairwise comparison 缓解动态团队规模下绝对分值噪声，检验的是团队成员相对贡献。OWIC 若优于这三类方法，必须分别说明收益来自开放世界 task-risk calibration、temporal intervention，还是多 agent aggregation，不能只报告一个最终平均分。
 
+PCD 把“失败发生在哪一层”写成一个可识别性问题。[112] 对固定 perception $z$ 的多次 reasoning 只估计 $V(z)=\rho(x)q(z)$，其中 $\rho$ 是当前 reasoner 在充分感知下的成功率，$q$ 是 perception 充分概率；相同乘积可由不同的 $\rho,q$ 产生。因此，增加 continuation 数量只能降低这个混杂量的方差，不能识别错误来源。PCD 另加 teacher disagreement 作为第二 witness，并只重分配 perception distillation 权重。这个结果不是 DeepWide 的直接证据，但它要求 OWIC 的 Gate 2B 至少包含 stage-preserving continuations 和双 witness：终局失败不能自动给所有早期 search/evidence step 负 credit，熵降也不能自动把 renderer 或 canonicalization 改进记为搜索 credit。
+
+agent-fleet audit-budget 工作给出另一个校准反例。[107] 在其两级 Gaussian-copula 模型与记录轨迹 replay 中，self-confidence 失校准越过阈值后，confidence-ranked audit 可以比随机抽查更差，且共享任务难度造成的跨模型相关误差不可忽略。该结论不直接决定 DeepWide 的容量档位，但改变了控制合同：entropy/confidence 只能在 held-out calibration 与 correlation stress 通过后参与 audit、defer 或 worker allocation；random、round-robin 和 coverage-diverse allocation 必须保留为强对照。
+
 ### 5.3 为什么“熵降越大，credit 越高”不可靠
 
 - **相关性错误。** 一个与任务无关但很新奇的页面可以改变模型分布，却不提高 Row F1、Item F1 或最终成功率。
@@ -343,6 +353,8 @@ AdaKP、TAPO 与 MARS-RA 给这组对照增加了三条不同的非因果路径�
 - **终端损失错位。** 即使信息只关于最终最优动作，若不同错误的后果不同，高 entropy bit 也可能几乎不影响任务损失，而低 entropy bit 决定大额 regret。Search as Computation Allocation 证明这种 IG 排序误差可以任意大。[83]
 - **bridge evidence 漏记。** 一篇页面可能不改变当前答案分布，却提供下一查询所需的判别实体。若 credit 只测即时熵降或静态相关性，这类步骤会被记成零；Bridge Evidence 的 omission replay 正是针对这种延迟可达性。[117]
 - **proxy 验证不可移植。** AdaKP 的 entropy reduction 在 gold-derived knowledge-point pool 上通过 LOO accuracy gate，不能推出同一 proxy 在开放 web、动态 evidence set 或当前策略下仍保持排序。[130]
+- **stage attribution 不可识别。** 同一早期 evidence/perception 后的低终局成功率可以来自早期信息不足，也可以来自后续 reasoner 困难；更多相同 prefix continuation 只减少混杂估计方差。PCD 因此另加 teacher disagreement witness。[112]
+- **置信排序可能反转。** 当 self-confidence 失校准且 agent 错误相关时，按置信度分配稀缺审计或 worker 预算可劣于随机策略。[107]
 
 这些反例说明，信息 credit 要先回答“关于什么随机变量的信息”“相对于什么任务损失”“在什么干预下有贡献”，不能只计算语言模型输出熵。
 
@@ -803,3 +815,4 @@ V2.19 针对这两个 label-blind 机制做了 evidence-continuity 修复。它�
 153. Wang, D. & Xu, A. **AlloBench: Measuring Online Tool Allocation Capability in LLM Agents.** arXiv:2607.23332 (2026). https://arxiv.org/abs/2607.23332
 154. Guo, H. et al. **DREvo: Distilling Recalibrated Historical Experience for Harness Self-Evolution.** arXiv:2607.26722 (2026). https://arxiv.org/abs/2607.26722
 155. Du, Y. et al. **Living-Harness Is an Interactive-Agent Evolver.** arXiv:2607.26598 (2026). https://arxiv.org/abs/2607.26598
+156. Fan, J., Zhuo, J. & Zou, B. **RRM: Experience-Driven Reflective Retrieval Memory for Long-Horizon Multimodal Reasoning.** arXiv:2607.28156 (2026). https://arxiv.org/abs/2607.28156
