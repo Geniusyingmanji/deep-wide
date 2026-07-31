@@ -1,10 +1,18 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.20
+> 版本：5.21
 >
-> 更新：2026-07-31 10:02 UTC
+> 更新：2026-07-31 10:37 UTC
 >
-> 当前覆盖：**V2.42.02 已形成严格 label-blind 的 WebSwarm-style build-only prototype，并冻结为未来独立无熵系统基线，不进入 V2.42.00 主线组件；baseline-only 处置已由提交 `9a642f4` 推送并与远端逐 SHA 一致。V2.41.98/99/42.00 与 R1 均健康；R1 权威聚合仍为 164/220，尚无正式 DeepWideBench 全集分数、提升或 SOTA。**
+> 当前覆盖：**V2.42.03 已对 V2.42.00 的 36 个预冻结 successor decision 完成 outcome-independent 可物化性审计：3 个空组件决策只有 byte-exact baseline identity handoff，33 个非空决策均缺少 selected-baseline-bound publication 与联合冲突/回归收据，不能物化。V2.42.03 不是 package builder、package gate 或质量结果，也不授权 benchmark forward/full220。V2.42.02 WebSwarm adapter 仍仅为未来独立无熵系统基线，不进入 V2.42.00 主线组件。现有 R1 与 watcher 全部保留；最新已核验的安全聚合仍为 164/220，尚无正式 DeepWideBench 全集分数、提升或 SOTA。**
+>
+> **5.21 V2.42.03 successor 可物化性审计与执行链闭包（2026-07-31 10:37 UTC）：V2.42.00 只对三层 baseline 与四个 eligible component 做 outcome-before 层级决策；它明确没有 candidate build/merge/freeze 或 package-gate 权限。V2.42.01 又只证明十个历史 publication 可在仓库内逐 byte 重放，不会自动把独立 publication rebase 到未来选中的 baseline。新增纯函数审计因而穷举并 fail-closed 分类全部 36 个 terminal decision：每个 `p12/schema76/schema77` 各有一个空组件决策，可复用该 baseline 已冻结字节做 identity handoff；其余 33 个非空决策全部 `frozen_package_bytes_available=false`，禁止静默丢组件或退化为 baseline。
+>
+> 四类 blocker 保持各自 authority 边界。`search_yield_shared_query` 目前只有未来 GO 后的 design/build-only integration authority，没有 publication；历史 Markdown schema69 candidate 未绑定未来选中的 baseline，schema76/77 均需 rebase；Markdown branch scope 的历史 schema70 publication 还必须与主线 scope 分命名空间重放；entropy controller 即使未来 GO 也只授权设计，尚无 implementation、pilot 或 full220 authority。任何非空组合还共同缺少 post-decision joint conflict audit 与联合行为回归，因此独立组件 GO 不能推出 union package 可执行或更优。
+>
+> create-exclusive 收据 [`results/v24203_successor_materialization_audit_v1_20260731.json`](results/v24203_successor_materialization_audit_v1_20260731.json) SHA `b7a5d5f9…c5e14e40` 只绑定冻结 V2.42.00 protocol、V2.42.01 replay 和四类组件的现有 authority。定向测试 `11/11`，V2.42.00–03 联合回归在显式 `PYTHONPATH=src` 下 `61/61`；第一次裸环境回归的两项错误仅为两个既有 V2.42.00 test module 未自行加入 `src/`，没有功能断言失败。审计不读 live status、题面、task state、prediction、mapping/gold/category/question_type、evaluator、score/reward 或 credential，不联网、不调用模型/search/fetch、不取 lease、不 signal/restart/resume/rerun、不构建 package，也不启动 benchmark。
+>
+> 下一条独立控制链必须在 V2.42.00 terminal receipt 之后才读取其 content-free decision，按选中的 baseline 和完整 eligible-component set 生成**新版本** rebase publication；然后以同一 opaque dev64、同模型/search/prompt/预算/evaluator、failure-as-zero、no-resume 做 package-level paired gate。只有 package gate GO 或空组件 identity handoff 才能进入全新 all-220 freeze；随后仍须等待 `1/2/4/8/12 × 3 waves` 中性容量冻结并由单一 owner executor 使用固定档位运行精确 `52/52/52/64=220`。不得修改已冻结 V2.42.00 控制面，也不得把本审计写成 package 已构建、benchmark 已提分或 SOTA。**
 >
 > **5.20 Bridge Evidence/CIGPO/CHILL-Harness 增量与 credit/controller 收紧（2026-07-31 10:02 UTC）：对八组 arXiv Atom 查询与既有 116 篇按 ID 去重后，新增精读 Bridge Evidence、CIGPO、CHILL-Harness 三篇 PDF，并以一手摘要核验 Think Big, Search Small。[117–120] Bridge Evidence 固定干预前 prefix、删除一篇已读文档并重跑 suffix，将终局答案、下一查询检索质量和 turn 成本分开组成 CTU；这要求 Phase C2 为 evidence step 增加 suffix replay、next-action enablement 与成本分量，不能用即时 entropy/relevance 抹掉 bridge credit。CIGPO 已用 frozen reference 的 gold-answer log-likelihood 增量做 contextual IG reward并维持 group reward variance，因此只作为 privileged training oracle，禁止进入 label-blind runtime。CHILL-Harness 已将 workflow effect estimation、candidate valuation 与 advantage-margin execution authorization 分离，因此主 controller 也必须把“候选最好”与“是否优于 factual workflow、足以授权替换”分成两道门。
 >
