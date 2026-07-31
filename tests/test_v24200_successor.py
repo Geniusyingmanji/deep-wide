@@ -86,6 +86,11 @@ class V24200SuccessorTests(unittest.TestCase):
             "markdown_branch_scope_open_fallback",
             decision["eligible_components"],
         )
+        self.assertFalse(decision["integrated_package_required"])
+        self.assertFalse(decision["package_gate_required_before_all220_freeze"])
+        self.assertTrue(
+            decision["empty_component_set_uses_selected_baseline_identity_handoff"]
+        )
 
     def test_markdown_scope_requires_markdown_parent(self) -> None:
         statuses = terminal(markdown_branch_scope="go")
@@ -118,6 +123,10 @@ class V24200SuccessorTests(unittest.TestCase):
             "deterministic_build_and_package_gate_only",
         )
         self.assertTrue(decision["package_gate_required_before_all220_freeze"])
+        self.assertTrue(decision["integrated_package_required"])
+        self.assertFalse(
+            decision["empty_component_set_uses_selected_baseline_identity_handoff"]
+        )
         self.assertFalse(decision["all220_freeze_or_launch_allowed"])
         self.assertFalse(PACKAGE_GATE_CONTRACT["benchmark_launch_allowed"])
 

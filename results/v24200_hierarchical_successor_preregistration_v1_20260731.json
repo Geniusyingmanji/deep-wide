@@ -1,0 +1,281 @@
+{
+  "artifact_version": 1,
+  "role": "v24200_hierarchical_successor_preregistration",
+  "protocol_id": "v24200_hierarchical_baseline_integrated_package_gate_v1",
+  "created_at_unix": 1785488306,
+  "label_blind": true,
+  "parent_disposition": {
+    "protocol": {
+      "path": "results/v24199_candidate_selector_controller_preregistration_v1_20260731.json",
+      "sha256": "80034909ca93b6f064ac281dd53b5f69a4425b5a9d4cb6fde32479ac89af500c"
+    },
+    "activation": {
+      "path": "results/v24199_candidate_selector_activation_v1_20260731.json",
+      "sha256": "d345ae00d8de438bef226c7833424167120d7297ff54c0b47bf7d7284b6f0557"
+    },
+    "wait_audit": {
+      "path": "results/v24199_candidate_selector_wait_activation_audit_v1_20260731.json",
+      "sha256": "8fa893134f0db4906de3f79ce55ca96a8d78b09dad7477a636bef41854451db5"
+    },
+    "disposition": "diagnostic_only_never_execution_authority",
+    "parent_process_remains_healthy_and_unmodified": true
+  },
+  "source_contract": {
+    "source_paths": {
+      "schema76": "outputs/v24154_scope_combined_fasttrack_watcher_state_v1_20260729.json",
+      "schema77": "outputs/v24176_predicate_completion_paired_dev_watcher_state_v1_20260730.json",
+      "search_yield": "outputs/v24180_predicate_search_yield_watcher_state_v1_20260730.json",
+      "markdown": "outputs/v24103_markdown_paired_dev_watcher_state_v1_20260728.json",
+      "markdown_branch_scope": "outputs/v24105_scope_open_paired_dev_watcher_state_v1_20260729.json",
+      "entropy_credit": "outputs/v24193_replicate_aware_gate2a_consumer_state_v1_20260731.json"
+    },
+    "source_specs_sha256": "69cf673a4e087fd7c3c5ff37f85067c10b36cf3e071c9fe2d59b455fbc836941",
+    "entropy_root_path": "outputs/v24190_tie_aware_gate2a_consumer_state_v1_20260730.json",
+    "read_only_after_activation": true,
+    "status_and_false_authorization_fields_only": true,
+    "numeric_metrics_reports_predictions_or_aggregates_read": false
+  },
+  "baseline_contract": {
+    "publications": {
+      "p12": {
+        "path": "results/v2410_rank_slot_candidate_publication_v4_20260727.json",
+        "sha256": "e7dee0a2f8b8b2ed55e318aeed1c383bcc7fdfbae226dd8732c1d2eb5a2c1675",
+        "pipeline_branch": "p12",
+        "state_schema_version": 68,
+        "mainline_scope": false
+      },
+      "schema76": {
+        "path": "results/v24154_scope_combined_execution_candidate_publication_v1_20260729.json",
+        "sha256": "0cd2c47af0f4dfbb3cc0f2b3fdc80182a48037e5936bd0a41082a8f63c2f29f1",
+        "pipeline_branch": "schema76",
+        "state_schema_version": 76,
+        "mainline_scope": true
+      },
+      "schema77": {
+        "path": "results/v24175_predicate_completion_execution_candidate_publication_v1_20260730.json",
+        "sha256": "139780e26566ac8d0fbd3328dafad05652552048e99330d39bb00bf8f7d77e5e",
+        "pipeline_branch": "schema77",
+        "state_schema_version": 77,
+        "mainline_scope": true
+      }
+    },
+    "rule": [
+      "schema76_no_go_selects_p12",
+      "schema76_go_and_schema77_no_go_selects_schema76",
+      "schema76_go_and_schema77_go_selects_schema77",
+      "schema77_never_overrules_schema76_no_go"
+    ],
+    "p12_to_schema76_paired_gate_consumed": true
+  },
+  "component_contract": {
+    "mainline_scope_and_markdown_branch_scope_namespaced_separately": true,
+    "component_go_means_build_and_package_gate_eligibility_only": true,
+    "independent_go_does_not_prove_union_package": true,
+    "nonempty_component_set_requires_new_package_gate": true,
+    "empty_component_set_uses_selected_baseline_identity_handoff": true,
+    "identity_handoff_still_requires_separate_all220_freeze_and_executor": true,
+    "terminal_package_count": 36,
+    "decision_manifest_sha256": "d73a97b75768fbc0eb89ab5f0224e6f6b73a00271ba760cbdf653cc1eaf05536"
+  },
+  "package_gate_contract": {
+    "gate_id": "v24200_integrated_package_vs_selected_baseline_same_dev64_v1",
+    "selection_frozen_before_package_build": true,
+    "candidate_cold_start_required": true,
+    "same_opaque_dev64_ids_required": true,
+    "same_model_search_prompt_budget_threshold_required": true,
+    "candidate_and_baseline_evaluator_contract_identical": true,
+    "all_64_outcomes_required": true,
+    "forward_failure_scored_as_zero": true,
+    "resume_or_selective_rerun_allowed": false,
+    "completion_non_decrease_required": true,
+    "whole_table_non_decrease_required": true,
+    "each_quality_component_min_delta": -0.005,
+    "candidate_token_ratio_max": 1.05,
+    "strict_component_activation_required_when_nonempty": true,
+    "minimum_material_improvement_any": {
+      "completion_count_delta": 1,
+      "whole_table_count_delta": 1,
+      "quality_composite_delta": 0.001
+    },
+    "go_authorizes_only_new_all220_freeze": true,
+    "benchmark_launch_allowed": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "execution": {
+    "watcher_marker": "scripts/watch_v24200_successor.py",
+    "python_flags": [
+      "-I",
+      "-B"
+    ],
+    "poll_seconds": 60,
+    "state_path": "outputs/v24200_hierarchical_successor_watcher_state_v1_20260731.json",
+    "activation_path": "results/v24200_hierarchical_successor_activation_v1_20260731.json",
+    "decision_receipt_path": "results/v24200_hierarchical_successor_decision_v1_20260731.json",
+    "wait_audit_path": "results/v24200_hierarchical_successor_wait_activation_audit_v1_20260731.json"
+  },
+  "source_policy": {
+    "before_activation_source_envelopes_opened": false,
+    "after_activation_only_registered_status_envelopes_opened": true,
+    "mapping_gold_category_question_type_evaluator_score_read": false,
+    "benchmark_question_answer_evidence_prediction_or_url_values_parsed_or_emitted": false,
+    "credential_value_or_keyring_read": false,
+    "network_model_search_fetch_evaluator_or_api_called": false
+  },
+  "authorization": {
+    "status_only_successor_active_after_activation": true,
+    "decision_receipt_creation_after_entire_chain_terminal": true,
+    "candidate_code_build_merge_or_freeze_generation": false,
+    "package_gate_evaluation_or_launch": false,
+    "shared_api_lease_acquire": false,
+    "network_model_search_fetch_evaluator_or_api_call": false,
+    "benchmark_forward_or_full220_launch": false,
+    "process_signal_restart_resume_rerun_skip_or_selective_retry": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "safe_wait_boundary": {
+    "future_outputs_absent": true,
+    "protected_processes": {
+      "r1_launcher": {
+        "marker": "scripts/launch_frozen_deepwide.py",
+        "pid": 1344451,
+        "start_ticks": 741535641,
+        "python_isolated_no_bytecode_required": false,
+        "command_line_emitted": false
+      },
+      "r1_forward": {
+        "marker": "scripts/run_deepwide_agent.py",
+        "pid": 1350579,
+        "start_ticks": 741557746,
+        "python_isolated_no_bytecode_required": false,
+        "command_line_emitted": false
+      },
+      "v24187_phase_watcher": {
+        "marker": "scripts/watch_v24187_phase_liveness.py",
+        "pid": 3204072,
+        "start_ticks": 733230314,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24193_gate2a_watcher": {
+        "marker": "scripts/watch_v24193_replicate_aware_gate2a.py",
+        "pid": 1486117,
+        "start_ticks": 741782930,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24194_capacity_watcher": {
+        "marker": "scripts/watch_v24194_capacity_ladder.py",
+        "pid": 1582182,
+        "start_ticks": 742119955,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24195_compatibility_watcher": {
+        "marker": "scripts/watch_v24195_lease_owner_compatibility.py",
+        "pid": 1638839,
+        "start_ticks": 742337902,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24196_capacity_executor": {
+        "marker": "scripts/watch_v24196_capacity_executor.py",
+        "pid": 1659284,
+        "start_ticks": 742415197,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24197_parallel_planner": {
+        "marker": "scripts/watch_v24197_parallel_all220.py",
+        "pid": 1758071,
+        "start_ticks": 742773881,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24198_candidate_bundle": {
+        "marker": "scripts/watch_v24198_candidate_bundle.py",
+        "pid": 1821768,
+        "start_ticks": 742994288,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24199_candidate_selector": {
+        "marker": "scripts/watch_v24199_candidate_selector.py",
+        "pid": 1924971,
+        "start_ticks": 743375183,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24176_schema77_watcher": {
+        "marker": "scripts/watch_v24176_predicate_completion_paired_dev.py",
+        "pid": 2071115,
+        "start_ticks": 731906778,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24180_search_yield_launcher": {
+        "marker": "scripts/launch_v24183_search_yield_after_schema77.py",
+        "pid": 2312198,
+        "start_ticks": 732623682,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24103_markdown_launcher": {
+        "marker": "scripts/launch_v24185_markdown_after_search_yield.py",
+        "pid": 3057575,
+        "start_ticks": 732925701,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24105_scope_open_watcher": {
+        "marker": "scripts/watch_v24105_scope_open_paired_dev.py",
+        "pid": 3511838,
+        "start_ticks": 724284036,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24190_tie_aware_watcher": {
+        "marker": "scripts/watch_v24190_tie_aware_gate2a.py",
+        "pid": 3264914,
+        "start_ticks": 733447322,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24191_policy_value_watcher": {
+        "marker": "scripts/watch_v24191_policy_value_gate2a.py",
+        "pid": 3326028,
+        "start_ticks": 733661551,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24192_abstain_aware_watcher": {
+        "marker": "scripts/watch_v24192_abstain_aware_gate2a.py",
+        "pid": 1447396,
+        "start_ticks": 741650081,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      }
+    }
+  },
+  "control_surface": {
+    "file_count": 10,
+    "manifest": {
+      "src/deepwide_agent/v24200_successor.py": "11f3ebef7d476607dda33481601d6ecc739d7606959a111d6d0fe2c7f976dbec",
+      "scripts/preregister_v24200_successor.py": "d21aa40a430d4b85092c4743f085b243a538bbcd6fa69172ee14e63aba55747a",
+      "scripts/watch_v24200_successor.py": "1b58420769f5019ed0327266b18c8aed6abc3e1a27a3a18bcd3c0d98ecd07490",
+      "scripts/activate_v24200_successor.py": "4a83569cafc47d8925c2a4d688a4ca24b8083dae051efa252bfd3e54a807cf90",
+      "scripts/audit_v24200_successor_wait_activation.py": "a087e85f179a513e44652f0727d39e3f5c748212db0d4141ec9610958d4661e3",
+      "tests/test_v24200_successor.py": "d8dff5b17d4c0730d78c2a14804469f1c1cc89ad3a7c6dbc35e471d99915fadf",
+      "tests/test_preregister_v24200_successor.py": "8a8b9fe7f359272d32f922c1b82d87f3cd9f022aa69bef4bd93e067c4a1417f6",
+      "tests/test_watch_v24200_successor.py": "1531ff466de81a809a90418d52f5f42e42639d9a970b22b0ed0d34ffe3274cb2",
+      "tests/test_activate_v24200_successor.py": "918c25c512d424b8f9f69c3eb038253b16720fceb1294f9f6ff413998f3134fc",
+      "tests/test_audit_v24200_successor_wait_activation.py": "4245477e916832641e80ced59482f8c292e204f25d770c627e8786f6a7208152"
+    },
+    "manifest_sha256": "6edfe704288a4ae6b72a1bfa71b6445abdda548e04df712c9c93287bed9b67a9",
+    "must_remain_absent": [
+      "scripts/__init__.py",
+      "sitecustomize.py",
+      "usercustomize.py"
+    ]
+  },
+  "decision_contract_sha256": "86140eb41535d070828dbbe3b535828989e8d803dc8ce49ebb3ddc020fbfd3ce"
+}

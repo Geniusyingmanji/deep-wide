@@ -355,6 +355,7 @@ def decision_from_statuses(statuses: Mapping[str, str]) -> dict[str, Any] | None
         raise RuntimeError("V2.42.00 terminal vector lacks a baseline")
     components = eligible_components(statuses)
     baseline = BASELINES[baseline_name]
+    integrated_package_required = bool(components)
     decision: dict[str, Any] = {
         "baseline_name": baseline_name,
         "baseline_publication": baseline,
@@ -363,8 +364,11 @@ def decision_from_statuses(statuses: Mapping[str, str]) -> dict[str, Any] | None
         "eligible_components": list(components),
         "component_go_authority": "deterministic_build_and_package_gate_only",
         "integrated_package_namespace": "results/v24200_integrated_packages",
+        "integrated_package_required": integrated_package_required,
         "package_gate_contract": PACKAGE_GATE_CONTRACT,
-        "package_gate_required_before_all220_freeze": True,
+        "package_gate_required_before_all220_freeze": integrated_package_required,
+        "empty_component_set_uses_selected_baseline_identity_handoff": not integrated_package_required,
+        "identity_handoff_still_requires_separate_all220_freeze_and_executor": True,
         "all220_freeze_or_launch_allowed": False,
         "v24199_diagnostic_only_not_execution_authority": True,
         "mapping_gold_category_question_type_evaluator_score_read": False,
@@ -428,4 +432,3 @@ def build_decision_manifest() -> dict[str, Any]:
     if len(decisions) != 36:
         raise AssertionError("V2.42.00 decision manifest is not the expected 36 packages")
     return dict(sorted(decisions.items()))
-
