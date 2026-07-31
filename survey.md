@@ -14,6 +14,8 @@
 
 2026 年 7 月 29–31 日的增量文献进一步排除了三个宽泛主张。WebSwarm 式递归委派不能推出“更多 agent 更好”：Two Calls Beat Five Agents 与 SKIMIX 都报告了 task-dependent、非单调的 multi-agent scaling，MANTA 又把通信拓扑本身作为推理时动作。[91–93] 相关性或不确定性 score 也不能单独决定工具数；CAM-DF 直接学习“现在停止”与“最佳继续”的 payoff gap，并把异质成本纳入决策。[90] 大的模型分布变化更不自动代表 task credit。CSCR 在相反 outcome 条件下观察到大量同向 token shift，并将其解释为 counterfactual sensitivity 而非可靠的 answer-aligned direction；OVCSD 则要求 state-aligned divergence 和 outcome-verified continuation。[97,98]
 
+同日公开的进一步结果把实验对照收得更紧。Sample More, Reflect Less 在可核验数学题和 1.5B–7B 本地模型上，以每种方法的实际生成 token 匹配重复采样曲线；其结果不支持把该域中的反思、辩论或自选候选收益归因于机制本身，但作者明确不外推到 frontier 模型和开放式任务。[104] BeyondUncertainty 说明口头置信可以有排序价值却仍失校准，而且省检索 passage 不等于省总 token，因为额外 probe 本身有成本。[105] SVR 又表明自验证停止可能保存正确的中间答案，但错误提前停止仍是主要限制。[106] One Human, N Agents 则在受限审计模型与小规模 trace replay 中发现，跨 agent 错误相关性更多由共享题目难度解释，而非简单由模型谱系解释。[107] 这些论文不能直接预测 DeepWideBench 分数，却共同要求任何 swarm、停止或 uncertainty controller 同时报告等预算简单基线、控制分支实际触发率、probe 全成本、错误提前停止和相关失败。
+
 ## 1. 范围、问题与检索方法
 
 ### 1.1 研究问题
@@ -38,6 +40,7 @@
 - 2026-07-21 做提交日期增量检索，并读取 Forage V2、Shared Discovery Paradox 与 A²TGPO 的 PDF。该轮新增了未知 denominator、belief–coverage 分离、gold-conditioned turn IG 和 uncertainty-guided resampling 的直接近邻。[72–75] 截至该范围仍未找到把 DeepWide 的 anchor、未见质量、行资格、单元格值四层同时概率化并用于 task-risk control/credit 的工作，但这只是限定语料与日期下的缺口判断。
 - 2026-07-31 对 2026-07-21 至 07-31 的 arXiv 新增记录做增量筛选，并逐页核对 WebSwarm、AREX、Delegation Intelligence、EviBack、RARG、Filesystem-Based Memory、Harness-G、Baikal、Search as Computation Allocation、SearchArt、CAST、AttriMem、MisKnow-Agent 与 FinanceHarness 的 PDF，而非只引用摘要。[5,76–88] 这一轮把 novelty 边界进一步收窄到四层风险的校准与联合验证：递归 follow-up、语义区域覆盖、同义检索去重、结构化非近视 credit、state-value credit 和终端损失下的 metareasoning 都已有直接近邻。
 - 2026-07-31 再对 07-28 至 07-31 的 `cs.AI/cs.CL/cs.IR/cs.LG` 记录做 500 条增量召回，并以 web/research/search、swarm/delegation、coverage/evidence、credit/VOC/uncertainty 词族筛选。正文或一手 arXiv 元数据核验了 HiEviDR-Bench、CAM-DF、Two Calls Beat Five Agents、SKIMIX、MANTA、SkillRise、GRSD、TTEL、OVCSD、CSCR、LEDGERMIND、LayerRAG-Bench、Thinking Under Uncertainty、AskChem 与 Selective Credibility-Limited Belief Update。[89–103] `DeepResearch Agent System`（arXiv:2607.27562）虽然声称多项 SOTA 和大幅百分比改进，但正文是 software copyright R&D document，未提供足以复核这些数字的同协议实验链；本综述将其列为已筛选但不承载结论的低可信记录。
+- 2026-07-31 对当日最新批次再做题名/摘要筛选，并读取 Sample More, Reflect Less、Beyond Self-Knowledge、SVR、One Human, N Agents、local computer-use inference scaling 与 HYSET 的 PDF 原文。[104–109] 该轮不新增“统一方法”主张，而是增加六个实验约束：等生成 token 的独立采样曲线、probe 输入/输出 token 全计费、自适应路径触发率、premature-stop error、相关失败下的有效独立分支数，以及组合动作的集合级边际价值。数学推理、受控 RAG、agent 审计、computer-use 与 tool retrieval 的结果均只作机制和失败模式近邻，不作 DeepWideBench 横向分数比较。
 - 对经典信息论与覆盖估计文献用 Crossref/OpenAlex/DOI 核验元数据；对关键 2023–2026 论文读取 arXiv 原文而不只依赖摘要。
 
 纳入标准是：方法直接控制检索、证据选择、工具调用、搜索树、停止或开放集合覆盖；或者直接定义 DeepWide/table-search 的系统与评测边界。排除纯推荐、视觉检索、物理导航等仅共享“entropy/search”词面但不能约束本研究设计的工作。检索记录的高密度比较版见 [.research/literature_matrix.md](.research/literature_matrix.md)。
@@ -80,7 +83,15 @@ Shared Discovery Paradox 提供了另一个必要反例。在其有限 Bayesian 
 
 两项新近的 multi-agent 结果要求把“并发”与“委派”拆开。Two Calls Beat Five Agents 在一个本地 7B 模型上发现，五角色 pipeline 会因格式和错误累积而落后于两次 self-refinement，且同一 refinement 在直接准确率已经很高的 HumanEval 上反而破坏性能；作者随后用 task-aware gate 才减少该退化。[91] SKIMIX 的摘要同样报告 agent-count scaling 非单调，收益主要集中在第一轮 refinement，且开放式数学与多选任务的方向不同。[92] MANTA 则允许角色、通信边、顺序、信息可见性和验证路径在推理时有界变化。[93] 因而，大并发只能解决吞吐。若把 WebSwarm 或 MANTA 式多 agent 作为质量机制，必须在相同总 token、tool call 与 wall-clock 下报告 agent count、round 和 topology 的完整曲线，并保留单 agent 与两次 refinement 对照。
 
+Sample More, Reflect Less 把这个对照推进到按实际生成 token 匹配的采样曲线。在其 150 题、可自动核验的数学设置中，36 个配对比较没有一个方法可靠优于等成本重复采样；Best-of-N 的相同八个样本由模型自选时，在 1.5B 上比多数计数低 8.0 和 11.3 个点，在 7B 上差值缩至 2.0 和 1.3 个点且区间跨零。[104] 这些数字受模型规模、数学答案可等价计数和只统计生成 token 的限制，不能外推为“WebSwarm 无效”。它们改变的是证明责任：DeepWide 的开放式表格没有天然 majority-vote baseline，但可以对同一预算做独立搜索样本的 evidence-set union、去重后的 candidate/table aggregation 和随机委派对照。所有输入 token、重复上下文、顺序依赖与并行 latency 也必须计入，且要报告 adaptive branch 实际触发比例，避免一个名义 swarm 实际退化成单 agent。
+
+相关失败使名义 agent 数进一步高估有效 width。One Human, N Agents 在一个两层 Gaussian-copula 审计模型和 15-agent trace replay 中报告，跨模型错误相关性主要随共享题目难度变化；五个开源模型的口头置信在其锁定 elicitation 下近乎常数，confidence-ranked audit 接近随机。[107] 这不是搜索委派实验，但提示 DeepWide 不能把四个 sibling 的相似结论当作四份独立证据。下一版应按 query intent、URL/content、source dependency 和 answer/evidence-set overlap 估计 effective independent branches，并与 nominal agent count 一起报告。
+
 CAM-DF 进一步把工具取得写成真正的决策问题，而不是 ranking 后附一个阈值。其监督量是 stop-now 与 best continuation 的离线 payoff gap，符号决定停或继续，幅度表示错误决策的代价，并显式纳入异质工具成本。[90] 这与 terminal-loss VOC 的方向一致，但更接近可训练的停止头。DeepWide controller 必须加入 CAM-DF-lite、固定阈值和 oracle best-prefix 对照，并分别报告 tool ranking quality 与 stop decision regret。
+
+BeyondUncertainty 与 SVR 给这个停止实验补上两个容易遗漏的成本和失败指标。BeyondUncertainty 的口头置信对检索收益只有中等排序能力，绝对校准较差；其路由少取 20.4% passage，却因额外 probe 让总 token 比 always-retrieve 增加 28.2%。[105] SVR 在数学推理中学习 verdict–confidence gate，并在完整系统比较中减少平均 turn；但其主阈值下错误提前停止仍为 29.9% 和 37.0%，阈值过高还会越过正确中间答案并在后续回归。[106] 因而 DeepWide 的 stop head 不能只报少搜了多少或平均轮数。必须把 probe 的全部输入/输出 token 计入，报告 premature-stop、correct-intermediate-overwrite、forced-stop、abstain 和 branch-trigger rate，并与等预算独立搜索/聚合比较。
+
+HYSET 从工具检索侧说明组合价值也不能由逐项分数简单相加。它把一组工具作为 query-conditioned hyperedge，显式建模集合大小和工具兼容性。[109] DeepWide 的 query/agent 组合不是工具集合，但同样存在互补与冗余。四层 risk/VOC controller 应比较单动作评分、greedy marginal gain 与小规模 set-level portfolio；若多个分支落入同一 evidence equivalence class，其组合价值不能按独立增益求和。
 
 HiEviDR-Bench 与 LEDGERMIND 把 evidence state 的要求具体化。HiEviDR-Bench 为每题构造 evidence→intermediate claim→conclusion 的分层图，并用 report quality、traceability、citation、claim verification 与 answer correctness做 progressive gating；其 2,000 题、16 模型实验中，作者报告 evidence identification 与 intermediate claim construction 是早期瓶颈。[89] LEDGERMIND 则要求 reasoning 和 repair 只能引用 active、tool-produced ledger entries，并把 repair 写成不允许无来源内容进入的 typed transition。[99] AskChem 进一步把检索单元从 paper 改成带 DOI、verbatim quote 或 evidence locator 的原子 claim。[102] 这些工作说明 evidence graph、claim ledger 或 provenance-constrained repair 不能作为本项目的独立创新。可比较的新增部分只能是四层风险怎样在这些受约束状态上校准和决策。
 
@@ -445,9 +456,13 @@ L(B_t)=w_A\Pr(A\neq A^*)+w_M\mathbb E[\text{missed mass}]
 
 对 anchor、row、cell 分别报告 AUROC/AUPRC、Brier、NLL、ECE 与 risk–coverage；对 $M$ 报告剩余行数/质量误差、row recall calibration、premature-stop rate。比较 semantic entropy、token entropy、margin、verbalized confidence、support count、recent yield、source diversity 与 calibrated ensemble。若 entropy 在相同成本下不能稳定优于简单信号，核心假设应判失败。
 
+口头置信还必须经过 allocation-level 检查。除了全局 AUROC/ECE，报告被 controller 实际选择的低置信 tail 中错误率、不同预算下的 calibration、跨 branch 的错误相关矩阵，以及按 source/evidence equivalence 去重后的有效样本数。若置信近乎常数或相关失败使有效样本远少于名义 agent 数，router 应退化到预注册的随机/轮转或相关性-aware baseline，而不是继续用任意 tie-break 制造“自适应”外观。[105,107]
+
 ### 9.2 controller 是否真的由信号获益
 
 所有 controller 比较必须共享模型、搜索/浏览工具、动作集合、最大 token、tool call、wall-clock 和重试次数。必须包含：当前 retrieve-then-generate、fixed wide→deep、fixed deep→wide、TaS/no-entropy planner、相同 controller 加 heuristic uncertainty、pure RelIG/EIG、myopic task-risk VOC、learned dynamic-VOC approximation、oracle one-step value（仅分析）、WebSwarm/SearchOS/A-MapReduce 系统级比较，以及 Harness-G 式 evidence-equivalence/menu 与 Baikal 式 random/Bayes-UCB region policy。credit 实验另含 AREX key-step bonus、SNC、CAST-style learned value delta 与 AttriMem-style answer attribution。只和 ReAct 比不够。
+
+若 controller 生成额外 probe、critique、verification、sibling message 或候选计划，预算必须计入所有输入/输出 token、search/fetch、串行深度和实际 wall-clock。WebSwarm/MANTA 式协作还要加入等生成 token 的独立搜索采样与去重聚合曲线；开放式表格不能直接多数投票，因此 aggregation rule 必须在结果前冻结。每个 adaptive 方法都报告 branch-trigger/round-engagement rate，防止因自评始终为“完成”而静默退化成更便宜的单调用方法。[104–106]
 
 ### 9.3 低熵错收敛
 
@@ -472,6 +487,10 @@ Search-Time Contamination 研究指出，联网 agent 可能检索到公开 benc
 ### 9.8 误导证据、时间污染与工具漂移
 
 对不含 benchmark label/gold 的审计集注入语义相关但受控错误的来源，改变 source dependency、authority-like presentation 和进入 research state 的阶段，并测 false-claim adoption、四层 risk calibration 与独立验证召回。另做 point-in-time 或固定 snapshot 复现实验，记录检索截止时间、索引版本、搜索后端和 tool schema。任何只在 live web 或单一后端成立的增益都必须标为环境依赖结果。[87,88]
+
+### 9.9 自适应机制是否真实执行、且是否优于简单算力分配
+
+对每个名义 adaptive 系统报告实际执行路径。至少记录各 route 的触发频率、每题 agent/round 分布、提前停止中的错误比例、曾出现正确中间态但最终被覆盖的比例，以及按 evidence/source dependency 修正后的有效独立分支数。主对照加入相同生成 token 的独立搜索样本、相同 tool-call 的随机 region/agent allocation 和相同 wall-clock 上限的并行采样。若 adaptive 组件很少触发，或其质量–成本点不超过简单采样 Pareto 前沿，结果只能支持“系统可运行”，不能支持 controller 或 swarm 机制有效。[104–109]
 
 ## 10. 对当前项目的直接诊断
 
@@ -652,3 +671,9 @@ V2.19 针对这两个 label-blind 机制做了 evidence-continuity 修复。它�
 101. Xiong, H.-D. et al. **Thinking Under Uncertainty: Evidence Use and Information-Seeking in Language Models.** arXiv:2607.26845 (2026). https://arxiv.org/abs/2607.26845
 102. Yan, B., Wolfe, G., Martiniani, S. & Cho, K. **AskChem: Claim-Centered Infrastructure for Chemistry Literature Synthesis.** arXiv:2607.28618 (2026). https://arxiv.org/abs/2607.28618
 103. Aravanis, T. & Koutras, C. D. **Selective Credibility-Limited Belief Update.** arXiv:2607.28523 (2026). https://arxiv.org/abs/2607.28523
+104. Mirzaei, I. **Sample More, Reflect Less: Self-Refine and Reflexion Lose to Repeated Sampling at Equal Token Cost, from 1.5B to 7B.** arXiv:2607.28576 (2026). https://arxiv.org/abs/2607.28576
+105. Sah, C. K., Zhang, L. & Lian, X. **Beyond Self-Knowledge: Propagating Uncertainty Across Reasoning and Retrieval in LLMs.** arXiv:2607.25600v2 (2026). https://arxiv.org/abs/2607.25600
+106. Chen, H., Lin, L. & Wang, G. **SVR: Self-Verifying Refinement via Joint Verdict-Confidence Reinforcement Learning for Adaptive Test-Time Compute.** arXiv:2607.28457 (2026). https://arxiv.org/abs/2607.28457
+107. Zavattari, C., Tommasi, A. & Prencipe, G. **One Human, N Agents: Audit-Budget Allocation for LLM Agent Fleets under Miscalibrated, Correlated Confidence.** arXiv:2607.28317 (2026). https://arxiv.org/abs/2607.28317
+108. Lee, W. & Choi, J. **Rethinking Inference-Time Scaling in Local Computer-Use Agents: Failure Modes and Compute Tradeoffs.** arXiv:2607.28573 (2026). https://arxiv.org/abs/2607.28573
+109. Hong, X., Dong, P., Yu, X. & Jiang, B. **Tools Are Not Islands: Set-Level Tool Retrieval for LLM Agents via Query-Conditioned Hyperedge Prediction.** arXiv:2607.25718v2 (2026). https://arxiv.org/abs/2607.25718

@@ -1,12 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.14
+> 版本：5.15
 >
-> 更新：2026-07-31 07:22 UTC
+> 更新：2026-07-31 07:31 UTC
 >
-> 当前覆盖：**2026-07-31 07:22 UTC 的 V2.41.98 状态见下方 5.14；R1 权威聚合仍为 161/220，尚无正式 DeepWideBench 全集分数、提升或 SOTA。**
+> 当前覆盖：**2026-07-31 07:31 UTC 的文献/实验合同增量见下方 5.15；V2.41.98 仍健康等待，R1 权威聚合仍为 161/220，尚无正式 DeepWideBench 全集分数、提升或 SOTA。**
 >
 > 状态：**截至 2026-07-31 05:58 UTC，fresh V2.41.87 phase-aware watcher 是当前权威 label-blind 安全聚合：按五段全集拓扑计入不可补跑的首题 infra-zero，R1 为 `161/220 = 32 completed + 129 failed`、剩余 59，internal-test 156 已全部终态；冻结队列正在最后的 dev+validation S04 自然推进，活动 Python PID `1350579`/start ticks `741557746`，未 signal/restart/resume/rerun/skip。旧 `full220_v2403_r1_status.json` 发布器仍停在 70/220，不能覆盖 fresh watcher。当前 phase 为 `r1_full220`、`critical=[]`；taxonomy 有 6 个 surface-uncovered failure，只授权人工离线审计，不授权活动策略变化。R1 released result、后续 quality chain、Avg@4、OWIC 与正式 evaluator aggregate 均未产生，因此仍没有 DeepWideBench 全集分数、榜单提升或 SOTA。主结果固定为**同一 all-220 全集**；dev64 只可作为预注册门，不能替代全集或用于选择性报告。V2.41.96 已作为 wait-only capacity executor 安全激活，protocol `e413f85d…e4d0`、activation `5c08d330…15c7`；它在 R1 exact220/release、quality chain terminal、现有 API worker 消失及旧 V2.41.94 watcher 自然退出前不会取 lease、调用 9878 或启动 benchmark。门释放后，V2.41.96 也只执行 `1/2/4/8/12 × 3 waves` 中性容量阶梯并冻结最高连续安全并发，仍无权启动 benchmark；后续须由独立预注册且重新审计的 launcher 使用该固定档位，从全新目录运行完整 220。失败计 0，禁止 resume、选择性补跑或热改。不可逆顺序固定为：`R1 exact220/release → P12/schema76 → official Avg@4 → schema77 paired dev64 → V2.41.80 search-yield immutable terminal → V2.41.03 markdown paired dev64 → 条件式V2.41.05 scope-open terminal → OWIC capture/Gate-1 → V2.41.90 → V2.41.91 → V2.41.92 → V2.41.93 replicate-aware Gate-2A → neutral capacity ladder → separately preregistered fresh all-220 launcher`。**
+
+> **5.15 WebSwarm 邻域增量与全集同预算实验合同（2026-07-31 07:31 UTC）：在已覆盖 WebSwarm、MANTA、SKIMIX 与 Two Calls Beat Five Agents 的基础上，PDF 原文新增核对 Sample More, Reflect Less、Beyond Self-Knowledge、SVR、One Human, N Agents、local CUA inference-time scaling 与 HYSET。它们不改变“动态 deep/wide 委派与 topology 已有直接工作”的 novelty verdict，但收紧五项实验要求。第一，任何 swarm/refinement 必须与按实际生成 token 匹配的独立搜索采样和冻结聚合规则比较，且 input token、tool/search/fetch、串行深度、wall-clock 全计成本。第二，每个 adaptive 方法必须报告 route/round/branch 实际触发率，防止名义 controller 静默退化成单调用。第三，停止机制同时报告 premature-stop error、正确中间态被后续覆盖、forced stop 与 abstain，不能只报平均轮数或少取 passage。第四，按 query intent、URL/content、source dependency 和 evidence-set overlap 估计 effective independent branches，不把相关 sibling 当独立 width。第五，对组合搜索动作比较逐项分数、greedy marginal gain 和小规模 set-level portfolio，evidence-equivalent 分支不得重复计 value/credit。
+>
+> 这些近邻来自数学推理、受控 RAG、agent fleet 审计、computer-use 与工具检索，不能横向推出 DeepWideBench 提升或否定 WebSwarm。它们只决定新的 falsification contract：如果 WebSwarm/MANTA/四层 VOC controller 的质量—成本点不超过等预算简单采样 Pareto 前沿，或增益只来自更多 token、相关重复证据、格式容错或低触发率，就不能把结果归因于 entropy、swarm 或 adaptive topology。V2.41.98 watcher 仍为 PID `1821768`/start ticks `742994288`，状态 `waiting_for_capacity_freeze / v24196_capacity_pair_absent`；本次只更新 [`survey.md`](survey.md)、[`.research/literature_matrix.md`](.research/literature_matrix.md) 与本计划，没有修改冻结 10-file control surface、调用 API、读取 benchmark 内容或启动全集。**
 
 > **5.14 V2.41.98 独立候选交接编译器冻结与安全激活（2026-07-31 07:22 UTC）：V2.41.98 被收窄为 wait-only handoff compiler，而不是候选选择器或全集 executor。它只有在 V2.41.96 容量 report/freeze、独立且 outcome 前冻结的 selector protocol、完整 quality-chain terminal receipt、唯一 selected-candidate publication/handoff，以及 canonical `52/52/52/64=220` 四个集成 freeze 全部现场校验后，才可按 `GO → bundle` 顺序 create-exclusive 发布；GO 与 bundle 仍保持 `benchmark_forward_launch_allowed=false`。它无权选择候选、评估 gate、取得 shared lease、调用 GPT-5.6/搜索/evaluator、读取题面/预测/mapping/gold/category/score 或启动 benchmark；真正全集运行仍需未来独立预注册、唯一 owner、重新 activation/audit 的 executor。
 >
@@ -1036,6 +1040,8 @@ I_{ij}=v(\{i,j\})-v(\{i\})-v(\{j\})+v(\varnothing).
 
 吞吐并发与单题协作机制分开实验。吞吐由中性容量阶梯选定并在整次 all-220 固定；WebSwarm/MANTA 式单题协作另做 `agent_count ∈ {1,2,4,8}`、`refinement_rounds ∈ {0,1,2}`、`topology ∈ {single,fixed-tree,fixed-graph,bounded-adaptive}` 的同预算曲线。先比较单 agent、two-call self-refinement 与固定拓扑，再允许 bounded-adaptive topology；报告每个点的质量、格式失败、重复 evidence、tokens、tool calls 与 wall-clock，不假设曲线单调。
 
+同预算不只指相同上限。按每个方法实际消耗的生成 token 在 independent-search sampling 曲线上插值匹配，同时单列 input token、search/fetch/page reads、最大串行深度和 wall-clock；开放表格的 simple-sampling 聚合规则在结果前冻结为 evidence-equivalence 去重、canonical-row merge 和逐格 provenance vote，不能事后选聚合器。每个 adaptive 分支还报告触发率、premature-stop error、correct-intermediate-overwrite 与 source/evidence 相关修正后的 effective branch count。若 adaptive 方法不超过该简单采样 Pareto 前沿，不能把额外质量归因于 swarm/refinement/controller。[104–109]
+
 ### 6.6 Phase D2：受控 credit-training pilot
 
 只有 Gate 2B 通过才启动。先在 closed/replay web 环境训练小规模模型，避免 live-web 漂移与训练成本掩盖 credit 机制。所有方法共享初始化、rollouts、terminal reward、batch、optimizer、训练 tokens 和 tool corpus：
@@ -1103,12 +1109,14 @@ Column F1 易被格式/列解析影响，保留但不作为唯一主指标。
 - unsupported/contradicted cell rate；
 - evidence coverage 与 citation precision；
 - forced-stop、premature-stop、over-search rate；
+- adaptive route/round/branch engagement rate 与 correct-intermediate-overwrite rate；
 - anchor recovery after initial miss；
 - new valid rows per 1k tokens。
 - evidence identification、evidence→claim support、claim→answer entailment 的 progressive-gate pass rate；
 - citation accuracy、active-ledger citation rate、repair provenance amplification；
 - stop/continue accuracy、payoff-weighted stop regret、oracle-best-prefix gap；
 - agent-count/round/topology 曲线中的 duplicate-evidence rate 与 format/communication failure rate。
+- nominal agent count、source/evidence-correlation-adjusted effective branch count，以及实际成本匹配的 independent-search sampling Pareto gap。
 
 credit 分支另报：signed contribution accuracy、pivotal-step recall、credit calibration、intervention validity/OOD、credit compute overhead、训练 sample efficiency 与 gradient variance。最终任务分数仍是主结果，credit proxy 不能替代它。
 
@@ -1218,7 +1226,9 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 - 单题 agent 数：`1/2/4/8`，总 token、tool calls、page reads 与最大 wall-clock 预算相同；
 - refinement rounds：`0/1/2`，保留 two-call self-refinement 作为简单强基线；
 - topology：single、fixed WebSwarm-style tree、fixed graph、MANTA-style bounded adaptive；
-- 每个点同时报告 DeepWide 质量、communication/format failure、evidence overlap 与成本，检查非单调性；
+- simple allocation：按每个方法实际生成 token 匹配 independent-search sampling 曲线；聚合器预先冻结为 evidence-equivalence 去重、canonical-row merge 与 provenance-aware cell vote；
+- 每个点同时报告 DeepWide 质量、communication/format failure、evidence overlap、route/round engagement、premature false success、correct-intermediate overwrite 与全部输入/输出成本，检查非单调性；
+- 由 query intent、URL/content、source dependency 与 evidence-set overlap 估计 effective independent branch count；nominal `agent_count` 不得直接当作 width；
 - 只有同预算质量提高可归因于协作机制，单纯 wall-clock 缩短只能称吞吐加速。
 
 ## 9. Go/No-Go 门禁
@@ -1293,6 +1303,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 - 无新增 contamination/leakage；
 - 收益不是单一 seed 或单一 task family 驱动。
 - CAM-DF-lite/固定阈值停止和 single-agent/two-call baseline 均在相同预算下评估；若引入多 agent，至少三个 agent-count 点且非单调性完整报告。
+- 所有带 probe、self-verification、reflection 或 delegation 的方法必须高于实际生成 token 匹配的 independent-search sampling Pareto 前沿；另报输入 token、串行深度与 wall-clock，adaptive branch 实际触发率不得省略。
 
 失败处理：不跑昂贵全量；检查估计器与 action model，最多允许一次预注册修订。
 
@@ -1440,6 +1451,9 @@ outputs/runs/<run_id>/
 | LLM judge 不可靠 | 指标偏差 | 人工分层抽检、judge disagreement | 双人审计、规则指标优先 |
 | API/网页漂移 | 难复现 | timestamp/hash、replay | 缓存允许的证据元数据、重复运行 |
 | agent 数/round 扩展非单调 | 更多通信反而累积格式与推理错误 | agent-count/round 同预算曲线 | single-agent/two-call gate；bounded topology update；不默认越多越好 |
+| 复杂方法只因多生成 token 获益 | 机制增益与算力增益混淆 | actual-token-matched independent-search sampling curve | 预冻结聚合器；paired Pareto gap；输入/输出 token 与串行深度全计 |
+| adaptive 分支不触发或错误早停 | 名义 controller 实际退化、正确中间态被覆盖 | route/round engagement、PSE、correct-intermediate overwrite | fail-closed fallback；CAM-DF/SVR/simple-sampling 对照 |
+| sibling 错误与证据高度相关 | nominal agent 数虚增有效 width | source/evidence overlap、error correlation、effective branch count | 去重/去相关 portfolio；random/round-robin fallback |
 | 吞吐并发与单题协作混淆 | wall-clock 下降被误写成质量提升 | 分离 executor concurrency 与 per-task agent count | 容量阶梯只决定吞吐；质量机制独立消融 |
 | stale/wrong-session/tool-contract evidence | 有引用但状态无效 | LayerRAG 式 cross-layer fault injection | active session/authorization/tool receipt；按层验收，不给通用 credit |
 | repair 放大无来源内容 | 修复阶段引入新 hallucination | repair 前后 ledger diff | typed transition 与 provenance non-amplification gate |
