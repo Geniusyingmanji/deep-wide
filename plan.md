@@ -1,10 +1,14 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.28
+> 版本：5.29
 >
-> 更新：2026-07-31 12:22 UTC
+> 更新：2026-07-31 12:38 UTC
 >
-> 当前覆盖：**V2.42.07 已冻结并安全激活 selected branch-scope namespace-alias publisher。它在任何 V2.42.06 outcome 前覆盖全部 36 个 content-free work order，只拥有 `markdown_branch_scope_open_fallback`：24 个无 scope 分支固定 no-op，4 个 P12 分支绑定历史 schema70 byte-exact publication，schema76/schema77 各 4 个分支只允许把 V2.42.06 已测试候选中的单一主线 scope hook登记为零字节 namespace alias；严禁重打历史 scope patch或修改候选字节。search/entropy、joint package、package gate、API 与 benchmark 全部继续阻塞。当前 watcher 只读 V2.42.06 安全 state envelope，selected work order 与 Markdown publication 均未打开。现有 R1 与 watcher 全部保留；最新 label-blind 安全聚合为 `168/220 = 34 completed + 134 failed`，剩余 52，正式 DeepWideBench 全集分数、提升或 SOTA 仍不存在。该 `168/220` 是安全进度 envelope（失败也计 terminal），不是 benchmark 得分。**
+> 当前覆盖：**V2.42.07 已冻结并安全激活 selected branch-scope namespace-alias publisher。V2.42.08 又完成 outcome-independent search rebase 可行性审计，覆盖全部 36 个 work order 与 6 种实际父候选（P12/schema76/schema77 × baseline/Markdown），但没有发布或物化 search 组件。V2.41.80 search-yield quality gate 仍 preterminal，故 search publisher、entropy、joint package、package gate、API 与 benchmark 全部继续阻塞。现有 R1 与 watcher 全部保留；最新 label-blind 安全聚合为 `170/220 = 34 completed + 136 failed`，剩余 50，正式 DeepWideBench 全集分数、提升或 SOTA 仍不存在。该 `170/220` 是安全进度 envelope（失败也计 terminal），不是 benchmark 得分。**
+>
+> **5.29 V2.42.08 selected-parent search rebase 可行性审计（2026-07-31 12:38 UTC）：在不读取 live quality status、gate result、selected decision、题面、预测、mapping/gold/category/evaluator/score 的前提下，先把 36 个冻结 work order 分类为 `18 search / 18 no-op`，search 分支按 P12/schema76/schema77 各 6 个。随后从 V2.42.01 仓库内 byte-exact DAG 重建 P12、schema76、schema77，并覆盖 `selected_baseline / selected_markdown_candidate` 六种父文件图；V2.42.07 scope 对 mainline 是零字节 alias，不重打历史 patch。每个父图都可确定性生成同预算 search feasibility map，delta 精确限制为 runtime、preflight、纯 scheduler module 与集成测试四类文件，只有一个 import/call，membership-gap query budget、模型/search/fetch/context/token/item budget均不增加，重复应用 fail closed。
+>
+> create-exclusive receipt [`results/v24208_search_rebase_feasibility_audit_v1_20260731.json`](results/v24208_search_rebase_feasibility_audit_v1_20260731.json) 文件 SHA `08302432…116b11`、payload SHA `40bbb371…7b117`。定向测试 `8/8` 与 compile 通过；收据明确 `selected_search_component_publication_available=false`、`component_publication_or_implementation_authority_granted=false`、candidate/package materialization、lease、network/model/search/fetch/evaluator/API 与 benchmark authority 全 false。该结果只证明 selected-parent rebase 的字节可构造性，不证明 search yield、质量或 joint compatibility；V2.41.80 必须先自然 terminal GO，之后仍需单独 publisher、完整组件 joint conflict/regression、同 dev64 package gate 与 capacity-bound single-owner executor。**
 >
 > **5.28 V2.42.07 selected branch-scope namespace alias 冻结与安全启动（2026-07-31 12:22 UTC）：执行闭包审计确认 V2.41.97 只生成 fixed wave plan，V2.41.98–V2.42.06 也不拥有最终 package/executor 权限；不能绕过 V2.42.00 outcome-before-selection 直接启动 all-220。V2.42.07 因而只补齐 scope 组件 publication，不预判 search-yield 或 entropy outcome，也不构建 joint package。P12 复用 V2.42.01 已逐 byte 重放的 schema70；schema76/schema77 的 V2.42.06 candidate 已各有且仅有一份 `v24104` import、fallback call 与 audit write，故 branch scope 只产生 content-addressed alias receipt，pipeline/schema/runtime bytes 全不变。任一 candidate byte、hook count、Markdown parent或 selected decision 漂移均 fail closed。
 >
@@ -1474,7 +1478,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 | M5B | OWIC estimator 与 verifier-sign-preserving advantage modulation | TBD | 1–2 周 | TBD | credit module、intervention tests | 未开始；CIGPO/Bridge Evidence/CHILL/SkillRise/GRSD/TTEL/OVCSD/CSCR 对照已写入协议 |
 | M6A | 50-task online controller pilot / Gate 3A | TBD | 1 周 | TBD | paired report、Pareto plots | 未开始 |
 | M6B | 3-seed credit-training pilot / Gate 3B | TBD | 2 周 | TBD | checkpoints、learning curves、credit audit | 未开始 |
-| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact；下一 fresh all-220 capacity freeze、唯一继承槽与固定并行计划 | 进行中（权威安全聚合 168/220；dev+validation S04 active；V2.41.94/96 wait-only；V2.41.97/98/99 等待 capacity freeze；V2.42.00 等待质量链终态） |
+| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact；下一 fresh all-220 capacity freeze、唯一继承槽与固定并行计划 | 进行中（权威安全聚合 170/220；dev+validation S04 active；V2.41.94/96 wait-only；V2.41.97/98/99 等待 capacity freeze；V2.42.00 等待质量链终态） |
 | M8 | 论文写作与审计 | TBD | 1–2 周 | TBD | manuscript、claim/evidence ledger | 未开始 |
 
 ### M1 推荐目录
