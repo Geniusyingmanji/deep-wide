@@ -1,10 +1,18 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.25
+> 版本：5.26
 >
-> 更新：2026-07-31 11:02 UTC
+> 更新：2026-07-31 11:40 UTC
 >
-> 当前覆盖：**V2.42.05 已在不读取 live decision/status、benchmark 内容或结果的前提下，完成 V2.42.00 全部 36 个冻结 decision 的 Markdown rebase feasibility audit：3 个 identity handoff ready，2 个 P12 历史字节路径仍需 post-decision binding，2 个 schema76/77 Markdown 路径 hook-compatible 但未 publication，2 个 Markdown+scope 路径另需零字节 namespace alias，27 个含 search/entropy 的路径继续因 implementation authority 阻塞。该审计不构建 candidate、不运行 package gate，也不授权 benchmark forward/full220。现有 R1 与 watcher 全部保留；最新 label-blind 安全聚合为 `166/220 = 34 completed + 132 failed`，剩余 54，正式 DeepWideBench 全集分数、提升或 SOTA 仍不存在。**
+> 当前覆盖：**V2.42.06 已冻结并安全激活 selected-baseline-bound Markdown component publisher。它在任何 V2.42.04 outcome 前枚举全部 36 个 content-free work order，只拥有 `markdown_rank_slot`：12 个无 Markdown 分支固定 no-op，8 个 P12 分支绑定历史 schema69 byte-exact publication，schema76/schema77 各 8 个分支在父 work order terminal 后才允许生成 target schema78/79 rebase；scope/search/entropy、joint package、package gate、API 与 benchmark 全部继续阻塞。当前 watcher 只读 V2.42.04 安全 state envelope，selected work order、publication 与 candidate 均不存在。现有 R1 与 watcher 全部保留；最新 label-blind 安全聚合为 `167/220 = 34 completed + 133 failed`，剩余 53，正式 DeepWideBench 全集分数、提升或 SOTA 仍不存在。**
+>
+> **5.26 V2.42.06 selected Markdown publisher 冻结与安全启动（2026-07-31 11:40 UTC）：publisher 从 V2.42.01 frozen DAG 重建 schema76/77，只加入历史 Markdown production hook，并将 baseline identity tests 的完整谓词扩展为精确 `(PIPELINE_VERSION, STATE_SCHEMA_VERSION)` 对；schema76 固定修改 10 个 guard 文件/18 条断言，schema77 为 11 个文件/20 条断言，禁止把 suffix/schema 各自放宽。schema76/schema77 的隔离联合回归分别为 `118/118` 与 `127/127`；候选失败时目录完整回滚。P12 只绑定 schema69 的 47 个历史 regular files，不创建新树；无 Markdown work order 只发布 content-free no-op receipt。主线既有 scope hook 精确保留一份，V2.41.04 历史 scope patch 与 namespace alias 均不应用。
+>
+> create-exclusive protocol [`results/v24206_selected_markdown_component_preregistration_v1_20260731.json`](results/v24206_selected_markdown_component_preregistration_v1_20260731.json) SHA `3c543a52…89ffa`、decision SHA `7ba1a30f…35711`、12-file control manifest SHA `caa6a06a…6fcf04`，绑定 V2.42.04 protocol/activation/wait audit 与 V2.42.05 feasibility receipt。唯一 isolated watcher `deepwide-v24206-selected-markdown-component-v1`、PID `2244092` 在 activation 前进入 `waiting_for_execution_activation`，parent state 未打开；activation [`results/v24206_selected_markdown_component_activation_v1_20260731.json`](results/v24206_selected_markdown_component_activation_v1_20260731.json) SHA `d1708f1f…7c0ac` 后自然进入 `waiting_for_v24204_terminal_work_order / parent_quality_chain_preterminal`，只打开父安全 envelope，selected work order 仍未打开。
+>
+> wait-boundary audit [`results/v24206_selected_markdown_component_wait_activation_audit_v1_20260731.json`](results/v24206_selected_markdown_component_wait_activation_audit_v1_20260731.json) SHA `c1375b8f…eb1f1` 证明冻结时 19 个受保护进程身份不变，parent selected work order、component publication 与 candidate root 全 absent；scope/search/entropy、joint package、package gate、lease/API/full220 权限全 false。V2.42.00–06 联合回归 `73/73`，另有真实 schema76 `118/118`、schema77 `127/127`；compile、5 个真实 `python -I -B --help`、diff、secret、label-blind 与网络/环境/signal 能力扫描通过。publisher 的唯一 subprocess 能力是 scrubbed environment 下运行候选内冻结回归。本阶段没有调用 GPT-5.6/search/fetch/evaluator，也未产生质量结果。
+>
+> 11:40 UTC 的权威安全 envelope 为 R1 `167/220`、checkpoint fresh、`critical=[]`，唯一 forward PID `1350579` 继续占用 9878；V2.41.94/96 仍等待 R1 release，V2.41.97–99 等待 capacity freeze，V2.42.00 等待 quality chain，V2.42.04 等待 terminal decision，V2.42.06 等待 V2.42.04 terminal work order。全部健康进程保留，未 signal/restart/resume/rerun，未启动重复全集或容量探针。高并发仍须等待现有 exact-220 自然终态后执行 `1/2/4/8/12 × 3 waves` 中性容量阶梯，再由独立 single-owner executor 以整次固定档位运行 fresh exact `52/52/52/64=220`。**
 >
 > **5.25 AdaKP、transition/agent credit 与只读工具 speculation 增量（2026-07-31 11:02 UTC）：对 07-21 至 07-31 的 agentic/recursive/parallel search、information gain、entropy、credit assignment 和 process reward 做三组日期限定查询，并对 07-30 至 07-31 的五个 CS 类别追加 500 条召回。与 survey 既有 129 篇按 arXiv ID 去重后，全文核验 AdaKP 与 Self-Speculating Agent，以一手摘要核验 TAPO 与 MARS-RA。[130–133]
 >
