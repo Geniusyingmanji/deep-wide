@@ -15,9 +15,11 @@ Large generated runs, virtual environments, credentials, and third-party source 
 
 ## Current conclusions
 
-As of 2026-07-31 13:32 UTC, the frozen R1 run is at `170/220` terminal tasks (`34` completed, `136` failed, `50` remaining). This is terminal progress, not a benchmark score. The released evaluator has not run, so there is no official DeepWideBench score, Avg@4 result, leaderboard improvement, or SOTA claim.
+As of 2026-07-31 13:46 UTC, the frozen R1 run is at `172/220` terminal tasks (`34` completed, `138` failed, `48` remaining). This is terminal progress, not a benchmark score. The released evaluator has not run, so there is no official DeepWideBench score, Avg@4 result, leaderboard improvement, or SOTA claim.
 
 V2.42.09 now treats the search environment as part of the frozen experiment: provider endpoint/model/tool schema, query and observation contracts, fetch/truncation/submission policy, and the transport/runtime/runner/launcher bytes receive one credential-free fingerprint across all four shards. The current live-web index is provider-managed and not snapshot-pinned, so environment shifts must be disclosed separately from method effects. This attestation does not authorize a benchmark launch; the active R1 and all healthy watchers remain untouched.
+
+The latest literature audit adds HiMPO, WikiLoop, and VecTree-RAG as direct controls. They respectively cover same-state memory-write credit, guarded before/after downstream utility for knowledge-base edits, and corpus-level vector routing followed by source-structure navigation. The remaining candidate contribution is therefore narrower: calibrated four-layer open-world task risk plus outcome-verified, provenance-aware credit, evaluated on a fresh exact-220 run after the existing publication, capacity, and single-owner launch gates open.
 
 The literature review rules out broad novelty claims based only on entropy, information gain, dynamic deep/wide routing, coverage maps, denominator discovery, or information-weighted credit assignment. The narrower hypothesis still worth testing is a **calibrated four-layer open-world belief** over anchors, unseen mass/scope, row eligibility, and cell values, used to choose actions by expected task-risk reduction per cost and source dependence.
 

@@ -1,10 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.32
+> 版本：5.33
 >
-> 更新：2026-07-31 13:36 UTC
+> 更新：2026-07-31 13:46 UTC
 >
-> 当前覆盖：**V2.42.07 已冻结并安全激活 selected branch-scope namespace-alias publisher。V2.42.08 又完成 outcome-independent search rebase 可行性审计，覆盖全部 36 个 work order 与 6 种实际父候选（P12/schema76/schema77 × baseline/Markdown），但没有发布或物化 search 组件。V2.41.80 search-yield quality gate 仍 preterminal，故 search publisher、entropy、joint package、package gate、API 与 benchmark 全部继续阻塞。现有 R1 与 watcher 全部保留；最新 label-blind 安全聚合为 `170/220 = 34 completed + 136 failed`，剩余 50，正式 DeepWideBench 全集分数、提升或 SOTA 仍不存在。该 `170/220` 是安全进度 envelope（失败也计 terminal），不是 benchmark 得分。**
+> 当前覆盖：**V2.42.07 已冻结并安全激活 selected branch-scope namespace-alias publisher。V2.42.08 又完成 outcome-independent search rebase 可行性审计，覆盖全部 36 个 work order 与 6 种实际父候选（P12/schema76/schema77 × baseline/Markdown），但没有发布或物化 search 组件。V2.41.80 search-yield quality gate 仍 preterminal，故 search publisher、entropy、joint package、package gate、API 与 benchmark 全部继续阻塞。现有 R1 与 watcher 全部保留；最新 label-blind 安全聚合为 `172/220 = 34 completed + 138 failed`，剩余 48，正式 DeepWideBench 全集分数、提升或 SOTA 仍不存在。该 `172/220` 是安全进度 envelope（失败也计 terminal），不是 benchmark 得分。**
+>
+> **5.33 HiMPO/WikiLoop/VecTree-RAG 补漏与全量实验合同收紧（2026-07-31 13:46 UTC）：对 07-28 至 07-31 的 967 条 arXiv 记录和全月按日期排序的前 2,000 条记录做去重筛选，并沿 WebSwarm/SwarmResearch 的引用邻域阅读全文核验 HiMPO、WikiLoop、VecTree-RAG、AGAO、AlloBench、DREvo 与 Living-Harness。[149–155] 前三篇进入核心矩阵；后四篇分别偏小样本描述性 orchestration pilot、工具构建投资或依赖 evaluator feedback 的跨题 harness 自演化，只保留筛选记录。WebSwarm 公开主分支仍为 2026-07-18 的 `40c9aaca…5717`，没有可据以改变既有复现审计的新 commit。
+>
+> HiMPO 已直接研究 memory-write credit：在同一个 compressed pre-write state 下比较旧/新 memory 对 target outcome 的可恢复信息，再用 outcome-conditioned hindsight relevance 抑制 tool/reasoning error 的 blame leakage。WikiLoop 又以冻结 Navigator 在同一 pre-edit Wiki 上比较 `before/after` downstream utility，并用 unrelated-query guard、edit cost 与结构惩罚约束知识库编辑；它还明确把 persistent write-back、历史依赖 credit 与 moving evaluator 列为未解决问题。因此“信息变化大就给更多 credit”“首次做同状态 memory credit”或“首次按 downstream utility 给知识写入 credit”均不可作为主张。新增强对照固定为 `raw ΔH / HiMPO-style recoverability / WikiLoop-style paired utility+guard / Bridge-Evidence suffix replay / fixed-continuation task delta / OWIC`；target outcome、reference answer、gold evidence 与 evaluator 只允许在预测完成后的离线 dev/credit audit 中使用，绝不进入同一题的 label-blind runtime。
+>
+> VecTree-RAG 则把执行基线分成 `corpus-level vector+sparse routing → source-verified document tree → page text/image close reading`。它在固定科学文献库上报告三 seed 结果，但 multi-turn agent 的 query-time token 成本并非普遍低于 flat retrieval，MOSAIC 又没有独立人工 adjudication；故只新增 structure-aware locate-then-read arm，不把论文分数外推到 live-web DeepWide。最终质量声明仍必须来自一次 fresh exact `52/52/52/64=220`、全失败计零、no-resume 的全集，不以 dev64 或 English subset 代替。跨题吞吐并发继续由 `1/2/4/8/12 × 3 waves` 容量阶梯冻结最高连续安全档；单题 swarm 另做同 token/search/fetch/tool/orchestrator/wall-clock 的 `1/2/4/8`、fixed width×depth、DivInit、WebSwarm 与 depth-varying 对照。当前 V2.42.07 state 仍 `benchmark_forward_or_full220_launch_allowed=false`、shared lease=false、publication absent，故本轮没有启动第二个全集或容量探针；PID `1350579/2244092/2307529` 保持原身份和运行状态。survey 现为 155 篇，其中新增三篇进入核心矩阵、四篇仅保留筛选记录。**
 >
 > **5.32 V2.42.09 search-environment fingerprint 与 prelaunch 绑定（2026-07-31 13:32 UTC）：落实 SimpleWikiSearch 对“环境不是中性背景”的约束，在所有活跃 watcher 的 frozen manifest 外新增纯验证模块 [`src/deepwide_agent/v24209_search_environment.py`](src/deepwide_agent/v24209_search_environment.py)。它从 future candidate freeze 的非敏感 `search` 配置与 `code_sha256` 构造确定性 fingerprint，显式绑定 provider runtime identity、endpoint、search model/tool schema、query isolation、results/worker budget、citation/observation mapping、page-fetch policy、content truncation、terminal submission rule，以及 clients/native/Anthropic adapter、runtime、runner、launcher 六个代码文件。Anthropic、Azure-native 与 Tavily 均有 exact schema；未知字段、credential/label/evaluator key、secret literal、opaque task ID、非固定 endpoint、缺失代码闭包和重新封印后的 provider/tool/snapshot 漂移全部 fail closed。
 >
@@ -1492,7 +1498,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 | M5B | OWIC estimator 与 verifier-sign-preserving advantage modulation | TBD | 1–2 周 | TBD | credit module、intervention tests | 未开始；CIGPO/Bridge Evidence/CHILL/SkillRise/GRSD/TTEL/OVCSD/CSCR 对照已写入协议 |
 | M6A | 50-task online controller pilot / Gate 3A | TBD | 1 周 | TBD | paired report、Pareto plots | 未开始 |
 | M6B | 3-seed credit-training pilot / Gate 3B | TBD | 2 周 | TBD | checkpoints、learning curves、credit audit | 未开始 |
-| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact；下一 fresh all-220 capacity freeze、唯一继承槽与固定并行计划 | 进行中（权威安全聚合 170/220；dev+validation S04 active；V2.41.94/96 wait-only；V2.41.97/98/99 等待 capacity freeze；V2.42.00 等待质量链终态） |
+| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact；下一 fresh all-220 capacity freeze、唯一继承槽与固定并行计划 | 进行中（权威安全聚合 172/220；dev+validation S04 active；V2.41.94/96 wait-only；V2.41.97/98/99 等待 capacity freeze；V2.42.00 等待质量链终态） |
 | M8 | 论文写作与审计 | TBD | 1–2 周 | TBD | manuscript、claim/evidence ledger | 未开始 |
 
 ### M1 推荐目录
