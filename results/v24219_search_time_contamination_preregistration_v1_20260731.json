@@ -1,0 +1,140 @@
+{
+  "artifact_version": 1,
+  "role": "v24219_search_time_contamination_preregistration",
+  "protocol_id": "v24219_post_terminal_label_blind_stc_audit_v1",
+  "created_at_unix": 1785531049,
+  "parent_contract": {
+    "protocol": {
+      "path": "results/v24218_exact220_executor_preregistration_v1_20260731.json",
+      "sha256": "99b1d7bda8468e3464b347aadb74f2174b0832a29fd5e398f4319b931e1d9667"
+    },
+    "activation": {
+      "path": "results/v24218_exact220_executor_activation_v1_20260731.json",
+      "sha256": "28fe50a2bcb3f2597b41152dc3fad03d7da19573adf74a313a9ea20ce68958aa"
+    },
+    "wait_audit": {
+      "path": "results/v24218_exact220_executor_wait_audit_v1_20260731.json",
+      "sha256": "8a69fc9962646bc7e8ee720b5999a5427a20fbdcf77bf5e8a1b5ab596f65eb18"
+    },
+    "state_path": "outputs/v24218_exact220_executor_watcher_state_v1_20260731.json",
+    "forward_barrier_path": "results/v24218_exact220_forward_barrier_v1_20260731.json",
+    "result_path": "results/v24218_exact220_result_v1_20260731.json",
+    "accepted_terminal_status": "complete_exact220_local_result_released_not_sota"
+  },
+  "input_contract": {
+    "runtime_manifest": {
+      "path": "outputs/runtime_manifest_v1_repro/manifest.jsonl",
+      "sha256": "4e394daf67e0bdc7d1fe247d4781945334026c0065ec7666d298f18f4b7180fb"
+    },
+    "canonical_partition": {
+      "test_s01": {
+        "path": "configs/full220_v2403_r1_test_s01.ids",
+        "sha256": "9f4c7bb4e9f63b01b574a52ec840266358dae6d9982dc7caebfeb813eca02dfb",
+        "count": 52
+      },
+      "test_s02": {
+        "path": "configs/full220_v2403_r1_test_s02.ids",
+        "sha256": "2b48a04896437fdea127e02ad7980f2cb9310db9a16841696affd04796502bbd",
+        "count": 52
+      },
+      "test_s03": {
+        "path": "configs/full220_v2403_r1_test_s03.ids",
+        "sha256": "abaadc27927a9dbd5ad8cc856513baa85e8c900ed041cf6e5c0978534d103566",
+        "count": 52
+      },
+      "devval": {
+        "path": "configs/full220_v2403_r1_devval_s04.ids",
+        "sha256": "79ba11a41c186daa80e8779e8fa2c1b47e7907f8e398d817dedb43099333d69c",
+        "count": 64
+      },
+      "canonical_opaque_partition_sha256": "cace8746d5a817a467e7cb70e715ee599a242cc88ce4474802b9d93a9221082b"
+    },
+    "runtime_visible_fields": [
+      "opaque_id",
+      "question"
+    ],
+    "same_task_terminal_evidence_projection": [
+      "id",
+      "kind",
+      "url",
+      "source_family",
+      "title",
+      "text",
+      "fingerprint"
+    ],
+    "query_fields_read": false,
+    "prediction_or_renderer_output_used": false,
+    "mapping_gold_category_question_type_split_evaluator_score_read": false
+  },
+  "detector_contract": {
+    "taxonomy_source": "Wang et al. arXiv:2606.05241v1",
+    "bml": "artifact/dataset URL, benchmark marker, or opaque-ID exposure",
+    "qcl": "longest normalized contiguous question substring divided by normalized question length",
+    "primary_qcl_ratio": 0.5,
+    "minimum_qcl_contiguous_chars": 80,
+    "qcl_sensitivity_ratios": [
+      0.25,
+      0.5,
+      0.75
+    ],
+    "paper_did_not_publish_a_portable_qcl_threshold": true,
+    "query_question_overlap_is_not_a_contamination_signal": true,
+    "eal_requires_exact_question_and_corresponding_gold_answer_pair": true,
+    "gold_is_unavailable_so_automatic_eal_confirmation": false,
+    "report_only_eal_candidate_and_manual_review_flag": true
+  },
+  "execution": {
+    "runner": "scripts/run_v24219_search_time_contamination.py",
+    "watcher": "scripts/watch_v24219_search_time_contamination.py",
+    "python_flags": [
+      "-I",
+      "-B"
+    ],
+    "poll_seconds": 60,
+    "state_path": "outputs/v24219_search_time_contamination_watcher_state_v1_20260731.json",
+    "activation_path": "results/v24219_search_time_contamination_activation_v1_20260731.json",
+    "wait_audit_path": "results/v24219_search_time_contamination_wait_audit_v1_20260731.json",
+    "post_terminal_only": true,
+    "parent_result_and_forward_barrier_must_both_be_sealed": true,
+    "create_exclusive_detail": "outputs/v24219_search_time_contamination_detail_v1_20260731.json",
+    "create_exclusive_report": "results/v24219_search_time_contamination_report_v1_20260731.json",
+    "rerun_or_resume_allowed": false
+  },
+  "reporting_contract": {
+    "official_primary_denominator": 220,
+    "official_primary_result_unchanged": true,
+    "sample_exclusion_or_score_recomputation": false,
+    "contamination_sensitive_subset_separate_from_primary": true,
+    "private_detail_emits_no_raw_question_query_page_text_url_or_task_id": true,
+    "public_aggregate_emits_no_question_query_page_text_url_or_task_id": true
+  },
+  "authorization": {
+    "offline_post_terminal_read_only_audit": true,
+    "network_model_search_fetch_evaluator_or_api_call": false,
+    "shared_api_lease_acquire": false,
+    "forward_result_evaluator_or_watcher_modification": false,
+    "benchmark_forward_or_full220_launch": false,
+    "process_signal_restart_resume_rerun_skip_or_selective_retry": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "control_surface": {
+    "file_count": 12,
+    "manifest": {
+      "src/deepwide_agent/v24219_search_time_contamination.py": "17db48e9b0ed0315cf67cac742d395729ac3fd60f646cafb522f1819daf69b20",
+      "scripts/run_v24219_search_time_contamination.py": "bc47dcd362bc66d4013ed0fadea8acf7deede28edb1c37451edf8dd2b7f91506",
+      "scripts/preregister_v24219_search_time_contamination.py": "5c485cc5ae20319453b0bc21bf57a150f5870b337aabe502d2d1ec1e0b5f1859",
+      "scripts/watch_v24219_search_time_contamination.py": "8aa6884d38e9e5ae495bc15e1cd41c0b4d9bf7d2a7bc4906569aa55f5e4fc4da",
+      "scripts/activate_v24219_search_time_contamination.py": "c9a2bc9f896b418706e89294a2fb6cabb5dbf9885ac014abbbe6934b5fd18a62",
+      "scripts/audit_v24219_search_time_contamination_wait.py": "9d166f05dff9b89e231cdb058976ff7c0e66172b67fe5a167596d2516854d10f",
+      "tests/test_v24219_search_time_contamination.py": "bb56b3255c4c0a9cee54fdd5764deab18f527ebf58638875755a637b72c14048",
+      "tests/test_run_v24219_search_time_contamination.py": "644ce61d84b5a005ad76f4661f2461837ac263991f4eae9e8011361370498cad",
+      "tests/test_preregister_v24219_search_time_contamination.py": "00fe8dea1a2dfe4c5933b415fc7b366e5ebc1fc8af51545abc5abf7bf901c435",
+      "tests/test_watch_v24219_search_time_contamination.py": "f498ba793670e845cc7d710b6ab685897ad6fa9547e225f41be5a475f3e90a9e",
+      "tests/test_activate_v24219_search_time_contamination.py": "ac0eb89b98aa41ad4c67187c99474838ed5a39ce83b565e77a7520000d22224d",
+      "tests/test_audit_v24219_search_time_contamination_wait.py": "aa087329f9d7106124e8ccfd979b2334323f483f0dd3bdf57cfbb9d96006fc90"
+    },
+    "manifest_sha256": "4784cb91995e7ee8d7e158ea6c1241dea25e81d01a76ed9fd02a12a5efc85737",
+    "v24218_control_surface_modified": false
+  },
+  "decision_contract_sha256": "c5dcbea70e72049c284646240738b341ae63442f00a5064a5125978784cdc0c4"
+}
