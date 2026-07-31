@@ -1,10 +1,18 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.22
+> 版本：5.23
 >
-> 更新：2026-07-31 10:31 UTC
+> 更新：2026-07-31 10:42 UTC
 >
 > 当前覆盖：**V2.42.03 已对 V2.42.00 的 36 个预冻结 successor decision 完成 outcome-independent 可物化性审计：3 个空组件决策只有 byte-exact baseline identity handoff，33 个非空决策均缺少 selected-baseline-bound publication 与联合冲突/回归收据，不能物化。V2.42.03 不是 package builder、package gate 或质量结果，也不授权 benchmark forward/full220。V2.42.02 WebSwarm adapter 仍仅为未来独立无熵系统基线，不进入 V2.42.00 主线组件。现有 R1 与 watcher 全部保留；最新已核验的安全聚合仍为 164/220，尚无正式 DeepWideBench 全集分数、提升或 SOTA。**
+>
+> **5.23 V2.42.04 post-decision work-order bridge 冻结与安全启动（2026-07-31 10:42 UTC）：新增纯 work-order 模块在任何质量 outcome 前枚举全部 36 个 content-free successor decision，并将每个 decision 的完整 V2.42.00 payload 与 SHA-256 重新绑定。3 个空组件分支只允许复用 `p12/schema76/schema77` 已冻结 publication 做 byte-exact identity handoff；33 个非空分支只产生 blocked integration work order，逐项保留 search-yield、Markdown、Markdown-scope 和 entropy controller 的 authority blocker。任何 work order 均不授权 component publisher、candidate build/merge/materialization、package gate、lease、模型/search/fetch/evaluator、full220 或 leaderboard；尤其 entropy GO 仍只有 design authority，必须另行取得 implementation authority。
+>
+> create-exclusive protocol [`results/v24204_postdecision_work_order_preregistration_v1_20260731.json`](results/v24204_postdecision_work_order_preregistration_v1_20260731.json) SHA `aedd97c0…72d5e4` 绑定 V2.42.00 protocol/activation/wait audit、V2.42.03 materialization audit、三层 baseline publication、10 个新控制文件和冻结时全部受保护进程身份。唯一 isolated watcher `deepwide-v24204-postdecision-work-order-v1` 的 PID `2154824` 在 activation 前产生 state `waiting_for_execution_activation`，且 parent state/decision 均未打开。activation [`results/v24204_postdecision_work_order_activation_v1_20260731.json`](results/v24204_postdecision_work_order_activation_v1_20260731.json) SHA `92c726d4…3222ca` 后，watcher 自然进入 `waiting_for_v24200_terminal_decision / parent_quality_chain_preterminal`；只打开 V2.42.00 安全 state envelope，decision receipt 仍未打开。
+>
+> wait-boundary audit [`results/v24204_postdecision_work_order_wait_activation_audit_v1_20260731.json`](results/v24204_postdecision_work_order_wait_activation_audit_v1_20260731.json) SHA `1bb747cb…3d3c6c` 证明全部冻结进程身份不变，selected work order absent，build/publisher/package-gate/lease/API/full220 权限全 false。定向测试 `16/16`、V2.42.00–04 联合回归 `77/77`，4 个真实 `python -I -B --help` 入口、compile 与禁止网络/进程/环境/动态代码扫描通过。V2.42.04 只补上 terminal decision 到“identity handoff 或 blocked work order”的安全桥，不是 selected-baseline rebase publisher，也不生成可执行 package 或 benchmark 质量结果。
+>
+> 后续仍需按组件 authority 分别创建独立 publisher：search-yield 只能在其 GO 后进入 design/build-only publication；Markdown/branch-scope 需按选中 baseline 重新 rebase 并保持 scope namespace；entropy 需先有独立 implementation authorization。全部 publication 到齐后才可做 joint conflict/regression receipt 与同 dev64 package gate。当前 R1 仍为 `164/220`、剩余 56，9878 仍由健康 R1 worker 使用，容量链仍在等待 release，因此没有启动重复全集或高并发探针。**
 >
 > **5.22 MAPD/ACM/trajectory-reliability 与 WebSwarm 执行边界增量（2026-07-31 10:31 UTC）：对 07-21 至 07-31 的 `deep research`、`web/agentic search`、`swarm`、`multi-agent`、`delegation` 和 `research/search agent` 做两组公开 arXiv Atom 日期查询，与既有 120 篇按 ID 去重。全文核验 MAPD、ACM 与 Silent Failures 三篇，摘要级核验 OrchBench、HalluProp、$\Sigma$-Mem、SafeFlow、Context Assembly 和 AgentRadio，共将 survey 参考文献扩展到 129 篇。[121–129] MAPD 已占据“离线 swarm 轨迹经 style-normalized protocol 蒸馏到单 agent”的相邻空间；其 task type、gold、success label 与 repair diagnosis 均属 privileged synthesis，不能进入 label-blind runtime。ACM 已占据 agent-initiated reversible context offload，但其 timing teacher 读取 reference answer，因此只可作为离线基线。Silent Failures 又表明 wrong-evidence-right-answer 和 over-retrieval laundering 会让正确终局掩盖错误 provenance。
 >

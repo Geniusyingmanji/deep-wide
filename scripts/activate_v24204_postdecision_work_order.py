@@ -1,0 +1,193 @@
+#!/usr/bin/env python3
+"""Bind V2.42.04 to one isolated post-decision work-order watcher."""
+
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+import time
+from pathlib import Path
+from typing import Any
+
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+if str(ROOT / "src") not in sys.path:
+    sys.path.insert(0, str(ROOT / "src"))
+
+from deepwide_agent.v24200_successor import payload_sha256  # noqa: E402
+from scripts.audit_v24187_phase_liveness import (  # noqa: E402
+    actual_python_script,
+    process_snapshot,
+)
+from scripts.preregister_v24204_postdecision_work_order import (  # noqa: E402
+    ACTIVATION,
+    OUTPUT,
+    PARENT_PROTOCOL,
+    PARENT_PROTOCOL_SHA256,
+    WATCHER_MARKER,
+    publish_new,
+    sha256,
+    validate_protocol,
+)
+
+
+ROLE = "v24204_postdecision_work_order_activation"
+
+
+def start_ticks(proc_root: Path, pid: int) -> int:
+    raw = (proc_root / str(pid) / "stat").read_text(encoding="utf-8")
+    suffix = raw[raw.rfind(")") + 2 :].split()
+    if len(suffix) <= 19:
+        raise RuntimeError("V2.42.04 process stat is truncated")
+    return int(suffix[19])
+
+
+def _watcher(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    matches = []
+    for row in rows:
+        argv = [str(value) for value in row.get("argv") or []]
+        script = actual_python_script(argv)
+        if script is not None and (script == WATCHER_MARKER or script.endswith("/" + WATCHER_MARKER)):
+            matches.append(
+                {
+                    "pid": int(row["pid"]),
+                    "isolated": all(flag in argv for flag in ("-I", "-B")),
+                }
+            )
+    if len(matches) != 1 or matches[0]["isolated"] is not True:
+        raise RuntimeError("V2.42.04 watcher process identity is invalid")
+    return matches[0]
+
+
+def build_activation(
+    root: Path = ROOT,
+    *,
+    protocol_path: Path = OUTPUT,
+    proc_root: Path = Path("/proc"),
+    created_at_unix: int | None = None,
+) -> dict[str, Any]:
+    root = root.resolve()
+    verified = validate_protocol(root, protocol_path)
+    watcher = _watcher(process_snapshot(proc_root))
+    pid = watcher["pid"]
+    value: dict[str, Any] = {
+        "artifact_version": 1,
+        "role": ROLE,
+        "created_at_unix": int(time.time()) if created_at_unix is None else int(created_at_unix),
+        "activation_valid": True,
+        "protocol": {"path": str(OUTPUT), "sha256": verified["sha256"]},
+        "status_only_parent": {
+            "path": str(PARENT_PROTOCOL),
+            "sha256": PARENT_PROTOCOL_SHA256,
+        },
+        "watcher": {
+            "marker": WATCHER_MARKER,
+            "pid": pid,
+            "start_ticks": start_ticks(proc_root, pid),
+            "python_isolated_no_bytecode": True,
+        },
+        "parent_safe_state_envelope_read_allowed": True,
+        "content_free_decision_receipt_read_only_after_parent_terminal": True,
+        "numeric_metrics_reports_predictions_or_aggregates_read_allowed": False,
+        "candidate_code_build_merge_materialization_or_freeze_generation_allowed": False,
+        "component_implementation_publisher_allowed": False,
+        "package_gate_evaluation_or_launch_allowed": False,
+        "shared_api_lease_acquire_allowed": False,
+        "network_model_search_fetch_evaluator_or_api_call_allowed": False,
+        "benchmark_forward_or_full220_launch_allowed": False,
+        "process_signal_restart_resume_rerun_skip_or_selective_retry": False,
+        "mapping_gold_category_question_type_evaluator_score_or_reward_read": False,
+        "leaderboard_submission_or_sota_claim": False,
+    }
+    value["activation_payload_sha256"] = payload_sha256(value)
+    return value
+
+
+def validate_activation(
+    root: Path,
+    path: Path = ACTIVATION,
+    *,
+    protocol_path: Path = OUTPUT,
+    proc_root: Path = Path("/proc"),
+) -> dict[str, Any]:
+    root = root.resolve()
+    target = path if path.is_absolute() else root / path
+    value = (
+        json.loads(target.read_text(encoding="utf-8"))
+        if target.is_file() and not target.is_symlink()
+        else None
+    )
+    if not isinstance(value, dict):
+        raise RuntimeError("V2.42.04 activation path is noncanonical")
+    verified = validate_protocol(root, protocol_path)
+    watcher = value.get("watcher") or {}
+    live = _watcher(process_snapshot(proc_root))
+    pid = watcher.get("pid")
+    unsigned = {key: item for key, item in value.items() if key != "activation_payload_sha256"}
+    false_fields = (
+        "numeric_metrics_reports_predictions_or_aggregates_read_allowed",
+        "candidate_code_build_merge_materialization_or_freeze_generation_allowed",
+        "component_implementation_publisher_allowed",
+        "package_gate_evaluation_or_launch_allowed",
+        "shared_api_lease_acquire_allowed",
+        "network_model_search_fetch_evaluator_or_api_call_allowed",
+        "benchmark_forward_or_full220_launch_allowed",
+        "process_signal_restart_resume_rerun_skip_or_selective_retry",
+        "mapping_gold_category_question_type_evaluator_score_or_reward_read",
+        "leaderboard_submission_or_sota_claim",
+    )
+    if (
+        target.resolve(strict=False) != (root / ACTIVATION).resolve(strict=False)
+        or value.get("role") != ROLE
+        or value.get("activation_valid") is not True
+        or value.get("protocol") != {"path": str(OUTPUT), "sha256": verified["sha256"]}
+        or value.get("status_only_parent")
+        != {"path": str(PARENT_PROTOCOL), "sha256": PARENT_PROTOCOL_SHA256}
+        or watcher.get("marker") != WATCHER_MARKER
+        or live.get("pid") != pid
+        or not isinstance(pid, int)
+        or isinstance(pid, bool)
+        or watcher.get("start_ticks") != start_ticks(proc_root, pid)
+        or watcher.get("python_isolated_no_bytecode") is not True
+        or value.get("parent_safe_state_envelope_read_allowed") is not True
+        or value.get("content_free_decision_receipt_read_only_after_parent_terminal")
+        is not True
+        or any(value.get(field) is not False for field in false_fields)
+        or value.get("activation_payload_sha256") != payload_sha256(unsigned)
+    ):
+        raise RuntimeError("V2.42.04 activation contract is invalid")
+    return {"path": target, "sha256": sha256(target), "value": value}
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--root", default=str(ROOT))
+    parser.add_argument("--protocol", default=str(OUTPUT))
+    parser.add_argument("--output", default=str(ACTIVATION))
+    parser.add_argument("--proc-root", default="/proc")
+    args = parser.parse_args()
+    root = Path(args.root).resolve()
+    target = Path(args.output)
+    target = target if target.is_absolute() else root / target
+    if target.resolve(strict=False) != (root / ACTIVATION).resolve(strict=False):
+        raise RuntimeError("V2.42.04 activation output path drifted")
+    value = build_activation(
+        root,
+        protocol_path=Path(args.protocol),
+        proc_root=Path(args.proc_root),
+    )
+    publish_new(target, value)
+    validate_activation(
+        root,
+        target,
+        protocol_path=Path(args.protocol),
+        proc_root=Path(args.proc_root),
+    )
+    print(json.dumps({"path": str(target), "sha256": sha256(target)}))
+
+
+if __name__ == "__main__":
+    main()
