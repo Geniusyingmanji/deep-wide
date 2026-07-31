@@ -1,0 +1,553 @@
+{
+  "artifact_version": 1,
+  "role": "v24212_selected_entropy_component_preregistration",
+  "protocol_id": "v24212_selected_parent_entropy_component_publisher_v1",
+  "created_at_unix": 1785513945,
+  "label_blind": true,
+  "frozen_parents": {
+    "v24210_protocol": {
+      "path": "results/v24210_selected_search_component_preregistration_v1_20260731.json",
+      "sha256": "dc5a64d036aac52e9ec76fdc952645678aff9408e18887f425686ba2660c6f23"
+    },
+    "v24210_activation": {
+      "path": "results/v24210_selected_search_component_activation_v1_20260731.json",
+      "sha256": "bc927d51b5fc143e5512b87449304832736baae2628cccf51f620cf2a188d9a8"
+    },
+    "v24210_wait_audit": {
+      "path": "results/v24210_selected_search_component_wait_activation_audit_v1_20260731.json",
+      "sha256": "6203ae306289451728658c19f5778d191a3ebc4da21454260015ccc7c678a3a7"
+    },
+    "v24193_protocol": {
+      "path": "results/v24193_replicate_aware_gate2a_consumer_preregistration_v1_20260731.json",
+      "sha256": "9b2fcf677bbb4f7cdb361d689f2634b23326d1cb640416eee920fb2b131b6031"
+    },
+    "v24193_activation": {
+      "path": "results/v24193_replicate_aware_gate2a_consumer_activation_audit_v1_20260731.json",
+      "sha256": "5a34c68ccdb84e039f2e766739f43d0853258ed5acb0c8a7c888ea3fb245aceb"
+    }
+  },
+  "parent_contract": {
+    "search_component_state_path": "outputs/v24210_selected_search_component_watcher_state_v1_20260731.json",
+    "gate2a_state_path": "outputs/v24193_replicate_aware_gate2a_consumer_state_v1_20260731.json",
+    "selected_work_order_path": "results/v24204_selected_postdecision_work_order_v1_20260731.json",
+    "search_publication_path": "results/v24210_selected_search_component_publication_v1_20260731.json",
+    "before_both_terminal_safe_state_envelopes_only": true,
+    "selected_parent_model_and_report_read_only_after_both_terminal": true,
+    "numeric_metrics_predictions_or_aggregates_read_before_terminal": false
+  },
+  "publication_contract": {
+    "manifest_payload_sha256": "375bc3ac8dd31d0b9eca2c6a06c59bff2199d686fc1e91722a4a898eedf32cbb",
+    "summary": {
+      "decision_count": 18,
+      "baseline_counts": {
+        "p12": 6,
+        "schema76": 6,
+        "schema77": 6
+      },
+      "parent_owner_counts": {
+        "baseline": 3,
+        "markdown": 3,
+        "scope": 3,
+        "search": 9
+      },
+      "unique_parent_byte_graph_count": 14,
+      "parent_graph_counts": {
+        "schema68": 1,
+        "schema69": 1,
+        "schema70": 1,
+        "schema76": 1,
+        "schema77": 1,
+        "schema78": 2,
+        "schema79": 2,
+        "schema80": 1,
+        "schema81": 1,
+        "schema82": 1,
+        "schema83": 2,
+        "schema84": 1,
+        "schema85": 2,
+        "schema86": 1
+      },
+      "search_bytes_required_count": 9,
+      "search_bytes_forbidden_count": 9,
+      "target_state_schema_versions": [
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100
+      ],
+      "controller_candidate_materialized_count": 0,
+      "static_candidate_rebase_feasible_count": 0,
+      "orders_requiring_separate_adapter_kernel_runner_rebase_count": 18,
+      "benchmark_launch_authorized_count": 0
+    },
+    "selection_frozen_before_parent_or_gate_outcome": true,
+    "owned_component": "entropy_credit_controller",
+    "eighteen_entropy_decisions_covered": true,
+    "fourteen_unique_parent_byte_graphs_covered": true,
+    "nine_search_parents_and_nine_nonsearch_parents_covered": true,
+    "real_state_transition_adapters_required": true,
+    "runtime_runner_preflight_launcher_rebase_required": true,
+    "model_file_sha_model_sha_job_sha_and_parent_sha_bound": true,
+    "projection_only_action_arm_forbidden": true,
+    "historical_projection_module_allowed_only_as_frozen_adapter_dependency": true,
+    "joint_package_or_package_gate_built": false
+  },
+  "quality_contract": {
+    "terminal_go_status": "replicate_aware_gate2a_pass",
+    "terminal_no_go_statuses": [
+      "replicate_aware_gate2a_fail",
+      "replicate_aware_gate2a_not_evaluable"
+    ],
+    "go_materializes_exactly_one_selected_parent_rebase": true,
+    "no_go_retires_entropy_without_rerun": true,
+    "entropy_absent_publishes_content_free_no_op": true,
+    "production_model_must_be_ready_and_fit_calibration_only": true
+  },
+  "execution": {
+    "watcher_marker": "scripts/watch_v24212_entropy_component.py",
+    "python_flags": [
+      "-I",
+      "-B"
+    ],
+    "poll_seconds": 60,
+    "state_path": "outputs/v24212_selected_entropy_component_watcher_state_v1_20260731.json",
+    "activation_path": "results/v24212_selected_entropy_component_activation_v1_20260731.json",
+    "publication_path": "results/v24212_selected_entropy_component_publication_v1_20260731.json",
+    "candidate_root": "/home/azureuser/workspace-gzy/zyf/deep/outputs/v24212_selected_entropy_candidate_v1_20260731",
+    "wait_audit_path": "results/v24212_selected_entropy_component_wait_activation_audit_v1_20260731.json"
+  },
+  "source_policy": {
+    "before_activation_parent_or_gate_state_opened": false,
+    "after_activation_only_safe_state_envelopes_opened": true,
+    "after_both_terminal_only_selected_parent_model_and_report_opened": true,
+    "benchmark_question_answer_evidence_prediction_or_url_parsed_or_emitted": false,
+    "post_terminal_evaluator_derived_gate_report_read_allowed": true,
+    "mapping_gold_category_question_type_evaluator_score_or_reward_read_for_forward_routing": false,
+    "credential_value_or_keyring_read": false,
+    "network_model_search_fetch_evaluator_or_api_called": false
+  },
+  "authorization": {
+    "selected_entropy_publisher_active_after_activation": true,
+    "component_publication_after_validated_parent_and_gate_terminal": true,
+    "selected_parent_entropy_candidate_materialization_on_go": true,
+    "content_free_noop_or_retirement_publication": true,
+    "joint_package_build_merge_or_freeze_generation": false,
+    "package_gate_evaluation_or_launch": false,
+    "shared_api_lease_acquire": false,
+    "network_model_search_fetch_evaluator_or_api_call": false,
+    "benchmark_forward_or_full220_launch": false,
+    "process_signal_restart_resume_rerun_skip_or_selective_retry": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "safe_wait_boundary": {
+    "future_outputs_and_candidate_absent": true,
+    "selected_parent_report_and_model_outputs_absent": true,
+    "protected_processes": {
+      "r1_launcher": {
+        "marker": "scripts/launch_frozen_deepwide.py",
+        "pid": 1344451,
+        "start_ticks": 741535641,
+        "python_isolated_no_bytecode_required": false,
+        "command_line_emitted": false
+      },
+      "r1_forward": {
+        "marker": "scripts/run_deepwide_agent.py",
+        "pid": 1350579,
+        "start_ticks": 741557746,
+        "python_isolated_no_bytecode_required": false,
+        "command_line_emitted": false
+      },
+      "v24187_phase_watcher": {
+        "marker": "scripts/watch_v24187_phase_liveness.py",
+        "pid": 3204072,
+        "start_ticks": 733230314,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24193_gate2a_watcher": {
+        "marker": "scripts/watch_v24193_replicate_aware_gate2a.py",
+        "pid": 1486117,
+        "start_ticks": 741782930,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24194_capacity_watcher": {
+        "marker": "scripts/watch_v24194_capacity_ladder.py",
+        "pid": 1582182,
+        "start_ticks": 742119955,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24195_compatibility_watcher": {
+        "marker": "scripts/watch_v24195_lease_owner_compatibility.py",
+        "pid": 1638839,
+        "start_ticks": 742337902,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24196_capacity_executor": {
+        "marker": "scripts/watch_v24196_capacity_executor.py",
+        "pid": 1659284,
+        "start_ticks": 742415197,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24197_parallel_planner": {
+        "marker": "scripts/watch_v24197_parallel_all220.py",
+        "pid": 1758071,
+        "start_ticks": 742773881,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24198_candidate_bundle": {
+        "marker": "scripts/watch_v24198_candidate_bundle.py",
+        "pid": 1821768,
+        "start_ticks": 742994288,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24199_candidate_selector": {
+        "marker": "scripts/watch_v24199_candidate_selector.py",
+        "pid": 1924971,
+        "start_ticks": 743375183,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24176_schema77_watcher": {
+        "marker": "scripts/watch_v24176_predicate_completion_paired_dev.py",
+        "pid": 2071115,
+        "start_ticks": 731906778,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24180_search_yield_launcher": {
+        "marker": "scripts/launch_v24183_search_yield_after_schema77.py",
+        "pid": 2312198,
+        "start_ticks": 732623682,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24103_markdown_launcher": {
+        "marker": "scripts/launch_v24185_markdown_after_search_yield.py",
+        "pid": 3057575,
+        "start_ticks": 732925701,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24105_scope_open_watcher": {
+        "marker": "scripts/watch_v24105_scope_open_paired_dev.py",
+        "pid": 3511838,
+        "start_ticks": 724284036,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24190_tie_aware_watcher": {
+        "marker": "scripts/watch_v24190_tie_aware_gate2a.py",
+        "pid": 3264914,
+        "start_ticks": 733447322,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24191_policy_value_watcher": {
+        "marker": "scripts/watch_v24191_policy_value_gate2a.py",
+        "pid": 3326028,
+        "start_ticks": 733661551,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24192_abstain_aware_watcher": {
+        "marker": "scripts/watch_v24192_abstain_aware_gate2a.py",
+        "pid": 1447396,
+        "start_ticks": 741650081,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24200_successor_watcher": {
+        "marker": "scripts/watch_v24200_successor.py",
+        "pid": 1989248,
+        "start_ticks": 743588730,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24204_postdecision_work_order_watcher": {
+        "marker": "scripts/watch_v24204_postdecision_work_order.py",
+        "pid": 2154824,
+        "start_ticks": 744203045,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24206_markdown_component_watcher": {
+        "marker": "scripts/watch_v24206_markdown_component.py",
+        "pid": 2244092,
+        "start_ticks": 744548108,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24207_scope_alias_watcher": {
+        "marker": "scripts/watch_v24207_scope_alias_component.py",
+        "pid": 2307529,
+        "start_ticks": 744798818,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24210_search_component_watcher": {
+        "marker": "scripts/watch_v24210_search_component.py",
+        "pid": 2497122,
+        "start_ticks": 745531849,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      }
+    }
+  },
+  "control_surface": {
+    "file_count": 25,
+    "manifest": {
+      "src/deepwide_agent/owic.py": "74317f34937cdfa8c13849be6bb5bb885810aa352bb847d712887c3f52d83cda",
+      "src/deepwide_agent/v2409_pilot.py": "ead5224bb71a721308cc79af3255cc8a3839d87a560338d46f9fdefce21db8c8",
+      "src/deepwide_agent/v2409_interventions.py": "d095d4d7243541dcb1d62ed8641faf85917cb226faba16d01309dd6304c5f527",
+      "src/deepwide_agent/v24121_continuation.py": "2e663e3406773865feaff7a7e13ff8f5ca89fb923d07d800bb31d4bc0bd79bbb",
+      "src/deepwide_agent/v24122_execution.py": "e0e840018a7488921f2585e5dd6eddebb0bfde6e4d88adb1cac24a78ed10b95e",
+      "src/deepwide_agent/v24211_entropy_controller.py": "a9d9d255357ee98fb675dac0c22a4e11fbd8aa793419f758a04c471a14f4a975",
+      "src/deepwide_agent/v24211_entropy_runtime.py": "193c0d4bd8b0b1516a6d3ae0d1b1c0e05a508b6e70d6749a2c37d0a415148879",
+      "src/deepwide_agent/v24211_entropy_feasibility.py": "8f9465a04ae1233d009989b27e65038c613bc914e211149b03b750e2bb211819",
+      "src/deepwide_agent/v24212_entropy_binding.py": "b4d9d26a68c6c7a4892df0aa75a7480d34878da4f0b69ea528d877d934648263",
+      "scripts/publish_v24212_entropy_component.py": "da9c93f3ba55b1adf97e53730c25a3b9a27797c0ba36290afcacc29cebe6b5c0",
+      "scripts/preregister_v24212_entropy_component.py": "75e982840be990217dfd7fa410f0c313a16d8287323adc38284c471a12d2acda",
+      "scripts/watch_v24212_entropy_component.py": "f156c9f2a715d635ebda2a6d0ec4d149a25e4e1dc5e8014f6b0d36c48378ba66",
+      "scripts/activate_v24212_entropy_component.py": "bf75daa828fb3bbb21a13bcb724e33b744718ff7a788e1219d554fb71a039115",
+      "scripts/audit_v24212_entropy_component_wait_activation.py": "fccf79d662d538d7187cdeb689048ca7104fc42aa3ced05e0a0bc712540223ca",
+      "tests/test_v24211_entropy_controller.py": "9149ec063e2bac6f9607b9218ecd2f542fcac5a7b1740da374e349a7d1dd2566",
+      "tests/test_v24211_entropy_runtime.py": "d490c352a0df8f9904dc7498130acdfb8d2fd6867c0b8ed42f1360832a03e6a6",
+      "tests/test_v24211_entropy_feasibility.py": "ce6e67f70484aa1d744d88facde57ff1c1bf5c41c2ff4890bb5ce0d840b81ab7",
+      "tests/test_v24121_continuation.py": "91658e2e1587b7d337758bfef95223d4db750404b7d4b1def033387bcae4ab54",
+      "tests/test_v24122_execution.py": "e3e45c5d8228e18b60f00c2a9c5e4e7b2d83094e3766af9f2aada1494c0a8e62",
+      "tests/test_v24212_entropy_binding.py": "65de218a033da23e6f8bc61f6fee22e5b725e6974d4dc87d8f31efeb8f825485",
+      "tests/test_publish_v24212_entropy_component.py": "e72a7844d6e99df6711f237fc84958a7041883804b218f40e9f3d12da2b7f61d",
+      "tests/test_preregister_v24212_entropy_component.py": "0b2d7a0e30803e46cdc5f237ac73d7b7a150bef81914d125df02c3d6ee98e943",
+      "tests/test_watch_v24212_entropy_component.py": "26092d95227b145341bd5bea0d46bd70da0e905e124460b8b2870fc09aca6aae",
+      "tests/test_activate_v24212_entropy_component.py": "4f5ccf97f9800f726f34ae7f292bef3d661fa66c0976760085e44c96c9c84414",
+      "tests/test_audit_v24212_entropy_component_wait_activation.py": "cbd2e11cc873a2c44b57802312de50d38a9804188f0494f8304377f9469fdaa4"
+    },
+    "manifest_sha256": "1b8ea836de4a22072515f1de827c67b0e25593eb512c27891b67828fcce358a9",
+    "must_remain_absent": [
+      "scripts/__init__.py",
+      "sitecustomize.py",
+      "usercustomize.py"
+    ],
+    "static_capability_audit": {
+      "src/deepwide_agent/owic.py": {
+        "sha256": "74317f34937cdfa8c13849be6bb5bb885810aa352bb847d712887c3f52d83cda",
+        "network_import": false,
+        "credential_environment_read": false,
+        "dynamic_execution": false,
+        "process_calls": [],
+        "isolated_scrubbed_local_regression_only": false
+      },
+      "src/deepwide_agent/v2409_pilot.py": {
+        "sha256": "ead5224bb71a721308cc79af3255cc8a3839d87a560338d46f9fdefce21db8c8",
+        "network_import": false,
+        "credential_environment_read": false,
+        "dynamic_execution": false,
+        "process_calls": [],
+        "isolated_scrubbed_local_regression_only": false
+      },
+      "src/deepwide_agent/v2409_interventions.py": {
+        "sha256": "d095d4d7243541dcb1d62ed8641faf85917cb226faba16d01309dd6304c5f527",
+        "network_import": false,
+        "credential_environment_read": false,
+        "dynamic_execution": false,
+        "process_calls": [],
+        "isolated_scrubbed_local_regression_only": false
+      },
+      "src/deepwide_agent/v24121_continuation.py": {
+        "sha256": "2e663e3406773865feaff7a7e13ff8f5ca89fb923d07d800bb31d4bc0bd79bbb",
+        "network_import": false,
+        "credential_environment_read": false,
+        "dynamic_execution": false,
+        "process_calls": [],
+        "isolated_scrubbed_local_regression_only": false
+      },
+      "src/deepwide_agent/v24122_execution.py": {
+        "sha256": "e0e840018a7488921f2585e5dd6eddebb0bfde6e4d88adb1cac24a78ed10b95e",
+        "network_import": false,
+        "credential_environment_read": false,
+        "dynamic_execution": false,
+        "process_calls": [],
+        "isolated_scrubbed_local_regression_only": false
+      },
+      "src/deepwide_agent/v24211_entropy_controller.py": {
+        "sha256": "a9d9d255357ee98fb675dac0c22a4e11fbd8aa793419f758a04c471a14f4a975",
+        "network_import": false,
+        "credential_environment_read": false,
+        "dynamic_execution": false,
+        "process_calls": [],
+        "isolated_scrubbed_local_regression_only": false
+      },
+      "src/deepwide_agent/v24211_entropy_runtime.py": {
+        "sha256": "193c0d4bd8b0b1516a6d3ae0d1b1c0e05a508b6e70d6749a2c37d0a415148879",
+        "network_import": false,
+        "credential_environment_read": false,
+        "dynamic_execution": false,
+        "process_calls": [],
+        "isolated_scrubbed_local_regression_only": false
+      },
+      "src/deepwide_agent/v24211_entropy_feasibility.py": {
+        "sha256": "8f9465a04ae1233d009989b27e65038c613bc914e211149b03b750e2bb211819",
+        "network_import": false,
+        "credential_environment_read": false,
+        "dynamic_execution": false,
+        "process_calls": [],
+        "isolated_scrubbed_local_regression_only": false
+      },
+      "src/deepwide_agent/v24212_entropy_binding.py": {
+        "sha256": "b4d9d26a68c6c7a4892df0aa75a7480d34878da4f0b69ea528d877d934648263",
+        "network_import": false,
+        "credential_environment_read": false,
+        "dynamic_execution": false,
+        "process_calls": [],
+        "isolated_scrubbed_local_regression_only": false
+      },
+      "scripts/publish_v24212_entropy_component.py": {
+        "sha256": "da9c93f3ba55b1adf97e53730c25a3b9a27797c0ba36290afcacc29cebe6b5c0",
+        "network_import": false,
+        "credential_environment_read": false,
+        "dynamic_execution": false,
+        "process_calls": [
+          "subprocess.run"
+        ],
+        "isolated_scrubbed_local_regression_only": true
+      },
+      "scripts/preregister_v24212_entropy_component.py": {
+        "sha256": "75e982840be990217dfd7fa410f0c313a16d8287323adc38284c471a12d2acda",
+        "network_import": false,
+        "credential_environment_read": false,
+        "dynamic_execution": false,
+        "process_calls": [],
+        "isolated_scrubbed_local_regression_only": false
+      },
+      "scripts/watch_v24212_entropy_component.py": {
+        "sha256": "f156c9f2a715d635ebda2a6d0ec4d149a25e4e1dc5e8014f6b0d36c48378ba66",
+        "network_import": false,
+        "credential_environment_read": false,
+        "dynamic_execution": false,
+        "process_calls": [],
+        "isolated_scrubbed_local_regression_only": false
+      },
+      "scripts/activate_v24212_entropy_component.py": {
+        "sha256": "bf75daa828fb3bbb21a13bcb724e33b744718ff7a788e1219d554fb71a039115",
+        "network_import": false,
+        "credential_environment_read": false,
+        "dynamic_execution": false,
+        "process_calls": [],
+        "isolated_scrubbed_local_regression_only": false
+      },
+      "scripts/audit_v24212_entropy_component_wait_activation.py": {
+        "sha256": "fccf79d662d538d7187cdeb689048ca7104fc42aa3ced05e0a0bc712540223ca",
+        "network_import": false,
+        "credential_environment_read": false,
+        "dynamic_execution": false,
+        "process_calls": [],
+        "isolated_scrubbed_local_regression_only": false
+      },
+      "tests/test_v24211_entropy_controller.py": {
+        "sha256": "9149ec063e2bac6f9607b9218ecd2f542fcac5a7b1740da374e349a7d1dd2566",
+        "network_import": false,
+        "credential_environment_read": false,
+        "dynamic_execution": false,
+        "process_calls": [],
+        "isolated_scrubbed_local_regression_only": false
+      },
+      "tests/test_v24211_entropy_runtime.py": {
+        "sha256": "d490c352a0df8f9904dc7498130acdfb8d2fd6867c0b8ed42f1360832a03e6a6",
+        "network_import": false,
+        "credential_environment_read": false,
+        "dynamic_execution": false,
+        "process_calls": [],
+        "isolated_scrubbed_local_regression_only": false
+      },
+      "tests/test_v24211_entropy_feasibility.py": {
+        "sha256": "ce6e67f70484aa1d744d88facde57ff1c1bf5c41c2ff4890bb5ce0d840b81ab7",
+        "network_import": false,
+        "credential_environment_read": false,
+        "dynamic_execution": false,
+        "process_calls": [],
+        "isolated_scrubbed_local_regression_only": false
+      },
+      "tests/test_v24121_continuation.py": {
+        "sha256": "91658e2e1587b7d337758bfef95223d4db750404b7d4b1def033387bcae4ab54",
+        "network_import": false,
+        "credential_environment_read": false,
+        "dynamic_execution": false,
+        "process_calls": [],
+        "isolated_scrubbed_local_regression_only": false
+      },
+      "tests/test_v24122_execution.py": {
+        "sha256": "e3e45c5d8228e18b60f00c2a9c5e4e7b2d83094e3766af9f2aada1494c0a8e62",
+        "network_import": false,
+        "credential_environment_read": false,
+        "dynamic_execution": false,
+        "process_calls": [],
+        "isolated_scrubbed_local_regression_only": false
+      },
+      "tests/test_v24212_entropy_binding.py": {
+        "sha256": "65de218a033da23e6f8bc61f6fee22e5b725e6974d4dc87d8f31efeb8f825485",
+        "network_import": false,
+        "credential_environment_read": false,
+        "dynamic_execution": false,
+        "process_calls": [],
+        "isolated_scrubbed_local_regression_only": false
+      },
+      "tests/test_publish_v24212_entropy_component.py": {
+        "sha256": "e72a7844d6e99df6711f237fc84958a7041883804b218f40e9f3d12da2b7f61d",
+        "network_import": false,
+        "credential_environment_read": false,
+        "dynamic_execution": false,
+        "process_calls": [],
+        "isolated_scrubbed_local_regression_only": false
+      },
+      "tests/test_preregister_v24212_entropy_component.py": {
+        "sha256": "0b2d7a0e30803e46cdc5f237ac73d7b7a150bef81914d125df02c3d6ee98e943",
+        "network_import": false,
+        "credential_environment_read": false,
+        "dynamic_execution": false,
+        "process_calls": [],
+        "isolated_scrubbed_local_regression_only": false
+      },
+      "tests/test_watch_v24212_entropy_component.py": {
+        "sha256": "26092d95227b145341bd5bea0d46bd70da0e905e124460b8b2870fc09aca6aae",
+        "network_import": false,
+        "credential_environment_read": false,
+        "dynamic_execution": false,
+        "process_calls": [],
+        "isolated_scrubbed_local_regression_only": false
+      },
+      "tests/test_activate_v24212_entropy_component.py": {
+        "sha256": "4f5ccf97f9800f726f34ae7f292bef3d661fa66c0976760085e44c96c9c84414",
+        "network_import": false,
+        "credential_environment_read": false,
+        "dynamic_execution": false,
+        "process_calls": [],
+        "isolated_scrubbed_local_regression_only": false
+      },
+      "tests/test_audit_v24212_entropy_component_wait_activation.py": {
+        "sha256": "cbd2e11cc873a2c44b57802312de50d38a9804188f0494f8304377f9469fdaa4",
+        "network_import": false,
+        "credential_environment_read": false,
+        "dynamic_execution": false,
+        "process_calls": [],
+        "isolated_scrubbed_local_regression_only": false
+      }
+    }
+  },
+  "decision_contract_sha256": "abbfc1906eb76eef8bd670a5604c3811a623242ffc7a5f2ce3f1f6459210efe3"
+}
