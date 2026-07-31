@@ -1,10 +1,18 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.16
+> 版本：5.17
 >
-> 更新：2026-07-31 08:25 UTC
+> 更新：2026-07-31 09:06 UTC
 >
-> 当前覆盖：**V2.41.99 outcome-before 继承/选择协议已冻结并安全激活；V2.41.98/99 均健康等待容量 pair。R1 权威聚合为 162/220，尚无正式 DeepWideBench 全集分数、提升或 SOTA。**
+> 当前覆盖：**V2.42.00 已 append-only 取代 V2.41.99 的平面继承规则并安全激活；V2.41.98/99/42.00 均健康。R1 权威聚合为 163/220，尚无正式 DeepWideBench 全集分数、提升或 SOTA。**
+>
+> **5.17 V2.42.00 层级基线、package gate 与 07-30 文献增量（2026-07-31 09:06 UTC）：V2.41.99 继续作为健康诊断 watcher 运行，但不再拥有未来执行权。复核发现其 24 槽模型有三个科学缺陷：schema76 已含主线 `v24104 conservative-open-scope-fallback`，却又把 Markdown 支路的 V2.41.05 scope gate 当作同一个无命名空间 bit；schema77 只相对 schema76 做 paired dev，而 schema76 protocol 明确允许 baseline 自身为 NO-GO，因此 schema77 的局部 GO 不能越过 schema76 对 P12 的失败；search、Markdown、scope 与 entropy 分支的独立 GO 也不能证明它们的 union package 优于当前基线。V2.42.00 因而固定层级规则：schema76 NO-GO 选 P12；schema76 GO 且 schema77 NO-GO 选 schema76；二者均 GO 才选 schema77。`mainline_scope` 与 `markdown_branch_scope` 分开命名，分支 GO 只进入 eligible-component set。非空组件集合必须先确定性 build，再与选中基线做同 opaque dev64、同模型/搜索/prompt/预算/evaluator、failure-as-zero、禁止 resume 的 package-level paired gate；空组件集合是基线 identity handoff，不做不可能的“基线对自身 material improvement”，但仍需独立 all-220 freeze 与 executor。
+>
+> 纯决策核心提交 `67a23a7` 后，create-exclusive protocol [`results/v24200_hierarchical_successor_preregistration_v1_20260731.json`](results/v24200_hierarchical_successor_preregistration_v1_20260731.json) SHA `d04d64ae…a92ae3` 冻结 36 个合法 terminal package；activation [`results/v24200_hierarchical_successor_activation_v1_20260731.json`](results/v24200_hierarchical_successor_activation_v1_20260731.json) SHA `f914adb5…decee3` 绑定唯一 `python -I -B` watcher PID `1989248`。真实 CLI wait audit [`results/v24200_hierarchical_successor_wait_activation_audit_v1_20260731.json`](results/v24200_hierarchical_successor_wait_activation_audit_v1_20260731.json) SHA `56d7f621…8aa972`，state 为 `waiting_for_quality_chain_terminal`。它只读取六个注册 status envelope 与 false authorization 字段，不读 numeric metrics/report/prediction/aggregate，不 build/open package、不评估 gate、不取 lease、不调用模型/搜索/evaluator、不启动 benchmark。冻结前定向回归 `19/19`，V2.41.98–V2.42.00 联合回归 `54/54`；V2.41.99 原 10-file manifest 仍 `10/10` 精确一致。代码与冻结工件提交 `3e8b084` 已推送，远端核验一致。
+>
+> 07-29 至 07-31 的四组 arXiv 日期限定检索新增 SciDataSailor、CRPO、PCD、$\beta$-OPSD 与 EMBL AI Librarian。[110–114] SciDataSailor 已用 prior/step entropy 动态调 MCTS branching width；CRPO 已让 entropy difference 决定朝向或远离 privileged teacher；PCD 用 downstream failure × teacher disagreement 的双 witness 定位可纠正层；$\beta$-OPSD 用 return-to-go 回传未来失配；Librarian 固定七个互补 query、层级去重与 `8 search / 12 fetch` worker pool。下一实验必须加入 fixed/random/entropy/VOC width、CRPO-style sign、PCD-style layer witness、return-to-go 与固定多 query 检索对照。熵只能调幅，credit 方向仍由 outcome、同状态 continuation 或层级可纠正性决定。
+>
+> 当前 fresh phase watcher 已推进到 `163/220 = 33 completed + 130 failed`、剩余 57，状态仍是 `waiting_for_r1_exact_terminal_220`；这不是正式 evaluator aggregate。后续不可逆顺序修正为：`R1 exact220/release → P12/schema76/Avg@4/schema77 与各独立质量链 terminal → V2.42.00 层级 baseline + eligible components → deterministic successor package → 非空 package 的同 dev64 paired gate → neutral 1/2/4/8/12×3 capacity freeze → 新命名空间 52/52/52/64 all-220 freeze → 独立 single-owner executor`。任何新 all-220 都必须使用全新目录、整次固定并发、失败计零且禁止 resume/选择性补跑；在此之前没有 benchmark 提升或 SOTA。**
 >
 > **5.16 V2.41.99 outcome-before 继承 DAG、严格 label-blind selector 与安全激活（2026-07-31 08:25 UTC）：当前权威安全聚合为 `162/220 = 33 completed + 129 failed`、剩余 58、`critical=[]`；旧 status 文件的 70/220 仍过时，正式 evaluator aggregate、Avg@4、提升与 SOTA 均不存在。冻结时 schema77、search-yield、Markdown、scope-open、replicate-aware entropy-credit 及其 V2.41.90 early-terminal root 六个安全 envelope 全部为 preterminal/waiting。选择合同在任何质量 outcome 前枚举 `schema76/77 × search on/off × {plain, markdown, markdown+scope} × entropy-controller on/off` 的 24 个合法向量，并双射到 24 个独立集成槽；selector 只读取预注册 terminal status string 和 false authorization fields，不按 score、rank 或 last-GO 选择。`scope-open GO → Markdown GO` 是硬约束；OWIC/Gate-1 的注册 terminal-without-report 路径确定映射 entropy-off；未知终态直接 fail closed。
 >

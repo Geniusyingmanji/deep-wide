@@ -16,6 +16,8 @@
 
 同日公开的进一步结果把实验对照收得更紧。Sample More, Reflect Less 在可核验数学题和 1.5B–7B 本地模型上，以每种方法的实际生成 token 匹配重复采样曲线；其结果不支持把该域中的反思、辩论或自选候选收益归因于机制本身，但作者明确不外推到 frontier 模型和开放式任务。[104] BeyondUncertainty 说明口头置信可以有排序价值却仍失校准，而且省检索 passage 不等于省总 token，因为额外 probe 本身有成本。[105] SVR 又表明自验证停止可能保存正确的中间答案，但错误提前停止仍是主要限制。[106] One Human, N Agents 则在受限审计模型与小规模 trace replay 中发现，跨 agent 错误相关性更多由共享题目难度解释，而非简单由模型谱系解释。[107] 这些论文不能直接预测 DeepWideBench 分数，却共同要求任何 swarm、停止或 uncertainty controller 同时报告等预算简单基线、控制分支实际触发率、probe 全成本、错误提前停止和相关失败。
 
+7 月 30 日批次又排除了“用熵决定 width”和“熵变化自动给正 credit”两种表述。SciDataSailor 在科学数据探索的 MCTS 数据合成中，用候选动作 prior entropy 与 step token entropy 动态决定 branching width，高不确定状态展开更多子节点；因此 entropy-adaptive width 已有直接系统近邻。[110] CRPO 比较普通学生上下文与带特权反馈的自教师上下文，按 predictive-entropy difference 把位置分成 reflective-exploration 正对和 exposure-bias 负对，训练方向可以朝向或远离教师；它说明大的 entropy drop 可能恰是路径收敛的负信号。[111] PCD 在多模态蒸馏中只在下游失败与 teacher–student disagreement 两个 witness 同时出现时加强感知 credit，说明层级风险 credit 需要目标层的可纠正性证据，而不是仅凭终局失败或局部不确定性。[112] $\beta$-OPSD 则用 return-to-go 把未来 student–target mismatch 回传给早期 token，形成另一条非短视 credit 基线。[113] 这些论文未在 DeepWideBench 上联合建模四层风险，但使本项目的证明责任更明确：熵只能调节候选动作或 credit 的强度，更新方向必须由 outcome、同状态 continuation 或层级 witness 约束。
+
 ## 1. 范围、问题与检索方法
 
 ### 1.1 研究问题
@@ -41,6 +43,7 @@
 - 2026-07-31 对 2026-07-21 至 07-31 的 arXiv 新增记录做增量筛选，并逐页核对 WebSwarm、AREX、Delegation Intelligence、EviBack、RARG、Filesystem-Based Memory、Harness-G、Baikal、Search as Computation Allocation、SearchArt、CAST、AttriMem、MisKnow-Agent 与 FinanceHarness 的 PDF，而非只引用摘要。[5,76–88] 这一轮把 novelty 边界进一步收窄到四层风险的校准与联合验证：递归 follow-up、语义区域覆盖、同义检索去重、结构化非近视 credit、state-value credit 和终端损失下的 metareasoning 都已有直接近邻。
 - 2026-07-31 再对 07-28 至 07-31 的 `cs.AI/cs.CL/cs.IR/cs.LG` 记录做 500 条增量召回，并以 web/research/search、swarm/delegation、coverage/evidence、credit/VOC/uncertainty 词族筛选。正文或一手 arXiv 元数据核验了 HiEviDR-Bench、CAM-DF、Two Calls Beat Five Agents、SKIMIX、MANTA、SkillRise、GRSD、TTEL、OVCSD、CSCR、LEDGERMIND、LayerRAG-Bench、Thinking Under Uncertainty、AskChem 与 Selective Credibility-Limited Belief Update。[89–103] `DeepResearch Agent System`（arXiv:2607.27562）虽然声称多项 SOTA 和大幅百分比改进，但正文是 software copyright R&D document，未提供足以复核这些数字的同协议实验链；本综述将其列为已筛选但不承载结论的低可信记录。
 - 2026-07-31 对当日最新批次再做题名/摘要筛选，并读取 Sample More, Reflect Less、Beyond Self-Knowledge、SVR、One Human, N Agents、local computer-use inference scaling 与 HYSET 的 PDF 原文。[104–109] 该轮不新增“统一方法”主张，而是增加六个实验约束：等生成 token 的独立采样曲线、probe 输入/输出 token 全计费、自适应路径触发率、premature-stop error、相关失败下的有效独立分支数，以及组合动作的集合级边际价值。数学推理、受控 RAG、agent 审计、computer-use 与 tool retrieval 的结果均只作机制和失败模式近邻，不作 DeepWideBench 横向分数比较。
+- 2026-07-31 09:06 UTC 再用 arXiv Atom API 对 07-29 至 07-31 的 `deep research`、`web/deep search agent`、`information gain/entropy/uncertainty` 与 `credit assignment/process reward/turn-level` 做四组日期限定查询，并核对 SciDataSailor、CRPO、PCD、$\beta$-OPSD 与 EMBL AI Librarian 的元数据和 PDF。[110–114] 前四项分别占据 entropy-guided branching、entropy-sign contrast、双 witness 层级 credit 与 return-to-go distillation credit；Librarian 则提供固定七个互补 query、分层去重和 `8 search / 12 fetch` worker pool 的工程对照。它们使用科学数据探索、深搜训练、多模态蒸馏、数学推理或生命科学检索设置，不构成 DeepWideBench 提升证据。
 - 对经典信息论与覆盖估计文献用 Crossref/OpenAlex/DOI 核验元数据；对关键 2023–2026 论文读取 arXiv 原文而不只依赖摘要。
 
 纳入标准是：方法直接控制检索、证据选择、工具调用、搜索树、停止或开放集合覆盖；或者直接定义 DeepWide/table-search 的系统与评测边界。排除纯推荐、视觉检索、物理导航等仅共享“entropy/search”词面但不能约束本研究设计的工作。检索记录的高密度比较版见 [.research/literature_matrix.md](.research/literature_matrix.md)。
@@ -61,6 +64,10 @@ SearchOS-V1 则把开放域信息搜寻建模为带引用的 relational schema c
 
 WebSwarm 的消融给出一个直接工程教训。去掉 Web-Probing 后，WideSearch 与 DeepWideSearch 的 Item F1 没有下降，但 web-tool 调用分别从 137.03 增至 239.90、从 203.73 增至 331.39；去掉 sibling experience reuse 才出现较明显的质量下降。[5] 因而，网页结构探测首先应作为成本控制与动作选择基线，不能被当作质量机制本身。我们的 semantic-region 与 evidence-equivalence 诊断也必须分别报告质量和工具成本。
 
+SciDataSailor 让“按熵自适应分支宽度”也不再是空白。它在可执行科学数据仓库上用 MCTS 合成轨迹，先以 strategy-level proposals 生成 tool probes，再把候选 prior entropy 与当前 step token entropy 归一化，映射到 $k_{min}$ 与 $k_{max}$ 之间的动态 child 数；token entropy 不可用时退回 prior entropy。[110] 该方法服务于训练数据合成而非 DeepWide 在线表格求解，且论文没有证明 entropy width 优于同预算 terminal-loss VOC。尽管任务不同，本项目必须加入固定 width、random width、SciDataSailor-style entropy width 与四层 VOC width 四个对照，并报告实际生成的分支数和去重后 evidence-set 数。
+
+EMBL AI Librarian 给出一个可直接借鉴、但不占 novelty 的检索工程对照。其单一 LLM 生成七个互补的 Europe PMC fielded lexical queries，search 与 full-text worker pool 分别为 8 和 12，并按 PMID、DOI、title 分层去重，最终返回定位到约 250 词的证据片段。[114] 它仅做一轮检索，正文也把多跳与“证据不足时是否继续”列为限制。对 DeepWide 而言，这支持把 query diversification、document deduplication、evidence localization 与跨题吞吐并发拆开测量；并发只能作为速度设置，不能获得搜索质量 credit。
+
 AREX 让“递归核对未解决约束”本身也不再是空白。它在内层研究循环之外增加 outer self-improvement loop，以结构化 answer/evidence/confidence 判断 accept、refine 或 restart；`update_context` 保留 verified findings、source IDs、unresolved constraints、rejected candidates 与 next plan。训练阶段又用关键步骤标注给 turn-level advantage 加 bonus。[76] 这与四层概率风险不同，但它是 constraint-wise follow-up、状态压缩和 key-step credit 的强基线。新增方法必须证明校准风险比自报 confidence 或关键步骤标注提供额外预测价值。
 
 Harness-G 从策略—环境接口解释了“query 很多但信息不增”的另一来源：不同自然语言查询逐渐产生高度重叠的累计 evidence set，即 retrieval-equivalence collapse。它把自由查询改成有限菜单，动作是 evidence sentence、entity 或 answer，再用冻结 answer scorer 比较 frontier alternatives，并沿 entity dependency graph 把下游增益回传给使其可达的早期动作。论文在六个 QA 数据集、1.5B 与 3B 模型上报告相对 Graph-R1 的平均 F1 分别提高 10.74 与 3.98；在固定 graph、outcome reward 与训练预算下，菜单相对 free-query 的提升超过 17 F1，而去掉 SNC 在三个多跳数据集上分别下降 3.08、4.55、2.88。[81] 这些是论文设置内的结果，但足以要求本项目加入 evidence-set overlap/query-equivalence 诊断，并把 SNC 纳入 credit 强基线。
@@ -70,6 +77,8 @@ Baikal 把 data lake 聚成 semantic regions，并把 region selection 写成有
 Search as Computation Allocation 把上述路线放进更严格的决策论边界。其 metalevel state 包含 latent environment、终端决策与损失、可执行 computation、观测 kernel、成本和停止动作。Dynamic VOC 衡量“执行该 computation 后，再最优使用剩余预算”相对立即停止可减少多少终端风险；myopic VOC 只计算一步。论文证明 mutual information 在 log loss 下与 myopic VOC 精确相等，但在 simple regret 下应使用 knowledge gradient，并给出信息增益排序可任意差的构造。[83] 这不仅是相关工作补充，而是方法修正：DeepWide 的 Row/Item/Column/SR 与失败计零不是 log loss，因此主 controller 必须估计 terminal-loss VOC，不能把 EIG/cost 当作普遍正确目标。
 
 SearchArt 与 CAST 又分别收紧了训练和 credit 的主张。SearchArt 用可验证 evidence graph 合成长程任务与轨迹，并组合 outcome、tool-format 和非单调 turn-budget reward训练搜索代理；它说明“可验证任务合成 + process reward + 长程 search harness”已是系统基线，但其 turn reward主要约束整条轨迹长度，不能识别某个 evidence action 的 task contribution。[84] CAST 则直接用 solver cost-to-go 的下降 $N(s_t)-N(s_{t+1})$ 形成 turn signal，并把终局 reward 保留为全局锚；在没有精确 solver 时，它也测试 learned value network。[85] 对本项目而言，四层 risk model 更应被检验为一个近似 state-value/VOC estimator，而不是以 entropy 名义获得特殊地位。
+
+CRPO、PCD 与 $\beta$-OPSD 进一步说明 credit 至少需要“方向、位置、延迟”三个独立判断。CRPO 的 entropy difference 不是奖励本身，而是决定学生是否应接近特权教师；当教师相对学生出现大的熵降时，论文把它解释为可能的 exposure bias，并对该位置施加远离教师的对比方向。[111] PCD 将下游失败与 teacher–student disagreement 相乘，只在二者共同支持“感知层可纠正”时提高该层蒸馏权重，同时保持 reasoning objective 的均值不变。[112] $\beta$-OPSD 的 return-to-go 则累计当前位置之后的 student–target mismatch，让早期 token 对未来偏差负责。[113] 因此，四层风险下降若用于 credit，至少要同时通过 outcome sign、目标层可纠正性和 fixed-continuation delayed effect；单步熵降只能作为调幅特征。
 
 AttriMem 将最终答案的 token-level context attribution 映射回产生 memory record 的操作，再与 outcome reward 联合训练 memory policy。[86] 它并非 web search 方法，但直接覆盖“根据最终答案对中间信息操作分 credit”的相邻空间。OWIC 若加入 source-span attribution，必须把它作为 baseline，并检查长上下文 attribution error、冗余证据和答案生成器依赖，不能把 attribution 当成已识别的因果贡献。
 
@@ -677,3 +686,8 @@ V2.19 针对这两个 label-blind 机制做了 evidence-continuity 修复。它�
 107. Zavattari, C., Tommasi, A. & Prencipe, G. **One Human, N Agents: Audit-Budget Allocation for LLM Agent Fleets under Miscalibrated, Correlated Confidence.** arXiv:2607.28317 (2026). https://arxiv.org/abs/2607.28317
 108. Lee, W. & Choi, J. **Rethinking Inference-Time Scaling in Local Computer-Use Agents: Failure Modes and Compute Tradeoffs.** arXiv:2607.28573 (2026). https://arxiv.org/abs/2607.28573
 109. Hong, X., Dong, P., Yu, X. & Jiang, B. **Tools Are Not Islands: Set-Level Tool Retrieval for LLM Agents via Query-Conditioned Hyperedge Prediction.** arXiv:2607.25718v2 (2026). https://arxiv.org/abs/2607.25718
+110. Rao, J., Qiu, Y., Zhang, C., Song, C. & Zhao, R. **SciDataSailor: Deep Scientific Data Exploring.** arXiv:2607.28098 (2026). https://arxiv.org/abs/2607.28098
+111. Wu, X. et al. **Contrastive Reinforced Policy Optimization via Privileged Self-Distillation.** arXiv:2607.28026 (2026). https://arxiv.org/abs/2607.28026
+112. Xiong, F., Xue, L. & Lin, H. **Correcting What You Cannot See: Credit Assignment for Perception Distillation in Multimodal Reasoners.** arXiv:2607.28336 (2026). https://arxiv.org/abs/2607.28336
+113. Xu, J., Liu, M., Zhang, J., Goldstein, T. & Huang, F. **$\beta$-OPSD: Deriving with Policy Optimization, Training with Self-Distillation.** arXiv:2607.28582 (2026). https://arxiv.org/abs/2607.28582
+114. Sigillo, L. et al. **EMBL AI Librarian: Life-Sciences Knowledge Layer for AI Agents.** arXiv:2607.28229 (2026). https://arxiv.org/abs/2607.28229
