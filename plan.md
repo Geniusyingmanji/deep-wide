@@ -1,10 +1,18 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.35
+> 版本：5.36
 >
-> 更新：2026-07-31 16:28 UTC
+> 更新：2026-07-31 17:39 UTC
 >
-> 当前覆盖：**V2.42.11 已实现 label-blind entropy/VOC runtime bridge，V2.42.12/13 已冻结 selected entropy-component publisher 与版本化恢复链。V2.42.12 首次 activation 因 upstream frozen-false 字段名不一致而 fail closed，未打开 selected content、未创建 candidate/publication、未取得 lease、未调用 API 或 benchmark；旧 activation/state 已密封且不重启。V2.42.13 使用全新 namespace，只修正该字段名，现已 create-exclusive 激活并进入 `waiting_for_search_parent_and_gate2a_terminal`。当前只读两个父状态的安全 envelope，selected work order/report/model、joint package、lease、API 与 benchmark launch 均为 false。R1 和全部健康 watcher 保留；最新 label-blind 安全聚合为 `175/220 = 35 completed + 140 failed`，剩余 45。该数值只是 forward 终态进度，不是 DeepWideBench 分数；released evaluator、Avg@4、提升和 SOTA 仍不存在。**
+> 当前覆盖：**V2.42.11–13 已冻结 label-blind entropy/VOC runtime 与 selected-component 链；V2.42.14 又冻结 36-decision deepest-owner/parent-chain joint package，但 activation 后交叉常量审计发现 entropy stage 把实际 V2.42.13 `selected_entropy_component_publication` 错绑定成不存在的 `...recovery_publication`。V2.42.14 因而在 parent 仍 preterminal、selected work order/publications 全未打开时 fail closed；唯一新 watcher 已终止，protocol/activation/state/失败审计密封且禁止同 namespace 重启。V2.42.15 使用全新 namespace，只修正 18 个 entropy decision 的 source path 与派生 seal，18 个非 entropy decision 逐字不变；现已 create-exclusive 激活并进入 `waiting_for_v24213_entropy_recovery_terminal`。当前 selected content、joint candidate/publication、package gate、dev64、lease、API 与 full220 均为 absent/false。R1 和全部上游健康 watcher 保留；最新权威 label-blind 安全聚合为 `177/220 = 35 completed + 142 failed`，剩余 43。该值只是 forward 终态进度，不是 DeepWideBench 分数；released evaluator、Avg@4、提升、entropy/credit 效果和 SOTA 仍不存在。**
+>
+> **5.36 V2.42.14/15 deepest-owner joint package、fail-closed 路径审计与版本化恢复（2026-07-31 17:39 UTC）：36 个冻结 decision 不能通过叠加四个 component 目录构造 package，因为 Markdown、search 与 entropy publisher 都从选中父图重建完整累积候选。V2.42.14 因而显式冻结 dependency chain `baseline → Markdown → scope → search → entropy`，同时保留 V2.42.00 的组件选择顺序用于一一覆盖校验。3 个空组件 decision 只做 byte-exact baseline identity handoff；其余 33 个必须选唯一 deepest cumulative graph、验证每个 selected component 的 source/test 激活、复制到 fresh repo-local root，并在 scrubbed `python -I -B` 环境重跑完整父+组件 regression。scope 在 schema76/77 是 semantic owner 但零字节 alias，故 deepest byte owner 仍为 Markdown；目录 overlay、silent component drop 和 baseline fallback 全禁止。
+>
+> 纯清单/篡改测试覆盖 identity、Markdown、scope alias、search、entropy 五类 `8/8`；publisher 测试 `5/5`，其中真实 P12 Markdown fresh candidate 完整回归 `50/50`；V2.42.14 全控制链为 `19/19`。首次 protocol SHA `d565ed96…2fff`、activation SHA `7288f7f0…41c5`，但 activation 后交叉常量审计发现 frozen entropy path 为不存在的 `v24213_...recovery_publication...`，实际 publisher 输出为 `v24213_...component_publication...`。错误在 V2.42.13 仍 preterminal 时被发现；V2.42.14 未打开 selected content、未创建 candidate/publication、未运行 package gate/dev64/API/full220。仅新建 watcher PID `2774521` 被 fail-closed 终止，原 23 个 protected process identity 保持。失败审计 [`results/v24214_selected_joint_package_failed_activation_audit_v1_20260731.json`](results/v24214_selected_joint_package_failed_activation_audit_v1_20260731.json) SHA `f216e96e…974e` 禁止同 namespace restart/retry/overwrite。
+>
+> V2.42.15 的 36-row recovery manifest SHA `65e96f7c…69e1`：18 个非 entropy order 与 V2.42.14 逐 byte 相等，18 个 entropy order 只改 `parent_chain[entropy].publication_path`、冗余 `deepest_publication_path` 及三个派生 seal；owner/schema/components/regression/authorization 变化计数为 0。差分/publisher 测试 `6/6`、control 测试 `6/6`。protocol [`results/v24215_selected_joint_package_recovery_preregistration_v1_20260731.json`](results/v24215_selected_joint_package_recovery_preregistration_v1_20260731.json) SHA `345015c5…2a34`，activation [`results/v24215_selected_joint_package_recovery_activation_v1_20260731.json`](results/v24215_selected_joint_package_recovery_activation_v1_20260731.json) SHA `6c2588e0…b733`，wait audit [`results/v24215_selected_joint_package_recovery_wait_audit_v1_20260731.json`](results/v24215_selected_joint_package_recovery_wait_audit_v1_20260731.json) SHA `5555a5df…5e4a`。唯一 watcher PID `2808901` 只读 V2.42.13 sealed safe envelope；selected work order 与四 publication 均未打开，V2.42.14 失败 namespace 保留，joint candidate/publication、package gate、dev64、lease、API/full220 全 false。
+>
+> exact-220 高并发顺序更新为：`R1 220/220 → released evaluator → search/Gate-2A 双父终态 → V2.42.13 selected entropy publication → V2.42.15 recovered joint-package regression/publication → 独立同 dev64 package gate → 1/2/4/8/12 × 3 中性容量阶梯 → 单一 lease owner → fresh 52/52/52/64`。当前权威 V2.41.87 phase watcher 为 `177/220 = 35 completed + 142 failed`、剩余 43、`critical=[]`、forward healthy；旧 `full220_v2403_r1_status.json` 仍过期在 70/220。现在启动第二个全集或容量探针仍会破坏冻结合同。**
 >
 > **5.35 V2.42.11–13 entropy runtime、fail-closed recovery 与 WebSwarm 可比协议（2026-07-31 16:28 UTC）：V2.42.11 在 `anchor / late_0 / late_1` 三个 frozen context 上覆盖 9 个 context–action 组合。action 分支执行历史真实两查询 observation、V2.41.22 provenance-preserving state adapter 和有界幂等 stage restart；stop/abstain 只写 sealed decision/transition receipt。full-entropy 与 no-entropy 分支共用模型/job/parent hash binding，runtime 仅可见 `{opaque_id, question}` 与同轮工具轨迹，projection-only arm 永不实例化。未发布 runtime 构造继续 fail closed，故“代码存在”不等于 production package 或 benchmark authority。
 >
@@ -583,6 +591,8 @@
 - V2.42.11 的 pure decision kernel 与 runtime bridge 已覆盖 3 个 context、9 个 context–action pair，真实接入 V2.41.21/22 observation/state adapter、双层 receipt、restart/idempotence 和 full/no-entropy 分支；未发布 package 无法实例化。
 - V2.42.12 selected entropy publisher 已将模型文件、内部 model seal、job manifest、parent manifest 与 14 个 parent byte graph 绑定。首次 activation 的字段名失配已 fail closed 并密封，未产生 candidate/publication/API/benchmark side effect。
 - V2.42.13 已在新 namespace 完成 preregistration、activation 和 live wait audit。当前只等待 V2.42.10 search parent 与 V2.41.93 Gate-2A，尚未打开 selected report/model 或授予 package/lease/launch 权限。
+- V2.42.14 已把 36 个 possible decision 的 deepest semantic/byte owner 与完整 parent dependency chain 写成可执行合同，并实现单一累积图、fresh candidate、完整父+组件回归与 strict activation validator。首次 activation 的 entropy publication path 绑定错误被交叉常量审计在 parent preterminal 时发现；新 watcher 已 fail closed 终止，失败 namespace 密封且没有 candidate/publication/dev64/API/benchmark side effect。
+- V2.42.15 已在全新 namespace 完成路径恢复 preregistration、activation 和 live wait audit：18 个非 entropy order 逐 byte 不变，18 个 entropy order 只改实际 V2.42.13 source binding 与派生 seal。唯一 watcher PID `2808901` 当前只等待 V2.42.13 terminal；selected content、joint package 与所有外部执行权限仍未打开。
 - Git 仓库、README、忽略规则与原方案 provenance 已建立。
 - DeepWideSearch 公开 query JSONL 已纳入仓库；官方答案表与第三方仓库留在 `external/`，不提交。
 - `scripts/run_deepwide_smoke.py` 已实现 GPT-5.5 + Tavily 基线：
@@ -703,7 +713,7 @@ V2.26 随后从剩余 10 个无历史 forward artifact 的 dev opaque ID 中按�
 
 ### 1.3 已实现但尚未过泛化门禁
 
-- V2.42.11–13 已把四层 risk features、no-entropy 对照、action/stop/abstain、真实 action transition 和 selected-component publication 写成可审计实现；真实 development calibration、Gate-2A 选择、joint package、dev64 package gate 与 exact-220 结果仍为空，因此不能称为已部署或已验证的 controller。
+- V2.42.11–15 已把四层 risk features、no-entropy 对照、action/stop/abstain、真实 action transition、selected-component publication，以及 36-decision deepest-owner joint-package revalidation/recovery control plane 写成可审计实现；真实 development calibration、Gate-2A 选择、terminal joint publication、dev64 package gate 与 exact-220 结果仍为空，因此不能称为已部署或已验证的 controller。
 - 当前 action model 只可在模型/job/parent seal 全部匹配时使用。它预测 `task_contribution` 与 action token cost，但尚无真实 prospective/equal-cost target dataset 证明排序或校准有效。
 - V2.19 的 provisional-direct reducer 只在实体、目标专业、目标年份、值标记和数值局部共现，且 adjudicator 引用该页并返回值时保留 unresolved row；它不把该行自动升级为 eligible。
 - 候选与 cell provenance 中引用的页面会重新进入同一行的 enrichment/refinement prompt，并在每行预算内优先于未引用噪声页。
@@ -725,7 +735,7 @@ V2.26 随后从剩余 10 个无历史 forward artifact 的 dev opaque ID 中按�
 - source dependency/镜像聚类与 search-time contamination scanner。
 - 经过真实 development/held-out 数据验证的 unseen-mass、row eligibility、cell semantic 与 terminal-risk 校准；当前实现包含 schema、proxy 和 synthetic tests，但没有可发布的实证 calibration。
 - 通过 Gate-2A 的 action-response estimator。V2.42.11 runtime 已能执行选择，但模型尚未由真实 prospective same-state/equal-cost 数据解锁。
-- selected entropy component 的双父终态 publication、完整 joint package、同 dev64 package gate 和 single-owner exact-220 execution。
+- selected entropy component 的双父终态 publication、V2.42.15 terminal joint package publication、独立同 dev64 package gate 和 single-owner exact-220 execution。joint-package builder/validator 已实现并冻结，但父链未终态，故真实 package 仍不存在。
 - 真实 300-step credit audit set、有效 same-state intervention outcomes、provenance-aware credit 的 Gate-2B 结果与 RL 训练。相应 schema/verifier 已存在，但真实 target 数据仍为 0。
 - 与 WebSwarm、SearchOS、A-MapReduce、TaS 的可比实验。
 
@@ -1516,11 +1526,11 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 | M3 | 四层信号数据与校准 | TBD | 2 周 | TBD | shadow signal dataset、calibration report、replay receipt | PAV/terminal calibrator、task-cluster split/bootstrap、provenance budget 与 replay verifier 已实现；真实匿名 development labels/bundle 尚无，Gate 1 未评估 |
 | M4A | Counterfactual action-value pilot | TBD | 1–2 周 | TBD | sealed action slates、propensity、gain report、model replay receipt | task-cluster-disjoint fitter/calibrator/audit/replay verifier 已实现；真实 prospective slate 与 equal-cost arm 数据仍为 0 |
 | M4B | Step-credit intervention audit set | TBD | 2 周 | TBD | 300-step interventions、credit report | fixed-continuation bundle/receipt contract 已实现；300 个有效 step 与七类 stress family（含 bridge evidence）尚未采集 |
-| M5A | Heuristic、pure EIG、myopic/dynamic VOC、CAM-DF/CHILL authorization、evidence-equivalence 与 region controller | TBD | 1–2 周 | TBD | controllers、unit tests、IG-vs-VOC/stop/authorization counterexamples | V2.42.11 runtime candidate 与 full/no-entropy kernel 已实现；真实 calibration、Gate-2A、selected publication、joint package 和 online pilot 未通过 |
+| M5A | Heuristic、pure EIG、myopic/dynamic VOC、CAM-DF/CHILL authorization、evidence-equivalence 与 region controller | TBD | 1–2 周 | TBD | controllers、unit tests、IG-vs-VOC/stop/authorization counterexamples | V2.42.11 runtime candidate、full/no-entropy kernel 与 V2.42.15 recovered joint-package control plane 已实现；真实 calibration、Gate-2A、terminal selected/joint publication 和 online pilot 未通过 |
 | M5B | OWIC estimator 与 verifier-sign-preserving advantage modulation | TBD | 1–2 周 | TBD | credit module、intervention tests | 未开始；CIGPO/Bridge Evidence/CHILL/SkillRise/GRSD/TTEL/OVCSD/CSCR 对照已写入协议 |
 | M6A | 50-task online controller pilot / Gate 3A | TBD | 1 周 | TBD | paired report、Pareto plots | 未开始 |
 | M6B | 3-seed credit-training pilot / Gate 3B | TBD | 2 周 | TBD | checkpoints、learning curves、credit audit | 未开始 |
-| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact；下一 fresh all-220 capacity freeze、唯一继承槽与固定并行计划 | 进行中（最近安全聚合 175/220；R1 forward active；V2.41.94/96 等 R1 release；V2.41.97/98/99 等 capacity freeze；V2.42.10 与 V2.42.13 分别等待 search/scope 与 Gate-2A 父链） |
+| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact；下一 fresh all-220 package gate、capacity freeze、唯一 owner 与固定并行计划 | 进行中（最近权威安全聚合 177/220；R1 forward active；V2.41.94/96 等 R1 release；V2.42.10/13/15 等 quality、selected publication 与 recovered joint package；正式分数仍无） |
 | M8 | 论文写作与审计 | TBD | 1–2 周 | TBD | manuscript、claim/evidence ledger | 未开始 |
 
 ### M1 推荐目录
@@ -1657,13 +1667,13 @@ outputs/runs/<run_id>/
 
 ## 14. 接下来 72 小时的具体任务
 
-### V2.42.13 到 fresh exact-220 的当前执行序列（2026-07-31 16:28 UTC）
+### V2.42.15 到 fresh exact-220 的当前执行序列（2026-07-31 17:39 UTC）
 
 1. 保留 R1 forward PID `1350579` 与所有健康 watcher，不 signal、restart、resume、复制或选择性补跑。只读监控 exact terminal count、checkpoint liveness 和 `mapping_or_gold_read=false`。
 2. R1 达到 `220/220` 后，由既有 finalizer 首次打开 evaluator mapping，生成 failure-as-zero 的 released all-220 artifact。此前任何 `completed/failed` 计数都不是 benchmark score。
 3. 让 V2.42.10 search parent 与 V2.41.93 Gate-2A 自然终态。V2.42.13 只有在两者 terminal、seal 和 selected decision 一致时才能打开 selected work order/report/model；否则发布 content-free no-op 或按协议终态退休。
-4. selected entropy publication 若存在，重跑 14 个 parent byte graph 的完整 parent+entropy regression、binding/tamper tests、label-blind static audit 和 joint component conflict scan。随后生成全新 joint package；禁止复用 V2.42.12 candidate/state。
-5. joint package 先过同一个 dev64 package gate。只有预注册的 quality/cost/non-regression 门全部通过，才进入 capacity 阶段；失败即停止，不调阈值、不挑子集。
+4. selected entropy publication 若存在，V2.42.15 从修正后的实际 V2.42.13 path 选择唯一 deepest cumulative graph，在全新 root 重跑完整 parent+component regression、source/test activation、binding/tamper 与 label-blind AST audit。V2.42.14 protocol/activation/state/candidate/publication 禁止复用、覆盖或重启；若 selected component 集为空则只做 byte-exact baseline identity handoff。
+5. V2.42.15 terminal joint publication 之后另行预注册同 opaque dev64 package gate；当前 recovery watcher 没有 dev64 或 package-gate launch 权限。只有 quality/cost/non-regression 与 strict component activation 门全部通过，才进入 capacity 阶段；失败即停止，不调阈值、不挑子集。
 6. 共享 lease 释放后执行 `1/2/4/8/12 × 3 waves` 的中性 GPT-5.6 容量阶梯，冻结最大连续安全档。容量选择只使用非 benchmark 输入，不以题目成功率调并发。
 7. single-owner executor 在四个全新 output roots 上以冻结档位运行 `52/52/52/64=220`。整次 fixed concurrency、no-resume、failure-as-zero；API/容量失败仍进分母，禁止只补失败题。
 8. full/no-entropy、WebSwarm-style 或其他主 variant 若进入论文主比较，每个 variant 都必须独立满足同样的 exact-220、fresh roots、固定预算和 single-owner 合同。English-76、dev64 或 completed-only 只能作诊断，不能替代全集。
