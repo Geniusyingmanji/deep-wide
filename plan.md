@@ -1,10 +1,10 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.10
+> 版本：5.11
 >
-> 更新：2026-07-31 04:14 UTC
+> 更新：2026-07-31 06:30 UTC
 >
-> 状态：**截至 2026-07-31 04:00 UTC，fresh V2.41.18 finalization watchdog 是当前权威安全聚合：按五段全集拓扑计入不可补跑的首题infra-zero，R1 为 `156/220 = 31 completed + 125 failed`、剩余64，internal-test 156 已全部终态；冻结队列已自然进入最后的dev+validation S04，活动Python PID`1350579`/start ticks`741557746`，未signal/restart/resume/rerun/skip。旧 `full220_v2403_r1_status.json` 发布器仍滞后，不能覆盖fresh finalizer。V2.41.87 phase-aware监控仍唯一权威阶段监控，当前为`r1_full220`、state fresh、`critical=[]`；同步taxonomy为`119 mapped + 1 excluded + 5 surface-uncovered`，`new_p13=false`且不授权活动策略变化。R1 result/final seal、P12 trial-2、schema76 paired result、trials1/3/4、Avg@4、schema77/search-yield/markdown/scope-open及OWIC结果均未产生，因此仍没有正式DeepWideBench分数、榜单提升或SOTA。主结果定义继续固定为**同一 all-220 全集**；dev64只可作为预注册安全/质量门，不能替代全集结果或用于选择性报告。当前冻结R1并发和所有forward参数不得热改；下一次全新sealed rollout若获GO，必须先对GPT-5.6/9878做不含benchmark内容的容量阶梯探针，把连续成功且无排队/限流异常的最高安全并发写入新freeze，再以该固定大并发跑完整220，失败仍计0且禁止选择性补跑。不可逆顺序固定为：`R1 exact220/release → P12/schema76 → official Avg@4 → schema77 paired dev64 → V2.41.80 search-yield immutable terminal → V2.41.03 markdown paired dev64 → 条件式V2.41.05 scope-open terminal → OWIC capture/Gate-1 → V2.41.90 → V2.41.91 → V2.41.92 → V2.41.93 replicate-aware Gate-2A`。**
+> 状态：**截至 2026-07-31 06:35 UTC，fresh V2.41.18 finalization watchdog 是当前权威安全聚合：按五段全集拓扑计入不可补跑的首题infra-zero，R1 为 `160/220 = 31 completed + 129 failed`、剩余60，internal-test 156 已全部终态；冻结队列已自然进入最后的dev+validation S04，活动Python PID`1350579`/start ticks`741557746`，未signal/restart/resume/rerun/skip。旧 `full220_v2403_r1_status.json` 发布器仍滞后，不能覆盖fresh finalizer。V2.41.87 phase-aware监控仍唯一权威阶段监控，当前为`r1_full220`、state fresh、`critical=[]`；同步taxonomy为`119 mapped + 1 excluded + 5 surface-uncovered`，`new_p13=false`且不授权活动策略变化。R1 result/final seal、P12 trial-2、schema76 paired result、trials1/3/4、Avg@4、schema77/search-yield/markdown/scope-open及OWIC结果均未产生，因此仍没有正式DeepWideBench分数、榜单提升或SOTA。主结果定义继续固定为**同一 all-220 全集**；dev64只可作为预注册安全/质量门，不能替代全集结果或用于选择性报告。当前冻结R1并发和所有forward参数不得热改；下一次全新sealed rollout若获GO，必须先对GPT-5.6/9878做不含benchmark内容的容量阶梯探针，把连续成功且无排队/限流异常的最高安全并发写入新freeze，再以该固定大并发跑完整220，失败仍计0且禁止选择性补跑。不可逆顺序固定为：`R1 exact220/release → P12/schema76 → official Avg@4 → schema77 paired dev64 → V2.41.80 search-yield immutable terminal → V2.41.03 markdown paired dev64 → 条件式V2.41.05 scope-open terminal → OWIC capture/Gate-1 → V2.41.90 → V2.41.91 → V2.41.92 → V2.41.93 replicate-aware Gate-2A`。**
 
 > **5.09 V2.41.93 continuation-replicate测量不确定性、层级bootstrap与全集大并发约束（2026-07-31 04:00 UTC）：V2.41.92对opaque task cluster做外层bootstrap，却先把每个action仅三次continuation压成单一均值；因此task sampling uncertainty进入CI，有限replicate measurement uncertainty没有进入。构造12个独立task cluster、full均选择同一动作的反例：该动作三次sealed contribution均为`[-1.0,0.4,1.0]`，均值0.1333；V2.41.92整体`pass`，mean-only两套shared-minimum 95%下界均为`+0.088888888889`，但层级重采样下界为`-0.133333333333`。这证明旧门可能把每题都相同的有限replicate噪声误写成稳定部署价值；V2.41.92只能作父诊断，不能独立授权controller design。
 >
@@ -17,6 +17,10 @@
 > 下一轮策略新增两个不改变当前 R1 的 shadow 组件。第一，计算 query-intent、URL、claim/evidence-set 与 source-dependency overlap；只产生新字符串却落入已有 evidence equivalence class 的动作不计 discovery yield 或 credit。第二，把可见搜索空间分成 semantic regions，比较 random region、LLM policy、Bayes-UCB 与风险条件化 region portfolio。两者均须使用可见问题和本轮检索 trace，禁止读取 benchmark category、split label、gold、evaluator 或 score。Delegation Intelligence 的解耦诊断也进入结果报告：search decision、evidence acquisition 与 synthesis/verification 分开计量，避免把 renderer 或验证失败归因给 entropy。
 >
 > 全集执行约束不变且更具体：当前 R1 的并发、worker 和 watcher全部保留；9878 正被 R1 使用时不得发容量探针。V2.41.94 只能是 wait-only controller，在 R1 exact-terminal 220 与 released pair 均验证后、shared API lease 可取得时，才用不含 benchmark 内容的固定请求做并发阶梯。每档必须连续成功、无429/5xx、无请求超时且队列/延迟不越过预注册界限；最高连续安全档写入下一次全新 freeze。随后以一个固定并发跑同一 all-220，四个新输出分片无 resume/选择性补跑，失败计0。dev64仅是预注册 gate，不能替代 all-220 主结果。**
+
+> **5.11 terminal-loss VOC、可靠性压力测试与 V2.41.94 安全冻结（2026-07-31 06:30 UTC）：新增 PDF 原文核对 Search as Computation Allocation、SearchArt、CAST、AttriMem、MisKnow-Agent 与 FinanceHarness。Search as Computation Allocation 给出决定性边界：mutual information 只在 log loss 下等于 myopic VOC；DeepWide 的零一/表格指标与 simple-regret 型目标应按 terminal-loss reduction/knowledge gradient 估值，且 IG 排序可任意劣于 VOC。因此主 controller 从“风险加权 EIG/cost”改为“四层 terminal-loss 的 approximate dynamic VOC/cost”，RelIG 仅保留为 log-loss 子值、诊断或低信息上界。训练侧新增 CAST learned-value delta、AttriMem answer attribution 与 SearchArt process reward 强基线；可靠性侧新增 MisKnow-style misleading-evidence lifecycle stress 和 FinanceGym-style point-in-time/tool-distribution-shift audit。
+>
+> V2.41.94 已以 create-exclusive protocol `5da63416...4681` 冻结中性 GPT-5.6 并发阶梯 `1/2/4/8/12 × 3 waves`，request-level metadata 会现场重算最高连续安全档，summary 或 freeze 即使重封印也不能改变决策。历史 capacity/lease/phase 与新代码共 88/88 回归通过。唯一 wait-only watcher PID `1582182`/start ticks `742119955`，activation audit `0cd11a6e...b548` 证明 R1 worker/launcher 保留、lease/API/report/freeze/execution activation 全部 absent/false。旧 V2.41.87 尚未登记新 lease owner，所以 execution activation 继续缺失；后续必须先做 append-only owner compatibility handoff，再允许容量探针。提交 `0034b53` 已推送远端 main。该机制不授权当前 R1 改并发，也不构成 benchmark 提分或 SOTA。**
 
 > **5.08 V2.41.92 missing-signal abstain闭包、双估计量policy-value门与安全激活（2026-07-31 03:40 UTC）：V2.41.91虽精确重放Gate-3A的positive-gain、value-per-token排序、stop与branch-specific成本，却仍遗漏同一冻结策略的missing-signal `abstain`。V2.41.22按stage捕获context而不调用online `eligible_contexts()`，V2.41.23又合法接受availability bit为0的canonical feature，因此“被捕获”不等于“可部署”。构造anchor entropy缺失的same-checkpoint反例时，V2.41.91仍可`pass`并为full选择正值动作；真实Gate-3A full分支必须abstain、即时贡献为0。故V2.41.91也只能作父诊断，不能独立授权controller design。
 >
@@ -408,7 +412,7 @@
 
 若只完成推理时 controller，题目暂定为：
 
-> **Entropy-DeepWide: Calibrated Hierarchical Belief Reduction for Open-World Deep-and-Wide Search**
+> **Risk-DeepWide: Calibrated Value of Computation for Open-World Deep-and-Wide Search**
 
 若训练时 credit 通过独立门禁，题目升级为：
 
@@ -416,9 +420,9 @@
 
 中心假设不是“熵可以用于搜索”或“熵降越大 credit 越高”，而是两个需要分开验证的命题：
 
-> DeepWide 的错误来自四个相互依赖、但损失结构不同的信念层：隐藏核心实体 $A$、未见实体质量/剩余集合 $M$、候选行资格 $R_e$、单元格语义值 $Y_{e,c}$。若这些信念可被校准，则按单位成本的期望任务风险下降路由 `resolve_anchor / discover / test_row / fill / falsify / audit / stop`，可能比固定流程、主观 planner 和相同动作空间的 heuristic controller 更有效。
+> DeepWide 的错误来自四个相互依赖、但损失结构不同的信念层：隐藏核心实体 $A$、未见实体质量/剩余集合 $M$、候选行资格 $R_e$、单元格语义值 $Y_{e,c}$。若这些信念和 action outcome model 可被校准，则按单位成本的近似 dynamic value of computation 路由 `resolve_anchor / discover / test_row / fill / falsify / audit / stop`，可能比固定流程、pure information gain、主观 planner 和相同动作空间的 heuristic controller 更有效。
 
-> 对训练时 credit，四层任务风险变化提供方向，task-relevant information gain 提供 epistemic progress，同状态干预估计贡献，evidence provenance 区分发现、验证与综合。只有同时通过结果对齐和干预验证的信息信号，才获得正 credit。
+> 对训练时 credit，四层任务价值变化提供方向，task-relevant information gain 只提供 epistemic observation，同状态干预估计贡献，evidence provenance 区分发现、验证与综合。只有同时通过结果对齐和干预验证的信息信号，才获得正 credit。
 
 两个命题共享 belief/evidence 基础设施，但证据不能互相替代。controller 提分不能证明 credit 定位正确；credit 与干预贡献相关也不能证明在线路由更好。二者必须分别过 Gate 2A/3A 和 Gate 2B/3B。文献边界、直接近邻和 non-claims 见 [survey.md](survey.md)。
 
@@ -614,15 +618,15 @@ credit 分支在 Gate 2B 之前只允许表述为：
 
 ### RQ2：动作价值
 
-预测的 EIG/task-risk reduction 是否与动作后的真实 loss reduction 相关？
+预测的 pure EIG、myopic task-risk VOC 与 finite-depth dynamic VOC，哪一个最接近动作后的真实 terminal loss reduction？
 
-**H2**：在共享候选动作的 counterfactual replay set 上，risk-reduction estimator 对最佳动作的 top-1/top-2 命中率与 Spearman 相关高于 heuristic utility，并在扣除成本后仍成立。
+**H2**：在共享候选动作的 counterfactual replay set 上，finite-depth dynamic-VOC estimator 对最佳动作的 top-1/top-2 命中率、Spearman 与 top-1 regret 优于 heuristic utility、pure RelIG/EIG 和 myopic task-risk VOC，并在扣除成本后仍成立。
 
 ### RQ3：controller 效果
 
 在完全相同的模型、工具、动作空间和预算下，分层控制器是否改善质量–成本 Pareto？
 
-**H3**：推理时分层风险 controller 相对同动作空间 heuristic controller，在预注册主指标上达到统计上与实际意义上都非劣/更优的 Pareto 结果，而不是只比 fixed pipeline 好。
+**H3**：推理时分层 dynamic-VOC controller 相对同动作空间 heuristic 与 pure-EIG controller，在预注册主指标上达到统计上与实际意义上都非劣/更优的 Pareto 结果，而不是只比 fixed pipeline 好。
 
 ### RQ4：机制与边界
 
@@ -719,15 +723,25 @@ $L_{output}$ 不是第五个 epistemic belief layer。它是从四层信念到 b
 
 ### 4.4 控制目标
 
-完整形式：
+完整形式采用 terminal computation allocation。令 $R(H_t)$ 是按当前 belief 立即停止的 Bayes task risk，$V_{b-C(a)}$ 是执行动作后在剩余预算下可达到的最小期望终端风险：
+
+\[
+\operatorname{VOC}^{*}_{b}(a\mid H_t)=
+R(H_t)-\mathbb E_{o\sim p(o\mid H_t,a)}
+[V_{b-C(a)}(H_t\oplus(a,o))].
+\]
+
+第一版用 Monte Carlo posterior samples、小规模 action outcome model 和有限深度 rollout 估计 dynamic VOC。若只展开一步，则必须明确称为 myopic task-risk VOC，不能简称 EIG。只有当某个子决策以 log loss 评估时，$I(Z;O\mid H,a)$ 才可作为其精确 myopic VOC；对 DeepWide Row/Item/Column/SR、失败计零或 simple regret，RelIG 只能作为 feature 或诊断。若用低信息剪枝上界，还必须验证损失有界且仅通过所选目标变量 $Z$ 决定，否则 Theorem 2 不适用。[83]
+
+实际排序为：
 
 \[
 a_t^*=\arg\max_a
-\frac{\mathbb E[L(B_t)-L(B_{t+1})\mid a]}
-{\mathbb E[C(a)]+\epsilon}.
+\frac{\widehat{\operatorname{VOC}}_b(a\mid H_t)}
+{\mathbb E[C(a)]+\epsilon},
 \]
 
-第一版允许用 Monte Carlo posterior samples + 小规模 action outcome model 估计。必须同时实现一个不含 entropy 的 heuristic controller，共享全部动作与 evidence pipeline：
+并对“动作本身开启后续 computation”的 option value 单列估计。必须同时实现一个不含 entropy 的 heuristic controller，共享全部动作与 evidence pipeline：
 
 ```text
 priority = missing_required_cell
@@ -737,7 +751,7 @@ priority = missing_required_cell
          + fixed_cost_penalty
 ```
 
-只有 Entropy/EIG controller 胜过这个 same-controller heuristic，才支持核心机制。
+只有 learned/dynamic-VOC controller 同时胜过这个 same-controller heuristic、pure RelIG/EIG 和 myopic-risk VOC，才支持核心机制。若 pure EIG 与 VOC 无稳定差异，则不能把 terminal-loss alignment 写成经验贡献。
 
 ### 4.5 停止规则
 
@@ -746,7 +760,7 @@ priority = missing_required_cell
 1. `Pr(anchor wrong)` 与 anchor `OTHER` mass 低于 dev 阈值；
 2. `Pr(row recall < target)` 低于阈值，并完成至少一次独立 scope audit；
 3. 关键行/格风险低，或不确定格显式 abstain；
-4. 所有非停止动作的 predicted loss reduction/cost 低于阈值；
+4. 所有非停止动作的 predicted net VOC 或 VOC/cost 低于阈值；
 5. 证据 provenance 完整且 calibration audit 通过。
 
 预算耗尽是独立的 `forced_stop`，不能与 epistemic sufficiency 合并统计。
@@ -783,7 +797,7 @@ c_t^{\mathrm{risk}}
 -\eta C_t.
 \]
 
-$\operatorname{RelIG}$ 只计算与 $A,M,R,Y$ 有关的信息，$c_t^{\mathrm{prov}}$ 区分 discovery、independent verification、contradiction resolution 和 synthesis。镜像来源先聚类，不能重复获 credit。
+$\operatorname{RelIG}$ 只计算与 $A,M,R,Y$ 有关的信息，且除 log-loss 子问题外不决定 credit 符号。$c_t^{\mathrm{risk}}$ 或 state-value delta 才是 task-value 主项。$c_t^{\mathrm{prov}}$ 区分 discovery、independent verification、contradiction resolution 和 synthesis。镜像来源先聚类，不能重复获 credit。训练对照新增 CAST-style learned value delta、AttriMem-style answer attribution 与 SearchArt outcome/format/turn reward。[84–86]
 
 ### 4.7 Advantage 注入与安全约束
 
@@ -910,6 +924,7 @@ $\operatorname{RelIG}$ 只计算与 $A,M,R,Y$ 有关的信息，$c_t^{\mathrm{pr
 
 - action 前后四层 belief；
 - gold task-loss change；
+- one-step task-risk VOC、有限深度 dynamic-VOC target 与 pure RelIG/EIG；
 - 新证据/新实体/纠错；
 - token、tool、page、time、USD；
 - 是否出现冲突导致 entropy 上升但错误风险下降。
@@ -923,7 +938,7 @@ $\operatorname{RelIG}$ 只计算与 $A,M,R,Y$ 有关的信息，$c_t^{\mathrm{pr
 3. `late_1`：必须把row/cell observation绑定到精确row/column/evidence span，重跑受影响adjudication、验证与renderer；
 4. 任一context若无法证明state transition语义保持，则fail closed，不降级为LLM自评projection。
 
-评测：gain regression MAE、Spearman、best-action accuracy、NDCG@k、regret、gain-per-cost calibration。若 estimator 只会预测“更贵动作 gain 更大”，必须做 cost residual 与等成本分层。
+评测：gain regression MAE、Spearman、best-action accuracy、NDCG@k、regret、gain-per-cost calibration，以及 pure IG 相对 terminal-loss VOC 的 top-1 regret。若 estimator 只会预测“更贵动作 gain 更大”，必须做 cost residual 与等成本分层。另含高 IG/低 value、低 IG/高 value、myopic-zero/dynamic-positive 三类构造反例。[83]
 
 ### 6.4 Phase C2：干预式 step-credit audit set
 
@@ -948,7 +963,10 @@ $\operatorname{RelIG}$ 只计算与 $A,M,R,Y$ 有关的信息，$c_t^{\mathrm{pr
 8. CVT-RL-style fixed-continuation contribution；
 9. Harness-G Structured Non-myopic Credit；
 10. AREX-style annotated key-step bonus；
-11. OWIC full 与各组件。
+11. CAST-style exact/learned state-value delta；
+12. AttriMem-style answer/source-span attribution；
+13. SearchArt outcome + format + turn-efficiency process reward；
+14. OWIC full 与各组件。
 
 主指标是 signed contribution accuracy、Spearman、top-20% pivotal-step recall、AUROC（有益/有害）、Brier/ECE 和单位 counterfactual rollout 成本。单列六类压力样本：无关新奇、重复错误、熵升纠错、延迟显效、两步协同、删除 OOD。
 
@@ -969,13 +987,14 @@ I_{ij}=v(\{i,j\})-v(\{i\})-v(\{j\})+v(\varnothing).
 3. fixed wide→deep；
 4. TaS-style table planner，无 uncertainty；
 5. same action space + heuristic controller；
-6. same action space + entropy only；
-7. full hierarchical risk/EIG controller；
-8. ECR-style finite-hypothesis controller；
-9. TASR-style answer-stability stopping；
-10. Harness-G-style evidence-equivalence menu；
-11. Baikal random-region / Bayes-UCB；
-12. full risk controller + evidence equivalence + semantic-region portfolio。
+6. same action space + pure RelIG/EIG；
+7. myopic terminal-risk VOC；
+8. learned finite-depth dynamic VOC；
+9. ECR-style finite-hypothesis controller；
+10. TASR-style answer-stability stopping；
+11. Harness-G-style evidence-equivalence menu；
+12. Baikal random-region / Bayes-UCB；
+13. dynamic-VOC controller + evidence equivalence + semantic-region portfolio。
 
 只有 Phase D1 过门后才跑 controller 全量。
 
@@ -991,9 +1010,12 @@ I_{ij}=v(\{i,j\})-v(\{i\})-v(\{j\})+v(\varnothing).
 6. strongest feasible counterfactual baseline；
 7. Harness-G SNC；
 8. AREX key-step bonus；
-9. OWIC-risk only；
-10. OWIC full；
-11. OWIC 去 counterfactual / 去 provenance / 去 unseen mass / 去 evidence equivalence。
+9. CAST-style learned value delta；
+10. AttriMem-style answer attribution；
+11. SearchArt-style outcome/format/turn process reward；
+12. OWIC-risk only；
+13. OWIC full；
+14. OWIC 去 counterfactual / 去 provenance / 去 unseen mass / 去 evidence equivalence。
 
 先用 1.5B–4B backbone、固定 20–30K train trajectories、3 seeds 做 pilot。主比较是 OWIC full vs 同训练预算下最强 credit baseline，不允许只和 outcome-only 比。除 held-out task metrics 外，报告训练 sample efficiency、gradient/advantage variance、credit sparsity、effective-step ratio、KL、OOD intervention rate 和 reward hacking。
 
@@ -1009,6 +1031,8 @@ I_{ij}=v(\{i,j\})-v(\{i\})-v(\{j\})+v(\varnothing).
 - AREX；
 - Harness-G；
 - Baikal。
+- SearchArt（训练系统，分数仅在同协议时比较）；
+- Search as Computation Allocation、CAST 与 AttriMem（机制对照）。
 
 优先在相同骨干、search/page tools、并发、max tool calls、token、wall-clock、attempts 下运行。若官方系统无法复现，分成：
 
@@ -1104,6 +1128,8 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 
 - raw entropy drop vs task-risk change；
 - expected IG vs realized entropy change vs Bayesian surprise；
+- pure RelIG/EIG vs myopic terminal-loss VOC vs finite-depth dynamic VOC；
+- 高 IG/低 value、低 IG/高 value、myopic-zero/dynamic-positive；
 - gold log-score vs label-free semantic potential；
 - 无 `OTHER` / unseen mass；
 - 不做 same-state branching、改为同 turn-index 比较；
@@ -1115,6 +1141,18 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 - 无 outcome gate、无 intervention-validity gate、无 source dedup。
 
 任何声称“因果”的结果都必须附 intervention definition、overlap/validity diagnostics 和 continuation-policy scope；否则统一称 attribution 或 credit surrogate。
+
+### 8.5 Evidence reliability 与环境压力测试
+
+- 语义相关但结论错误的单一来源；
+- 相同错误的镜像/同源重复与独立来源对照；
+- cold-start、mid-research、pre-synthesis 三个注入阶段；
+- authority-like presentation 与普通页面样式；
+- continuous evidence-entry verification、final-only verification 与二者组合；
+- fixed point-in-time snapshot vs live web；
+- search backend、tool schema 与训练时工具分布切换。
+
+主指标包括 false-claim adoption、独立验证召回、四层 Brier/ECE、unsupported/contradicted rate 和成本。该审计使用独立构造任务，禁止把 benchmark gold 或 category 注入 forward runtime。[87,88]
 
 ## 9. Go/No-Go 门禁
 
@@ -1152,9 +1190,10 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 - 所有 actual gain 来自同状态、同 continuation policy/seed、真实 terminal answer/保守 failure 与 post-terminal evaluator task loss；任何 model-predicted post-action proxy、verbalized confidence 或 entropy change 都不能作为实际标签；
 - 至少3个固定 continuation seeds，分支 evaluator artifact、prediction、cost ledger与source checkpoint全部内容寻址绑定；
 - predicted vs actual gain 的 Spearman ≥ 0.30 且 CI 不跨 0；
-- best-action top-2 accuracy 显著高于 random/heuristic；
+- learned dynamic VOC 的 best-action top-2 accuracy 显著高于 random、heuristic、pure RelIG/EIG 和 myopic-risk VOC；
 - 等成本分层后仍有效；
 - 能识别至少一类“entropy 上升但 task risk 下降”的反证动作。
+- 在高 IG/低 value 与低 IG/高 value 反例上，terminal-loss VOC 的 top-1 regret 低于 pure IG；若该区别只在合成例成立，论文必须标为理论而非 empirical contribution。
 
 失败处理：使用规则控制器；EIG 仅作为分析指标，不进入标题。
 
@@ -1206,8 +1245,9 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 - 至少两个机制消融符合 RQ4 预测；
 - 人工 evidence audit 不显示 precision 明显恶化；
 - 系统级讨论覆盖 WebSwarm、SearchOS、ECR、TaS、A-MapReduce。
-- 系统级讨论还必须覆盖 AREX、Harness-G 与 Baikal，并分别报告搜索决策、evidence acquisition、synthesis/verification 和 output-contract failure。
-- 若标题包含 credit/causal，Gate 2B 与 3B 必须同时通过，且讨论 ECHO、TRACE、LOTAPO、STAMP、RICE-PO、SIOP、CVT-RL、AREX key-step bonus 与 Harness-G SNC。
+- 系统级讨论还必须覆盖 AREX、Harness-G、Baikal、SearchArt、MisKnow-Agent 与 FinanceHarness，并分别报告搜索决策、evidence acquisition、synthesis/verification、环境/时间边界和 output-contract failure。
+- controller 主张必须讨论 Search as Computation Allocation，并报告 pure IG、myopic VOC 与 finite-depth dynamic VOC 的同预算差异。
+- 若标题包含 credit/causal，Gate 2B 与 3B 必须同时通过，且讨论 ECHO、TRACE、LOTAPO、STAMP、RICE-PO、SIOP、CVT-RL、AREX key-step bonus、Harness-G SNC、CAST state-value credit 与 AttriMem attribution。
 
 失败处理：按证据降级为 UQ diagnostic、negative result 或 engineering report；不得保留过强标题/摘要。
 
@@ -1223,7 +1263,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 | M3 | 四层信号数据与校准 | TBD | 2 周 | TBD | shadow signal dataset、calibration report、replay receipt | PAV/terminal calibrator、task-cluster split/bootstrap、provenance budget 与 replay verifier 已实现；真实匿名 development labels/bundle 尚无，Gate 1 未评估 |
 | M4A | Counterfactual action-value pilot | TBD | 1–2 周 | TBD | sealed action slates、propensity、gain report、model replay receipt | task-cluster-disjoint fitter/calibrator/audit/replay verifier 已实现；真实 prospective slate 与 equal-cost arm 数据仍为 0 |
 | M4B | Step-credit intervention audit set | TBD | 2 周 | TBD | 300-step interventions、credit report | fixed-continuation bundle/receipt contract 已实现；300 个有效 step 与六类 stress family 尚未采集 |
-| M5A | Heuristic、EIG、evidence-equivalence 与 region controller | TBD | 1 周 | TBD | controllers、unit tests | 未开始；Harness-G/Baikal baseline 已写入协议 |
+| M5A | Heuristic、pure EIG、myopic/dynamic VOC、evidence-equivalence 与 region controller | TBD | 1–2 周 | TBD | controllers、unit tests、IG-vs-VOC counterexamples | 未开始；Search as Computation Allocation/Harness-G/Baikal baseline 已写入协议 |
 | M5B | OWIC estimator 与 advantage modulation | TBD | 1–2 周 | TBD | credit module、intervention tests | 未开始 |
 | M6A | 50-task online controller pilot / Gate 3A | TBD | 1 周 | TBD | paired report、Pareto plots | 未开始 |
 | M6B | 3-seed credit-training pilot / Gate 3B | TBD | 2 周 | TBD | checkpoints、learning curves、credit audit | 未开始 |
@@ -1319,6 +1359,10 @@ outputs/runs/<run_id>/
 | gold-answer credit 泄漏到推理 | test invalid | no-gold inference test | train/runtime 物理隔离、仅训练 oracle baseline |
 | credit proxy reward hacking | 分数涨但任务/evidence 变差 | counterfactual outcome + human audit | terminal anchor、sign-preserving modulation、constraints |
 | EIG 估计过贵 | 得不偿失 | gain/cost logging | two-stage pruning、cached rollouts、heuristic fallback |
+| mutual information 与终端任务损失错位 | 高 IG 动作无实际价值 | IG-vs-VOC rank/regret、构造反例 | terminal-loss VOC 为主，IG 只作 feature/bound |
+| myopic VOC 忽略后续可达动作 | 错杀开启高价值 descendant 的步骤 | myopic-zero/dynamic-positive stress | 有限深度 rollout、option-value feature、保守 fallback |
+| 误导来源使 posterior 更尖锐 | 低熵但错误采用 | false-claim adoption、lifecycle injection | evidence-entry continuous verification、独立来源与 synthesis audit |
+| 时间泄漏或工具分布漂移 | 虚假提升、不可复现 | PIT replay、backend/schema matrix | 固定 snapshot/cutoff、工具契约与分层报告 |
 | 强系统已覆盖工程点 | novelty 不足 | 持续更新 survey | 只主张四层开放世界校准机制 |
 | benchmark 泄漏/污染 | 分数无效 | no-leak/STC scanner | 进程隔离、污染样本 quarantine |
 | LLM judge 不可靠 | 指标偏差 | 人工分层抽检、judge disagreement | 双人审计、规则指标优先 |
@@ -1336,7 +1380,7 @@ outputs/runs/<run_id>/
 | evidence-equivalence + risk 联合控制 | 相对 Harness-G menu/SNC 的同预算消融 | 文献约束与接口设计已有；未实现、无结果 |
 | semantic-region + risk portfolio | 相对 random/LLM/Bayes-UCB region policy | 文献约束与动作设计已有；未实现、无结果 |
 | 校准的 unseen-mass/coverage posterior | Gate 1 coverage 指标 | V2.40.9 已实现 missingness-aware proxy calibrator 与 recent-yield baseline gate；真实 prospective Gate 1 尚未评估，不能称 posterior 已验证 |
-| 风险加权 EIG/cost controller | Gate 2A + Gate 3A | context-specific 七动作 response model 与 Gate 2A 评估器已实现；online controller 仍未设计/集成，须真实 Gate 1+2A 通过后另行预注册 |
+| 四层 terminal-loss dynamic-VOC/cost controller | Gate 2A + Gate 3A，且优于 pure IG/myopic VOC | context-specific 七动作 response model 与 Gate 2A 评估器已实现；online dynamic-VOC controller 仍未设计/集成，须真实 Gate 1+2A 通过后另行预注册 |
 | 同预算质量–成本改进 | 全量 paired test | 无结果 |
 | 机制解释 | 对应消融与轨迹案例 | 无结果 |
 | 开放世界、结果对齐的 step credit | Gate 2B 干预定位指标 | 无实现 |
@@ -1422,4 +1466,5 @@ terminal-only shadow aggregate 已覆盖 7 个终态中的 5 个有信号任务�
 - 主结果有 paired uncertainty interval、成本和人工 evidence audit；
 - 所有精确数字能追溯到 frozen artifact；
 - 文献与 non-claims 覆盖 2026-07-21 的直接近邻，包括 Forage V2、Shared Discovery Paradox、ECHO、TRACE、LOTAPO、STAMP、RICE-PO、SIOP、CVT-RL、InfoPO、AEM、SELAUR、STRIDE、APPO、PivoARL、A²TGPO 与 T²PO；
+- 文献与 non-claims 还覆盖 2026-07-30 的 Search as Computation Allocation、SearchArt、CAST、AttriMem、MisKnow-Agent 与 FinanceHarness，并落实 IG/VOC、误导证据、PIT 和 tool-shift 对照；
 - 失败 gate 被如实报告，标题和摘要按证据强度降级。

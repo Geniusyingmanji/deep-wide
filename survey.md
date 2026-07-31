@@ -8,6 +8,8 @@
 
 “把信息熵用于搜索代理”或“给熵降大的步骤更多 credit”都不能作为本项目的核心首创主张。Semantic Entropy 已将自由文本答案聚类为语义等价类并用熵预测错误；FLARE、Self-RAG、TASR 和 Know Before You Fetch 已用置信或校准概率控制检索与停止；CuriosiTree、Conformal Information Pursuit 和 ECR 已用期望信息增益或期望熵下降选择下一动作；InfoReasoner、IGPO、IG-Search、SIGHT、TEPO 和 IGRPO 已把信息量用于搜索代理训练或 rollout 分配。更直接地，ECHO 已把后验收缩称为 epistemic credit，TRACE、LOTAPO、STAMP、RICE-PO 等分别用真值答案似然、删除干预、证据 provenance 和同状态局部分支定位 turn credit。DeepWide 侧也已出现 Table-as-Search、A-MapReduce、Web2BigTable、WebSwarm 与 SearchOS，分别覆盖持久表格状态、横向并行、递归 deep/wide 路由和 coverage-aware 调度。Forage V2 又直接研究完成边界未知时的 denominator blindness，Shared Discovery Paradox 则说明更准确的共享 posterior 若被压成重复的单一动作，可能降低群体发现覆盖。[72,73] 2026 年 7 月下旬的 AREX、Harness-G 与 Baikal 又分别覆盖“已验证约束/未解决约束”驱动的递归跟进、检索等价坍缩与非近视 credit、semantic-region bandit coverage。[76,81,82]
 
+截至 2026-07-31，信息熵作为统一优化目标还有一个更直接的理论反例。Search as Computation Allocation 证明，mutual information 只有在终端决策为概率分布且使用 log loss 时才等于 myopic value of computation；若终端目标是零一损失或 simple regret，动作价值是 posterior best-decision improvement，也就是 knowledge-gradient 型 VOC。该文构造的有限问题中，按信息增益选中的 computation，其 VOC 可以低于最优 computation 的任意给定比例。[83] 因而，本项目更准确的核心是**以四层 DeepWide 终端损失定义 value of computation**。信息熵只在 log-loss 子问题中充当精确短视价值，在一般损失下充当诊断或代理；只有当损失有界且通过目标变量决定时，低 mutual information 才给出 myopic VOC 的单侧上界。它不能单独决定跨动作排序或 credit。
+
 在本次检索范围内，仍有一个可验证、也可被否证的候选缺口：尚未找到工作在 DeepWide 表格任务中同时校准隐藏 anchor、未见结果质量、行资格和格值，并把这四类风险变化与结果对齐的同状态反事实 credit 联合验证。有限候选集上的低 Shannon 熵不代表开放集合完整，甚至可能是在错误 anchor 上过度确信。因此，本综述建议将创新假设收窄为：用校准的四层信念估计任务风险变化；用 evidence-set equivalence 防止同义查询反复取回相同证据；再通过同状态干预和 provenance 判断风险变化是否由该步骤造成、是否支持最终任务。信息量在这里是 epistemic signal，而不是自动成立的 causal credit。当前代码与实验尚未验证这一整套方法；已实现的 V2.41.93 只是等待 sealed continuation 数据的 replicate-aware Gate-2A，真实 report 尚未产生，不能视为 controller、credit 或 benchmark 提升证据。
 
 ## 1. 范围、问题与检索方法
@@ -32,7 +34,7 @@
 - 2026-07-20 再检索 `credit assignment AND (information gain OR entropy) AND agent/search` 与 `open world AND uncertainty AND agent/search`，核对新增近邻 PivoARL、InfoPO、AEM、SELAUR、STRIDE 与 APPO；使用 arXiv API 逐条验证标题、作者、版本和摘要。
 - 2026-07-21 补充检索 denominator blindness、shared discovery、turn-group information gain 和 uncertainty-guided exploration，核对 Forage V2、Shared Discovery Paradox、A²TGPO 与 T²PO 的 arXiv 元数据与原文。
 - 2026-07-21 做提交日期增量检索，并读取 Forage V2、Shared Discovery Paradox 与 A²TGPO 的 PDF。该轮新增了未知 denominator、belief–coverage 分离、gold-conditioned turn IG 和 uncertainty-guided resampling 的直接近邻。[72–75] 截至该范围仍未找到把 DeepWide 的 anchor、未见质量、行资格、单元格值四层同时概率化并用于 task-risk control/credit 的工作，但这只是限定语料与日期下的缺口判断。
-- 2026-07-31 对 2026-07-21 至 07-31 的 arXiv 新增记录做增量筛选，并逐页核对 WebSwarm、AREX、Delegation Intelligence、EviBack、RARG、Filesystem-Based Memory、Harness-G 与 Baikal 的 PDF，而非只引用摘要。[5,76–82] 这一轮把 novelty 边界进一步收窄到四层风险的校准与联合验证：递归 follow-up、语义区域覆盖、同义检索去重和结构化非近视 credit 都已有直接近邻。
+- 2026-07-31 对 2026-07-21 至 07-31 的 arXiv 新增记录做增量筛选，并逐页核对 WebSwarm、AREX、Delegation Intelligence、EviBack、RARG、Filesystem-Based Memory、Harness-G、Baikal、Search as Computation Allocation、SearchArt、CAST、AttriMem、MisKnow-Agent 与 FinanceHarness 的 PDF，而非只引用摘要。[5,76–88] 这一轮把 novelty 边界进一步收窄到四层风险的校准与联合验证：递归 follow-up、语义区域覆盖、同义检索去重、结构化非近视 credit、state-value credit 和终端损失下的 metareasoning 都已有直接近邻。
 - 对经典信息论与覆盖估计文献用 Crossref/OpenAlex/DOI 核验元数据；对关键 2023–2026 论文读取 arXiv 原文而不只依赖摘要。
 
 纳入标准是：方法直接控制检索、证据选择、工具调用、搜索树、停止或开放集合覆盖；或者直接定义 DeepWide/table-search 的系统与评测边界。排除纯推荐、视觉检索、物理导航等仅共享“entropy/search”词面但不能约束本研究设计的工作。检索记录的高密度比较版见 [.research/literature_matrix.md](.research/literature_matrix.md)。
@@ -58,6 +60,14 @@ AREX 让“递归核对未解决约束”本身也不再是空白。它在内层
 Harness-G 从策略—环境接口解释了“query 很多但信息不增”的另一来源：不同自然语言查询逐渐产生高度重叠的累计 evidence set，即 retrieval-equivalence collapse。它把自由查询改成有限菜单，动作是 evidence sentence、entity 或 answer，再用冻结 answer scorer 比较 frontier alternatives，并沿 entity dependency graph 把下游增益回传给使其可达的早期动作。论文在六个 QA 数据集、1.5B 与 3B 模型上报告相对 Graph-R1 的平均 F1 分别提高 10.74 与 3.98；在固定 graph、outcome reward 与训练预算下，菜单相对 free-query 的提升超过 17 F1，而去掉 SNC 在三个多跳数据集上分别下降 3.08、4.55、2.88。[81] 这些是论文设置内的结果，但足以要求本项目加入 evidence-set overlap/query-equivalence 诊断，并把 SNC 纳入 credit 强基线。
 
 Baikal 把 data lake 聚成 semantic regions，并把 region selection 写成有预算的 bandit。它比较 random、LLM policy、Bayesian $\epsilon$-greedy 与 Bayes-UCB，按 finding groundedness、relevance、distinctness 和 utility 更新区域价值。在每个数据湖仅 15 个 query、由 GPT-5-mini 评分的设置下，作者报告最佳配置相对最强基线提高 28% 和 36%；但消融也表明 semantic regions 加随机选择已经贡献大部分收益，且没有 LLM prior 时 $\epsilon$-greedy 的优势消失。[82] 因此 semantic-region coverage 与 UCB 都不是本项目的新颖点。合理扩展是让区域调度接受四层风险和 evidence-equivalence 输入，并用官方表格指标而非仅 LLM rubric 验证。
+
+Search as Computation Allocation 把上述路线放进更严格的决策论边界。其 metalevel state 包含 latent environment、终端决策与损失、可执行 computation、观测 kernel、成本和停止动作。Dynamic VOC 衡量“执行该 computation 后，再最优使用剩余预算”相对立即停止可减少多少终端风险；myopic VOC 只计算一步。论文证明 mutual information 在 log loss 下与 myopic VOC 精确相等，但在 simple regret 下应使用 knowledge gradient，并给出信息增益排序可任意差的构造。[83] 这不仅是相关工作补充，而是方法修正：DeepWide 的 Row/Item/Column/SR 与失败计零不是 log loss，因此主 controller 必须估计 terminal-loss VOC，不能把 EIG/cost 当作普遍正确目标。
+
+SearchArt 与 CAST 又分别收紧了训练和 credit 的主张。SearchArt 用可验证 evidence graph 合成长程任务与轨迹，并组合 outcome、tool-format 和非单调 turn-budget reward训练搜索代理；它说明“可验证任务合成 + process reward + 长程 search harness”已是系统基线，但其 turn reward主要约束整条轨迹长度，不能识别某个 evidence action 的 task contribution。[84] CAST 则直接用 solver cost-to-go 的下降 $N(s_t)-N(s_{t+1})$ 形成 turn signal，并把终局 reward 保留为全局锚；在没有精确 solver 时，它也测试 learned value network。[85] 对本项目而言，四层 risk model 更应被检验为一个近似 state-value/VOC estimator，而不是以 entropy 名义获得特殊地位。
+
+AttriMem 将最终答案的 token-level context attribution 映射回产生 memory record 的操作，再与 outcome reward 联合训练 memory policy。[86] 它并非 web search 方法，但直接覆盖“根据最终答案对中间信息操作分 credit”的相邻空间。OWIC 若加入 source-span attribution，必须把它作为 baseline，并检查长上下文 attribution error、冗余证据和答案生成器依赖，不能把 attribution 当成已识别的因果贡献。
+
+两项可靠性工作给出新的压力测试。MisKnow-Agent 在控制 authority、source style、rank 和 lifecycle stage 的误导文档注入中报告：一篇误导文档把六种 open-source 配置的平均 FCAR 从 0% 提高到 54.7%，pre-synthesis 注入的平均 FCAR 为 85.5%，而 front/spread/back 排名条件只在 66.2%/65.5%/64.5% 间变化；pre/post defense 均未消除采用。[87] 这些数字仅属于其 DeepResearch Bench 设置，但说明来源排名、重复证据或 posterior 变尖都不能替代 evidence truthfulness。FinanceHarness/FinanceGym 则用 per-question point-in-time sandbox 分开 pre-cutoff evidence 与 post-cutoff outcome rubric，并观察到 specialized agent 的 tool-distribution shift。[88] 因而，DeepWide 实验需要连续验证进入 state 的证据、在 synthesis 前再核对 load-bearing claims，并冻结检索截止时间、后端和工具契约。
 
 Forage V2 对开放集合给出更直接的命名：当完成边界没有预先给出时，代理会系统性低估 denominator，并可能对自己发现的小集合报告 100% coverage。它把 Planner 与独立 Evaluator 隔离，让两者分别收集对象和发现“完整意味着什么”，再把 denominator 修订经验跨 run 迁移。[72] 这占据了“首次发现分母盲区”或“首次让代理同时搜索答案和完成边界”的主张。它仍不是本项目拟议的概率层：每个 run 使用自己发现的 denominator，论文明确指出这些 coverage 百分比不能跨 run 直接比较，也没有给出未见质量的校准 posterior。
 
@@ -234,6 +244,7 @@ Shared Discovery Paradox 表明“信念更准”与“覆盖更高”可以反�
 - **删除干预失真。** 从已经生成的轨迹删除早期 turn，再保留后续动作，会产生代理在现实中不可能走出的上下文。LOTAPO 因此把自身定义为 attribution 而非已识别因果效应。[45]
 - **训练与推理不一致。** gold-answer likelihood 在 RL 训练时可用，在线动作选择和无标签任务中不可用；把它写成 inference-time controller 会发生目标泄漏。
 - **信用与探索不同。** VIME 等方法用 dynamics information gain 作 intrinsic exploration reward，但探索更多并不等于对最终任务贡献更大。[41]
+- **终端损失错位。** 即使信息只关于最终最优动作，若不同错误的后果不同，高 entropy bit 也可能几乎不影响任务损失，而低 entropy bit 决定大额 regret。Search as Computation Allocation 证明这种 IG 排序误差可以任意大。[83]
 
 这些反例说明，信息 credit 要先回答“关于什么随机变量的信息”“相对于什么任务损失”“在什么干预下有贡献”，不能只计算语言模型输出熵。
 
@@ -247,7 +258,7 @@ $I_{ij}>0$ 表示二者共同出现的价值超过各自边际值之和。Shaple
 
 ### 5.4 推荐的新主张：开放世界的结果对齐信息 credit
 
-建议把候选方法暂称为 **Open-World Information Credit (OWIC)**。它不是新的 Shannon 公式，而是一套 DeepWide 特有的 credit 约束。名称有意不含 “causal”：AMR-SD 与 PGPO 已把 teacher/student 或有/无视觉条件下的 likelihood/KL 比称为 Causal Information Gain，但这种命名本身不等于干预识别；本项目只有在明确 intervention、固定 continuation、validity/overlap 与识别假设成立的分析中才使用 causal interpretation。[61,62]
+建议把候选方法暂称为 **Open-World Information Credit (OWIC)**。它不是新的 Shannon 公式，而是一套 DeepWide 特有的 credit 约束。名称有意不含 “causal”：AMR-SD 与 PGPO 已把 teacher/student 或有/无视觉条件下的 likelihood/KL 比称为 Causal Information Gain，但这种命名本身不等于干预识别；本项目只有在明确 intervention、固定 continuation、validity/overlap 与识别假设成立的分析中才使用 causal interpretation。[61,62] Search as Computation Allocation 进一步要求把 OWIC 的规范部分写成 terminal task value/VOC；信息量只能解释其中的 epistemic observation，不是独立的终端效用。[83]
 
 1. **四层 credit target。** 分别追踪 anchor $A$、未见质量 $M$、行资格 $R_e$ 和 cell 值 $Y_{e,c}$，禁止用一个答案 entropy 覆盖四类错误。
 2. **结果对齐。** 信息信号只有在改善 proper score 或任务风险时才为正。反证即使提高 entropy，只要降低错误风险也应获正 credit。
@@ -260,13 +271,13 @@ $I_{ij}>0$ 表示二者共同出现的价值超过各自边际值之和。Shaple
 
 \[
 c_t = \underbrace{L(B_t)-L(B_{t+1})}_{\text{task-risk change}}
-+\lambda\underbrace{\operatorname{RelIG}_t}_{\text{task-relevant epistemic gain}}
++\lambda\underbrace{\operatorname{RelIG}_t}_{\text{diagnostic / log-loss subvalue}}
 +\beta\underbrace{\widehat{\Delta}^{\mathrm{cf}}_t}_{\text{same-state contribution}}
 +\rho\underbrace{c_t^{\mathrm{prov}}}_{\text{verified evidence role}}
 -\eta\underbrace{C_t}_{\text{cost / harm}}.
 \]
 
-其中 $L$ 必须由 dev set 上冻结的 proper scoring rule 或 DeepWide task-risk surrogate 定义，$\operatorname{RelIG}$ 只计算与四层任务变量有关的信息；$\widehat{\Delta}^{\mathrm{cf}}$ 的干预族和 continuation policy 分开报告。为保持策略不被任意 shaping 改写，可把 $\Phi(B)=-L(B)$ 的差分作为 potential-based shaping 分量；Ng 等人的结论只在固定 MDP 与正确 potential 形式下保证 policy invariance，不能为错误 belief 或开放世界 support 提供保护。[42]
+其中 $L$ 必须由 dev set 上冻结的 proper scoring rule 或 DeepWide task-risk surrogate 定义，$\operatorname{RelIG}$ 只计算与四层任务变量有关的信息；除非对应子任务明确使用 log loss，否则它不得覆盖 $L$ 或单独决定动作/credit 符号。$\widehat{\Delta}^{\mathrm{cf}}$ 的干预族和 continuation policy 分开报告。为保持策略不被任意 shaping 改写，可把 $\Phi(B)=-L(B)$ 的差分作为 potential-based shaping 分量；Ng 等人的结论只在固定 MDP 与正确 potential 形式下保证 policy invariance，不能为错误 belief 或开放世界 support 提供保护。[42]
 
 ### 5.5 新颖性 verdict
 
@@ -312,6 +323,9 @@ Forage V2 进一步表明 denominator 本身可能随定义与证据演化，Sha
 | AREX | verified/unresolved constraints、结构化 confidence、context update | 递归 refine/restart 与训练 | 是 | 否 | 约束级 follow-up、状态压缩与 key-step bonus 已有 |
 | Harness-G | evidence/entity/answer 菜单、evidence equivalence、dependency graph | 推理接口与非近视 credit | 是 | 否 | 查询等价坍缩与结构化非近视 credit 已有；必须纳入强基线 |
 | Baikal | semantic regions 与 finding-quality posterior | 区域 bandit 调度 | 是 | 区域覆盖，但不估计未知结果集质量 | semantic-region coverage、$\epsilon$-greedy 与 UCB 已有 |
+| Search as Computation Allocation | terminal decision/loss、computation topology 与 observation kernel | metareasoning、VOC、knowledge gradient | 是 | 依赖问题定义 | IG 只在 log loss 下等于 myopic VOC；主目标必须改为 terminal-loss VOC |
+| SearchArt、CAST、AttriMem | 终局 outcome、过程约束、solver state value、answer attribution | 训练与 turn/operation credit | 学习后控制 | 否 | 可验证长程训练、state-value credit 与答案 attribution 已有；必须作为训练/credit 对照 |
+| MisKnow-Agent、FinanceHarness | 误导证据采用、lifecycle、PIT corpus 与工具契约 | reliability injection、时间隔离、rubric | 评测/训练 | 固定 corpus | truthfulness、时间污染与 tool shift 必须单列，不能被 entropy/coverage 指标吸收 |
 | TaS、A-MapReduce、Web2BigTable | 行、格、横向子任务 | 推理系统 | 是 | 启发式覆盖 | 表格状态与大规模宽搜已有 |
 | WebSwarm、SearchOS | 搜索节点、网页结构、coverage/gaps | 推理系统 | 是 | 定性 open-set / scope audit | 动态 deep/wide 与覆盖驱动调度已有 |
 | Good–Turing、coverage、capture–recapture | 未见事件质量/种类数 | 统计估计 | 不直接 | 是 | 提供 width posterior，但需处理搜索偏差 |
@@ -332,9 +346,9 @@ Forage V2 进一步表明 denominator 本身可能随定义与证据演化，Sha
 
 ### 7.2 可辩护的候选创新
 
-若论文只做推理时控制，建议沿用：
+若论文只做推理时控制，建议改为：
 
-> **Entropy-DeepWide: Calibrated Hierarchical Belief Reduction for Open-World Deep-and-Wide Search**
+> **Risk-DeepWide: Calibrated Value of Computation for Open-World Deep-and-Wide Search**
 
 若加入训练时 credit assignment，更准确的候选名是：
 
@@ -350,7 +364,7 @@ Forage V2 进一步表明 denominator 本身可能随定义与证据演化，Sha
 6. **证据等价感知。** 对 query intent、URL/claim set 与 source dependency 做等价类聚合；只返回已有证据类的动作不给 discovery credit，并与 Harness-G 的菜单/SNC 做比较。[81]
 7. **风险条件化的区域组合。** 以 Baikal 式 semantic region 作为动作先验，再由 anchor/coverage/row/cell 风险分配区域与搜索模式；与 random region、LLM policy、Bayes-UCB 和不分区 controller 做同预算比较。[82]
 
-检索到的文献中，没有一篇同时满足以上七点。但这只是截至检索日的**候选空白**；Forage V2 的 denominator audit、Shared Discovery Paradox 的 belief–coverage 分离、SearchOS 的 scope audit、ECR 的有限假设 EER、C-IP 的校准、CuriosiTree 的 EIG/cost、AREX 的递归约束核对、Harness-G 的 evidence-equivalence/SNC、Baikal 的区域 bandit、ECHO 的 epistemic credit、STAMP 的 provenance 和 CVT-RL 的反事实贡献已覆盖各个相邻部分。论文必须正面比较这些近邻，不能靠改名构造差异。
+检索到的文献中，没有一篇同时满足以上七点。但这只是截至检索日的**候选空白**；Forage V2 的 denominator audit、Shared Discovery Paradox 的 belief–coverage 分离、SearchOS 的 scope audit、ECR 的有限假设 EER、C-IP 的校准、CuriosiTree 的 EIG/cost、Search as Computation Allocation 的 terminal-loss VOC、AREX 的递归约束核对、Harness-G 的 evidence-equivalence/SNC、Baikal 的区域 bandit、CAST 的 state-value credit、AttriMem 的答案 attribution、ECHO 的 epistemic credit、STAMP 的 provenance 和 CVT-RL 的反事实贡献已覆盖各个相邻部分。论文必须正面比较这些近邻，不能靠改名构造差异。
 
 ## 8. 建议的分层开放世界熵框架
 
@@ -420,7 +434,7 @@ L(B_t)=w_A\Pr(A\neq A^*)+w_M\mathbb E[\text{missed mass}]
 
 ### 9.2 controller 是否真的由信号获益
 
-所有 controller 比较必须共享模型、搜索/浏览工具、动作集合、最大 token、tool call、wall-clock 和重试次数。必须包含：当前 retrieve-then-generate、fixed wide→deep、fixed deep→wide、TaS/no-entropy planner、相同 controller 加 heuristic uncertainty、oracle one-step value（仅分析）、WebSwarm/SearchOS/A-MapReduce 系统级比较，以及 Harness-G 式 evidence-equivalence/menu 与 Baikal 式 random/Bayes-UCB region policy。credit 实验另含 AREX key-step bonus 与 SNC。只和 ReAct 比不够。
+所有 controller 比较必须共享模型、搜索/浏览工具、动作集合、最大 token、tool call、wall-clock 和重试次数。必须包含：当前 retrieve-then-generate、fixed wide→deep、fixed deep→wide、TaS/no-entropy planner、相同 controller 加 heuristic uncertainty、pure RelIG/EIG、myopic task-risk VOC、learned dynamic-VOC approximation、oracle one-step value（仅分析）、WebSwarm/SearchOS/A-MapReduce 系统级比较，以及 Harness-G 式 evidence-equivalence/menu 与 Baikal 式 random/Bayes-UCB region policy。credit 实验另含 AREX key-step bonus、SNC、CAST-style learned value delta 与 AttriMem-style answer attribution。只和 ReAct 比不够。
 
 ### 9.3 低熵错收敛
 
@@ -438,9 +452,17 @@ Search-Time Contamination 研究指出，联网 agent 可能检索到公开 benc
 
 信号评估不能只看训练后最终分数。应建立带干预的 step-credit audit set：对同一状态执行原动作、等成本 sibling、no-op、证据替换和反证动作，再用固定 continuation 估计最终任务风险差。报告 credit 与该差值的 Spearman、signed accuracy、top-k pivotal-step recall 和 calibration，并单列以下诊断：无关但新奇信息、重复错误来源、先升熵后纠错、延迟显效、多步骤协同、删除后 OOD。比较 raw entropy drop、semantic entropy drop、gold log-score gain、TRACE-style TD、LOTAPO、STAMP、RICE-PO、CVT-RL-style counterfactual 和 OWIC。若 OWIC 只与 entropy change 相关、却不能预测干预后的 task value，它不能称为 credit assignment 方法。
 
+### 9.7 信息与任务价值是否错位
+
+构造至少三类 state-matched case：高 IG 但低 terminal-loss reduction、低 IG 但高 regret reduction，以及 myopic value 为零但能开启高价值 descendant computation。比较 RelIG、myopic VOC、learned dynamic VOC 与 oracle rollout value 的排序、top-1 regret 和 calibration。若 pure IG 与 task value 的排序差异没有在真实轨迹或构造反例上复现，论文只能将 VOC 作为理论动机；若复现，则 controller 的主消融必须报告差异来自 terminal loss，而不是换了更多 features。
+
+### 9.8 误导证据、时间污染与工具漂移
+
+对不含 benchmark label/gold 的审计集注入语义相关但受控错误的来源，改变 source dependency、authority-like presentation 和进入 research state 的阶段，并测 false-claim adoption、四层 risk calibration 与独立验证召回。另做 point-in-time 或固定 snapshot 复现实验，记录检索截止时间、索引版本、搜索后端和 tool schema。任何只在 live web 或单一后端成立的增益都必须标为环境依赖结果。[87,88]
+
 ## 10. 对当前项目的直接诊断
 
-当前仓库已推进到 V2.39.9 的可恢复 staged runtime，但仍不是完整 Entropy-DeepWide。runtime 只读取 `{opaque_id, question}`，支持 Tavily、Azure hosted 和 Anthropic hosted search、持久 JSON state、开放集 anchor/`OTHER`、scope/candidate discovery、mention recall、逐行/逐格查询、cell-level provenance、行级 quarantine、单位尺度审计和确定性表格渲染。V2.20.1–V2.39.5 逐步加入 anchor evidence、闭合/混合行域、named-node bridge、rank-slot occupant、目录遍历、URL quarantine、日期/人名 canonicalization 与 post-verification publishable coverage。V2.39.6 把 logical request、成功/失败 response 和 HTTP attempt 分开持久化，并将 candidate reservation 从 32K 降到 20K。V2.39.7 又把 launch capacity envelope 改为 400KB UTF-8 bytes×20K，记录无内容的 request-size ledger，增加只改属性不改 membership 的 confirmed-member unknown-cell recovery，并支持公元 1–9999 年和中文事件时间列。V2.39.8 把固定槽位中已有页面证据的实体属性加入后续缺格查询并修正 fixed-row unknown 统计；V2.39.9 收紧目录人口证明、修正中文证据句柄，并在严格 provenance 条件下恢复 reviewer 遗漏序列化的结构化身份边。尚未实现的仍是经过开发集校准的四层概率信念、unseen-mass posterior、entropy/EIG/task-risk controller、同状态干预 credit 和 RL 训练。
+当前仓库已推进到 V2.39.9 的可恢复 staged runtime，但仍不是完整 Risk-DeepWide/OWIC-DeepWide。runtime 只读取 `{opaque_id, question}`，支持 Tavily、Azure hosted 和 Anthropic hosted search、持久 JSON state、开放集 anchor/`OTHER`、scope/candidate discovery、mention recall、逐行/逐格查询、cell-level provenance、行级 quarantine、单位尺度审计和确定性表格渲染。V2.20.1–V2.39.5 逐步加入 anchor evidence、闭合/混合行域、named-node bridge、rank-slot occupant、目录遍历、URL quarantine、日期/人名 canonicalization 与 post-verification publishable coverage。V2.39.6 把 logical request、成功/失败 response 和 HTTP attempt 分开持久化，并将 candidate reservation 从 32K 降到 20K。V2.39.7 又把 launch capacity envelope 改为 400KB UTF-8 bytes×20K，记录无内容的 request-size ledger，增加只改属性不改 membership 的 confirmed-member unknown-cell recovery，并支持公元 1–9999 年和中文事件时间列。V2.39.8 把固定槽位中已有页面证据的实体属性加入后续缺格查询并修正 fixed-row unknown 统计；V2.39.9 收紧目录人口证明、修正中文证据句柄，并在严格 provenance 条件下恢复 reviewer 遗漏序列化的结构化身份边。尚未实现的仍是经过开发集校准的四层概率信念、unseen-mass posterior、terminal-loss dynamic-VOC controller、同状态干预 credit 和 RL 训练。
 
 V2.31–V2.33 的 validation smoke 依次为 1/2、1/2 和 0/2 completed。V2.32 唯一完成的 50 行任务得到 Entity 1.00、Row F1 0.76、Item F1 0.90、Column F1 1.00，但同批另一题失败且整表 score 为 0；一个完成任务不能支持聚合改进或 SOTA。V2.33 的两个失败分别是 32/60 coverage 与 bridge unresolved。V2.35 consumed-task replay 得到 60/60 rank slots、60/60 query routes 和真实候选页 reserve，但不运行 reviewer、搜索、预测或 evaluator，因此不估计质量。机器证据分别见 [`results/validation_smoke_v232_20260722.json`](results/validation_smoke_v232_20260722.json)、[`results/validation_smoke_v233_20260722.json`](results/validation_smoke_v233_20260722.json) 与 [`results/v235_structural_boundaries_replay_20260722.json`](results/v235_structural_boundaries_replay_20260722.json)。
 
@@ -596,3 +618,9 @@ V2.19 针对这两个 label-blind 机制做了 evidence-continuity 修复。它�
 80. Zhou, S. et al. **Filesystem-Based Memory for LLM Agents: Organization, Evolution, and Sustainability.** arXiv:2607.26637 (2026). https://arxiv.org/abs/2607.26637
 81. Hou, Y. et al. **Harness-G: A Graph-Structured Harness for Search Agents.** arXiv:2607.27652 (2026). https://arxiv.org/abs/2607.27652
 82. Agarwal, D. et al. **Baikal: Structured Search for Deep Research over Data Lakes.** arXiv:2607.27726 (2026). https://arxiv.org/abs/2607.27726
+83. Tuisov, A. **Search as Computation Allocation.** arXiv:2607.27871 (2026). https://arxiv.org/abs/2607.27871
+84. Mei, L. et al. **SearchArt: Training Long-Horizon Search Agent with Scalable Synthetic and Verified Task.** arXiv:2607.24850 (2026). https://arxiv.org/abs/2607.24850
+85. Wang, Y. et al. **CAST: Game Solvers as Turn-Level Teachers for LLM Agents.** arXiv:2607.25308 (2026). https://arxiv.org/abs/2607.25308
+86. Li, Q. et al. **AttriMem: Attribution-Guided Process Feedback for Agent Memory Learning.** arXiv:2607.21106 (2026). https://arxiv.org/abs/2607.21106
+87. Zhu, P. et al. **Is Deep Research Reliable? Misleading Knowledge Induces False Conclusions.** arXiv:2607.20891v2 (2026). https://arxiv.org/abs/2607.20891
+88. Xiao, Y. et al. **FinanceHarness: Autonomous Financial Deep Research Framework.** arXiv:2607.27853 (2026). https://arxiv.org/abs/2607.27853

@@ -17,6 +17,12 @@
 | Filesystem-Based Memory (2607.26637) | 文件树形状、store health 与检索轨迹 | agent-organized hierarchy、verbatim dump、chunk retrieval | 长期记忆管理与检索 | 否 | 随 stream 增长，但非结果集遗漏 | 组织主要节省检索成本，原文未观察到组织本身改善答案；memory shape 不得替代质量证据 |
 | Harness-G (2607.27652) | evidence/entity/answer 有限菜单与 evidence-set equivalence | graph interface；frontier alternatives；Structured Non-myopic Credit | 检索与 step credit | 是 | 否 | retrieval-equivalence collapse 与非近视 credit 已有；必须做 evidence overlap 诊断并纳入 SNC 基线 |
 | Baikal (2607.27726) | semantic region、visit/reward posterior、finding quality | clustering；random/LLM/Bayesian $\epsilon$-greedy/Bayes-UCB | 区域覆盖与探索—利用 | 否 | region coverage，不估计未知结果集质量 | semantic-region bandit 已有；候选差异只能是与四层风险/evidence equivalence 的联合控制 |
+| Search as Computation Allocation (2607.27871) | latent environment、terminal decision/loss、可用 computation 与 observation kernel | Bellman metareasoning、dynamic/myopic value of computation、knowledge gradient | 搜索动作与停止 | 否 | 取决于 terminal state；未专门估计 web unseen mass | 只有 log loss 下 mutual information 等于 myopic VOC；simple regret 下 IG 排序可任意差。主 controller 必须优化近似 terminal-loss VOC，熵只作子目标或 bound |
+| SearchArt (2607.24850) | 合成 evidence graph、长轨迹、终局正确性、tool validity 与 turn budget | 可验证任务/轨迹合成；outcome + format + turn-efficiency reward；search harness | 训练长程 search agent | 是 | 生成图可扩展，但无校准遗漏后验 | 可验证 task synthesis 与 process reward 已有；作为训练系统基线。其 turn reward 主要依赖长度区间，不定位每步 task contribution |
+| CAST (2607.25308) | solver cost-to-go、state value 与 action advantage | $N(s_t)-N(s_{t+1})$；asinh/RMS shaping；solver/learned-value teacher | turn-level credit | 是 | 否 | 又一 task-value credit 强基线；若 DeepWide 无精确 solver，必须比较 learned four-layer value delta，而不能把 entropy delta 当 advantage |
+| AttriMem (2607.21106) | memory action 产生的 record/span 对最终答案 token 的贡献 | ContextCite token attribution 映射回 memory process；outcome + local reward | memory-policy credit | 是 | 否 | answer attribution 已下沉到 token/operation；provenance baseline 应加入 source-span attribution，但 attribution error 和长上下文依赖必须审计 |
+| MisKnow-Agent (2607.20891) | 误导文档的暴露、采用、authority/style 与 lifecycle stage | controlled false-conclusion injection；FCAR；pre/post defenses | 深研可靠性评测 | 否 | 否 | 高熵降或 evidence overlap 都不能替代真伪验证；需加入连续 evidence-entry/synthesis verification 和 misleading-source stress test |
+| FinanceHarness / FinanceGym (2607.27853) | point-in-time corpus、pre-cutoff evidence 与 post-cutoff outcome rubric | PIT search sandbox；layered tools/workflows；evidence-linked rubrics | 深研执行、训练与时序评测 | 是 | corpus 固定、非开放 web | 时间污染与 tool-distribution shift 有直接系统证据；DeepWide 的 search-time contamination、cutoff 和工具后端必须冻结并分层报告 |
 | Forage V2 (2604.19837) | 自主发现的 completion criterion 与 denominator | 独立 Evaluator/Planner、co-evolving evaluation、跨 run 组织记忆 | 覆盖审计、停止、经验迁移 | 否 | 是，直接研究 denominator blindness | 高，必须深度讨论；“未知完成边界/分母盲区”已有直接工作，其 denominator 是自发现定义且跨 run coverage 不可直接比较，仍未给出校准 unseen-mass posterior |
 | Shared Discovery Paradox (2607.18045) | 有限目标位置的 pooled posterior 与多搜索者动作组合 | 可解 Bayesian benchmark、top-L posterior portfolio、source-correlation model | 覆盖动作分配与激励 | 否 | 是，有限原子空间的发现概率 | 高，必须深度讨论；更准 shared belief 可因动作重复而降低 coverage，controller 必须联合 posterior、动作多样性与来源依赖 |
 | Semantic Entropy (2302.09664；Nature 2024) | 自由文本答案的语义等价类 | 多样本语义聚类后的熵 | 被动错误/幻觉检测 | 否 | 有限采样答案集 | 提供 cell/anchor 语义熵候选估计器，不提供 controller |
@@ -63,10 +69,10 @@
 
 ## 综述写作分级
 
-- **必须深度讨论**：WebSwarm、SearchOS、AREX、Harness-G、Baikal、Forage V2、Shared Discovery Paradox、Table-as-Search、ECR、Semantic Entropy、ECHO、TRACE、LOTAPO、STAMP、RICE-PO、CVT-RL、Good–Turing/coverage。
-- **方法对照**：A-MapReduce、Web2BigTable、CuriosiTree、InfoReasoner、IGPO、A²TGPO、T²PO、IG-Search、TEPO、SIGHT、SIOP、PBSD、ACPO、Know Before You Fetch、QuCo-RAG。
+- **必须深度讨论**：WebSwarm、SearchOS、AREX、Harness-G、Baikal、Search as Computation Allocation、Forage V2、Shared Discovery Paradox、Table-as-Search、ECR、Semantic Entropy、ECHO、TRACE、LOTAPO、STAMP、RICE-PO、CVT-RL、Good–Turing/coverage。
+- **方法对照**：A-MapReduce、Web2BigTable、SearchArt、CAST、AttriMem、MisKnow-Agent、FinanceHarness、CuriosiTree、InfoReasoner、IGPO、A²TGPO、T²PO、IG-Search、TEPO、SIGHT、SIOP、PBSD、ACPO、Know Before You Fetch、QuCo-RAG。
 - **背景引用**：FLARE、Self-RAG、Dartboard、SePer、InfoTree、IGPO、IGRPO、WebUncertainty。
 
 ## 矩阵结论
 
-现有工作已覆盖表格状态、动态 deep/wide 路由、约束级递归跟进、semantic-region bandit、evidence-equivalence menu、未知 denominator 的独立审计、belief–coverage 分离、熵下降、EIG-per-cost、校准停止、posterior-sensitive/non-myopic turn credit、gold-answer likelihood credit、删除 attribution、证据 provenance 和局部反事实 credit。当前仍可能成立、但需要实验证明的缺口是：在隐藏 anchor 与未知结果集大小并存的 DeepWide 任务中，用一个**校准的分层开放世界信念**同时表示 anchor、未见质量、行资格与单元格值；推理时在证据等价类和 semantic regions 上联合期望任务风险下降、成本、动作组合与来源依赖来路由，训练时再以同状态反事实和 provenance 验证哪些风险变化应转成 credit。该判断是检索截止日下的 novelty hypothesis，不是首创证明。
+现有工作已覆盖表格状态、动态 deep/wide 路由、约束级递归跟进、semantic-region bandit、evidence-equivalence menu、未知 denominator 的独立审计、belief–coverage 分离、熵下降、EIG-per-cost、终端损失下的 VOC、校准停止、posterior-sensitive/non-myopic turn credit、state-value advantage、答案 attribution、gold-answer likelihood credit、删除 attribution、证据 provenance 和局部反事实 credit。当前仍可能成立、但需要实验证明的缺口是：在隐藏 anchor 与未知结果集大小并存的 DeepWide 任务中，用一个**校准的分层开放世界信念**同时表示 anchor、未见质量、行资格与单元格值；推理时在证据等价类和 semantic regions 上以 DeepWide 终端损失定义近似 dynamic VOC，并联合成本、动作组合与来源依赖来路由；训练时再以同状态反事实和 provenance 验证哪些 value change 应转成 credit。该判断是检索截止日下的 novelty hypothesis，不是首创证明。
