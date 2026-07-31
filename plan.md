@@ -1,10 +1,18 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.34
+> 版本：5.35
 >
-> 更新：2026-07-31 14:39 UTC
+> 更新：2026-07-31 16:28 UTC
 >
-> 当前覆盖：**V2.42.10 已冻结并安全激活 selected search-component publisher。它修正 V2.42.08 的父图漏项，覆盖全部 36 个 work order、18 个 search 决策、9 个语义父分支与 7 个唯一父字节图。P12 的 Markdown+scope 分支明确以 schema70 为父并生成独立 schema86；schema76/schema77 的 scope 继续是 Markdown 父的零字节 alias。V2.42.10 当前只等待 V2.42.07 与 V2.41.80 同时终态，不拿 shared lease、不调用模型/search/evaluator、不授权 benchmark。现有 R1 与 watcher 全部保留；最新已验证的 label-blind 安全聚合仍为 `172/220 = 34 completed + 138 failed`，剩余 48，正式 DeepWideBench 全集分数、提升或 SOTA 仍不存在。该 `172/220` 是安全进度 envelope，不是 benchmark 得分。**
+> 当前覆盖：**V2.42.11 已实现 label-blind entropy/VOC runtime bridge，V2.42.12/13 已冻结 selected entropy-component publisher 与版本化恢复链。V2.42.12 首次 activation 因 upstream frozen-false 字段名不一致而 fail closed，未打开 selected content、未创建 candidate/publication、未取得 lease、未调用 API 或 benchmark；旧 activation/state 已密封且不重启。V2.42.13 使用全新 namespace，只修正该字段名，现已 create-exclusive 激活并进入 `waiting_for_search_parent_and_gate2a_terminal`。当前只读两个父状态的安全 envelope，selected work order/report/model、joint package、lease、API 与 benchmark launch 均为 false。R1 和全部健康 watcher 保留；最新 label-blind 安全聚合为 `175/220 = 35 completed + 140 failed`，剩余 45。该数值只是 forward 终态进度，不是 DeepWideBench 分数；released evaluator、Avg@4、提升和 SOTA 仍不存在。**
+>
+> **5.35 V2.42.11–13 entropy runtime、fail-closed recovery 与 WebSwarm 可比协议（2026-07-31 16:28 UTC）：V2.42.11 在 `anchor / late_0 / late_1` 三个 frozen context 上覆盖 9 个 context–action 组合。action 分支执行历史真实两查询 observation、V2.41.22 provenance-preserving state adapter 和有界幂等 stage restart；stop/abstain 只写 sealed decision/transition receipt。full-entropy 与 no-entropy 分支共用模型/job/parent hash binding，runtime 仅可见 `{opaque_id, question}` 与同轮工具轨迹，projection-only arm 永不实例化。未发布 runtime 构造继续 fail closed，故“代码存在”不等于 production package 或 benchmark authority。
+>
+> V2.42.12/13 将 18 个 entropy 决策展开到 14 个唯一 parent byte graph，目标 schema 为 87–100；9 个决策要求 search bytes，9 个禁止 search bytes。V2.42.12 activation SHA `7ff21665…2e74` 后因把 V2.42.10 的真实字段 `mapping_gold_category_question_type_evaluator_score_or_reward_read` 错写为带 `_for_forward_routing` 的 successor 字段而终止。失败审计 SHA `1239de2d…6307` 证明 selected content、candidate/publication、lease、network/API 与 benchmark 均未打开。V2.42.13 protocol SHA `aa974037…6b8b`，activation SHA `57597276…c687`，wait-audit SHA `90536028…b2c4`；激活前聚焦实现/父链测试为 `16/16`，live wait test 为 `1/1`，合计 `17/17`。唯一 watcher PID `2683462` 只等待 V2.42.10 search parent 与 V2.41.93 Gate-2A 自然终态。提交 `1d5f152` 已推送。
+>
+> WebSwarm arXiv v1 标注 `Work in progress`。其 DeepWideSearch 结果来自 76 题 English subset、两次随机运行均值；GLM-4.5 使用 128K context、每 agent 最多 200 action steps、3 条 `entity_collect` 并行路径和 2 个 experience scouts。Web-Probing 的消融主要改变工具成本，sibling experience 对 Item F1 的影响更大。因此内部复现固定为 `ReAct / w/o recursive / all-deep / all-wide / w/o probe / w/o experience / full WebSwarm / four-layer VOC` 八臂，并共享模型、search/page tool、结果数、page-summary、action-step、token、tool-call、orchestrator 与 wall-clock 预算。论文的 `6.58/29.64/58.40` 仅是其 SR/Row F1/Item F1，不得横比本项目 GPT-5.6 exact-220。
+>
+> exact-220 高并发顺序保持 fail closed：`R1 220/220 → released evaluator → search/Gate-2A 双父终态 → V2.42.13 selected entropy publication → joint-package regression → dev64 package gate → 1/2/4/8/12 × 3 中性容量阶梯 → 单一 lease owner → fresh 52/52/52/64`。容量阶梯选最大连续安全档，并在整次运行固定该档；所有 output roots 全新，no-resume、failure-as-zero，任何 variant 都不得用 completed-only、子集或选择性补跑代替全集。当前 R1 仍占用唯一 forward/9878，故现在启动第二个全集或容量探针会破坏实验合同。**
 >
 > **5.34 V2.42.10 search publisher、WebSwarm 复核与新增 credit/evidence 近邻（2026-07-31 14:39 UTC）：V2.42.08 将 search 父候选简化为 baseline/Markdown 六图，但 P12 的真实 `search+Markdown+scope` work order 必须接历史 schema70，而不是 schema69。新 publisher 因而把 18 个 search 决策展开为 `3 baselines × 3 semantic parents × 2 entropy choices = 18`，字节层合并 mainline 的两个零字节 scope alias 后得到 7 图。目标 schema 固定为 P12 `80/81/86`、schema76 `82/83`、schema77 `84/85`。search absent 发布 content-free no-op；V2.41.80 GO 才物化一个 selected-parent rebase，NO-GO 或 incomplete attempt 都终态退休且禁止改阈值、重跑或 selective retry。entropy 仍为未拥有 blocker。
 >
@@ -572,6 +580,9 @@
 
 ### 1.1 已完成
 
+- V2.42.11 的 pure decision kernel 与 runtime bridge 已覆盖 3 个 context、9 个 context–action pair，真实接入 V2.41.21/22 observation/state adapter、双层 receipt、restart/idempotence 和 full/no-entropy 分支；未发布 package 无法实例化。
+- V2.42.12 selected entropy publisher 已将模型文件、内部 model seal、job manifest、parent manifest 与 14 个 parent byte graph 绑定。首次 activation 的字段名失配已 fail closed 并密封，未产生 candidate/publication/API/benchmark side effect。
+- V2.42.13 已在新 namespace 完成 preregistration、activation 和 live wait audit。当前只等待 V2.42.10 search parent 与 V2.41.93 Gate-2A，尚未打开 selected report/model 或授予 package/lease/launch 权限。
 - Git 仓库、README、忽略规则与原方案 provenance 已建立。
 - DeepWideSearch 公开 query JSONL 已纳入仓库；官方答案表与第三方仓库留在 `external/`，不提交。
 - `scripts/run_deepwide_smoke.py` 已实现 GPT-5.5 + Tavily 基线：
@@ -692,6 +703,8 @@ V2.26 随后从剩余 10 个无历史 forward artifact 的 dev opaque ID 中按�
 
 ### 1.3 已实现但尚未过泛化门禁
 
+- V2.42.11–13 已把四层 risk features、no-entropy 对照、action/stop/abstain、真实 action transition 和 selected-component publication 写成可审计实现；真实 development calibration、Gate-2A 选择、joint package、dev64 package gate 与 exact-220 结果仍为空，因此不能称为已部署或已验证的 controller。
+- 当前 action model 只可在模型/job/parent seal 全部匹配时使用。它预测 `task_contribution` 与 action token cost，但尚无真实 prospective/equal-cost target dataset 证明排序或校准有效。
 - V2.19 的 provisional-direct reducer 只在实体、目标专业、目标年份、值标记和数值局部共现，且 adjudicator 引用该页并返回值时保留 unresolved row；它不把该行自动升级为 eligible。
 - 候选与 cell provenance 中引用的页面会重新进入同一行的 enrichment/refinement prompt，并在每行预算内优先于未引用噪声页。
 - 行查询先覆盖每行的值，再把剩余预算优先分配给 unresolved 资格核验；refinement 仍不能用值查询随意改变候选资格。
@@ -710,14 +723,13 @@ V2.26 随后从剩余 10 个无历史 forward artifact 的 dev opaque ID 中按�
 - 精确 DOM/PDF evidence span 与 claim-level evidence graph；V2.21.1 能抽取正文，
   但当前仍保存截断正文块，且历史 V2.20.3/20.4 replay 未保存追加 search batch。
 - source dependency/镜像聚类与 search-time contamination scanner。
-- 校准的 unseen-mass/coverage posterior；当前只有 output-only proxy。
-- 概率化 row eligibility 与 cell semantic belief；当前只有离散状态。
-- 校准器、EIG 或 task-risk estimator。
-- 动态 controller、反证搜索和组合停止规则。
-- step-credit estimator、同状态干预 runner、provenance credit 与 RL 训练。
+- 经过真实 development/held-out 数据验证的 unseen-mass、row eligibility、cell semantic 与 terminal-risk 校准；当前实现包含 schema、proxy 和 synthetic tests，但没有可发布的实证 calibration。
+- 通过 Gate-2A 的 action-response estimator。V2.42.11 runtime 已能执行选择，但模型尚未由真实 prospective same-state/equal-cost 数据解锁。
+- selected entropy component 的双父终态 publication、完整 joint package、同 dev64 package gate 和 single-owner exact-220 execution。
+- 真实 300-step credit audit set、有效 same-state intervention outcomes、provenance-aware credit 的 Gate-2B 结果与 RL 训练。相应 schema/verifier 已存在，但真实 target 数据仍为 0。
 - 与 WebSwarm、SearchOS、A-MapReduce、TaS 的可比实验。
 
-因此，当前项目不可描述为“已经实现 U-DeepWide、Entropy-DeepWide 或 OWIC-DeepWide”。
+因此，当前项目可以描述为“已实现并冻结 entropy/VOC runtime candidate 与发布供应链”，但不可描述为“已部署或已验证 Risk-DeepWide/OWIC-DeepWide”，更不可声称 benchmark 提升。
 
 ## 2. 明确不主张什么
 
@@ -1226,6 +1238,8 @@ I_{ij}=v(\{i,j\})-v(\{i\})-v(\{j\})+v(\varnothing).
 - SearchArt（训练系统，分数仅在同协议时比较）；
 - Search as Computation Allocation、CAM-DF、CAST 与 AttriMem（机制对照）。
 
+WebSwarm 的 controlled internal baseline 不只运行一个 `full` 配置。至少保留八个同预算执行臂：ReAct、w/o recursive delegation、all-deep、all-wide、w/o Web-Probing、w/o sibling experience、full WebSwarm 和 four-layer VOC。固定 `entity_collect` path 数、experience scout 数、最大 action steps、search top-k、page reader/summary policy 和 aggregation rule；同时记录 nominal/effective agent width、query/URL/content/source/evidence-set overlap、错误经验传播、input/output tokens、工具调用、orchestrator 调用与墙钟。probe-only 与 experience-only 的结果分开解释，不能把节省工具调用写成质量提升。
+
 优先在相同骨干、search/page tools、并发、max tool calls、token、wall-clock、attempts 下运行。若官方系统无法复现，分成：
 
 - **controlled internal baselines**：支持因果机制比较；
@@ -1502,11 +1516,11 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 | M3 | 四层信号数据与校准 | TBD | 2 周 | TBD | shadow signal dataset、calibration report、replay receipt | PAV/terminal calibrator、task-cluster split/bootstrap、provenance budget 与 replay verifier 已实现；真实匿名 development labels/bundle 尚无，Gate 1 未评估 |
 | M4A | Counterfactual action-value pilot | TBD | 1–2 周 | TBD | sealed action slates、propensity、gain report、model replay receipt | task-cluster-disjoint fitter/calibrator/audit/replay verifier 已实现；真实 prospective slate 与 equal-cost arm 数据仍为 0 |
 | M4B | Step-credit intervention audit set | TBD | 2 周 | TBD | 300-step interventions、credit report | fixed-continuation bundle/receipt contract 已实现；300 个有效 step 与七类 stress family（含 bridge evidence）尚未采集 |
-| M5A | Heuristic、pure EIG、myopic/dynamic VOC、CAM-DF/CHILL authorization、evidence-equivalence 与 region controller | TBD | 1–2 周 | TBD | controllers、unit tests、IG-vs-VOC/stop/authorization counterexamples | 未开始；Search as Computation Allocation/CAM-DF/Harness-G/Baikal/CHILL baseline 已写入协议 |
+| M5A | Heuristic、pure EIG、myopic/dynamic VOC、CAM-DF/CHILL authorization、evidence-equivalence 与 region controller | TBD | 1–2 周 | TBD | controllers、unit tests、IG-vs-VOC/stop/authorization counterexamples | V2.42.11 runtime candidate 与 full/no-entropy kernel 已实现；真实 calibration、Gate-2A、selected publication、joint package 和 online pilot 未通过 |
 | M5B | OWIC estimator 与 verifier-sign-preserving advantage modulation | TBD | 1–2 周 | TBD | credit module、intervention tests | 未开始；CIGPO/Bridge Evidence/CHILL/SkillRise/GRSD/TTEL/OVCSD/CSCR 对照已写入协议 |
 | M6A | 50-task online controller pilot / Gate 3A | TBD | 1 周 | TBD | paired report、Pareto plots | 未开始 |
 | M6B | 3-seed credit-training pilot / Gate 3B | TBD | 2 周 | TBD | checkpoints、learning curves、credit audit | 未开始 |
-| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact；下一 fresh all-220 capacity freeze、唯一继承槽与固定并行计划 | 进行中（最近已验证安全聚合 172/220；dev+validation S04 active；V2.41.94/96 wait-only；V2.41.97/98/99 等待 capacity freeze；V2.42.10 等待 scope 与 search-yield 双终态） |
+| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact；下一 fresh all-220 capacity freeze、唯一继承槽与固定并行计划 | 进行中（最近安全聚合 175/220；R1 forward active；V2.41.94/96 等 R1 release；V2.41.97/98/99 等 capacity freeze；V2.42.10 与 V2.42.13 分别等待 search/scope 与 Gate-2A 父链） |
 | M8 | 论文写作与审计 | TBD | 1–2 周 | TBD | manuscript、claim/evidence ledger | 未开始 |
 
 ### M1 推荐目录
@@ -1631,7 +1645,7 @@ outputs/runs/<run_id>/
 | 四层 terminal-loss dynamic-VOC/cost controller | Gate 2A + Gate 3A，且优于 pure IG/myopic VOC | context-specific 七动作 response model 与 Gate 2A 评估器已实现；online dynamic-VOC controller 仍未设计/集成，须真实 Gate 1+2A 通过后另行预注册 |
 | 同预算质量–成本改进 | 全量 paired test | 无结果 |
 | 机制解释 | 对应消融与轨迹案例 | 无结果 |
-| 开放世界、结果对齐的 step credit | Gate 2B 干预定位指标 | 无实现 |
+| 开放世界、结果对齐的 step credit | Gate 2B 干预定位指标 | fixed-continuation/intervention schema 与 replay verifier 已实现；真实 300-step target/baseline 数据为 0，Gate 2B 未评估 |
 | credit 改善训练而非只拟合 proxy | Gate 3B 同预算 3-seed pilot | 无结果 |
 | 多智能体协作质量 | 相同总预算下 agent-count/round/topology 曲线优于 single/two-call | 未实验；文献显示可能非单调，不能由高 executor 并发推断 |
 | 分层 evidence 可靠性 | HiEviDR 式 progressive gate + LayerRAG cross-layer stress | 指标/压力测试已写入计划；无真实结果 |
@@ -1642,6 +1656,17 @@ outputs/runs/<run_id>/
 在相应证据行未完成前，摘要只能写“we propose/ask/evaluate”，不能写“improves/outperforms/demonstrates”。若 Gate 2B 未过，不得在题目或摘要使用 causal credit。
 
 ## 14. 接下来 72 小时的具体任务
+
+### V2.42.13 到 fresh exact-220 的当前执行序列（2026-07-31 16:28 UTC）
+
+1. 保留 R1 forward PID `1350579` 与所有健康 watcher，不 signal、restart、resume、复制或选择性补跑。只读监控 exact terminal count、checkpoint liveness 和 `mapping_or_gold_read=false`。
+2. R1 达到 `220/220` 后，由既有 finalizer 首次打开 evaluator mapping，生成 failure-as-zero 的 released all-220 artifact。此前任何 `completed/failed` 计数都不是 benchmark score。
+3. 让 V2.42.10 search parent 与 V2.41.93 Gate-2A 自然终态。V2.42.13 只有在两者 terminal、seal 和 selected decision 一致时才能打开 selected work order/report/model；否则发布 content-free no-op 或按协议终态退休。
+4. selected entropy publication 若存在，重跑 14 个 parent byte graph 的完整 parent+entropy regression、binding/tamper tests、label-blind static audit 和 joint component conflict scan。随后生成全新 joint package；禁止复用 V2.42.12 candidate/state。
+5. joint package 先过同一个 dev64 package gate。只有预注册的 quality/cost/non-regression 门全部通过，才进入 capacity 阶段；失败即停止，不调阈值、不挑子集。
+6. 共享 lease 释放后执行 `1/2/4/8/12 × 3 waves` 的中性 GPT-5.6 容量阶梯，冻结最大连续安全档。容量选择只使用非 benchmark 输入，不以题目成功率调并发。
+7. single-owner executor 在四个全新 output roots 上以冻结档位运行 `52/52/52/64=220`。整次 fixed concurrency、no-resume、failure-as-zero；API/容量失败仍进分母，禁止只补失败题。
+8. full/no-entropy、WebSwarm-style 或其他主 variant 若进入论文主比较，每个 variant 都必须独立满足同样的 exact-220、fresh roots、固定预算和 single-owner 合同。English-76、dev64 或 completed-only 只能作诊断，不能替代全集。
 
 ### V2.40.5 Gate 2B baseline-source 合同（2026-07-26 00:03 UTC 新增）
 
