@@ -1,10 +1,18 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.18
+> 版本：5.19
 >
-> 更新：2026-07-31 09:34 UTC
+> 更新：2026-07-31 09:54 UTC
 >
-> 当前覆盖：**V2.42.01 已从仓库内 bytes 重放 schema68→77 冻结 DAG 并逐阶段 byte-exact；V2.41.98/99/42.00 与 R1 均健康。R1 权威聚合为 163/220，尚无正式 DeepWideBench 全集分数、提升或 SOTA。**
+> 当前覆盖：**V2.42.02 已形成严格 label-blind 的 WebSwarm-style build-only prototype，并冻结为未来独立无熵系统基线，不进入 V2.42.00 主线组件。V2.41.98/99/42.00 与 R1 均健康；R1 权威聚合为 164/220，尚无正式 DeepWideBench 全集分数、提升或 SOTA。**
+>
+> **5.19 V2.42.02 label-blind WebSwarm adapter 原型与 baseline-only 处置（2026-07-31 09:53 UTC）：在冻结生产 runtime 外新增纯 adapter，将 visible question/columns/known rows 与 content-free provenance ledger 编译为 `atom/deep/wide/entity_collect` 四模式合同。模型提案必须绑定 adapter 生成的 planner-context SHA；strict payload 递归拒绝 benchmark/subset/category/question_type/label/split、mapping/gold/answer-key/evaluator/score/reward/prediction/task-id 等特权 key。每个 child prompt 机械继承 root scope SHA、原始可见问题/columns/rows 与 active page evidence ID；search-answer-only 或 contradicted evidence 不得路由。child return 还要通过 root/objective hash、active provenance 与递归/child cap。deterministic fallback 保证隐藏 anchor 先 deep，再处理下游 wide/entity collection；观察到的 web topology 只分 `unprobed/centralized/centralized_with_gaps/distributed`，明确不估计 unseen mass。
+>
+> exact-contract duplicate 与 evidence-set equivalence 已分开：只删除同 objective/mode/evidence-set 的精确重复；共享 evidence 但目标不同的 child 保留，并报告 `unique_evidence_set_count`，不把 nominal sibling 数当有效 width。当前只有 topology-derived content-free tactic，没有 sibling trajectory experience。冻结 audit [`results/v24202_label_blind_webswarm_adapter_audit_v1_20260731.json`](results/v24202_label_blind_webswarm_adapter_audit_v1_20260731.json) SHA `c046c9ca…d99d1a6`：AST 证明 prototype 无文件/环境/网络/进程/动态代码能力，27 次 adapter payload + 1 次 child-envelope synthetic replay 通过；prototype+audit 联合定向 `22/22`。代码与收据提交 `37d4417` 已推送并核验远端一致。上述只证明 schema、隔离与故障边界，不是 production integration、模型/search/fetch execution、质量、成本或 benchmark 效果。
+>
+> V2.42.00 只接受已有独立质量 GO 的组件；V2.42.02 没有 quality GO，不能事后加入 eligible-component set、integrated package 或主候选 freeze。append-only 处置 [`results/v24202_webswarm_baseline_only_disposition_v1_20260731.json`](results/v24202_webswarm_baseline_only_disposition_v1_20260731.json) SHA `d5ce7592…b5150d` 固定 `baseline_only_not_mainline_component`，不修改 V2.42.00 outcome-before selection。未来它只能从 V2.42.00 已选 baseline bytes 派生独立 no-entropy system baseline arm；dev64 只作工程/同预算门，可报告分数必须 fresh exact220、official evaluator、failure-as-zero、全新 output roots、no-resume、相同 model/search backend/user prompt/output contract/budget/attempts，并逐字继承容量 freeze。方法特定 system instructions 允许不同，但必须预先冻结/披露且全部 input tokens 计成本。未实现的 sibling experience 与 no-Web-Probing 不得冒充消融。
+>
+> 当前资源门仍未释放：R1 `164/220 = 34 completed + 130 failed`、剩余 56、checkpoint fresh；V2.41.96 等待 R1 release，V2.41.97 等待 capacity pair，V2.42.00 六条 source 全 waiting，9878 正被健康 R1 forward 使用。所有受保护 PID/start ticks 未变化，因此本轮未 signal/restart/resume/rerun，也未调用 GPT-5.6/search/evaluator 或启动重复全集。**
 >
 > **5.18 V2.42.01 仓库内 DAG 重放、WebSwarm 复现边界与递归可靠性增量（2026-07-31 09:34 UTC）：新增 build-only replay 完全在内存文件图中重建 `schema68→71→72`、`68→73`、`68→74`、`72+73+74→75`、`68→69→70`、`75+70→76`、`76→77`，并与 10 个冻结 publication manifest 逐 byte 相等。它不读取 sibling candidate tree、task state、prediction、mapping/gold/category/evaluator/score，不物化候选、不联网、不调用模型/search/fetch，也无 benchmark launch 权限。create-exclusive receipt [`results/v24201_repo_local_candidate_dag_replay_v1_20260731.json`](results/v24201_repo_local_candidate_dag_replay_v1_20260731.json) SHA `cee95e89…bdb2a6f`，定向测试 `5/5`；代码/测试/收据已提交 `1c5b117` 并推送，远端逐 SHA 一致。现有 R1 与 V2.41.87/93/94/95/96/97/98/99/42.00 PID/start ticks 均未变化。
 >
