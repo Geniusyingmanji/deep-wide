@@ -1,10 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.23
+> 版本：5.24
 >
-> 更新：2026-07-31 10:42 UTC
+> 更新：2026-07-31 10:53 UTC
 >
-> 当前覆盖：**V2.42.03 已对 V2.42.00 的 36 个预冻结 successor decision 完成 outcome-independent 可物化性审计：3 个空组件决策只有 byte-exact baseline identity handoff，33 个非空决策均缺少 selected-baseline-bound publication 与联合冲突/回归收据，不能物化。V2.42.03 不是 package builder、package gate 或质量结果，也不授权 benchmark forward/full220。V2.42.02 WebSwarm adapter 仍仅为未来独立无熵系统基线，不进入 V2.42.00 主线组件。现有 R1 与 watcher 全部保留；最新已核验的安全聚合仍为 164/220，尚无正式 DeepWideBench 全集分数、提升或 SOTA。**
+> 当前覆盖：**V2.42.05 已在不读取 live decision/status、benchmark 内容或结果的前提下，完成 V2.42.00 全部 36 个冻结 decision 的 Markdown rebase feasibility audit：3 个 identity handoff ready，2 个 P12 历史字节路径仍需 post-decision binding，2 个 schema76/77 Markdown 路径 hook-compatible 但未 publication，2 个 Markdown+scope 路径另需零字节 namespace alias，27 个含 search/entropy 的路径继续因 implementation authority 阻塞。该审计不构建 candidate、不运行 package gate，也不授权 benchmark forward/full220。现有 R1 与 watcher 全部保留；正式 DeepWideBench 全集分数、提升或 SOTA 仍不存在。**
+>
+> **5.24 V2.42.05 Markdown rebase feasibility audit（2026-07-31 10:53 UTC）：纯 repo-local 审计从 V2.42.01 的 frozen in-memory DAG 逐 byte 重放 schema69/70/76/77，并只用 V2.42.00 已冻结的 content-free component names 分类 36 个 decision。分类计数固定为 `3/2/2/2/27`：3 个空组件 identity handoff；2 个 P12 schema69/70 历史字节路径需未来 selected-package binding；schema76/77 各有一个 Markdown-only 路径可复用生产 hook、各有一个 Markdown+scope 路径还需 namespace alias；其余 27 个组合只要含 search-yield 或 entropy 就在 publication 前 fail-closed。
+>
+> 审计还纠正了一个重要实现事实：对已含主线 scope hook 的 schema76/77 再机械应用历史 V2.41.04 branch-scope patch **不会天然抛错**，而会生成第二份 scope import、fallback call 与 audit write。安全结论因此是“V2.42.05 检测到重复 hook 后主动拒绝该路径”，不能写成历史 patch 自带重复保护；未来 branch scope 必须采用零字节 namespace alias/attestation，不能重打 patch。
+>
+> create-exclusive 收据 [`results/v24205_markdown_rebase_feasibility_audit_v1_20260731.json`](results/v24205_markdown_rebase_feasibility_audit_v1_20260731.json) 文件 SHA `271151d8…315c1c`、payload SHA `c1bc86b9…7953bd`。定向测试 `8/8`、V2.42.00–05 联合回归 `85/85`，compile、真实 isolated CLI 与禁止 label/evaluator 输入及网络/进程能力扫描通过。该收据明确 `candidate_tree_or_package_materialized=false`、implementation/package-gate/lease/API/full220 authority 全 false；它不是 publisher、selected package、质量结果或 benchmark 提分。V2.42.04 watcher 继续等待 V2.42.00 terminal decision，任何后续 publication 仍必须在 terminal decision 后按 selected baseline 单独授权与冻结。**
 >
 > **5.23 V2.42.04 post-decision work-order bridge 冻结与安全启动（2026-07-31 10:42 UTC）：新增纯 work-order 模块在任何质量 outcome 前枚举全部 36 个 content-free successor decision，并将每个 decision 的完整 V2.42.00 payload 与 SHA-256 重新绑定。3 个空组件分支只允许复用 `p12/schema76/schema77` 已冻结 publication 做 byte-exact identity handoff；33 个非空分支只产生 blocked integration work order，逐项保留 search-yield、Markdown、Markdown-scope 和 entropy controller 的 authority blocker。任何 work order 均不授权 component publisher、candidate build/merge/materialization、package gate、lease、模型/search/fetch/evaluator、full220 或 leaderboard；尤其 entropy GO 仍只有 design authority，必须另行取得 implementation authority。
 >
