@@ -1,12 +1,18 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.21
+> 版本：5.22
 >
-> 更新：2026-07-31 10:37 UTC
+> 更新：2026-07-31 10:31 UTC
 >
 > 当前覆盖：**V2.42.03 已对 V2.42.00 的 36 个预冻结 successor decision 完成 outcome-independent 可物化性审计：3 个空组件决策只有 byte-exact baseline identity handoff，33 个非空决策均缺少 selected-baseline-bound publication 与联合冲突/回归收据，不能物化。V2.42.03 不是 package builder、package gate 或质量结果，也不授权 benchmark forward/full220。V2.42.02 WebSwarm adapter 仍仅为未来独立无熵系统基线，不进入 V2.42.00 主线组件。现有 R1 与 watcher 全部保留；最新已核验的安全聚合仍为 164/220，尚无正式 DeepWideBench 全集分数、提升或 SOTA。**
 >
-> **5.21 V2.42.03 successor 可物化性审计与执行链闭包（2026-07-31 10:37 UTC）：V2.42.00 只对三层 baseline 与四个 eligible component 做 outcome-before 层级决策；它明确没有 candidate build/merge/freeze 或 package-gate 权限。V2.42.01 又只证明十个历史 publication 可在仓库内逐 byte 重放，不会自动把独立 publication rebase 到未来选中的 baseline。新增纯函数审计因而穷举并 fail-closed 分类全部 36 个 terminal decision：每个 `p12/schema76/schema77` 各有一个空组件决策，可复用该 baseline 已冻结字节做 identity handoff；其余 33 个非空决策全部 `frozen_package_bytes_available=false`，禁止静默丢组件或退化为 baseline。
+> **5.22 MAPD/ACM/trajectory-reliability 与 WebSwarm 执行边界增量（2026-07-31 10:31 UTC）：对 07-21 至 07-31 的 `deep research`、`web/agentic search`、`swarm`、`multi-agent`、`delegation` 和 `research/search agent` 做两组公开 arXiv Atom 日期查询，与既有 120 篇按 ID 去重。全文核验 MAPD、ACM 与 Silent Failures 三篇，摘要级核验 OrchBench、HalluProp、$\Sigma$-Mem、SafeFlow、Context Assembly 和 AgentRadio，共将 survey 参考文献扩展到 129 篇。[121–129] MAPD 已占据“离线 swarm 轨迹经 style-normalized protocol 蒸馏到单 agent”的相邻空间；其 task type、gold、success label 与 repair diagnosis 均属 privileged synthesis，不能进入 label-blind runtime。ACM 已占据 agent-initiated reversible context offload，但其 timing teacher 读取 reference answer，因此只可作为离线基线。Silent Failures 又表明 wrong-evidence-right-answer 和 over-retrieval laundering 会让正确终局掩盖错误 provenance。
+>
+> WebSwarm/no-entropy baseline 因而新增四层系统消融，而不是直接扩大 agent 数。第一层用 OrchBench-style content-free simulation 分离 orchestration plan 与 worker 能力；第二层比较 staged handoff、bounded async peer message 与无 sibling communication；第三层比较 raw trace imitation、structured protocol、outcome-only 与 protocol-plus-outcome training；第四层对每条 child return 强制 active evidence、root scope、source dependency、reliability source 与 semantic taint。context offload 另与同状态 continue-search、answer/abstain 比较，并保存可逆原文 ID。所有 privileged teacher/gold/evaluator 信息只允许预测冻结后的离线训练或诊断，禁止回灌同一 evaluated forward。
+>
+> 这些近邻不改变 V2.42.03 的执行阻塞，也没有产生 DeepWideBench 分数。吞吐高并发仍只由 `1/2/4/8/12 × 3 waves` 的中性容量阶梯决定；单题 agent 数、通信拓扑、context manager 与 executor 并发必须分别冻结、分别计 token/tool/wall-clock。当前 R1 和所有 watcher 继续健康运行，9878 仍由唯一 R1 worker 占用，因此本轮只访问公开 arXiv 元数据/PDF，没有调用 GPT-5.6、项目 search/fetch API、evaluator 或用户提供的 Tavily key，也没有 signal/restart/resume/rerun 或启动重复全集。**
+>
+> **5.21 V2.42.03 successor 可物化性审计与执行链闭包（2026-07-31 10:23 UTC）：V2.42.00 只对三层 baseline 与四个 eligible component 做 outcome-before 层级决策；它明确没有 candidate build/merge/freeze 或 package-gate 权限。V2.42.01 又只证明十个历史 publication 可在仓库内逐 byte 重放，不会自动把独立 publication rebase 到未来选中的 baseline。新增纯函数审计因而穷举并 fail-closed 分类全部 36 个 terminal decision：每个 `p12/schema76/schema77` 各有一个空组件决策，可复用该 baseline 已冻结字节做 identity handoff；其余 33 个非空决策全部 `frozen_package_bytes_available=false`，禁止静默丢组件或退化为 baseline。
 >
 > 四类 blocker 保持各自 authority 边界。`search_yield_shared_query` 目前只有未来 GO 后的 design/build-only integration authority，没有 publication；历史 Markdown schema69 candidate 未绑定未来选中的 baseline，schema76/77 均需 rebase；Markdown branch scope 的历史 schema70 publication 还必须与主线 scope 分命名空间重放；entropy controller 即使未来 GO 也只授权设计，尚无 implementation、pilot 或 full220 authority。任何非空组合还共同缺少 post-decision joint conflict audit 与联合行为回归，因此独立组件 GO 不能推出 union package 可执行或更优。
 >
