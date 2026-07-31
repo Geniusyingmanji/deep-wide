@@ -1,10 +1,20 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.39
+> 版本：5.40
 >
-> 更新：2026-07-31 20:16 UTC
+> 更新：2026-07-31 21:00 UTC
 >
-> 当前覆盖：**V2.42.11–13 已冻结 label-blind entropy/VOC runtime 与 selected-component 链；V2.42.14 的错误路径 namespace 已 fail closed，V2.42.15 以新 namespace 恢复 joint-package 链且仍在等待 V2.42.13。V2.42.16 已安全激活 fresh cold-start paired dev64 package gate，V2.42.17 是不修改 V2.41.94/96 的唯一 post-gate capacity successor。V2.42.18 已冻结并激活唯一 single-owner fresh exact-220 executor，目前只读 V2.42.16 安全 envelope；execution-start、四个 fresh roots、lease、preflight、model/search、forward、mapping/evaluator 与 result 均未打开。R1 和全部上游健康 watcher 保留；2026-07-31 20:16 UTC 的权威 label-blind 快照为 `181/220 = 35 completed + 146 failed`，剩余 39。该值只是 forward 终态进度，不是 DeepWideBench 分数；released evaluator、Avg@4、提升、entropy/credit 效果和 SOTA 仍不存在。**
+> 当前覆盖：**V2.42.11–13 已冻结 label-blind entropy/VOC runtime 与 selected-component 链；V2.42.14 的错误路径 namespace 已 fail closed，V2.42.15 以新 namespace 恢复 joint-package 链且仍在等待 V2.42.13。V2.42.16 已安全激活 fresh cold-start paired dev64 package gate，V2.42.17 是不修改 V2.41.94/96 的唯一 post-gate capacity successor。V2.42.18 已冻结并激活唯一 single-owner fresh exact-220 executor，目前只读 V2.42.16 安全 envelope；execution-start、四个 fresh roots、lease、preflight、model/search、forward、mapping/evaluator 与 result 均未打开。V2.42.19 已冻结并激活独立的 post-terminal search-time-contamination watcher，只读 V2.42.18 的 preterminal 安全 envelope，尚未打开 manifest/evidence 或创建审计报告。R1 和全部上游健康 watcher 保留；2026-07-31 21:00 UTC 的权威 label-blind 快照仍为 `181/220 = 35 completed + 146 failed`，剩余 39。该值只是 forward 终态进度，不是 DeepWideBench 分数；released evaluator、Avg@4、提升、entropy/credit 效果和 SOTA 仍不存在。**
+>
+> **5.40 V2.42.19 post-terminal contamination audit、安全激活与 context/latency 近邻补漏（2026-07-31 21:00 UTC）：V2.42.19 将 Search-Time Contamination 的审计冻结在 V2.42.18 exact-220 result 与 forward barrier 都封印之后。审计器不联网、不调用模型/搜索/evaluator、不申请 shared lease，也不修改 forward、result 或 watcher。输入只有 exact `{opaque_id, question}` manifest 与同题终态 evidence 的 `{id, kind, url, source_family, title, text, fingerprint}` 投影；query、prediction、mapping、gold、category、question_type、split 和 evaluator score 均不进入检测。query 本来由可见题面生成，因此 query–question 重叠不作为污染信号。
+>
+> 自动检测分为 BML candidate、QCL candidate 与 EAL candidate。BML 使用 artifact/dataset URL、benchmark marker 与 opaque-ID 暴露；QCL 使用规范化题面与已持久化 `kind=page` evidence 的最长连续公共片段，主敏感度阈值冻结为 ratio `0.50` 且至少 80 字符，另报 `0.25/0.50/0.75` 三档。Wang et al. 没有发布可直接移植的 QCL 二元阈值，故这些阈值是本项目的预注册 sensitivity grid，不冒充论文设置。严格 EAL 还要求对应 gold answer 与原题明确成对出现；label-blind scanner 不读 gold，所以只能输出 `EAL candidate / manual review required`，不能自动确认 EAL。[35]
+>
+> protocol SHA `d7923f65…e0a61`、decision SHA `c5dcbea7…c0c4`、12-file control manifest SHA `4784cb91…5737`；activation SHA `3355de78…a8759`、wait-audit SHA `38f2d222…fbeaa`。唯一 isolated watcher PID `3141508`、start ticks `747867111`，当前 `waiting_for_v24218_exact220_terminal / parent_preterminal`。冻结前完整套件 `21/21`；当前生命周期可安全重放子集 `20/20`，只排除 activation 后必然不再 pristine 的 live freeze 断言。完整 unittest discovery 以 exit code 0 完成。V2.42.18 的 28 个 live control files 仍逐 SHA 匹配，R1 与 V2.42.13/15/16/17/18 PID/start ticks 全部保持，未 signal、restart、resume、rerun 或重复启动。实现、freeze、activation 三次精确提交 `4430335 / 4425424 / a06030c` 均已推送。
+>
+> 官方 primary result 始终保留完整 220 分母与 failure-as-zero；污染命中不能被删题后冒充主分数，只能另报 contamination-sensitive analysis。可提交 `results/` 报告只含聚合、哈希和 flag，逐题 detail 留在被 Git 忽略的 `outputs/`，不输出题面、query、页面正文、原始 URL 或 task ID。当前 runtime 只持久化 query-focused page evidence，而非整页原文，所以 scanner 不能排除未保存页面部分中的污染；EAL candidate 必须由隔离的人工/独立审计确认。detail/report 目前均 absent，尚无污染率结果。
+>
+> 文献增量新增 AdaCoM 与 SpecHop，去重清单扩为 162 篇。[161,162] AdaCoM 训练外部 manager 对冻结 agent 的当前上下文做保留、删除、重写或合并，说明“冻结模型外的可学习 context controller”已有直接工作；其 transfer 依赖 agent capability，不能当通用四层 controller 证据。SpecHop 用快速但不可靠的 speculator 维持异步线程，再以 target-tool observation 验证、commit 或 rollback；它保持目标轨迹的前提依赖 verifier 与 faster-speculator 假设，并用额外并行调用换 wall-clock。后续对照新增 `append-only / fixed summarization / AdaCoM-style external manager` 与 `sequential / read-only next-call speculation / SpecHop verify-and-rollback`，分别报告 constraint retention、load-bearing evidence loss、真实 tail latency、错误 speculation、取消/浪费请求和总模型/工具成本。二者都不是 entropy 或质量提升的替代证据。**
 >
 > **5.39 V2.42.18 exact-220 executor 冻结激活、label-blind 复核与 termination/utility 近邻补漏（2026-07-31 20:16 UTC）：V2.42.18 已把 post-package、post-capacity 的全集执行路径冻结为一个 shared-lease owner。它只接受 V2.42.16 的合法 package identity/GO 和 V2.42.17 的合法 capacity GO；空组件 identity handoff 取 selected baseline bytes，package GO 取 joint candidate bytes。canonical partition 固定为 fresh `52/52/52/64=220`。每个 wave 先并发完成所有 shard 的 fresh preflight，再并发 forward；四 shard 全部 exact-terminal 后才允许打开 mapping 与 released evaluator。整次 fixed concurrency、no-resume、no selective retry、failure-as-zero。`executor_concurrency`、`agent_width=1` 与按 query/URL/content/source/evidence-set 去重的 `effective_evidence_width` 分开记录。
 >
@@ -758,7 +768,7 @@ V2.26 随后从剩余 10 个无历史 forward artifact 的 dev opaque ID 中按�
 
 - 精确 DOM/PDF evidence span 与 claim-level evidence graph；V2.21.1 能抽取正文，
   但当前仍保存截断正文块，且历史 V2.20.3/20.4 replay 未保存追加 search batch。
-- source dependency/镜像聚类与 search-time contamination scanner。
+- source dependency/镜像聚类；V2.42.19 scanner 已冻结，尚待 exact-220 终态报告、EAL 人工复核和整页 capture 盲区审计。
 - 经过真实 development/held-out 数据验证的 unseen-mass、row eligibility、cell semantic 与 terminal-risk 校准；当前实现包含 schema、proxy 和 synthetic tests，但没有可发布的实证 calibration。
 - 通过 Gate-2A 的 action-response estimator。V2.42.11 runtime 已能执行选择，但模型尚未由真实 prospective same-state/equal-cost 数据解锁。
 - selected entropy component 的双父终态 publication、V2.42.15 terminal joint package publication、独立同 dev64 package gate 和 single-owner exact-220 execution。joint-package builder/validator 已实现并冻结，但父链未终态，故真实 package 仍不存在。
@@ -1033,8 +1043,10 @@ $\operatorname{RelIG}$ 只计算与 $A,M,R,Y$ 有关的信息，且除 log-loss 
 
 - 查询生成时禁止 benchmark 名、arXiv 论文名、instance id 与原问题长字符串整段复制。
 - 对返回 URL/正文扫描 GitHub、HuggingFace、benchmark repo、answer table 和问题文本高重合。
-- 命中污染来源的样本保留审计记录但不计主结果；另报 contamination-sensitive analysis。
-- 保存完整 URL、query、时间戳、页面 hash 与 evidence span，保证可追溯。
+- 官方 primary result 始终保留 all-220 分母与 failure-as-zero；污染命中样本不得删除。另报 contamination-sensitive analysis，并明确它不是主分数。
+- BML、QCL 与 EAL 必须分层报告。URL/repository 命中不能自动当作答案泄漏；EAL 只有在原题长连续片段和对应答案明确成对出现时才能确认。
+- runtime label-blind scanner 不读取 gold，因此自动输出只能是 BML/QCL/EAL candidate 与 manual-review flag。确认 EAL 的人工或独立 judge 审计必须在 forward 封印后隔离进行。
+- 私有审计记录保存 URL/query/时间戳、页面 hash 与 evidence span；可提交聚合只保留哈希、计数与 flag。当前只持久化 query-focused evidence，未保存整页部分属于明确的检测盲区。
 
 ### 5.4 人工标注
 
@@ -1752,7 +1764,7 @@ Rollout 2 的目的，是在 R1 释放评分后验证 P0/P1/P2 的全集效果�
 3. 分别报告 internal-test 156、consumed dev+validation 64 与 all-220；报告 completed/failed、SR、Entity、Row/Item/Column P/R/F1、模型/搜索调用、tokens、fetches、墙钟及账本一致性。
 4. 将 rollout 1 与历史 GPT-5.5 单 rollout 220/220 及论文强基线比较。只有在同协议指标有竞争力且污染/证据审计通过后，才追加 rollout 2–4 并计算 Avg@4/Max@4/Pass@4；否则先修复通用失败簇。
 5. 逐列汇总 planned queries、新页面、支持格数和单位成本，验证列公平是否产生实际 evidence yield，避免把“query 覆盖”误写成“质量提升”。
-6. entropy/credit 继续 `none_shadow_only`；从本次冻结轨迹准备 30–50 个 state-matched intervention，并补 exact evidence span、source-dependency clustering 与 contamination scanner。
+6. entropy/credit 继续 `none_shadow_only`；从本次冻结轨迹准备 30–50 个 state-matched intervention，并补 exact evidence span、source-dependency clustering、V2.42.19 post-terminal report、EAL 人工复核与整页 capture 盲区审计。
 
 当前全集运行拓扑固定如下，任何后续状态汇报都必须按这五段汇总，不能把首题隐藏或补跑：
 
