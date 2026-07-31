@@ -1,10 +1,18 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.37
+> 版本：5.38
 >
-> 更新：2026-07-31 18:32 UTC
+> 更新：2026-07-31 19:03 UTC
 >
-> 当前覆盖：**V2.42.11–13 已冻结 label-blind entropy/VOC runtime 与 selected-component 链；V2.42.14 的错误路径 namespace 已 fail closed，V2.42.15 以新 namespace 恢复 joint-package 链且仍在等待 V2.42.13。V2.42.16 已另行冻结并安全激活 fresh cold-start paired dev64 package gate；唯一 watcher 只读 V2.42.15 安全 envelope，尚未打开 publication、paired roots、lease、model/search、mapping/evaluator、capacity 或 full220。R1 和全部上游健康 watcher保留；最新权威 label-blind 安全聚合为 `177/220 = 35 completed + 142 failed`，剩余 43。该值只是 forward 终态进度，不是 DeepWideBench 分数；released evaluator、Avg@4、提升、entropy/credit 效果和 SOTA 仍不存在。**
+> 当前覆盖：**V2.42.11–13 已冻结 label-blind entropy/VOC runtime 与 selected-component 链；V2.42.14 的错误路径 namespace 已 fail closed，V2.42.15 以新 namespace 恢复 joint-package 链且仍在等待 V2.42.13。V2.42.16 已另行冻结并安全激活 fresh cold-start paired dev64 package gate。V2.42.17 已作为不修改 V2.41.94/96 的唯一 post-gate capacity successor 安全激活，目前只读 V2.42.16 安全 envelope；publication、paired roots、lease、execution-start、model/search、mapping/evaluator、capacity report/freeze 与 full220 权限均未打开。R1 和全部上游健康 watcher 保留；2026-07-31 19:03 UTC 的权威 label-blind 快照为 `179/220 = 35 completed + 144 failed`，剩余 41。该值只是 forward 终态进度，不是 DeepWideBench 分数；released evaluator、Avg@4、提升、entropy/credit 效果和 SOTA 仍不存在。**
+>
+> **5.38 V2.42.17 capacity successor、安全接力与 ConMem 补漏（2026-07-31 19:03 UTC）：旧容量链存在永久互锁。健康的 V2.41.94 没有 execution activation，已激活的 V2.41.96 又必须持续让位于 V2.41.94，而冻结合同禁止终止、重启或修改两者。V2.42.17 因而只接受 V2.42.16 的 terminal GO 或空组件 identity handoff；随后要求连续两次 quiet observation、唯一 shared lease，以及 client/API 之前 create-exclusive execution-start。start 已存在而 report 缺失时永久 `terminal_incomplete_no_retry`；report 已封印而 freeze 缺失时只能重建 freeze，禁止重新探测。
+>
+> protocol SHA `5a003bd0…45bb`、decision SHA `4deb1e37…e7d`、control manifest SHA `06c2be17…da7b`。唯一 isolated watcher PID `2958300`、start ticks `747175782`；activation SHA `b73fc14f…90f8`，wait-audit SHA `20a19f8e…8c68`，当前 `waiting_for_v24216_package_gate_terminal / parent_preterminal`。定向测试 `10/10`。wait audit 证明 V2.41.94/96 仍按冻结 PID/start-ticks 运行，legacy execution activation/report/freeze 与 V2.42.17 execution-start/report/freeze 全 absent，lease/API/search/evaluator/full220 均 false。提交 `198d43d` 已推送；没有 signal、restart、resume、rerun 或重复全集。
+>
+> 07-30 至 07-31 的最新分类窗口按 arXiv ID 与现有 157 篇去重后，新增直接近邻 ConMem（arXiv:2607.28126v1），清单扩为 158 篇。该文把 inspection-log evidence units 的 Shapley-style downstream-utility contribution 用于 memory retention/eviction，说明“按贡献保留信息”和 Shapley memory credit 也已有直接工作。它使用固定工业日志、训练期 utility 与后续确认异常，不处理 live web、开放集合 unseen mass、四层 DeepWide 风险或 label-blind 在线动作。credit 对照新增 `ConMem-style pruned Shapley memory valuation`，并与 raw entropy、HiMPO recoverability、WikiLoop paired utility、Bridge-Evidence replay 和固定 continuation task delta 分开报告。WebSwarm 与 SearchSwarm 经官方 arXiv API 复核仍为 v1。
+>
+> “开大并发”固定拆成三个不可互换的轴。跨题 executor concurrency 只由 V2.42.17 的 `1/2/4/8/12 × 3 waves` 中性容量阶梯决定，并在整次 fresh exact-220 固定；单题 swarm width 另做 `1/2/4/8` 同总预算消融；有效信息宽度按 query intent、URL/content、source dependency 与 evidence-set overlap 去重后计算。名义 agent 数或 wall-clock 加速不得当作质量机制。不可逆顺序为 `R1 220/220 → released evaluator → selected publications → V2.42.15 joint package → V2.42.16 paired dev64 GO → V2.42.17 two-quiet + unique-lease capacity ladder → capacity freeze → separate single-owner activation → fresh 52/52/52/64`。当前第二个全集仍不得启动。**
 >
 > **5.37 V2.42.16 paired package gate、SearchSwarm 补漏与全集容量边界（2026-07-31 18:32 UTC）：V2.42.16 不复用历史 baseline，而是在同一组 opaque dev64 ID、同一 model/search/runtime/evaluator 合同下运行 baseline 与 candidate 两个 fresh cold-start arm。两臂都 exact-terminal 之前 mapping/evaluator 物理关闭；failure-as-zero、no-resume、no-selective-rerun。completion 与 whole-table 不下降、每个 quality component delta 不低于 `-0.005`、token ratio 不超过 `1.05`、所有非空组件 strict activation，且 completion `+1`、whole table `+1` 或 quality composite `+0.001` 至少满足一项，才可 GO。GO 只授权中性容量测量和另行 all-220 freeze，绝不直接授权 benchmark launch。
 >
@@ -1199,12 +1207,15 @@ I_{ij}=v(\{i,j\})-v(\{i\})-v(\{j\})+v(\varnothing).
 16. label-blind WebSwarm adapter，仅从 visible question/input 与本轮 evidence state 选择 atom/deep/wide/entity_collect，并固定 official evaluator、no-resume、failure-as-zero；同时运行 no-recursive、all-to-wide、all-to-deep、no-Web-Probing 与 no-sibling-experience 消融。
 17. SearchSwarm-style delegation/context baseline：同一骨干下比较 no-delegation、只开放 subagent tool schema、完整 briefing/citation harness 与训练式委派；子报告必须保留原始 evidence ID，主 context 节省与全系统成本分开报告。[157]
 18. CHILL-style two-gate controller：第一门在 admissible workflow 中排序 estimated task/resource advantage，第二门只在选中项相对 factual workflow 超过预注册 authorization margin 时执行，否则保持 factual workflow。[119]
+19. ConMem-style pruned Shapley memory baseline：只在预测完成后的离线 dev/credit audit 中，用相同 pre-write state、冻结 downstream consumer 与相同 memory budget 估计 evidence-unit coalition value；同时报告 utility-call 成本、ranking stability、unrelated-query regression 与 held-out task-value correlation。[158]
 
 只有 Phase D1 过门后才跑 controller 全量。
 
 吞吐并发与单题协作机制分开实验。吞吐由中性容量阶梯选定并在整次 all-220 固定；WebSwarm/MANTA 式单题协作另做 `agent_count ∈ {1,2,4,8}`、`refinement_rounds ∈ {0,1,2}`、`topology ∈ {single,fixed-tree,fixed-graph,bounded-adaptive}` 的同预算曲线。再加入 planner/delegator 与 child/executor 的独立模型容量轴，固定 answer renderer 和总预算，比较大 planner+小 child、小 planner+大 child、同模型三种角色分配；Think Big, Search Small 只作为容量假设来源，不能替代 DeepWide 实测。[120] 先比较单 agent、two-call self-refinement 与固定拓扑，再允许 bounded-adaptive topology；报告每个点的质量、格式失败、重复 evidence、tokens、tool calls 与 wall-clock，不假设曲线单调。Scaling LLM-Driven MAS 的 1/3/5/7-agent 峰值与一致性结果只用来预注册“中档可能最优”的反例；本项目仍按自己的容量和任务曲线选点，不能照搬其 5-agent 结论。[137]
 
 SearchSwarm 式子代理必须再拆出 context-compression effect。主代理只接收 brief/report 的 arm 与主代理可访问完整子轨迹的 arm共享相同原始检索、模型和总预算；报告 main-context token、child-context token、全系统 token、load-bearing claim retention、citation/provenance retention、错误摘要传播和重复搜索。[157] 如果质量变化只能由隐藏更多原始工具输出解释，不能归因于四层风险或 delegation intelligence。
+
+ConMem 式 memory valuation 与 temporal search-step credit 分开。它只比较固定 memory units 的 coalition marginal utility，不得把 benchmark label、gold、reference evidence 或 evaluator score反馈给同一题的 runtime。若 pruned-Shapley 排序不能在 held-out fixed continuation 上稳定预测终局 task delta，或其收益来自训练/测试查询分布重叠，则只能称 memory-retention heuristic，不能作为 OWIC 的因果 credit 证据。[158]
 
 每个候选行另报告 conjunction completeness：必需 predicate 中有地址化支持的比例、任一 gold/candidate hit、complete-first success 和部分满足 distractor 排名。n-Clue 的 `81.1%` gold discovery 与 `35.8%` complete-first 只说明两种 estimand 会分离，不能作为本项目门槛；DeepWide 阈值必须在自己的 development split 冻结。[139]
 
@@ -1404,7 +1415,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 
 ### 8.6 并发、agent 数与 topology 专项消融
 
-- 跨题吞吐并发：由 V2.41.96 中性 `1/2/4/8/12 × 3 waves` 容量阶梯决定，只比较吞吐、排队、429/5xx、超时与 tail latency；
+- 跨题吞吐并发：由 V2.42.17 复用的中性 `1/2/4/8/12 × 3 waves` 容量阶梯决定，只比较吞吐、排队、429/5xx、超时与 tail latency；它在 V2.42.16 GO、两次 quiet observation、唯一 lease 和 execution-start-before-client 合同之后才可测量。V2.41.96 仅保留为不可修改的 legacy watcher；
 - 单题 agent 数：`1/2/4/8`，总 token、tool calls、page reads 与最大 wall-clock 预算相同；
 - 角色模型容量：planner/delegator 与 child/executor 分轴扫描，固定 renderer、action menu、总生成/输入 token、tool/page 和 wall-clock；报告质量、成本与 route error，不能由跨题并发档位推断角色容量最优；
 - refinement rounds：`0/1/2`，保留 two-call self-refinement 作为简单强基线；
@@ -1412,6 +1423,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 - simple allocation：按每个方法实际生成 token 匹配 independent-search sampling 曲线；聚合器预先冻结为 evidence-equivalence 去重、canonical-row merge 与 provenance-aware cell vote；
 - 每个点同时报告 DeepWide 质量、communication/format failure、evidence overlap、route/round engagement、premature false success、correct-intermediate overwrite 与全部输入/输出成本，检查非单调性；
 - 由 query intent、URL/content、source dependency 与 evidence-set overlap 估计 effective independent branch count；nominal `agent_count` 不得直接当作 width；
+- 日志显式保存 `executor_concurrency`、`agent_width` 与 `effective_evidence_width`。第一项只描述跨题吞吐，第二项描述单题名义分支，第三项才描述去相关后的信息通道；三者禁止共用一个 `parallelism` 字段；
 - 只有同预算质量提高可归因于协作机制，单纯 wall-clock 缩短只能称吞吐加速。
 - sibling/experience memory 增加 `source_state -> current_state` compatibility receipt；比较 no-memory、verbatim replay 与 state-conditioned critique/reconstruction。任何历史 success、benchmark category 或 evaluator correctness 都不得成为当前 forward 的 memory key 或 route signal。[142]
 - 若采用 Bayesian workflow uncertainty，token log-prob 必须先在独立 development data 校准为 task-level confidence；静态 DAG 只列 monitor baseline，另以实际 execution trace 表示 feedback、重复执行和 revision，不把 DAG posterior 当作正确性证明。[138]
