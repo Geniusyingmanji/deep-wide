@@ -1,10 +1,18 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.36
+> 版本：5.37
 >
-> 更新：2026-07-31 17:39 UTC
+> 更新：2026-07-31 18:32 UTC
 >
-> 当前覆盖：**V2.42.11–13 已冻结 label-blind entropy/VOC runtime 与 selected-component 链；V2.42.14 又冻结 36-decision deepest-owner/parent-chain joint package，但 activation 后交叉常量审计发现 entropy stage 把实际 V2.42.13 `selected_entropy_component_publication` 错绑定成不存在的 `...recovery_publication`。V2.42.14 因而在 parent 仍 preterminal、selected work order/publications 全未打开时 fail closed；唯一新 watcher 已终止，protocol/activation/state/失败审计密封且禁止同 namespace 重启。V2.42.15 使用全新 namespace，只修正 18 个 entropy decision 的 source path 与派生 seal，18 个非 entropy decision 逐字不变；现已 create-exclusive 激活并进入 `waiting_for_v24213_entropy_recovery_terminal`。当前 selected content、joint candidate/publication、package gate、dev64、lease、API 与 full220 均为 absent/false。R1 和全部上游健康 watcher 保留；最新权威 label-blind 安全聚合为 `177/220 = 35 completed + 142 failed`，剩余 43。该值只是 forward 终态进度，不是 DeepWideBench 分数；released evaluator、Avg@4、提升、entropy/credit 效果和 SOTA 仍不存在。**
+> 当前覆盖：**V2.42.11–13 已冻结 label-blind entropy/VOC runtime 与 selected-component 链；V2.42.14 的错误路径 namespace 已 fail closed，V2.42.15 以新 namespace 恢复 joint-package 链且仍在等待 V2.42.13。V2.42.16 已另行冻结并安全激活 fresh cold-start paired dev64 package gate；唯一 watcher 只读 V2.42.15 安全 envelope，尚未打开 publication、paired roots、lease、model/search、mapping/evaluator、capacity 或 full220。R1 和全部上游健康 watcher保留；最新权威 label-blind 安全聚合为 `177/220 = 35 completed + 142 failed`，剩余 43。该值只是 forward 终态进度，不是 DeepWideBench 分数；released evaluator、Avg@4、提升、entropy/credit 效果和 SOTA 仍不存在。**
+>
+> **5.37 V2.42.16 paired package gate、SearchSwarm 补漏与全集容量边界（2026-07-31 18:32 UTC）：V2.42.16 不复用历史 baseline，而是在同一组 opaque dev64 ID、同一 model/search/runtime/evaluator 合同下运行 baseline 与 candidate 两个 fresh cold-start arm。两臂都 exact-terminal 之前 mapping/evaluator 物理关闭；failure-as-zero、no-resume、no-selective-rerun。completion 与 whole-table 不下降、每个 quality component delta 不低于 `-0.005`、token ratio 不超过 `1.05`、所有非空组件 strict activation，且 completion `+1`、whole table `+1` 或 quality composite `+0.001` 至少满足一项，才可 GO。GO 只授权中性容量测量和另行 all-220 freeze，绝不直接授权 benchmark launch。
+>
+> protocol SHA `5ad2ba72…b714`、decision SHA `d20b536a…88ab`、activation SHA `fe3f2851…e30e`、wait-audit SHA `75f70b05…1dcb`。唯一 watcher PID `2889939`、start ticks `746969965`，当前 `waiting_for_v24215_joint_package_terminal`。定向实现、runner、watcher、preregistration、activation 与 wait-audit 测试 `15/15`；manifest loader 要求输入精确为 `{opaque_id, question}`，forward `run_task` 只读取这两个字段。当前 publication、pair prepare/barrier、两个 arm result、gate decision、capacity activation/output 与 full220 权限均 absent/false；未发送任何 signal，未重启或复制健康 benchmark/watcher。
+>
+> 文献补漏新增 SearchSwarm（arXiv:2606.09730v1）并将去重清单扩为 157 篇。该文把 `call_sub_agent` 明确解释为主动 context management：独立子 context 只回传带引用的压缩报告，再用成功 harness 轨迹 SFT 内化委派。由此，训练 delegation intelligence、independent-context subagents 和 report compression 均不能作为本项目宽泛创新。实验新增 `no delegation / tool-schema only / full harness / trained delegation / WebSwarm / four-layer VOC` 同预算分解，并报告主/子 context token、摘要遗漏、provenance retention、总 tool calls 与 wall-clock；其 BrowseComp 等分数不与 DeepWideBench 横比。
+>
+> exact-220 高并发顺序保持：`R1 220/220 → released evaluator → selected parents/publications → V2.42.15 joint package → V2.42.16 paired dev64 GO → 1/2/4/8/12 × 3 neutral capacity waves → single lease owner → fresh 52/52/52/64`。容量选择最大连续安全档并在整次运行固定；现在启动第二个全集、提前探测容量或绕过 package gate 都会破坏冻结合同。**
 >
 > **5.36 V2.42.14/15 deepest-owner joint package、fail-closed 路径审计与版本化恢复（2026-07-31 17:39 UTC）：36 个冻结 decision 不能通过叠加四个 component 目录构造 package，因为 Markdown、search 与 entropy publisher 都从选中父图重建完整累积候选。V2.42.14 因而显式冻结 dependency chain `baseline → Markdown → scope → search → entropy`，同时保留 V2.42.00 的组件选择顺序用于一一覆盖校验。3 个空组件 decision 只做 byte-exact baseline identity handoff；其余 33 个必须选唯一 deepest cumulative graph、验证每个 selected component 的 source/test 激活、复制到 fresh repo-local root，并在 scrubbed `python -I -B` 环境重跑完整父+组件 regression。scope 在 schema76/77 是 semantic owner 但零字节 alias，故 deepest byte owner 仍为 Markdown；目录 overlay、silent component drop 和 baseline fallback 全禁止。
 >
@@ -1189,11 +1197,14 @@ I_{ij}=v(\{i,j\})-v(\{i\})-v(\{j\})+v(\varnothing).
 14. fixed-threshold / CAM-DF-lite / TSDS-style joint stop-defer；
 15. dynamic-VOC controller + evidence equivalence + semantic-region portfolio；
 16. label-blind WebSwarm adapter，仅从 visible question/input 与本轮 evidence state 选择 atom/deep/wide/entity_collect，并固定 official evaluator、no-resume、failure-as-zero；同时运行 no-recursive、all-to-wide、all-to-deep、no-Web-Probing 与 no-sibling-experience 消融。
-17. CHILL-style two-gate controller：第一门在 admissible workflow 中排序 estimated task/resource advantage，第二门只在选中项相对 factual workflow 超过预注册 authorization margin 时执行，否则保持 factual workflow。[119]
+17. SearchSwarm-style delegation/context baseline：同一骨干下比较 no-delegation、只开放 subagent tool schema、完整 briefing/citation harness 与训练式委派；子报告必须保留原始 evidence ID，主 context 节省与全系统成本分开报告。[157]
+18. CHILL-style two-gate controller：第一门在 admissible workflow 中排序 estimated task/resource advantage，第二门只在选中项相对 factual workflow 超过预注册 authorization margin 时执行，否则保持 factual workflow。[119]
 
 只有 Phase D1 过门后才跑 controller 全量。
 
 吞吐并发与单题协作机制分开实验。吞吐由中性容量阶梯选定并在整次 all-220 固定；WebSwarm/MANTA 式单题协作另做 `agent_count ∈ {1,2,4,8}`、`refinement_rounds ∈ {0,1,2}`、`topology ∈ {single,fixed-tree,fixed-graph,bounded-adaptive}` 的同预算曲线。再加入 planner/delegator 与 child/executor 的独立模型容量轴，固定 answer renderer 和总预算，比较大 planner+小 child、小 planner+大 child、同模型三种角色分配；Think Big, Search Small 只作为容量假设来源，不能替代 DeepWide 实测。[120] 先比较单 agent、two-call self-refinement 与固定拓扑，再允许 bounded-adaptive topology；报告每个点的质量、格式失败、重复 evidence、tokens、tool calls 与 wall-clock，不假设曲线单调。Scaling LLM-Driven MAS 的 1/3/5/7-agent 峰值与一致性结果只用来预注册“中档可能最优”的反例；本项目仍按自己的容量和任务曲线选点，不能照搬其 5-agent 结论。[137]
+
+SearchSwarm 式子代理必须再拆出 context-compression effect。主代理只接收 brief/report 的 arm 与主代理可访问完整子轨迹的 arm共享相同原始检索、模型和总预算；报告 main-context token、child-context token、全系统 token、load-bearing claim retention、citation/provenance retention、错误摘要传播和重复搜索。[157] 如果质量变化只能由隐藏更多原始工具输出解释，不能归因于四层风险或 delegation intelligence。
 
 每个候选行另报告 conjunction completeness：必需 predicate 中有地址化支持的比例、任一 gold/candidate hit、complete-first success 和部分满足 distractor 排名。n-Clue 的 `81.1%` gold discovery 与 `35.8%` complete-first 只说明两种 estimand 会分离，不能作为本项目门槛；DeepWide 阈值必须在自己的 development split 冻结。[139]
 
@@ -1239,6 +1250,7 @@ I_{ij}=v(\{i,j\})-v(\{i\})-v(\{j\})+v(\varnothing).
 - A-MapReduce；
 - Web2BigTable；
 - WebSwarm；
+- SearchSwarm；
 - SearchOS；
 - AREX；
 - Harness-G；
@@ -1249,6 +1261,8 @@ I_{ij}=v(\{i,j\})-v(\{i\})-v(\{j\})+v(\varnothing).
 - Search as Computation Allocation、CAM-DF、CAST 与 AttriMem（机制对照）。
 
 WebSwarm 的 controlled internal baseline 不只运行一个 `full` 配置。至少保留八个同预算执行臂：ReAct、w/o recursive delegation、all-deep、all-wide、w/o Web-Probing、w/o sibling experience、full WebSwarm 和 four-layer VOC。固定 `entity_collect` path 数、experience scout 数、最大 action steps、search top-k、page reader/summary policy 和 aggregation rule；同时记录 nominal/effective agent width、query/URL/content/source/evidence-set overlap、错误经验传播、input/output tokens、工具调用、orchestrator 调用与墙钟。probe-only 与 experience-only 的结果分开解释，不能把节省工具调用写成质量提升。
+
+SearchSwarm 的 controlled baseline 使用同一模型、search/page tools 和 renderer，依次比较 no-delegation、tool-schema-only、完整 harness、训练式委派、WebSwarm full 与 four-layer VOC。所有子代理 token/tool/page cost 进入总预算；压缩报告要回链原始 evidence，并以盲审统计 load-bearing claim 丢失率。论文的 BrowseComp、BrowseComp-ZH、GAIA 与 xbench 数字只作外部背景，不参与 DeepWideBench 排名或 gate。
 
 优先在相同骨干、search/page tools、并发、max tool calls、token、wall-clock、attempts 下运行。若官方系统无法复现，分成：
 
@@ -1504,7 +1518,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 - future-method holdout 的主比较 CI 支持预注册 non-inferiority/improvement；强泛化主张还需 confirmatory set 同方向；
 - 至少两个机制消融符合 RQ4 预测；
 - 人工 evidence audit 不显示 precision 明显恶化；
-- 系统级讨论覆盖 WebSwarm、SearchOS、ECR、TaS、A-MapReduce、BM25 Wins at Scale、Think Big Search Small、Two Calls Beat Five Agents、SKIMIX、MANTA 与 Scaling LLM-Driven MAS，并明确全局排名不等于终局综合、吞吐并发不等于单题协作质量、统一角色模型不等于容量最优。[134,137]
+- 系统级讨论覆盖 WebSwarm、SearchSwarm、SearchOS、ECR、TaS、A-MapReduce、BM25 Wins at Scale、Think Big Search Small、Two Calls Beat Five Agents、SKIMIX、MANTA 与 Scaling LLM-Driven MAS，并明确委派不等于四层风险控制、主上下文压缩不等于总成本下降、全局排名不等于终局综合、吞吐并发不等于单题协作质量、统一角色模型不等于容量最优。[134,137,157]
 - 系统级讨论还必须覆盖 AREX、Harness-G、Baikal、SearchArt、MisKnow-Agent 与 FinanceHarness，并分别报告搜索决策、evidence acquisition、synthesis/verification、环境/时间边界和 output-contract failure。
 - controller 主张必须讨论 Search as Computation Allocation，并报告 pure IG、myopic VOC 与 finite-depth dynamic VOC 的同预算差异。
 - 停止主张必须比较 CAM-DF-lite；过程可靠性必须按 HiEviDR/LEDGERMIND/LayerRAG 的 evidence、claim、answer、tool-contract、authorization 与 session 层分别报告。
@@ -1667,14 +1681,14 @@ outputs/runs/<run_id>/
 
 ## 14. 接下来 72 小时的具体任务
 
-### V2.42.15 到 fresh exact-220 的当前执行序列（2026-07-31 17:39 UTC）
+### V2.42.16 到 fresh exact-220 的当前执行序列（2026-07-31 18:32 UTC）
 
 1. 保留 R1 forward PID `1350579` 与所有健康 watcher，不 signal、restart、resume、复制或选择性补跑。只读监控 exact terminal count、checkpoint liveness 和 `mapping_or_gold_read=false`。
 2. R1 达到 `220/220` 后，由既有 finalizer 首次打开 evaluator mapping，生成 failure-as-zero 的 released all-220 artifact。此前任何 `completed/failed` 计数都不是 benchmark score。
 3. 让 V2.42.10 search parent 与 V2.41.93 Gate-2A 自然终态。V2.42.13 只有在两者 terminal、seal 和 selected decision 一致时才能打开 selected work order/report/model；否则发布 content-free no-op 或按协议终态退休。
 4. selected entropy publication 若存在，V2.42.15 从修正后的实际 V2.42.13 path 选择唯一 deepest cumulative graph，在全新 root 重跑完整 parent+component regression、source/test activation、binding/tamper 与 label-blind AST audit。V2.42.14 protocol/activation/state/candidate/publication 禁止复用、覆盖或重启；若 selected component 集为空则只做 byte-exact baseline identity handoff。
-5. V2.42.15 terminal joint publication 之后另行预注册同 opaque dev64 package gate；当前 recovery watcher 没有 dev64 或 package-gate launch 权限。只有 quality/cost/non-regression 与 strict component activation 门全部通过，才进入 capacity 阶段；失败即停止，不调阈值、不挑子集。
-6. 共享 lease 释放后执行 `1/2/4/8/12 × 3 waves` 的中性 GPT-5.6 容量阶梯，冻结最大连续安全档。容量选择只使用非 benchmark 输入，不以题目成功率调并发。
+5. V2.42.16 已 create-exclusive 冻结并由唯一 watcher 等待 V2.42.15。joint publication terminal 后，它才可在同一组 opaque dev64 ID 上运行 baseline/candidate 两个 fresh cold-start arm；两臂 exact-terminal 前不得打开 mapping/evaluator。只有 quality/cost/non-regression、material-gain 与 strict component activation 门全部通过，才进入 capacity 阶段；失败即停止，不调阈值、不挑子集。
+6. V2.42.16 GO 且共享 lease 释放后，执行 `1/2/4/8/12 × 3 waves` 的中性 GPT-5.6 容量阶梯，冻结最大连续安全档。容量选择只使用非 benchmark 输入，不以题目成功率调并发。
 7. single-owner executor 在四个全新 output roots 上以冻结档位运行 `52/52/52/64=220`。整次 fixed concurrency、no-resume、failure-as-zero；API/容量失败仍进分母，禁止只补失败题。
 8. full/no-entropy、WebSwarm-style 或其他主 variant 若进入论文主比较，每个 variant 都必须独立满足同样的 exact-220、fresh roots、固定预算和 single-owner 合同。English-76、dev64 或 completed-only 只能作诊断，不能替代全集。
 
