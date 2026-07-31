@@ -1,10 +1,14 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.26
+> 版本：5.27
 >
-> 更新：2026-07-31 11:40 UTC
+> 更新：2026-07-31 11:58 UTC
 >
 > 当前覆盖：**V2.42.06 已冻结并安全激活 selected-baseline-bound Markdown component publisher。它在任何 V2.42.04 outcome 前枚举全部 36 个 content-free work order，只拥有 `markdown_rank_slot`：12 个无 Markdown 分支固定 no-op，8 个 P12 分支绑定历史 schema69 byte-exact publication，schema76/schema77 各 8 个分支在父 work order terminal 后才允许生成 target schema78/79 rebase；scope/search/entropy、joint package、package gate、API 与 benchmark 全部继续阻塞。当前 watcher 只读 V2.42.04 安全 state envelope，selected work order、publication 与 candidate 均不存在。现有 R1 与 watcher 全部保留；最新 label-blind 安全聚合为 `167/220 = 34 completed + 133 failed`，剩余 53，正式 DeepWideBench 全集分数、提升或 SOTA 仍不存在。**
+>
+> **5.27 WebSwarm 邻域、global retrieval 与联合校准增量（2026-07-31 11:58 UTC）：在不打开任何 benchmark 题面、预测、raw error、mapping/gold/category/evaluator/score 的条件下，新增全文核验九篇 2026 年工作。[134–142] BM25 scaling 的 28-tier 结果要求新增 `raw exploration` 与 `global BM25 ranking -> agent refinement` 的同预算强基线；其同一 150 题 full-scale control 为 raw file agent `36.9/895K tok/q`、Agent+BM25 `69.4/101K tok/q`，仅是该论文内 mechanism control，绝不作为本项目或 DeepWideBench 分数。MagicSelector 的 decomposition reward 依赖 gold target-tool set，只列 privileged proxy；TSDS 要求 stop 与 defer 联合校准且其保证依赖 calibration/test i.i.d.；n-Clue 的 `81.1% gold discovery / 35.8% complete-first` 要求把候选命中与合取证据完整性分开。
+>
+> 多智能体扩展研究在 1/3/5/7-agent 中以 5-agent 中档达到峰值，7-agent 受 timeout、错误传播与一致性影响；Bayesian MAS uncertainty monitor 又要求 log-prob 先校准，并明确静态 DAG 不覆盖完整时序、反馈和修订。因此“开大并发”继续只指跨题吞吐：现有 R1/9878 自然释放后，既有冻结 watcher 执行 `1/2/4/8/12 × 3 waves`，选中一个连续安全档位并在整次 fresh exact `52/52/52/64=220` 固定；单题 agent count 另按同预算 `1/2/4/8` 消融。Auto Research 的 inner-select/freeze/outer-holdout、Conformal Cascade 的 finite-set defer 和 MemHarness 的 state-conditioned reconstruction 分别进入 intervention transfer、有限答案集 deferral 与 memory reuse 对照。survey 现为 142 篇；本轮只更新研究协议，没有修改 V2.42.06 的 12-file frozen control surface，也没有启动、signal、restart、resume 或重复运行 benchmark/capacity probe。**
 >
 > **5.26 V2.42.06 selected Markdown publisher 冻结与安全启动（2026-07-31 11:40 UTC）：publisher 从 V2.42.01 frozen DAG 重建 schema76/77，只加入历史 Markdown production hook，并将 baseline identity tests 的完整谓词扩展为精确 `(PIPELINE_VERSION, STATE_SCHEMA_VERSION)` 对；schema76 固定修改 10 个 guard 文件/18 条断言，schema77 为 11 个文件/20 条断言，禁止把 suffix/schema 各自放宽。schema76/schema77 的隔离联合回归分别为 `118/118` 与 `127/127`；候选失败时目录完整回滚。P12 只绑定 schema69 的 47 个历史 regular files，不创建新树；无 Markdown work order 只发布 content-free no-op receipt。主线既有 scope hook 精确保留一份，V2.41.04 历史 scope patch 与 namespace alias 均不应用。
 >
@@ -1041,6 +1045,8 @@ HiEviDR reference graph、标准 claim 与答案只在预测冻结后的离线 e
 
 每个有序 action prefix 另构造 `stop_now` 与所有合法 continuation，计算离线 best-continuation payoff gap。停止基线至少包括固定调用数、校准阈值、TASR、CAM-DF-lite 与 oracle best prefix；分别报告 ranking quality、stop/continue classification、payoff-weighted regret 和异质成本分层。CAM-DF 标签只来自冻结 prefix 的离线结果，不能读取当前 benchmark 的 gold 后反馈给同一 forward pass。
 
+stop 与 defer/escalate 必须再加入 TSDS 式联合校准，而不是分别选择两个看似最优的阈值。校准集固定二维超参数网格，联合约束 episode-level terminal reward、调用率和总成本；主报告明确限定在 calibration/test exchangeability 或 i.i.d. 假设下，并另做语言、时间、搜索后端和任务规模 shift stress。有限答案集加入 Conformal Cascade；开放表格只有在 anchor/row/cell 等价类及 `OTHER`/unseen mass 明确定义后才允许迁移 conformal set-size 规则。[136,141]
+
 **强制终局 continuation 合同（V2.41.20 后新增）**：动作价值标签不得由执行动作的同一个模型直接预测，也不得把 calibrated pre/post proxy 之差命名为 actual gain。每个候选动作必须从同一个 create-exclusive predecision checkpoint 分叉；动作的真实 observation（搜索结果、页面或工具输出）必须物化进分支 state，并由 context-specific adapter 清空且仅清空受该 observation 影响的下游 suffix。`no_op` 与 action branch 使用相同 continuation policy、模型版本、seed、预算和 evaluator，执行到 terminal answer 或按预注册规则保守计失败；预测冻结后才能读取 evaluator，并以匹配分支的终局 task loss 差定义 action contribution。至少运行3个固定 continuation seeds并按 task cluster 聚合。只预测 post-action risk vector 的 arm 可作为便宜的 surrogate feature 或消融，但永远不能充当 Gate 2A/credit ground truth。
 
 第一版 adapter 顺序固定为：
@@ -1110,23 +1116,26 @@ I_{ij}=v(\{i,j\})-v(\{i\})-v(\{j\})+v(\varnothing).
 1. 当前 6-query retrieve-then-generate；
 2. fixed deep→wide；
 3. fixed wide→deep；
-4. TaS-style table planner，无 uncertainty；
-5. same action space + heuristic controller；
-6. same action space + pure RelIG/EIG；
-7. myopic terminal-risk VOC；
-8. learned finite-depth dynamic VOC；
-9. ECR-style finite-hypothesis controller；
-10. TASR-style answer-stability stopping；
-11. Harness-G-style evidence-equivalence menu；
-12. Baikal random-region / Bayes-UCB；
-13. fixed-threshold / CAM-DF-lite cost-aware stopping；
-14. dynamic-VOC controller + evidence equivalence + semantic-region portfolio；
-15. label-blind WebSwarm adapter，仅从 visible question/input 与本轮 evidence state 选择 atom/deep/wide/entity_collect，并固定 official evaluator、no-resume、failure-as-zero；同时运行 no-recursive、all-to-wide、all-to-deep、no-Web-Probing 与 no-sibling-experience 消融。
-16. CHILL-style two-gate controller：第一门在 admissible workflow 中排序 estimated task/resource advantage，第二门只在选中项相对 factual workflow 超过预注册 authorization margin 时执行，否则保持 factual workflow。[119]
+4. raw local exploration 与 BM25/global rank→agent refinement，两者共享 reader、候选预算和终审；
+5. TaS-style table planner，无 uncertainty；
+6. same action space + heuristic controller；
+7. same action space + pure RelIG/EIG；
+8. myopic terminal-risk VOC；
+9. learned finite-depth dynamic VOC；
+10. ECR-style finite-hypothesis controller；
+11. TASR-style answer-stability stopping；
+12. Harness-G-style evidence-equivalence menu；
+13. Baikal random-region / Bayes-UCB；
+14. fixed-threshold / CAM-DF-lite / TSDS-style joint stop-defer；
+15. dynamic-VOC controller + evidence equivalence + semantic-region portfolio；
+16. label-blind WebSwarm adapter，仅从 visible question/input 与本轮 evidence state 选择 atom/deep/wide/entity_collect，并固定 official evaluator、no-resume、failure-as-zero；同时运行 no-recursive、all-to-wide、all-to-deep、no-Web-Probing 与 no-sibling-experience 消融。
+17. CHILL-style two-gate controller：第一门在 admissible workflow 中排序 estimated task/resource advantage，第二门只在选中项相对 factual workflow 超过预注册 authorization margin 时执行，否则保持 factual workflow。[119]
 
 只有 Phase D1 过门后才跑 controller 全量。
 
-吞吐并发与单题协作机制分开实验。吞吐由中性容量阶梯选定并在整次 all-220 固定；WebSwarm/MANTA 式单题协作另做 `agent_count ∈ {1,2,4,8}`、`refinement_rounds ∈ {0,1,2}`、`topology ∈ {single,fixed-tree,fixed-graph,bounded-adaptive}` 的同预算曲线。再加入 planner/delegator 与 child/executor 的独立模型容量轴，固定 answer renderer 和总预算，比较大 planner+小 child、小 planner+大 child、同模型三种角色分配；Think Big, Search Small 只作为容量假设来源，不能替代 DeepWide 实测。[120] 先比较单 agent、two-call self-refinement 与固定拓扑，再允许 bounded-adaptive topology；报告每个点的质量、格式失败、重复 evidence、tokens、tool calls 与 wall-clock，不假设曲线单调。
+吞吐并发与单题协作机制分开实验。吞吐由中性容量阶梯选定并在整次 all-220 固定；WebSwarm/MANTA 式单题协作另做 `agent_count ∈ {1,2,4,8}`、`refinement_rounds ∈ {0,1,2}`、`topology ∈ {single,fixed-tree,fixed-graph,bounded-adaptive}` 的同预算曲线。再加入 planner/delegator 与 child/executor 的独立模型容量轴，固定 answer renderer 和总预算，比较大 planner+小 child、小 planner+大 child、同模型三种角色分配；Think Big, Search Small 只作为容量假设来源，不能替代 DeepWide 实测。[120] 先比较单 agent、two-call self-refinement 与固定拓扑，再允许 bounded-adaptive topology；报告每个点的质量、格式失败、重复 evidence、tokens、tool calls 与 wall-clock，不假设曲线单调。Scaling LLM-Driven MAS 的 1/3/5/7-agent 峰值与一致性结果只用来预注册“中档可能最优”的反例；本项目仍按自己的容量和任务曲线选点，不能照搬其 5-agent 结论。[137]
+
+每个候选行另报告 conjunction completeness：必需 predicate 中有地址化支持的比例、任一 gold/candidate hit、complete-first success 和部分满足 distractor 排名。n-Clue 的 `81.1%` gold discovery 与 `35.8%` complete-first 只说明两种 estimand 会分离，不能作为本项目门槛；DeepWide 阈值必须在自己的 development split 冻结。[139]
 
 同预算不只指相同上限。按每个方法实际消耗的生成 token 在 independent-search sampling 曲线上插值匹配，同时单列 input token、search/fetch/page reads、最大串行深度和 wall-clock；开放表格的 simple-sampling 聚合规则在结果前冻结为 evidence-equivalence 去重、canonical-row merge 和逐格 provenance vote，不能事后选聚合器。每个 adaptive 分支还报告触发率、premature-stop error、correct-intermediate-overwrite 与 source/evidence 相关修正后的 effective branch count。若 adaptive 方法不超过该简单采样 Pareto 前沿，不能把额外质量归因于 swarm/refinement/controller。[104–109]
 
@@ -1328,6 +1337,8 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 - 每个点同时报告 DeepWide 质量、communication/format failure、evidence overlap、route/round engagement、premature false success、correct-intermediate overwrite 与全部输入/输出成本，检查非单调性；
 - 由 query intent、URL/content、source dependency 与 evidence-set overlap 估计 effective independent branch count；nominal `agent_count` 不得直接当作 width；
 - 只有同预算质量提高可归因于协作机制，单纯 wall-clock 缩短只能称吞吐加速。
+- sibling/experience memory 增加 `source_state -> current_state` compatibility receipt；比较 no-memory、verbatim replay 与 state-conditioned critique/reconstruction。任何历史 success、benchmark category 或 evaluator correctness 都不得成为当前 forward 的 memory key 或 route signal。[142]
+- 若采用 Bayesian workflow uncertainty，token log-prob 必须先在独立 development data 校准为 task-level confidence；静态 DAG 只列 monitor baseline，另以实际 execution trace 表示 feedback、重复执行和 revision，不把 DAG posterior 当作正确性证明。[138]
 
 ## 9. Go/No-Go 门禁
 
@@ -1371,6 +1382,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 - 能识别至少一类“entropy 上升但 task risk 下降”的反证动作。
 - 在高 IG/低 value 与低 IG/高 value 反例上，terminal-loss VOC 的 top-1 regret 低于 pure IG；若该区别只在合成例成立，论文必须标为理论而非 empirical contribution。
 - stop head 相对固定阈值和 TASR 的 payoff-weighted regret 同方向改善，并与 CAM-DF-lite 比较；若只改善 tool ranking 而不改善 stop decision，不得宣称成本感知停止有效。
+- stop/defer 的联合策略须相对分别调阈值的 TASR/CAM-DF 与 TSDS-style LTT baseline 改善；任何 finite-sample guarantee 都要声明 exchangeability/i.i.d. 范围，shift stress 失败时只保留经验结果。[136]
 - CHILL-style controller 必须分别报告 candidate ranking 与 execution authorization：选中 workflow 的 estimated advantage 未超过冻结 margin 时保持 factual workflow；另报 unauthorized harmful replacement、missed beneficial replacement 与授权触发率。[119]
 
 失败处理：使用规则控制器；EIG 仅作为分析指标，不进入标题。
@@ -1391,6 +1403,8 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 - evidence-step 子集必须与 Bridge Evidence/CTU 对照，分开报告 terminal-task、next-action enablement 和 cost delta；CIGPO 只列为 gold-conditioned privileged training oracle，并计入 privileged-information budget。[117,118]
 - opposing-outcome shift、surface substitution 或 null-feedback stress 下，entropy/likelihood shift 不得翻转 verifier 决定的方向；无法满足时 entropy 仅作 sensitivity/uncertainty diagnostic。
 - AdaKP-style entropy proxy 必须在 held-out intervention-defined task contribution 上重新通过预注册 rank-correlation gate；gold-derived candidate/LOO gate 只列 privileged oracle。若 label-blind pool 不过门，entropy selection 降级为诊断。[130]
+- MagicSelector-style decomposition reward 只作为 privileged tool-ranking proxy：target-tool NDCG/completeness 不得冒充终局 task contribution，也不得进入 label-blind benchmark runtime。[135]
+- inner development search 选中的 intervention 必须先冻结，再按 Auto Research 式 outer-holdout matrix 验证方向与排序 transfer；inner feedback 与同一任务的重复 rollout 不得作为独立 confirmation。[140]
 
 失败处理：不启动 credit RL。若 task-risk change 有效但 causal component 无效，方法降级为 outcome-aligned potential shaping；若只有 entropy 有效，降级为 epistemic diagnostic，不使用 causal/credit 标题。
 
@@ -1428,10 +1442,11 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 - future-method holdout 的主比较 CI 支持预注册 non-inferiority/improvement；强泛化主张还需 confirmatory set 同方向；
 - 至少两个机制消融符合 RQ4 预测；
 - 人工 evidence audit 不显示 precision 明显恶化；
-- 系统级讨论覆盖 WebSwarm、SearchOS、ECR、TaS、A-MapReduce、Think Big Search Small、Two Calls Beat Five Agents、SKIMIX 与 MANTA，并明确吞吐并发不等于单题协作质量、统一角色模型不等于容量最优。
+- 系统级讨论覆盖 WebSwarm、SearchOS、ECR、TaS、A-MapReduce、BM25 Wins at Scale、Think Big Search Small、Two Calls Beat Five Agents、SKIMIX、MANTA 与 Scaling LLM-Driven MAS，并明确全局排名不等于终局综合、吞吐并发不等于单题协作质量、统一角色模型不等于容量最优。[134,137]
 - 系统级讨论还必须覆盖 AREX、Harness-G、Baikal、SearchArt、MisKnow-Agent 与 FinanceHarness，并分别报告搜索决策、evidence acquisition、synthesis/verification、环境/时间边界和 output-contract failure。
 - controller 主张必须讨论 Search as Computation Allocation，并报告 pure IG、myopic VOC 与 finite-depth dynamic VOC 的同预算差异。
 - 停止主张必须比较 CAM-DF-lite；过程可靠性必须按 HiEviDR/LEDGERMIND/LayerRAG 的 evidence、claim、answer、tool-contract、authorization 与 session 层分别报告。
+- 停止/升级主张还必须比较 TSDS joint calibration 与有限答案集 Conformal Cascade，并明确开放生成所需的 answer/row clustering 额外假设。[136,141]
 - 若标题包含 credit/causal，Gate 2B 与 3B 必须同时通过，且讨论 ECHO、TRACE、CIGPO、LOTAPO、STAMP、RICE-PO、Bridge Evidence/CTU、SIOP、CVT-RL、CHILL-Harness、AREX key-step bonus、Harness-G SNC、CAST state-value、AttriMem attribution、SkillRise、GRSD、TTEL、OVCSD 与 CSCR。
 - 训练/多智能体 credit 还须区分 AdaKP entropy selection、TAPO transition auxiliary 与 MARS-RA agent ranking；吞吐讨论须把 Self-Speculating Agent 的离线 next-call match 与真实 wall-clock/capacity 分开。[130–133]
 
@@ -1443,7 +1458,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 
 | M | 目标 | Owner | 时间 | 预算上限 | 产物 | 状态 |
 |---|---|---|---|---:|---|---|
-| M0 | 基线、官方评测、文献/novelty audit | 当前会话 + 待确认 PI | 已更新至 2026-07-31 | 已发生，待补账 | `survey.md`、`.research/literature_matrix.md`、基线 scripts/results | 完成（持续增量） |
+| M0 | 基线、官方评测、文献/novelty audit | 当前会话 + 待确认 PI | 已更新至 2026-07-31（142 篇） | 已发生，待补账 | `survey.md`、`.research/literature_matrix.md`、基线 scripts/results | 完成（持续增量） |
 | M1 | 严格 runtime/eval 隔离与正文 evidence pipeline | 当前会话 + TBD owner | 已实现 manifest 隔离、HTML/PDF 正文、query-local citation provenance 与历史 forward preflight；精确 span/STC 待做 | TBD | `src/deepwide_agent`、evaluator、no-leak tests | 部分完成 |
 | M2 | 表格/evidence state 与 replay | 当前会话 + TBD owner | V2.29.0 schema 37、单题 checkpoint、hosted trace 去重、failure trace 持久化、anchor-only replay 和 pinned V2.25 closed-domain replay 已可运行；20-task replay pack 待做 | TBD | state schema、20-task replay pack | 部分完成 |
 | M3 | 四层信号数据与校准 | TBD | 2 周 | TBD | shadow signal dataset、calibration report、replay receipt | PAV/terminal calibrator、task-cluster split/bootstrap、provenance budget 与 replay verifier 已实现；真实匿名 development labels/bundle 尚无，Gate 1 未评估 |
@@ -1453,7 +1468,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 | M5B | OWIC estimator 与 verifier-sign-preserving advantage modulation | TBD | 1–2 周 | TBD | credit module、intervention tests | 未开始；CIGPO/Bridge Evidence/CHILL/SkillRise/GRSD/TTEL/OVCSD/CSCR 对照已写入协议 |
 | M6A | 50-task online controller pilot / Gate 3A | TBD | 1 周 | TBD | paired report、Pareto plots | 未开始 |
 | M6B | 3-seed credit-training pilot / Gate 3B | TBD | 2 周 | TBD | checkpoints、learning curves、credit audit | 未开始 |
-| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact；下一 fresh all-220 capacity freeze、唯一继承槽与固定并行计划 | 进行中（权威聚合 166/220；dev+validation S04 active；V2.41.96 wait-only；V2.41.97/98/99 等待 capacity freeze；V2.42.00 等待六源终态） |
+| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact；下一 fresh all-220 capacity freeze、唯一继承槽与固定并行计划 | 进行中（权威安全聚合 167/220；dev+validation S04 active；V2.41.94/96 wait-only；V2.41.97/98/99 等待 capacity freeze；V2.42.00 等待质量链终态） |
 | M8 | 论文写作与审计 | TBD | 1–2 周 | TBD | manuscript、claim/evidence ledger | 未开始 |
 
 ### M1 推荐目录
@@ -1582,6 +1597,9 @@ outputs/runs/<run_id>/
 | credit 改善训练而非只拟合 proxy | Gate 3B 同预算 3-seed pilot | 无结果 |
 | 多智能体协作质量 | 相同总预算下 agent-count/round/topology 曲线优于 single/two-call | 未实验；文献显示可能非单调，不能由高 executor 并发推断 |
 | 分层 evidence 可靠性 | HiEviDR 式 progressive gate + LayerRAG cross-layer stress | 指标/压力测试已写入计划；无真实结果 |
+| global retrieval→agent refinement | 同骨干/reader/预算下优于 raw exploration 与 native BM25 | BM25 scaling 强近邻已确认；DeepWide adapter/全集结果均无 |
+| 联合 stop/defer 校准 | 相对 TASR、CAM-DF、TSDS 与 finite-set conformal baseline | 协议已补；无 DeepWide 校准或 shift 结果 |
+| 合取证据完整性 | candidate hit 与 complete-first/predicate-complete 分开报告 | n-Clue 近邻已确认；本项目指标尚未实现 |
 
 在相应证据行未完成前，摘要只能写“we propose/ask/evaluate”，不能写“improves/outperforms/demonstrates”。若 Gate 2B 未过，不得在题目或摘要使用 causal credit。
 
@@ -1663,5 +1681,5 @@ terminal-only shadow aggregate 已覆盖 7 个终态中的 5 个有信号任务�
 - 主结果有 paired uncertainty interval、成本和人工 evidence audit；
 - 所有精确数字能追溯到 frozen artifact；
 - 文献与 non-claims 覆盖 2026-07-21 的直接近邻，包括 Forage V2、Shared Discovery Paradox、ECHO、TRACE、LOTAPO、STAMP、RICE-PO、SIOP、CVT-RL、InfoPO、AEM、SELAUR、STRIDE、APPO、PivoARL、A²TGPO 与 T²PO；
-- 文献与 non-claims 还覆盖 2026-07-30 的 Search as Computation Allocation、SearchArt、CAST、AttriMem、MisKnow-Agent 与 FinanceHarness，并落实 IG/VOC、误导证据、PIT 和 tool-shift 对照；
+- 文献与 non-claims 还覆盖 2026-07-30/31 的 Search as Computation Allocation、SearchArt、CAST、AttriMem、MisKnow-Agent、FinanceHarness、BM25 Wins at Scale、MagicSelector、TSDS、Scaling LLM-Driven MAS、Bayesian MAS monitor、n-Clue、Auto Research、Conformal Cascade 与 MemHarness，并落实 IG/VOC、global-ranking、joint-stop/defer、合取完整性、outer intervention transfer、memory reconstruction、误导证据、PIT 和 tool-shift 对照；
 - 失败 gate 被如实报告，标题和摘要按证据强度降级。
