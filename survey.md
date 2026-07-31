@@ -32,7 +32,7 @@
 
 ### 1.2 检索过程
 
-检索在 2026-07-19 至 2026-07-21 进行，采用三层策略：
+主体检索在 2026-07-19 至 2026-07-21 进行，并持续做提交日期增量核验至 2026-07-31，采用三层策略：
 
 - 精确追踪用户给出的 WebSwarm（arXiv:2607.08662），并沿其 related work 核对 DeepWideSearch、Table-as-Search、A-MapReduce、Web2BigTable、SearchOS、TreeSeeker 等系统。
 - 在 arXiv API 以 `entropy`、`information gain`、`expected entropy reduction`、`retrieval`、`search agent`、`open set`、`unseen mass`、`capture-recapture` 等组合查询，各抓取按提交日期排序的前 100 条，共 300 条记录、去重后 297 条，再按标题与摘要筛选直接相关工作。
@@ -44,6 +44,7 @@
 - 2026-07-31 再对 07-28 至 07-31 的 `cs.AI/cs.CL/cs.IR/cs.LG` 记录做 500 条增量召回，并以 web/research/search、swarm/delegation、coverage/evidence、credit/VOC/uncertainty 词族筛选。正文或一手 arXiv 元数据核验了 HiEviDR-Bench、CAM-DF、Two Calls Beat Five Agents、SKIMIX、MANTA、SkillRise、GRSD、TTEL、OVCSD、CSCR、LEDGERMIND、LayerRAG-Bench、Thinking Under Uncertainty、AskChem 与 Selective Credibility-Limited Belief Update。[89–103] `DeepResearch Agent System`（arXiv:2607.27562）虽然声称多项 SOTA 和大幅百分比改进，但正文是 software copyright R&D document，未提供足以复核这些数字的同协议实验链；本综述将其列为已筛选但不承载结论的低可信记录。
 - 2026-07-31 对当日最新批次再做题名/摘要筛选，并读取 Sample More, Reflect Less、Beyond Self-Knowledge、SVR、One Human, N Agents、local computer-use inference scaling 与 HYSET 的 PDF 原文。[104–109] 该轮不新增“统一方法”主张，而是增加六个实验约束：等生成 token 的独立采样曲线、probe 输入/输出 token 全计费、自适应路径触发率、premature-stop error、相关失败下的有效独立分支数，以及组合动作的集合级边际价值。数学推理、受控 RAG、agent 审计、computer-use 与 tool retrieval 的结果均只作机制和失败模式近邻，不作 DeepWideBench 横向分数比较。
 - 2026-07-31 09:06 UTC 再用 arXiv Atom API 对 07-29 至 07-31 的 `deep research`、`web/deep search agent`、`information gain/entropy/uncertainty` 与 `credit assignment/process reward/turn-level` 做四组日期限定查询，并核对 SciDataSailor、CRPO、PCD、$\beta$-OPSD 与 EMBL AI Librarian 的元数据和 PDF。[110–114] 前四项分别占据 entropy-guided branching、entropy-sign contrast、双 witness 层级 credit 与 return-to-go distillation credit；Librarian 则提供固定七个互补 query、分层去重和 `8 search / 12 fetch` worker pool 的工程对照。它们使用科学数据探索、深搜训练、多模态蒸馏、数学推理或生命科学检索设置，不构成 DeepWideBench 提升证据。
+- 2026-07-31 10:02 UTC 以 arXiv Atom API 对 `deep research`、`agentic/web search`、`multi-agent search`、`information gain agent`、`credit assignment agent`、`recursive search` 和 `information seeking` 做八组增量查询，并与既有 116 篇按 arXiv ID 去重。新增精读 Bridge Evidence、CIGPO 与 CHILL-Harness 三篇 PDF，并以一手摘要核验 Think Big, Search Small。[117–120] 这轮不支持新的首创主张，反而新增三项强对照：固定前缀后删除证据并重跑 suffix 的轨迹效用、gold-answer likelihood 的 contextual IG credit，以及干预相对 workflow advantage；层级搜索还需分开扫描 delegation 与 execution 的模型容量。只有前三篇计入 PDF 精读，第四篇的具体数字仍以摘要证据为限。
 - 对经典信息论与覆盖估计文献用 Crossref/OpenAlex/DOI 核验元数据；对关键 2023–2026 论文读取 arXiv 原文而不只依赖摘要。
 
 纳入标准是：方法直接控制检索、证据选择、工具调用、搜索树、停止或开放集合覆盖；或者直接定义 DeepWide/table-search 的系统与评测边界。排除纯推荐、视觉检索、物理导航等仅共享“entropy/search”词面但不能约束本研究设计的工作。检索记录的高密度比较版见 [.research/literature_matrix.md](.research/literature_matrix.md)。
@@ -258,8 +259,15 @@ ECR 同时暴露了可延伸的边界：
 | CRAFT / BiPACE (2606.29476 / 2606.25556) | sibling rollout 或近似同状态 action-conditioned baseline | 轨迹 outcome | 近似 | 说明 credit 的比较单元应尽量共享状态，而非同一 turn index |
 | ACPO (2607.03126) / HAPO (2604.11056) / EMPG (2509.09265) | token entropy 用作可更新容量或不确定性权重 | 终局 outcome | 否 | entropy 在这里决定“哪里可学”，不决定“方向是否正确” [49,63,64] |
 | A²TGPO (2605.06200) / T²PO (2605.02178) | gold-answer IG 的 turn-group credit/clipping；token/turn uncertainty progress 的 intervention/resampling | A²TGPO 需 gold；T²PO 用 outcome RL | 否 | IG/uncertainty 已直接控制 credit 与探索强度；不处理开放 denominator [74,75] |
+| CIGPO (2607.16244) | frozen reference 对 gold answer 的逐 turn log-likelihood 增量；与 F1 分开归一并做权重 curriculum | 是 | 否 | contextual IG credit 已有；主要解决 group-relative reward 方差塌缩，不能进入 label-blind runtime [118] |
+| Bridge Evidence / CTU (2607.15253) | 删除单篇已读文档、固定此前 prefix 并重跑 suffix；比较终局答案、下一查询检索质量与 turn 成本 | gold evidence 与答案评价用于离线研究 | 相对指定 omission 与 replay policy 的局部效应 | 静态相关性或即时熵降可能漏掉开启下一跳的 bridge evidence；应作为 evidence-step credit 强基线 [117] |
+| CHILL-Harness (2607.25825) | factual workflow 与候选 workflow 的干预相对 task/resource advantage | 训练需 paired intervention/effect evidence | 以显式 intervention estimand 学习 | 已把 harness 适配写成 effect estimation→candidate valuation→authorization；OWIC 只能提供特征，不能跳过执行授权门 [119] |
 
 ECHO 的范围最值得正面说明。它在 Clue Selector Game 中有均匀有限候选集、真实 oracle、确定性过滤和精确 posterior，主 reward 是候选集合的分数式收缩；实验只到 1.5B、约 10 turns。论文将近似信念、噪声或对抗来源、开放工具动作和 web search 明确列为未解决限制。[43] 这恰好留下 DeepWide 的工程与统计难点，但不留下“首次提出 epistemic credit”这一概念空白。TRACE、LOTAPO、STAMP、RICE-PO、SIOP、CVT-RL、CRAFT、BiPACE、ACPO、PBSD 和 PiCA 又分别覆盖 gold-readiness TD、删除 attribution、provenance、局部分支、label-free potential、显式干预、sibling counterfactual、state-matched baseline、entropy reweighting 与 privileged likelihood credit。[44–54]
+
+Bridge Evidence 把“眼前有用”与“让后续搜索成为可能”分开测量。作者在 HotpotQA 的 1,000 个开发问题上，对代理实际读取的每篇文档做 omission replay，并在 23,322 个文档观测上报告 Static RAG Utility 与 Counterfactual Trajectory Utility 的 Spearman $\rho=-0.026$；35.7% 的已读文档落入低静态效用、高轨迹效用的 bridge 区域。[117] 这些数值只属于该 ReAct/Wikipedia 设置，且 CTU 仍依赖 gold evidence、组合权重和固定 replay policy。它仍直接否定了“证据没有立即降低答案熵或填格，因此没有 credit”的规则。DeepWide 的离线 audit 应分别保留 terminal-task delta、next-action enablement 与额外成本，不能在采集时先压成一个熵差。
+
+CIGPO 与 CHILL-Harness 从训练和控制两侧进一步占据相邻空间。CIGPO 直接用 frozen reference 对 ground-truth answer 的逐 turn log-likelihood 增量提供 contextual IG reward，以维持 GRPO 的组内奖励方差。[118] 这使“信息增益较大的 turn 多给 credit”本身更难成为创新，而且该信号只能作为训练 oracle。CHILL-Harness 则先估计具体 workflow 相对 factual workflow 的干预效应，再选择候选，最后只有 estimated advantage 超过授权 margin 才真正替换 workflow。[119] 对 OWIC 的含义是：四层风险或 entropy 可以参与 effect predictor，但候选排名与执行授权必须分开；高分不足以自动改变在线搜索拓扑。
 
 2026-07-20 至 21 日的补充检索进一步收紧了 novelty。InfoPO 用 masked-feedback counterfactual 衡量一次用户反馈对后续动作分布的改变，再以 outcome gate 融合任务方向；AEM 在 response 粒度用 uncertainty proxy 重缩放 advantage；SELAUR 将 entropy、least confidence 与 margin 注入失败轨迹奖励。[66–68] STRIDE 把 outcome-discriminative pattern 与 saliency entropy 结合，APPO 则明确报告 token entropy 本身不能可靠定位影响最终结果的决策点。[69,70] PivoARL 从失败轨迹中定位 pivotal turn 并只从该状态重试，以 information-gain 视角解释信号集中。[71] A²TGPO 与 T²PO 又分别把 turn IG 用于归一/clipping，把 uncertainty dynamics 用于 intervention/resampling。[74,75] 因而，“信息增益 + counterfactual + outcome gate”“response-level entropy credit”“pivotal retry”与“uncertainty-guided resampling”均已有直接近邻。可辩护的范围只能落在 DeepWide 的四层开放世界任务变量、未见质量，以及 evidence provenance 与任务风险的联合验证上。
 
@@ -284,6 +292,7 @@ SkillRise、GRSD、TTEL、OVCSD 与 CSCR 把 credit 的邻域继续压缩。Skil
 - **训练与推理不一致。** gold-answer likelihood 在 RL 训练时可用，在线动作选择和无标签任务中不可用；把它写成 inference-time controller 会发生目标泄漏。
 - **信用与探索不同。** VIME 等方法用 dynamics information gain 作 intrinsic exploration reward，但探索更多并不等于对最终任务贡献更大。[41]
 - **终端损失错位。** 即使信息只关于最终最优动作，若不同错误的后果不同，高 entropy bit 也可能几乎不影响任务损失，而低 entropy bit 决定大额 regret。Search as Computation Allocation 证明这种 IG 排序误差可以任意大。[83]
+- **bridge evidence 漏记。** 一篇页面可能不改变当前答案分布，却提供下一查询所需的判别实体。若 credit 只测即时熵降或静态相关性，这类步骤会被记成零；Bridge Evidence 的 omission replay 正是针对这种延迟可达性。[117]
 
 这些反例说明，信息 credit 要先回答“关于什么随机变量的信息”“相对于什么任务损失”“在什么干预下有贡献”，不能只计算语言模型输出熵。
 
@@ -325,7 +334,7 @@ c_t = \underbrace{L(B_t)-L(B_{t+1})}_{\text{task-risk change}}
 | token/response entropy 低或熵降大就多给 credit | 中，容易实现 | 很低；EMPG、TEPO、ACPO、AEM、SELAUR 等已覆盖 | 仅作消融 |
 | semantic entropy reduction 作为 turn reward | 中 | 很低；InfoReasoner、ECHO 直接覆盖 | 强基线，不作主贡献 |
 | gold-answer log-prob gain / TD credit | 高，训练信号稳定 | 低；IGPO、TRACE、PBSD、IG-Search 已密集覆盖 | 训练 oracle baseline |
-| leave-one-turn 或首次证据 attribution | 中高 | 低到中；LOTAPO、STAMP 已覆盖 | provenance / retrospective baseline |
+| leave-one-turn、首次证据或 evidence omission suffix replay | 中高 | 低；LOTAPO、STAMP、Bridge Evidence 已覆盖 | provenance / retrospective/counterfactual baseline |
 | 四层开放世界 task-risk + 同状态反事实 + provenance | 中，计算和数据要求高 | 截至检索日仍有候选空白 | 值得做，但必须用实验守门 |
 
 最终判断是：**作为辅助 epistemic shaping，信息熵视角可行；作为唯一 credit 不可靠；作为校准、结果对齐、开放世界且经反事实验证的 DeepWide credit，仍有研究空间。**
@@ -357,6 +366,7 @@ Forage V2 进一步表明 denominator 本身可能随定义与证据演化，Sha
 | InfoReasoner、IGPO、IG-Search、SIGHT、TEPO、IGRPO | gold-answer、语义答案或 rollout | 训练 | 学习后间接控制 | 否 | IG/entropy 训练奖励已有 |
 | ECHO、TRACE、SIOP | 显式后验、gold-answer readiness 或自生成 outcome modes | turn-level RL credit | 是 | 否 | epistemic/potential/TD turn credit 已有 |
 | LOTAPO、STAMP、RICE-PO、CVT-RL | 删除 attribution、证据 provenance、同状态局部分支或验证后的干预效应 | step/turn credit | 是 | 通常否 | attribution 与 causal baseline 已形成，裸 entropy 不够 |
+| CIGPO、Bridge Evidence、CHILL-Harness | gold-conditioned contextual IG、证据 omission suffix replay、workflow intervention advantage | 训练 credit、离线归因、在线 harness 授权 | 是 | 否 | IG credit、bridge-step utility 与干预式 orchestration 均已有；新增方法必须证明四层开放世界变量和官方任务损失的额外价值 |
 | InfoPO、AEM、SELAUR、STRIDE、APPO、PivoARL | masked-feedback counterfactual、response entropy、uncertainty reward、outcome-discriminative pattern、pivotal retry | turn/token/response credit 与局部重试 | 是 | 否 | 信息信号与结果门控、反事实或 pivotal state 的组合也已有；四层任务变量才可能构成差异 |
 | A²TGPO、T²PO | gold-answer IG 与 token/turn uncertainty dynamics | credit/clipping、intervention/resampling | 是 | 否 | IG/uncertainty 控制训练与探索已有；label-blind 分层 task risk 才可能构成差异 |
 | AREX | verified/unresolved constraints、结构化 confidence、context update | 递归 refine/restart 与训练 | 是 | 否 | 约束级 follow-up、状态压缩与 key-step bonus 已有 |
@@ -378,6 +388,7 @@ Forage V2 进一步表明 denominator 本身可能随定义与证据演化，Sha
 - 首次用 semantic regions、UCB 或 $\epsilon$-greedy 平衡 deep-research coverage。
 - 首次发现不同 query 收敛到相同 evidence set，或首次用结构化菜单做 non-myopic search credit。
 - 首次用 verified/unresolved constraints 递归 follow-up、压缩研究状态或突出关键步骤训练。
+- 首次用 gold-conditioned contextual IG 给 turn 分 credit，或首次用 omission replay/干预相对 advantage 给搜索步骤与 harness workflow 定价。
 - 首次把表格、coverage map 或 evidence graph 作为搜索状态。
 - 低熵等于正确、完整或有充分证据。
 - Good–Turing/capture–recapture 在搜索引擎偏置下自动给出无偏全集估计。
@@ -493,7 +504,7 @@ Search-Time Contamination 研究指出，联网 agent 可能检索到公开 benc
 
 ### 9.6 credit assignment 是否定位了真正有贡献的步骤
 
-信号评估不能只看训练后最终分数。应建立带干预的 step-credit audit set：对同一状态执行原动作、等成本 sibling、no-op、证据替换和反证动作，再用固定 continuation 估计最终任务风险差。报告 credit 与该差值的 Spearman、signed accuracy、top-k pivotal-step recall 和 calibration，并单列以下诊断：无关但新奇信息、重复错误来源、先升熵后纠错、延迟显效、多步骤协同、删除后 OOD。比较 raw entropy drop、semantic entropy drop、gold log-score gain、TRACE-style TD、LOTAPO、STAMP、RICE-PO、CVT-RL-style counterfactual 和 OWIC。若 OWIC 只与 entropy change 相关、却不能预测干预后的 task value，它不能称为 credit assignment 方法。
+信号评估不能只看训练后最终分数。应建立带干预的 step-credit audit set：对同一状态执行原动作、等成本 sibling、no-op、证据替换和反证动作，再用固定 continuation 估计最终任务风险差。对 evidence action 另做 Bridge Evidence 式 omission replay，固定干预前 prefix、从干预点重跑 suffix，并将终局 task delta、下一查询或后继动作的 enablement、额外 turn/token/tool cost 分开保存，再预注册是否以及怎样组合成 CTU-like scalar。[117] 报告 credit 与终局差值的 Spearman、signed accuracy、top-k pivotal-step recall 和 calibration，并单列以下诊断：无关但新奇信息、重复错误来源、先升熵后纠错、延迟显效、bridge evidence、多步骤协同、删除后 OOD。比较 raw entropy drop、semantic entropy drop、CIGPO/gold log-score gain、TRACE-style TD、LOTAPO、STAMP、RICE-PO、CTU、CVT-RL-style counterfactual、CHILL-style intervention advantage 和 OWIC。[117–119] 若 OWIC 只与 entropy change 相关、却不能预测干预后的 task value 或后续可达性，它不能称为 credit assignment 方法。
 
 ### 9.7 信息与任务价值是否错位
 
@@ -505,7 +516,7 @@ Search-Time Contamination 研究指出，联网 agent 可能检索到公开 benc
 
 ### 9.9 自适应机制是否真实执行、且是否优于简单算力分配
 
-对每个名义 adaptive 系统报告实际执行路径。至少记录各 route 的触发频率、每题 agent/round 分布、提前停止中的错误比例、曾出现正确中间态但最终被覆盖的比例，以及按 evidence/source dependency 修正后的有效独立分支数。主对照加入相同生成 token 的独立搜索样本、相同 tool-call 的随机 region/agent allocation 和相同 wall-clock 上限的并行采样。若 adaptive 组件很少触发，或其质量–成本点不超过简单采样 Pareto 前沿，结果只能支持“系统可运行”，不能支持 controller 或 swarm 机制有效。[104–109]
+对每个名义 adaptive 系统报告实际执行路径。至少记录各 route 的触发频率、每题 agent/round 分布、提前停止中的错误比例、曾出现正确中间态但最终被覆盖的比例，以及按 evidence/source dependency 修正后的有效独立分支数。主对照加入相同生成 token 的独立搜索样本、相同 tool-call 的随机 region/agent allocation 和相同 wall-clock 上限的并行采样。层级系统还要独立扫描 delegation/planner 与 execution/child 的模型容量，不能默认所有角色使用同一模型最优；Think Big, Search Small 的摘要结果提示容量敏感性可能集中在 delegation，但这一结论仍需在 DeepWide 上按同预算重测。[120] 在线控制采用两段式决策：先按预期 task/resource advantage 排序候选 workflow，再以独立 margin 决定是否替换 factual workflow，防止“best candidate”在所有候选均有害时仍被执行。[119] 若 adaptive 组件很少触发，或其质量–成本点不超过简单采样 Pareto 前沿，结果只能支持“系统可运行”，不能支持 controller 或 swarm 机制有效。[104–109,119,120]
 
 ## 10. 对当前项目的直接诊断
 
@@ -577,7 +588,7 @@ V2.19 针对这两个 label-blind 机制做了 evidence-continuity 修复。它�
 
 ## 11. 结论
 
-信息熵适合作为这项工作的理论主线，但不能作为孤立 novelty。已有文献已经覆盖语义熵、信息增益奖励、EIG 动作选择、熵驱动证据选择、校准停止、表格状态、动态深宽搜索、未知 denominator 审计、belief–coverage 分离、semantic-region bandit、evidence-equivalence control，以及 posterior-sensitive/non-myopic turn credit。可辩护的新问题只剩下：DeepWide 的隐藏 anchor、开放集合遗漏、行资格和格值能否形成一个经校准且不简单相加的任务风险模型；该模型能否在相同动作菜单、区域、预算和证据等价约束下改善完整 all-220；若进一步训练策略，分层风险变化能否在同状态反事实与 provenance 下定位真正改善最终任务的步骤。
+信息熵适合作为这项工作的理论主线，但不能作为孤立 novelty。已有文献已经覆盖语义熵、信息增益奖励、EIG 动作选择、熵驱动证据选择、校准停止、表格状态、动态深宽搜索、未知 denominator 审计、belief–coverage 分离、semantic-region bandit、evidence-equivalence control、gold-conditioned contextual-IG credit、evidence omission suffix replay，以及 intervention-relative harness authorization。可辩护的新问题只剩下：DeepWide 的隐藏 anchor、开放集合遗漏、行资格和格值能否形成一个经校准且不简单相加的任务风险模型；该模型能否在相同动作菜单、区域、预算和证据等价约束下改善完整 all-220；若进一步训练策略，分层风险变化能否在同状态反事实、bridge-step enablement 与 provenance 下定位真正改善最终任务的步骤。
 
 新的 `plan.md` 因此采用证据门控顺序：先隔离评测、稳定 evidence pipeline 并复现基线，再验证四类信号和干预式 step credit，再验证动作价值预测，最后才实现完整 controller 或 RL credit。V2.40.2 的 2/2 completion、0/2 整表成功与 V2.40.3 的零调用回放说明项目仍处于第一阶段；completion 和 query-plan coverage 都不能替代值正确率。若 anchor/coverage/row/cell signal 不能校准，若 step score 不能预测 counterfactual task contribution，或同动作空间下不改善任务风险–成本 Pareto，则“熵作为核心创新”应降级为诊断工具。
 
@@ -699,3 +710,7 @@ V2.19 针对这两个 label-blind 机制做了 evidence-continuity 修复。它�
 114. Sigillo, L. et al. **EMBL AI Librarian: Life-Sciences Knowledge Layer for AI Agents.** arXiv:2607.28229 (2026). https://arxiv.org/abs/2607.28229
 115. Pan, Y. et al. **FORGE: Research-Trajectory Hijacking Attacks on Deep Research Agents.** arXiv:2607.04718 (2026). https://arxiv.org/abs/2607.04718
 116. Leung, E., Lumer, E., Feld, C., Huber, A., Subbiah, V. K. & Paul, K. **Do You Need a Frontier Model as a Citation Verifier? Benchmarking Rubric LLMs for Deep-Research Source Attribution.** arXiv:2607.08700 (2026). https://arxiv.org/abs/2607.08700
+117. Mukhopadhyay, D., Ghosh, U. K. & Chatterjee, S. **Bridge Evidence: Static Retrieval Utility Does Not Predict Causal Utility in Multi-Step Agentic Search.** arXiv:2607.15253 (2026). https://arxiv.org/abs/2607.15253
+118. Dou, H. **CIGPO: Contextual Information-Gain Policy Optimization for Multi-Turn Evidence-Reading LLM Agents.** arXiv:2607.16244 (2026; first submitted 2026-06-26). https://arxiv.org/abs/2607.16244
+119. Fu, J. et al. **CHILL-Harness: Counterfactual Harness Learning for Efficient Reasoning in Long-Horizon Agents.** arXiv:2607.25825 (2026). https://arxiv.org/abs/2607.25825
+120. Cai, Q., Zhao, Y. & Li, X. **Think Big, Search Small: Where Capacity Matters in Hierarchical Search Agents?** arXiv:2607.07548 (2026). https://arxiv.org/abs/2607.07548

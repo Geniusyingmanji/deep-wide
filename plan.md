@@ -1,10 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.19
+> 版本：5.20
 >
-> 更新：2026-07-31 09:54 UTC
+> 更新：2026-07-31 10:02 UTC
 >
-> 当前覆盖：**V2.42.02 已形成严格 label-blind 的 WebSwarm-style build-only prototype，并冻结为未来独立无熵系统基线，不进入 V2.42.00 主线组件。V2.41.98/99/42.00 与 R1 均健康；R1 权威聚合为 164/220，尚无正式 DeepWideBench 全集分数、提升或 SOTA。**
+> 当前覆盖：**V2.42.02 已形成严格 label-blind 的 WebSwarm-style build-only prototype，并冻结为未来独立无熵系统基线，不进入 V2.42.00 主线组件；baseline-only 处置已由提交 `9a642f4` 推送并与远端逐 SHA 一致。V2.41.98/99/42.00 与 R1 均健康；R1 权威聚合仍为 164/220，尚无正式 DeepWideBench 全集分数、提升或 SOTA。**
+>
+> **5.20 Bridge Evidence/CIGPO/CHILL-Harness 增量与 credit/controller 收紧（2026-07-31 10:02 UTC）：对八组 arXiv Atom 查询与既有 116 篇按 ID 去重后，新增精读 Bridge Evidence、CIGPO、CHILL-Harness 三篇 PDF，并以一手摘要核验 Think Big, Search Small。[117–120] Bridge Evidence 固定干预前 prefix、删除一篇已读文档并重跑 suffix，将终局答案、下一查询检索质量和 turn 成本分开组成 CTU；这要求 Phase C2 为 evidence step 增加 suffix replay、next-action enablement 与成本分量，不能用即时 entropy/relevance 抹掉 bridge credit。CIGPO 已用 frozen reference 的 gold-answer log-likelihood 增量做 contextual IG reward并维持 group reward variance，因此只作为 privileged training oracle，禁止进入 label-blind runtime。CHILL-Harness 已将 workflow effect estimation、candidate valuation 与 advantage-margin execution authorization 分离，因此主 controller 也必须把“候选最好”与“是否优于 factual workflow、足以授权替换”分成两道门。
+>
+> Think Big, Search Small 的一手摘要提示层级搜索的容量敏感性可能主要位于 delegation 而不是 execution；本计划只据此增加 planner×child model capacity 的同预算扫描，不采用其摘要数字作为本项目证据。上述新增工作进一步否定“信息增益大就自动给正 credit”与“统一大模型分配给所有 swarm role 即最优”两种弱主张，但仍未发现同时概率化 anchor、未见质量、行资格和 cell value，并以官方 DeepWide terminal loss 做 label-blind control/credit 的直接同构工作。这仍只是截至检索日的 novelty hypothesis，不是首创证明，也不产生 benchmark 提升。
+>
+> 本轮 `gca-leakage-audit` 只读取安全 aggregate/status envelope。最新 aggregate 明示 `label_blind=true`、`mapping_or_gold_read=false`、`question_or_prediction_emitted=false`、`raw_error_emitted=false`；R1 仍为 `164/220 = 34 completed + 130 failed`、剩余 56。11 个受保护 PID/start ticks 均未变化，V2.41.94 等待 R1 release，V2.41.97–99 等待 capacity freeze，V2.42.00 六条 source 全 waiting，9878 仍由唯一健康 R1 worker 使用。本轮未 signal/restart/resume/rerun、未调用 GPT-5.6、benchmark search/fetch API 或 evaluator、未启动重复全集；联网只访问公开 arXiv 元数据/PDF。高并发仍须等待 `1/2/4/8/12 × 3 waves` 中性容量阶梯冻结后由独立 single-owner exact-220 executor 一次性继承。**
 >
 > **5.19 V2.42.02 label-blind WebSwarm adapter 原型与 baseline-only 处置（2026-07-31 09:53 UTC）：在冻结生产 runtime 外新增纯 adapter，将 visible question/columns/known rows 与 content-free provenance ledger 编译为 `atom/deep/wide/entity_collect` 四模式合同。模型提案必须绑定 adapter 生成的 planner-context SHA；strict payload 递归拒绝 benchmark/subset/category/question_type/label/split、mapping/gold/answer-key/evaluator/score/reward/prediction/task-id 等特权 key。每个 child prompt 机械继承 root scope SHA、原始可见问题/columns/rows 与 active page evidence ID；search-answer-only 或 contradicted evidence 不得路由。child return 还要通过 root/objective hash、active provenance 与递归/child cap。deterministic fallback 保证隐藏 anchor 先 deep，再处理下游 wide/entity collection；观察到的 web topology 只分 `unprobed/centralized/centralized_with_gaps/distributed`，明确不估计 unseen mass。
 >
@@ -1013,12 +1019,14 @@ HiEviDR reference graph、标准 claim 与答案只在预测冻结后的离线 e
 - tool output perturbation；
 - LOTAPO-style `[DELETE]`，仅作 attribution baseline。
 
+对每个 evidence-bearing step 另构造 Bridge Evidence-style omission arm：只删除该步引入的一条 active evidence unit，固定干预前 prefix，并从干预点用相同模型、seed、预算与 continuation policy 重跑完整 suffix。必须分别持久化 `(a)` official terminal-task loss delta、`(b)` 下一查询/后继动作的 evidence-yield 或 enablement delta、`(c)` turn/token/tool/page cost delta；三项都保留为主分析列，CTU-like 标量的权重和零效应阈值必须在结果前冻结。若删除使 state 无法通过相同 schema/provenance gate，则记 invalid/OOD，不得回填原 suffix 或静默丢弃。gold evidence/answer 只允许在预测冻结后的离线 oracle arm 中使用。[117]
+
 每个 intervention 至少用 3 个固定 continuation seeds；记录 intervention validity、state overlap、OOD rate、最终四层 loss、Item/Row/CE 变化和成本。credit baseline 至少包括：
 
 1. raw token/segment entropy drop；
 2. semantic entropy drop；
-3. gold-class log-score gain；
-4. IGPO / TRACE-style forward TD；
+3. CIGPO/IGPO-style contextual gold-class log-score gain；
+4. TRACE-style forward TD；
 5. LOTAPO deletion；
 6. STAMP first-exposure provenance；
 7. RICE-PO local counterfactual；
@@ -1033,9 +1041,11 @@ HiEviDR reference graph、标准 claim 与答案只在预测冻结后的离线 e
 16. TTEL informed-vs-null feedback localization；
 17. OVCSD state-aligned、outcome-verified continuation；
 18. CSCR opposing-outcome sensitivity reallocation；
-19. OWIC full 与各组件。
+19. Bridge Evidence/CTU-style evidence omission suffix replay；
+20. CHILL-Harness-style intervention-relative workflow advantage；
+21. OWIC full 与各组件。
 
-主指标是 signed contribution accuracy、Spearman、top-20% pivotal-step recall、AUROC（有益/有害）、Brier/ECE 和单位 counterfactual rollout 成本。单列六类压力样本：无关新奇、重复错误、熵升纠错、延迟显效、两步协同、删除 OOD。
+主指标是 signed contribution accuracy、Spearman、top-20% pivotal-step recall、AUROC（有益/有害）、Brier/ECE 和单位 counterfactual rollout 成本。对 evidence step 另报 terminal delta、next-action enablement delta 与 cost delta 的分项相关和符号一致性。单列七类压力样本：无关新奇、重复错误、熵升纠错、延迟显效、bridge evidence、两步协同、删除 OOD。
 
 任何 entropy、likelihood/KL shift 或 privileged-teacher shift 只可调节 credit 幅度或不确定性，不能自行确定正负方向。正负方向由冻结 verifier/terminal outcome 决定；另做 correct-vs-incorrect opposing-outcome、null-feedback 与 surface-token substitution 审计。teacher continuation 必须从 student-reached state 出发并通过环境终局验证，否则只列为 privileged score，不计 task credit。
 
@@ -1066,10 +1076,11 @@ I_{ij}=v(\{i,j\})-v(\{i\})-v(\{j\})+v(\varnothing).
 13. fixed-threshold / CAM-DF-lite cost-aware stopping；
 14. dynamic-VOC controller + evidence equivalence + semantic-region portfolio；
 15. label-blind WebSwarm adapter，仅从 visible question/input 与本轮 evidence state 选择 atom/deep/wide/entity_collect，并固定 official evaluator、no-resume、failure-as-zero；同时运行 no-recursive、all-to-wide、all-to-deep、no-Web-Probing 与 no-sibling-experience 消融。
+16. CHILL-style two-gate controller：第一门在 admissible workflow 中排序 estimated task/resource advantage，第二门只在选中项相对 factual workflow 超过预注册 authorization margin 时执行，否则保持 factual workflow。[119]
 
 只有 Phase D1 过门后才跑 controller 全量。
 
-吞吐并发与单题协作机制分开实验。吞吐由中性容量阶梯选定并在整次 all-220 固定；WebSwarm/MANTA 式单题协作另做 `agent_count ∈ {1,2,4,8}`、`refinement_rounds ∈ {0,1,2}`、`topology ∈ {single,fixed-tree,fixed-graph,bounded-adaptive}` 的同预算曲线。先比较单 agent、two-call self-refinement 与固定拓扑，再允许 bounded-adaptive topology；报告每个点的质量、格式失败、重复 evidence、tokens、tool calls 与 wall-clock，不假设曲线单调。
+吞吐并发与单题协作机制分开实验。吞吐由中性容量阶梯选定并在整次 all-220 固定；WebSwarm/MANTA 式单题协作另做 `agent_count ∈ {1,2,4,8}`、`refinement_rounds ∈ {0,1,2}`、`topology ∈ {single,fixed-tree,fixed-graph,bounded-adaptive}` 的同预算曲线。再加入 planner/delegator 与 child/executor 的独立模型容量轴，固定 answer renderer 和总预算，比较大 planner+小 child、小 planner+大 child、同模型三种角色分配；Think Big, Search Small 只作为容量假设来源，不能替代 DeepWide 实测。[120] 先比较单 agent、two-call self-refinement 与固定拓扑，再允许 bounded-adaptive topology；报告每个点的质量、格式失败、重复 evidence、tokens、tool calls 与 wall-clock，不假设曲线单调。
 
 同预算不只指相同上限。按每个方法实际消耗的生成 token 在 independent-search sampling 曲线上插值匹配，同时单列 input token、search/fetch/page reads、最大串行深度和 wall-clock；开放表格的 simple-sampling 聚合规则在结果前冻结为 evidence-equivalence 去重、canonical-row merge 和逐格 provenance vote，不能事后选聚合器。每个 adaptive 分支还报告触发率、premature-stop error、correct-intermediate-overwrite 与 source/evidence 相关修正后的 effective branch count。若 adaptive 方法不超过该简单采样 Pareto 前沿，不能把额外质量归因于 swarm/refinement/controller。[104–109]
 
@@ -1080,7 +1091,7 @@ I_{ij}=v(\{i,j\})-v(\{i\})-v(\{j\})+v(\varnothing).
 1. outcome-only GRPO；
 2. uniform turn advantage；
 3. TEPO/InfoReasoner-style entropy credit；
-4. IGPO 或 TRACE-style gold-log-score credit；
+4. IGPO、TRACE 或 CIGPO-style gold-log-score/contextual-IG credit；
 5. STAMP provenance credit；
 6. strongest feasible counterfactual baseline；
 7. Harness-G SNC；
@@ -1092,9 +1103,11 @@ I_{ij}=v(\{i,j\})-v(\{i\})-v(\{j\})+v(\varnothing).
 13. GRSD outcome-discriminative group modulation；
 14. OVCSD state-aligned outcome-verified distillation；
 15. CSCR sensitivity reallocation；
-16. OWIC-risk only；
-17. OWIC full；
-18. OWIC 去 counterfactual / 去 provenance / 去 unseen mass / 去 evidence equivalence。
+16. Bridge Evidence/CTU-style evidence-step target；
+17. CHILL-style intervention-relative workflow advantage；
+18. OWIC-risk only；
+19. OWIC full；
+20. OWIC 去 counterfactual / 去 provenance / 去 unseen mass / 去 evidence equivalence。
 
 先用 1.5B–4B backbone、固定 20–30K train trajectories、3 seeds 做 pilot。主比较是 OWIC full vs 同训练预算下最强 credit baseline，不允许只和 outcome-only 比。除 held-out task metrics 外，报告训练 sample efficiency、gradient/advantage variance、credit sparsity、effective-step ratio、KL、OOD intervention rate 和 reward hacking。
 
@@ -1257,6 +1270,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 
 - 跨题吞吐并发：由 V2.41.96 中性 `1/2/4/8/12 × 3 waves` 容量阶梯决定，只比较吞吐、排队、429/5xx、超时与 tail latency；
 - 单题 agent 数：`1/2/4/8`，总 token、tool calls、page reads 与最大 wall-clock 预算相同；
+- 角色模型容量：planner/delegator 与 child/executor 分轴扫描，固定 renderer、action menu、总生成/输入 token、tool/page 和 wall-clock；报告质量、成本与 route error，不能由跨题并发档位推断角色容量最优；
 - refinement rounds：`0/1/2`，保留 two-call self-refinement 作为简单强基线；
 - topology：single、fixed WebSwarm-style tree、fixed graph、MANTA-style bounded adaptive；
 - simple allocation：按每个方法实际生成 token 匹配 independent-search sampling 曲线；聚合器预先冻结为 evidence-equivalence 去重、canonical-row merge 与 provenance-aware cell vote；
@@ -1306,6 +1320,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 - 能识别至少一类“entropy 上升但 task risk 下降”的反证动作。
 - 在高 IG/低 value 与低 IG/高 value 反例上，terminal-loss VOC 的 top-1 regret 低于 pure IG；若该区别只在合成例成立，论文必须标为理论而非 empirical contribution。
 - stop head 相对固定阈值和 TASR 的 payoff-weighted regret 同方向改善，并与 CAM-DF-lite 比较；若只改善 tool ranking 而不改善 stop decision，不得宣称成本感知停止有效。
+- CHILL-style controller 必须分别报告 candidate ranking 与 execution authorization：选中 workflow 的 estimated advantage 未超过冻结 margin 时保持 factual workflow；另报 unauthorized harmful replacement、missed beneficial replacement 与授权触发率。[119]
 
 失败处理：使用规则控制器；EIG 仅作为分析指标，不进入标题。
 
@@ -1313,15 +1328,16 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 
 通过条件：
 
-- audit set 至少含 300 个有效步骤，且六类压力样本每类至少 30 个；阈值在 validation 冻结，最终只在 held-out intervention set 评一次；
+- audit set 至少含 300 个有效步骤，且七类压力样本每类至少 30 个；阈值在 validation 冻结，最终只在 held-out intervention set 评一次；
 - OWIC 对 intervention-defined task contribution 的 Spearman ≥ 0.30 且 95% CI 不跨 0；
-- signed contribution accuracy ≥ 0.65，且显著高于 raw entropy、gold-log-score 和 deletion baseline；
+- signed contribution accuracy ≥ 0.65，且显著高于 raw entropy、CIGPO/IGPO gold-log-score、LOTAPO deletion 和 Bridge Evidence/CTU baseline；
 - top-20% pivotal-step recall 相对最强非反事实 baseline 至少提高 10% relative；
 - 在“熵升但纠错”和“重复错误导致熵降”两个压力子集中方向准确率均高于 0.60；
 - intervention validity ≥ 90%，OOD rate、overlap 和不同 continuation-policy 敏感性完整报告；invalid intervention 不计主估计但进入失败率，不能静默丢弃；
 - gold、reference evidence graph 或 evaluator-only 字段只能用于训练/离线 oracle baseline；所有方法另报 privileged-information budget，确保收益不是更多特权监督造成；
 - 去除 counterfactual 或 provenance 至少有一个产生预期方向的显著退化，否则不得把它们写成贡献。
 - 与 OVCSD 式 state-aligned outcome-verified continuation、GRSD group contrast、TTEL null-feedback contrast、CSCR sensitivity reallocation 和适用时的 SkillRise downstream-return credit 比较；
+- evidence-step 子集必须与 Bridge Evidence/CTU 对照，分开报告 terminal-task、next-action enablement 和 cost delta；CIGPO 只列为 gold-conditioned privileged training oracle，并计入 privileged-information budget。[117,118]
 - opposing-outcome shift、surface substitution 或 null-feedback stress 下，entropy/likelihood shift 不得翻转 verifier 决定的方向；无法满足时 entropy 仅作 sensitivity/uncertainty diagnostic。
 
 失败处理：不启动 credit RL。若 task-risk change 有效但 causal component 无效，方法降级为 outcome-aligned potential shaping；若只有 entropy 有效，降级为 epistemic diagnostic，不使用 causal/credit 标题。
@@ -1360,11 +1376,11 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 - future-method holdout 的主比较 CI 支持预注册 non-inferiority/improvement；强泛化主张还需 confirmatory set 同方向；
 - 至少两个机制消融符合 RQ4 预测；
 - 人工 evidence audit 不显示 precision 明显恶化；
-- 系统级讨论覆盖 WebSwarm、SearchOS、ECR、TaS、A-MapReduce、Two Calls Beat Five Agents、SKIMIX 与 MANTA，并明确吞吐并发不等于单题协作质量。
+- 系统级讨论覆盖 WebSwarm、SearchOS、ECR、TaS、A-MapReduce、Think Big Search Small、Two Calls Beat Five Agents、SKIMIX 与 MANTA，并明确吞吐并发不等于单题协作质量、统一角色模型不等于容量最优。
 - 系统级讨论还必须覆盖 AREX、Harness-G、Baikal、SearchArt、MisKnow-Agent 与 FinanceHarness，并分别报告搜索决策、evidence acquisition、synthesis/verification、环境/时间边界和 output-contract failure。
 - controller 主张必须讨论 Search as Computation Allocation，并报告 pure IG、myopic VOC 与 finite-depth dynamic VOC 的同预算差异。
 - 停止主张必须比较 CAM-DF-lite；过程可靠性必须按 HiEviDR/LEDGERMIND/LayerRAG 的 evidence、claim、answer、tool-contract、authorization 与 session 层分别报告。
-- 若标题包含 credit/causal，Gate 2B 与 3B 必须同时通过，且讨论 ECHO、TRACE、LOTAPO、STAMP、RICE-PO、SIOP、CVT-RL、AREX key-step bonus、Harness-G SNC、CAST state-value、AttriMem attribution、SkillRise、GRSD、TTEL、OVCSD 与 CSCR。
+- 若标题包含 credit/causal，Gate 2B 与 3B 必须同时通过，且讨论 ECHO、TRACE、CIGPO、LOTAPO、STAMP、RICE-PO、Bridge Evidence/CTU、SIOP、CVT-RL、CHILL-Harness、AREX key-step bonus、Harness-G SNC、CAST state-value、AttriMem attribution、SkillRise、GRSD、TTEL、OVCSD 与 CSCR。
 
 失败处理：按证据降级为 UQ diagnostic、negative result 或 engineering report；不得保留过强标题/摘要。
 
@@ -1379,12 +1395,12 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 | M2 | 表格/evidence state 与 replay | 当前会话 + TBD owner | V2.29.0 schema 37、单题 checkpoint、hosted trace 去重、failure trace 持久化、anchor-only replay 和 pinned V2.25 closed-domain replay 已可运行；20-task replay pack 待做 | TBD | state schema、20-task replay pack | 部分完成 |
 | M3 | 四层信号数据与校准 | TBD | 2 周 | TBD | shadow signal dataset、calibration report、replay receipt | PAV/terminal calibrator、task-cluster split/bootstrap、provenance budget 与 replay verifier 已实现；真实匿名 development labels/bundle 尚无，Gate 1 未评估 |
 | M4A | Counterfactual action-value pilot | TBD | 1–2 周 | TBD | sealed action slates、propensity、gain report、model replay receipt | task-cluster-disjoint fitter/calibrator/audit/replay verifier 已实现；真实 prospective slate 与 equal-cost arm 数据仍为 0 |
-| M4B | Step-credit intervention audit set | TBD | 2 周 | TBD | 300-step interventions、credit report | fixed-continuation bundle/receipt contract 已实现；300 个有效 step 与六类 stress family 尚未采集 |
-| M5A | Heuristic、pure EIG、myopic/dynamic VOC、CAM-DF stopping、evidence-equivalence 与 region controller | TBD | 1–2 周 | TBD | controllers、unit tests、IG-vs-VOC/stop counterexamples | 未开始；Search as Computation Allocation/CAM-DF/Harness-G/Baikal baseline 已写入协议 |
-| M5B | OWIC estimator 与 verifier-sign-preserving advantage modulation | TBD | 1–2 周 | TBD | credit module、intervention tests | 未开始；SkillRise/GRSD/TTEL/OVCSD/CSCR 对照已写入协议 |
+| M4B | Step-credit intervention audit set | TBD | 2 周 | TBD | 300-step interventions、credit report | fixed-continuation bundle/receipt contract 已实现；300 个有效 step 与七类 stress family（含 bridge evidence）尚未采集 |
+| M5A | Heuristic、pure EIG、myopic/dynamic VOC、CAM-DF/CHILL authorization、evidence-equivalence 与 region controller | TBD | 1–2 周 | TBD | controllers、unit tests、IG-vs-VOC/stop/authorization counterexamples | 未开始；Search as Computation Allocation/CAM-DF/Harness-G/Baikal/CHILL baseline 已写入协议 |
+| M5B | OWIC estimator 与 verifier-sign-preserving advantage modulation | TBD | 1–2 周 | TBD | credit module、intervention tests | 未开始；CIGPO/Bridge Evidence/CHILL/SkillRise/GRSD/TTEL/OVCSD/CSCR 对照已写入协议 |
 | M6A | 50-task online controller pilot / Gate 3A | TBD | 1 周 | TBD | paired report、Pareto plots | 未开始 |
 | M6B | 3-seed credit-training pilot / Gate 3B | TBD | 2 周 | TBD | checkpoints、learning curves、credit audit | 未开始 |
-| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact；下一 fresh all-220 capacity freeze、唯一继承槽与固定并行计划 | 进行中（权威聚合 162/220；dev+validation S04 active；V2.41.96 wait-only；V2.41.97/98/99 等待 capacity freeze） |
+| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact；下一 fresh all-220 capacity freeze、唯一继承槽与固定并行计划 | 进行中（权威聚合 164/220；dev+validation S04 active；V2.41.96 wait-only；V2.41.97/98/99 等待 capacity freeze；V2.42.00 等待六源终态） |
 | M8 | 论文写作与审计 | TBD | 1–2 周 | TBD | manuscript、claim/evidence ledger | 未开始 |
 
 ### M1 推荐目录
