@@ -1,0 +1,104 @@
+{
+  "artifact_version": 1,
+  "role": "v24195_lease_owner_compatibility_preregistration",
+  "protocol_id": "v24195_v24194_lease_owner_compatibility_v1",
+  "created_at_unix": 1785475804,
+  "label_blind": true,
+  "parents": {
+    "results/v24187_phase_liveness_preregistration_v1_20260730.json": {
+      "sha256": "873f42369f6f5ac7d1b619510257f8cc7c932140b734dd14d23c4a5c6e45d34c"
+    },
+    "scripts/audit_v24187_phase_liveness.py": {
+      "sha256": "ff776dafe18d2455cf74dbe953d8590b7e36b43bcda658043791f3e27d4b3fd4"
+    },
+    "results/v24194_capacity_ladder_preregistration_v1_20260731.json": {
+      "sha256": "5da63416e800a73afa49ae479351f83e30892947e987e5d390011b02face4681"
+    },
+    "scripts/preregister_v24194_capacity_ladder.py": {
+      "sha256": "aecf6b72b292890661b282b2f6f1c0fc6507bef77da59500bcb3e09487470583"
+    },
+    "scripts/deepwide_api_lease.py": {
+      "sha256": "8d9cffa78617b458172307d3558c76e9370f045f531c2f5aaaceb866f5a78c7d"
+    }
+  },
+  "compatibility_contract": {
+    "registered_owner": "v24194_neutral_gpt56_capacity_ladder_v1",
+    "registered_purpose": "neutral_capacity_for_next_fresh_all220_freeze",
+    "frozen_parent_expected_finding": "shared_api_lease_identity",
+    "suppress_only_expected_finding_for_exact_registered_live_identity": true,
+    "preserve_all_unrelated_parent_critical_findings": true,
+    "legacy_registered_owners_remain_parent_authoritative": true,
+    "unknown_owner_or_purpose_fails_closed": true,
+    "lease_lock_is_authoritative_and_json_is_observational": true
+  },
+  "activation_contract": {
+    "successor_protocol_path": "results/v24196_capacity_executor_preregistration_v1_20260731.json",
+    "successor_activation_path": "results/v24196_capacity_executor_activation_v1_20260731.json",
+    "successor_executor_marker": "scripts/watch_v24196_capacity_executor.py",
+    "successor_protocol_must_bind_this_protocol_sha256": true,
+    "successor_protocol_must_bind_v24194_protocol_sha256": true,
+    "activation_payload_live_recomputed": true,
+    "activation_pid_and_proc_start_ticks_live_revalidated": true,
+    "activation_owner_purpose_and_executor_exact_match": true
+  },
+  "execution": {
+    "python_flags": [
+      "-I",
+      "-B"
+    ],
+    "poll_seconds": 10,
+    "proc_root": "/proc",
+    "watcher_marker": "scripts/watch_v24195_lease_owner_compatibility.py",
+    "state_path": "outputs/v24195_lease_owner_compatibility_watcher_state_v1_20260731.json",
+    "wait_activation_path": "results/v24195_lease_owner_compatibility_wait_activation_audit_v1_20260731.json",
+    "lease_path": "outputs/deepwide_benchmark_api.lease.lock",
+    "safe_wait_boundary": {
+      "phase": "r1_full220",
+      "phase_valid": true,
+      "phase_critical_findings": [],
+      "v24194_status": "waiting_for_r1_release",
+      "v24194_shared_api_lease_acquired": false,
+      "v24194_neutral_capacity_model_api_called": false,
+      "successor_activation_absent": true,
+      "successor_protocol_absent": true
+    }
+  },
+  "source_policy": {
+    "parent_label_blind_liveness_report_recomputed_live": true,
+    "shared_lease_owner_purpose_pid_and_lock_state_only": true,
+    "proc_executable_identity_and_start_ticks_only": true,
+    "runtime_task_question_answer_evidence_prediction_or_url_opened": false,
+    "mapping_gold_category_question_type_evaluator_or_score_read": false,
+    "credential_value_or_keyring_read": false,
+    "network_model_search_fetch_or_evaluator_api_called": false
+  },
+  "authorization": {
+    "read_only_compatibility_watcher": true,
+    "process_signal_restart_resume_rerun_skip_or_selective_retry": false,
+    "shared_api_lease_acquire": false,
+    "execution_activation_publish": false,
+    "network_model_search_fetch_or_evaluator_api_call": false,
+    "benchmark_forward_or_full220_launch": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "control_surface": {
+    "file_count": 8,
+    "manifest": {
+      "scripts/preregister_v24195_lease_owner_compatibility.py": "ccdcdb70fb5c6a94a17918b7fec993c93179749cd133f56b80b73018980824de",
+      "scripts/audit_v24195_lease_owner_compatibility.py": "e0eae4427df3b58db4778d940c417ac1211b03032c9284af7560e015d4a8c4e6",
+      "scripts/watch_v24195_lease_owner_compatibility.py": "c7083651a6e29ed82b2aacea7a480522293436c733e738e04f159881504ac687",
+      "scripts/audit_v24195_lease_owner_compatibility_wait_activation.py": "667403caad474bba42339d6b415c192d08b1ffba51d6246e94a5aa4f4d1028c8",
+      "tests/test_preregister_v24195_lease_owner_compatibility.py": "bb8e0632517233e6a435f6471033b8c4c29dd2aad501ef4d1f82a32965e28519",
+      "tests/test_audit_v24195_lease_owner_compatibility.py": "722cbc0da36df2f3a740abf60799f25585c25982d160e669503837068ebceca5",
+      "tests/test_watch_v24195_lease_owner_compatibility.py": "3b6a22479390fc232176011ca214ad2408ddd8ccc30b005dc8cadfafa2ee9d4e",
+      "tests/test_audit_v24195_lease_owner_compatibility_wait_activation.py": "d8890f0a89e304744cab15a75630d48738e3ec4f80d2bbf8eac9fb06d8204569"
+    },
+    "manifest_sha256": "2bd31f83a52edde6134ac5b2e445c73b8ee37cca597f837fb61b4855b12768ef",
+    "must_remain_absent": [
+      "scripts/__init__.py",
+      "sitecustomize.py",
+      "usercustomize.py"
+    ]
+  },
+  "decision_contract_sha256": "bd13dd61e44a362b10655ba5d851758fe9cd5b43cbd2a7e82df63fac00e02a81"
+}
