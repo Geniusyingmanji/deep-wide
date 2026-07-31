@@ -1,0 +1,424 @@
+#!/usr/bin/env python3
+"""Build-only audit for V2.42.23 verifier-sign-preserving credit."""
+
+from __future__ import annotations
+
+import argparse
+import ast
+import hashlib
+import json
+import os
+import re
+import sys
+import time
+from pathlib import Path
+from typing import Any
+
+
+ROOT = Path(__file__).resolve().parents[1]
+SRC = ROOT / "src"
+if str(SRC) not in sys.path:
+    sys.path.insert(0, str(SRC))
+
+from deepwide_agent.v24223_sign_preserving_credit import (  # noqa: E402
+    CREDIT_TRAINING_AUTHORIZED,
+    POLICY_ID,
+    PRODUCTION_PACKAGE_AUTHORIZED,
+    build_amplitude_features,
+    build_verified_terminal_contribution,
+    modulate_verified_credit,
+    object_sha256,
+    validate_modulation_receipt,
+)
+
+
+ROLE = "v24223_verifier_sign_preserving_credit_build_audit"
+OUTPUT = Path(
+    "results/v24223_verifier_sign_preserving_credit_build_audit_v1_20260731.json"
+)
+MODULE = Path("src/deepwide_agent/v24223_sign_preserving_credit.py")
+MODULE_TEST = Path("tests/test_v24223_sign_preserving_credit.py")
+AUDIT = Path("scripts/audit_v24223_sign_preserving_credit.py")
+AUDIT_TEST = Path("tests/test_audit_v24223_sign_preserving_credit.py")
+CONTROL_FILES = (MODULE, MODULE_TEST, AUDIT, AUDIT_TEST)
+ACTIVE_FORWARD_GUARD_FILES = (
+    Path("src/deepwide_agent/runtime.py"),
+    Path("src/deepwide_agent/v24211_entropy_runtime.py"),
+    Path("scripts/run_deepwide_agent.py"),
+    Path("scripts/launch_frozen_deepwide.py"),
+)
+
+ALLOWED_IMPORT_ROOTS = frozenset(
+    {"__future__", "collections", "hashlib", "json", "math", "typing"}
+)
+FORBIDDEN_CALL_NAMES = frozenset(
+    {"__import__", "breakpoint", "compile", "eval", "exec", "input", "open"}
+)
+FORBIDDEN_ATTRIBUTE_ROOTS = frozenset(
+    {
+        "aiohttp",
+        "anyio",
+        "asyncio",
+        "builtins",
+        "http",
+        "httpx",
+        "importlib",
+        "os",
+        "pathlib",
+        "requests",
+        "shutil",
+        "socket",
+        "subprocess",
+        "urllib",
+    }
+)
+REQUIRED_PUBLIC_FUNCTIONS = frozenset(
+    {
+        "build_amplitude_features",
+        "build_verified_terminal_contribution",
+        "modulate_verified_credit",
+        "object_sha256",
+        "validate_amplitude_features",
+        "validate_modulation_receipt",
+        "validate_verified_terminal_contribution",
+    }
+)
+SECRET_LITERAL = re.compile(
+    r"(?:ghp_|github_pat_|tvly-(?:dev-)?|sk-)[A-Za-z0-9_-]{16,}"
+)
+OPAQUE_ID = re.compile(r"task_[0-9a-f]{24}")
+
+
+def sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def payload_sha256(value: object) -> str:
+    return hashlib.sha256(
+        json.dumps(
+            value,
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        ).encode("utf-8")
+    ).hexdigest()
+
+
+def ordinary(root: Path, relative: Path) -> Path:
+    if relative.is_absolute() or ".." in relative.parts:
+        raise RuntimeError("V2.42.23 path is noncanonical")
+    path = root / relative
+    if (
+        path.resolve(strict=False) != path.absolute()
+        or path.is_symlink()
+        or not path.is_file()
+        or not path.resolve().is_relative_to(root)
+    ):
+        raise RuntimeError(
+            f"V2.42.23 expected an ordinary repository file: {relative}"
+        )
+    return path
+
+
+def _attribute_root(node: ast.Attribute) -> str | None:
+    current: ast.expr = node
+    while isinstance(current, ast.Attribute):
+        current = current.value
+    return current.id if isinstance(current, ast.Name) else None
+
+
+def audit_python_source(source: str) -> dict[str, Any]:
+    tree = ast.parse(source)
+    imports: set[str] = set()
+    defined_functions: set[str] = set()
+    forbidden_calls: list[str] = []
+    forbidden_attributes: list[str] = []
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            imports.update(alias.name.split(".", 1)[0] for alias in node.names)
+        elif isinstance(node, ast.ImportFrom):
+            if node.module:
+                imports.add(node.module.split(".", 1)[0])
+        elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            defined_functions.add(node.name)
+        elif isinstance(node, ast.Call):
+            if isinstance(node.func, ast.Name) and node.func.id in FORBIDDEN_CALL_NAMES:
+                forbidden_calls.append(node.func.id)
+            elif isinstance(node.func, ast.Attribute):
+                root = _attribute_root(node.func)
+                if root in FORBIDDEN_ATTRIBUTE_ROOTS:
+                    forbidden_attributes.append(f"{root}.{node.func.attr}")
+    disallowed_imports = sorted(imports - ALLOWED_IMPORT_ROOTS)
+    missing_functions = sorted(REQUIRED_PUBLIC_FUNCTIONS - defined_functions)
+    if disallowed_imports or forbidden_calls or forbidden_attributes or missing_functions:
+        raise RuntimeError(
+            "V2.42.23 capability boundary failed: "
+            f"imports={disallowed_imports}, calls={sorted(forbidden_calls)}, "
+            f"attributes={sorted(forbidden_attributes)}, missing={missing_functions}"
+        )
+    return {
+        "ast_node_count": sum(1 for _ in ast.walk(tree)),
+        "import_roots": sorted(imports),
+        "required_public_functions_present": sorted(REQUIRED_PUBLIC_FUNCTIONS),
+        "disallowed_import_count": 0,
+        "forbidden_call_count": 0,
+        "forbidden_attribute_call_count": 0,
+        "file_environment_network_process_or_dynamic_code_capability": False,
+    }
+
+
+def _digest(character: str) -> str:
+    return character * 64
+
+
+def _contribution(*values: float, **overrides: bool) -> dict[str, Any]:
+    flags = {
+        "terminal_outcome_verified": True,
+        "same_state_matched_continuation": True,
+        "intervention_valid": True,
+        "state_overlap_valid": True,
+        "ood_detected": False,
+        "prediction_closed_before_evaluator_join": True,
+        "evaluator_joined_post_terminal_only": True,
+    }
+    flags.update(overrides)
+    return build_verified_terminal_contribution(
+        opaque_step_ref_sha256=_digest("a"),
+        source_checkpoint_sha256=_digest("b"),
+        continuation_policy_sha256=_digest("c"),
+        evaluator_protocol_sha256=_digest("d"),
+        intervention_protocol_sha256=_digest("e"),
+        replicate_signed_terminal_contributions=list(values),
+        **flags,
+    )
+
+
+def _features(entropy_reduction: float) -> dict[str, Any]:
+    return build_amplitude_features(
+        opaque_step_ref_sha256=_digest("a"),
+        source_checkpoint_sha256=_digest("b"),
+        feature_source_sha256=_digest("f"),
+        entropy_reduction=entropy_reduction,
+        provenance_role="contradiction_resolution",
+        provenance_strength=1.0,
+        cost_fraction=0.25,
+    )
+
+
+def replay_synthetic_contracts() -> dict[str, Any]:
+    positive = modulate_verified_credit(
+        verified_contribution=_contribution(0.2, 0.3, 0.4),
+        amplitude_features=_features(-0.8),
+    )
+    negative = modulate_verified_credit(
+        verified_contribution=_contribution(-0.2, -0.3, -0.4),
+        amplitude_features=_features(0.8),
+    )
+    neutral = modulate_verified_credit(
+        verified_contribution=_contribution(-0.5, 0.0, 0.5),
+        amplitude_features=_features(1.0),
+    )
+    if (
+        positive["entropy_direction"] != "increase"
+        or positive["modulated_advantage_candidate"] <= 0.0
+        or negative["modulated_advantage_candidate"] >= 0.0
+        or neutral["modulated_advantage_candidate"] != 0.0
+        or not all(
+            value["verifier_sign_preserved"]
+            for value in (positive, negative, neutral)
+        )
+    ):
+        raise RuntimeError("V2.42.23 synthetic sign replay drifted")
+
+    invalid_intervention_rejected = False
+    try:
+        _contribution(0.2, 0.2, 0.2, intervention_valid=False)
+    except ValueError as error:
+        invalid_intervention_rejected = "valid in-overlap" in str(error)
+
+    ood_intervention_rejected = False
+    try:
+        _contribution(0.2, 0.2, 0.2, ood_detected=True)
+    except ValueError as error:
+        ood_intervention_rejected = "valid in-overlap" in str(error)
+
+    insufficient_replicates_rejected = False
+    try:
+        _contribution(0.2, 0.2)
+    except ValueError as error:
+        insufficient_replicates_rejected = "three to sixty-four" in str(error)
+
+    tampered = dict(positive)
+    tampered["modulated_advantage_candidate"] = -float(
+        tampered["modulated_advantage_candidate"]
+    )
+    unsigned = dict(tampered)
+    unsigned.pop("receipt_sha256")
+    tampered["receipt_sha256"] = object_sha256(unsigned)
+    resealed_sign_flip_rejected = False
+    try:
+        validate_modulation_receipt(tampered)
+    except ValueError as error:
+        resealed_sign_flip_rejected = "formula drifted" in str(error)
+
+    if not all(
+        (
+            invalid_intervention_rejected,
+            ood_intervention_rejected,
+            insufficient_replicates_rejected,
+            resealed_sign_flip_rejected,
+        )
+    ):
+        raise RuntimeError("V2.42.23 fail-closed replay drifted")
+    return {
+        "valid_modulation_replay_count": 3,
+        "positive_negative_and_neutral_verifier_signs_covered": True,
+        "entropy_increase_with_positive_terminal_contribution_covered": True,
+        "entropy_decrease_cannot_reverse_negative_terminal_contribution": True,
+        "zero_terminal_contribution_remains_zero": True,
+        "invalid_intervention_rejected": True,
+        "ood_intervention_rejected": True,
+        "insufficient_replicates_rejected": True,
+        "resealed_sign_flip_rejected": True,
+        "synthetic_benchmark_rows_or_content_read": False,
+    }
+
+
+def build_audit(
+    root: Path = ROOT, *, created_at_unix: int | None = None
+) -> dict[str, Any]:
+    root = root.resolve()
+    if root != ROOT.resolve():
+        raise RuntimeError("V2.42.23 audit may only use the canonical workspace")
+    paths = {str(relative): ordinary(root, relative) for relative in CONTROL_FILES}
+    guards = {
+        str(relative): ordinary(root, relative)
+        for relative in ACTIVE_FORWARD_GUARD_FILES
+    }
+    module_source = paths[str(MODULE)].read_text(encoding="utf-8")
+    static_audit = audit_python_source(module_source)
+    guard_import_hits = {
+        relative: source.read_text(encoding="utf-8").count(
+            "v24223_sign_preserving_credit"
+        )
+        for relative, source in guards.items()
+    }
+    if any(guard_import_hits.values()):
+        raise RuntimeError("V2.42.23 appears in an active forward guard file")
+    control_manifest = {relative: sha256(path) for relative, path in paths.items()}
+    guard_manifest = {relative: sha256(path) for relative, path in guards.items()}
+    replay = replay_synthetic_contracts()
+    value: dict[str, Any] = {
+        "artifact_version": 1,
+        "role": ROLE,
+        "created_at_unix": int(time.time()) if created_at_unix is None else int(created_at_unix),
+        "policy_id": POLICY_ID,
+        "label_blind_runtime": True,
+        "build_only": True,
+        "control_surface": {
+            "file_count": len(control_manifest),
+            "manifest": control_manifest,
+            "manifest_sha256": payload_sha256(control_manifest),
+        },
+        "active_forward_guard": {
+            "file_count": len(guard_manifest),
+            "manifest": guard_manifest,
+            "guard_manifest_sha256": payload_sha256(guard_manifest),
+            "module_name_hit_count_by_file": guard_import_hits,
+            "module_absent_from_guarded_forward_entrypoints": True,
+        },
+        "static_capability_audit": static_audit,
+        "synthetic_contract_replay": replay,
+        "scientific_scope": {
+            "verifier_sign_preserving_credit_modulation_implemented": True,
+            "terminal_same_state_contribution_is_only_sign_source": True,
+            "entropy_provenance_and_cost_change_magnitude_only": True,
+            "entropy_increase_can_retain_positive_verified_credit": True,
+            "invalid_ood_or_unmatched_intervention_fails_closed": True,
+            "minimum_three_fixed_continuation_replicates_required": True,
+            "post_terminal_evaluator_protocol_hash_bound": True,
+            "full_source_intervention_bundle_semantics_replayed_by_this_module": False,
+            "caller_validity_attestations_independently_proven_by_this_module": False,
+            "real_intervention_data_observed": False,
+            "gate2b_evaluated": False,
+            "training_effect_observed": False,
+            "benchmark_quality_or_cost_effect_observed": False,
+        },
+        "source_policy": {
+            "repository_control_code_and_synthetic_hashes_only": True,
+            "runtime_task_question_query_raw_evidence_url_prediction_or_answer_read": False,
+            "benchmark_subset_category_question_type_label_split_or_mapping_read": False,
+            "gold_evaluator_payload_score_reward_or_results_read": False,
+            "post_terminal_numeric_contribution_or_evaluator_protocol_hash_allowed": True,
+            "credential_environment_keyring_or_secret_value_read": False,
+            "network_model_search_fetch_subprocess_or_api_called": False,
+        },
+        "authorization": {
+            "production_package_authorized": PRODUCTION_PACKAGE_AUTHORIZED,
+            "credit_training_authorized": CREDIT_TRAINING_AUTHORIZED,
+            "active_forward_prompt_model_search_budget_or_controller_change": False,
+            "process_signal_restart_resume_rerun_or_selective_retry": False,
+            "candidate_materialization_or_package_gate": False,
+            "benchmark_forward_dev64_full220_or_evaluator_launch": False,
+            "shared_api_lease_acquire": False,
+            "leaderboard_submission_or_sota_claim": False,
+        },
+        "claims": {
+            "build_only_kernel_available": True,
+            "runtime_integration_available": False,
+            "real_credit_estimate_available": False,
+            "benchmark_score_available": False,
+            "benchmark_improvement_observed": False,
+            "training_improvement_observed": False,
+            "leaderboard_submission_performed": False,
+            "sota": False,
+        },
+        "audit_valid": True,
+    }
+    encoded = json.dumps(value, ensure_ascii=False)
+    if OPAQUE_ID.search(encoded) or SECRET_LITERAL.search(encoded):
+        raise RuntimeError("V2.42.23 audit would expose forbidden content")
+    value["audit_payload_sha256"] = payload_sha256(value)
+    return value
+
+
+def publish_new(path: Path, value: dict[str, Any]) -> None:
+    target = path.resolve(strict=False)
+    expected = (ROOT / OUTPUT).resolve(strict=False)
+    if target != expected or not target.is_relative_to(ROOT / "results"):
+        raise RuntimeError("V2.42.23 audit output path is noncanonical")
+    target.parent.mkdir(parents=True, exist_ok=True)
+    descriptor = os.open(target, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+    try:
+        with os.fdopen(descriptor, "w", encoding="utf-8") as handle:
+            json.dump(value, handle, ensure_ascii=False, indent=2)
+            handle.write("\n")
+            handle.flush()
+            os.fsync(handle.fileno())
+    except BaseException:
+        target.unlink(missing_ok=True)
+        raise
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--output", default=str(OUTPUT))
+    args = parser.parse_args()
+    target = Path(args.output)
+    target = target if target.is_absolute() else ROOT / target
+    value = build_audit()
+    publish_new(target, value)
+    print(
+        json.dumps(
+            {
+                "path": str(target),
+                "sha256": sha256(target),
+                "audit_valid": value["audit_valid"],
+                "build_only": value["build_only"],
+            }
+        )
+    )
+
+
+if __name__ == "__main__":
+    main()
