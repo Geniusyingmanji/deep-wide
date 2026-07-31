@@ -1,10 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.27
+> 版本：5.28
 >
-> 更新：2026-07-31 11:58 UTC
+> 更新：2026-07-31 12:22 UTC
 >
-> 当前覆盖：**V2.42.06 已冻结并安全激活 selected-baseline-bound Markdown component publisher。它在任何 V2.42.04 outcome 前枚举全部 36 个 content-free work order，只拥有 `markdown_rank_slot`：12 个无 Markdown 分支固定 no-op，8 个 P12 分支绑定历史 schema69 byte-exact publication，schema76/schema77 各 8 个分支在父 work order terminal 后才允许生成 target schema78/79 rebase；scope/search/entropy、joint package、package gate、API 与 benchmark 全部继续阻塞。当前 watcher 只读 V2.42.04 安全 state envelope，selected work order、publication 与 candidate 均不存在。现有 R1 与 watcher 全部保留；最新 label-blind 安全聚合为 `167/220 = 34 completed + 133 failed`，剩余 53，正式 DeepWideBench 全集分数、提升或 SOTA 仍不存在。**
+> 当前覆盖：**V2.42.07 已冻结并安全激活 selected branch-scope namespace-alias publisher。它在任何 V2.42.06 outcome 前覆盖全部 36 个 content-free work order，只拥有 `markdown_branch_scope_open_fallback`：24 个无 scope 分支固定 no-op，4 个 P12 分支绑定历史 schema70 byte-exact publication，schema76/schema77 各 4 个分支只允许把 V2.42.06 已测试候选中的单一主线 scope hook登记为零字节 namespace alias；严禁重打历史 scope patch或修改候选字节。search/entropy、joint package、package gate、API 与 benchmark 全部继续阻塞。当前 watcher 只读 V2.42.06 安全 state envelope，selected work order 与 Markdown publication 均未打开。现有 R1 与 watcher 全部保留；最新 label-blind 安全聚合为 `168/220 = 34 completed + 134 failed`，剩余 52，正式 DeepWideBench 全集分数、提升或 SOTA 仍不存在。该 `168/220` 是安全进度 envelope（失败也计 terminal），不是 benchmark 得分。**
+>
+> **5.28 V2.42.07 selected branch-scope namespace alias 冻结与安全启动（2026-07-31 12:22 UTC）：执行闭包审计确认 V2.41.97 只生成 fixed wave plan，V2.41.98–V2.42.06 也不拥有最终 package/executor 权限；不能绕过 V2.42.00 outcome-before-selection 直接启动 all-220。V2.42.07 因而只补齐 scope 组件 publication，不预判 search-yield 或 entropy outcome，也不构建 joint package。P12 复用 V2.42.01 已逐 byte 重放的 schema70；schema76/schema77 的 V2.42.06 candidate 已各有且仅有一份 `v24104` import、fallback call 与 audit write，故 branch scope 只产生 content-addressed alias receipt，pipeline/schema/runtime bytes 全不变。任一 candidate byte、hook count、Markdown parent或 selected decision 漂移均 fail closed。
+>
+> create-exclusive protocol [`results/v24207_selected_scope_alias_component_preregistration_v1_20260731.json`](results/v24207_selected_scope_alias_component_preregistration_v1_20260731.json) SHA `2a2800ca…1ebe0`、decision SHA `c79a8637…4f00a`、12-file control manifest SHA `151ebf8e…280f7`；全部 36 分支计数为 `24 no-op / 4 schema70 / 4 schema76 alias / 4 schema77 alias`，candidate-byte modification、historical-patch replay、joint-package 与 benchmark authorization 均为 0。V2.42.00–07 控制链回归 `83/83`，V2.42.07 定向 `15/15`，包括候选字节篡改、work-order 篡改、preterminal parent、missing activation 和 create-exclusive 故障注入；compile、5 个真实 isolated CLI、secret/opaque-ID、网络/环境/动态执行能力扫描通过，V2.42.06 的 12-file frozen manifest 仍 12/12 一致。
+>
+> 唯一 isolated watcher `deepwide-v24207-scope-alias-v1`、PID `2307529` 在 activation 前只写 `waiting_for_execution_activation`。activation [`results/v24207_selected_scope_alias_component_activation_v1_20260731.json`](results/v24207_selected_scope_alias_component_activation_v1_20260731.json) SHA `bca63bc2…61796` 后自然进入 `waiting_for_v24206_terminal_markdown_publication / parent_markdown_component_preterminal`。wait audit [`results/v24207_selected_scope_alias_component_wait_activation_audit_v1_20260731.json`](results/v24207_selected_scope_alias_component_wait_activation_audit_v1_20260731.json) SHA `25c9d7e4…69776` 证明冻结时 20 个既有健康进程身份不变，parent selected work order/Markdown publication 未打开，scope publication absent，candidate bytes 未改，lease/API/evaluator/full220 权限全 false。R1 自然推进到 `168/220`，唯一 forward 继续占用 9878；未 signal/restart/resume/rerun，未启动重复全集或容量探针。下一闭包仍是 selected search/entropy publisher（仅在各自 GO 时）→完整组件 joint package/identity handoff→同 dev64 package gate→容量 freeze→single-owner fresh exact220 executor。**
 >
 > **5.27 WebSwarm 邻域、global retrieval 与联合校准增量（2026-07-31 11:58 UTC）：在不打开任何 benchmark 题面、预测、raw error、mapping/gold/category/evaluator/score 的条件下，新增全文核验九篇 2026 年工作。[134–142] BM25 scaling 的 28-tier 结果要求新增 `raw exploration` 与 `global BM25 ranking -> agent refinement` 的同预算强基线；其同一 150 题 full-scale control 为 raw file agent `36.9/895K tok/q`、Agent+BM25 `69.4/101K tok/q`，仅是该论文内 mechanism control，绝不作为本项目或 DeepWideBench 分数。MagicSelector 的 decomposition reward 依赖 gold target-tool set，只列 privileged proxy；TSDS 要求 stop 与 defer 联合校准且其保证依赖 calibration/test i.i.d.；n-Clue 的 `81.1% gold discovery / 35.8% complete-first` 要求把候选命中与合取证据完整性分开。
 >
@@ -1468,7 +1474,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 | M5B | OWIC estimator 与 verifier-sign-preserving advantage modulation | TBD | 1–2 周 | TBD | credit module、intervention tests | 未开始；CIGPO/Bridge Evidence/CHILL/SkillRise/GRSD/TTEL/OVCSD/CSCR 对照已写入协议 |
 | M6A | 50-task online controller pilot / Gate 3A | TBD | 1 周 | TBD | paired report、Pareto plots | 未开始 |
 | M6B | 3-seed credit-training pilot / Gate 3B | TBD | 2 周 | TBD | checkpoints、learning curves、credit audit | 未开始 |
-| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact；下一 fresh all-220 capacity freeze、唯一继承槽与固定并行计划 | 进行中（权威安全聚合 167/220；dev+validation S04 active；V2.41.94/96 wait-only；V2.41.97/98/99 等待 capacity freeze；V2.42.00 等待质量链终态） |
+| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact；下一 fresh all-220 capacity freeze、唯一继承槽与固定并行计划 | 进行中（权威安全聚合 168/220；dev+validation S04 active；V2.41.94/96 wait-only；V2.41.97/98/99 等待 capacity freeze；V2.42.00 等待质量链终态） |
 | M8 | 论文写作与审计 | TBD | 1–2 周 | TBD | manuscript、claim/evidence ledger | 未开始 |
 
 ### M1 推荐目录
