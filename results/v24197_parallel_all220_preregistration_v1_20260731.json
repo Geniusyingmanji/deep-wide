@@ -1,0 +1,187 @@
+{
+  "artifact_version": 1,
+  "role": "v24197_parallel_all220_preregistration",
+  "protocol_id": "v24197_capacity_bound_parallel_all220_planner_v1",
+  "created_at_unix": 1785480163,
+  "label_blind": true,
+  "parent": {
+    "protocol": {
+      "path": "results/v24196_capacity_executor_preregistration_v1_20260731.json",
+      "sha256": "e413f85dab40c65fee6202f84df2cf45c333cef4a10e81d22950c1c3b528e4d0"
+    },
+    "activation": {
+      "path": "results/v24196_capacity_executor_activation_v1_20260731.json",
+      "sha256": "5c08d330003d9c4c59168269a900c63612fe651aff16b2f47f73c6fcb95015c7"
+    },
+    "wait_audit": {
+      "path": "results/v24196_capacity_executor_wait_activation_audit_v1_20260731.json",
+      "sha256": "f310049a159c4a5b40240a0b375ebe9cefc48e7fc07afc9f0fdb8a47ab335866"
+    }
+  },
+  "capacity_input": {
+    "report_path": "results/v24196_capacity_ladder_report_v1_20260731.json",
+    "freeze_path": "results/v24196_next_fresh_all220_capacity_freeze_v1_20260731.json",
+    "parent_protocol_sha256": "e413f85dab40c65fee6202f84df2cf45c333cef4a10e81d22950c1c3b528e4d0",
+    "must_be_live_recomputed_not_trusted_by_summary": true,
+    "capacity_no_go_is_terminal_no_plan": true
+  },
+  "candidate_input": {
+    "bundle_path": "results/v24197_fresh_all220_execution_bundle_v1_20260731.json",
+    "quality_go_receipt_required": true,
+    "quality_go_receipt_is_structural_input_not_execution_authority": true,
+    "bundle_and_go_receipt_must_both_keep_forward_launch_false": true,
+    "four_shards": [
+      "test_s01",
+      "test_s02",
+      "test_s03",
+      "devval"
+    ],
+    "shard_counts": [
+      52,
+      52,
+      52,
+      64
+    ],
+    "exact_disjoint_all220_required": true,
+    "canonical_all220_source_files": {
+      "configs/full220_v2403_r1_test_s01.ids": {
+        "sha256": "9f4c7bb4e9f63b01b574a52ec840266358dae6d9982dc7caebfeb813eca02dfb"
+      },
+      "configs/full220_v2403_r1_test_s02.ids": {
+        "sha256": "2b48a04896437fdea127e02ad7980f2cb9310db9a16841696affd04796502bbd"
+      },
+      "configs/full220_v2403_r1_test_s03.ids": {
+        "sha256": "abaadc27927a9dbd5ad8cc856513baa85e8c900ed041cf6e5c0978534d103566"
+      },
+      "configs/full220_v2403_r1_devval_s04.ids": {
+        "sha256": "79ba11a41c186daa80e8779e8fa2c1b47e7907f8e398d817dedb43099333d69c"
+      }
+    },
+    "canonical_all220_opaque_partition_sha256": "cace8746d5a817a467e7cb70e715ee599a242cc88ce4474802b9d93a9221082b",
+    "one_pipeline_code_prompt_search_budget_threshold_required": true,
+    "fresh_output_roots_required": true,
+    "search_capacity_preflight_required": true
+  },
+  "planning_contract": {
+    "capacity_workers_copied_exactly": true,
+    "parallel_shard_width_capped_by_capacity": true,
+    "worst_case_model_request_concurrency_must_not_exceed_capacity": true,
+    "fixed_wave_schedule_for_entire_all220": true,
+    "single_parent_shared_lease_owner_required_for_future_executor": true,
+    "forward_failures_scored_as_zero": true,
+    "resume_or_selective_rerun_allowed": false,
+    "plan_itself_never_authorizes_launch": true
+  },
+  "safe_wait_boundary": {
+    "v24196_capacity_report_absent": true,
+    "v24196_capacity_freeze_absent": true,
+    "candidate_bundle_absent": true,
+    "parallel_plan_absent": true,
+    "protected_processes": {
+      "r1_launcher": {
+        "marker": "scripts/launch_frozen_deepwide.py",
+        "pid": 1344451,
+        "start_ticks": 741535641,
+        "python_isolated_no_bytecode_required": false,
+        "command_line_emitted": false
+      },
+      "r1_forward": {
+        "marker": "scripts/run_deepwide_agent.py",
+        "pid": 1350579,
+        "start_ticks": 741557746,
+        "python_isolated_no_bytecode_required": false,
+        "command_line_emitted": false
+      },
+      "v24187_phase_watcher": {
+        "marker": "scripts/watch_v24187_phase_liveness.py",
+        "pid": 3204072,
+        "start_ticks": 733230314,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24193_gate2a_watcher": {
+        "marker": "scripts/watch_v24193_replicate_aware_gate2a.py",
+        "pid": 1486117,
+        "start_ticks": 741782930,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24194_capacity_watcher": {
+        "marker": "scripts/watch_v24194_capacity_ladder.py",
+        "pid": 1582182,
+        "start_ticks": 742119955,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24195_compatibility_watcher": {
+        "marker": "scripts/watch_v24195_lease_owner_compatibility.py",
+        "pid": 1638839,
+        "start_ticks": 742337902,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      },
+      "v24196_capacity_executor": {
+        "marker": "scripts/watch_v24196_capacity_executor.py",
+        "pid": 1659284,
+        "start_ticks": 742415197,
+        "python_isolated_no_bytecode_required": true,
+        "command_line_emitted": false
+      }
+    }
+  },
+  "execution": {
+    "python_flags": [
+      "-I",
+      "-B"
+    ],
+    "poll_seconds": 60,
+    "watcher_marker": "scripts/watch_v24197_parallel_all220.py",
+    "state_path": "outputs/v24197_parallel_all220_watcher_state_v1_20260731.json",
+    "activation_path": "results/v24197_parallel_all220_activation_v1_20260731.json",
+    "wait_audit_path": "results/v24197_parallel_all220_wait_activation_audit_v1_20260731.json",
+    "plan_path": "results/v24197_parallel_all220_plan_v1_20260731.json"
+  },
+  "source_policy": {
+    "safe_capacity_state_and_immutable_file_metadata_only_before_inputs_exist": true,
+    "opaque_id_and_manifest_files_only_after_candidate_bundle_and_capacity_pair_exist": true,
+    "candidate_manifest_bytes_hash_only_never_parsed_or_emitted": true,
+    "benchmark_question_answer_evidence_prediction_url_values_parsed_or_emitted": false,
+    "mapping_gold_category_question_type_evaluator_score_read": false,
+    "credential_value_or_keyring_read": false,
+    "network_model_search_fetch_evaluator_or_api_called": false,
+    "process_command_lines_or_environment_emitted": false
+  },
+  "authorization": {
+    "process_signal_restart_resume_rerun_skip_or_selective_retry": false,
+    "current_r1_or_quality_chain_forward_config_change": false,
+    "shared_api_lease_acquire": false,
+    "network_model_search_fetch_evaluator_or_api_call": false,
+    "benchmark_forward_or_full220_launch": false,
+    "candidate_bundle_or_go_receipt_creation": false,
+    "parallel_plan_creation_after_all_inputs_validate": true,
+    "future_executor_requires_separate_preregistration_and_activation": true,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "control_surface": {
+    "file_count": 10,
+    "manifest": {
+      "src/deepwide_agent/v24197_parallel_all220.py": "fa43f0a78b3f90b13da8381ea56f711d0046a5eb710ca2079095e59fccb83c02",
+      "scripts/preregister_v24197_parallel_all220.py": "312d8a75120bb7143a83811225d1718f85ba965fe43caa3f477911f05175a3de",
+      "scripts/watch_v24197_parallel_all220.py": "ab29b7d2f0827d12d7f4828a1a308e7be7d4c57eb2f82dc28db74ccb3b9c85da",
+      "scripts/activate_v24197_parallel_all220.py": "1f390d8de7749f91d269cc47af916701e93dc5239787453576ef89990e920620",
+      "scripts/audit_v24197_parallel_all220_wait_activation.py": "9a939d8a76e8e661b1cf7b200aae7d86a55adf6e3ec41786c4aac74736fb16fd",
+      "tests/test_v24197_parallel_all220.py": "a50aa1917e5f9dfbb0bcf7991f4e96560fbb1c97fe5b7697085115043aa69167",
+      "tests/test_preregister_v24197_parallel_all220.py": "3c4ff95c9ebd391b5313d4aad0841ff0c9cd4bc60840d6375823f1dec785aa23",
+      "tests/test_watch_v24197_parallel_all220.py": "755120cc715d665aa1fb49b561d245abf04831c08596c2f26a86f574ea51036b",
+      "tests/test_activate_v24197_parallel_all220.py": "d44b75cead702d05b0f3dd5a5ec0bf282b263599206e57cfc2e54d11d718a2f0",
+      "tests/test_audit_v24197_parallel_all220_wait_activation.py": "00008ce5da9be01e5f547952858846ef71476f8b3460edef90296a7de822b890"
+    },
+    "manifest_sha256": "6fcfaf80d396b3b0991daf92143deb9fe2445a9dc89f1034013c3f4bfaa20969",
+    "must_remain_absent": [
+      "scripts/__init__.py",
+      "sitecustomize.py",
+      "usercustomize.py"
+    ]
+  },
+  "decision_contract_sha256": "5c738771cd859f558db2edbcb0385d6937bb53937f398856c644c50101ce266c"
+}

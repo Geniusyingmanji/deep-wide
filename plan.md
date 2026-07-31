@@ -1,10 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.12
+> 版本：5.13
 >
-> 更新：2026-07-31 05:58 UTC
+> 更新：2026-07-31 06:45 UTC
+>
+> 当前覆盖：**2026-07-31 06:45 UTC 的 V2.41.97 状态见下方 5.13；R1 权威聚合仍为 161/220，尚无正式 DeepWideBench 全集分数、提升或 SOTA。**
 >
 > 状态：**截至 2026-07-31 05:58 UTC，fresh V2.41.87 phase-aware watcher 是当前权威 label-blind 安全聚合：按五段全集拓扑计入不可补跑的首题 infra-zero，R1 为 `161/220 = 32 completed + 129 failed`、剩余 59，internal-test 156 已全部终态；冻结队列正在最后的 dev+validation S04 自然推进，活动 Python PID `1350579`/start ticks `741557746`，未 signal/restart/resume/rerun/skip。旧 `full220_v2403_r1_status.json` 发布器仍停在 70/220，不能覆盖 fresh watcher。当前 phase 为 `r1_full220`、`critical=[]`；taxonomy 有 6 个 surface-uncovered failure，只授权人工离线审计，不授权活动策略变化。R1 released result、后续 quality chain、Avg@4、OWIC 与正式 evaluator aggregate 均未产生，因此仍没有 DeepWideBench 全集分数、榜单提升或 SOTA。主结果固定为**同一 all-220 全集**；dev64 只可作为预注册门，不能替代全集或用于选择性报告。V2.41.96 已作为 wait-only capacity executor 安全激活，protocol `e413f85d…e4d0`、activation `5c08d330…15c7`；它在 R1 exact220/release、quality chain terminal、现有 API worker 消失及旧 V2.41.94 watcher 自然退出前不会取 lease、调用 9878 或启动 benchmark。门释放后，V2.41.96 也只执行 `1/2/4/8/12 × 3 waves` 中性容量阶梯并冻结最高连续安全并发，仍无权启动 benchmark；后续须由独立预注册且重新审计的 launcher 使用该固定档位，从全新目录运行完整 220。失败计 0，禁止 resume、选择性补跑或热改。不可逆顺序固定为：`R1 exact220/release → P12/schema76 → official Avg@4 → schema77 paired dev64 → V2.41.80 search-yield immutable terminal → V2.41.03 markdown paired dev64 → 条件式V2.41.05 scope-open terminal → OWIC capture/Gate-1 → V2.41.90 → V2.41.91 → V2.41.92 → V2.41.93 replicate-aware Gate-2A → neutral capacity ladder → separately preregistered fresh all-220 launcher`。**
+
+> **5.13 V2.41.97 全集并行计划冻结与安全激活（2026-07-31 06:45 UTC）：当前权威安全聚合仍为 `161/220 = 32 completed + 129 failed`、剩余 59、`critical=[]`；正式 evaluator aggregate、Avg@4、提升与 SOTA 均不存在。新增 capacity-bound planner 只把未来 V2.41.96 live-replayed capacity pair 与独立 quality-GO candidate bundle 编译为唯一固定 wave schedule。candidate 必须是 canonical `52/52/52/64` 四分片、精确互斥 220 opaque IDs、同一 pipeline/schema/code/prompt/search/budget/threshold、四个全新 output roots；manifest 只 hash bytes，不解析或输出题面值。workers、parallel width 与 worst-case request concurrency 逐字继承 capacity freeze，整次 all-220 固定；forward failure 计 0，禁止 resume、选择性补跑、预存输出与中途改并发。GO receipt、bundle 和 plan 均保持 `full220_launch_allowed=false`，真正执行仍需独立 single-owner executor 的预注册、activation、shared lease 与即时 search-capacity preflight。
+>
+> create-exclusive protocol [`results/v24197_parallel_all220_preregistration_v1_20260731.json`](results/v24197_parallel_all220_preregistration_v1_20260731.json) SHA `768b787d…6b4d`、decision SHA `5c738771…266c`、10-file manifest SHA `6fcfaf80…0969`；isolated `python -I -B` tmux `deepwide-v24197-parallel-all220-v1` 的唯一 watcher PID `1758071`/start ticks `742773881`。activation [`results/v24197_parallel_all220_activation_v1_20260731.json`](results/v24197_parallel_all220_activation_v1_20260731.json) SHA `00e0915e…dce3` 后，state 已自然进入 `waiting_for_capacity_freeze`；wait audit [`results/v24197_parallel_all220_wait_activation_audit_v1_20260731.json`](results/v24197_parallel_all220_wait_activation_audit_v1_20260731.json) SHA `6748e559…bba7` 证明 R1 与 V2.41.87/93/94/95/96 的 PID/start-ticks 全部保留，capacity/candidate/opaque-ID 内容未打开，manifest 未 hash，lease/API/evaluator/benchmark/plan 权限全为 false。V2.41.97 定向回归 `24/24`、V2.41.94–97 联合回归 `67/67`，bootstrap 已有不得 self-reexec 的回归；compile、diff、credential 与 forbidden-signal 审计通过。当前 capacity report/freeze、candidate bundle 和 parallel plan 均不存在，所以这只是全集高并发的安全可执行边界，不是已启动的全集实验，也不构成 benchmark 分数、提升或 SOTA。**
 
 > **5.12 最新搜索/credit 边界与全集高并发协议（2026-07-31 05:58 UTC）：07-28 至 07-31 增量文献加入 HiEviDR-Bench、CAM-DF、Two Calls Beat Five Agents、SKIMIX、MANTA、SkillRise、GRSD、TTEL、OVCSD、CSCR、LEDGERMIND、LayerRAG-Bench、Thinking Under Uncertainty、AskChem 与 Selective Credibility-Limited Belief Update。它们进一步排除“agent 越多越好”“score 可直接决定停止”“分布变化越大 credit 越高”“有 citation 即可靠”四类主张。下一版实验必须加入 CAM-DF-lite 停止头、agent-count/refinement-round/topology 同预算曲线、HiEviDR 式 evidence→claim→answer 分层指标、SkillRise/GRSD/TTEL/OVCSD/CSCR credit 基线，以及 evidence/tool-contract/authorization/session 四层故障注入。reference evidence graph、task label、gold 与 evaluator 字段只允许预测冻结后的离线诊断，绝不进入 runtime。
 >
@@ -1071,7 +1077,7 @@ I_{ij}=v(\{i,j\})-v(\{i\})-v(\{j\})+v(\varnothing).
 - **controlled internal baselines**：支持因果机制比较；
 - **reported external systems**：只提供背景，明确模型/预算不一致，不排序宣称 SOTA。
 
-正式 DeepWideBench 结果必须来自同一冻结版本的一次完整 `all-220` execution：四个全新 output shard 覆盖精确 220 个 opaque ID，不能用 dev64、completed-only 或选择性子集替代。V2.41.96 只能在旧链自然释放后用中性请求选择最高连续安全并发并写出 freeze，不能启动 benchmark；选中档位、per-shard workers 和总并发须由后续独立预注册 launcher 逐字继承，整次运行不得改变。API/容量故障仍计保守 0，不得 resume 或只补失败题。
+正式 DeepWideBench 结果必须来自同一冻结版本的一次完整 `all-220` execution：四个全新 output shard 覆盖精确 220 个 opaque ID，不能用 dev64、completed-only 或选择性子集替代。V2.41.96 只能在旧链自然释放后用中性请求选择最高连续安全并发并写出 freeze，不能启动 benchmark；V2.41.97 只把该 freeze 与独立 candidate GO bundle 编译成固定 wave plan，也不能启动 benchmark。选中档位、per-shard workers、parallel width 和 worst-case 总并发须由未来独立预注册且 identity-bound 的 single-owner executor 逐字继承，整次运行不得改变。API/容量故障仍计保守 0，不得 resume 或只补失败题。
 
 ## 7. 指标与统计
 
@@ -1327,7 +1333,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 | M5B | OWIC estimator 与 verifier-sign-preserving advantage modulation | TBD | 1–2 周 | TBD | credit module、intervention tests | 未开始；SkillRise/GRSD/TTEL/OVCSD/CSCR 对照已写入协议 |
 | M6A | 50-task online controller pilot / Gate 3A | TBD | 1 周 | TBD | paired report、Pareto plots | 未开始 |
 | M6B | 3-seed credit-training pilot / Gate 3B | TBD | 2 周 | TBD | checkpoints、learning curves、credit audit | 未开始 |
-| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact；下一 fresh all-220 capacity freeze | 进行中（权威聚合 161/220；dev+validation S04 active；V2.41.96 wait-only） |
+| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact；下一 fresh all-220 capacity freeze 与固定并行计划 | 进行中（权威聚合 161/220；dev+validation S04 active；V2.41.96 wait-only；V2.41.97 等待 capacity freeze） |
 | M8 | 论文写作与审计 | TBD | 1–2 周 | TBD | manuscript、claim/evidence ledger | 未开始 |
 
 ### M1 推荐目录
