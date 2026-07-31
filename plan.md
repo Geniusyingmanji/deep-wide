@@ -1,10 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.31
+> 版本：5.32
 >
-> 更新：2026-07-31 12:59 UTC
+> 更新：2026-07-31 13:36 UTC
 >
 > 当前覆盖：**V2.42.07 已冻结并安全激活 selected branch-scope namespace-alias publisher。V2.42.08 又完成 outcome-independent search rebase 可行性审计，覆盖全部 36 个 work order 与 6 种实际父候选（P12/schema76/schema77 × baseline/Markdown），但没有发布或物化 search 组件。V2.41.80 search-yield quality gate 仍 preterminal，故 search publisher、entropy、joint package、package gate、API 与 benchmark 全部继续阻塞。现有 R1 与 watcher 全部保留；最新 label-blind 安全聚合为 `170/220 = 34 completed + 136 failed`，剩余 50，正式 DeepWideBench 全集分数、提升或 SOTA 仍不存在。该 `170/220` 是安全进度 envelope（失败也计 terminal），不是 benchmark 得分。**
+>
+> **5.32 V2.42.09 search-environment fingerprint 与 prelaunch 绑定（2026-07-31 13:32 UTC）：落实 SimpleWikiSearch 对“环境不是中性背景”的约束，在所有活跃 watcher 的 frozen manifest 外新增纯验证模块 [`src/deepwide_agent/v24209_search_environment.py`](src/deepwide_agent/v24209_search_environment.py)。它从 future candidate freeze 的非敏感 `search` 配置与 `code_sha256` 构造确定性 fingerprint，显式绑定 provider runtime identity、endpoint、search model/tool schema、query isolation、results/worker budget、citation/observation mapping、page-fetch policy、content truncation、terminal submission rule，以及 clients/native/Anthropic adapter、runtime、runner、launcher 六个代码文件。Anthropic、Azure-native 与 Tavily 均有 exact schema；未知字段、credential/label/evaluator key、secret literal、opaque task ID、非固定 endpoint、缺失代码闭包和重新封印后的 provider/tool/snapshot 漂移全部 fail closed。
+>
+> 四 shard verifier 只打开 `configs/*.json` 和其中已声明的环境代码哈希，不打开 runtime manifest 或 selected-ID 文件内容；要求 `52/52/52/64=220` 四个 freeze 的环境合同逐字相同，并标明 live-web snapshot/index/cutoff **未固定且不能精确重放**。后继 `compile_environment_bound_prelaunch` 再把该指纹绑定到 V2.41.97 exact-220 plan，逐项重验 pipeline/schema、freeze/ID refs、fresh output roots、canonical waves、整次固定并发、capacity cap、no-resume、failure-as-zero、single lease owner 和 launch=false；环境发生变化必须单列，不能记成 method effect。它只生成 prelaunch 数据，仍要求未来独立 executor activation 现场重验 provider health 和环境指纹。
+>
+> create-exclusive audit [`results/v24209_search_environment_audit_v1_20260731.json`](results/v24209_search_environment_audit_v1_20260731.json) 文件 SHA `bead0004…5ec78cb`、payload SHA `cdf3f44f…27b8276`、4-file control manifest SHA `d5501f15…ee5bb0`。当前 R1 四个 config-only freeze 的诊断指纹为 `83a5de15…a9247`，统一指向 `anthropic-server-web-search`，环境代码 6 个，`selected_total=220`，但 `provider_index_snapshot_pinned=false`；它不是 fresh candidate、质量结果或分数。定向机制/audit `13/13`、compile 与 isolated CLI 通过；receipt 明确 benchmark content/ID、credential、network/model/search/fetch/evaluator/API、active-process mutation、candidate materialization 与 full220 launch 全 false。三个健康 PID `1350579/2244092/2307529` 未 signal/restart/resume/rerun，当前重复全集仍未启动。**
 >
 > **5.31 SwarmResearch/SimpleWikiSearch 补漏与全集高并发合同（2026-07-31 12:59 UTC）：对 2026-07 全月的 `deep research`、`agentic/web search`、`multi-agent/swarm search` 与 `deep-and-wide` 做日期窗去重召回，全文核验 SwarmResearch、SimpleWikiSearch 与 Agent Harness Distillation。前两篇进入 survey [147–148]；AHD 主要是通用 AMAS harness 黑盒提取/IP 风险，筛选后不进入核心矩阵。SwarmResearch 已占据“按搜索深度动态调并行度”的相邻主张。其 60-worker-iteration、5-task fixed-scaling 对照使用异构 orchestrator/worker，并报告动态调度在 4/5 题优于最佳固定 width×depth；另一个 15-task 主比较仅一 run/task、无 web 且 evaluator 隐藏。因此只预注册 fixed-vs-depth-varying 调度对照，不外推到 DeepWide。SimpleWikiSearch 则要求把 snapshot、cleaning/chunking、index、retrieval/fusion backend、tool schema、observation truncation 与 submit rule 共同冻结成 environment fingerprint，后端漂移不得记为 controller 提升。survey 现为 148 篇。
 >

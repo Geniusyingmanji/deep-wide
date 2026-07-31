@@ -1,0 +1,77 @@
+{
+  "artifact_version": 1,
+  "role": "v24209_search_environment_audit",
+  "label_blind": true,
+  "current_r1_config_only_diagnostic": {
+    "selected_total": 220,
+    "freeze_references": {
+      "test_s01": {
+        "path": "configs/full220_v2403_r1_test_s01_anthropic.json",
+        "sha256": "e40d29d1efabb167ecaa99e5cf82b26930b3e9d5e442a931c852865ffac3ab34"
+      },
+      "test_s02": {
+        "path": "configs/full220_v2403_r1_test_s02_anthropic.json",
+        "sha256": "b64b1f245cf184589766f6713660a2076916edb7ac3d14e3eb9eb292e9513b60"
+      },
+      "test_s03": {
+        "path": "configs/full220_v2403_r1_test_s03_anthropic.json",
+        "sha256": "6dbea84ecbed31f861718499cf73fcecfed0862a95987e58c4023c0fd85fa9d1"
+      },
+      "devval": {
+        "path": "configs/full220_v2403_r1_devval_s04_anthropic.json",
+        "sha256": "7de014029f08ce901155cb2b39cbbbc83d89b452d19f53785e408575fe1ab8fa"
+      }
+    },
+    "environment_fingerprint_sha256": "83a5de15c7439ca7bb1f5b4abdeb4837b90addcd05507eff25d402ae9f2a9247",
+    "provider_runtime_identity": "anthropic-server-web-search",
+    "environment_code_file_count": 6,
+    "one_environment_across_all_shards": true,
+    "provider_index_snapshot_pinned": false,
+    "not_a_fresh_candidate_or_quality_result": true
+  },
+  "mechanism_contract": {
+    "provider_model_endpoint_and_tool_schema_bound": true,
+    "search_budget_and_query_isolation_bound": true,
+    "observation_mapping_fetch_policy_and_submission_rule_bound": true,
+    "transport_runtime_runner_and_launcher_bytes_bound": true,
+    "all_four_shards_require_one_environment": true,
+    "exact220_fixed_concurrency_no_resume_failure_as_zero_revalidated": true,
+    "live_provider_index_shift_must_be_reported_separately": true,
+    "future_environment_revalidation_before_executor_activation_required": true
+  },
+  "static_capability_audit": {
+    "src/deepwide_agent/v24209_search_environment.py": {
+      "sha256": "45ee5ddbac1caef68e5372a15eb418e9f3b8d2c6307f25da77f5c4c05e41cdc4",
+      "forbidden_network_or_process_import": false,
+      "credential_environment_read": false,
+      "dynamic_execution": false
+    },
+    "scripts/audit_v24209_search_environment.py": {
+      "sha256": "8ba041ee25fb922b17cedf29fc09eb5a5fe1c499bdeb353f012c828c6675ae01",
+      "forbidden_network_or_process_import": false,
+      "credential_environment_read": false,
+      "dynamic_execution": false
+    }
+  },
+  "control_surface": {
+    "file_count": 4,
+    "manifest": {
+      "src/deepwide_agent/v24209_search_environment.py": "45ee5ddbac1caef68e5372a15eb418e9f3b8d2c6307f25da77f5c4c05e41cdc4",
+      "scripts/audit_v24209_search_environment.py": "8ba041ee25fb922b17cedf29fc09eb5a5fe1c499bdeb353f012c828c6675ae01",
+      "tests/test_v24209_search_environment.py": "1843dd11d92233d51b9485e874ded91357c63ac228004d77418a6526cabd8e68",
+      "tests/test_audit_v24209_search_environment.py": "7d29e4d00076c0fdf60d44df15eac1b1badcb7ea191013e811eba111d5d752cf"
+    },
+    "manifest_sha256": "d5501f15801eb813f8ac679698f2300c323fbcc409e818c85ab2bce4fbee5bb0"
+  },
+  "runtime_task_manifest_or_selected_id_file_opened": false,
+  "benchmark_question_answer_evidence_prediction_result_or_url_read": false,
+  "mapping_gold_category_question_type_evaluator_score_or_reward_read": false,
+  "credential_value_read_persisted_hashed_or_emitted": false,
+  "network_model_search_fetch_evaluator_or_api_called": false,
+  "active_process_signal_restart_resume_rerun_skip_or_selective_retry": false,
+  "active_benchmark_or_watcher_modified": false,
+  "candidate_bundle_parallel_plan_or_output_root_materialized": false,
+  "benchmark_forward_or_full220_launch_allowed": false,
+  "leaderboard_submission_or_sota_claim": false,
+  "audit_payload_sha256": "cdf3f44fda653cd770c8bcbfc60630e08c14938208e0dfd5d0a774bea27b8276"
+}
