@@ -1,10 +1,20 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.38
+> 版本：5.39
 >
-> 更新：2026-07-31 19:03 UTC
+> 更新：2026-07-31 20:16 UTC
 >
-> 当前覆盖：**V2.42.11–13 已冻结 label-blind entropy/VOC runtime 与 selected-component 链；V2.42.14 的错误路径 namespace 已 fail closed，V2.42.15 以新 namespace 恢复 joint-package 链且仍在等待 V2.42.13。V2.42.16 已另行冻结并安全激活 fresh cold-start paired dev64 package gate。V2.42.17 已作为不修改 V2.41.94/96 的唯一 post-gate capacity successor 安全激活，目前只读 V2.42.16 安全 envelope；publication、paired roots、lease、execution-start、model/search、mapping/evaluator、capacity report/freeze 与 full220 权限均未打开。R1 和全部上游健康 watcher 保留；2026-07-31 19:03 UTC 的权威 label-blind 快照为 `179/220 = 35 completed + 144 failed`，剩余 41。该值只是 forward 终态进度，不是 DeepWideBench 分数；released evaluator、Avg@4、提升、entropy/credit 效果和 SOTA 仍不存在。**
+> 当前覆盖：**V2.42.11–13 已冻结 label-blind entropy/VOC runtime 与 selected-component 链；V2.42.14 的错误路径 namespace 已 fail closed，V2.42.15 以新 namespace 恢复 joint-package 链且仍在等待 V2.42.13。V2.42.16 已安全激活 fresh cold-start paired dev64 package gate，V2.42.17 是不修改 V2.41.94/96 的唯一 post-gate capacity successor。V2.42.18 已冻结并激活唯一 single-owner fresh exact-220 executor，目前只读 V2.42.16 安全 envelope；execution-start、四个 fresh roots、lease、preflight、model/search、forward、mapping/evaluator 与 result 均未打开。R1 和全部上游健康 watcher 保留；2026-07-31 20:16 UTC 的权威 label-blind 快照为 `181/220 = 35 completed + 146 failed`，剩余 39。该值只是 forward 终态进度，不是 DeepWideBench 分数；released evaluator、Avg@4、提升、entropy/credit 效果和 SOTA 仍不存在。**
+>
+> **5.39 V2.42.18 exact-220 executor 冻结激活、label-blind 复核与 termination/utility 近邻补漏（2026-07-31 20:16 UTC）：V2.42.18 已把 post-package、post-capacity 的全集执行路径冻结为一个 shared-lease owner。它只接受 V2.42.16 的合法 package identity/GO 和 V2.42.17 的合法 capacity GO；空组件 identity handoff 取 selected baseline bytes，package GO 取 joint candidate bytes。canonical partition 固定为 fresh `52/52/52/64=220`。每个 wave 先并发完成所有 shard 的 fresh preflight，再并发 forward；四 shard 全部 exact-terminal 后才允许打开 mapping 与 released evaluator。整次 fixed concurrency、no-resume、no selective retry、failure-as-zero。`executor_concurrency`、`agent_width=1` 与按 query/URL/content/source/evidence-set 去重的 `effective_evidence_width` 分开记录。
+>
+> protocol SHA `99b1d7bd…d9667`、decision SHA `d6280597…5a25`、28-file control manifest SHA `61612a55…e102`；activation SHA `28fe50a2…58aa`、wait-audit SHA `8a69fc99…eb18`。唯一 isolated watcher PID `3061652`、start ticks `747569004`，当前 `waiting_for_v24216_package_gate_terminal / package_parent_preterminal`。28 个 live control files 逐 SHA 无漂移。冻结前聚焦套件 `20/20`；当前生命周期可安全重放的 V2.42.18 子集 `19/19`，排除已经因 activation 正常变为 non-pristine 的 live create-exclusive freeze 断言。runtime/WebSwarm label-blind 套件本次实跑 `276/276`，V2.42.11 entropy runtime `25/25`，V2.42.16 package gate `15/15`。静态数据流审计的 forbidden-token 命中均为拒绝列表、false attestation 或 forward/evaluator 隔离检查，未发现按 benchmark category、question_type、split、mapping、gold、answer key 或 per-task score 路由的正向分支。没有 run 被终止或隔离。
+>
+> 当前 execution-start、materialization、四个 future roots、preflight、forward、mapping/evaluator 与 result 全 absent，shared lease=false。所有既有健康 benchmark/watcher PID/start ticks 保持，未 signal、restart、resume、rerun 或重复启动。V2.42.18 已经是未来全集的 activation；父 gate 打开后由该 watcher 自动执行，禁止再创建“separate activation”或手动启动第二份全集。不可逆顺序修正为 `R1 220/220 → released evaluator → selected publications → V2.42.15 joint package → V2.42.16 paired dev64 GO → V2.42.17 neutral capacity freeze → existing V2.42.18 two-quiet + unique lease → fresh 52/52/52/64`。
+>
+> 文献清单由 158 扩为 160。Choubey et al. 的 ACL Industry 2026 系统已经把 dependency-localized Plan DAG、预先声明的 evidence-sufficiency criteria 与 step termination 联合实现；其企业 sales-enablement 消融中，移除 agent termination 后作者报告 HAA `82.09→73.67`、coverage `4.31→4.02`，public/internal search calls `327/90→224/64`。[159] 这些数字只适用于其 10 个企业场景，不能外推为 DeepWideBench 结果。ScaffoldAgent 又把 retrieval relevance/novelty、outline coherence/balance/redundancy 与 trial-writing support/coverage/redundancy合成 inference-time utility，用于 outline expansion/contraction/revision，并以边际 utility 小于阈值停止；实验仍设置最多 20 轮。[160] 因而“显式充分性停止”“下游 utility 驱动搜索结构”“边际收益停止”均已有直接工作。
+>
+> 新的强基线加入 `fixed evidence-sufficiency termination` 和 `ScaffoldAgent-style composite-utility outline control`。二者与 raw/calibrated entropy、ECR-style EER、CAM-DF、Search-as-Computation-Allocation VOC、WebSwarm、SearchSwarm 和 four-layer terminal-loss VOC 在相同模型、工具、总 token、search/fetch、串行深度、wall-clock 与 failure-as-zero 口径下比较。固定充分性 arm 的 criteria 只能从 visible question 和当前题 active evidence 构造；ScaffoldAgent arm 的 judge/utility 输入同样不得读取 benchmark label、gold、mapping 或 evaluator score。若 four-layer 方法不能超过这些基线的质量—成本 Pareto，entropy 只保留为诊断信号，不作为核心机制主张。**
 >
 > **5.38 V2.42.17 capacity successor、安全接力与 ConMem 补漏（2026-07-31 19:03 UTC）：旧容量链存在永久互锁。健康的 V2.41.94 没有 execution activation，已激活的 V2.41.96 又必须持续让位于 V2.41.94，而冻结合同禁止终止、重启或修改两者。V2.42.17 因而只接受 V2.42.16 的 terminal GO 或空组件 identity handoff；随后要求连续两次 quiet observation、唯一 shared lease，以及 client/API 之前 create-exclusive execution-start。start 已存在而 report 缺失时永久 `terminal_incomplete_no_retry`；report 已封印而 freeze 缺失时只能重建 freeze，禁止重新探测。
 >
@@ -1119,7 +1129,7 @@ HiEviDR reference graph、标准 claim 与答案只在预测冻结后的离线 e
 - token、tool、page、time、USD；
 - 是否出现冲突导致 entropy 上升但错误风险下降。
 
-每个有序 action prefix 另构造 `stop_now` 与所有合法 continuation，计算离线 best-continuation payoff gap。停止基线至少包括固定调用数、校准阈值、TASR、CAM-DF-lite 与 oracle best prefix；分别报告 ranking quality、stop/continue classification、payoff-weighted regret 和异质成本分层。CAM-DF 标签只来自冻结 prefix 的离线结果，不能读取当前 benchmark 的 gold 后反馈给同一 forward pass。
+每个有序 action prefix 另构造 `stop_now` 与所有合法 continuation，计算离线 best-continuation payoff gap。停止基线至少包括固定调用数、校准阈值、TASR、CAM-DF-lite、fixed evidence-sufficiency criteria、ScaffoldAgent-style composite utility 与 oracle best prefix；分别报告 ranking quality、stop/continue classification、payoff-weighted regret 和异质成本分层。[159,160] Fixed-sufficiency criteria 必须在第一次搜索前只从 visible question 生成，后续只能由当前题 active evidence 判定是否满足。Composite utility 的 embedding、NLI、trial-writing 和 LLM-judge 调用全部计入成本，并与最多轮数 cap 一起预注册。CAM-DF 标签和两个新增 arm 的离线诊断都不能读取当前 benchmark 的 gold 后反馈给同一 forward pass。
 
 stop 与 defer/escalate 必须再加入 TSDS 式联合校准，而不是分别选择两个看似最优的阈值。校准集固定二维超参数网格，联合约束 episode-level terminal reward、调用率和总成本；主报告明确限定在 calibration/test exchangeability 或 i.i.d. 假设下，并另做语言、时间、搜索后端和任务规模 shift stress。有限答案集加入 Conformal Cascade；开放表格只有在 anchor/row/cell 等价类及 `OTHER`/unseen mass 明确定义后才允许迁移 conformal set-size 规则。[136,141]
 
@@ -1204,16 +1214,20 @@ I_{ij}=v(\{i,j\})-v(\{i\})-v(\{j\})+v(\varnothing).
 13. Baikal random-region / Bayes-UCB；
 14. fixed-threshold / CAM-DF-lite / TSDS-style joint stop-defer；
 15. dynamic-VOC controller + evidence equivalence + semantic-region portfolio；
-16. label-blind WebSwarm adapter，仅从 visible question/input 与本轮 evidence state 选择 atom/deep/wide/entity_collect，并固定 official evaluator、no-resume、failure-as-zero；同时运行 no-recursive、all-to-wide、all-to-deep、no-Web-Probing 与 no-sibling-experience 消融。
-17. SearchSwarm-style delegation/context baseline：同一骨干下比较 no-delegation、只开放 subagent tool schema、完整 briefing/citation harness 与训练式委派；子报告必须保留原始 evidence ID，主 context 节省与全系统成本分开报告。[157]
-18. CHILL-style two-gate controller：第一门在 admissible workflow 中排序 estimated task/resource advantage，第二门只在选中项相对 factual workflow 超过预注册 authorization margin 时执行，否则保持 factual workflow。[119]
-19. ConMem-style pruned Shapley memory baseline：只在预测完成后的离线 dev/credit audit 中，用相同 pre-write state、冻结 downstream consumer 与相同 memory budget 估计 evidence-unit coalition value；同时报告 utility-call 成本、ranking stability、unrelated-query regression 与 held-out task-value correlation。[158]
+16. fixed evidence-sufficiency termination：第一次 search 前从 visible question 生成不可追加的 coverage/source/time/exclusion criteria；每轮只用当前题 active evidence 做逐项 supported/unresolved 判定，未满足则继续等预算 action，预算用尽则 abstain/fail closed。[159]
+17. ScaffoldAgent-style composite-utility outline control：共享同一检索动作和 renderer，只增加 expansion/contraction/revision、retrieval/structure/trial-writing utility 与 marginal-gain stop；冻结 utility 权重、最近窗口、阈值和最多轮数，并计入所有 embedding/NLI/judge/trial-writing 成本。[160]
+18. label-blind WebSwarm adapter，仅从 visible question/input 与本轮 evidence state 选择 atom/deep/wide/entity_collect，并固定 official evaluator、no-resume、failure-as-zero；同时运行 no-recursive、all-to-wide、all-to-deep、no-Web-Probing 与 no-sibling-experience 消融。
+19. SearchSwarm-style delegation/context baseline：同一骨干下比较 no-delegation、只开放 subagent tool schema、完整 briefing/citation harness 与训练式委派；子报告必须保留原始 evidence ID，主 context 节省与全系统成本分开报告。[157]
+20. CHILL-style two-gate controller：第一门在 admissible workflow 中排序 estimated task/resource advantage，第二门只在选中项相对 factual workflow 超过预注册 authorization margin 时执行，否则保持 factual workflow。[119]
+21. ConMem-style pruned Shapley memory baseline：只在预测完成后的离线 dev/credit audit 中，用相同 pre-write state、冻结 downstream consumer 与相同 memory budget 估计 evidence-unit coalition value；同时报告 utility-call 成本、ranking stability、unrelated-query regression 与 held-out task-value correlation。[158]
 
 只有 Phase D1 过门后才跑 controller 全量。
 
 吞吐并发与单题协作机制分开实验。吞吐由中性容量阶梯选定并在整次 all-220 固定；WebSwarm/MANTA 式单题协作另做 `agent_count ∈ {1,2,4,8}`、`refinement_rounds ∈ {0,1,2}`、`topology ∈ {single,fixed-tree,fixed-graph,bounded-adaptive}` 的同预算曲线。再加入 planner/delegator 与 child/executor 的独立模型容量轴，固定 answer renderer 和总预算，比较大 planner+小 child、小 planner+大 child、同模型三种角色分配；Think Big, Search Small 只作为容量假设来源，不能替代 DeepWide 实测。[120] 先比较单 agent、two-call self-refinement 与固定拓扑，再允许 bounded-adaptive topology；报告每个点的质量、格式失败、重复 evidence、tokens、tool calls 与 wall-clock，不假设曲线单调。Scaling LLM-Driven MAS 的 1/3/5/7-agent 峰值与一致性结果只用来预注册“中档可能最优”的反例；本项目仍按自己的容量和任务曲线选点，不能照搬其 5-agent 结论。[137]
 
 SearchSwarm 式子代理必须再拆出 context-compression effect。主代理只接收 brief/report 的 arm 与主代理可访问完整子轨迹的 arm共享相同原始检索、模型和总预算；报告 main-context token、child-context token、全系统 token、load-bearing claim retention、citation/provenance retention、错误摘要传播和重复搜索。[157] 如果质量变化只能由隐藏更多原始工具输出解释，不能归因于四层风险或 delegation intelligence。
+
+Fixed evidence sufficiency 与 composite utility 必须再拆出其信息来源。前者保存 immutable criteria、每条 criteria 的 active-evidence ID 和首次满足轮次；人工完整度审计只在预测冻结后进行，不回写同一 forward。后者分别报告 retrieval、structure、generation 三个 utility 分量，以及每类 outline action 的实际触发率；另做去 trial writing、去 novelty、固定 outline 和固定轮数消融。若增益来自更长 report、更多 judge 调用、手工 criteria 更完整或不同最大轮数，不得归因于四层风险或 entropy。[159,160]
 
 ConMem 式 memory valuation 与 temporal search-step credit 分开。它只比较固定 memory units 的 coalition marginal utility，不得把 benchmark label、gold、reference evidence 或 evaluator score反馈给同一题的 runtime。若 pruned-Shapley 排序不能在 held-out fixed continuation 上稳定预测终局 task delta，或其收益来自训练/测试查询分布重叠，则只能称 memory-retention heuristic，不能作为 OWIC 的因果 credit 证据。[158]
 
@@ -1262,6 +1276,8 @@ ConMem 式 memory valuation 与 temporal search-step credit 分开。它只比�
 - Web2BigTable；
 - WebSwarm；
 - SearchSwarm；
+- Don't Stop Early / fixed evidence-sufficiency termination；
+- ScaffoldAgent / composite-utility outline control；
 - SearchOS；
 - AREX；
 - Harness-G；
@@ -1275,12 +1291,14 @@ WebSwarm 的 controlled internal baseline 不只运行一个 `full` 配置。至
 
 SearchSwarm 的 controlled baseline 使用同一模型、search/page tools 和 renderer，依次比较 no-delegation、tool-schema-only、完整 harness、训练式委派、WebSwarm full 与 four-layer VOC。所有子代理 token/tool/page cost 进入总预算；压缩报告要回链原始 evidence，并以盲审统计 load-bearing claim 丢失率。论文的 BrowseComp、BrowseComp-ZH、GAIA 与 xbench 数字只作外部背景，不参与 DeepWideBench 排名或 gate。
 
+Evidence-sufficiency 与 ScaffoldAgent controlled baselines 也使用同一 search/page tools、evidence ledger、renderer 和 terminal evaluator。前者的 criteria 生成器、后者的 outline/utility judge 均只看 visible question 与当前题 active evidence，递归拒绝 benchmark category、question_type、split、mapping、gold、answer key、evaluator score 和同题 correctness。二者与 four-layer VOC 匹配总 token、search/fetch/page、最大串行深度、wall-clock cap、retry 与 failure-as-zero；若预算不能精确匹配，报告完整 Pareto 曲线，不以单个不同成本点下结论。[159,160]
+
 优先在相同骨干、search/page tools、并发、max tool calls、token、wall-clock、attempts 下运行。若官方系统无法复现，分成：
 
 - **controlled internal baselines**：支持因果机制比较；
 - **reported external systems**：只提供背景，明确模型/预算不一致，不排序宣称 SOTA。
 
-正式 DeepWideBench 结果必须来自同一冻结版本的一次完整 `all-220` execution：四个全新 output shard 覆盖精确 220 个 opaque ID，不能用 dev64、completed-only 或选择性子集替代。V2.41.96 只能在旧链自然释放后用中性请求选择最高连续安全并发并写出 freeze，不能启动 benchmark；V2.41.97 只把该 freeze 与独立 candidate GO bundle 编译成固定 wave plan，也不能启动 benchmark。选中档位、per-shard workers、parallel width 和 worst-case 总并发须由未来独立预注册且 identity-bound 的 single-owner executor 逐字继承，整次运行不得改变。API/容量故障仍计保守 0，不得 resume 或只补失败题。
+正式 DeepWideBench 结果必须来自同一冻结版本的一次完整 `all-220` execution：四个全新 output shard 覆盖精确 220 个 opaque ID，不能用 dev64、completed-only 或选择性子集替代。旧 V2.41.96/97 仅提供历史容量/调度合同，均不能启动 benchmark；当前唯一执行路径是已预注册、identity-bound 并激活的 V2.42.18。它从 V2.42.17 capacity freeze 逐字继承选中档位、per-task workers、parallel width 和 worst-case 总并发，整次运行不得改变。API/容量故障仍计保守 0，不得 resume 或只补失败题。
 
 ## 7. 指标与统计
 
@@ -1693,7 +1711,7 @@ outputs/runs/<run_id>/
 
 ## 14. 接下来 72 小时的具体任务
 
-### V2.42.16 到 fresh exact-220 的当前执行序列（2026-07-31 18:32 UTC）
+### V2.42.16 到 fresh exact-220 的当前执行序列（2026-07-31 20:16 UTC）
 
 1. 保留 R1 forward PID `1350579` 与所有健康 watcher，不 signal、restart、resume、复制或选择性补跑。只读监控 exact terminal count、checkpoint liveness 和 `mapping_or_gold_read=false`。
 2. R1 达到 `220/220` 后，由既有 finalizer 首次打开 evaluator mapping，生成 failure-as-zero 的 released all-220 artifact。此前任何 `completed/failed` 计数都不是 benchmark score。
@@ -1701,7 +1719,7 @@ outputs/runs/<run_id>/
 4. selected entropy publication 若存在，V2.42.15 从修正后的实际 V2.42.13 path 选择唯一 deepest cumulative graph，在全新 root 重跑完整 parent+component regression、source/test activation、binding/tamper 与 label-blind AST audit。V2.42.14 protocol/activation/state/candidate/publication 禁止复用、覆盖或重启；若 selected component 集为空则只做 byte-exact baseline identity handoff。
 5. V2.42.16 已 create-exclusive 冻结并由唯一 watcher 等待 V2.42.15。joint publication terminal 后，它才可在同一组 opaque dev64 ID 上运行 baseline/candidate 两个 fresh cold-start arm；两臂 exact-terminal 前不得打开 mapping/evaluator。只有 quality/cost/non-regression、material-gain 与 strict component activation 门全部通过，才进入 capacity 阶段；失败即停止，不调阈值、不挑子集。
 6. V2.42.16 GO 且共享 lease 释放后，执行 `1/2/4/8/12 × 3 waves` 的中性 GPT-5.6 容量阶梯，冻结最大连续安全档。容量选择只使用非 benchmark 输入，不以题目成功率调并发。
-7. single-owner executor 在四个全新 output roots 上以冻结档位运行 `52/52/52/64=220`。整次 fixed concurrency、no-resume、failure-as-zero；API/容量失败仍进分母，禁止只补失败题。
+7. 已激活的 V2.42.18 single-owner watcher 在两次 quiet observation 与唯一 shared lease 后，先发布 execution-start，再在四个全新 output roots 上以 V2.42.17 冻结档位运行 `52/52/52/64=220`。每 wave 的所有 fresh preflight 先完成，随后才并发 forward；四 shard exact-terminal 后才打开 mapping/evaluator。整次 fixed concurrency、no-resume、failure-as-zero，API/容量失败仍进分母，禁止只补失败题，也禁止另启第二个 executor。
 8. full/no-entropy、WebSwarm-style 或其他主 variant 若进入论文主比较，每个 variant 都必须独立满足同样的 exact-220、fresh roots、固定预算和 single-owner 合同。English-76、dev64 或 completed-only 只能作诊断，不能替代全集。
 
 ### V2.40.5 Gate 2B baseline-source 合同（2026-07-26 00:03 UTC 新增）
