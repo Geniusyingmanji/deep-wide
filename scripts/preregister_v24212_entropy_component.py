@@ -195,6 +195,7 @@ def _parents(root: Path) -> dict[str, Any]:
         )
         is not False
         or values["v24193_activation"].get("activation_valid") is not True
+        or not _sealed(values["v24193_activation"], "audit_payload_sha256")
         or values["v24193_activation"].get("boundary", {}).get(
             "manifest_model_prediction_aggregate_or_outcome_opened"
         )
