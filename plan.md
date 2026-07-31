@@ -1,10 +1,18 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.29
+> 版本：5.31
 >
-> 更新：2026-07-31 12:38 UTC
+> 更新：2026-07-31 12:59 UTC
 >
 > 当前覆盖：**V2.42.07 已冻结并安全激活 selected branch-scope namespace-alias publisher。V2.42.08 又完成 outcome-independent search rebase 可行性审计，覆盖全部 36 个 work order 与 6 种实际父候选（P12/schema76/schema77 × baseline/Markdown），但没有发布或物化 search 组件。V2.41.80 search-yield quality gate 仍 preterminal，故 search publisher、entropy、joint package、package gate、API 与 benchmark 全部继续阻塞。现有 R1 与 watcher 全部保留；最新 label-blind 安全聚合为 `170/220 = 34 completed + 136 failed`，剩余 50，正式 DeepWideBench 全集分数、提升或 SOTA 仍不存在。该 `170/220` 是安全进度 envelope（失败也计 terminal），不是 benchmark 得分。**
+>
+> **5.31 SwarmResearch/SimpleWikiSearch 补漏与全集高并发合同（2026-07-31 12:59 UTC）：对 2026-07 全月的 `deep research`、`agentic/web search`、`multi-agent/swarm search` 与 `deep-and-wide` 做日期窗去重召回，全文核验 SwarmResearch、SimpleWikiSearch 与 Agent Harness Distillation。前两篇进入 survey [147–148]；AHD 主要是通用 AMAS harness 黑盒提取/IP 风险，筛选后不进入核心矩阵。SwarmResearch 已占据“按搜索深度动态调并行度”的相邻主张。其 60-worker-iteration、5-task fixed-scaling 对照使用异构 orchestrator/worker，并报告动态调度在 4/5 题优于最佳固定 width×depth；另一个 15-task 主比较仅一 run/task、无 web 且 evaluator 隐藏。因此只预注册 fixed-vs-depth-varying 调度对照，不外推到 DeepWide。SimpleWikiSearch 则要求把 snapshot、cleaning/chunking、index、retrieval/fusion backend、tool schema、observation truncation 与 submit rule 共同冻结成 environment fingerprint，后端漂移不得记为 controller 提升。survey 现为 148 篇。
+>
+> “开大并发”只在合法发布链后执行，并拆成两个独立实验轴。跨题吞吐仍由已经冻结的 `1/2/4/8/12 × 3 waves` 中性容量阶梯选择最大连续安全档，随后由唯一 owner 在全新 roots 上以该档整次固定运行 exact `52/52/52/64=220`，no-resume、failure-as-zero；不得在运行中自适应并发，也不得复用当前 R1。单题质量另比较 `1/2/4/8` agents、fixed width×depth、DivInit seeds、evidence-equivalence routing 与 depth-varying controller，严格匹配 worker iterations、总 input/output tokens、search/fetch/tool calls、orchestrator 成本与 wall-clock cap。当前 V2.42.07 安全 state 明确 `benchmark_forward_or_full220_launch_allowed=false`，publication 和 R1 seal 均 absent；本轮只读安全 aggregate 和进程元数据，保留 PID `1350579/2244092/2307529`，没有 signal/restart/resume/rerun，也没有重复启动全集。**
+>
+> **5.30 DivInit/Dr-DCI/DRNOISE/FA-SD 全文补漏（2026-07-31 12:48 UTC）：对 WebSwarm 邻域二次去重召回并读取四篇 PDF，将 survey 从 142 扩展到 146 篇。[143–146] DivInit 已直接研究并行 search 的首轮 query anchor collapse；未来 `1/2/4/8` 单题 agent 曲线必须加入 independent sampling、first-turn diverse seeds 与 evidence-equivalence routing，并按 query/URL/content/source dependency 报 effective width。Dr-DCI 已占据 `retriever pull → bounded workspace → local cross-document verification`，因此 global BM25、Agent+BM25、dynamic workspace、raw file/web agent 与 WebSwarm 都要做同预算对照。
+>
+> DRNOISE 的论文内 100-task paired corpus 显示一个直接错误断言可使强 clean agent 下降 66–88 个百分点，oracle full-context 又把 GPT-5.4 conditional deference 从 `68/81` 降到 `8/100`；本计划据此新增 incomplete-route、complete-route override 与 reconciliation failure 分解，但这些合成语料数字绝不作为本项目风险率。FA-SD 则表明 successful-rollout privileged feedback 可产生 input-agnostic decoding collapse、teacher drift 与 prompt inconsistency；credit-training 新增 fixed/EMA/no-feedback teacher、有效 distillation-sample ratio、input-conditioned query/action diversity 与 warm-up regression 对照。本轮只更新公开文献与实验合同，不调用 benchmark GPT/search/evaluator、不读取 label/gold/score，也不改变任何冻结 watcher。**
 >
 > **5.29 V2.42.08 selected-parent search rebase 可行性审计（2026-07-31 12:38 UTC）：在不读取 live quality status、gate result、selected decision、题面、预测、mapping/gold/category/evaluator/score 的前提下，先把 36 个冻结 work order 分类为 `18 search / 18 no-op`，search 分支按 P12/schema76/schema77 各 6 个。随后从 V2.42.01 仓库内 byte-exact DAG 重建 P12、schema76、schema77，并覆盖 `selected_baseline / selected_markdown_candidate` 六种父文件图；V2.42.07 scope 对 mainline 是零字节 alias，不重打历史 patch。每个父图都可确定性生成同预算 search feasibility map，delta 精确限制为 runtime、preflight、纯 scheduler module 与集成测试四类文件，只有一个 import/call，membership-gap query budget、模型/search/fetch/context/token/item budget均不增加，重复应用 fail closed。
 >
@@ -1468,7 +1476,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 
 | M | 目标 | Owner | 时间 | 预算上限 | 产物 | 状态 |
 |---|---|---|---|---:|---|---|
-| M0 | 基线、官方评测、文献/novelty audit | 当前会话 + 待确认 PI | 已更新至 2026-07-31（142 篇） | 已发生，待补账 | `survey.md`、`.research/literature_matrix.md`、基线 scripts/results | 完成（持续增量） |
+| M0 | 基线、官方评测、文献/novelty audit | 当前会话 + 待确认 PI | 已更新至 2026-07-31（148 篇） | 已发生，待补账 | `survey.md`、`.research/literature_matrix.md`、基线 scripts/results | 完成（持续增量） |
 | M1 | 严格 runtime/eval 隔离与正文 evidence pipeline | 当前会话 + TBD owner | 已实现 manifest 隔离、HTML/PDF 正文、query-local citation provenance 与历史 forward preflight；精确 span/STC 待做 | TBD | `src/deepwide_agent`、evaluator、no-leak tests | 部分完成 |
 | M2 | 表格/evidence state 与 replay | 当前会话 + TBD owner | V2.29.0 schema 37、单题 checkpoint、hosted trace 去重、failure trace 持久化、anchor-only replay 和 pinned V2.25 closed-domain replay 已可运行；20-task replay pack 待做 | TBD | state schema、20-task replay pack | 部分完成 |
 | M3 | 四层信号数据与校准 | TBD | 2 周 | TBD | shadow signal dataset、calibration report、replay receipt | PAV/terminal calibrator、task-cluster split/bootstrap、provenance budget 与 replay verifier 已实现；真实匿名 development labels/bundle 尚无，Gate 1 未评估 |
