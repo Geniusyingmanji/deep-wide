@@ -1,10 +1,14 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.41
+> 版本：5.42
 >
-> 更新：2026-07-31 21:44 UTC
+> 更新：2026-07-31 22:01 UTC
 >
-> 当前覆盖：**V2.42.11–13 已冻结 label-blind entropy/VOC runtime 与 selected-component 链；V2.42.14 的错误路径 namespace 已 fail closed，V2.42.15 以新 namespace 恢复 joint-package 链且仍在等待 V2.42.13。V2.42.16 已安全激活 fresh cold-start paired dev64 package gate，V2.42.17 是不修改 V2.41.94/96 的唯一 post-gate capacity successor。V2.42.18 已冻结并激活唯一 single-owner fresh exact-220 executor，目前只读 V2.42.16 安全 envelope；execution-start、四个 fresh roots、lease、preflight、model/search、forward、mapping/evaluator 与 result 均未打开。V2.42.19/20 已分别冻结并激活 post-terminal contamination 与 source-dependency watcher；V2.42.20 当前只读 V2.42.19 的 preterminal 安全 envelope，尚未打开 task evidence 或创建审计 detail/report。R1 和全部上游健康 watcher保留；2026-07-31 21:40 UTC 的权威 label-blind 快照为 `183/220 = 35 completed + 148 failed`，剩余 37。该值只是 forward 终态进度，不是 DeepWideBench 分数；released evaluator、Avg@4、提升、entropy/credit 效果和 SOTA 仍不存在。**
+> 当前覆盖：**V2.42.11–13 已冻结 label-blind entropy/VOC runtime 与 selected-component 链；V2.42.14 的错误路径 namespace 已 fail closed，V2.42.15 以新 namespace 恢复 joint-package 链且仍在等待 V2.42.13。V2.42.16 已安全激活 fresh cold-start paired dev64 package gate，V2.42.17 是不修改 V2.41.94/96 的唯一 post-gate capacity successor。V2.42.18 已冻结并激活唯一 single-owner fresh exact-220 executor，目前只读 V2.42.16 安全 envelope；execution-start、四个 fresh roots、lease、preflight、model/search、forward、mapping/evaluator 与 result 均未打开。V2.42.19/20 已分别冻结并激活 post-terminal contamination 与 source-dependency watcher；V2.42.20 当前只读 V2.42.19 的 preterminal 安全 envelope，尚未打开 task evidence 或创建审计 detail/report。R1 和全部上游健康 watcher保留；2026-07-31 22:01 UTC 的权威 label-blind 快照为 `184/220 = 35 completed + 149 failed`，剩余 36。该值只是 forward 终态进度，不是 DeepWideBench 分数；released evaluator、Avg@4、提升、entropy/credit 效果和 SOTA 仍不存在。**
+>
+> **5.42 CGDP、graph credit、并行聚合与 live-search 补漏（2026-07-31 22:01 UTC）：官方 arXiv Atom 元数据与 PDF 正文新增核验八项会改变实验合同的工作，去重清单由 164 扩为 172。[165–172] CGDP 已把 agentic search 写成带 terminal reward 与动作成本的 POMDP，并提供 persistent predicate belief 与 programmatic exhaustion gate；因此 POMDP、belief-state search 和 exhaustion stopping 均不能作为新颖点。GDCR/SAPO 又用训练期 answer node/ER graph 的最短路进展给新检索、新引用实体分 step reward，SlimSearcher 以 correctness gate 约束相对 tool/token efficiency，SAAS 与 R²-Searcher 分别学习 search necessity 和 sufficient/insufficient/mismatched retrieval boundary。后续 controller/credit 强基线新增 `CGDP predicate belief + exhaustion`、`R² boundary reflection`、`SAAS search boundary`、`SlimSearcher outcome-gated cost` 与 `GDCR privileged graph oracle`；所有答案、correctness、teacher 或图标签只允许在隔离训练/离线 oracle 中使用，严格禁止进入 benchmark forward。
+>
+> AggAgent 进一步说明并行 width 的效果取决于 reducer：它把完整已完成轨迹作为可查询环境，而不是只投票或先压缩。单题 `1/2/4/8` agent 曲线据此增加 `voting / solution-only / summary / full-trajectory agentic aggregation / frozen provenance-aware reducer` 轴，并固定总 rollout 与聚合成本；executor concurrency 仍仅由 V2.42.17 的 `1/2/4/8/12 × 3 waves` 中性容量阶梯决定。LiveBrowseComp、DeepWeb-Bench 分别补上 parametric-memory verification 与跨源推导/校准诊断，未来只作 transfer/stress，绝不替代当前 official exact-220。该文献更新没有修改 V2.42.11–20 冻结控制面，没有启动、signal、restart、resume、rerun、容量探针或第二个全集；权威进度仍为 `184/220`，正式分数仍无。**
 >
 > **5.41 V2.42.20 来源依赖/镜像聚类、安全激活与相关证据近邻（2026-07-31 21:44 UTC）：V2.42.20 是 V2.42.19 之后的纯 post-terminal audit，不是第二个 benchmark executor，也不回改 V2.42.18/19 的冻结面。输入只投影同题终态 evidence 的 `{id, kind, url, source_family, title, text, fingerprint}`；question、query、prediction、renderer、mapping、gold、category、question_type、split 和 evaluator score 均不读取。只有 `kind=page` 进入宽度估计，失败题缺失 state 按零证据计，并始终保留 exact-220 分母。
 >
@@ -797,6 +801,9 @@ V2.26 随后从剩余 10 个无历史 forward artifact 的 dev opaque ID 中按�
 - 首次用 semantic regions、UCB 或 $\epsilon$-greedy 平衡 deep-research coverage；
 - 首次发现 query string 不同但 evidence set 等价，或首次用结构化菜单做 non-myopic search credit；
 - 首次用 verified/unresolved constraints 做递归 follow-up、研究状态压缩或 key-step bonus；
+- 首次把 agentic search 写成 POMDP、显式 belief-state loop 或 predicate-based stop/act/observe/update；
+- 首次用 answer-grounded graph distance、search-enabled/search-disabled boundary 或 correctness-gated efficiency 给 agentic-search 步骤/轨迹分 credit；
+- 首次用完整并行轨迹的按需检索式聚合提高 search-agent test-time scaling；
 - 首次把 table、coverage map 或 evidence graph 作为搜索状态；
 - 低熵意味着正确、证据充分或集合完整；
 - Good–Turing/capture–recapture 在搜索引擎偏置下给出无偏全集估计；
@@ -1296,6 +1303,11 @@ ConMem 式 memory valuation 与 temporal search-step credit 分开。它只比�
 - Web2BigTable；
 - WebSwarm；
 - SearchSwarm；
+- CGDP / predicate belief + programmatic exhaustion；
+- R²-Searcher / retrieval-boundary reflection；
+- SAAS / search-enabled-vs-disabled boundary；
+- SlimSearcher / correctness-gated efficiency reward；
+- AggAgent / full-trajectory agentic aggregation；
 - Don't Stop Early / fixed evidence-sufficiency termination；
 - ScaffoldAgent / composite-utility outline control；
 - SearchOS；
@@ -1306,12 +1318,18 @@ ConMem 式 memory valuation 与 temporal search-step credit 分开。它只比�
 - Two Calls Beat Five Agents（简单 refinement 与格式故障诊断，不作跨任务榜单直接比较）；
 - SearchArt（训练系统，分数仅在同协议时比较）；
 - Search as Computation Allocation、CAM-DF、CAST 与 AttriMem（机制对照）。
+- GDCR/SAPO（answer-grounded graph progress，仅隔离的 privileged training oracle）；
+- LiveBrowseComp 与 DeepWeb-Bench（time-matched search、跨源推导/校准 transfer stress，不参与 DeepWideBench 排名）。
 
 WebSwarm 的 controlled internal baseline 不只运行一个 `full` 配置。至少保留八个同预算执行臂：ReAct、w/o recursive delegation、all-deep、all-wide、w/o Web-Probing、w/o sibling experience、full WebSwarm 和 four-layer VOC。固定 `entity_collect` path 数、experience scout 数、最大 action steps、search top-k、page reader/summary policy 和 aggregation rule；同时记录 nominal/effective agent width、query/URL/content/source/evidence-set overlap、错误经验传播、input/output tokens、工具调用、orchestrator 调用与墙钟。probe-only 与 experience-only 的结果分开解释，不能把节省工具调用写成质量提升。
 
 SearchSwarm 的 controlled baseline 使用同一模型、search/page tools 和 renderer，依次比较 no-delegation、tool-schema-only、完整 harness、训练式委派、WebSwarm full 与 four-layer VOC。所有子代理 token/tool/page cost 进入总预算；压缩报告要回链原始 evidence，并以盲审统计 load-bearing claim 丢失率。论文的 BrowseComp、BrowseComp-ZH、GAIA 与 xbench 数字只作外部背景，不参与 DeepWideBench 排名或 gate。
 
 Evidence-sufficiency 与 ScaffoldAgent controlled baselines 也使用同一 search/page tools、evidence ledger、renderer 和 terminal evaluator。前者的 criteria 生成器、后者的 outline/utility judge 均只看 visible question 与当前题 active evidence，递归拒绝 benchmark category、question_type、split、mapping、gold、answer key、evaluator score 和同题 correctness。二者与 four-layer VOC 匹配总 token、search/fetch/page、最大串行深度、wall-clock cap、retry 与 failure-as-zero；若预算不能精确匹配，报告完整 Pareto 曲线，不以单个不同成本点下结论。[159,160]
+
+CGDP/R²/SAAS/SlimSearcher controlled baselines 必须拆开 runtime-deployable 与 privileged-training 版本。CGDP 的 predicate belief 和 programmatic exhaustion 只用 visible question、active evidence、action similarity 与 observation novelty，可进入 label-blind runtime 对照。R² 的 boundary reflection 在 runtime 只能看当前 evidence；SAAS 的 search-disabled/search-enabled paired correctness、SlimSearcher 的 ground-truth correctness gate 和 GDCR 的 answer-node graph 只能用于隔离训练或 post-terminal oracle，必须记录 privileged-information budget，不能为同一 benchmark forward 选 route、stop、memory 或 prompt。[165–168,172]
+
+并行实验新增独立 aggregation 轴。对每个固定 `agent_count`，预先冻结并比较 majority/weighted vote、final-solution-only、citation-bearing summary、AggAgent-style full-trajectory on-demand read 与本项目 provenance-aware canonical-table reducer；rollout 生成完全相同，聚合阶段的 input/output token、模型调用、trajectory reads 与 wall-clock 单列。只有同一 reducer 下的差值可归因于 search policy，只有同一 rollout set 下的差值可归因于 reducer。[169]
 
 优先在相同骨干、search/page tools、并发、max tool calls、token、wall-clock、attempts 下运行。若官方系统无法复现，分成：
 
@@ -1458,6 +1476,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 - 角色模型容量：planner/delegator 与 child/executor 分轴扫描，固定 renderer、action menu、总生成/输入 token、tool/page 和 wall-clock；报告质量、成本与 route error，不能由跨题并发档位推断角色容量最优；
 - refinement rounds：`0/1/2`，保留 two-call self-refinement 作为简单强基线；
 - topology：single、fixed WebSwarm-style tree、fixed graph、MANTA-style bounded adaptive；
+- aggregation：majority/weighted vote、final-solution-only、citation-bearing summary、AggAgent-style full-trajectory on-demand read、frozen provenance-aware canonical-table reducer；固定同一 rollout set 后才比较 reducer，固定同一 reducer 后才比较 search policy；
 - simple allocation：按每个方法实际生成 token 匹配 independent-search sampling 曲线；聚合器预先冻结为 evidence-equivalence 去重、canonical-row merge 与 provenance-aware cell vote；
 - 每个点同时报告 DeepWide 质量、communication/format failure、evidence overlap、route/round engagement、premature false success、correct-intermediate overwrite 与全部输入/输出成本，检查非单调性；
 - 由 query intent、URL/content、source dependency 与 evidence-set overlap 估计 effective independent branch count；nominal `agent_count` 不得直接当作 width；
@@ -1569,6 +1588,8 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 - 至少两个机制消融符合 RQ4 预测；
 - 人工 evidence audit 不显示 precision 明显恶化；
 - 系统级讨论覆盖 WebSwarm、SearchSwarm、SearchOS、ECR、TaS、A-MapReduce、BM25 Wins at Scale、Think Big Search Small、Two Calls Beat Five Agents、SKIMIX、MANTA 与 Scaling LLM-Driven MAS，并明确委派不等于四层风险控制、主上下文压缩不等于总成本下降、全局排名不等于终局综合、吞吐并发不等于单题协作质量、统一角色模型不等于容量最优。[134,137,157]
+- controller/停止主张还必须覆盖 CGDP、R²-Searcher、SAAS 与 SlimSearcher，并把 predicate belief、boundary reflection、search necessity、正确性 gate 和四层 terminal-loss VOC 分开消融。[165,167,168,172]
+- 并行质量主张必须覆盖 AggAgent，并在相同 rollout set 上分离 search-policy 与 aggregation-policy 效果；credit 主张必须覆盖 GDCR/SAPO，并把 answer-node graph 标为 privileged oracle。[166,169]
 - 系统级讨论还必须覆盖 AREX、Harness-G、Baikal、SearchArt、MisKnow-Agent 与 FinanceHarness，并分别报告搜索决策、evidence acquisition、synthesis/verification、环境/时间边界和 output-contract failure。
 - controller 主张必须讨论 Search as Computation Allocation，并报告 pure IG、myopic VOC 与 finite-depth dynamic VOC 的同预算差异。
 - 停止主张必须比较 CAM-DF-lite；过程可靠性必须按 HiEviDR/LEDGERMIND/LayerRAG 的 evidence、claim、answer、tool-contract、authorization 与 session 层分别报告。
@@ -1584,7 +1605,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 
 | M | 目标 | Owner | 时间 | 预算上限 | 产物 | 状态 |
 |---|---|---|---|---:|---|---|
-| M0 | 基线、官方评测、文献/novelty audit | 当前会话 + 待确认 PI | 已更新至 2026-07-31（156 篇） | 已发生，待补账 | `survey.md`、`.research/literature_matrix.md`、基线 scripts/results | 完成（持续增量） |
+| M0 | 基线、官方评测、文献/novelty audit | 当前会话 + 待确认 PI | 已更新至 2026-07-31（172 篇） | 已发生，待补账 | `survey.md`、`.research/literature_matrix.md`、基线 scripts/results | 完成（持续增量） |
 | M1 | 严格 runtime/eval 隔离与正文 evidence pipeline | 当前会话 + TBD owner | 已实现 manifest 隔离、HTML/PDF 正文、query-local citation provenance 与历史 forward preflight；V2.42.19 scanner 已冻结，终态报告、人工 EAL 与整页精确 span 待做 | TBD | `src/deepwide_agent`、evaluator、no-leak tests | 部分完成 |
 | M2 | 表格/evidence state 与 replay | 当前会话 + TBD owner | V2.29.0 schema 37、单题 checkpoint、hosted trace 去重、failure trace 持久化、anchor-only replay 和 pinned V2.25 closed-domain replay 已可运行；20-task replay pack 待做 | TBD | state schema、20-task replay pack | 部分完成 |
 | M3 | 四层信号数据与校准 | TBD | 2 周 | TBD | shadow signal dataset、calibration report、replay receipt | PAV/terminal calibrator、task-cluster split/bootstrap、provenance budget 与 replay verifier 已实现；真实匿名 development labels/bundle 尚无，Gate 1 未评估 |
@@ -1594,7 +1615,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 | M5B | OWIC estimator 与 verifier-sign-preserving advantage modulation | TBD | 1–2 周 | TBD | credit module、intervention tests | 未开始；CIGPO/Bridge Evidence/CHILL/SkillRise/GRSD/TTEL/OVCSD/CSCR 对照已写入协议 |
 | M6A | 50-task online controller pilot / Gate 3A | TBD | 1 周 | TBD | paired report、Pareto plots | 未开始 |
 | M6B | 3-seed credit-training pilot / Gate 3B | TBD | 2 周 | TBD | checkpoints、learning curves、credit audit | 未开始 |
-| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact；下一 fresh all-220 package gate、capacity freeze、唯一 owner 与固定并行计划 | 进行中（最近权威安全聚合 183/220；R1 forward active；V2.41.94/96 等 R1 release；V2.42.10/13/15 等 quality、selected publication 与 recovered joint package；V2.42.19/20 等 post-terminal audit；正式分数仍无） |
+| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact；下一 fresh all-220 package gate、capacity freeze、唯一 owner 与固定并行计划 | 进行中（最近权威安全聚合 184/220；R1 forward active；V2.41.94/96 等 R1 release；V2.42.10/13/15 等 quality、selected publication 与 recovered joint package；V2.42.19/20 等 post-terminal audit；正式分数仍无） |
 | M8 | 论文写作与审计 | TBD | 1–2 周 | TBD | manuscript、claim/evidence ledger | 未开始 |
 
 ### M1 推荐目录
@@ -1741,6 +1762,7 @@ outputs/runs/<run_id>/
 6. V2.42.16 GO 且共享 lease 释放后，执行 `1/2/4/8/12 × 3 waves` 的中性 GPT-5.6 容量阶梯，冻结最大连续安全档。容量选择只使用非 benchmark 输入，不以题目成功率调并发。
 7. 已激活的 V2.42.18 single-owner watcher 在两次 quiet observation 与唯一 shared lease 后，先发布 execution-start，再在四个全新 output roots 上以 V2.42.17 冻结档位运行 `52/52/52/64=220`。每 wave 的所有 fresh preflight 先完成，随后才并发 forward；四 shard exact-terminal 后才打开 mapping/evaluator。整次 fixed concurrency、no-resume、failure-as-zero，API/容量失败仍进分母，禁止只补失败题，也禁止另启第二个 executor。
 8. full/no-entropy、WebSwarm-style 或其他主 variant 若进入论文主比较，每个 variant 都必须独立满足同样的 exact-220、fresh roots、固定预算和 single-owner 合同。English-76、dev64 或 completed-only 只能作诊断，不能替代全集。
+9. 文献补漏不改变当前不可逆执行序列。R1 与 V2.42.13/15/16/17/18/19/20 全部保持原 PID/identity；AggAgent、CGDP、GDCR、SAAS、SlimSearcher、R²、LiveBrowseComp 或 DeepWeb-Bench 只进入未来对照设计，当前不得借此启动新 benchmark、容量探针或第二个 all-220。
 
 ### V2.40.5 Gate 2B baseline-source 合同（2026-07-26 00:03 UTC 新增）
 
