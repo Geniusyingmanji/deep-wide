@@ -1,0 +1,131 @@
+{
+  "artifact_version": 1,
+  "role": "v24220_source_dependency_preregistration",
+  "protocol_id": "v24220_post_terminal_label_blind_source_dependency_v1",
+  "created_at_unix": 1785533934,
+  "parent_contract": {
+    "protocol": {
+      "path": "results/v24219_search_time_contamination_preregistration_v1_20260731.json",
+      "sha256": "d7923f65800d2e1b65b6fe735a859a401566800878e50cd7c9f4dd48e5be0a61"
+    },
+    "state_path": "outputs/v24219_search_time_contamination_watcher_state_v1_20260731.json",
+    "report_path": "results/v24219_search_time_contamination_report_v1_20260731.json",
+    "accepted_terminal_status": "complete_post_terminal_contamination_audit"
+  },
+  "input_contract": {
+    "canonical_partition": {
+      "test_s01": {
+        "path": "configs/full220_v2403_r1_test_s01.ids",
+        "sha256": "9f4c7bb4e9f63b01b574a52ec840266358dae6d9982dc7caebfeb813eca02dfb",
+        "count": 52
+      },
+      "test_s02": {
+        "path": "configs/full220_v2403_r1_test_s02.ids",
+        "sha256": "2b48a04896437fdea127e02ad7980f2cb9310db9a16841696affd04796502bbd",
+        "count": 52
+      },
+      "test_s03": {
+        "path": "configs/full220_v2403_r1_test_s03.ids",
+        "sha256": "abaadc27927a9dbd5ad8cc856513baa85e8c900ed041cf6e5c0978534d103566",
+        "count": 52
+      },
+      "devval": {
+        "path": "configs/full220_v2403_r1_devval_s04.ids",
+        "sha256": "79ba11a41c186daa80e8779e8fa2c1b47e7907f8e398d817dedb43099333d69c",
+        "count": 64
+      },
+      "canonical_opaque_partition_sha256": "cace8746d5a817a467e7cb70e715ee599a242cc88ce4474802b9d93a9221082b"
+    },
+    "same_task_terminal_evidence_projection": [
+      "id",
+      "kind",
+      "url",
+      "source_family",
+      "title",
+      "text",
+      "fingerprint"
+    ],
+    "runtime_manifest_content_opened": false,
+    "question_query_prediction_or_renderer_output_read": false,
+    "mapping_gold_category_question_type_split_evaluator_score_read": false,
+    "only_visited_page_kind_enters_width": true
+  },
+  "estimator_contract": {
+    "hard_edges": [
+      "same_canonical_url",
+      "exact_content",
+      "near_duplicate_content",
+      "redirect_equivalent",
+      "cross_family_path_content_mirror"
+    ],
+    "near_duplicate_character_shingle_size": 13,
+    "near_duplicate_minimum_chars": 80,
+    "near_duplicate_minimum_length_ratio": 0.5,
+    "near_duplicate_jaccard_threshold": 0.78,
+    "near_duplicate_containment_threshold": 0.9,
+    "minimum_shared_quote_chars": 96,
+    "soft_pairwise_rho": {
+      "same_source_family": 0.2,
+      "shared_quoted_span": 0.45,
+      "shared_structured_record": 0.3,
+      "cross_family_path_mirror": 0.25
+    },
+    "effective_width_formula": "n_hard^2 / (n_hard + 2 * sum(max_pairwise_soft_rho))",
+    "same_host_or_family_alone_never_forms_hard_cluster": true,
+    "structured_record_reuse_is_soft_not_confirmed_mirror": true,
+    "dependency_adjusted_width_is_sensitivity_not_correctness": true
+  },
+  "execution": {
+    "runner": "scripts/run_v24220_source_dependency.py",
+    "watcher": "scripts/watch_v24220_source_dependency.py",
+    "python_flags": [
+      "-I",
+      "-B"
+    ],
+    "poll_seconds": 60,
+    "state_path": "outputs/v24220_source_dependency_watcher_state_v1_20260731.json",
+    "activation_path": "results/v24220_source_dependency_activation_v1_20260731.json",
+    "wait_audit_path": "results/v24220_source_dependency_wait_audit_v1_20260731.json",
+    "post_v24219_terminal_only": true,
+    "create_exclusive_detail": "outputs/v24220_source_dependency_detail_v1_20260731.json",
+    "create_exclusive_report": "results/v24220_source_dependency_report_v1_20260731.json",
+    "rerun_or_resume_allowed": false
+  },
+  "reporting_contract": {
+    "official_primary_denominator": 220,
+    "official_primary_result_unchanged": true,
+    "sample_exclusion_score_or_prediction_recomputation": false,
+    "private_detail_emits_no_question_query_page_text_raw_url_evidence_id_or_task_id": true,
+    "public_aggregate_emits_no_question_query_page_text_raw_url_evidence_id_or_task_id": true,
+    "persisted_query_focused_evidence_not_full_raw_page_limitation": true
+  },
+  "authorization": {
+    "offline_post_terminal_read_only_audit": true,
+    "network_model_search_fetch_evaluator_or_api_call": false,
+    "shared_api_lease_acquire": false,
+    "forward_result_evaluator_or_watcher_modification": false,
+    "benchmark_forward_or_full220_launch": false,
+    "process_signal_restart_resume_rerun_skip_or_selective_retry": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "control_surface": {
+    "file_count": 12,
+    "manifest": {
+      "src/deepwide_agent/v24220_source_dependency.py": "b1b3d1d759b9271578679023415ce2d1521d864f586dd323159e9c84c2869613",
+      "scripts/run_v24220_source_dependency.py": "638cc0a3dbf109dfd2306e56879e9ca20bd2a2bc0ea1a7a884946a32156c6d40",
+      "scripts/preregister_v24220_source_dependency.py": "ab8d372e2af77a2d3b926365ac328c63d999b17da31344959e0ae40e8b5967a0",
+      "scripts/watch_v24220_source_dependency.py": "132be2bb77a88aa59290cea6ec57b01760ef3357a98274dc639fcfa1877eec6b",
+      "scripts/activate_v24220_source_dependency.py": "8d0b0ca1f989770a82cf759e384532282b5bdfc08e11b2c3f47fc40d9c2e0f74",
+      "scripts/audit_v24220_source_dependency_wait.py": "24b86c740ed0a57635dc75533f31e6995612ee42cb5a20e093d539e252ec9c80",
+      "tests/test_v24220_source_dependency.py": "9a6bda880b55d87fdca88e40ec38edf4b258b84aa051a3f2f0de907363b074c8",
+      "tests/test_run_v24220_source_dependency.py": "bb9b863f664f00472929e691991dd963555bec0ac8adf450c5e9bf6816187cdb",
+      "tests/test_preregister_v24220_source_dependency.py": "97126d0bd1df9d680a83be2a3cac4945fb4a8f5a6ff1aad170143b46e3048130",
+      "tests/test_watch_v24220_source_dependency.py": "9aeaf88c39affb59808678cfa397fbdb98df28ae12f66f5da3dab399e4914de5",
+      "tests/test_activate_v24220_source_dependency.py": "ad309a04a1c3d6fe27daa4d5ad7a9cd229e991adeb5fd0f5b19d548e99288d84",
+      "tests/test_audit_v24220_source_dependency_wait.py": "e83ea2a3faa6d59fbf1fa48f9cb78cbe21ff46d1630a1ae55b5eaf594a2ae52a"
+    },
+    "manifest_sha256": "0402f6179fd9aad33da8abd3330965b56e8d1038cfd9cb6adc52dbd511117bf7",
+    "v24218_or_v24219_control_surface_modified": false
+  },
+  "decision_contract_sha256": "63e11c5533fae6b1d27e58fc4c8321b90cc2cc0c0ac8592b5cfdf19b05d53290"
+}
