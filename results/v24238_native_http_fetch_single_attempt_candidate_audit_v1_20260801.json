@@ -1,0 +1,169 @@
+{
+  "artifact_version": 1,
+  "role": "v24238_native_http_fetch_single_attempt_candidate_audit",
+  "created_at_unix": 1785562010,
+  "label_blind_runtime": true,
+  "build_only": false,
+  "candidate_runtime_adapter": true,
+  "parent_receipt": {
+    "path": "results/v24237_tavily_search_single_attempt_candidate_audit_v1_20260801.json",
+    "file_sha256": "8c9315b3dc01d0255c79dd0fd9ee747961df5abe2c8416541dfd80d5f1d3c8ad",
+    "payload_sha256": "6d8f359f55c2c0ca546b29e39e4fbfbd31575252d5131d56d90923cf27d91ca9",
+    "v24237_control_manifest_sha256": "bddfff603d5c5466bd5b76e7819f8ce916dadf2f8ba801d07104e2c24a0d2330",
+    "v24237_control_files_rehashed": 4,
+    "v24237_candidate_parent_validated": true
+  },
+  "control_surface": {
+    "file_count": 4,
+    "manifest": {
+      "src/deepwide_agent/v24238_native_http_fetch_single_attempt.py": "bcab8b636a7dd17c041e00f7e60030df6a188501d05cc7a73d67cb2e2bd50222",
+      "tests/test_v24238_native_http_fetch_single_attempt.py": "aea1516ee5d70734e85c35126f6b37619ae1fd800657b86855f0d9e3799f3ed6",
+      "scripts/audit_v24238_native_http_fetch_single_attempt.py": "2432be87cd6b5daaa320702426431dd713d1822a8db607a9b8ec609d66c8a2ff",
+      "tests/test_audit_v24238_native_http_fetch_single_attempt.py": "48b8f588618d1934138f5f207ee6996d4c0051f3127a8d568dff6ac375194047"
+    },
+    "manifest_sha256": "d343b2f5bbd67c52afb107829af852ae504566fb4271d64ca7296450fc3a0eb7"
+  },
+  "active_forward_guard": {
+    "file_count": 8,
+    "manifest": {
+      "src/deepwide_agent/__init__.py": "2fe51574581cf575ad7cc00f3fe7d6cdd2d375266e40e290d05e9a49aac8f9e5",
+      "src/deepwide_agent/clients.py": "339d923973f07ebcd33cb12cee2c26103df70ed3aea1fc0a737ffd675ac06fbc",
+      "src/deepwide_agent/native_search.py": "cd0d6bfccf4b345b11274558bdcffb39d279697d183242baf811dfd56ac71e50",
+      "src/deepwide_agent/anthropic_search.py": "eab1f14e0f4be76f6a2cca1422aabbf064c9c3867af414b7cbf8b9a15c1f0678",
+      "src/deepwide_agent/runtime.py": "b13d925e71213ddd27e98f606541772d11a07d0069221823e81de1998614f869",
+      "src/deepwide_agent/v24211_entropy_runtime.py": "193c0d4bd8b0b1516a6d3ae0d1b1c0e05a508b6e70d6749a2c37d0a415148879",
+      "scripts/run_deepwide_agent.py": "10680e64a43a6f8100da8fb3f04a87839d7d4c0978724c74b8bcc089b66a642a",
+      "scripts/launch_frozen_deepwide.py": "66ccde2d0477c039718216d0ffcd505618597ad8b1ce434a029ec513d5b3ac2a"
+    },
+    "manifest_sha256": "e2626ecfa54eba89ccdee3706a78c5150e76bc6204cf3ad666c43e242fb7649a",
+    "module_name_hit_count_by_file": {
+      "src/deepwide_agent/__init__.py": 0,
+      "src/deepwide_agent/clients.py": 0,
+      "src/deepwide_agent/native_search.py": 0,
+      "src/deepwide_agent/anthropic_search.py": 0,
+      "src/deepwide_agent/runtime.py": 0,
+      "src/deepwide_agent/v24211_entropy_runtime.py": 0,
+      "scripts/run_deepwide_agent.py": 0,
+      "scripts/launch_frozen_deepwide.py": 0
+    },
+    "module_absent_from_guarded_clients_and_forward_entrypoints": true
+  },
+  "static_capability_audit": {
+    "ast_node_count": 2364,
+    "import_modules": [
+      "__future__",
+      "dataclasses",
+      "deepwide_agent.v24232_webswarm_total_budget",
+      "deepwide_agent.v24234_provider_cost_meter",
+      "deepwide_agent.v24235_preauthorized_effect_harness",
+      "hashlib",
+      "ipaddress",
+      "requests",
+      "socket",
+      "typing",
+      "urllib.parse"
+    ],
+    "required_public_symbols_present": [
+      "NativeHttpFetchAttemptValue",
+      "NativeHttpFetchRequest",
+      "NativeHttpFetchSingleAttemptAdapter",
+      "bind",
+      "single_attempt"
+    ],
+    "single_transport_get_call_site_count": 1,
+    "system_resolver_call_site_count": 1,
+    "network_get_and_dns_capability": true,
+    "tls_verification_bypass_call_count": 0,
+    "redirect_following_call_count": 0,
+    "file_environment_keyring_process_subprocess_or_dynamic_code_capability": false,
+    "privileged_metadata_read_count": 0
+  },
+  "control_source_forbidden_literal_scan": {
+    "file_count": 4,
+    "hit_count": 0,
+    "credential_or_concrete_opaque_id_literal_present": false
+  },
+  "fake_transport_replay": {
+    "fake_resolver_and_transport_only": true,
+    "network_socket_or_real_fetch_called": false,
+    "callback_attempt_count": 2,
+    "resolver_call_count": 2,
+    "transport_get_count": 2,
+    "one_callback_invocation_equals_one_transport_get": true,
+    "dns_preflight_repeated_before_each_get": true,
+    "first_status_retryable_500": true,
+    "second_status_success_200": true,
+    "same_url_across_retries": true,
+    "redirect_following_disabled": true,
+    "streaming_enabled": true,
+    "tls_verification_enabled": true,
+    "raw_url_or_response_not_in_receipt": true,
+    "responses_closed": true,
+    "settled_permit_count": 1,
+    "pending_permit_count": 0,
+    "benchmark_question_prediction_mapping_gold_evaluator_or_score_read": false
+  },
+  "scientific_scope": {
+    "one_callback_invocation_one_transport_get_by_implementation": true,
+    "internal_retry_implemented": false,
+    "redirect_following_implemented": false,
+    "tls_verification_disabled": false,
+    "public_address_dns_preflight_implemented": true,
+    "system_resolver_used_by_default": true,
+    "dns_preflight_result_pinned_to_transport": false,
+    "dns_rebinding_fully_excluded": false,
+    "retained_response_byte_cap_implemented": true,
+    "total_transport_response_bytes_hard_capped": false,
+    "full_provider_response_hashed_when_truncated": false,
+    "response_close_attempted": true,
+    "response_close_success_independently_verified": false,
+    "request_url_directly_persisted_or_emitted": false,
+    "caller_public_nonsecret_url_required": true,
+    "url_secret_absence_independently_verified": false,
+    "sensitive_query_key_rejection_implemented": true,
+    "nominal_timeout_reservation_checked": true,
+    "requests_timeout_is_total_wall_deadline": false,
+    "arbitrary_caller_headers_accepted": false,
+    "environment_or_keyring_credential_read_implemented": false,
+    "requests_trust_env_disabled": true,
+    "challenge_and_attempt_reference_headers_sent": false,
+    "provider_challenge_consumption_independently_verified": false,
+    "provider_response_authenticity_independently_verified": false,
+    "real_provider_traffic_observed": false,
+    "active_client_or_runner_integrated": false,
+    "dev64_gate_evaluated": false,
+    "fresh_exact220_evaluated": false,
+    "quality_cost_or_benchmark_effect_observed": false
+  },
+  "source_policy": {
+    "repository_control_code_parent_receipt_and_fake_resolver_transport_only": true,
+    "runtime_task_question_query_raw_evidence_url_prediction_or_answer_read": false,
+    "benchmark_subset_category_question_type_label_split_or_mapping_read": false,
+    "gold_evaluator_payload_score_reward_or_results_read": false,
+    "credential_environment_keyring_or_secret_value_read": false,
+    "audit_network_socket_model_search_fetch_subprocess_or_api_called": false
+  },
+  "authorization": {
+    "candidate_single_attempt_network_call_capability": true,
+    "active_provider_traffic_authorized": false,
+    "production_package_authorized": false,
+    "active_forward_integration_authorized": false,
+    "benchmark_forward_or_evaluator_authorized": false,
+    "dev64_or_exact220_launch_authorized": false,
+    "shared_api_lease_acquire_authorized": false,
+    "process_signal_restart_resume_rerun_or_selective_retry": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "claims": {
+    "candidate_native_http_fetch_single_attempt_adapter_available": true,
+    "production_runtime_wrapper_available": false,
+    "dns_rebinding_safety_proven": false,
+    "real_provider_execution_evidence_available": false,
+    "benchmark_score_available": false,
+    "benchmark_improvement_observed": false,
+    "leaderboard_submission_performed": false,
+    "sota": false
+  },
+  "audit_valid": true,
+  "audit_payload_sha256": "89e249bec8c76a66883dadb0931aa1f969808629ebb8b82a120d7596ed5fafde"
+}
