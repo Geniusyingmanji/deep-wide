@@ -1,6 +1,6 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
-> 检索截止：2026-08-01 03:17 UTC；项目证据更新：2026-08-01 05:38 UTC
+> 检索截止：2026-08-01 03:17 UTC；项目证据更新：2026-08-01 05:58 UTC
 >
 > 结论强度：这是基于公开文献的 novelty audit，不是“没有任何相关工作”的证明。2026 年文献多为尚未同行评审的 arXiv 预印本，文中将预印本结果视为作者报告，而非独立复现事实。
 
@@ -31,6 +31,8 @@ V2.42.37 再补 Tavily Search single-attempt adapter。官方 Search endpoint �
 V2.42.38 将 native page fetch 拆成单 callback 单 GET。每次 attempt 都先解析 hostname，并在任一地址非 global 时拒绝；不跟 redirect、保留 bounded response prefix、启用 TLS verification 并关闭 Requests 环境继承。这个实现刻意不把 DNS preflight 包装成完整 SSRF 证明：解析结果没有 pin 到 transport，DNS rebinding 仍可能；prefix cap 也不等于总传输量硬上限，截断时 response hash 只覆盖 retained prefix。常见敏感 query key 会 pre-GET 拒绝，但不能独立证明任意 caller URL 无秘密。fake replay 为 `500 → 200` 两次 DNS preflight/两个 GET；定向实现/审计 `17/17`、V2.42.02/31–38 全链 `196/196`。这些仍只是隔离机械边界，没有真实 fetch、active runtime、dev64 或 benchmark 证据。
 
 V2.42.39 将 Azure Responses hosted search 拆成单 callback 单 POST，并同时计 HTTP search attempt、provider tokens 与实际 `web_search_call` actions。缺 usage/action/text 不得成为零成本成功；provider action 超过 reservation 时保留真实 attempt observation，再由 settlement fail closed，而不是掩盖已经发生的超额 effect。它仍不能在 effect 前硬限 provider action、证明 input-token reservation、验证多 query marker 完整性或把 action 当页面证据。fake `429 → 200` replay 支持定向实现/审计 `16/16`，V2.42.02/31–39 全链为 `212/212`；没有调用真实 9878、没有 active integration、dev64 或 benchmark 效果。
+
+V2.42.40 再把 Anthropic Messages server search 拆成单 callback 单 POST，并保留现有 one-query-per-request、forced `web_search_20250305` 与 query-local provenance 语义。credential 由 caller 显式传入且只进入 `x-api-key` header；adapter 不读环境/keyring，request/response 中的直接 credential 回显分别在 POST 前和 response hash 前拒绝。计量把 direct/cache-creation/cache-read tokens 合并为 input cost，并交叉验证 `usage.server_tool_use.web_search_requests` 与实际 `server_tool_use` block 数；不一致时取较大计数后 fail closed。provider 超声明 `max_uses` 也只是在 effect 后被发现，不能声称 pre-effect hard cap。fake `429 → 200` replay 支持定向实现/审计 `17/17`、V2.42.02/31–40 全链 `229/229`，现有 Anthropic client 契约另为 `8/8`；没有真实 Anthropic 调用、active integration、dev64 或 benchmark 效果，server result 仍只是 discovery lead 而非 page evidence。
 
 V2.42.22 又把 fixed evidence-sufficiency termination 写成独立 build-only 对照。catalog 声明 coverage/source/time/exclusion criterion、动作类和 clean evidence/source 阈值；当前 active page contradiction 阻止该 criterion 满足，硬预算耗尽只允许 abstain。该实现不含 entropy、概率 belief 或 evaluator 信号，因而能在未来同预算实验中检验四层 VOC 是否真正优于固定完成条件。其哈希与空 supplied trace 只能验证 schema、绑定和调用内时序合同，不能证明 criterion 的语义来源、调用外真实时序或 active-evidence snapshot 完整性；当前也没有 benchmark 效果。
 
