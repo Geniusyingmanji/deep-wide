@@ -1,8 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.77
+> 版本：5.78
 >
-> 更新：2026-08-01 11:42 UTC
+> 更新：2026-08-01 12:18 UTC
+>
+> **5.78 V2.42.55 finite-depth dynamic terminal-loss VOC build-only kernel（2026-08-01 12:18 UTC）：复核确认 V2.42.11 不是 dynamic VOC：它只把四层 risk/anchor entropy 投影输入已校准单步回归，预测 task contribution 与 token cost，再按正 contribution/token 排序；没有 Bellman recursion、descendant computation option value，也没有在同一 action graph 上显式比较 pure IG 与 myopic terminal-loss VOC。新增纯 kernel 只接受 SHA-256 引用与有界标量构成的有限 DAG：每个 state 冻结 stop-now 四层终端损失和 belief-entropy 诊断，每个 action 冻结异质成本与经 calibration-ref 绑定的 observation transition。它在同一动作/概率/成本图上分别计算 pure expected entropy reduction、一步 terminal-loss VOC 和有限深度 Bellman VOC；成本先作硬预算，再按正 value/cost 排序，完全平局按预注册 action order，且始终保留 stop。
+>
+> 反例 replay 明确复现三种区别：high-IG/low-terminal-value 由 pure IG 选择，low-IG/high-terminal-value 由 myopic VOC 选择，myopic-zero bridge 因可开启后继 computation 而得到 dynamic VOC=0.5、descendant option value=0.5 并由 depth-2 policy 选择；depth=1 对所有 affordable action 与最终选择都精确等于 myopic。缺任一 transition calibration 时三种策略全部 abstain；cycle、unreachable state、非归一概率、重复 ref、预算溢出和重封后的 Python bool/int 类型漂移均 fail closed。该模块没有 file/environment/network/model/search/evaluator/process 能力，不读取 question、task ID、category/question_type/split/gold/mapping/evaluator/score/reward，也未被 active forward 7 个入口导入。
+>
+> 定向实现+create-exclusive audit 18/18；V2.42.11 controller/runtime 19/19、feasibility 六项逐 case 6/6、相邻 MICA implementation/audit 21/21 通过。feasibility 整文件命令在最后一项处未返回 unittest summary 或可用 exit code，随后六项均以独立隔离进程通过；不把无法归因的命令事件写成产品回归。v3 audit [results/v24255_finite_depth_dynamic_voc_build_audit_v3_20260801.json](results/v24255_finite_depth_dynamic_voc_build_audit_v3_20260801.json) 文件 SHA f285ba53…9f447、payload SHA 45a73ab3…7c72、4-file manifest SHA 26d41ffb…845a。回执只证明纯 Bellman 机械语义、封印、canonical-JSON 类型重放和 label-blind capability boundary；真实四层 stop loss、transition probability calibration、action graph、runtime integration、Gate 2A/3A、dev64/exact220 与质量/成本效果仍全为 false。V2.42.55 不修改 V2.42.54 或 V2.42.16–20，不取 lease、不调用 GPT-5.6/search/evaluator，也不授权 production。
+>
+> 当前覆盖：**12:11 UTC 原 R1 launcher/worker 与 7 个后继 watcher共 9 个保护 PID 均仍存活且未 signal/restart/resume/rerun。12:00 UTC 权威 label-blind aggregate 仍为 208/220 = 42 completed + 166 failed、剩余 12；mapping/gold 未读，V2.42.13/15/16/17/18/19/20 依序等待。phase audit 另标记旧 capacity state stale，故自动变更和第二个全集继续禁止。没有 released evaluator、正式 DeepWideBench 分数、Avg@4、候选提升或 SOTA。**
 >
 > **5.77 V2.42.54 create-exclusive paired-dev64 launcher preparation（2026-08-01 11:42 UTC）：V2.42.53 已证明 isolated runtime integration，但其 prospective gate 仍只是合同，尚未固定两臂 roots、精确 dev64 输入快照与 shared-lease/evaluator barrier。新 preparation-only package 逐字节绑定 V2.42.53 audit/四个 parent control files，以及现有 V2.42.16 protocol、activation、wait-audit 三个 receipt；live V2.42.16 state 不冻结，避免正常自然推进造成假漂移。输入只接受 64 行精确 `{opaque_id, question}` JSONL 与同序 64-ID 文件，现场验证 schema/唯一性/顺序后只持久化 bytes SHA、count 和 schema，题面与 raw ID 不写入 receipt。
 >
@@ -1855,7 +1863,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 | M3 | 四层信号数据与校准 | TBD | 2 周 | TBD | shadow signal dataset、calibration report、replay receipt | PAV/terminal calibrator、task-cluster split/bootstrap、provenance budget 与 replay verifier 已实现；真实匿名 development labels/bundle 尚无，Gate 1 未评估 |
 | M4A | Counterfactual action-value pilot | TBD | 1–2 周 | TBD | sealed action slates、propensity、gain report、model replay receipt | task-cluster-disjoint fitter/calibrator/audit/replay verifier 已实现；真实 prospective slate 与 equal-cost arm 数据仍为 0 |
 | M4B | Step-credit intervention audit set | TBD | 2 周 | TBD | 300-step inner/outer interventions、credit report | fixed-continuation bundle/receipt、V2.42.26 outer-target firewall、V2.42.27 ordering store、V2.42.28 challenge compatibility graph 与 V2.42.29 public signature verifier 已实现；native executor challenge consumption、仓库外独立 signer 身份/控制域、append-only launch attestation、300 个 artifact-disjoint outer-valid pairs 与七类 stress family（含 bridge evidence）尚未完成 |
-| M5A | Heuristic、pure EIG、myopic/dynamic VOC、CAM-DF/CHILL authorization、evidence-equivalence 与 region controller | TBD | 1–2 周 | TBD | controllers、unit tests、IG-vs-VOC/stop/authorization counterexamples | V2.42.11 runtime candidate、full/no-entropy kernel 与 V2.42.15 recovered joint-package control plane 已实现；真实 calibration、Gate-2A、terminal selected/joint publication 和 online pilot 未通过 |
+| M5A | Heuristic、pure EIG、myopic/dynamic VOC、CAM-DF/CHILL authorization、evidence-equivalence 与 region controller | TBD | 1–2 周 | TBD | controllers、unit tests、IG-vs-VOC/stop/authorization counterexamples | V2.42.11 单步 contribution/token runtime candidate 与 V2.42.15 recovered joint-package control plane 已实现；V2.42.55 又完成同有限 DAG 的 pure IG、myopic terminal-loss VOC、finite-depth Bellman VOC、stop/abstain build-only kernel 与三类反例。真实四层 loss/transition calibration、active integration、Gate-2A、terminal selected/joint publication 和 online pilot 均未通过 |
 | M5B | OWIC estimator 与 verifier-sign-preserving advantage modulation | TBD | 1–2 周 | TBD | credit module、intervention tests | 部分完成：V2.42.23 sign-preserving kernel、V2.42.24 sealed source adapter、V2.42.25 TRIAGE baseline、V2.42.26 independent outer-target firewall、V2.42.27 ordering store、V2.42.28 challenge compatibility graph、V2.42.29 signature verifier 与 V2.42.30 MICA baseline 已完成 build-only 实现；V2.42.23–30 实现+审计联合回归 `147/147`。真实 outer pairs、native challenge-consuming executor、独立 signer/append-only attestation、300-step audit、正式 Gate 2B 与训练接入仍未开始；SGCD/CIGPO/Bridge Evidence/CHILL/SkillRise/GRSD/TTEL/OVCSD/CSCR/Counterfactual-Shapley/MICA 对照已写入协议 |
 | M6A | 50-task online controller pilot / Gate 3A | TBD | 1 周 | TBD | paired report、Pareto plots | 未开始 |
 | M6B | 3-seed credit-training pilot / Gate 3B | TBD | 2 周 | TBD | checkpoints、learning curves、credit audit | 未开始 |
@@ -1982,7 +1990,7 @@ outputs/runs/<run_id>/
 | evidence-equivalence + risk 联合控制 | 相对 Harness-G menu/SNC 的同预算消融 | 文献约束与接口设计已有；未实现、无结果 |
 | semantic-region + risk portfolio | 相对 random/LLM/Bayes-UCB region policy | 文献约束与动作设计已有；未实现、无结果 |
 | 校准的 unseen-mass/coverage posterior | Gate 1 coverage 指标 | V2.40.9 已实现 missingness-aware proxy calibrator 与 recent-yield baseline gate；真实 prospective Gate 1 尚未评估，不能称 posterior 已验证 |
-| 四层 terminal-loss dynamic-VOC/cost controller | Gate 2A + Gate 3A，且优于 pure IG/myopic VOC | context-specific 七动作 response model 与 Gate 2A 评估器已实现；online dynamic-VOC controller 仍未设计/集成，须真实 Gate 1+2A 通过后另行预注册 |
+| 四层 terminal-loss dynamic-VOC/cost controller | Gate 2A + Gate 3A，且优于 pure IG/myopic VOC | context-specific 七动作 response model、Gate 2A 评估器与 V2.42.55 finite-DAG Bellman kernel/反例已实现；真实四层 terminal-loss/transition calibration 与 online runtime integration 仍未完成，须真实 Gate 1+2A 后另行预注册 |
 | 同预算质量–成本改进 | 全量 paired test | 无结果 |
 | 机制解释 | 对应消融与轨迹案例 | 无结果 |
 | 开放世界、结果对齐的 step credit | Gate 2B 对 independent outer intervention target 的定位指标 | fixed-continuation/intervention schema、sealed source adapter 与 outer-target firewall 已实现；真实 300-step artifact-disjoint outer pairs 为 0，正式 Gate 2B 未评估 |
