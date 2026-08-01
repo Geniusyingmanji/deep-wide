@@ -1,8 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.74
+> 版本：5.75
 >
-> 更新：2026-08-01 10:24 UTC
+> 更新：2026-08-01 10:52 UTC
+>
+> **5.75 V2.42.52 restartable source-bound candidate runner package（2026-08-01 10:52 UTC）：V2.42.51 虽已有 runner 形状，但仍靠测试手工拼装 V2.42.31–51。新隔离 factory 在一个 pristine local-POSIX root 内 create-exclusive 发布 package initial，建立互不重叠的 `journal/registry/outcome` 子树，逐层初始化 coordinator→scheduler→assembly→facade→registry→outcome ledger→runner bridge，全部父层可重放后才 create-exclusive 发布 ready receipt。`initialize/open` 共用同一 package contract；重启后 registry/outcome 前缀继续，global durable action ordinal 不回退。partial initialization、非空 root、root/source 重叠、symlink、额外 residue、receipt/contract/source 漂移均 fail closed；unresolved claim 重启后仍保持 quarantine，不能自动 retry/resume。
+>
+> package contract 绑定 V2.42.31–52 的 22-file byte-exact source manifest、guidance/budget/arm/initial-state/facade 合同、parser/projection SHA、三类 search provider 的 exact endpoint/model/API-version 配对及所有 timeout/attempt/token/tool/result/fetch 上限。每个 runner public operation 前重算 source manifest 并重验 ready、父 initial、facade/registry/ledger binding；但校验与随后 effect 之间没有 filesystem 原子性，运行中换源码的 TOCTOU 仍未排除，加载进内存的 code identity 也未被独立 attestation。凭据只作为 typed ephemeral runtime object 进入 exact adapter；不进入 canonical object、hash、文件、package receipt 或 outcome，但会按底层 adapter 设计留在进程内存。默认构造各 adapter 的 hardened real transport；测试必须显式注入 fake bundle。
+>
+> 定向实现+parent-bound no-network 审计 `20/20`，V2.42.02/31–52 完整父链 `467/467`。candidate create-exclusive receipt [`results/v24252_candidate_runner_package_candidate_audit_v1_20260801.json`](results/v24252_candidate_runner_package_candidate_audit_v1_20260801.json) 文件 SHA `f8f01f17…f002060`、payload SHA `c65216f4…b2cfd8`、4-file manifest SHA `a0ac4a5d…e03435`；fake replay 完成 initialize→model→open/restart→search→pinned fetch→legacy page ingestion，ordinal `1→3`、三个 durable success，provider prose 未返回、注入式页面仍零 instruction authority、sentinel credential 未进入文件/contract/receipt。active forward 8 个入口命中 0，特权元数据读取与 credential canonicalization/hash/persistence call site 均为 0。production、真实流量、active integration、lease、dev64/exact220、evaluator 与 leaderboard 权限仍全 false；下一步必须是独立、fresh、label-blind dev64 integration gate，而不是替换当前 R1 或启动第二个全集。
+>
+> 当前覆盖：**R1 与全部保护 watcher 原身份存活且未 signal/restart/resume/rerun；2026-08-01 10:52 UTC 最新一致 aggregate 自然推进为 `207/220 = 41 completed + 166 failed`、剩余 13，`label_blind=true`、`mapping_or_gold_read=false`。V2.42.13/15/16/17/18/19/20 依序等待且各自 evaluator/API read=false。该计数仍不是 DeepWideBench 分数；released all-220、Avg@4、候选提升、entropy/credit/WebSwarm 效果和 SOTA 均不存在。**
 >
 > **5.74 V2.42.51 runner-compatible explicit evidence-ingress bridge（2026-08-01 10:20 UTC）：V2.42.50 的 typed API 与旧 runner 的 `complete_json/search_many/fetch_urls` 之间存在权限鸿沟：V2.42.46 lead 不是 page evidence，page projection 也固定 `active_evidence_eligible=false`，而旧 `add_search_batches` 会把任意非空 `raw_content` 升为 `kind=page`。新隔离 bridge 不修改 active clients/runtime/runner，而先执行 durable search lead，再由同一 exact ledger 对该 lead 的 fetch URL 执行 pinned fetch；只有 exact lead/page 类型、lead canonical URL 与 fetched page canonical URL 相等、显式支持的媒体类型、未截断正文、父 body hash/length binding、两侧 trust flags 与完整 durable receipt graph 全部通过时，才生成 content-free admission 并输出旧 schema 的 `raw_content`。provider answer/snippet/raw content/score 全部丢弃；未知 `fetch_urls` 请求在 claim/effect 前拒绝。
 >
@@ -1826,7 +1834,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 | M | 目标 | Owner | 时间 | 预算上限 | 产物 | 状态 |
 |---|---|---|---|---:|---|---|
 | M0 | 基线、官方评测、文献/novelty audit | 当前会话 + 待确认 PI | 已增量核验至 2026-08-01 03:17 UTC（178 篇） | 已发生，待补账 | `survey.md`、`.research/literature_matrix.md`、基线 scripts/results | 完成（持续增量） |
-| M1 | 严格 runtime/eval 隔离与正文 evidence pipeline | 当前会话 + TBD owner | 已实现 manifest 隔离、HTML/PDF 正文、query-local citation provenance 与历史 forward preflight；V2.42.19 scanner 已冻结，终态报告、人工 EAL 与整页精确 span 待做 | TBD | `src/deepwide_agent`、evaluator、no-leak tests | 部分完成 |
+| M1 | 严格 runtime/eval 隔离与正文 evidence pipeline | 当前会话 + TBD owner | 已实现 manifest 隔离、HTML/PDF 正文、query-local citation provenance 与历史 forward preflight；V2.42.19 scanner 已冻结；V2.42.52 已提供 source-bound restartable candidate package，但尚未接 active runtime，终态报告、人工 EAL 与整页精确 span 待做 | TBD | `src/deepwide_agent`、evaluator、no-leak tests | 部分完成 |
 | M2 | 表格/evidence state 与 replay | 当前会话 + TBD owner | V2.29.0 schema 37、单题 checkpoint、hosted trace 去重、failure trace 持久化、anchor-only replay 和 pinned V2.25 closed-domain replay 已可运行；20-task replay pack 待做 | TBD | state schema、20-task replay pack | 部分完成 |
 | M3 | 四层信号数据与校准 | TBD | 2 周 | TBD | shadow signal dataset、calibration report、replay receipt | PAV/terminal calibrator、task-cluster split/bootstrap、provenance budget 与 replay verifier 已实现；真实匿名 development labels/bundle 尚无，Gate 1 未评估 |
 | M4A | Counterfactual action-value pilot | TBD | 1–2 周 | TBD | sealed action slates、propensity、gain report、model replay receipt | task-cluster-disjoint fitter/calibrator/audit/replay verifier 已实现；真实 prospective slate 与 equal-cost arm 数据仍为 0 |
@@ -1835,7 +1843,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 | M5B | OWIC estimator 与 verifier-sign-preserving advantage modulation | TBD | 1–2 周 | TBD | credit module、intervention tests | 部分完成：V2.42.23 sign-preserving kernel、V2.42.24 sealed source adapter、V2.42.25 TRIAGE baseline、V2.42.26 independent outer-target firewall、V2.42.27 ordering store、V2.42.28 challenge compatibility graph、V2.42.29 signature verifier 与 V2.42.30 MICA baseline 已完成 build-only 实现；V2.42.23–30 实现+审计联合回归 `147/147`。真实 outer pairs、native challenge-consuming executor、独立 signer/append-only attestation、300-step audit、正式 Gate 2B 与训练接入仍未开始；SGCD/CIGPO/Bridge Evidence/CHILL/SkillRise/GRSD/TTEL/OVCSD/CSCR/Counterfactual-Shapley/MICA 对照已写入协议 |
 | M6A | 50-task online controller pilot / Gate 3A | TBD | 1 周 | TBD | paired report、Pareto plots | 未开始 |
 | M6B | 3-seed credit-training pilot / Gate 3B | TBD | 2 周 | TBD | checkpoints、learning curves、credit audit | 未开始 |
-| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact；下一 fresh all-220 package gate、capacity freeze、唯一 owner 与固定并行计划 | 进行中（2026-08-01 04:40 UTC 权威进度 `193/220 = 38 completed + 155 failed`，剩余 27；worker/queue 与保护 watcher 存活，label-blind aggregate 为 true、mapping/gold 未读；checkpoint activity 超 30 分钟而 degraded，critical 为空，协议禁止自动重启；V2.42.13/15/16/17/18/19/20 依序等待；released evaluator 与正式分数仍无） |
+| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact；下一 fresh all-220 package gate、capacity freeze、唯一 owner 与固定并行计划 | 进行中（2026-08-01 10:52 UTC 权威进度 `207/220 = 41 completed + 166 failed`，剩余 13；worker/queue 与 7 个后继保护 watcher 均存活，label-blind aggregate 为 true、mapping/gold 未读；V2.42.13/15/16/17/18/19/20 依序等待且 evaluator/API read=false；released evaluator 与正式分数仍无） |
 | M8 | 论文写作与审计 | TBD | 1–2 周 | TBD | manuscript、claim/evidence ledger | 未开始 |
 
 ### M1 推荐目录
