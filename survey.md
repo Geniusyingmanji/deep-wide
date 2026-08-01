@@ -1,10 +1,12 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
-> 检索截止：2026-08-01 03:17 UTC；项目证据更新：2026-08-01 12:18 UTC
+> 检索截止：2026-08-01 03:17 UTC；项目证据更新：2026-08-01 12:35 UTC
 >
 > 结论强度：这是基于公开文献的 novelty audit，不是“没有任何相关工作”的证明。2026 年文献多为尚未同行评审的 arXiv 预印本，文中将预印本结果视为作者报告，而非独立复现事实。
 
 V2.42.55 在 2026-08-01 12:18 UTC 把理论区分落实为可执行但仍 build-only 的 kernel。此前 V2.42.11 只预测单步 task contribution/token；它没有 finite-depth Bellman recursion，也不显式给出 pure IG、myopic terminal-loss VOC 与 descendant option value。新 kernel 在同一个 content-free、校准 transition DAG 上计算三者，并复现 high-IG/low-value、low-IG/high-value 和 myopic-zero/dynamic-positive bridge 三类反例；depth=1 与 myopic 精确等价，缺 calibration 则 abstain，cycle/unreachable/概率或预算非法则 fail closed。定向实现/审计 18/18，v3 回执 SHA f285ba53…9f447。这只证明算法合同，不证明真实 DeepWide 四层损失或 transition 已校准，更没有 runtime/dev64/exact-220 效果；因此 Search as Computation Allocation 的 novelty 边界不变：贡献候选是四层终端风险的任务化与经验校准，不是 Bellman VOC 或信息熵公式本身。
+
+V2.42.56 又把“校准 transition”从口号变成数据合同。对 V2.41.23 源码的 schema audit 表明，其 matched-continuation aggregate 能提供 myopic terminal contribution，却不含 post-action four-layer projection、next-state target 或 transition probability；现有单步模型不能被重新命名成 dynamic VOC。新 primitive 要求 development fit/calibration task clusters 不相交，以 cluster-equal fit + Dirichlet smoothing 估计 transition，以 held-out normalized multiclass Brier gate；stop-now loss 同样只在 fit clusters 拟合、用 calibration MAE gate。任一局部失败都会让 V2.42.55 三策略全 abstain。实现/audit 17/17，回执 SHA 8c726fca…a6cf1；真实 successor dataset 和 calibrated model 仍不存在。因此它收紧了证据标准，但尚未产生方法效果。
 
 ## 摘要
 
@@ -12,7 +14,7 @@ V2.42.55 在 2026-08-01 12:18 UTC 把理论区分落实为可执行但仍 build-
 
 截至 2026-07-31，信息熵作为统一优化目标还有一个更直接的理论反例。Search as Computation Allocation 证明，mutual information 只有在终端决策为概率分布且使用 log loss 时才等于 myopic value of computation；若终端目标是零一损失或 simple regret，动作价值是 posterior best-decision improvement，也就是 knowledge-gradient 型 VOC。该文构造的有限问题中，按信息增益选中的 computation，其 VOC 可以低于最优 computation 的任意给定比例。[83] 因而，本项目更准确的核心是**以四层 DeepWide 终端损失定义 value of computation**。信息熵只在 log-loss 子问题中充当精确短视价值，在一般损失下充当诊断或代理；只有当损失有界且通过目标变量决定时，低 mutual information 才给出 myopic VOC 的单侧上界。它不能单独决定跨动作排序或 credit。
 
-在本次检索范围内，仍有一个可验证、也可被否证的候选缺口：尚未找到工作在 DeepWide 表格任务中同时校准隐藏 anchor、未见结果质量、行资格和格值，并把这四类风险变化与结果对齐的同状态反事实 credit 联合验证。有限候选集上的低 Shannon 熵不代表开放集合完整，甚至可能是在错误 anchor 上过度确信。因此，本综述建议将创新假设收窄为：用校准的四层信念估计任务风险变化；用 evidence-set equivalence 和来源依赖图防止同义查询、镜像页面或同源记录制造虚假宽度；再通过同状态干预和 provenance 判断风险变化是否由该步骤造成、是否支持最终任务。信息量在这里是 epistemic signal，而不是自动成立的 causal credit。V2.42.11 已实现 label-blind 的 entropy/VOC 决策 kernel 和真实 action-to-state runtime bridge，V2.42.12/13 又冻结了 selected-component publisher 与恢复协议；V2.42.16–18 已冻结 paired dev64 package gate、post-gate capacity successor 和 single-owner exact-220 executor，V2.42.19/20 则冻结了污染与来源依赖的 post-terminal audit。所有执行链仍在等待上游，没有运行 paired forward、容量探针、mapping/evaluator 或第二个全集。因此这些实现不能说明该方法有效或提高分数。
+在本次检索范围内，仍有一个可验证、也可被否证的候选缺口：尚未找到工作在 DeepWide 表格任务中同时校准隐藏 anchor、未见结果质量、行资格和格值，并把这四类风险变化与结果对齐的同状态反事实 credit 联合验证。有限候选集上的低 Shannon 熵不代表开放集合完整，甚至可能是在错误 anchor 上过度确信。因此，本综述建议将创新假设收窄为：用校准的四层信念估计任务风险变化；用 evidence-set equivalence 和来源依赖图防止同义查询、镜像页面或同源记录制造虚假宽度；再通过同状态干预和 provenance 判断风险变化是否由该步骤造成、是否支持最终任务。信息量在这里是 epistemic signal，而不是自动成立的 causal credit。V2.42.11 已实现 label-blind 的单步 contribution/token controller 和真实 action-to-state runtime bridge，V2.42.55/56 分别补上 build-only finite-depth Bellman kernel 与 split calibration/source primitive；V2.42.12/13 又冻结了 selected-component publisher 与恢复协议，V2.42.16–20 则冻结 paired dev64、capacity、exact-220 与 post-terminal audit。所有执行链仍在等待上游，真实 successor dataset/model 均不存在，也没有运行 paired forward、容量探针、mapping/evaluator 或第二个全集。因此这些实现不能说明该方法有效或提高分数。
 
 V2.42.21 进一步把 CGDP 最接近本项目的 predicate belief 与 programmatic exhaustion 实现为独立、build-only 的 label-blind 强基线。该基线只接收 predicate/action/evidence/source-class 的 SHA-256 投影；`answer_ready` 只表示 required predicates 都有 clean page-backed support，并不表示任务成功或开放集合完整；同一 evidence class 一旦既 clean 又 contradicted 就 fail closed。它没有概率校准、四层开放世界状态、entropy/VOC、来源独立性估计、runtime 接入或 benchmark 权限。因此它只补齐未来对照，不构成四层方法有效、提分或 SOTA 的证据。
 

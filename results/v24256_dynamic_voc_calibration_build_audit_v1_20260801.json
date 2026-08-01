@@ -1,0 +1,175 @@
+{
+  "artifact_version": 1,
+  "role": "v24256_dynamic_voc_calibration_build_audit",
+  "created_at_unix": 1785587700,
+  "policy_id": "v24256_label_blind_dynamic_voc_split_calibration_v1",
+  "label_blind_runtime": true,
+  "build_only": true,
+  "parents": {
+    "v24255": {
+      "path": "results/v24255_finite_depth_dynamic_voc_build_audit_v3_20260801.json",
+      "file_sha256": "f285ba537f0631e69ef8ef6a227b445f106e9fbc1f94f8ca464104176809f447",
+      "payload_sha256": "45a73ab31a78703fb4a44647f29d3c716f957cee9daca745cccce963b9927c72",
+      "control_manifest_sha256": "26d41ffbbd8caef6359f45e10e879e7a2ab4dfa175c1d52f772cb553abd2845a",
+      "build_only_parent_validated": true
+    },
+    "v24123": {
+      "path": "results/v24123_release_bound_launcher_preregistration_v1_20260728.json",
+      "protocol_sha256": "f78e54b7dd1d8510a4b1afcf1e6d3a9c5c36dc81d8dbda05d39010940b8845ca",
+      "source_path": "src/deepwide_agent/v24123_release.py",
+      "source_sha256": "49838bbcd450e995e9bbfbf0f0de9414bf98ef876945bd6830e0a79b38f21ed7",
+      "true_continuation_contract_validated": true,
+      "real_true_continuation_result_available": false,
+      "controller_or_training_authorized": false
+    },
+    "v24123_schema_gap": {
+      "v24123_aggregate_has_terminal_contribution_and_provenance_hashes": true,
+      "v24123_training_row_has_pre_action_features_and_myopic_contribution": true,
+      "v24123_aggregate_has_successor_state_projection": false,
+      "v24123_training_row_has_successor_state_or_transition_probability": false,
+      "v24123_can_supply_myopic_target_without_new_data": true,
+      "v24123_can_supply_dynamic_transition_calibration_without_new_data": false
+    }
+  },
+  "control_surface": {
+    "file_count": 4,
+    "manifest": {
+      "src/deepwide_agent/v24256_dynamic_voc_calibration.py": "d691f4107cf9bbd243302cd17a04b3da3ff2eff4c2508a4b194a376d66d7dce0",
+      "tests/test_v24256_dynamic_voc_calibration.py": "41e100702359c411cd6671104f28f85c1e9107c1cc4109422a1f92c3c3c8657c",
+      "scripts/audit_v24256_dynamic_voc_calibration.py": "97469c02e8d28d0b0ba0d35587f6a36058db1cf55140fe3f887556c3bcba155b",
+      "tests/test_audit_v24256_dynamic_voc_calibration.py": "5c677b8efa08284fbc0bbe718c7cb311c240cab291e4f565a449771a9711be04"
+    },
+    "manifest_sha256": "a79ac7ebe81b277a5eacbca4111da4962ca8e55530093cf378dc21904d63241e"
+  },
+  "active_forward_guard": {
+    "file_count": 8,
+    "manifest": {
+      "src/deepwide_agent/__init__.py": "2fe51574581cf575ad7cc00f3fe7d6cdd2d375266e40e290d05e9a49aac8f9e5",
+      "src/deepwide_agent/runtime.py": "b13d925e71213ddd27e98f606541772d11a07d0069221823e81de1998614f869",
+      "src/deepwide_agent/v24211_entropy_runtime.py": "193c0d4bd8b0b1516a6d3ae0d1b1c0e05a508b6e70d6749a2c37d0a415148879",
+      "src/deepwide_agent/v24253_candidate_runtime_integration.py": "56c7f480943016c096952bfe20a9da5829cfc8ae0069c5e43b8acc8f2d09046a",
+      "src/deepwide_agent/v24254_candidate_dev64_launcher.py": "96fa05c8caabb278e91febf419edb3eaebeea7259c629e80a3785b692071b8c0",
+      "src/deepwide_agent/v24255_finite_depth_dynamic_voc.py": "267461d14be63acc493999f12c2d032486e03f49b8445542dee8e7e7c6f61eb3",
+      "scripts/run_deepwide_agent.py": "10680e64a43a6f8100da8fb3f04a87839d7d4c0978724c74b8bcc089b66a642a",
+      "scripts/launch_frozen_deepwide.py": "66ccde2d0477c039718216d0ffcd505618597ad8b1ce434a029ec513d5b3ac2a"
+    },
+    "manifest_sha256": "0a3a017e92b757a22f1f5c0f3df21d60a1736b58e6f67bc177e5556a7f256d67",
+    "module_name_hit_count_by_file": {
+      "src/deepwide_agent/__init__.py": 0,
+      "src/deepwide_agent/runtime.py": 0,
+      "src/deepwide_agent/v24211_entropy_runtime.py": 0,
+      "src/deepwide_agent/v24253_candidate_runtime_integration.py": 0,
+      "src/deepwide_agent/v24254_candidate_dev64_launcher.py": 0,
+      "src/deepwide_agent/v24255_finite_depth_dynamic_voc.py": 0,
+      "scripts/run_deepwide_agent.py": 0,
+      "scripts/launch_frozen_deepwide.py": 0
+    },
+    "module_absent_from_guarded_forward_entrypoints": true
+  },
+  "static_capability_audit": {
+    "ast_node_count": 7669,
+    "import_roots": [
+      "__future__",
+      "collections",
+      "copy",
+      "hashlib",
+      "json",
+      "math",
+      "typing",
+      "v24255_finite_depth_dynamic_voc"
+    ],
+    "required_public_functions_present": [
+      "build_calibration_protocol",
+      "build_stop_loss_sample",
+      "build_topology",
+      "build_transition_sample",
+      "fit_dynamic_voc_source_package",
+      "object_sha256",
+      "reject_privileged_runtime_metadata",
+      "validate_calibration_protocol",
+      "validate_dynamic_voc_source_package",
+      "validate_stop_loss_sample",
+      "validate_topology",
+      "validate_transition_sample"
+    ],
+    "disallowed_import_count": 0,
+    "forbidden_file_environment_network_process_or_dynamic_code_call_count": 0,
+    "privileged_runtime_metadata_read_count": 0,
+    "file_environment_network_model_search_fetch_process_subprocess_or_dynamic_code_capability": false
+  },
+  "control_source_forbidden_literal_scan": {
+    "file_count": 4,
+    "hit_count": 0,
+    "credential_or_concrete_opaque_id_literal_present": false
+  },
+  "synthetic_contract_replay": {
+    "content_free_split_calibration_replayed": true,
+    "fit_and_calibration_task_clusters_disjoint": true,
+    "task_cluster_equal_transition_fit_replayed": true,
+    "dirichlet_smoothed_transition_fit_replayed": true,
+    "heldout_normalized_multiclass_brier_gate_replayed": true,
+    "task_cluster_equal_stop_loss_fit_replayed": true,
+    "heldout_stop_loss_mae_gate_replayed": true,
+    "calibration_complete_emits_v24255_ready_model": true,
+    "calibration_incomplete_emits_v24255_all_abstain_model": true,
+    "pure_ig_myopic_and_dynamic_policy_divergence_replayed": true,
+    "nested_privileged_runtime_metadata_rejected": true,
+    "real_task_state_transition_evaluator_payload_or_api_read": false
+  },
+  "upstream_science_output_presence_at_audit": {
+    "results/v24123_entropy_action_response_model_v1_20260728.json": false,
+    "results/v24123_true_continuation_gate2a_report_v1_20260728.json": false,
+    "results/v24193_replicate_aware_true_continuation_gate2a_report_v1_20260731.json": false
+  },
+  "scientific_scope": {
+    "content_free_successor_transition_sample_schema_implemented": true,
+    "post_terminal_development_loss_sample_schema_implemented": true,
+    "fit_calibration_task_cluster_firewall_implemented": true,
+    "task_cluster_equal_weighting_implemented": true,
+    "dirichlet_smoothed_transition_fit_implemented": true,
+    "heldout_transition_brier_gate_implemented": true,
+    "heldout_stop_loss_mae_gate_implemented": true,
+    "calibration_failure_forces_all_v24255_policies_to_abstain": true,
+    "v24123_myopic_contribution_not_reinterpreted_as_transition": true,
+    "belief_entropy_is_diagnostic_not_terminal_utility": true,
+    "real_successor_state_projection_dataset_available": false,
+    "real_transition_probabilities_calibrated": false,
+    "real_stop_loss_model_calibrated": false,
+    "v24123_action_response_model_available": false,
+    "gate2a_or_gate3a_evaluated": false,
+    "runtime_or_benchmark_effect_observed": false
+  },
+  "source_policy": {
+    "repository_control_code_parent_receipts_and_synthetic_hashes_only": true,
+    "runtime_task_question_query_raw_state_observation_prediction_or_answer_read": false,
+    "benchmark_subset_category_question_type_label_split_or_mapping_read": false,
+    "gold_evaluator_payload_score_reward_or_results_read": false,
+    "development_loss_scalar_used_only_in_synthetic_replay": true,
+    "credential_environment_keyring_or_secret_value_read": false,
+    "network_model_search_fetch_subprocess_or_api_called": false
+  },
+  "authorization": {
+    "production_package_authorized": false,
+    "runtime_forward_authorized": false,
+    "credit_training_authorized": false,
+    "benchmark_evaluator_launch_authorized": false,
+    "active_forward_prompt_model_search_budget_or_controller_change": false,
+    "process_signal_restart_resume_rerun_or_selective_retry": false,
+    "candidate_materialization_or_package_gate": false,
+    "dev64_full220_or_evaluator_launch": false,
+    "shared_api_lease_acquire": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "claims": {
+    "build_only_dynamic_voc_calibration_primitive_available": true,
+    "real_calibration_dataset_available": false,
+    "real_calibrated_dynamic_voc_model_available": false,
+    "runtime_integration_available": false,
+    "benchmark_score_available": false,
+    "benchmark_improvement_observed": false,
+    "leaderboard_submission_performed": false,
+    "sota": false
+  },
+  "audit_valid": true,
+  "audit_payload_sha256": "8b6ed6d525deb64ff83d39883b125f47dd51bfa15f2595b714fcdadc0109974c"
+}
