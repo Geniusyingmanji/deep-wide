@@ -9,13 +9,16 @@ The repository currently contains:
 - `scripts/`: baseline generation and official-evaluation adapters;
 - `data/deepwidesearch/`: the public DeepWideSearch query file used by the baseline;
 - `results/`: compact, credential-free aggregate result artifacts;
+- `docs/EXPERIMENT_SYNTHESIS.md`: cumulative experiment evidence, failure analysis, and claim boundaries;
 - the original proposal PDF for provenance.
 
 Large generated runs, virtual environments, credentials, and third-party source mirrors are intentionally excluded from Git. See `plan.md` for the current project status and reproducibility requirements.
 
+For a concise, evidence-ranked summary of what the experiment logs do and do not establish, see [`docs/EXPERIMENT_SYNTHESIS.md`](docs/EXPERIMENT_SYNTHESIS.md). It distinguishes benchmark-quality results from forward-only failure censuses, consumed-state replays, build audits, and waiting watchers.
+
 ## Current conclusions
 
-As of the 2026-07-31 23:38 UTC snapshot, the authoritative label-blind safe envelope reports `188/220` terminal tasks in the frozen R1 run (`37` completed, `151` failed, `32` remaining), with healthy forward liveness. The legacy status publisher is still stale at `70/220` and is not authoritative. This is terminal progress, not a benchmark score. The released evaluator has not run, so there is no official DeepWideBench score, Avg@4 result, leaderboard improvement, entropy/credit effect, or SOTA claim.
+As of the 2026-08-01 07:45:17 UTC snapshot, the authoritative label-blind failure census reports `200/220` terminal tasks in the frozen R1 run (`40` completed, `160` failed, `20` remaining). Mapping/gold and the released evaluator remain unopened. This is terminal progress and failure accounting, not a benchmark score, so there is still no official DeepWideBench score, Avg@4 result, leaderboard improvement, entropy/credit effect, or SOTA claim. The cumulative evidence synthesis is maintained in [`docs/EXPERIMENT_SYNTHESIS.md`](docs/EXPERIMENT_SYNTHESIS.md).
 
 V2.42.11 implements the label-blind entropy/VOC decision kernel and a real action-to-state runtime bridge for three contexts and nine context-action pairs. V2.42.12/13 freeze the selected entropy-component publisher over 18 decisions and 14 unique parent byte graphs; V2.42.13 remains safely preterminal. V2.42.14 then froze the 36-decision deepest-owner/parent-chain joint-package contract, but a post-activation cross-constant audit found that its entropy stage named a nonexistent recovery-publication path instead of the actual V2.42.13 output. The new V2.42.14 watcher was terminated fail closed before selected content, candidate/package, dev64, lease, API, or benchmark access; its protocol, activation, state, and failure audit remain sealed and are never restarted.
 
