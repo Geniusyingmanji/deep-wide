@@ -1,6 +1,6 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
-> 检索截止：2026-08-01 03:17 UTC；项目证据更新：2026-08-01 04:21 UTC
+> 检索截止：2026-08-01 03:17 UTC；项目证据更新：2026-08-01 04:37 UTC
 >
 > 结论强度：这是基于公开文献的 novelty audit，不是“没有任何相关工作”的证明。2026 年文献多为尚未同行评审的 arXiv 预印本，文中将预印本结果视为作者报告，而非独立复现事实。
 
@@ -21,6 +21,8 @@ V2.42.32 将上述“共享总预算”声明变成可重放的 build-only 账�
 V2.42.33 又把“先扣账再允许 effect”收窄为可审计的纯协议。调用方先声明九维上界，该上界完整写入 V2.42.32 账本后才生成一次性 permit；settlement 只接受不超过上界的 caller-reported actual cost，且不退回未使用 reservation。这个设计能在合同内拒绝重复 permit/effect receipt/settlement、逐维 overrun、重排删除和到顶后的新 permit，也允许多个已串行 admission 的 pending permit 乱序结清。它仍不执行或授权模型、搜索、fetch 与 orchestrator 调用，也不证明声明上界保守、provider limit 真正生效、actual cost 独立测得、外部 effect 发生在 permit 之后或 concurrent writers 使用 CAS。因此 `20/20` 定向测试和 V2.42.02/31/32/33 的 `90/90` 联合回归只支持 preauthorization journal 的机械边界，不能支持真实成本匹配、运行时先后关系、质量提升或 benchmark 结论。
 
 V2.42.34 将 caller-reported vector 进一步拆为 provider-typed attempt measurement。七类 contract 分别冻结 logical model call、HTTP attempts、hosted-search provider actions、Tavily search calls、native fetch calls 与两类 local calls 的映射；token/tool usage 使用 `observed`、`unavailable` 和 `not_applicable` 三态，避免把接口不提供 usage 与真正的零消耗混为一谈。若某个适用维度 unavailable，结算只在该维使用已经预扣的 reservation，其他维继续采用 observed lower bound；若 observed lower bound 已越过 reservation，即使 fallback vector 表面在界内也拒绝结算。transport failure 不能携带 response hash/bytes，HTTP response 则必须同时绑定二者。该实现仍是 build-only schema：response hash、bytes、本地 counter 和 wall interval 都由调用方提供，无独立 provider attestation 或可信 clock；无密钥 canonical hash 也不能排除攻击者重写整套自洽收据。因此 `23/23` 定向实现/审计和 V2.42.02/31–34 的 `113/113` 联合回归只补齐未来同预算 WebSwarm 实验的 typed accounting 边界，不能证明真实计量、执行顺序、质量收益或 benchmark 提升。
+
+V2.42.35 开始跨过“只有 schema、没有 effect control flow”的边界，但仍是隔离候选而非 production runtime。它在单进程 lock 内先扣 V2.42.34 reservation、commit permit/challenge，再调用 caller-supplied single-attempt callback；同一 effect 的 bounded retries 串行，不同 permits 的 callbacks 可以并发，settlement 再串行提交。异常、challenge/observation 错绑和 over-reservation 都留下 charged pending permit，禁止自动重放整个 effect；安全收据嵌入 meter/permit/invocation/attempt/measurement 完整子图且不记录 raw callback value。`24/24` 定向实现/审计与 V2.42.02/31–35 的 `137/137` 联合回归证明 process-local 排序、并发和 fail-closed 语义可执行；它们没有证明 callback 只发一次 HTTP、真实 provider effect 在 permit 后发生、provider 消费 challenge、跨进程 CAS 或崩溃持久性。现有多重试 clients 也不能直接塞进 callback，否则一个 permit 会隐藏多个 attempts。下一步是 provider-specific single-attempt adapter、durable journal/CAS/timeout-backoff 和独立 dev64 gate，不是直接启动 WebSwarm 全集。
 
 V2.42.22 又把 fixed evidence-sufficiency termination 写成独立 build-only 对照。catalog 声明 coverage/source/time/exclusion criterion、动作类和 clean evidence/source 阈值；当前 active page contradiction 阻止该 criterion 满足，硬预算耗尽只允许 abstain。该实现不含 entropy、概率 belief 或 evaluator 信号，因而能在未来同预算实验中检验四层 VOC 是否真正优于固定完成条件。其哈希与空 supplied trace 只能验证 schema、绑定和调用内时序合同，不能证明 criterion 的语义来源、调用外真实时序或 active-evidence snapshot 完整性；当前也没有 benchmark 效果。
 
