@@ -1,10 +1,14 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.51
+> 版本：5.52
 >
-> 更新：2026-08-01 02:06 UTC
+> 更新：2026-08-01 02:18 UTC
 >
-> 当前覆盖：**V2.42.11–13 已冻结 label-blind entropy/VOC runtime 与 selected-component 链；V2.42.14 的错误路径 namespace 已 fail closed，V2.42.15 以新 namespace 恢复 joint-package 链且仍在等待 V2.42.13。V2.42.16 已安全激活 fresh cold-start paired dev64 package gate，V2.42.17 是不修改 V2.41.94/96 的唯一 post-gate capacity successor。V2.42.18 已冻结并激活唯一 single-owner fresh exact-220 executor，目前只读 V2.42.16 安全 envelope；execution-start、四个 fresh roots、lease、preflight、model/search、forward、mapping/evaluator 与 result 均未打开。V2.42.19/20 已分别冻结并激活 post-terminal contamination 与 source-dependency watcher；V2.42.20 当前只读 V2.42.19 的 preterminal 安全 envelope，尚未打开 task evidence 或创建审计 detail/report。V2.42.21–29 依次实现 build-only 的 CGDP predicate-exhaustion、fixed evidence sufficiency、verifier-sign-preserving OWIC、V2.41.23 sealed source adapter、TRIAGE role-typed credit、independent outer-target firewall、repository-local commit/launch/reserve/pair/reveal store、launch-challenge compatibility graph 与 RSA-PSS detached-signature verifier；九个组件都未接入 active runtime 或运行链。R1 和全部上游健康 watcher 保留；2026-08-01 02:05 UTC 的最新权威 label-blind 安全 envelope 为 `191/220 = 37 completed + 154 failed`，剩余 29，checkpoint/current-phase envelope fresh、forward healthy。该值只是 forward 终态进度，不是 DeepWideBench 分数；released evaluator、Avg@4、提升、entropy/credit 效果和 SOTA 仍不存在。**
+> 当前覆盖：**V2.42.11–13 已冻结 label-blind entropy/VOC runtime 与 selected-component 链；V2.42.14 的错误路径 namespace 已 fail closed，V2.42.15 以新 namespace 恢复 joint-package 链且仍在等待 V2.42.13。V2.42.16 已安全激活 fresh cold-start paired dev64 package gate，V2.42.17 是不修改 V2.41.94/96 的唯一 post-gate capacity successor。V2.42.18 已冻结并激活唯一 single-owner fresh exact-220 executor，目前只读 V2.42.16 安全 envelope；execution-start、四个 fresh roots、lease、preflight、model/search、forward、mapping/evaluator 与 result 均未打开。V2.42.19/20 已分别冻结并激活 post-terminal contamination 与 source-dependency watcher；V2.42.20 当前只读 V2.42.19 的 preterminal 安全 envelope，尚未打开 task evidence 或创建审计 detail/report。V2.42.21–29 依次实现 build-only 的 CGDP predicate-exhaustion、fixed evidence sufficiency、verifier-sign-preserving OWIC、V2.41.23 sealed source adapter、TRIAGE role-typed credit、independent outer-target firewall、repository-local commit/launch/reserve/pair/reveal store、launch-challenge compatibility graph 与 RSA-PSS detached-signature verifier；九个组件都未接入 active runtime 或运行链。R1 和全部上游健康 watcher 保留；2026-08-01 02:18 UTC 的最新权威 label-blind 安全 envelope 为 `192/220 = 38 completed + 154 failed`，剩余 28，`mapping_or_gold_read=false`。该值只是 forward 终态进度，不是 DeepWideBench 分数；released evaluator、Avg@4、提升、entropy/credit 效果和 SOTA 仍不存在。**
+>
+> **5.52 Agent-UCT/MICA 增量、全集与高并发边界（2026-08-01 02:18 UTC）：官方分类 RSS 与定向全文核验将文献清单从 176 篇增至 178 篇。Agent-UCT `2607.24162v2` 已在离散 RAG workflow 配置树上使用 prefix-reuse graph 和复用感知成本正则，因此“成本感知 tree search”或“复用前缀降低搜索成本”不能作为本项目首创；其 logical cost、API/token cost 与 wall-clock 必须分开报告，且只有 task-independent、语义不变、provenance 完整的前缀允许复用。[177] MICA `2603.06194v3` 已把结构化状态 potential 的即时下降与 Monte Carlo return 混合成跨时 credit，且不需要 matched-state rollout tree；Phase C2/D2 因而新增 MICA-style 强基线，并单列 environment-provided dense feedback 与 judge/特权信息预算。[178] 它们都没有联合建模 DeepWide 的 anchor、unseen mass、row eligibility、cell value、source dependency 与 independent outer continuation，因此不推翻收窄后的四层开放世界风险假设，但进一步排除把 potential delta 或成本感知树搜索单独包装成创新。
+>
+> WebSwarm/SearchSwarm/TRIAGE/Counterfactual Shapley 的官方版本仍为 `v1/v1/v3/v1`；WebSwarm 仍标注 `Work in progress`，公共 main HEAD 仍为 `40c9aacad7cd6e9cdb3e7add954d59b766425717`。R1 当前 `192/220 = 38 completed + 154 failed`，剩余 28。V2.42.17/18 的真实 wait-audit 文件与冻结 control manifest `06c2be…da7b`、`61612a…e102` 已只读复核；两者都仍等待 V2.42.16，未取 lease、未调用 API、未打开 mapping/evaluator。九个保护进程存活且未 signal/restart/resume/rerun。大并发仍只能由既有 V2.42.17 在上游 GO 后执行预注册 `1/2/4/8/12×3` 中性阶梯，再由 V2.42.18 以冻结档运行唯一 fresh exact-220；当前另起全集或手工容量探针会破坏配对、freshness 与 single-owner 证据。**
 >
 > **5.51 V2.42.29 RSA-PSS 外部声明验签 primitive 与信任边界（2026-08-01 02:06 UTC）：V2.42.28 的 executor declaration 明确没有签名。V2.42.29 新增无文件/环境/进程/网络能力的纯验证模块，固定 canonical JSON、domain separation、RSA-PSS/SHA-256、MGF1-SHA-256、32-byte salt、2048–8192-bit modulus 与 exponent 65537。签名 statement 绑定 V2.42.28 protocol/namespace、launch challenge、request、freeze、unsigned executor declaration、execution trace、evaluator provenance、六个 terminal、三个 contribution、aggregate、final compatibility pair 和 legacy pair。protocol 在 statement 验证前冻结 canonical DER `rsaEncryption` SPKI 公钥 hash；错误 key、PSS salt、signature、statement/pair/challenge、短 RSA key、EC key、非 canonical DER/base64 与重封印 receipt 全部 fail closed。
 >
@@ -1281,7 +1285,8 @@ inner 与 outer 的每个 intervention 都至少用 3 个固定 continuation see
 18. CSCR opposing-outcome sensitivity reallocation；
 19. Bridge Evidence/CTU-style evidence omission suffix replay；
 20. CHILL-Harness-style intervention-relative workflow advantage；
-21. OWIC full 与各组件。
+21. MICA-style structured-potential delta + Monte Carlo return：四层 risk potential 由 fit/calibration cluster 冻结，训练期 dense judge 不得进入 benchmark forward；即时量与 return 分开归一，并单列 judge 调用、特权字段与 domain mismatch；
+22. OWIC full 与各组件。
 
 另设三条不与 temporal step credit 混为一类的 comparator。AdaKP-style arm 只在离线 privileged oracle 中使用 gold-derived hint/evidence pool，并另做 label-blind candidate pool；entropy proxy 必须在 held-out intervention-defined task value 上重新过门。TAPO-style arm 只增加 action-conditioned next-observation auxiliary loss。MARS-RA-style arm 只在 multi-agent 子集中比较 pairwise agent ranking、absolute contribution score 与 Shapley approximation，并保持同一 terminal reward 与总预算。[130–132]
 
@@ -1363,9 +1368,10 @@ ConMem 式 memory valuation 与 temporal search-step credit 分开。它只比�
 18. AdaKP-style entropy-proxy candidate selection（privileged oracle 与 label-blind pool 分开）；
 19. TAPO-style next-observation auxiliary；
 20. MARS-RA pairwise agent-ranking shaping（仅 multi-agent 子集）；
-21. OWIC-risk only；
-22. OWIC full；
-23. OWIC 去 counterfactual / 去 provenance / 去 unseen mass / 去 evidence equivalence。
+21. MICA-style structured-potential immediate delta + Monte Carlo return；
+22. OWIC-risk only；
+23. OWIC full；
+24. OWIC 去 counterfactual / 去 provenance / 去 unseen mass / 去 evidence equivalence。
 
 先用 1.5B–4B backbone、固定 20–30K train trajectories、3 seeds 做 pilot。主比较是 OWIC full vs 同训练预算下最强 credit baseline，不允许只和 outcome-only 比。除 held-out task metrics 外，报告训练 sample efficiency、gradient/advantage variance、credit sparsity、effective-step ratio、KL、OOD intervention rate 和 reward hacking。
 
@@ -1393,12 +1399,18 @@ ConMem 式 memory valuation 与 temporal search-step credit 分开。它只比�
 - Two Calls Beat Five Agents（简单 refinement 与格式故障诊断，不作跨任务榜单直接比较）；
 - SearchArt（训练系统，分数仅在同协议时比较）；
 - Search as Computation Allocation、CAM-DF、CAST 与 AttriMem（机制对照）。
+- Agent-UCT / RAGSpace / WTB（离散 workflow 搜索、prefix reuse 与逻辑/实际成本分离）；
+- MICA（structured-potential immediate/return credit，无 matched-state rollout 的训练强基线）；
 - GDCR/SAPO（answer-grounded graph progress，仅隔离的 privileged training oracle）；
 - LiveBrowseComp 与 DeepWeb-Bench（time-matched search、跨源推导/校准 transfer stress，不参与 DeepWideBench 排名）。
 
 WebSwarm 的 controlled internal baseline 不只运行一个 `full` 配置。至少保留八个同预算执行臂：ReAct、w/o recursive delegation、all-deep、all-wide、w/o Web-Probing、w/o sibling experience、full WebSwarm 和 four-layer VOC。固定 `entity_collect` path 数、experience scout 数、最大 action steps、search top-k、page reader/summary policy 和 aggregation rule；同时记录 nominal/effective agent width、query/URL/content/source/evidence-set overlap、错误经验传播、input/output tokens、工具调用、orchestrator 调用与墙钟。probe-only 与 experience-only 的结果分开解释，不能把节省工具调用写成质量提升。
 
 SearchSwarm 的 controlled baseline 使用同一模型、search/page tools 和 renderer，依次比较 no-delegation、tool-schema-only、完整 harness、训练式委派、WebSwarm full 与 four-layer VOC。所有子代理 token/tool/page cost 进入总预算；压缩报告要回链原始 evidence，并以盲审统计 load-bearing claim 丢失率。论文的 BrowseComp、BrowseComp-ZH、GAIA 与 xbench 数字只作外部背景，不参与 DeepWideBench 排名或 gate。
+
+Agent-UCT-style workflow search 与单题 controller 分开评估。前者只在 development workflow space 上选择离散组件配置，使用 disjoint search/test tasks；不得按同一 benchmark test outcome 反复选配置。每个候选同时记录 logical configuration evaluations、cold materializations、prefix-cache hits、真实 model/search/fetch calls、input/output tokens、wall-clock 与质量。缓存 key 只能包含 task-independent code/config prefix 和已验证的语义版本，不能包含 benchmark category、question_type、gold/evaluator outcome 或当前题事实。no-reuse、exact-prefix reuse 与 semantic-equivalence reuse 三臂必须分开；logical-cost saving 不能写成 API 或 wall-clock saving，除非对应账本也下降。[177]
+
+MICA-style credit baseline 只在 Gate 2B 之后的 closed/replay training pilot 中运行。四层 risk potential、即时 delta、Monte Carlo return、normalization scope 与 mixing weight 均在 training/calibration split 冻结；dense judge、target state 或 evaluator-derived feedback 视为 privileged training input，并在部署时物理移除。它与 OWIC 共享 rollout、terminal reward、optimizer、token/tool budget 和 seeds；另报无需 outer rollout 的成本优势、potential misspecification、delayed bridge-step recall、judge drift，以及相对 independent outer contribution 的 signed accuracy。[178]
 
 Evidence-sufficiency 与 ScaffoldAgent controlled baselines 也使用同一 search/page tools、evidence ledger、renderer 和 terminal evaluator。前者的 criteria 生成器、后者的 outline/utility judge 均只看 visible question 与当前题 active evidence，递归拒绝 benchmark category、question_type、split、mapping、gold、answer key、evaluator score 和同题 correctness。二者与 four-layer VOC 匹配总 token、search/fetch/page、最大串行深度、wall-clock cap、retry 与 failure-as-zero；若预算不能精确匹配，报告完整 Pareto 曲线，不以单个不同成本点下结论。[159,160]
 
@@ -1665,13 +1677,14 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 - 至少两个机制消融符合 RQ4 预测；
 - 人工 evidence audit 不显示 precision 明显恶化；
 - 系统级讨论覆盖 WebSwarm、SearchSwarm、SearchOS、ECR、TaS、A-MapReduce、BM25 Wins at Scale、Think Big Search Small、Two Calls Beat Five Agents、SKIMIX、MANTA 与 Scaling LLM-Driven MAS，并明确委派不等于四层风险控制、主上下文压缩不等于总成本下降、全局排名不等于终局综合、吞吐并发不等于单题协作质量、统一角色模型不等于容量最优。[134,137,157]
+- workflow-search/cost 主张必须覆盖 Agent-UCT，并把 logical evaluation、prefix materialization、真实 API/token 与 wall-clock 分开；任何 cache reuse 都须证明 task-independent 与 label-blind。[177]
 - controller/停止主张还必须覆盖 CGDP、R²-Searcher、SAAS 与 SlimSearcher，并把 predicate belief、boundary reflection、search necessity、正确性 gate 和四层 terminal-loss VOC 分开消融。[165,167,168,172]
 - 并行质量主张必须覆盖 AggAgent，并在相同 rollout set 上分离 search-policy 与 aggregation-policy 效果；credit 主张必须覆盖 GDCR/SAPO，并把 answer-node graph 标为 privileged oracle。[166,169]
 - 系统级讨论还必须覆盖 AREX、Harness-G、Baikal、SearchArt、MisKnow-Agent 与 FinanceHarness，并分别报告搜索决策、evidence acquisition、synthesis/verification、环境/时间边界和 output-contract failure。
 - controller 主张必须讨论 Search as Computation Allocation，并报告 pure IG、myopic VOC 与 finite-depth dynamic VOC 的同预算差异。
 - 停止主张必须比较 CAM-DF-lite；过程可靠性必须按 HiEviDR/LEDGERMIND/LayerRAG 的 evidence、claim、answer、tool-contract、authorization 与 session 层分别报告。
 - 停止/升级主张还必须比较 TSDS joint calibration 与有限答案集 Conformal Cascade，并明确开放生成所需的 answer/row clustering 额外假设。[136,141]
-- 若标题包含 credit/causal，Gate 2B 与 3B 必须同时通过，且讨论 ECHO、TRACE、CIGPO、LOTAPO、STAMP、RICE-PO、Bridge Evidence/CTU、SIOP、CVT-RL、CHILL-Harness、AREX key-step bonus、Harness-G SNC、CAST state-value、AttriMem attribution、SkillRise、GRSD、TTEL、OVCSD 与 CSCR。
+- 若标题包含 credit/causal，Gate 2B 与 3B 必须同时通过，且讨论 ECHO、TRACE、CIGPO、LOTAPO、STAMP、RICE-PO、Bridge Evidence/CTU、SIOP、MICA、CVT-RL、CHILL-Harness、AREX key-step bonus、Harness-G SNC、CAST state-value、AttriMem attribution、SkillRise、GRSD、TTEL、OVCSD 与 CSCR。[178]
 - 训练/多智能体 credit 还须区分 AdaKP entropy selection、TAPO transition auxiliary 与 MARS-RA agent ranking；吞吐讨论须把 Self-Speculating Agent 的离线 next-call match 与真实 wall-clock/capacity 分开。[130–133]
 
 失败处理：按证据降级为 UQ diagnostic、negative result 或 engineering report；不得保留过强标题/摘要。
@@ -1682,17 +1695,17 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 
 | M | 目标 | Owner | 时间 | 预算上限 | 产物 | 状态 |
 |---|---|---|---|---:|---|---|
-| M0 | 基线、官方评测、文献/novelty audit | 当前会话 + 待确认 PI | 已增量核验至 2026-08-01 01:52 UTC（176 篇） | 已发生，待补账 | `survey.md`、`.research/literature_matrix.md`、基线 scripts/results | 完成（持续增量） |
+| M0 | 基线、官方评测、文献/novelty audit | 当前会话 + 待确认 PI | 已增量核验至 2026-08-01 02:17 UTC（178 篇） | 已发生，待补账 | `survey.md`、`.research/literature_matrix.md`、基线 scripts/results | 完成（持续增量） |
 | M1 | 严格 runtime/eval 隔离与正文 evidence pipeline | 当前会话 + TBD owner | 已实现 manifest 隔离、HTML/PDF 正文、query-local citation provenance 与历史 forward preflight；V2.42.19 scanner 已冻结，终态报告、人工 EAL 与整页精确 span 待做 | TBD | `src/deepwide_agent`、evaluator、no-leak tests | 部分完成 |
 | M2 | 表格/evidence state 与 replay | 当前会话 + TBD owner | V2.29.0 schema 37、单题 checkpoint、hosted trace 去重、failure trace 持久化、anchor-only replay 和 pinned V2.25 closed-domain replay 已可运行；20-task replay pack 待做 | TBD | state schema、20-task replay pack | 部分完成 |
 | M3 | 四层信号数据与校准 | TBD | 2 周 | TBD | shadow signal dataset、calibration report、replay receipt | PAV/terminal calibrator、task-cluster split/bootstrap、provenance budget 与 replay verifier 已实现；真实匿名 development labels/bundle 尚无，Gate 1 未评估 |
 | M4A | Counterfactual action-value pilot | TBD | 1–2 周 | TBD | sealed action slates、propensity、gain report、model replay receipt | task-cluster-disjoint fitter/calibrator/audit/replay verifier 已实现；真实 prospective slate 与 equal-cost arm 数据仍为 0 |
 | M4B | Step-credit intervention audit set | TBD | 2 周 | TBD | 300-step inner/outer interventions、credit report | fixed-continuation bundle/receipt、V2.42.26 outer-target firewall、V2.42.27 ordering store、V2.42.28 challenge compatibility graph 与 V2.42.29 public signature verifier 已实现；native executor challenge consumption、仓库外独立 signer 身份/控制域、append-only launch attestation、300 个 artifact-disjoint outer-valid pairs 与七类 stress family（含 bridge evidence）尚未完成 |
 | M5A | Heuristic、pure EIG、myopic/dynamic VOC、CAM-DF/CHILL authorization、evidence-equivalence 与 region controller | TBD | 1–2 周 | TBD | controllers、unit tests、IG-vs-VOC/stop/authorization counterexamples | V2.42.11 runtime candidate、full/no-entropy kernel 与 V2.42.15 recovered joint-package control plane 已实现；真实 calibration、Gate-2A、terminal selected/joint publication 和 online pilot 未通过 |
-| M5B | OWIC estimator 与 verifier-sign-preserving advantage modulation | TBD | 1–2 周 | TBD | credit module、intervention tests | 部分完成：V2.42.23 sign-preserving kernel、V2.42.24 sealed source adapter、V2.42.25 TRIAGE baseline、V2.42.26 independent outer-target firewall、V2.42.27 ordering store、V2.42.28 challenge compatibility graph 与 V2.42.29 signature verifier 已完成 build-only 实现；V2.42.23–29 实现+审计联合回归 `126/126`。真实 outer pairs、native challenge-consuming executor、独立 signer/append-only attestation、300-step audit、正式 Gate 2B 与训练接入仍未开始；SGCD/CIGPO/Bridge Evidence/CHILL/SkillRise/GRSD/TTEL/OVCSD/CSCR/Counterfactual-Shapley 对照已写入协议 |
+| M5B | OWIC estimator 与 verifier-sign-preserving advantage modulation | TBD | 1–2 周 | TBD | credit module、intervention tests | 部分完成：V2.42.23 sign-preserving kernel、V2.42.24 sealed source adapter、V2.42.25 TRIAGE baseline、V2.42.26 independent outer-target firewall、V2.42.27 ordering store、V2.42.28 challenge compatibility graph 与 V2.42.29 signature verifier 已完成 build-only 实现；V2.42.23–29 实现+审计联合回归 `126/126`。真实 outer pairs、native challenge-consuming executor、独立 signer/append-only attestation、300-step audit、正式 Gate 2B 与训练接入仍未开始；SGCD/CIGPO/Bridge Evidence/CHILL/SkillRise/GRSD/TTEL/OVCSD/CSCR/Counterfactual-Shapley/MICA 对照已写入协议 |
 | M6A | 50-task online controller pilot / Gate 3A | TBD | 1 周 | TBD | paired report、Pareto plots | 未开始 |
 | M6B | 3-seed credit-training pilot / Gate 3B | TBD | 2 周 | TBD | checkpoints、learning curves、credit audit | 未开始 |
-| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact；下一 fresh all-220 package gate、capacity freeze、唯一 owner 与固定并行计划 | 进行中（2026-08-01 02:05 UTC 权威进度 `191/220 = 37 completed + 154 failed`，剩余 29；R1 forward/checkpoint healthy；V2.42.13/15/16/17/18/19/20 依序等待；released evaluator 与正式分数仍无） |
+| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact；下一 fresh all-220 package gate、capacity freeze、唯一 owner 与固定并行计划 | 进行中（2026-08-01 02:18 UTC 权威进度 `192/220 = 38 completed + 154 failed`，剩余 28；R1 forward 与保护 watcher 存活、label-blind aggregate 为 true、mapping/gold 未读；V2.42.13/15/16/17/18/19/20 依序等待；released evaluator 与正式分数仍无） |
 | M8 | 论文写作与审计 | TBD | 1–2 周 | TBD | manuscript、claim/evidence ledger | 未开始 |
 
 ### M1 推荐目录
@@ -1830,7 +1843,7 @@ outputs/runs/<run_id>/
 
 ## 14. 接下来 72 小时的具体任务
 
-### V2.42.16 到 fresh exact-220 的当前执行序列（2026-08-01 01:52 UTC）
+### V2.42.16 到 fresh exact-220 的当前执行序列（2026-08-01 02:18 UTC）
 
 1. 保留 R1 forward PID `1350579` 与所有健康 watcher，不 signal、restart、resume、复制或选择性补跑。只读监控 exact terminal count、checkpoint liveness 和 `mapping_or_gold_read=false`。
 2. R1 达到 `220/220` 后，由既有 finalizer 首次打开 evaluator mapping，生成 failure-as-zero 的 released all-220 artifact。此前任何 `completed/failed` 计数都不是 benchmark score。
@@ -1840,7 +1853,7 @@ outputs/runs/<run_id>/
 6. V2.42.16 GO 且共享 lease 释放后，执行 `1/2/4/8/12 × 3 waves` 的中性 GPT-5.6 容量阶梯，冻结最大连续安全档。容量选择只使用非 benchmark 输入，不以题目成功率调并发。
 7. 已激活的 V2.42.18 single-owner watcher 在两次 quiet observation 与唯一 shared lease 后，先发布 execution-start，再在四个全新 output roots 上以 V2.42.17 冻结档位运行 `52/52/52/64=220`。每 wave 的所有 fresh preflight 先完成，随后才并发 forward；四 shard exact-terminal 后才打开 mapping/evaluator。整次 fixed concurrency、no-resume、failure-as-zero，API/容量失败仍进分母，禁止只补失败题，也禁止另启第二个 executor。
 8. full/no-entropy、WebSwarm-style 或其他主 variant 若进入论文主比较，每个 variant 都必须独立满足同样的 exact-220、fresh roots、固定预算和 single-owner 合同。English-76、dev64 或 completed-only 只能作诊断，不能替代全集。
-9. 文献补漏不改变当前不可逆执行序列。R1 与 V2.42.13/15/16/17/18/19/20 全部保持原 PID/identity；AggAgent、CGDP、GDCR、SAAS、SlimSearcher、R²、LiveBrowseComp 或 DeepWeb-Bench 只进入未来对照设计，当前不得借此启动新 benchmark、容量探针或第二个 all-220。
+9. 文献补漏不改变当前不可逆执行序列。R1 与 V2.42.13/15/16/17/18/19/20 全部保持原 PID/identity；AggAgent、CGDP、GDCR、SAAS、SlimSearcher、R²、LiveBrowseComp、DeepWeb-Bench、Agent-UCT 或 MICA 只进入未来对照设计，当前不得借此启动新 benchmark、容量探针或第二个 all-220。
 10. V2.42.26–29 均已冻结并推送，但仍是 build-only。V2.42.28 只把 challenge 贯穿 compatibility envelope，V2.42.29 只验证某私钥签过精确 graph statement；两者都不能证明 legacy execution 在 challenge 后发生或 signer 独立。正式 credit 工作的下一步不是立即训练，而是实现实际消费 challenge 的 outer executor，并由仓库外独立 trust domain 以冻结公钥、append-only receipt 与可信时间/单调序列证明 launch-before-execution；随后才预注册并采集 task-cluster-disjoint 的 inner/outer continuation pairs。在真实 challenge-native outer-valid pair 数达到门槛前，历史 synthetic Gate-2B pass、inner contribution correlation、repository file order、compatibility wrapper、仅验签 receipt 和 benchmark forward 结果都不能授权 credit training。
 
 ### V2.40.5 Gate 2B baseline-source 合同（2026-07-26 00:03 UTC 新增）
