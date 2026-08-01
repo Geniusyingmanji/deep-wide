@@ -1,0 +1,154 @@
+{
+  "artifact_version": 1,
+  "role": "v24243_retry_deadline_scheduler_candidate_audit",
+  "created_at_unix": 1785568606,
+  "label_blind_runtime": true,
+  "candidate_runtime_scheduler": true,
+  "parent_receipt": {
+    "path": "results/v24242_durable_effect_coordinator_candidate_audit_v2_20260801.json",
+    "file_sha256": "93606959b007272e1b6151a6efc60a5da50ef893e6fb0f4004c583b6c2b9100e",
+    "payload_sha256": "e90c354ff56dd8c6ada20ef1a8f0735f6f8f3e6113f0095427e2e84dc2c055bf",
+    "v24242_control_manifest_sha256": "38cc04bc40e28e3057c76d52f7cb4bfc511636cf5e3a9f8e56ae6fdea8656418",
+    "v24242_control_files_rehashed": 4,
+    "v24242_candidate_parent_validated": true
+  },
+  "control_surface": {
+    "file_count": 4,
+    "manifest": {
+      "src/deepwide_agent/v24243_retry_deadline_scheduler.py": "0229c193cd75b86390c2a17d851376a751482d947c5befe2eda73e21c0ad1922",
+      "tests/test_v24243_retry_deadline_scheduler.py": "20ca7cd12d26f6973d28db8ec974376760a2f5d400cbf1200ba02a4a7e39e1f0",
+      "scripts/audit_v24243_retry_deadline_scheduler.py": "7e54017c30f5a747808f7ef4ea5123f075854532d42620dfea782f893238f4d6",
+      "tests/test_audit_v24243_retry_deadline_scheduler.py": "83e5bd2e8a9357820b16e7755d9137cf400f74869e33f475eb324a931a37382d"
+    },
+    "manifest_sha256": "f26af43875ed51cc6de5b1441fef78fc9f7c4091b2629996227ed3e964a31280"
+  },
+  "active_forward_guard": {
+    "file_count": 8,
+    "manifest": {
+      "src/deepwide_agent/__init__.py": "2fe51574581cf575ad7cc00f3fe7d6cdd2d375266e40e290d05e9a49aac8f9e5",
+      "src/deepwide_agent/clients.py": "339d923973f07ebcd33cb12cee2c26103df70ed3aea1fc0a737ffd675ac06fbc",
+      "src/deepwide_agent/native_search.py": "cd0d6bfccf4b345b11274558bdcffb39d279697d183242baf811dfd56ac71e50",
+      "src/deepwide_agent/anthropic_search.py": "eab1f14e0f4be76f6a2cca1422aabbf064c9c3867af414b7cbf8b9a15c1f0678",
+      "src/deepwide_agent/runtime.py": "b13d925e71213ddd27e98f606541772d11a07d0069221823e81de1998614f869",
+      "src/deepwide_agent/v24211_entropy_runtime.py": "193c0d4bd8b0b1516a6d3ae0d1b1c0e05a508b6e70d6749a2c37d0a415148879",
+      "scripts/run_deepwide_agent.py": "10680e64a43a6f8100da8fb3f04a87839d7d4c0978724c74b8bcc089b66a642a",
+      "scripts/launch_frozen_deepwide.py": "66ccde2d0477c039718216d0ffcd505618597ad8b1ce434a029ec513d5b3ac2a"
+    },
+    "manifest_sha256": "e2626ecfa54eba89ccdee3706a78c5150e76bc6204cf3ad666c43e242fb7649a",
+    "module_name_hit_count_by_file": {
+      "src/deepwide_agent/__init__.py": 0,
+      "src/deepwide_agent/clients.py": 0,
+      "src/deepwide_agent/native_search.py": 0,
+      "src/deepwide_agent/anthropic_search.py": 0,
+      "src/deepwide_agent/runtime.py": 0,
+      "src/deepwide_agent/v24211_entropy_runtime.py": 0,
+      "scripts/run_deepwide_agent.py": 0,
+      "scripts/launch_frozen_deepwide.py": 0
+    },
+    "module_absent_from_guarded_clients_and_forward_entrypoints": true
+  },
+  "static_capability_audit": {
+    "ast_node_count": 5190,
+    "import_modules": [
+      "__future__",
+      "copy",
+      "dataclasses",
+      "deepwide_agent.v24232_webswarm_total_budget",
+      "deepwide_agent.v24234_provider_cost_meter",
+      "deepwide_agent.v24235_preauthorized_effect_harness",
+      "deepwide_agent.v24242_durable_effect_coordinator",
+      "time",
+      "typing"
+    ],
+    "required_public_symbols_present": [
+      "RetryDeadlineEffectScheduler",
+      "RetryDeadlineExecutionError",
+      "RetryDeadlineExecutionResult",
+      "build_retry_deadline_contract",
+      "validate_retry_deadline_contract",
+      "validate_retry_deadline_execution_receipt",
+      "validate_retry_deadline_failure_receipt"
+    ],
+    "caller_supplied_callback_call_site_count": 1,
+    "parent_coordinator_run_effect_call_site_count": 1,
+    "direct_time_sleep_call_site_count": 0,
+    "monotonic_clock_default_site_count": 1,
+    "direct_network_environment_file_process_subprocess_or_dynamic_code_capability": false,
+    "privileged_metadata_read_count": 0
+  },
+  "control_source_forbidden_literal_scan": {
+    "file_count": 4,
+    "hit_count": 0,
+    "credential_or_concrete_opaque_id_literal_present": false
+  },
+  "fake_schedule_replay": {
+    "fake_callback_local_tempdir_and_virtual_time_only": true,
+    "network_socket_or_real_provider_called": false,
+    "successful_attempt_count": 3,
+    "successful_provider_callback_count": 3,
+    "deterministic_sleep_seconds": [
+      0.02,
+      0.04
+    ],
+    "required_backoff_total_milliseconds": 60,
+    "virtual_total_elapsed_nanoseconds": 75000000,
+    "durable_settlement_committed_after_success": true,
+    "callback_overrun_rejected_after_return": true,
+    "overrun_provider_callback_count": 1,
+    "overrun_permit_remains_charged": true,
+    "overrun_settlement_committed": false,
+    "callback_force_cancellation_implemented": false,
+    "raw_callback_value_in_receipt": false,
+    "benchmark_question_prediction_mapping_gold_evaluator_or_score_read": false
+  },
+  "scientific_scope": {
+    "strict_retry_admission_deadline_implemented": true,
+    "deterministic_capped_backoff_implemented": true,
+    "backoff_preauthorized_in_wall_reservation_implemented": true,
+    "injectable_monotonic_clock_and_sleeper_implemented": true,
+    "post_callback_deadline_check_implemented": true,
+    "already_running_callback_force_cancellation_implemented": false,
+    "trusted_hard_total_wall_timeout_implemented": false,
+    "requests_per_call_timeout_treated_as_total_deadline": false,
+    "scheduler_state_durably_persisted": false,
+    "clock_or_sleeper_independently_attested": false,
+    "real_provider_traffic_observed": false,
+    "active_client_or_runner_integrated": false,
+    "dev64_gate_evaluated": false,
+    "fresh_exact220_evaluated": false,
+    "quality_cost_or_benchmark_effect_observed": false
+  },
+  "source_policy": {
+    "repository_control_code_parent_receipt_fake_callback_virtual_time_and_local_tempdir_only": true,
+    "runtime_task_question_query_raw_evidence_url_prediction_or_answer_read": false,
+    "benchmark_subset_category_question_type_label_split_or_mapping_read": false,
+    "gold_evaluator_payload_score_reward_or_results_read": false,
+    "credential_environment_keyring_or_secret_value_read": false,
+    "audit_network_socket_model_search_fetch_subprocess_or_api_called": false
+  },
+  "authorization": {
+    "caller_supplied_effect_callback_invocation_capability": true,
+    "active_provider_traffic_authorized": false,
+    "production_package_authorized": false,
+    "active_forward_integration_authorized": false,
+    "external_side_effect_authorized": false,
+    "benchmark_forward_or_evaluator_authorized": false,
+    "dev64_or_exact220_launch_authorized": false,
+    "shared_api_lease_acquire_authorized": false,
+    "process_signal_restart_resume_rerun_or_selective_retry": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "claims": {
+    "candidate_checkpoint_deadline_and_backoff_scheduler_available": true,
+    "trusted_hard_total_wall_timeout_available": false,
+    "hung_arbitrary_callback_cancellation_available": false,
+    "production_runtime_wrapper_available": false,
+    "real_provider_execution_evidence_available": false,
+    "benchmark_score_available": false,
+    "benchmark_improvement_observed": false,
+    "leaderboard_submission_performed": false,
+    "sota": false
+  },
+  "audit_valid": true,
+  "audit_payload_sha256": "6400bc8ed8d1fb7a61beacb76d2f90e1b6973d764de2ea0e93755db23b94e062"
+}
