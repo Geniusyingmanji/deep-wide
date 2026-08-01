@@ -1,0 +1,137 @@
+{
+  "artifact_version": 1,
+  "role": "v24230_mica_credit_baseline_build_audit",
+  "created_at_unix": 1785552083,
+  "policy_id": "v24230_mica_multi_granularity_credit_baseline_v1",
+  "source_paper": {
+    "arxiv_id": "2603.06194",
+    "version": 3,
+    "formula_scope": "mica_multi_granularity_intertemporal_credit"
+  },
+  "label_blind_runtime": true,
+  "build_only": true,
+  "baseline_only": true,
+  "control_surface": {
+    "file_count": 4,
+    "manifest": {
+      "src/deepwide_agent/v24230_mica_credit_baseline.py": "cbb0ab2a2f4f21908990c448a81aea1e8f8af7c160209ed0f88d7655fadafaed",
+      "tests/test_v24230_mica_credit_baseline.py": "db8882d3df94472836ef8116170f016dec433179c58d5dcf4a898a567beb139f",
+      "scripts/audit_v24230_mica_credit_baseline.py": "e9e6375550e813cbf77860ebb9a8e013cb2f76d21f9bb177d93577fafc4d05c7",
+      "tests/test_audit_v24230_mica_credit_baseline.py": "99164ac68feb51c39c173dd73f545821dc3b617ca9deaaf169110c1fd07e617e"
+    },
+    "manifest_sha256": "727618f8b09df7a126b47184daa41390fe26e7dfc7de05732bef2800d2960095"
+  },
+  "active_forward_guard": {
+    "file_count": 5,
+    "manifest": {
+      "src/deepwide_agent/__init__.py": "2fe51574581cf575ad7cc00f3fe7d6cdd2d375266e40e290d05e9a49aac8f9e5",
+      "src/deepwide_agent/runtime.py": "b13d925e71213ddd27e98f606541772d11a07d0069221823e81de1998614f869",
+      "src/deepwide_agent/v24211_entropy_runtime.py": "193c0d4bd8b0b1516a6d3ae0d1b1c0e05a508b6e70d6749a2c37d0a415148879",
+      "scripts/run_deepwide_agent.py": "10680e64a43a6f8100da8fb3f04a87839d7d4c0978724c74b8bcc089b66a642a",
+      "scripts/launch_frozen_deepwide.py": "66ccde2d0477c039718216d0ffcd505618597ad8b1ce434a029ec513d5b3ac2a"
+    },
+    "manifest_sha256": "50640605f2cc80552701b4daffbba9eb677c69e1598d51ccd8c661503dc76365",
+    "module_name_hit_count_by_file": {
+      "src/deepwide_agent/__init__.py": 0,
+      "src/deepwide_agent/runtime.py": 0,
+      "src/deepwide_agent/v24211_entropy_runtime.py": 0,
+      "scripts/run_deepwide_agent.py": 0,
+      "scripts/launch_frozen_deepwide.py": 0
+    },
+    "module_absent_from_guarded_forward_entrypoints": true
+  },
+  "static_capability_audit": {
+    "ast_node_count": 3479,
+    "import_roots": [
+      "__future__",
+      "hashlib",
+      "json",
+      "math",
+      "typing"
+    ],
+    "required_public_functions_present": [
+      "build_mica_mixed_advantage_batch",
+      "build_mica_policy",
+      "build_potential_transition",
+      "object_sha256",
+      "reject_privileged_runtime_metadata",
+      "validate_mica_mixed_advantage_batch",
+      "validate_mica_policy",
+      "validate_potential_transition"
+    ],
+    "disallowed_import_count": 0,
+    "forbidden_file_environment_network_process_or_dynamic_code_call_count": 0,
+    "privileged_metadata_read_count": 0,
+    "file_environment_network_model_search_fetch_process_subprocess_or_dynamic_code_capability": false
+  },
+  "control_source_forbidden_literal_scan": {
+    "file_count": 4,
+    "hit_count": 0,
+    "credential_or_concrete_opaque_id_literal_present": false
+  },
+  "synthetic_contract_replay": {
+    "paper_immediate_idr_equation_replayed": true,
+    "discounted_monte_carlo_return_equation_replayed": true,
+    "same_prompt_same_turn_population_normalization_replayed": true,
+    "same_prompt_all_valid_turn_population_normalization_replayed": true,
+    "convex_mixed_advantage_replayed": true,
+    "variable_horizon_eligible_trajectory_normalization_replayed": true,
+    "state_and_potential_continuity_replayed": true,
+    "dense_feedback_cost_aggregation_replayed": true,
+    "nested_privileged_runtime_metadata_rejected": true,
+    "dense_feedback_semantic_correctness_independently_verified": false,
+    "potential_is_causal_state_value": false,
+    "same_state_causal_identification": false,
+    "independent_outer_target_used": false,
+    "synthetic_benchmark_rows_or_real_evaluator_payload_read": false
+  },
+  "scientific_scope": {
+    "mica_v3_immediate_idr_return_and_mixed_advantage_implemented": true,
+    "gamma_domain_zero_excluded_and_one_included": true,
+    "alpha_and_beta_convex_boundary_included": true,
+    "population_not_sample_standard_deviation_implemented": true,
+    "normalization_epsilon": 1e-08,
+    "variable_horizon_eligible_turn_sets_implemented": true,
+    "dense_feedback_calls_and_tokens_recorded": true,
+    "dense_feedback_limited_to_training_or_calibration_scope": true,
+    "dense_feedback_semantic_correctness_proven": false,
+    "potential_is_causal_state_value": false,
+    "same_state_causal_identification": false,
+    "independent_outer_target_used": false,
+    "real_rollouts_or_dense_judgments_observed": false,
+    "gate2b_evaluated": false,
+    "training_effect_observed": false,
+    "benchmark_quality_or_cost_effect_observed": false
+  },
+  "source_policy": {
+    "repository_control_code_and_synthetic_hashes_only": true,
+    "runtime_task_question_query_raw_evidence_url_prediction_or_answer_read": false,
+    "benchmark_subset_category_question_type_label_split_or_mapping_read": false,
+    "gold_evaluator_payload_score_reward_or_results_read": false,
+    "credential_environment_keyring_or_secret_value_read": false,
+    "network_model_search_fetch_subprocess_or_api_called": false
+  },
+  "authorization": {
+    "production_package_authorized": false,
+    "credit_training_authorized": false,
+    "benchmark_forward_or_evaluator_authorized": false,
+    "active_forward_prompt_model_search_budget_or_controller_change": false,
+    "process_signal_restart_resume_rerun_or_selective_retry": false,
+    "candidate_materialization_or_package_gate": false,
+    "dev64_full220_or_evaluator_launch": false,
+    "shared_api_lease_acquire": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "claims": {
+    "build_only_mica_baseline_available": true,
+    "runtime_integration_available": false,
+    "real_credit_estimate_available": false,
+    "benchmark_score_available": false,
+    "benchmark_improvement_observed": false,
+    "training_improvement_observed": false,
+    "leaderboard_submission_performed": false,
+    "sota": false
+  },
+  "audit_valid": true,
+  "audit_payload_sha256": "e227a9bf9dea28cf9b91cace674984edf1fda838fc92c322a68e9d993547dd11"
+}
