@@ -1,6 +1,6 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
-> 检索截止：2026-08-01 03:17 UTC；项目证据更新：2026-08-01 09:39 UTC
+> 检索截止：2026-08-01 03:17 UTC；项目证据更新：2026-08-01 10:24 UTC
 >
 > 结论强度：这是基于公开文献的 novelty audit，不是“没有任何相关工作”的证明。2026 年文献多为尚未同行评审的 arXiv 预印本，文中将预印本结果视为作者报告，而非独立复现事实。
 
@@ -31,6 +31,8 @@ V2.42.48 又在 assembly 外加入 content-free action-ref facade，但仍不是
 V2.42.49 局部封闭了 caller 自由选择 action ref 的问题。每个 pristine registry 以 OS CSPRNG 建立随机实例域，固定三个 operation stage，并在 local `flock` 下为所有操作发放全局单调 ordinal；claim 经 create-exclusive file 和 file/directory fsync 持久化后才进入 V2.42.48 facade。无效请求也消耗 ordinal，transport 首次被调用时对应 claim 已可重放，public API 不暴露 action ref/callback/fault hook。`19/19` 定向审计与 V2.42.02/31–49 的 `408/408` 父链只支持该 local-POSIX 顺序边界。registry 不读取内容，因此相同请求仍是两个 action；另建 registry 可获得新域，caller 单 registry ownership、父 facade 全局不可绕过、claim→outcome durable binding、claimed-but-unstarted crash recovery、并发 effect completion order、NFS/分布式语义、代码身份与恶意同用户防重封均未证明。09:26 UTC 的安全 envelope 仍为 `203/220`，released score、提升与 SOTA 仍不存在。
 
 V2.42.50 将一个 ledger 内的 effect 限成 single-inflight，并把 V2.42.49 claim 与完整验证后的 success receipt 持久绑定。锁从 clean-prefix 核对一直持有到 claim、provider effect 和 create-exclusive success outcome fsync 完成；因此成功前缀里 claim order 等于 outcome order。无效请求、transport 异常、provider 成功后 outcome 发布失败或绕过 ledger 的父 registry claim 都会形成 unresolved claim，之后永久 quarantine，既不自动重试也不把未知状态写成失败。`19/19` 定向审计与 V2.42.02/31–50 的 `427/427` 父链证明该 local-POSIX success-only顺序边界；它以失去同 ledger 并行换取明确顺序，仍没有 failure settlement、uncertain-effect reconciliation/provider idempotency、single-ledger ownership、父层不可绕过、NFS/分布式语义、代码身份或 active integration。09:39 UTC 安全 envelope 自然推进为 `204/220`，但 mapping/gold/evaluator 未读，仍无 released score、提升或 SOTA。
+
+V2.42.51 进一步补上 typed provider chain 与旧 runner 调用形状之间的显式 evidence-ingress 边界。model 侧把 durable strict JSON object 转成 content-free trace/counter；search 侧绝不把 lead 或 provider prose直接交给 `add_search_batches`，而是在同一 exact ledger 内执行 lead→pinned fetch，并核对 canonical URL 等值、显式媒体类型、未截断 page、父 body hash/length、trust flags 与完整 outcome graph后才生成 admission。admission 对 runner result 的 title/URL/content-type/raw-content/query 作 SHA-256 binding，缺失、改写或字段漂移都会在 legacy ingestion 前拒绝；未知 direct fetch 在 claim 前失败。页面只被提升为可使用的 active evidence **data**，仍是 `untrusted_data=true`、`instruction_authority=false`，不证明 prompt-injection safety、事实真实性、相关性或来源独立性。`20/20` 定向审计与 V2.42.02/31–51 的 `447/447` 父链只支持 fake-only candidate bridge；无密钥重封印、URL/content-type→response bytes 的密码学绑定、exact failure usage、并行 provider、全局 ingestion enforcement、active runtime、真实 provider、dev64/exact-220 与质量效果均未证明。10:24 UTC 最新一致 label-blind aggregate 为 `206/220`，mapping/gold/evaluator 仍未读，故没有 released score、提升或 SOTA。
 
 V2.42.36 为最关键的 GPT-5.6 reasoning-model path 补上首个 single-attempt adapter。它只允许本机 `127.0.0.1:9878/responses` 和 `gpt-5.6-sol`，禁重定向并关闭 Requests 环境代理/`.netrc`；一次 callback 在源码中只有一个 POST call site，429/timeout 等 retry 由 V2.42.35 在新 attempt invocation 下调度。成功必须同时有 text 与 observed nonzero usage；缺 usage、invalid JSON 和 empty output 都不是零成本成功。fake-transport 审计实际重放了 429→200 两个 callbacks/两个 POST，receipt 不含 raw prompt/answer。新增 public `single_attempt` 入口的 reservation-bypass 回归后，定向实现/审计为 `23/23`，V2.42.02/31–36 全链为 `160/160`；这些结果只证明本地 adapter 的机械边界，没有调用真实 9878、没有证明 challenge 被 provider 消费或 response hash 具真实性，也未覆盖 hosted search、Anthropic、Tavily、fetch、crash durability 或 dev64 质量效果。
 
