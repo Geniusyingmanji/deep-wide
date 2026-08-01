@@ -1,8 +1,20 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.79
+> 版本：5.80
 >
-> 更新：2026-08-01 12:45 UTC
+> 更新：2026-08-01 12:55 UTC
+>
+> **5.80 DeepWideBench score-first 纠偏（2026-08-01 12:55 UTC）：八天没有完整结果的主因已经量化，不是 watcher 静默或 GPT-5.6 全面不可用。冻结 R1 的 queue 按 shard 串行，当前 shard 也只有一个 task worker；安全 aggregate 为 `209/220 = 42 completed + 167 failed`。209 个终止任务累计 `612,533s = 170.1h` task wall、`534.6M` system tokens 和 `157,863` 次 fetch，均值为每题 `48.8min / 2.56M system tokens / 755 fetches`。失败任务占终止项 `79.9%`，又消耗了总 wall 的 `78.9%` 和 system tokens 的 `72.0%`。只有 3 个失败属于 model-request exhaustion；主失败是 candidate/merge validation `42`、other forward `36`、stage semantic validation `27`、anchor unresolved `20`、row-enrichment validation `13`、coverage gate `9` 和 visible-date contract `8`。因此根因是“单题过深、全局近串行、研究级 fail-closed 校验把可降级答案变成零分”，而不是简单增加重试或 API key 能解决。
+>
+> 当前 R1 保持不可变并自然跑完；不 signal、restart、resume、选择性补题或另起全集。按当前 devval shard 的 `53` 个终止项/`120,877s` 粗略外推，剩余 11 题约需 `7.0h`；按全局均值约 `9.0h`。这只是条件 ETA，不是承诺。exact `220/220` 后立即走既有 released evaluator，原样报告 failure-as-zero 的首个基线分数。即使剩余 11 题全部 completed，该轮 completed 上界也只有 `53/220 = 24.1%`，所以它的作用是取得可审计基线和失败地图，不再被描述为竞争性候选。
+>
+> 刷榜主线从现在起与 entropy/credit/WebSwarm 研究线解耦。当前 V2.42.13→15→16→17→18 链保留且不撤销，但它仍被 search/Gate-2A/selected-package 的研究父链阻塞，V2.42.18 至今 `benchmark_forward_called=false`，不能再把这条长链当作“马上会出分”的 ETA 主线。R1 release 后的下一个执行设计必须是 append-only 的 **score-first successor**，关键路径只允许 `robust label-blind runner → paired dev64 → frozen capacity → one fresh exact-220 → evaluator`。四层 entropy、dynamic VOC、credit assignment、WebSwarm、污染与 source-dependency 均可作为 shadow/消融或 post-terminal audit，但不得成为 runner、dev64、capacity 或首个候选 220 的前置条件。若现有研究链先自然完成，可复用其已验证产物；否则选择 baseline/最小候选身份并继续，不等待 optional science gate。
+>
+> score-first runner 的优化顺序冻结为：**(P0) completed output rate，(P1) wall/token/fetch 成本，(P2) official quality，(P3) entropy/credit 机制收益**。只有凭据、输入边界、不可恢复的 evaluator schema/provenance 破坏仍 hard-fail；anchor/coverage/row/cell 不确定性先做有界局部 repair，仍不确定时输出 schema-valid best-effort 结果并把缺口留在内部诊断，不再默认把整题变成 terminal zero。首个候选工程目标是 completed `>=95%`、p95 wall `<=20min/task`、mean system tokens `<=0.75M/task`、mean fetch `<=200/task`；这些是进入 dev64 的门槛，不是已实现或已达到的结果。任何放宽都不得读取 category/question_type/split/mapping/gold/evaluator/score，也不得把 evaluator 反馈送回同一 evaluated forward pass。
+>
+> 新评测漏斗为：`label-blind smoke16（无 evaluator，16/16 terminal 且 >=15 completed） → 同输入/模型/预算 paired dev64（两臂 prediction freeze 后才离线 evaluator；candidate completed >=95%，completion/whole-table 不降，quality composite 至少 +0.001 或同等预注册实质改善，token ratio <=1.05） → V2.42.17 同型 1/2/4/8/12×3 中性容量阶梯 → 单一 fresh 52/52/52/64 exact-220`。跨题 executor concurrency 与单题 WebSwarm width 分开；全集固定使用容量阶梯中连续三轮健康的最高档，不在运行中自适应。dev64 不通过就只修复安全聚合中贡献最大的一个结构性失败机制并重跑新鲜配对门，不启动全集，也不新增无关研究 primitive。
+>
+> WIP/停止规则同步收紧：同时最多一个 score-first candidate、一个全集 owner；在首个 R1 分数和 score-first dev64 结果出来前，不再新增 build-only 文献原语或 watcher 层。未来 run 若 90 分钟无 terminal 且无真实 forward checkpoint，才进入只读故障审计；健康 checkpoint 不触发重启。任何 optional parent 让执行门纯等待超过 2 小时，视为依赖设计错误，下一版本用 append-only successor 删除该依赖，而不是再叠 watcher。每次状态只报 `terminal/completed/failed/remaining、近窗吞吐、条件 ETA、mean/p95 wall、tokens、fetches、当前唯一 blocker`，不再用实现版本数代替榜单进展。本次纠偏只更新计划并完成 label-blind 只读审计，没有改变现有 forward/config/prompt/budget/controller，没有调用 evaluator，也没有触碰任何运行进程。**
 >
 > **5.79 V2.42.56 dynamic-VOC split calibration/source primitive（2026-08-01 12:35 UTC）：沿 V2.42.55 向真实数据审计后，确认不能直接复用 V2.41.23 action-response model 作为 dynamic transition。V2.41.23 aggregate 只保留 pre-action features、matched no-op/action 终局 contribution、成本和 observation/adapter hashes；其 training row 只有 task contribution 与 log token cost，没有 post-action four-layer projection、next-state reference 或 transition probability。且实际 V2.41.23 model、V2.41.23 Gate-2A report 和 V2.41.93 report 当前全 absent，根链仍停在 waiting_for_p12_trial2_exact220_release。因而把旧单步 contribution 当 Bellman transition 不只是未校准，而是 estimand 错位。
 >
