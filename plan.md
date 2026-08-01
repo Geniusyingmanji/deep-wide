@@ -1,10 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.47
+> 版本：5.48
 >
-> 更新：2026-08-01 00:08 UTC
+> 更新：2026-08-01 00:35 UTC
 >
-> 当前覆盖：**V2.42.11–13 已冻结 label-blind entropy/VOC runtime 与 selected-component 链；V2.42.14 的错误路径 namespace 已 fail closed，V2.42.15 以新 namespace 恢复 joint-package 链且仍在等待 V2.42.13。V2.42.16 已安全激活 fresh cold-start paired dev64 package gate，V2.42.17 是不修改 V2.41.94/96 的唯一 post-gate capacity successor。V2.42.18 已冻结并激活唯一 single-owner fresh exact-220 executor，目前只读 V2.42.16 安全 envelope；execution-start、四个 fresh roots、lease、preflight、model/search、forward、mapping/evaluator 与 result 均未打开。V2.42.19/20 已分别冻结并激活 post-terminal contamination 与 source-dependency watcher；V2.42.20 当前只读 V2.42.19 的 preterminal 安全 envelope，尚未打开 task evidence 或创建审计 detail/report。V2.42.21–25 依次实现 build-only 的 CGDP predicate-exhaustion、fixed evidence sufficiency、verifier-sign-preserving OWIC、V2.41.23 sealed source adapter 与 TRIAGE role-typed credit 强基线；五个组件都未接入 active runtime 或运行链。R1 和全部上游健康 watcher保留；2026-08-01 00:08 UTC 的最新权威 label-blind 安全 envelope 为 `189/220 = 37 completed + 152 failed`，剩余 31，forward liveness healthy。该值只是 forward 终态进度，不是 DeepWideBench 分数；released evaluator、Avg@4、提升、entropy/credit 效果和 SOTA 仍不存在。**
+> 当前覆盖：**V2.42.11–13 已冻结 label-blind entropy/VOC runtime 与 selected-component 链；V2.42.14 的错误路径 namespace 已 fail closed，V2.42.15 以新 namespace 恢复 joint-package 链且仍在等待 V2.42.13。V2.42.16 已安全激活 fresh cold-start paired dev64 package gate，V2.42.17 是不修改 V2.41.94/96 的唯一 post-gate capacity successor。V2.42.18 已冻结并激活唯一 single-owner fresh exact-220 executor，目前只读 V2.42.16 安全 envelope；execution-start、四个 fresh roots、lease、preflight、model/search、forward、mapping/evaluator 与 result 均未打开。V2.42.19/20 已分别冻结并激活 post-terminal contamination 与 source-dependency watcher；V2.42.20 当前只读 V2.42.19 的 preterminal 安全 envelope，尚未打开 task evidence 或创建审计 detail/report。V2.42.21–26 依次实现 build-only 的 CGDP predicate-exhaustion、fixed evidence sufficiency、verifier-sign-preserving OWIC、V2.41.23 sealed source adapter、TRIAGE role-typed credit 强基线与 independent outer-target firewall；六个组件都未接入 active runtime 或运行链。R1 和全部上游健康 watcher保留；2026-08-01 00:35 UTC 的最新权威 label-blind 安全 envelope 为 `189/220 = 37 completed + 152 failed`，剩余 31，checkpoint liveness healthy。该值只是 forward 终态进度，不是 DeepWideBench 分数；released evaluator、Avg@4、提升、entropy/credit 效果和 SOTA 仍不存在。**
+>
+> **5.48 V2.42.26 independent outer-target firewall、正式 Gate-2B 纠偏与最新文献复核（2026-08-01 00:35 UTC）：V2.42.23/24 把同一组终局 continuation 的 contribution 作为 credit 符号来源。如果 Gate-2B 再以同一 contribution 计算 signed accuracy 或 Spearman，指标会机械奖励定义内的一致性，不能支持 held-out credit 定位。V2.42.26 因此冻结 fit/calibration/audit task-cluster 三分法，先在 inner continuation graph 上构造并封印 credit prediction，再要求 outer target 与 inner 共用 exact manifest contract 和 semantic step identity，但 freeze、evaluator provenance、terminal receipts、contribution records、replicate aggregate 与 arm-graph hashes 全部不重用。数值相等允许，artifact 复用拒绝；prediction builder 的 API 不接收 outer target。当前模块只生成 diagnostic aggregate，`production_package_authorized=false`、`credit_training_authorized=false`、`gate2b_pass_authorized=false`。
+>
+> create-exclusive 审计 [`results/v24226_credit_outer_target_firewall_build_audit_v1_20260801.json`](results/v24226_credit_outer_target_firewall_build_audit_v1_20260801.json) 为 `audit_valid=true / build_only=true`，文件 SHA `228c6571…92ed`、payload SHA `1add0fe8…4820`、4-file control manifest SHA `89617c09…f9c7`。五个 active-forward 入口对新模块命中均为 0；历史 Gate evaluator 与 synthetic pass 保留为代码回归，但 `historical_gate_authorizes_formal_gate2b_claim_after_v24226=false`。clean-env 联合回归 `193/193`，覆盖 V2.41.23、V2.42.23–26、旧 OWIC/Gate-2B、WebSwarm adapter 与 entropy runtime。实现提交 `0a40f11` 已推送远端 main。该回执只证明 API 和 artifact-hash 合同，不独立证明真实 wall-clock 创建顺序、semantic equivalence 或 distributional OOD。真实 independent outer pairs、正式 Gate-2B、credit training 与 benchmark 效果仍为 0。
+>
+> 官方 arXiv Atom 于 00:33–00:34 UTC 再确认 WebSwarm `2607.08662v1 / Work in progress`、SearchSwarm `2606.09730v1`、TRIAGE `2606.32017v3` 与 Counterfactual Shapley `2607.16999v1`。2026-07-30 至 2026-08-01 的窄日期窗没有发现改变现有 WebSwarm 同预算对照、四层风险或 outer-target credit 合同的新直接近邻；10 条召回中的实质近邻均已在 176 篇清单中。本轮不为扩大篇数加入弱相关论文。唯一全集链仍为 `R1 → released evaluator → V2.42.13/15 → V2.42.16 → V2.42.17 1/2/4/8/12×3 → V2.42.18 exact-220 → V2.42.19/20`。九个保护进程均保留，无 signal/restart/resume/rerun、手工容量探针或重复全集。**
 >
 > **5.47 V2.42.25 TRIAGE role-typed 强基线、P9/P10 DAG 覆盖核验与全集纪律（2026-08-01 00:06 UTC）：V2.42.25 将 TRIAGE v3 的四个固定角色常数 `(decisive progress, useful exploration, no-progress infrastructure, regression)=(1,0.5,-0.1,-0.5)` 和 `A_role=A_outcome+λc_role` 写成独立 build-only 对照。role judgment 只绑定可见 prompt/local-context 的哈希投影，窗口上限为当前 segment 前后各 5 个 action–observation pair；final verifier outcome、gold/mapping/category/question_type/score 不可供 judge 使用。post-terminal outcome advantage 由另一收据绑定，verifier 也不可见 role label。λ 只能按预注册 training split 选定，test/benchmark outcome 禁止参与；每条记录披露 judge call/input/output token，批量接口复现 within-batch whitening。
 >
@@ -662,7 +668,7 @@
 
 > DeepWide 的错误来自四个相互依赖、但损失结构不同的信念层：隐藏核心实体 $A$、未见实体质量/剩余集合 $M$、候选行资格 $R_e$、单元格语义值 $Y_{e,c}$。若这些信念和 action outcome model 可被校准，则按单位成本的近似 dynamic value of computation 路由 `resolve_anchor / discover / test_row / fill / falsify / audit / stop`，可能比固定流程、pure information gain、主观 planner 和相同动作空间的 heuristic controller 更有效。
 
-> 对训练时 credit，四层任务价值变化提供方向，task-relevant information gain 只提供 epistemic observation，同状态干预估计贡献，evidence provenance 区分发现、验证与综合。只有同时通过结果对齐和干预验证的信息信号，才获得正 credit。
+> 对训练时 credit，inner continuation 的四层任务价值变化只用于冻结预测方向，task-relevant information gain 只调节幅度，evidence provenance 区分发现、验证与综合。预测冻结后，必须由 artifact-disjoint 的 outer continuation campaign 提供评价 target。只有在独立 outer target 上通过结果对齐和干预验证的信息信号，才有资格进入训练 gate。
 
 两个命题共享 belief/evidence 基础设施，但证据不能互相替代。controller 提分不能证明 credit 定位正确；credit 与干预贡献相关也不能证明在线路由更好。二者必须分别过 Gate 2A/3A 和 Gate 2B/3B。文献边界、直接近邻和 non-claims 见 [survey.md](survey.md)。
 
@@ -675,6 +681,7 @@
 - V2.42.13 已在新 namespace 完成 preregistration、activation 和 live wait audit。当前只等待 V2.42.10 search parent 与 V2.41.93 Gate-2A，尚未打开 selected report/model 或授予 package/lease/launch 权限。
 - V2.42.14 已把 36 个 possible decision 的 deepest semantic/byte owner 与完整 parent dependency chain 写成可执行合同，并实现单一累积图、fresh candidate、完整父+组件回归与 strict activation validator。首次 activation 的 entropy publication path 绑定错误被交叉常量审计在 parent preterminal 时发现；新 watcher 已 fail closed 终止，失败 namespace 密封且没有 candidate/publication/dev64/API/benchmark side effect。
 - V2.42.15 已在全新 namespace 完成路径恢复 preregistration、activation 和 live wait audit：18 个非 entropy order 逐 byte 不变，18 个 entropy order 只改实际 V2.42.13 source binding 与派生 seal。唯一 watcher PID `2808901` 当前只等待 V2.42.13 terminal；selected content、joint package 与所有外部执行权限仍未打开。
+- V2.42.26 已在 active import graph 外实现 independent outer-target firewall。fit/calibration/audit clusters 两两不交；prediction builder 不接收 outer target；inner/outer campaign 必须共享 manifest contract 与 semantic step，但 freeze、provenance、terminal receipts、contribution records、aggregate 和 arm graph 全部不重用。create-exclusive audit 与 `193/193` clean-env 联合回归通过，但模块只授权 build-only diagnostic，不授权正式 Gate-2B、训练或 benchmark。
 - Git 仓库、README、忽略规则与原方案 provenance 已建立。
 - DeepWideSearch 公开 query JSONL 已纳入仓库；官方答案表与第三方仓库留在 `external/`，不提交。
 - `scripts/run_deepwide_smoke.py` 已实现 GPT-5.5 + Tavily 基线：
@@ -795,7 +802,7 @@ V2.26 随后从剩余 10 个无历史 forward artifact 的 dev opaque ID 中按�
 
 ### 1.3 已实现但尚未过泛化门禁
 
-- V2.42.11–15 已把四层 risk features、no-entropy 对照、action/stop/abstain、真实 action transition、selected-component publication，以及 36-decision deepest-owner joint-package revalidation/recovery control plane 写成可审计实现；真实 development calibration、Gate-2A 选择、terminal joint publication、dev64 package gate 与 exact-220 结果仍为空，因此不能称为已部署或已验证的 controller。
+- V2.42.11–15 已把四层 risk features、no-entropy 对照、action/stop/abstain、真实 action transition、selected-component publication，以及 36-decision deepest-owner joint-package revalidation/recovery control plane 写成可审计实现；V2.42.23–26 另提供 sign-preserving credit、sealed source adapter、TRIAGE 对照与 independent outer-target firewall。真实 development calibration、Gate-2A 选择、terminal joint publication、dev64 package gate、independent outer targets 与 exact-220 结果仍为空，因此不能称为已部署或已验证的 controller/credit method。
 - 当前 action model 只可在模型/job/parent seal 全部匹配时使用。它预测 `task_contribution` 与 action token cost，但尚无真实 prospective/equal-cost target dataset 证明排序或校准有效。
 - V2.19 的 provisional-direct reducer 只在实体、目标专业、目标年份、值标记和数值局部共现，且 adjudicator 引用该页并返回值时保留 unresolved row；它不把该行自动升级为 eligible。
 - 候选与 cell provenance 中引用的页面会重新进入同一行的 enrichment/refinement prompt，并在每行预算内优先于未引用噪声页。
@@ -818,7 +825,7 @@ V2.26 随后从剩余 10 个无历史 forward artifact 的 dev opaque ID 中按�
 - 经过真实 development/held-out 数据验证的 unseen-mass、row eligibility、cell semantic 与 terminal-risk 校准；当前实现包含 schema、proxy 和 synthetic tests，但没有可发布的实证 calibration。
 - 通过 Gate-2A 的 action-response estimator。V2.42.11 runtime 已能执行选择，但模型尚未由真实 prospective same-state/equal-cost 数据解锁。
 - selected entropy component 的双父终态 publication、V2.42.15 terminal joint package publication、独立同 dev64 package gate 和 single-owner exact-220 execution。joint-package builder/validator 已实现并冻结，但父链未终态，故真实 package 仍不存在。
-- 真实 300-step credit audit set、有效 same-state intervention outcomes、provenance-aware credit 的 Gate-2B 结果与 RL 训练。相应 schema/verifier 已存在，但真实 target 数据仍为 0。
+- 真实 300-step credit audit set、有效 same-state intervention outcomes、artifact-disjoint inner/outer continuation pairs、provenance-aware credit 的正式 Gate-2B 结果与 RL 训练。V2.42.26 已封闭同 target 自证路径，但真实 outer target 数据仍为 0。
 - 与 WebSwarm、SearchOS、A-MapReduce、TaS 的可比实验。
 
 因此，当前项目可以描述为“已实现并冻结 entropy/VOC runtime candidate 与发布供应链”，但不可描述为“已部署或已验证 Risk-DeepWide/OWIC-DeepWide”，更不可声称 benchmark 提升。
@@ -1034,8 +1041,9 @@ V(h_t,g_k(a_t),\tau_{>t})].
 - $c_t^{\mathrm{risk}}$ 以四层 proper score/task loss 判断方向；反证可以熵升而 risk 降。
 - $c_t^{\mathrm{cf},k}$ 分别对 `no_op / equal_cost_sibling / semantic_substitution / evidence_substitution / tool_output_perturbation` 报告，不把不同干预平均后伪装成唯一因果效应。
 - continuation policy $\mu$ 固定并记录版本。估计值只解释为相对于该干预和 $\mu$ 的贡献，不声称是未来任意 policy 下的 total causal effect。
+- 上式只定义单个 campaign 内的 intervention contribution。用于构造 credit prediction 的 inner estimate 记为 $c_{t,\mathrm{in}}^{\mathrm{cf},k}$；prediction freeze 之后，用新的 continuation artifacts 计算 $c_{t,\mathrm{out}}^{\mathrm{cf},k}$，它才是 Gate-2B 的评价 target。两者共享预注册语义步骤和 manifest contract，但不共享 freeze、evaluator provenance、terminal receipts、contribution records、aggregate 或 arm graph。
 
-第一版 OWIC 为：
+历史加法 OWIC baseline 为：
 
 \[
 c_t^{\mathrm{OWIC}}=
@@ -1048,6 +1056,8 @@ c_t^{\mathrm{risk}}
 
 $\operatorname{RelIG}$ 只计算与 $A,M,R,Y$ 有关的信息，且除 log-loss 子问题外不决定 credit 符号。$c_t^{\mathrm{risk}}$ 或 state-value delta 才是 task-value 主项。$c_t^{\mathrm{prov}}$ 区分 discovery、independent verification、contradiction resolution 和 synthesis。镜像来源先聚类，不能重复获 credit。训练对照新增 CAST-style learned value delta、AttriMem-style answer attribution 与 SearchArt outcome/format/turn reward。[84–86]
 
+该加法式保留为历史/消融 baseline，因为辅助项可能翻转 terminal contribution。正式 sign-preserving 候选先从 inner campaign 的 outcome-verified contribution 冻结方向，再用 entropy、provenance 和 cost 的正有界函数调节幅度。inner contribution 为零时 credit 必须为零，任何辅助项都不能单独生成或翻转符号。Gate-2B 不评价 credit 与 $c_{t,\mathrm{in}}$ 的相关性，只评价冻结 credit prediction 与 $c_{t,\mathrm{out}}$ 的相关性和方向准确率。
+
 ### 4.7 Advantage 注入与安全约束
 
 第一阶段不端到端训练，先离线验证 credit。通过 Gate 2B 后比较两种注入：
@@ -1055,7 +1065,7 @@ $\operatorname{RelIG}$ 只计算与 $A,M,R,Y$ 有关的信息，且除 log-loss 
 1. **Potential shaping**：$\Phi(B)=-L(B)$，使用 $\gamma\Phi(B_{t+1})-\Phi(B_t)$，检查 telescoping 与 policy-invariance 条件。
 2. **Sign-preserving modulation**：终局 advantage 决定主方向，OWIC 只在有界范围内放大正轨迹的高贡献步骤、减轻负轨迹中经反事实验证的有用步骤惩罚，参考 STAMP 的安全结构。
 
-不得让 raw entropy bonus 覆盖 terminal task reward。所有 credit 需要 clipping、group normalization audit、effective-step ratio 和 reward-hacking 检查；若 credit 与终局方向冲突，保留原始值用于诊断，但训练是否采用由预注册 gate 决定。
+不得让 raw entropy bonus 覆盖 terminal task reward。所有 credit 需要 clipping、group normalization audit、effective-step ratio 和 reward-hacking 检查；若 credit 与 independent outer terminal direction 冲突，保留原始值用于诊断，但不得进入训练。只有正式 Gate-2B 在 held-out outer targets 上通过，预注册训练 gate 才能决定是否采用。
 
 ## 5. 数据、隔离与污染控制
 
@@ -1216,9 +1226,11 @@ stop 与 defer/escalate 必须再加入 TSDS 式联合校准，而不是分别�
 - tool output perturbation；
 - LOTAPO-style `[DELETE]`，仅作 attribution baseline。
 
+采集严格分成四个阶段。第一，fit、calibration 与 audit task clusters 在任何 intervention outcome 打开前按 task-cluster hash 冻结且两两不交。第二，只在 fit/calibration clusters 上选择公式、幅度参数和阈值。第三，对 audit cluster 的 inner campaign 构造 credit prediction，随后封印 prediction freeze，builder 的输入签名不含 outer manifest、outer receipt 或 outer contribution。第四，才在同一语义步骤上启动 outer campaign。Outer campaign 使用相同模型、预算、continuation policy 与 manifest contract，但必须生成新的 freeze、evaluator provenance、terminal receipts、contribution records、replicate aggregate 和 arm graph。任何 artifact hash overlap、同 source graph 的别名、prediction freeze 后的重新选步或只补失败 outer arm 都使 pair 无效。
+
 对每个 evidence-bearing step 另构造 Bridge Evidence-style omission arm：只删除该步引入的一条 active evidence unit，固定干预前 prefix，并从干预点用相同模型、seed、预算与 continuation policy 重跑完整 suffix。必须分别持久化 `(a)` official terminal-task loss delta、`(b)` 下一查询/后继动作的 evidence-yield 或 enablement delta、`(c)` turn/token/tool/page cost delta；三项都保留为主分析列，CTU-like 标量的权重和零效应阈值必须在结果前冻结。若删除使 state 无法通过相同 schema/provenance gate，则记 invalid/OOD，不得回填原 suffix 或静默丢弃。gold evidence/answer 只允许在预测冻结后的离线 oracle arm 中使用。[117]
 
-每个 intervention 至少用 3 个固定 continuation seeds；记录 intervention validity、state overlap、OOD rate、最终四层 loss、Item/Row/CE 变化和成本。credit baseline 至少包括：
+inner 与 outer 的每个 intervention 都至少用 3 个固定 continuation seeds；记录 intervention validity、state overlap、OOD rate、最终四层 loss、Item/Row/CE 变化和成本。`300 个有效步骤` 的分母只统计 prediction 已预先冻结、inner/outer graph disjoint 且 outer campaign 通过完整 provenance/evaluator binding 的 pair。inner-valid/outer-invalid 的步骤进入失败率，不能从分母静默删除。credit baseline 至少包括：
 
 1. raw token/segment entropy drop；
 2. semantic entropy drop；
@@ -1244,7 +1256,7 @@ stop 与 defer/escalate 必须再加入 TSDS 式联合校准，而不是分别�
 
 另设三条不与 temporal step credit 混为一类的 comparator。AdaKP-style arm 只在离线 privileged oracle 中使用 gold-derived hint/evidence pool，并另做 label-blind candidate pool；entropy proxy 必须在 held-out intervention-defined task value 上重新过门。TAPO-style arm 只增加 action-conditioned next-observation auxiliary loss。MARS-RA-style arm 只在 multi-agent 子集中比较 pairwise agent ranking、absolute contribution score 与 Shapley approximation，并保持同一 terminal reward 与总预算。[130–132]
 
-主指标是 signed contribution accuracy、Spearman、top-20% pivotal-step recall、AUROC（有益/有害）、Brier/ECE 和单位 counterfactual rollout 成本。对 evidence step 另报 terminal delta、next-action enablement delta 与 cost delta 的分项相关和符号一致性。单列七类压力样本：无关新奇、重复错误、熵升纠错、延迟显效、bridge evidence、两步协同、删除 OOD。
+主指标是冻结 credit prediction 相对 independent outer contribution 的 signed accuracy、Spearman、top-20% pivotal-step recall、AUROC（有益/有害）、Brier/ECE 和单位 counterfactual rollout 成本。对 evidence step 另报 outer terminal delta、next-action enablement delta 与 cost delta 的分项相关和符号一致性。inner contribution 只用于构造/诊断，不作为正式 target。单列七类压力样本：无关新奇、重复错误、熵升纠错、延迟显效、bridge evidence、两步协同、删除 OOD。
 
 任何 entropy、likelihood/KL shift 或 privileged-teacher shift 只可调节 credit 幅度或不确定性，不能自行确定正负方向。正负方向由冻结 verifier/terminal outcome 决定；另做 correct-vs-incorrect opposing-outcome、null-feedback 与 surface-token substitution 审计。teacher continuation 必须从 student-reached state 出发并通过环境终局验证，否则只列为 privileged score，不计 task credit。
 
@@ -1570,12 +1582,13 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 
 通过条件：
 
-- audit set 至少含 300 个有效步骤，且七类压力样本每类至少 30 个；阈值在 validation 冻结，最终只在 held-out intervention set 评一次；
-- OWIC 对 intervention-defined task contribution 的 Spearman ≥ 0.30 且 95% CI 不跨 0；
+- audit set 至少含 300 个有效的 independent outer-target pairs，且七类压力样本每类至少 30 个；fit、calibration 与 audit task clusters 两两不交，阈值在 calibration 冻结，最终只在 held-out outer intervention set 评一次；
+- 每条 prediction 必须在 outer campaign 物化前冻结。inner 与 outer 共用 exact manifest contract、语义步骤、模型、预算和 continuation policy，但 freeze、evaluator provenance、terminal receipts、contribution records、replicate aggregate 与 arm graph 必须全部不交；任何 overlap、同 source graph 别名、post-target reselection 或 selective retry 均 fail closed；
+- OWIC 对 independent outer intervention-defined task contribution 的 Spearman ≥ 0.30 且 95% CI 不跨 0；
 - signed contribution accuracy ≥ 0.65，且显著高于 raw entropy、CIGPO/IGPO gold-log-score、LOTAPO deletion 和 Bridge Evidence/CTU baseline；
 - top-20% pivotal-step recall 相对最强非反事实 baseline 至少提高 10% relative；
 - 在“熵升但纠错”和“重复错误导致熵降”两个压力子集中方向准确率均高于 0.60；
-- intervention validity ≥ 90%，OOD rate、overlap 和不同 continuation-policy 敏感性完整报告；invalid intervention 不计主估计但进入失败率，不能静默丢弃；
+- outer intervention validity ≥ 90%，OOD rate、state overlap、artifact-overlap rejection 和不同 continuation-policy 敏感性完整报告；invalid intervention 不计主估计但进入失败率，不能静默丢弃；
 - gold、reference evidence graph 或 evaluator-only 字段只能用于训练/离线 oracle baseline；所有方法另报 privileged-information budget，确保收益不是更多特权监督造成；
 - 去除 counterfactual 或 provenance 至少有一个产生预期方向的显著退化，否则不得把它们写成贡献。
 - 与 OVCSD 式 state-aligned outcome-verified continuation、GRSD group contrast、TTEL null-feedback contrast、CSCR sensitivity reallocation 和适用时的 SkillRise downstream-return credit 比较；
@@ -1584,6 +1597,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 - AdaKP-style entropy proxy 必须在 held-out intervention-defined task contribution 上重新通过预注册 rank-correlation gate；gold-derived candidate/LOO gate 只列 privileged oracle。若 label-blind pool 不过门，entropy selection 降级为诊断。[130]
 - MagicSelector-style decomposition reward 只作为 privileged tool-ranking proxy：target-tool NDCG/completeness 不得冒充终局 task contribution，也不得进入 label-blind benchmark runtime。[135]
 - inner development search 选中的 intervention 必须先冻结，再按 Auto Research 式 outer-holdout matrix 验证方向与排序 transfer；inner feedback 与同一任务的重复 rollout 不得作为独立 confirmation。[140]
+- 历史 V2.40.5 synthetic `gate2b=pass` 只证明 evaluator 在构造数据上能走通。它没有 V2.42.26 所要求的 independent outer-target graph，不能支持正式 Gate-2B、训练启动、论文 credit claim 或 benchmark 因果解释。
 
 失败处理：不启动 credit RL。若 task-risk change 有效但 causal component 无效，方法降级为 outcome-aligned potential shaping；若只有 entropy 有效，降级为 epistemic diagnostic，不使用 causal/credit 标题。
 
@@ -1639,17 +1653,17 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 
 | M | 目标 | Owner | 时间 | 预算上限 | 产物 | 状态 |
 |---|---|---|---|---:|---|---|
-| M0 | 基线、官方评测、文献/novelty audit | 当前会话 + 待确认 PI | 已更新至 2026-07-31（176 篇） | 已发生，待补账 | `survey.md`、`.research/literature_matrix.md`、基线 scripts/results | 完成（持续增量） |
+| M0 | 基线、官方评测、文献/novelty audit | 当前会话 + 待确认 PI | 已增量核验至 2026-08-01 00:34 UTC（176 篇） | 已发生，待补账 | `survey.md`、`.research/literature_matrix.md`、基线 scripts/results | 完成（持续增量） |
 | M1 | 严格 runtime/eval 隔离与正文 evidence pipeline | 当前会话 + TBD owner | 已实现 manifest 隔离、HTML/PDF 正文、query-local citation provenance 与历史 forward preflight；V2.42.19 scanner 已冻结，终态报告、人工 EAL 与整页精确 span 待做 | TBD | `src/deepwide_agent`、evaluator、no-leak tests | 部分完成 |
 | M2 | 表格/evidence state 与 replay | 当前会话 + TBD owner | V2.29.0 schema 37、单题 checkpoint、hosted trace 去重、failure trace 持久化、anchor-only replay 和 pinned V2.25 closed-domain replay 已可运行；20-task replay pack 待做 | TBD | state schema、20-task replay pack | 部分完成 |
 | M3 | 四层信号数据与校准 | TBD | 2 周 | TBD | shadow signal dataset、calibration report、replay receipt | PAV/terminal calibrator、task-cluster split/bootstrap、provenance budget 与 replay verifier 已实现；真实匿名 development labels/bundle 尚无，Gate 1 未评估 |
 | M4A | Counterfactual action-value pilot | TBD | 1–2 周 | TBD | sealed action slates、propensity、gain report、model replay receipt | task-cluster-disjoint fitter/calibrator/audit/replay verifier 已实现；真实 prospective slate 与 equal-cost arm 数据仍为 0 |
-| M4B | Step-credit intervention audit set | TBD | 2 周 | TBD | 300-step interventions、credit report | fixed-continuation bundle/receipt contract 已实现；300 个有效 step 与七类 stress family（含 bridge evidence）尚未采集 |
+| M4B | Step-credit intervention audit set | TBD | 2 周 | TBD | 300-step inner/outer interventions、credit report | fixed-continuation bundle/receipt contract 与 V2.42.26 outer-target firewall 已实现；300 个 artifact-disjoint outer-valid pairs 与七类 stress family（含 bridge evidence）尚未采集 |
 | M5A | Heuristic、pure EIG、myopic/dynamic VOC、CAM-DF/CHILL authorization、evidence-equivalence 与 region controller | TBD | 1–2 周 | TBD | controllers、unit tests、IG-vs-VOC/stop/authorization counterexamples | V2.42.11 runtime candidate、full/no-entropy kernel 与 V2.42.15 recovered joint-package control plane 已实现；真实 calibration、Gate-2A、terminal selected/joint publication 和 online pilot 未通过 |
-| M5B | OWIC estimator 与 verifier-sign-preserving advantage modulation | TBD | 1–2 周 | TBD | credit module、intervention tests | 部分完成：V2.42.23 build-only sign-preserving kernel、19 项定向测试与审计回执已完成；真实 intervention adapter/bundle 验证、300-step audit、Gate 2B 与训练接入仍未开始；SGCD/CIGPO/Bridge Evidence/CHILL/SkillRise/GRSD/TTEL/OVCSD/CSCR 对照已写入协议 |
+| M5B | OWIC estimator 与 verifier-sign-preserving advantage modulation | TBD | 1–2 周 | TBD | credit module、intervention tests | 部分完成：V2.42.23 sign-preserving kernel、V2.42.24 sealed source adapter、V2.42.25 TRIAGE baseline 与 V2.42.26 independent outer-target firewall 已完成 build-only 审计，联合回归 `193/193`；真实 outer pairs、300-step audit、正式 Gate 2B 与训练接入仍未开始；SGCD/CIGPO/Bridge Evidence/CHILL/SkillRise/GRSD/TTEL/OVCSD/CSCR/Counterfactual-Shapley 对照已写入协议 |
 | M6A | 50-task online controller pilot / Gate 3A | TBD | 1 周 | TBD | paired report、Pareto plots | 未开始 |
 | M6B | 3-seed credit-training pilot / Gate 3B | TBD | 2 周 | TBD | checkpoints、learning curves、credit audit | 未开始 |
-| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact；下一 fresh all-220 package gate、capacity freeze、唯一 owner 与固定并行计划 | 进行中（5.45 文档封存点 186/220；R1 forward active；V2.41.94/96 等 R1 release；V2.42.10/13/15 等 quality、selected publication 与 recovered joint package；V2.42.19/20 等 post-terminal audit；正式分数仍无） |
+| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact；下一 fresh all-220 package gate、capacity freeze、唯一 owner 与固定并行计划 | 进行中（2026-08-01 00:35 UTC 权威进度 `189/220 = 37 completed + 152 failed`，剩余 31；R1 forward/checkpoint healthy；V2.42.13/15/16/17/18/19/20 依序等待；released evaluator 与正式分数仍无） |
 | M8 | 论文写作与审计 | TBD | 1–2 周 | TBD | manuscript、claim/evidence ledger | 未开始 |
 
 ### M1 推荐目录
@@ -1740,6 +1754,7 @@ outputs/runs/<run_id>/
 | 多步骤协同被单步边际遗漏 | early/verification credit 错配 | pair intervention subset | provenance role + pairwise interaction audit |
 | gold-answer credit 泄漏到推理 | test invalid | no-gold inference test | train/runtime 物理隔离、仅训练 oracle baseline |
 | credit proxy reward hacking | 分数涨但任务/evidence 变差 | counterfactual outcome + human audit | terminal anchor、sign-preserving modulation、constraints |
+| outcome-anchored credit 与同一 target 机械自证 | 同一 continuation contribution 同时决定 credit 符号和 Gate-2B target，相关/方向指标虚高 | inner/outer artifact-hash intersection、prediction-freeze 时序、cluster split audit | V2.42.26 independent outer-target firewall；fit/calibration/audit 分离；outer-invalid 计失败率；禁止同 source graph、别名或 selective retry |
 | EIG 估计过贵 | 得不偿失 | gain/cost logging | two-stage pruning、cached rollouts、heuristic fallback |
 | mutual information 与终端任务损失错位 | 高 IG 动作无实际价值 | IG-vs-VOC rank/regret、构造反例 | terminal-loss VOC 为主，IG 只作 feature/bound |
 | myopic VOC 忽略后续可达动作 | 错杀开启高价值 descendant 的步骤 | myopic-zero/dynamic-positive stress | 有限深度 rollout、option-value feature、保守 fallback |
@@ -1774,7 +1789,7 @@ outputs/runs/<run_id>/
 | 四层 terminal-loss dynamic-VOC/cost controller | Gate 2A + Gate 3A，且优于 pure IG/myopic VOC | context-specific 七动作 response model 与 Gate 2A 评估器已实现；online dynamic-VOC controller 仍未设计/集成，须真实 Gate 1+2A 通过后另行预注册 |
 | 同预算质量–成本改进 | 全量 paired test | 无结果 |
 | 机制解释 | 对应消融与轨迹案例 | 无结果 |
-| 开放世界、结果对齐的 step credit | Gate 2B 干预定位指标 | fixed-continuation/intervention schema 与 replay verifier 已实现；真实 300-step target/baseline 数据为 0，Gate 2B 未评估 |
+| 开放世界、结果对齐的 step credit | Gate 2B 对 independent outer intervention target 的定位指标 | fixed-continuation/intervention schema、sealed source adapter 与 outer-target firewall 已实现；真实 300-step artifact-disjoint outer pairs 为 0，正式 Gate 2B 未评估 |
 | credit 改善训练而非只拟合 proxy | Gate 3B 同预算 3-seed pilot | 无结果 |
 | 多智能体协作质量 | 相同总预算下 agent-count/round/topology 曲线优于 single/two-call | 未实验；文献显示可能非单调，不能由高 executor 并发推断 |
 | 分层 evidence 可靠性 | HiEviDR 式 progressive gate + LayerRAG cross-layer stress | 指标/压力测试已写入计划；无真实结果 |
@@ -1786,7 +1801,7 @@ outputs/runs/<run_id>/
 
 ## 14. 接下来 72 小时的具体任务
 
-### V2.42.16 到 fresh exact-220 的当前执行序列（2026-07-31 20:16 UTC）
+### V2.42.16 到 fresh exact-220 的当前执行序列（2026-08-01 00:35 UTC）
 
 1. 保留 R1 forward PID `1350579` 与所有健康 watcher，不 signal、restart、resume、复制或选择性补跑。只读监控 exact terminal count、checkpoint liveness 和 `mapping_or_gold_read=false`。
 2. R1 达到 `220/220` 后，由既有 finalizer 首次打开 evaluator mapping，生成 failure-as-zero 的 released all-220 artifact。此前任何 `completed/failed` 计数都不是 benchmark score。
@@ -1797,14 +1812,15 @@ outputs/runs/<run_id>/
 7. 已激活的 V2.42.18 single-owner watcher 在两次 quiet observation 与唯一 shared lease 后，先发布 execution-start，再在四个全新 output roots 上以 V2.42.17 冻结档位运行 `52/52/52/64=220`。每 wave 的所有 fresh preflight 先完成，随后才并发 forward；四 shard exact-terminal 后才打开 mapping/evaluator。整次 fixed concurrency、no-resume、failure-as-zero，API/容量失败仍进分母，禁止只补失败题，也禁止另启第二个 executor。
 8. full/no-entropy、WebSwarm-style 或其他主 variant 若进入论文主比较，每个 variant 都必须独立满足同样的 exact-220、fresh roots、固定预算和 single-owner 合同。English-76、dev64 或 completed-only 只能作诊断，不能替代全集。
 9. 文献补漏不改变当前不可逆执行序列。R1 与 V2.42.13/15/16/17/18/19/20 全部保持原 PID/identity；AggAgent、CGDP、GDCR、SAAS、SlimSearcher、R²、LiveBrowseComp 或 DeepWeb-Bench 只进入未来对照设计，当前不得借此启动新 benchmark、容量探针或第二个 all-220。
+10. V2.42.26 已冻结并推送，但仍是 build-only。正式 credit 工作的下一步不是立即训练，而是预注册并采集 task-cluster-disjoint 的 inner/outer continuation pairs；在真实 outer-valid pair 数达到门槛前，历史 synthetic Gate-2B pass、inner contribution correlation 和 benchmark forward 结果都不能授权 credit training。
 
 ### V2.40.5 Gate 2B baseline-source 合同（2026-07-26 00:03 UTC 新增）
 
-OWIC Gate 2B 不能以记录中的任意 scalar 代表反事实 baseline。新增的冻结图外 source-replay 合同将 deletion、RICE-PO-style local counterfactual 与 CVT-RL-style fixed continuation 分别绑定到独立原始 branch arms；正式 evaluator 以本次 live-replayed 四层风险模型现场计算 terminal-risk difference。三个 baseline 的 arm、continuation trace 与 terminal artifact 必须各自唯一，不能复用目标 intervention arm；local counterfactual 必须满足预注册等成本容差。任一 source file、target manifest、provenance、method contract、risk model/replay receipt 或 stress protocol 漂移均 fail closed。
+OWIC Gate 2B 不能以记录中的任意 scalar 代表反事实 baseline。冻结图外 source-replay 合同将 deletion、RICE-PO-style local counterfactual 与 CVT-RL-style fixed continuation 分别绑定到独立原始 branch arms；正式 evaluator 以本次 live-replayed 四层风险模型现场计算 terminal-risk difference。三个 baseline 的 arm、continuation trace 与 terminal artifact 必须各自唯一，不能复用目标 intervention arm；local counterfactual 必须满足预注册等成本容差。任一 source file、target manifest、provenance、method contract、risk model/replay receipt 或 stress protocol 漂移均 fail closed。V2.42.26 进一步要求这些 source arms 只构造 inner prediction；正式评价另由 artifact-disjoint outer campaign 提供 target，不能把 source contribution 自身重新封装为 target。
 
 六类 stress family 也不再是调用方自由字段。每个 credit record 必须携带 exact provenance：若为 deterministic preregistered intervention design，assignment source 必须等于冻结 protocol hash且 human-label budget 为 0；若为 post-terminal human audit，则每个标签必须计入 privileged-information budget。invalid/OOD 分母定义为 target 与 baseline source 的所有唯一 arms；同时 invalid+OOD 的同一 arm 只进入并集一次。invalid source step 不进入主估计，但必须进入失败率。
 
-这项改动只封闭统计真实性，不增加真实数据：当前 prospective baseline source/target intervention 均为 0。合成 300-step pass 只证明 Gate 能在构造条件下工作；正式 Gate 2B 仍需真实 300 个有效步骤、六类各 30、三 continuation、强 baseline 与 held-out 一次性评估。
+这些改动只封闭统计真实性，不增加真实数据：当前 prospective inner/outer intervention pairs 均为 0。历史合成 300-step pass 只证明旧 Gate 能在构造条件下工作；正式 Gate 2B 仍需至少 300 个 outer-valid pairs、七类压力样本各至少 30、inner/outer 各三 continuation、强 baseline 与 held-out 一次性评估。
 
 ### Rollout 2 的不可变实验契约（2026-07-25 15:45 UTC 新增）
 
