@@ -1,0 +1,202 @@
+{
+  "artifact_version": 1,
+  "role": "v24234_provider_cost_meter_build_audit",
+  "created_at_unix": 1785558059,
+  "policy_id": "v24234_provider_cost_meter_v1",
+  "label_blind_runtime": true,
+  "build_only": true,
+  "parent_receipt": {
+    "path": "results/v24233_webswarm_effect_preauthorization_build_audit_v1_20260801.json",
+    "file_sha256": "4630d2056aa7508d5b6a55257dfb4f3f7c75a6dafeff4b08c5ab05644a383cf3",
+    "payload_sha256": "fceafc658823913bbf200bfffd8e050f59490266052260499cd1998539874260",
+    "v24233_control_manifest_sha256": "77d73a9a02c7aa9ebc04f87c3b3f499cc4d356393420fac62229c3a4664dbaca",
+    "v24233_control_files_rehashed": 4,
+    "v24233_build_only_parent_validated": true
+  },
+  "control_surface": {
+    "file_count": 4,
+    "manifest": {
+      "src/deepwide_agent/v24234_provider_cost_meter.py": "cc8471276ab4c6af67a62be38a1ee43b327dd443c2700f60da68c63b72c24d79",
+      "tests/test_v24234_provider_cost_meter.py": "6182d6af55ce9d80858cedcf00da3dba66fa9f09d56c080eaed1f1668e78e5b0",
+      "scripts/audit_v24234_provider_cost_meter.py": "e522a393755bc694c80af9cf08d9342003f10d6211a5298787579475a5f2c9ce",
+      "tests/test_audit_v24234_provider_cost_meter.py": "181e8498f635716d45990add715478c8c5ccb21212b59f444828e3c50b6fa2f2"
+    },
+    "manifest_sha256": "f800894c52616037cdaea613385d4a4fc35a73c092c7c3a57db81c266505be97"
+  },
+  "active_forward_guard": {
+    "file_count": 5,
+    "manifest": {
+      "src/deepwide_agent/__init__.py": "2fe51574581cf575ad7cc00f3fe7d6cdd2d375266e40e290d05e9a49aac8f9e5",
+      "src/deepwide_agent/runtime.py": "b13d925e71213ddd27e98f606541772d11a07d0069221823e81de1998614f869",
+      "src/deepwide_agent/v24211_entropy_runtime.py": "193c0d4bd8b0b1516a6d3ae0d1b1c0e05a508b6e70d6749a2c37d0a415148879",
+      "scripts/run_deepwide_agent.py": "10680e64a43a6f8100da8fb3f04a87839d7d4c0978724c74b8bcc089b66a642a",
+      "scripts/launch_frozen_deepwide.py": "66ccde2d0477c039718216d0ffcd505618597ad8b1ce434a029ec513d5b3ac2a"
+    },
+    "manifest_sha256": "50640605f2cc80552701b4daffbba9eb677c69e1598d51ccd8c661503dc76365",
+    "module_name_hit_count_by_file": {
+      "src/deepwide_agent/__init__.py": 0,
+      "src/deepwide_agent/runtime.py": 0,
+      "src/deepwide_agent/v24211_entropy_runtime.py": 0,
+      "scripts/run_deepwide_agent.py": 0,
+      "scripts/launch_frozen_deepwide.py": 0
+    },
+    "module_absent_from_guarded_forward_entrypoints": true
+  },
+  "static_capability_audit": {
+    "ast_node_count": 4345,
+    "import_modules": [
+      "__future__",
+      "deepwide_agent.v24232_webswarm_total_budget",
+      "deepwide_agent.v24233_webswarm_effect_preauthorization",
+      "typing"
+    ],
+    "required_public_functions_present": [
+      "build_provider_attempt",
+      "build_provider_cost_measurement",
+      "build_provider_meter_contract",
+      "issue_metered_effect_permit",
+      "settle_metered_effect_permit",
+      "validate_provider_attempt",
+      "validate_provider_cost_measurement",
+      "validate_provider_meter_contract"
+    ],
+    "disallowed_import_count": 0,
+    "forbidden_file_environment_network_process_or_dynamic_code_call_count": 0,
+    "privileged_metadata_read_count": 0,
+    "file_environment_network_model_search_fetch_process_subprocess_or_dynamic_code_capability": false
+  },
+  "control_source_forbidden_literal_scan": {
+    "file_count": 4,
+    "hit_count": 0,
+    "credential_or_concrete_opaque_id_literal_present": false
+  },
+  "synthetic_contract_replay": {
+    "provider_count": 7,
+    "provider_kinds": [
+      "azure_responses_model",
+      "azure_responses_web_search",
+      "anthropic_server_web_search",
+      "tavily_search_api",
+      "native_http_fetch",
+      "local_orchestrator",
+      "local_other_tool"
+    ],
+    "provider_rows": [
+      {
+        "provider_kind": "azure_responses_model",
+        "attempt_count": 2,
+        "logical_status": "completed",
+        "reservation_fallback_applied": false,
+        "settlement_eligible": true
+      },
+      {
+        "provider_kind": "azure_responses_web_search",
+        "attempt_count": 1,
+        "logical_status": "completed",
+        "reservation_fallback_applied": false,
+        "settlement_eligible": true
+      },
+      {
+        "provider_kind": "anthropic_server_web_search",
+        "attempt_count": 2,
+        "logical_status": "completed",
+        "reservation_fallback_applied": true,
+        "settlement_eligible": true
+      },
+      {
+        "provider_kind": "tavily_search_api",
+        "attempt_count": 2,
+        "logical_status": "completed",
+        "reservation_fallback_applied": false,
+        "settlement_eligible": true
+      },
+      {
+        "provider_kind": "native_http_fetch",
+        "attempt_count": 2,
+        "logical_status": "completed",
+        "reservation_fallback_applied": false,
+        "settlement_eligible": true
+      },
+      {
+        "provider_kind": "local_orchestrator",
+        "attempt_count": 1,
+        "logical_status": "completed",
+        "reservation_fallback_applied": false,
+        "settlement_eligible": true
+      },
+      {
+        "provider_kind": "local_other_tool",
+        "attempt_count": 1,
+        "logical_status": "failed",
+        "reservation_fallback_applied": false,
+        "settlement_eligible": true
+      }
+    ],
+    "all_provider_contracts_and_v24233_settlements_replayed": true,
+    "model_logical_call_and_http_attempt_mapping_replayed": true,
+    "hosted_search_http_attempt_and_provider_action_mapping_replayed": true,
+    "tavily_and_fetch_token_usage_not_applicable_replayed": true,
+    "transport_failure_has_no_synthetic_response_replayed": true,
+    "failed_local_effect_remains_chargeable_replayed": true,
+    "missing_applicable_usage_uses_only_dimension_local_reservation_fallback": true,
+    "missing_applicable_usage_treated_as_zero": false,
+    "observed_lower_bound_above_reservation_rejected": true,
+    "provider_response_authenticity_independently_verified": false,
+    "local_counter_and_clock_independently_attested": false,
+    "schema_resealing_without_secret_cryptographically_excluded": false,
+    "runtime_provider_wrapper_integrated": false,
+    "real_model_search_fetch_or_orchestrator_execution_observed": false,
+    "synthetic_benchmark_rows_or_real_evaluator_payload_read": false
+  },
+  "scientific_scope": {
+    "typed_provider_cost_contract_available": true,
+    "usage_observed_unavailable_and_not_applicable_distinguished": true,
+    "missing_applicable_usage_not_treated_as_zero": true,
+    "missing_usage_settles_against_already_debited_reservation": true,
+    "observed_cost_lower_bound_preserved": true,
+    "observed_cost_above_reservation_rejected": true,
+    "provider_response_hash_and_byte_count_schema_available": true,
+    "transport_failure_cannot_claim_response_bytes_or_hash": true,
+    "provider_response_authenticity_independently_verified": false,
+    "local_counter_and_clock_independently_attested": false,
+    "schema_resealing_without_secret_cryptographically_excluded": false,
+    "declared_reservation_is_conservative_independently_verified": false,
+    "provider_limits_enforce_reservation_independently_verified": false,
+    "external_effect_occurrence_or_order_independently_verified": false,
+    "runtime_provider_wrapper_integrated": false,
+    "real_model_search_fetch_or_orchestrator_execution_observed": false,
+    "dev64_gate_evaluated": false,
+    "fresh_exact220_evaluated": false,
+    "quality_cost_or_benchmark_effect_observed": false
+  },
+  "source_policy": {
+    "repository_control_code_parent_receipt_and_synthetic_hashes_only": true,
+    "runtime_task_question_query_raw_evidence_url_prediction_or_answer_read": false,
+    "benchmark_subset_category_question_type_label_split_or_mapping_read": false,
+    "gold_evaluator_payload_score_reward_or_results_read": false,
+    "credential_environment_keyring_or_secret_value_read": false,
+    "network_model_search_fetch_subprocess_or_api_called": false
+  },
+  "authorization": {
+    "production_package_authorized": false,
+    "active_forward_integration_authorized": false,
+    "external_side_effect_authorized": false,
+    "benchmark_forward_or_evaluator_authorized": false,
+    "dev64_or_exact220_launch_authorized": false,
+    "shared_api_lease_acquire_authorized": false,
+    "process_signal_restart_resume_rerun_or_selective_retry": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "claims": {
+    "build_only_provider_cost_meter_available": true,
+    "runtime_provider_wrapper_available": false,
+    "independently_attested_provider_cost_available": false,
+    "real_webswarm_budgeted_run_available": false,
+    "benchmark_score_available": false,
+    "benchmark_improvement_observed": false,
+    "leaderboard_submission_performed": false,
+    "sota": false
+  },
+  "audit_valid": true,
+  "audit_payload_sha256": "7dca1ae5897b61963763973db72337ddb9a4311e8f687e15553ffb33a9cb23b7"
+}
