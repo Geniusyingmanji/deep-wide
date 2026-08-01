@@ -1,6 +1,6 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
-> 检索截止：2026-08-01 03:17 UTC；项目证据更新：2026-08-01 05:00 UTC
+> 检索截止：2026-08-01 03:17 UTC；项目证据更新：2026-08-01 05:16 UTC
 >
 > 结论强度：这是基于公开文献的 novelty audit，不是“没有任何相关工作”的证明。2026 年文献多为尚未同行评审的 arXiv 预印本，文中将预印本结果视为作者报告，而非独立复现事实。
 
@@ -25,6 +25,8 @@ V2.42.34 将 caller-reported vector 进一步拆为 provider-typed attempt measu
 V2.42.35 开始跨过“只有 schema、没有 effect control flow”的边界，但仍是隔离候选而非 production runtime。它在单进程 lock 内先扣 V2.42.34 reservation、commit permit/challenge，再调用 caller-supplied single-attempt callback；同一 effect 的 bounded retries 串行，不同 permits 的 callbacks 可以并发，settlement 再串行提交。异常、challenge/observation 错绑和 over-reservation 都留下 charged pending permit，禁止自动重放整个 effect；安全收据嵌入 meter/permit/invocation/attempt/measurement 完整子图且不记录 raw callback value。`24/24` 定向实现/审计与 V2.42.02/31–35 的 `137/137` 联合回归证明 process-local 排序、并发和 fail-closed 语义可执行；它们没有证明 callback 只发一次 HTTP、真实 provider effect 在 permit 后发生、provider 消费 challenge、跨进程 CAS 或崩溃持久性。现有多重试 clients 也不能直接塞进 callback，否则一个 permit 会隐藏多个 attempts。下一步是 provider-specific single-attempt adapter、durable journal/CAS/timeout-backoff 和独立 dev64 gate，不是直接启动 WebSwarm 全集。
 
 V2.42.36 为最关键的 GPT-5.6 reasoning-model path 补上首个 single-attempt adapter。它只允许本机 `127.0.0.1:9878/responses` 和 `gpt-5.6-sol`，禁重定向并关闭 Requests 环境代理/`.netrc`；一次 callback 在源码中只有一个 POST call site，429/timeout 等 retry 由 V2.42.35 在新 attempt invocation 下调度。成功必须同时有 text 与 observed nonzero usage；缺 usage、invalid JSON 和 empty output 都不是零成本成功。fake-transport 审计实际重放了 429→200 两个 callbacks/两个 POST，receipt 不含 raw prompt/answer。新增 public `single_attempt` 入口的 reservation-bypass 回归后，定向实现/审计为 `23/23`，V2.42.02/31–36 全链为 `160/160`；这些结果只证明本地 adapter 的机械边界，没有调用真实 9878、没有证明 challenge 被 provider 消费或 response hash 具真实性，也未覆盖 hosted search、Anthropic、Tavily、fetch、crash durability 或 dev64 质量效果。
+
+V2.42.37 再补 Tavily Search single-attempt adapter。官方 Search endpoint 的 Bearer 认证允许 credential 留在 ephemeral header 而不进入 canonical request body；adapter 按 sealed attempt index 轮换 caller-supplied credentials，并把 401/403/432 与普通 retryable HTTP 分开。它不读环境、文件或 keyring，但 credentials 会在 adapter 进程内存中保留；query 含 credential 时 pre-POST 拒绝，response 直接回显 credential 时在 hash 前拒绝。同一次 Tavily result 的有限 relevance score 被保留，但静态审计限制为 decoder 中唯一一次读取，不能充当 benchmark/evaluator signal。`432 → 200` fake replay 证明两个 callbacks 对应两个 POST 和两个不同 credential，query/answer/result/page/key 均不进入 receipt。定向实现/审计为 `19/19`，V2.42.02/31–37 全链为 `179/179`；这仍没有调用真实 Tavily API，也没有证明 provider challenge consumption、response authenticity、total deadline、active runtime 集成或 benchmark 效果。
 
 V2.42.22 又把 fixed evidence-sufficiency termination 写成独立 build-only 对照。catalog 声明 coverage/source/time/exclusion criterion、动作类和 clean evidence/source 阈值；当前 active page contradiction 阻止该 criterion 满足，硬预算耗尽只允许 abstain。该实现不含 entropy、概率 belief 或 evaluator 信号，因而能在未来同预算实验中检验四层 VOC 是否真正优于固定完成条件。其哈希与空 supplied trace 只能验证 schema、绑定和调用内时序合同，不能证明 criterion 的语义来源、调用外真实时序或 active-evidence snapshot 完整性；当前也没有 benchmark 效果。
 
