@@ -1,0 +1,188 @@
+{
+  "artifact_version": 1,
+  "role": "v24249_durable_action_registry_candidate_audit",
+  "created_at_unix": 1785576535,
+  "label_blind_runtime": true,
+  "candidate_durable_action_registry": true,
+  "parent_receipt": {
+    "path": "results/v24248_candidate_client_facade_candidate_audit_v1_20260801.json",
+    "file_sha256": "ff49c36b7c0b1f8e555538b6d50836184c3e5831b0c3d78c57c04e0c87154e55",
+    "payload_sha256": "b8113b8f95618aee80eacf7fa5da315ada2d4f12d3f0d9690aadb79e24b63690",
+    "v24248_control_manifest_sha256": "c06f696efa2a5187fc437818f42129835b63f593bca53b2d95585105baa7a5cb",
+    "v24248_control_files_rehashed": 4,
+    "v24248_candidate_parent_validated": true
+  },
+  "control_surface": {
+    "file_count": 4,
+    "manifest": {
+      "src/deepwide_agent/v24249_durable_action_registry.py": "352186062036728536f1434289159915651c64ed5d14f6d5e7e83a7c79882c7e",
+      "tests/test_v24249_durable_action_registry.py": "5b8c184484c610f05e8af4e58beb92484775dae35686262589b26bfd19560076",
+      "scripts/audit_v24249_durable_action_registry.py": "418206ddee7e03f699a29b5743b712b312caab06b2f14982fd2475b52b92ea80",
+      "tests/test_audit_v24249_durable_action_registry.py": "5b577a27f76e724188ae207edd06bdbc16ab5da3a7891efb35b398ea62aeab2a"
+    },
+    "manifest_sha256": "0d282b27dacbd84836525a2c319991e09600eda9504be35294e417333e5e6a19"
+  },
+  "active_forward_guard": {
+    "file_count": 8,
+    "manifest": {
+      "src/deepwide_agent/__init__.py": "2fe51574581cf575ad7cc00f3fe7d6cdd2d375266e40e290d05e9a49aac8f9e5",
+      "src/deepwide_agent/clients.py": "339d923973f07ebcd33cb12cee2c26103df70ed3aea1fc0a737ffd675ac06fbc",
+      "src/deepwide_agent/native_search.py": "cd0d6bfccf4b345b11274558bdcffb39d279697d183242baf811dfd56ac71e50",
+      "src/deepwide_agent/anthropic_search.py": "eab1f14e0f4be76f6a2cca1422aabbf064c9c3867af414b7cbf8b9a15c1f0678",
+      "src/deepwide_agent/runtime.py": "b13d925e71213ddd27e98f606541772d11a07d0069221823e81de1998614f869",
+      "src/deepwide_agent/v24211_entropy_runtime.py": "193c0d4bd8b0b1516a6d3ae0d1b1c0e05a508b6e70d6749a2c37d0a415148879",
+      "scripts/run_deepwide_agent.py": "10680e64a43a6f8100da8fb3f04a87839d7d4c0978724c74b8bcc089b66a642a",
+      "scripts/launch_frozen_deepwide.py": "66ccde2d0477c039718216d0ffcd505618597ad8b1ce434a029ec513d5b3ac2a"
+    },
+    "manifest_sha256": "e2626ecfa54eba89ccdee3706a78c5150e76bc6204cf3ad666c43e242fb7649a",
+    "module_name_hit_count_by_file": {
+      "src/deepwide_agent/__init__.py": 0,
+      "src/deepwide_agent/clients.py": 0,
+      "src/deepwide_agent/native_search.py": 0,
+      "src/deepwide_agent/anthropic_search.py": 0,
+      "src/deepwide_agent/runtime.py": 0,
+      "src/deepwide_agent/v24211_entropy_runtime.py": 0,
+      "scripts/run_deepwide_agent.py": 0,
+      "scripts/launch_frozen_deepwide.py": 0
+    },
+    "module_absent_from_guarded_clients_and_forward_entrypoints": true
+  },
+  "static_capability_audit": {
+    "ast_node_count": 4645,
+    "import_modules": [
+      "__future__",
+      "contextlib",
+      "copy",
+      "dataclasses",
+      "deepwide_agent.v24232_webswarm_total_budget",
+      "deepwide_agent.v24248_candidate_client_facade",
+      "fcntl",
+      "json",
+      "os",
+      "pathlib",
+      "re",
+      "secrets",
+      "stat",
+      "typing"
+    ],
+    "required_public_symbols_present": [
+      "DurableActionRegistryError",
+      "DurableActionRegistryPoisoned",
+      "DurableCandidateActionRegistry",
+      "DurableRegisteredFacadeResult",
+      "initialize",
+      "load_claims",
+      "open",
+      "run_fetched_page",
+      "run_model_json",
+      "run_search_leads",
+      "status",
+      "validate_durable_action_registry_initial",
+      "validate_receipt_against_registry",
+      "validate_registered_facade_receipt"
+    ],
+    "facade_dispatch_call_site_count_by_method": {
+      "run_model_json": 1,
+      "run_search_leads": 1,
+      "run_fetched_page": 1
+    },
+    "caller_action_ref_public_parameter_count": 0,
+    "public_callback_or_fault_hook_parameter_count": 0,
+    "privileged_metadata_read_count": 0,
+    "direct_network_environment_process_subprocess_or_dynamic_code_call_site_count": 0,
+    "filesystem_capability_restricted_to_local_registry_store": true
+  },
+  "control_source_forbidden_literal_scan": {
+    "file_count": 4,
+    "hit_count": 0,
+    "credential_or_concrete_opaque_id_literal_present": false
+  },
+  "fake_registry_replay": {
+    "local_tempdir_virtual_time_and_injected_fake_transports_only": true,
+    "network_socket_or_real_model_search_fetch_api_called": false,
+    "allocated_action_count": 4,
+    "allocated_ordinals": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "allocated_operation_kinds": [
+      "model_json",
+      "search_leads",
+      "fetched_page",
+      "model_json"
+    ],
+    "claim_prefix_replayed_for_all_receipts": true,
+    "model_post_count": 2,
+    "search_post_count": 1,
+    "fetch_pool_count": 1,
+    "fetch_urlopen_count": 1,
+    "equal_model_requests_received_distinct_actions": true,
+    "equal_ephemeral_request_deduplication_claimed": false,
+    "separate_registry_received_distinct_random_domain": true,
+    "caller_single_registry_ownership_independently_verified": false,
+    "private_prompt_query_url_page_or_json_entered_receipts": false,
+    "public_action_ref_callback_or_fault_hook_parameter_present": false,
+    "benchmark_question_prediction_mapping_gold_evaluator_or_score_used_for_routing": false
+  },
+  "scientific_scope": {
+    "os_csprng_instance_domain_implemented": true,
+    "fixed_operation_stage_refs_implemented": true,
+    "global_monotonic_action_ordinal_implemented": true,
+    "durable_claim_before_facade_effect_implemented": true,
+    "local_posix_advisory_lock_implemented": true,
+    "file_and_directory_fsync_implemented": true,
+    "caller_supplied_action_ref_accepted": false,
+    "ephemeral_request_content_used_for_action_identity": false,
+    "equal_ephemeral_request_deduplication_implemented": false,
+    "caller_single_registry_ownership_independently_verified": false,
+    "direct_parent_facade_bypass_globally_excluded": false,
+    "action_claim_order_equals_effect_completion_order_verified": false,
+    "claim_to_effect_outcome_durable_binding_implemented": false,
+    "claimed_but_unstarted_action_recovery_implemented": false,
+    "initialization_crash_automatic_recovery_implemented": false,
+    "adapter_code_identity_independently_attested": false,
+    "malicious_same_user_resealing_excluded": false,
+    "network_or_distributed_filesystem_semantics_proven": false,
+    "search_leads_or_page_text_active_evidence_eligibility_granted": false,
+    "real_provider_traffic_observed": false,
+    "active_client_or_runner_integrated": false,
+    "dev64_gate_evaluated": false,
+    "fresh_exact220_evaluated": false,
+    "quality_cost_or_benchmark_effect_observed": false
+  },
+  "source_policy": {
+    "repository_control_code_parent_receipt_synthetic_requests_values_fake_transports_and_local_tempdir_only": true,
+    "runtime_task_question_prediction_or_answer_read": false,
+    "benchmark_subset_category_question_type_label_split_or_mapping_used_for_routing": false,
+    "gold_evaluator_payload_score_reward_or_results_read": false,
+    "credential_environment_keyring_or_secret_value_read": false,
+    "audit_network_socket_real_model_search_fetch_subprocess_or_api_called": false
+  },
+  "authorization": {
+    "isolated_durable_action_registry_capability": true,
+    "active_provider_traffic_authorized": false,
+    "production_package_authorized": false,
+    "active_forward_integration_authorized": false,
+    "external_side_effect_authorized": false,
+    "benchmark_forward_or_evaluator_authorized": false,
+    "dev64_or_exact220_launch_authorized": false,
+    "shared_api_lease_acquire_authorized": false,
+    "process_signal_restart_resume_rerun_or_selective_retry": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "claims": {
+    "candidate_durable_action_registry_available": true,
+    "legacy_runtime_drop_in_client_available": false,
+    "active_runtime_wrapper_available": false,
+    "active_evidence_admission_available": false,
+    "real_provider_execution_evidence_available": false,
+    "benchmark_score_available": false,
+    "benchmark_improvement_observed": false,
+    "leaderboard_submission_performed": false,
+    "sota": false
+  },
+  "audit_valid": true,
+  "audit_payload_sha256": "8eeae6be20853d3ec8551164f906bbcd72e00db97ac55a0ec12ce2dc121bd57a"
+}
