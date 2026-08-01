@@ -1,8 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.76
+> 版本：5.77
 >
-> 更新：2026-08-01 11:22 UTC
+> 更新：2026-08-01 11:42 UTC
+>
+> **5.77 V2.42.54 create-exclusive paired-dev64 launcher preparation（2026-08-01 11:42 UTC）：V2.42.53 已证明 isolated runtime integration，但其 prospective gate 仍只是合同，尚未固定两臂 roots、精确 dev64 输入快照与 shared-lease/evaluator barrier。新 preparation-only package 逐字节绑定 V2.42.53 audit/四个 parent control files，以及现有 V2.42.16 protocol、activation、wait-audit 三个 receipt；live V2.42.16 state 不冻结，避免正常自然推进造成假漂移。输入只接受 64 行精确 `{opaque_id, question}` JSONL 与同序 64-ID 文件，现场验证 schema/唯一性/顺序后只持久化 bytes SHA、count 和 schema，题面与 raw ID 不写入 receipt。
+>
+> initialize 在一个 pristine local-POSIX root 下 create-exclusively 发布 initial/lease-intent/ready 三个 fsync receipt，并建立 `legacy_control` 与 `candidate_runtime` 两臂各自互不重叠的空 package/output roots。两臂共享 package/config/launch limits/visible-task schema/模型搜索预算；唯一差异预注册为是否启用 V2.42.53 checkpoint/page postcondition wrapper。lease intent 固定使用仓库既有 shared `flock`，要求一个连续 lease 覆盖两次 forward 与两次 evaluator；两臂 exact 64 terminal 前 mapping 不得 open/hash/read，failure-as-zero、forward/evaluator no-resume，dev64 只作 consumed engineering gate。决策阈值也在任何 pair materialization 前冻结：completion/whole-table 不降、四项 quality 各不低于 `-0.005`、总 token ratio 不高于 `1.05`，且 completion、whole-table 或 quality composite 至少改善 `1/1/0.001` 之一；GO 也只允许未来 activation 设计，不直接授权 exact-220。V2.42.16–20 保持优先，V2.42.16 terminal GO 且 lease 释放前不得激活。
+>
+> 该类 public surface 只有 `arm_roots/preflight`，没有 launch、activation、lease acquire、`run_task`、subprocess、network、evaluator 或 aggregate 方法；production/真实流量/shared lease/dev64/exact220/evaluator/SOTA 权限全 false。定向实现+parent-bound no-network 审计 `21/21`，V2.42.02/31–54 完整父链 `508/508`。create-exclusive receipt [`results/v24254_candidate_dev64_launcher_candidate_audit_v1_20260801.json`](results/v24254_candidate_dev64_launcher_candidate_audit_v1_20260801.json) 文件 SHA `50b78b7a…d5a03`、payload SHA `5747b0b0…bf026`、4-file manifest SHA `bb64bcee…cee22`；fake replay 确认四个 disjoint pristine roots、三份 content-free receipt、题面/raw ID 零落盘、lease 未取得、active-forward 8 入口命中 0，privileged metadata 与直接 launch/lease/evaluator/task capability call site 均为 0。下一步只能在既有 V2.42.16 GO 之后另行冻结 activation/executor；当前不物化真实 pair roots、不抢 lease、不启动 dev64。
+>
+> 当前覆盖：**原 R1 launcher/worker 与 7 个后继 watcher 共 9 个保护 PID 仍存活且未 signal/restart/resume/rerun；11:38 UTC aggregate 自然推进为 `208/220 = 42 completed + 166 failed`、剩余 12，`label_blind=true`、`mapping_or_gold_read=false`。没有 released all-220、正式 DeepWideBench 分数、Avg@4、候选提升、entropy/credit/WebSwarm 效果或 SOTA。**
 >
 > **5.76 V2.42.53 isolated `DeepWideRuntime` integration（2026-08-01 11:22 UTC）：V2.42.52 已把 provider/effect/runner bridge 封成 restartable package，但尚未证明 production-shaped `DeepWideRuntime` 能在不扩大输入或 evidence 权限的前提下消费它。新隔离 subclass 只接受精确 `{opaque_id, question}`；constructor 逐字绑定 package contract/ready receipt、runtime config、launch limits、四文件 source manifest 和 prospective dev64 identity。task、search、direct-fetch 及每次 checkpoint 前都重做 package/source preflight；进入 inherited runtime 的 search/fetch batch 必须先过 V2.42.51 admission validator，每个持久化 page（含 structured chunk）还必须保留 `v24251_explicit_page_ingress:<sha256>`，并固定为 untrusted data、零 instruction authority。output root 必须 pristine，单进程内同 ID 重跑和已有 checkpoint resume 均 fail closed。
 >
@@ -1842,7 +1850,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 | M | 目标 | Owner | 时间 | 预算上限 | 产物 | 状态 |
 |---|---|---|---|---:|---|---|
 | M0 | 基线、官方评测、文献/novelty audit | 当前会话 + 待确认 PI | 已增量核验至 2026-08-01 03:17 UTC（178 篇） | 已发生，待补账 | `survey.md`、`.research/literature_matrix.md`、基线 scripts/results | 完成（持续增量） |
-| M1 | 严格 runtime/eval 隔离与正文 evidence pipeline | 当前会话 + TBD owner | 已实现 manifest 隔离、HTML/PDF 正文、query-local citation provenance 与历史 forward preflight；V2.42.19 scanner 已冻结；V2.42.52 已提供 source-bound restartable package，V2.42.53 已提供未接 active runner 的 isolated `DeepWideRuntime` wrapper 与 checkpoint-wide admission enforcement；create-exclusive launcher/lease、终态报告、人工 EAL 与整页精确 span 待做 | TBD | `src/deepwide_agent`、evaluator、no-leak tests | 部分完成 |
+| M1 | 严格 runtime/eval 隔离与正文 evidence pipeline | 当前会话 + TBD owner | 已实现 manifest 隔离、HTML/PDF 正文、query-local citation provenance 与历史 forward preflight；V2.42.19 scanner 已冻结；V2.42.52–53 已提供 source-bound package 与 isolated runtime wrapper，V2.42.54 已冻结 create-exclusive paired-dev64 roots/lease/evaluator-barrier preparation但未实现 activation/execution；终态报告、人工 EAL 与整页精确 span 待做 | TBD | `src/deepwide_agent`、evaluator、no-leak tests | 部分完成 |
 | M2 | 表格/evidence state 与 replay | 当前会话 + TBD owner | V2.29.0 schema 37、单题 checkpoint、hosted trace 去重、failure trace 持久化、anchor-only replay 和 pinned V2.25 closed-domain replay 已可运行；20-task replay pack 待做 | TBD | state schema、20-task replay pack | 部分完成 |
 | M3 | 四层信号数据与校准 | TBD | 2 周 | TBD | shadow signal dataset、calibration report、replay receipt | PAV/terminal calibrator、task-cluster split/bootstrap、provenance budget 与 replay verifier 已实现；真实匿名 development labels/bundle 尚无，Gate 1 未评估 |
 | M4A | Counterfactual action-value pilot | TBD | 1–2 周 | TBD | sealed action slates、propensity、gain report、model replay receipt | task-cluster-disjoint fitter/calibrator/audit/replay verifier 已实现；真实 prospective slate 与 equal-cost arm 数据仍为 0 |
@@ -1851,7 +1859,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 | M5B | OWIC estimator 与 verifier-sign-preserving advantage modulation | TBD | 1–2 周 | TBD | credit module、intervention tests | 部分完成：V2.42.23 sign-preserving kernel、V2.42.24 sealed source adapter、V2.42.25 TRIAGE baseline、V2.42.26 independent outer-target firewall、V2.42.27 ordering store、V2.42.28 challenge compatibility graph、V2.42.29 signature verifier 与 V2.42.30 MICA baseline 已完成 build-only 实现；V2.42.23–30 实现+审计联合回归 `147/147`。真实 outer pairs、native challenge-consuming executor、独立 signer/append-only attestation、300-step audit、正式 Gate 2B 与训练接入仍未开始；SGCD/CIGPO/Bridge Evidence/CHILL/SkillRise/GRSD/TTEL/OVCSD/CSCR/Counterfactual-Shapley/MICA 对照已写入协议 |
 | M6A | 50-task online controller pilot / Gate 3A | TBD | 1 周 | TBD | paired report、Pareto plots | 未开始 |
 | M6B | 3-seed credit-training pilot / Gate 3B | TBD | 2 周 | TBD | checkpoints、learning curves、credit audit | 未开始 |
-| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact；下一 fresh all-220 package gate、capacity freeze、唯一 owner 与固定并行计划 | 进行中（2026-08-01 11:17 UTC 权威进度仍为 `207/220 = 41 completed + 166 failed`，剩余 13；worker/queue 与 7 个后继保护 watcher均存活，label-blind aggregate 为 true、mapping/gold 未读；V2.42.13/15/16/17/18/19/20 依序等待；released evaluator 与正式分数仍无） |
+| M7 | 强基线、消融、全量 test | 当前会话 + TBD owner | rollout 1 已于 2026-07-25 启动 | 以冻结调用账本实报 | 5 段 frozen execution artifacts、220-task aggregate artifact；下一 fresh all-220 package gate、capacity freeze、唯一 owner 与固定并行计划 | 进行中（2026-08-01 11:38 UTC 权威进度 `208/220 = 42 completed + 166 failed`，剩余 12；worker/queue 与 7 个后继保护 watcher均存活，label-blind aggregate 为 true、mapping/gold 未读；V2.42.13/15/16/17/18/19/20 依序等待；released evaluator 与正式分数仍无） |
 | M8 | 论文写作与审计 | TBD | 1–2 周 | TBD | manuscript、claim/evidence ledger | 未开始 |
 
 ### M1 推荐目录
@@ -2001,7 +2009,7 @@ outputs/runs/<run_id>/
 8. full/no-entropy、WebSwarm-style 或其他主 variant 若进入论文主比较，每个 variant 都必须独立满足同样的 exact-220、fresh roots、固定预算和 single-owner 合同。English-76、dev64 或 completed-only 只能作诊断，不能替代全集。
 9. 文献补漏不改变当前不可逆执行序列。R1 与 V2.42.13/15/16/17/18/19/20 全部保持原 PID/identity；AggAgent、CGDP、GDCR、SAAS、SlimSearcher、R²、LiveBrowseComp、DeepWeb-Bench、Agent-UCT 或 MICA 只进入未来对照设计，当前不得借此启动新 benchmark、容量探针或第二个 all-220。
 10. V2.42.26–30 均已冻结为 build-only；V2.42.30 只是忠实 MICA structured-potential/return baseline，不授权训练或 forward。V2.42.28 只把 challenge 贯穿 compatibility envelope，V2.42.29 只验证某私钥签过精确 graph statement；两者都不能证明 legacy execution 在 challenge 后发生或 signer 独立。正式 credit 工作的下一步不是立即训练，而是实现实际消费 challenge 的 outer executor，并由仓库外独立 trust domain 以冻结公钥、append-only receipt 与可信时间/单调序列证明 launch-before-execution；随后才预注册并采集 task-cluster-disjoint 的 inner/outer continuation pairs。在真实 challenge-native outer-valid pair 数达到门槛前，历史 synthetic Gate-2B pass、inner contribution correlation、repository file order、compatibility wrapper、仅验签 receipt、MICA potential delta 和 benchmark forward 结果都不能授权 credit training。
-11. V2.42.53 只完成 isolated runtime integration，不授权 active traffic。下一代码项应是 create-exclusive paired-dev64 launcher：绑定 frozen V2.42.53 receipt/source/config、精确 64-ID identity hash、两臂 fresh roots、单 lease、terminal-before-evaluator 和 failure-as-zero aggregate；先用 fake crash/tamper replay，再由既有 V2.42.16 序列决定是否真实启动。它不得接管、patch、暂停或重启当前 R1。
+11. V2.42.54 已把 frozen V2.42.53 receipt/source/config、精确 64-ID/manifest hash、两臂 fresh package/output roots、单连续 lease intent、terminal-before-evaluator 与 failure-as-zero/no-resume 合同实现为 preparation-only package并完成 fake/tamper audit。它没有 activation/executor/aggregate 权限，不得物化真实 pair 或抢 lease。只有既有 V2.42.16 terminal GO 且释放 shared lease 后，后续版本才可设计 create-exclusive activation/executor；仍不得接管、patch、暂停或重启当前 R1。
 
 ### V2.40.5 Gate 2B baseline-source 合同（2026-07-26 00:03 UTC 新增）
 
