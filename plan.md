@@ -1,8 +1,18 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.81
+> 版本：5.82
 >
-> 更新：2026-08-02 12:28 UTC
+> 更新：2026-08-02 13:15 UTC
+>
+> **5.82 V2.42.61 deterministic-normalizer smoke16 全终局（2026-08-02 13:15 UTC）：四五十分钟不是搜索 API 的正常时延，而是旧 R1 整题 workflow 的设计性放大。旧 R1 的精确全集统计为 `220/220 = 47 completed + 173 failed`、累计 task wall `650,717.636s`，即 `2,957.807s = 49.30min/task`；每题平均约 `31.86 GPT calls / 93.04 logical search calls / 764.40 fetch attempts`。planning、anchor、scope、candidate/coverage、mention-gap、row enrichment/refinement、membership/attribute/unknown-cell recovery 各阶段重复领预算，且失败题也平均跑约 48.6 分钟后才由晚期 fail-closed contract 归零。这个 `49.30min` 是总 task-wall/220，不是某次查询的网络时延；220 题近串行才把全集放大到约 7.5 天累计 task wall。
+>
+> 当前 label-blind score-first pipeline 已收敛为：`可见 {opaque_id, question} → 1 次规划 GPT → 最多 8 个逻辑查询（4 search workers）→ 最多 16 个页面目标（8 fetch workers，20s/HTTP attempt）→ 1 次综合 GPT → 确定性 Markdown 结构规范化 → 仅在仍不可恢复时 1 次 GPT repair → schema-valid terminal prediction`。所有阶段共享整题 `600s / 3 GPT / 8 query / 16 admitted target` 总预算；`600s` 是父子进程硬熔断，不是 ETA。search provider 内的重定向/transport 尝试会使实际 HTTP fetch counter 略高于 16，但不会重新开放下一阶段搜索预算。
+>
+> 权威聚合 [`results/v24261_direct_executor_smoke_result_v1_20260802.json`](results/v24261_direct_executor_smoke_result_v1_20260802.json) 为 `16/16 terminal = 12 normalized_primary + 2 primary + 1 repaired + 1 best_effort_fallback`，即 `15/16` model-generated、1 fallback、0 hard deadline，预注册工程门 **GO**。mean/median/p95-max wall 分别为 `65.160s / 56.593s / 196.739s`；只有 1 题超过 120s。平均 `2.125` 个 GPT request、`7.938` 个 logical search、`16.75` 个实际 fetch、`153,246.938` system tokens。相比旧 R1 mean wall 约 `45.4×` 加速；相对未规范化 V2.42.57，均值由 `46.013s` 升至 `65.160s` 是一个 196.739s provider/网页长尾拉高，并非普遍回退到分钟级搜索。16 题顺序串行总 wall 约 `17.38min`；按本轮均值，220 题纯串行约 `3.98h`，8 路无争用理想下限约 `29.9min`，实际全集 ETA 必须由容量阶梯实测，不能把线性外推当承诺。
+>
+> 本轮只证明执行完成率、成本和延迟工程门，不证明 DeepWideBench 质量提升：未调用 evaluator、未使用同轮反馈、未获得 paired-dev64 分数，不能宣称 benchmark 提升或 SOTA。post-result 审计继续确认 runtime 只接受两字段可见输入，category/question_type/split/mapping/gold/evaluator/score 均未进入 forward；逐题题面、query、URL、页面和 prediction 不提交。定向 runtime/normalizer/aggregate/executor 回归 `27/27` 通过；另一次以 `python -I -m unittest tests...` 启动的命令因隔离模式移除仓库导入路径而 4/4 discovery error，改用隔离 `unittest discover` 后全部通过，前者不计为产品测试失败。
+>
+> 下一步更新为：先冻结 V2.42.61 作为候选工程基线；然后预注册跨题 executor capacity ladder `1/2/4/8/12 × 3`，保持单题 `4 search workers / 8 fetch workers` 与总预算不变，观测吞吐、429/5xx、超时、p95 和 token/fetch 漂移。容量稳定后再做同输入/同模型/同预算 paired dev64，两臂 prediction 全冻结后才离线 evaluator；通过质量门才授权唯一 fresh exact-220。不要以“提速”为由增加单题 search/fetch 宽度，也不要直接从 smoke GO 跳到全集。**
 >
 > **5.81 V2.42.57/58 score-first smoke16 全终局（2026-08-02 12:28 UTC）：先纠正耗时口径。旧 R1 的 `49.3min/task` 是整题端到端 wall，不是一次搜索 API 调用；但它仍然不合理，因为旧 runtime 平均每题串联约 `31.9` 次 GPT、`93.0` 次逻辑搜索、`764.4` 次 fetch，并让 planning、anchor、scope、candidate/coverage、mention-gap、row enrichment/refinement、membership/attribute/unknown-cell recovery 逐阶段重复领预算。220 题又基本按 shard/task 串行；173 个失败题平均仍消耗 `48.6min`，最后被晚期 fail-closed contract 整题归零。因此七天级 wall 是 pipeline 设计性放大，不是 DeepWideBench 只有 220 题却天然需要七天，也不是搜索 API 单次需要四五十分钟。
 >

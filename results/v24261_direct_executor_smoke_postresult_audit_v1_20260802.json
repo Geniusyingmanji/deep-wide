@@ -1,0 +1,100 @@
+{
+  "artifact_version": 1,
+  "role": "v24261_direct_executor_smoke_postresult_audit",
+  "created_at_unix": 1785676526,
+  "label_blind": true,
+  "protocol": {
+    "path": "results/v24261_direct_executor_smoke_preregistration_v1_20260802.json",
+    "sha256": "8365c2defa1a7c597a15145f25c436a4d93852f9cd4ac4c784396e7595071505",
+    "protocol_id": "v24261_direct_executor_smoke16_v1",
+    "decision_contract_sha256": "9beaa3bc2b00db8298b0428a8ddec7dd66d90d36789c6ad03d4d4b6766c8793c",
+    "control_manifest_sha256": "6458d5cf965552352efa673e84777e5ef59ef6349173ee21a2cea439eb71d516"
+  },
+  "activation": {
+    "path": "results/v24261_direct_executor_smoke_activation_v1_20260802.json",
+    "sha256": "ba3ce705b9f26bd143fa1a4711cef5fcbdfac0b70670bc93011651b644785dc3",
+    "payload_seal_valid": true,
+    "contents_emitted": false
+  },
+  "execution_start": {
+    "path": "results/v24261_direct_executor_smoke_execution_start_v1_20260802.json",
+    "sha256": "568c7b359010cf2b6298bf0617948a50ae0ae1d729101e006234b15d85048b23",
+    "payload_seal_valid": true,
+    "api_called_before_execution_start": false,
+    "contents_emitted": false
+  },
+  "result": {
+    "path": "results/v24261_direct_executor_smoke_result_v1_20260802.json",
+    "sha256": "d65ba620cb5dcd197faa8780b28253fcca0dcf8988927d84c9dc3400406bff86",
+    "payload_seal_valid": true,
+    "summary": {
+      "selected": 16,
+      "terminal": 16,
+      "completion_kinds": {
+        "normalized_primary": 12,
+        "primary": 2,
+        "repaired": 1,
+        "best_effort_fallback": 1
+      },
+      "model_generated_tables": 15,
+      "fallback_tables": 1,
+      "hard_deadline_fallbacks": 0,
+      "mean_wall_seconds": 65.16,
+      "median_wall_seconds": 56.593,
+      "p95_wall_seconds": 196.739,
+      "mean_model_requests": 2.125,
+      "mean_logical_search_calls": 7.9375,
+      "mean_fetch_calls": 16.75,
+      "mean_system_tokens": 153246.938,
+      "engineering_gate": "go",
+      "findings": []
+    },
+    "prediction_question_query_url_page_or_answer_emitted": false
+  },
+  "runtime_boundary": {
+    "accepted_task_fields": [
+      "opaque_id",
+      "question"
+    ],
+    "mapping_gold_category_question_type_split_evaluator_score_read": false,
+    "same_evaluated_forward_received_evaluator_feedback": false,
+    "credential_value_read_persisted_hashed_or_emitted_by_audit": false,
+    "network_model_search_fetch_or_evaluator_api_called_by_audit": false,
+    "runtime_task_candidate_or_prediction_opened_by_audit": false
+  },
+  "execution_closure": {
+    "runner_process_present_after_result": false,
+    "child_process_present_after_result": false,
+    "watcher_process_present_after_result": false,
+    "shared_api_lease_active": false,
+    "process_signal_restart_resume_skip_or_selective_retry": false
+  },
+  "tests": {
+    "isolated_discover_passed": 27,
+    "isolated_discover_failed": 0,
+    "suites": {
+      "v24257_score_first_runtime": "11/11",
+      "v24259_deterministic_table_normalizer": "11/11",
+      "v24259_smoke_aggregate": "2/2",
+      "v24261_direct_executor": "3/3"
+    },
+    "non_product_command_error": "python -I module-name invocation could not import the non-package tests directory; isolated unittest discover rerun passed 27/27"
+  },
+  "authorization": {
+    "capacity_ladder_design": true,
+    "capacity_ladder_launch": false,
+    "paired_dev64_design": true,
+    "paired_dev64_launch": false,
+    "official_evaluator_call": false,
+    "full220_launch": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "claims": {
+    "engineering_latency_and_completion_gate_passed": true,
+    "benchmark_quality_improvement_observed": false,
+    "paired_quality_result_available": false,
+    "sota": false
+  },
+  "audit_valid": true,
+  "audit_payload_sha256": "105c0202294778bfa33f0e1d5ba74ad9bc8c641416617f4037c83fb0076bcd24"
+}
