@@ -1,8 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.85
+> 版本：5.86
 >
-> 更新：2026-08-02 15:00 UTC
+> 更新：2026-08-02 16:08 UTC
+>
+> **5.86 V2.42.65 shared-prefix paired dev64 全终局（2026-08-02 16:08 UTC）：针对 V2.42.59 deterministic Markdown normalizer 做同题、同 planning/search/fetch/synthesis、同模型随机前缀的严格 paired ablation。每题只执行一次共享前缀，原始 synthesis 后才分成 control V2.42.57 与 candidate V2.42.59；若两臂都需 repair，只共享一次 repair response，并按各臂实际需要记反事实成本。forward 仍只接受精确 `{opaque_id, question}`；两份 exact-64 prediction freeze 之前不打开或哈希 mapping/query/answer/gold/evaluator。executor 固定 V2.42.64 已验证的 `4×`，GPT 全局 slot cap=`2`，无 resume/rerun/skip/selective retry。
+>
+> 真实 forward 约 `18.5min` 完成 `64/64` terminal pairs。control 为 `61 model-generated + 3 fallback`，candidate 为 `63 + 1`；candidate 仅改变 2/64 predictions，其余 62 题逐字相同。64/64 child slot receipt 有效，`136` actual shared GPT requests 与 `136` acquisitions 精确一致；control/candidate system tokens 分别 `10,027,493 / 10,022,565`，ratio=`0.999509`。这证明确定性结构规范化把两张本会 fallback 的表恢复为模型表，且没有增加 token。
+>
+> 两臂全部冻结后才首次验证 live evaluator identity，并以 failure-as-zero 的固定 64 分母运行官方 evaluator；control 64 行中 61 valid、3 terminal error，错误不选择性重评，candidate 对 62 个相同 prediction 复用完全相同 evaluator row，只对 2 个改变项新评。权威结果 [`results/v24265_paired_dev64_result_v1_20260802.json`](results/v24265_paired_dev64_result_v1_20260802.json) 为 paired gate **GO**：conservative entity accuracy `0.703125 → 0.718750`（`+0.015625`），quality composite `0.480919 → 0.484825`（`+0.003906`）；`f1_by_row / f1_by_item / column_f1` 与 whole-table successes 均不降。post-result audit findings=0，runner/child/finalizer/lease 自然闭合，无 kill/resume/选择性重评或 evaluator feedback 回流。
+>
+> 该结论只是已消费 dev64 上的开发消融，不是 fresh/held-out、不是 220 全集、不是 avg@4，也不支持 SOTA 宣称。下一步按预注册 GO 唯一授权一个 fresh exact-220 candidate run：冻结 V2.42.59 + 4× executor + GPT slot cap=2 + 同一单题预算；全 220 predictions 冻结后才调用同一 evaluator，所有 forward/evaluator failure 计零。全集结果出来前不再基于 dev64 evaluator 做逐题路由或调参。并行下一工程分支才处理 monotonic URL/batch deadline 与 entropy/VOC 自适应检索预算，不能污染这次 exact-220 candidate identity。**
 >
 > **5.85 V2.42.64 targeted 4/8/12 capacity 全终局（2026-08-02 15:00 UTC）：为避免 V2.42.63 被一个随机 matched-task fetch 尾部在 2× 误停，append-only 冻结并真实运行 `4/8/12 × 3 waves`。任务、prompt、GPT-5.6、Anthropic search、单题 `600s / 3 GPT / 8 logical search / 16 admitted fetch`、search/fetch workers、provider retry 与全局 GPT slot cap=2 全部保持不变；matched-task wall ratio 只作诊断，但 absolute p95≤600s、effective speedup≥1.5×、model-generated≥90%、token/fetch ratio≤1.5，以及任何 stage/infrastructure/`ModelRequestError`/invalid-receipt 均继续 fail closed。4× 的 12 个冻结 task 精确各运行一次，不选择成功题；全实验在首个失败档自然停止，无 resume/rerun/selective retry。
 >

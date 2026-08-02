@@ -1,0 +1,112 @@
+{
+  "artifact_version": 1,
+  "role": "v24265_shared_prefix_paired_dev64_result",
+  "protocol_id": "v24265_v24257_vs_v24259_shared_prefix_paired_dev64_v1",
+  "created_at_unix": 1785686712,
+  "status": "go",
+  "selected": 64,
+  "conservative_denominator": 64,
+  "failure_as_zero": true,
+  "exact_terminal_both_arms_before_evaluator": true,
+  "candidate_changed_predictions_evaluated": 2,
+  "candidate_identical_predictions_reused": 62,
+  "control": {
+    "runtime_completed": 64,
+    "runtime_failed": 0,
+    "evaluator_valid": 61,
+    "evaluator_invalid_or_not_run": 3,
+    "whole_table_successes": 4,
+    "system_total_tokens": 10027493.0,
+    "entity_acc": 0.703125,
+    "f1_by_row": 0.2935551717245101,
+    "f1_by_item": 0.43356987275643477,
+    "column_f1": 0.4934239639696917,
+    "quality_composite": 0.48091850211265913,
+    "model_generated_tables": 61
+  },
+  "candidate": {
+    "runtime_completed": 64,
+    "runtime_failed": 0,
+    "evaluator_valid": 61,
+    "evaluator_invalid_or_not_run": 3,
+    "whole_table_successes": 4,
+    "system_total_tokens": 10022565.0,
+    "entity_acc": 0.71875,
+    "f1_by_row": 0.2935551717245101,
+    "f1_by_item": 0.43356987275643477,
+    "column_f1": 0.4934239639696917,
+    "quality_composite": 0.48482475211265913,
+    "model_generated_tables": 63
+  },
+  "decision": {
+    "status": "go",
+    "passed": true,
+    "checks": {
+      "model_generated_non_decrease": true,
+      "whole_table_non_decrease": true,
+      "quality_component_safety": true,
+      "token_ratio": true,
+      "directional_gain": true
+    },
+    "candidate_minus_control": {
+      "runtime_completed": 0,
+      "whole_table_successes": 0,
+      "entity_acc": 0.015625,
+      "f1_by_row": 0.0,
+      "f1_by_item": 0.0,
+      "column_f1": 0.0,
+      "quality_composite": 0.00390625
+    },
+    "system_total_tokens_ratio": 0.9995085511403499
+  },
+  "provenance": {
+    "protocol_sha256": "350e50d7bc15342e3f60a77804863e89233b6d8a8b09da2e327089399ff47904",
+    "forward_result_sha256": "35cd788339996c80eaad302ada27db5cc4929c3073a68844fef073028f00a6bb",
+    "control_freeze_sha256": "4cba902e3d471566df007d0504ce9c9640cf74e4cf27cdf4400c4e04ca74d6b8",
+    "candidate_freeze_sha256": "7e8b8b3434255fbe389a6eb05fd3faa93c874ee5f88d1b8212bd2cc8f6b4ff22",
+    "mapping_sha256": "3d6f8f71e8136f5a3fe9385e2511e50a367e220dd84e790ba3c7dec975ab5d86",
+    "control_evaluator_contract_sha256": "5235cd0ccf159bdd54b3352a17fb410b282f6c304cdac5cda6a68ab6d180bd06",
+    "candidate_changed_evaluator_contract_sha256": "827d104eca1f1608ebf0aad2e00b9775ca7ffa846e1e2f4f13918a322b742241",
+    "query_data_sha256": "4dd18df4ab8d166f14a1458f884fd8e0652f970764e245e868d75947daa5e5cf",
+    "answer_corpus_manifest_sha256": "5ddc76dd9e9fa4a7080f84e824de6230c62101d2375dee72a0f508b7cfa4ec7e",
+    "evaluator_source_manifest_sha256": "2829e4808226bd35e4e312f024ceded3a9bc2b1e923493e06503278e382ba061",
+    "judge": {
+      "proxy_url": "http://127.0.0.1:9878/responses",
+      "model": "gpt-5.6-sol",
+      "reasoning_effort": "low",
+      "max_output_tokens": 8192,
+      "timeout_seconds": 600,
+      "max_retries": 12
+    },
+    "recovery_policy": {
+      "explicit_resume_required": true,
+      "committed_success_or_error_is_terminal": true,
+      "committed_rows_must_be_exact_prediction_prefix": true,
+      "canonical_result_file_atomic_replace_per_task": true,
+      "selective_error_retry_allowed": false
+    },
+    "candidate_hybrid_eval_results_sha256": "4c2101e9504fc9efe954ebd2a097339159064c44b4c3ce21437f1bbe94fbde44"
+  },
+  "source_policy": {
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "mapping_gold_category_question_type_split_evaluator_score_read_by_forward": false,
+    "mapping_opened_only_after_both_exact64_freezes": true,
+    "same_run_evaluator_feedback_used_for_forward_or_prediction_selection": false
+  },
+  "authorization": {
+    "successor_exact220_design": true,
+    "exact220_launch": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "claims": {
+    "development_ablation_only": true,
+    "fresh_or_held_out": false,
+    "full220_result": false,
+    "avg_at_4": false,
+    "sota": false
+  },
+  "result_payload_sha256": "36698d84ee0b0a1f1a2971c77412a5f1e94d928382c17aab8f1e5f90efb6d8ec"
+}

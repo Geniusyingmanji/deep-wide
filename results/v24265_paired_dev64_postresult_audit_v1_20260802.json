@@ -1,0 +1,116 @@
+{
+  "artifact_version": 1,
+  "role": "v24265_paired_dev64_postresult_audit",
+  "created_at_unix": 1785686741,
+  "label_blind": true,
+  "protocol_sha256": "350e50d7bc15342e3f60a77804863e89233b6d8a8b09da2e327089399ff47904",
+  "preactivation_audit_sha256": "3e012d9575c741b04a0773f4dc0d8b0a5299bc8bd6abb46411f2e282aedac0e3",
+  "activation_sha256": "563d32ad5f6678a2feb9cba31f64be8292ebcf0e2d1b0ffc697ca9b9650b5ac5",
+  "execution_start_sha256": "6de1cfa02210e5146b6abe410acc4b1f26f6c098cd702335fdaaf5b2e24a0214",
+  "forward_result_sha256": "35cd788339996c80eaad302ada27db5cc4929c3073a68844fef073028f00a6bb",
+  "final_result_sha256": "dd6ab44e3fda38a972675489c66ba0483c63f7dd4cf191f77fb9e5da2d2858cb",
+  "forward": {
+    "selected": 64,
+    "terminal_pairs": 64,
+    "control_model_generated_tables": 61,
+    "candidate_model_generated_tables": 63,
+    "shared_model_receipts": {
+      "actual_shared_model_requests": 136,
+      "all_acquisitions_match_actual_requests": true,
+      "children": 64,
+      "invalid": 0,
+      "present": 64,
+      "slot_acquisitions": 136,
+      "valid": 64
+    }
+  },
+  "paired_result": {
+    "status": "go",
+    "selected": 64,
+    "conservative_denominator": 64,
+    "candidate_changed_predictions_evaluated": 2,
+    "candidate_identical_predictions_reused": 62,
+    "control": {
+      "runtime_completed": 64,
+      "runtime_failed": 0,
+      "evaluator_valid": 61,
+      "evaluator_invalid_or_not_run": 3,
+      "whole_table_successes": 4,
+      "system_total_tokens": 10027493.0,
+      "entity_acc": 0.703125,
+      "f1_by_row": 0.2935551717245101,
+      "f1_by_item": 0.43356987275643477,
+      "column_f1": 0.4934239639696917,
+      "quality_composite": 0.48091850211265913,
+      "model_generated_tables": 61
+    },
+    "candidate": {
+      "runtime_completed": 64,
+      "runtime_failed": 0,
+      "evaluator_valid": 61,
+      "evaluator_invalid_or_not_run": 3,
+      "whole_table_successes": 4,
+      "system_total_tokens": 10022565.0,
+      "entity_acc": 0.71875,
+      "f1_by_row": 0.2935551717245101,
+      "f1_by_item": 0.43356987275643477,
+      "column_f1": 0.4934239639696917,
+      "quality_composite": 0.48482475211265913,
+      "model_generated_tables": 63
+    },
+    "decision": {
+      "status": "go",
+      "passed": true,
+      "checks": {
+        "model_generated_non_decrease": true,
+        "whole_table_non_decrease": true,
+        "quality_component_safety": true,
+        "token_ratio": true,
+        "directional_gain": true
+      },
+      "candidate_minus_control": {
+        "runtime_completed": 0,
+        "whole_table_successes": 0,
+        "entity_acc": 0.015625,
+        "f1_by_row": 0.0,
+        "f1_by_item": 0.0,
+        "column_f1": 0.0,
+        "quality_composite": 0.00390625
+      },
+      "system_total_tokens_ratio": 0.9995085511403499
+    }
+  },
+  "execution_closure": {
+    "runner_process_present_after_result": false,
+    "child_process_present_after_result": false,
+    "finalizer_process_present_after_result": false,
+    "shared_api_lease_active": false,
+    "process_signal_restart_skip_selective_retry_or_error_revaluation": false,
+    "active_run_killed_or_quarantined": false,
+    "invalid_result_path": null
+  },
+  "source_policy": {
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "mapping_gold_category_question_type_split_evaluator_score_read_by_forward": false,
+    "both_prediction_freezes_before_evaluator_side_open": true,
+    "same_run_evaluator_feedback_used_for_forward_or_prediction_selection": false,
+    "credential_value_persisted_hashed_or_emitted": false
+  },
+  "claims": {
+    "development_ablation_only": true,
+    "full220_result": false,
+    "avg_at_4": false,
+    "sota": false
+  },
+  "authorization": {
+    "successor_exact220_design": true,
+    "exact220_launch": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "findings": [],
+  "audit_valid": true,
+  "audit_payload_sha256": "5ca70cc8078cb35e71f1590ad6653b5c63189d50bd3211228c4f57f45fa63980"
+}
