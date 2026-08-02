@@ -1,0 +1,172 @@
+{
+  "artifact_version": 1,
+  "role": "v24260_import_bootstrap_smoke_preregistration",
+  "protocol_id": "v24260_import_bootstrap_smoke16_v1",
+  "created_at_unix": 1785674664,
+  "label_blind": true,
+  "parents": {
+    "protocol": {
+      "path": "results/v24259_deterministic_normalizer_smoke_preregistration_v1_20260802.json",
+      "sha256": "edca50fd785dd72af3b483337519ee77c0d8cb288d4ad3afcd06c478514892a9"
+    },
+    "result": {
+      "path": "results/v24259_deterministic_normalizer_smoke_result_v1_20260802.json",
+      "sha256": "b1e460ae28bb731af0f23161a37bc8001e6c8964aac2fff9585ca1771fcaae7f"
+    },
+    "postresult_audit": {
+      "path": "results/v24259_deterministic_normalizer_smoke_postresult_audit_v1_20260802.json",
+      "sha256": "807690c4724f720422cbc82ca024d21a97aebe5c02ec5f519522b480e205da61"
+    },
+    "zero_call_failure": {
+      "completion_kinds": {
+        "worker_failure_fallback": 16
+      },
+      "total_system_tokens": 0,
+      "total_fetch_calls": 0
+    }
+  },
+  "single_change": {
+    "mechanism": "insert_repository_root_before_importing_frozen_v24259_child_runner",
+    "wrapper_path": "scripts/v24260_successor/run_v24259_score_first_task.py",
+    "parent_child_path": "scripts/run_v24259_score_first_task.py",
+    "failed_parent_help_probe": "ModuleNotFoundError:scripts",
+    "successor_help_probe_exit_zero": true,
+    "runtime_normalizer_model_prompt_search_provider_budget_selection_and_gate_unchanged": true
+  },
+  "task_contract": {
+    "manifest": {
+      "path": "outputs/runtime_manifest_v1_repro/manifest.jsonl",
+      "sha256": "4e394daf67e0bdc7d1fe247d4781945334026c0065ec7666d298f18f4b7180fb",
+      "row_schema": [
+        "opaque_id",
+        "question"
+      ]
+    },
+    "id_source": {
+      "path": "configs/full220_v2403_r1_devval_s04.ids",
+      "sha256": "79ba11a41c186daa80e8779e8fa2c1b47e7907f8e398d817dedb43099333d69c"
+    },
+    "selection_rule": "same_frozen_first_16_devval_ids_full_fresh_cold_start",
+    "selected_count": 16,
+    "selected_opaque_ids_sha256": "0ce5098b8b14e99f1ec5d812962d9eed8d476d7c3cc956748ed05b2445e606c4",
+    "selected_opaque_ids_persisted_or_emitted": false,
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "already_consumed_engineering_smoke_not_independent_evaluation": true,
+    "category_question_type_split_mapping_gold_score_used_for_selection": false,
+    "selective_parent_failure_rerun": false
+  },
+  "limits": {
+    "wall_seconds": 600,
+    "model_calls": 3,
+    "search_queries": 8,
+    "fetch_targets": 16,
+    "search_results_per_query": 3,
+    "evidence_chars": 100000,
+    "page_chars": 5000,
+    "plan_output_tokens": 4000,
+    "synthesis_output_tokens": 30000,
+    "repair_output_tokens": 12000
+  },
+  "provider_contract": {
+    "model": {
+      "proxy_url": "http://127.0.0.1:9878/responses",
+      "name": "gpt-5.6-sol",
+      "reasoning_effort": "low",
+      "service_tier": "priority",
+      "timeout_seconds": 180,
+      "max_retries": 2
+    },
+    "search": {
+      "provider": "anthropic-server-web-search",
+      "model": "claude-haiku-4-5-20251001",
+      "timeout_seconds": 90,
+      "max_retries": 2,
+      "workers": 4,
+      "fetch_workers": 8,
+      "fetch_timeout_seconds": 20,
+      "server_search_max_uses_per_query": 1,
+      "server_search_auto_fetch_disabled": true,
+      "explicit_page_fetches_share_task_cap": true
+    },
+    "credentials_environment_only_not_persisted_hashed_or_emitted": true
+  },
+  "gate_contract": {
+    "minimum_model_generated_tables": 15,
+    "maximum_fallback_tables": 1,
+    "maximum_hard_deadline_fallbacks": 1,
+    "maximum_p95_wall_seconds": 600,
+    "maximum_mean_system_tokens": 750000,
+    "maximum_mean_fetch_calls": 200,
+    "primary_or_repaired_only_counts_as_model_generated": true,
+    "schema_only_fallback_does_not_count_as_completion_improvement": true,
+    "go_authorizes_paired_dev64_design_only": true,
+    "go_does_not_authorize_dev64_full220_evaluator_or_leaderboard": true,
+    "model_generated_kinds": [
+      "primary",
+      "repaired",
+      "normalized_primary",
+      "normalized_repaired"
+    ],
+    "normalized_table_requires_no_nonempty_factual_cell_rewrite": true
+  },
+  "lease_contract": {
+    "path": "outputs/deepwide_benchmark_api.lease.lock",
+    "owner": "v24260_import_bootstrap_smoke16_v1",
+    "purpose": "v24259_normalizer_with_isolated_child_import_bootstrap",
+    "nonblocking_posix_flock_required": true,
+    "single_owner_across_all_16_tasks": true,
+    "legacy_expected_finding": "v24195:unknown_lease_owner"
+  },
+  "execution": {
+    "runner_marker": "scripts/run_v24260_score_first_smoke.py",
+    "task_runner_marker": "scripts/v24260_successor/run_v24259_score_first_task.py",
+    "watcher_marker": "scripts/watch_v24260_import_bootstrap_smoke.py",
+    "activation_path": "results/v24260_import_bootstrap_smoke_activation_v1_20260802.json",
+    "execution_start_path": "results/v24260_import_bootstrap_smoke_execution_start_v1_20260802.json",
+    "output_root": "outputs/v24260_import_bootstrap_smoke16_v1_20260802",
+    "result_path": "results/v24260_import_bootstrap_smoke_result_v1_20260802.json",
+    "watcher_state_path": "outputs/v24260_import_bootstrap_smoke_watcher_state_v1_20260802.json",
+    "executor_concurrency": 1,
+    "parent_deadline_grace_seconds": 5,
+    "forward_resume_or_selective_rerun_allowed": false,
+    "result_overwrite_allowed": false
+  },
+  "source_policy": {
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "mapping_gold_category_question_type_evaluator_score_read": false,
+    "same_run_evaluator_feedback_used_for_forward_or_tuning": false,
+    "credential_value_persisted_hashed_or_emitted": false
+  },
+  "authorization": {
+    "single_fresh_smoke16_after_activation_and_lease": true,
+    "process_signal_restart_resume_skip_or_selective_retry": false,
+    "official_evaluator_call": false,
+    "paired_dev64_or_full220_launch": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "safe_freeze_boundary": {
+    "future_paths_present": [],
+    "shared_api_lease_active": false,
+    "network_model_search_fetch_evaluator_or_api_called": false
+  },
+  "control_surface": {
+    "file_count": 7,
+    "manifest": {
+      "scripts/v24260_successor/run_v24259_score_first_task.py": "3a33706a54114fcd1e2939d3d233a2fb8980407de38bb13e7006ba31f04c20e0",
+      "scripts/run_v24260_score_first_smoke.py": "c888f581c08cd4b79ab7cd7d6be55a349c6d7dc2d3e82a7b9147a382d13f7d3d",
+      "scripts/preregister_v24260_import_bootstrap_smoke.py": "dc3fd1fe993ed42f6e7aa61fb6a45c22d032588e748801f8180c307215795eb1",
+      "scripts/activate_v24260_import_bootstrap_smoke.py": "339f6322085a06d6e3b1696ec065e2d7aad004909f4359f4af01714e36ce076a",
+      "scripts/audit_v24260_import_bootstrap_smoke.py": "5581288f63ec931819bfa07b944a5a6e621edf4899a3a8aca8b6837d55819cb8",
+      "scripts/watch_v24260_import_bootstrap_smoke.py": "97c5f3187c5576ab4fc68d02638f0ee4a182b9644bf33e54c0d82207ec76cb48",
+      "tests/test_v24260_import_bootstrap_smoke.py": "81f20e51e7ef25da92baa780730d079e12f2451dbb4a0c4305b47078328098b8"
+    },
+    "manifest_sha256": "5574bdfca3b7790c49b8d1f096e32ec776ea2850ebcfd3ea6d97729f46e1b2fd"
+  },
+  "decision_contract_sha256": "1dd151a8775e9c7f5c83b56a463b85a5233075702016e0be651a95424b83b12b"
+}
