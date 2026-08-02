@@ -1,0 +1,106 @@
+{
+  "artifact_version": 1,
+  "role": "v24268_keyless_nonbenchmark_smoke_preregistration",
+  "protocol_id": "v24268_keyless_batched_same_width_nonbenchmark_smoke_v1",
+  "created_at_unix": 1785698571,
+  "git_head": "6cfdb3aaf780ed16a567edbdae361ecf7079f74a",
+  "label_blind": true,
+  "parent": {
+    "exact220_result": "results/v24267_exact220_result_v1_20260802.json",
+    "exact220_result_sha256": "0e08df141b1c34726bc04673fcb5c56f98b4aab08df906c2d7f35b568b6932eb",
+    "exact220_postresult_audit": "results/v24267_exact220_postresult_audit_v1_20260802.json",
+    "exact220_postresult_audit_sha256": "24af29aa314550839486a6e430bf24355c0ce003466f170102c88b5b206e8eaf"
+  },
+  "candidate": {
+    "policy_id": "v24268_keyless_batched_search_telemetry_v1",
+    "single_scientific_change": "replace one-Anthropic-request-per-logical-query with keyless Azure-native query-local batching on the existing loopback GPT-5.6 proxy",
+    "instrumentation_change": "append content-free per-effect latency, counter delta, retrieval-yield counts, and final table-shape telemetry",
+    "unchanged": [
+      "visible task boundary",
+      "planning prompt and model",
+      "eight logical query cap",
+      "sixteen fetch-target cap",
+      "three results per logical query cap",
+      "page fetcher and page-character cap",
+      "synthesis prompt and model",
+      "deterministic table normalizer",
+      "bounded repair",
+      "total fallback"
+    ]
+  },
+  "task_contract": {
+    "selected_count": 1,
+    "source": "new synthetic public-information task unrelated to DeepWideBench",
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "benchmark_question_id_mapping_split_category_gold_evaluator_or_score_used": false,
+    "task_question_prediction_query_url_page_or_answer_may_be_committed": false
+  },
+  "limits": {
+    "wall_seconds": 600,
+    "model_calls": 3,
+    "search_queries": 8,
+    "fetch_targets": 16,
+    "search_results_per_query": 3,
+    "evidence_chars": 100000,
+    "page_chars": 5000
+  },
+  "provider_contract": {
+    "proxy_url": "http://127.0.0.1:9878/responses",
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "low",
+    "service_tier": "priority",
+    "model_slot_cap": 2,
+    "search_provider": "azure-native-keyless-batched",
+    "search_batch_size": 8,
+    "search_workers": 1,
+    "search_context_size": "medium",
+    "server_auto_fetch_enabled": false,
+    "fetch_workers": 8,
+    "fetch_timeout_seconds": 20,
+    "credential_required_or_persisted": false
+  },
+  "gate_contract": {
+    "child_exit_zero": true,
+    "terminal_v24268_result": true,
+    "parent_v24259_downcast_valid": true,
+    "model_generated_table_required": true,
+    "model_slot_receipt_present_and_valid": true,
+    "model_slot_acquisitions_equal_actual_model_requests": true,
+    "logical_search_batches_equal_admitted_queries": true,
+    "hosted_search_http_calls_at_most": 4,
+    "search_or_fetch_stage_failure_allowed": false,
+    "telemetry_contains_content_or_privileged_metadata": false,
+    "shared_lease_released_after_terminal": true
+  },
+  "source_manifest": {
+    "src/deepwide_agent/v24268_keyless_batched_runtime.py": "776d6724f2024ff82e2b851e7a367c1b1657abc6ec80dcebe97c6fb22f85a51a",
+    "scripts/run_v24268_keyless_batched_task.py": "dbff17e9e10c031761a353b433acb510e379395ccfee4acc5e32c3d01a73b5c0",
+    "src/deepwide_agent/v24267_total_fallback.py": "6c75ee5e87a671d3d1a7644ed430d59aba01dca0886e8b30706da24e2f49bf89",
+    "src/deepwide_agent/v24259_deterministic_table_normalizer.py": "bc2ed6ae62cd68cf908ff2c50f59caa37cf6f57d9d12ab3db5294cf39b2c5f91",
+    "src/deepwide_agent/v24257_score_first_runtime.py": "c4e3f818d0306f53d40f641a7a580aa7238e0698d2863301fe8399d8e3c1fa3e",
+    "src/deepwide_agent/native_search.py": "cd0d6bfccf4b345b11274558bdcffb39d279697d183242baf811dfd56ac71e50",
+    "src/deepwide_agent/clients.py": "339d923973f07ebcd33cb12cee2c26103df70ed3aea1fc0a737ffd675ac06fbc",
+    "src/deepwide_agent/v24263_global_model_limiter.py": "050751273bf28520bb82799e5194b9b404c58fecf6c5a725cfea93da0d041497",
+    "scripts/deepwide_api_lease.py": "8d9cffa78617b458172307d3558c76e9370f045f531c2f5aaaceb866f5a78c7d"
+  },
+  "execution": {
+    "output_root": "outputs/v24268_keyless_nonbenchmark_smoke_v1_20260802",
+    "aggregate_result": "results/v24268_keyless_nonbenchmark_smoke_result_v1_20260802.json",
+    "lease_path": "outputs/deepwide_benchmark_api.lease.lock",
+    "lease_owner": "v24268_keyless_nonbenchmark_smoke_v1",
+    "no_resume_rerun_or_selective_retry": true
+  },
+  "authorization": {
+    "one_nonbenchmark_smoke": true,
+    "benchmark_forward": false,
+    "dev64": false,
+    "exact220": false,
+    "evaluator": false,
+    "additional_rollout_or_avg4": false,
+    "leaderboard_submission": false,
+    "sota_claim": false
+  }
+}
