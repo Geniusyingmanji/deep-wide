@@ -16,23 +16,23 @@ from typing import Any
 
 
 ROLE = "v24275_two_wave_dev64_forward_contract"
-PROTOCOL_ID = "v24275_v24273_two_wave_vs_v24271_frozen_candidate_dev64_v1"
+PROTOCOL_ID = "v24275_v24273_two_wave_vs_v24271_frozen_candidate_dev64_v2"
 FORWARD_PROTOCOL = Path(
-    "results/v24275_two_wave_dev64_forward_contract_v1_20260802.json"
+    "results/v24275_two_wave_dev64_forward_contract_v2_20260802.json"
 )
 PREAUDIT = Path(
-    "results/v24275_two_wave_dev64_preactivation_audit_v1_20260802.json"
+    "results/v24275_two_wave_dev64_preactivation_audit_v2_20260802.json"
 )
 ACTIVATION = Path(
-    "results/v24275_two_wave_dev64_activation_v1_20260802.json"
+    "results/v24275_two_wave_dev64_activation_v2_20260802.json"
 )
 EXECUTION_START = Path(
-    "results/v24275_two_wave_dev64_execution_start_v1_20260802.json"
+    "results/v24275_two_wave_dev64_execution_start_v2_20260802.json"
 )
 FORWARD_RESULT = Path(
-    "results/v24275_two_wave_dev64_forward_result_v1_20260802.json"
+    "results/v24275_two_wave_dev64_forward_result_v2_20260802.json"
 )
-OUTPUT_ROOT = Path("outputs/v24275_two_wave_dev64_v1_20260802")
+OUTPUT_ROOT = Path("outputs/v24275_two_wave_dev64_v2_20260802")
 MODEL_SLOT_DIRECTORY = OUTPUT_ROOT / "model_slots"
 TASK_ROOT = OUTPUT_ROOT / "tasks"
 RUNTIME_PREDICTIONS = OUTPUT_ROOT / "candidate_runtime_predictions.jsonl"
@@ -242,6 +242,14 @@ def validate_protocol(
             "mapping_control_prediction_gold_category_question_type_split_evaluator_score_read_by_forward"
         )
         is not False
+        or value.get("source_policy", {}).get(
+            "historical_per_task_control_prediction_freeze_runtime_summary_and_mapping_gold_evaluator_rows_open_only_after_candidate_exact64_freeze"
+        )
+        is not True
+        or value.get("source_policy", {}).get(
+            "historical_control_aggregate_result_and_evaluator_contract_read_as_preregistration_metadata"
+        )
+        is not True
     ):
         raise RuntimeError("V2.42.75 forward contract identity drifted")
     manifest = value.get("forward_surface", {}).get("dependency_manifest")

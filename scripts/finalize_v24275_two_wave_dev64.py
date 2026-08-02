@@ -43,9 +43,9 @@ from deepwide_agent.v24275_forward_contract import (  # noqa: E402
 from scripts import run_v24275_two_wave_dev64 as candidate_runner  # noqa: E402
 
 
-FULL_PROTOCOL = Path("results/v24275_two_wave_dev64_preregistration_v1_20260802.json")
-FINAL_RESULT = Path("results/v24275_two_wave_dev64_result_v1_20260802.json")
-OUTPUT_ROOT = Path("outputs/v24275_two_wave_dev64_v1_20260802")
+FULL_PROTOCOL = Path("results/v24275_two_wave_dev64_preregistration_v2_20260802.json")
+FINAL_RESULT = Path("results/v24275_two_wave_dev64_result_v2_20260802.json")
+OUTPUT_ROOT = Path("outputs/v24275_two_wave_dev64_v2_20260802")
 EVALUATOR_ROOT = OUTPUT_ROOT / "evaluator"
 MAPPING_PATH = Path("outputs/runtime_manifest_v1_repro/evaluator_mapping.jsonl")
 QUALITY = ("entity_acc", "f1_by_row", "f1_by_item", "column_f1")

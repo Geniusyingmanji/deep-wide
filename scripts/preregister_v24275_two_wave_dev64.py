@@ -51,10 +51,10 @@ from deepwide_agent.v24275_forward_contract import (  # noqa: E402
 
 
 ROLE = "v24275_two_wave_vs_v24271_frozen_candidate_dev64_preregistration"
-OUTPUT = Path("results/v24275_two_wave_dev64_preregistration_v1_20260802.json")
-FINAL_RESULT = Path("results/v24275_two_wave_dev64_result_v1_20260802.json")
+OUTPUT = Path("results/v24275_two_wave_dev64_preregistration_v2_20260802.json")
+FINAL_RESULT = Path("results/v24275_two_wave_dev64_result_v2_20260802.json")
 POSTAUDIT = Path(
-    "results/v24275_two_wave_dev64_postresult_audit_v1_20260802.json"
+    "results/v24275_two_wave_dev64_postresult_audit_v2_20260802.json"
 )
 EVALUATOR_ROOT = OUTPUT_ROOT / "evaluator"
 FINALIZER_MARKER = "scripts/finalize_v24275_two_wave_dev64.py"
@@ -88,6 +88,9 @@ CAPACITY_EXTENSION = Path(
 )
 HARD_DEADLINE_CAPACITY = Path(
     "results/v24276_hard_deadline_capacity_v1_20260802.json"
+)
+V1_REVOCATION = Path(
+    "results/v24275_dev64_v1_zero_call_revocation_v1_20260802.json"
 )
 
 FORWARD_FILES = (
@@ -181,6 +184,7 @@ def _parents(root: Path) -> dict[str, Any]:
         CAPACITY_STAIRCASE,
         CAPACITY_EXTENSION,
         HARD_DEADLINE_CAPACITY,
+        V1_REVOCATION,
     )
     for path in paths:
         _ordinary(root, path)
@@ -193,6 +197,7 @@ def _parents(root: Path) -> dict[str, Any]:
     capacity = read_object(root / CAPACITY_STAIRCASE)
     extension = read_object(root / CAPACITY_EXTENSION)
     hard_capacity = read_object(root / HARD_DEADLINE_CAPACITY)
+    revocation = read_object(root / V1_REVOCATION)
     if (
         control_protocol.get("role")
         != "v24271_keyless_candidate_vs_frozen_control_dev64_preregistration"
@@ -254,6 +259,25 @@ def _parents(root: Path) -> dict[str, Any]:
         )
         or not all(hard_capacity.get("summary", {}).get("checks", {}).values())
         or any(hard_capacity.get("authorization", {}).values())
+        or revocation.get("role") != "v24275_dev64_v1_zero_call_revocation"
+        or revocation.get("status") != "revoked_before_activation"
+        or not _sealed(revocation, "revocation_payload_sha256")
+        or revocation.get("successor_protocol_id") != PROTOCOL_ID
+        or any(
+            revocation.get(name) is not False
+            for name in (
+                "activation_created",
+                "execution_start_created",
+                "output_root_created",
+                "shared_api_lease_acquired",
+                "network_model_search_fetch_or_evaluator_api_called",
+                "benchmark_forward_called",
+                "mapping_gold_or_evaluator_rows_opened",
+                "protected_existing_processes_signaled_restarted_or_stopped",
+                "resume_restart_or_reuse_allowed",
+            )
+        )
+        or any(revocation.get("authorization", {}).values())
     ):
         raise RuntimeError("V2.42.75 parent identity drifted")
     evaluator = control_protocol.get("evaluator_contract")
@@ -286,6 +310,7 @@ def _parents(root: Path) -> dict[str, Any]:
         "capacity": capacity,
         "extension": extension,
         "hard_capacity": hard_capacity,
+        "v1_revocation": revocation,
         "evaluator": evaluator,
         "task_contract": task_contract,
         "ids": list(ids),
@@ -361,6 +386,12 @@ def build_protocol(
                 "task_wall_max_seconds": parents["hard_capacity"]["summary"][
                     "task_wall_max_seconds"
                 ],
+            },
+            "revoked_v1_zero_call_freeze": {
+                "path": str(V1_REVOCATION),
+                "sha256": sha256(root / V1_REVOCATION),
+                "status": "revoked_before_activation",
+                "resume_restart_or_reuse_allowed": False,
             },
             "historical_control_prediction_freeze_runtime_summary_mapping_gold_or_evaluator_rows_opened_or_hashed": False,
         },
@@ -448,9 +479,9 @@ def build_protocol(
         },
         "lease_contract": {
             "path": str(LEASE),
-            "forward_owner": "v24275_two_wave_dev64_forward_v1",
+            "forward_owner": "v24275_two_wave_dev64_forward_v2",
             "forward_purpose": "label_blind_two_wave_candidate_dev64_forward",
-            "evaluator_owner": "v24275_two_wave_dev64_evaluator_v1",
+            "evaluator_owner": "v24275_two_wave_dev64_evaluator_v2",
             "evaluator_purpose": "post_candidate_freeze_full64_both_arms_evaluator",
             "forward_and_evaluator_may_not_overlap": True,
         },
@@ -471,7 +502,8 @@ def build_protocol(
         "source_policy": {
             "runtime_boundary": ["opaque_id", "question"],
             "mapping_control_prediction_gold_category_question_type_split_evaluator_score_read_by_forward": False,
-            "historical_control_and_evaluator_open_only_after_candidate_exact64_freeze": True,
+            "historical_per_task_control_prediction_freeze_runtime_summary_and_mapping_gold_evaluator_rows_open_only_after_candidate_exact64_freeze": True,
+            "historical_control_aggregate_result_and_evaluator_contract_read_as_preregistration_metadata": True,
             "credential_value_persisted_hashed_or_emitted": False,
         },
         "authorization": {
@@ -606,6 +638,14 @@ def validate_protocol(
         or value.get("authorization", {}).get("new_exact220_launch") is not False
         or value.get("authorization", {}).get("leaderboard_submission_or_sota_claim")
         is not False
+        or value.get("source_policy", {}).get(
+            "historical_per_task_control_prediction_freeze_runtime_summary_and_mapping_gold_evaluator_rows_open_only_after_candidate_exact64_freeze"
+        )
+        is not True
+        or value.get("source_policy", {}).get(
+            "historical_control_aggregate_result_and_evaluator_contract_read_as_preregistration_metadata"
+        )
+        is not True
     ):
         raise RuntimeError("V2.42.75 protocol identity drifted")
     parents = _parents(root)
@@ -619,6 +659,7 @@ def validate_protocol(
         ("neutral_capacity_staircase", CAPACITY_STAIRCASE),
         ("neutral_capacity_extension", CAPACITY_EXTENSION),
         ("hard_deadline_capacity_gate", HARD_DEADLINE_CAPACITY),
+        ("revoked_v1_zero_call_freeze", V1_REVOCATION),
     ):
         if value["parents"][key]["sha256"] != sha256(root / path_):
             raise RuntimeError(f"V2.42.75 parent hash drifted: {key}")

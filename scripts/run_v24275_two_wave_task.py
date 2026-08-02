@@ -208,7 +208,7 @@ def main() -> None:
     )
     transport_path = _ordinary_under(Path(args.transport_health), ROOT / "outputs")
     slot_directory = Path(args.model_slot_directory)
-    expected_task_root = (ROOT / "outputs/v24275_two_wave_dev64_v1_20260802/tasks").resolve()
+    expected_task_root = (ROOT / "outputs/v24275_two_wave_dev64_v2_20260802/tasks").resolve()
     task_directory = task_path.parent
     if (
         not task_path.is_file()

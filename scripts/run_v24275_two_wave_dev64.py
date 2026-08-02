@@ -837,10 +837,13 @@ def run_one_task(
             )
         except (OSError, TypeError, ValueError, RuntimeError, json.JSONDecodeError):
             receipt = None
+    # Absence of the child receipt is not evidence of a healthy transport.
+    # Conservatively materialize one helper failure so worker crashes before
+    # receipt publication cannot pass the retrieval-health gate.
     health: dict[str, int] = {
-        "hard_fetch_helper_calls": 0,
+        "hard_fetch_helper_calls": 1,
         "hard_fetch_deadline_failures": 0,
-        "fetch_helper_failures": 0,
+        "fetch_helper_failures": 1,
     }
     if transport_path.is_file() and not transport_path.is_symlink():
         try:

@@ -107,6 +107,20 @@ class V24275TwoWaveDev64Tests(unittest.TestCase):
         self.assertEqual(
             value["parents"]["hard_deadline_capacity_gate"]["concurrency"], 8
         )
+        self.assertEqual(
+            value["parents"]["revoked_v1_zero_call_freeze"]["status"],
+            "revoked_before_activation",
+        )
+        self.assertTrue(
+            value["source_policy"][
+                "historical_per_task_control_prediction_freeze_runtime_summary_and_mapping_gold_evaluator_rows_open_only_after_candidate_exact64_freeze"
+            ]
+        )
+        self.assertTrue(
+            value["source_policy"][
+                "historical_control_aggregate_result_and_evaluator_contract_read_as_preregistration_metadata"
+            ]
+        )
         self.assertFalse(value["authorization"]["new_exact220_launch"])
         self.assertFalse(
             value["authorization"]["leaderboard_submission_or_sota_claim"]
@@ -150,6 +164,35 @@ class V24275TwoWaveDev64Tests(unittest.TestCase):
         }
         self.assertTrue(forbidden.isdisjoint(opened))
         self.assertTrue(forbidden.isdisjoint(hashed))
+
+    def test_source_policy_timing_tamper_fails_full_and_forward_contracts(self) -> None:
+        altered = copy.deepcopy(self.protocol)
+        altered["source_policy"][
+            "historical_per_task_control_prediction_freeze_runtime_summary_and_mapping_gold_evaluator_rows_open_only_after_candidate_exact64_freeze"
+        ] = False
+        altered["decision_contract_sha256"] = payload_sha256(
+            {key: value for key, value in altered.items() if key != "decision_contract_sha256"}
+        )
+        with mock.patch.object(
+            prereg, "_ordinary", return_value=ROOT / "README.md"
+        ), mock.patch.object(
+            prereg, "read_object", return_value=altered
+        ), self.assertRaisesRegex(RuntimeError, "identity"):
+            prereg.validate_protocol(ROOT, prereg.OUTPUT)
+
+        forward = copy.deepcopy(self.forward_protocol)
+        forward["source_policy"][
+            "historical_control_aggregate_result_and_evaluator_contract_read_as_preregistration_metadata"
+        ] = False
+        unsigned = dict(forward)
+        unsigned.pop("forward_contract_payload_sha256")
+        forward["forward_contract_payload_sha256"] = payload_sha256(unsigned)
+        with mock.patch.object(
+            forward_contract, "_ordinary", return_value=ROOT / "README.md"
+        ), mock.patch.object(
+            forward_contract, "read_object", return_value=forward
+        ), self.assertRaisesRegex(RuntimeError, "identity"):
+            forward_contract.validate_protocol(ROOT)
 
     def test_forward_eager_import_closure_is_frozen_and_capability_free(self) -> None:
         manifest = self.protocol["forward_surface"]["manifest"]
@@ -384,7 +427,8 @@ class V24275TwoWaveDev64Tests(unittest.TestCase):
         self.assertEqual(outcome.row["status"], "completed")
         self.assertEqual(outcome.row["completion_kind"], "worker_failure_fallback")
         self.assertEqual(outcome.row["telemetry"]["retrieval_failed"], 1)
-        self.assertEqual(outcome.row["telemetry"]["hard_fetch_helper_calls"], 0)
+        self.assertEqual(outcome.row["telemetry"]["hard_fetch_helper_calls"], 1)
+        self.assertEqual(outcome.row["telemetry"]["fetch_helper_failures"], 1)
         self.assertFalse(outcome.receipt_present)
 
     def test_decision_requires_quality_latency_and_all_retrieval_health_gates(self) -> None:
