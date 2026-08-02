@@ -1,0 +1,75 @@
+{
+  "artifact_version": 1,
+  "role": "v24258_score_first_smoke_successor_preregistration",
+  "protocol_id": "v24258_zero_effect_start_successor_v1",
+  "created_at_unix": 1785672807,
+  "label_blind": true,
+  "parents": {
+    "v24257_protocol": {
+      "path": "results/v24257_score_first_smoke_preregistration_v1_20260802.json",
+      "sha256": "f00cbfa62d097f351108e4ff2ceb5bcf1dc1bc5f8af65dd45877c9bfc6054e6b",
+      "decision_contract_sha256": "2ba906398d83d4429abeb7af9ddaf8435d529959e77c9e1442b0ee26a36a8711"
+    },
+    "v24257_activation": {
+      "path": "results/v24257_score_first_smoke_activation_v1_20260802.json",
+      "sha256": "0bcfd5b5588682fd34e42bcf8a4bc31db40ae9f3d6dad61bc9526f07790f1d1a"
+    },
+    "zero_effect_failure": {
+      "path": "results/v24257_score_first_smoke_start_failure_v1_20260802.json",
+      "sha256": "980b13ccb64dc9fbacd2d50723394cc84cc225046978c464951c2d0d51a3fe0e",
+      "failure_payload_sha256": "7c2b7c841a927fb73a83fb208fe569b1d095a22514fdd9fd4c179ac0a2040774"
+    }
+  },
+  "correction": {
+    "single_change": "define_frozen_runner_marker_before_delegating_to_byte_frozen_v24257_runner",
+    "wrapper": "scripts/v24258_successor/scripts/run_v24257_score_first_smoke.py",
+    "delegated_parent_runner": "scripts/run_v24257_score_first_smoke.py",
+    "model_prompt_search_budget_task_selection_and_gate_unchanged": true,
+    "parent_protocol_retry_or_resume": false,
+    "append_only_successor_launch": true
+  },
+  "execution": {
+    "activation_path": "results/v24258_score_first_smoke_successor_activation_v1_20260802.json",
+    "wrapper_path": "scripts/v24258_successor/scripts/run_v24257_score_first_smoke.py",
+    "compatible_process_script_suffix": "scripts/run_v24257_score_first_smoke.py",
+    "parent_protocol_argument": "results/v24257_score_first_smoke_preregistration_v1_20260802.json",
+    "execution_start_path": "results/v24257_score_first_smoke_execution_start_v1_20260802.json",
+    "output_root": "outputs/v24257_score_first_smoke16_v1_20260802",
+    "result_path": "results/v24257_score_first_smoke_result_v1_20260802.json",
+    "shared_lease_path": "outputs/deepwide_benchmark_api.lease.lock",
+    "shared_lease_owner": "v24257_score_first_smoke16_v1",
+    "shared_lease_purpose": "bounded_label_blind_score_first_smoke16_engineering_gate",
+    "existing_watcher": {
+      "marker": "scripts/watch_v24257_score_first_smoke.py",
+      "pid": 3430232,
+      "start_ticks": 762013025
+    },
+    "new_or_restarted_watcher_allowed": false
+  },
+  "source_policy": {
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "mapping_gold_category_question_type_evaluator_score_read": false,
+    "same_forward_evaluator_feedback": false,
+    "credential_value_persisted_hashed_or_emitted": false
+  },
+  "authorization": {
+    "one_corrected_smoke16_successor_launch": true,
+    "parent_retry_resume_or_selective_rerun": false,
+    "process_signal_or_existing_watcher_restart": false,
+    "official_evaluator_dev64_full220_or_leaderboard": false
+  },
+  "control_surface": {
+    "file_count": 4,
+    "manifest": {
+      "scripts/preregister_v24258_score_first_smoke_successor.py": "64ef931b1f8a69d5cf887240d45f6b99701f596e0d69a9d32a98114650a3e11e",
+      "scripts/activate_v24258_score_first_smoke_successor.py": "26272d2a8a82198ff0966980c14debccef7c84c9b668e40b7a5dfd7d5ce6cbfc",
+      "scripts/v24258_successor/scripts/run_v24257_score_first_smoke.py": "99bc2502752db3f6aa17cba03847ed79b561cce6b1ba866959e229c64757fec8",
+      "tests/test_v24258_score_first_smoke_successor.py": "86b56ae164aa5415fd36467d3cf2dfeba7234d1af3556ad5c201c491276640e0"
+    },
+    "manifest_sha256": "dcecd7507856231acc1539229253fcb85b22954a36e76134e967cc269ce56174"
+  },
+  "decision_contract_sha256": "fb2844340be72bcace4c78f7a2dce50070c4a73e96f0e8d921034d9109bf4bb8"
+}
