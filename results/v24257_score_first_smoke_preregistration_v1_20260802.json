@@ -1,0 +1,170 @@
+{
+  "artifact_version": 1,
+  "role": "v24257_score_first_smoke_preregistration",
+  "protocol_id": "v24257_score_first_smoke16_v1",
+  "created_at_unix": 1785672112,
+  "label_blind": true,
+  "baseline": {
+    "result": {
+      "path": "results/full220_v2403_r1_20260725.json",
+      "sha256": "b8e49006559b207b05ad66256cecba24ab02752cdc5b72bbf788154cf523c985"
+    },
+    "seal": {
+      "path": "results/full220_v2403_r1_20260725_finalize_seal.json",
+      "sha256": "6353c3d1caa05fc67f750570d3b3e5909d23945cc69b63f479a47c23d6b3c63f"
+    },
+    "selected": 220,
+    "runtime_completed": 47,
+    "runtime_failed": 173,
+    "conservative_score": 0.00909090909090909,
+    "conservative_row_f1": 0.03910544520838638,
+    "conservative_item_f1": 0.090947755251532,
+    "completed_valid_only_item_f1": 0.4446334701186008,
+    "consumed_public_engineering_result_not_independent_test": true
+  },
+  "task_contract": {
+    "manifest": {
+      "path": "outputs/runtime_manifest_v1_repro/manifest.jsonl",
+      "sha256": "4e394daf67e0bdc7d1fe247d4781945334026c0065ec7666d298f18f4b7180fb",
+      "row_schema": [
+        "opaque_id",
+        "question"
+      ]
+    },
+    "id_source": {
+      "path": "configs/full220_v2403_r1_devval_s04.ids",
+      "sha256": "79ba11a41c186daa80e8779e8fa2c1b47e7907f8e398d817dedb43099333d69c"
+    },
+    "selection_rule": "first_16_in_frozen_devval_id_order",
+    "selected_count": 16,
+    "selected_opaque_ids_sha256": "0ce5098b8b14e99f1ec5d812962d9eed8d476d7c3cc956748ed05b2445e606c4",
+    "selected_opaque_ids_persisted_or_emitted": false,
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "already_consumed_engineering_smoke_not_independent_evaluation": true,
+    "category_question_type_split_mapping_gold_score_used_for_selection": false
+  },
+  "limits": {
+    "wall_seconds": 600,
+    "model_calls": 3,
+    "search_queries": 8,
+    "fetch_targets": 16,
+    "search_results_per_query": 3,
+    "evidence_chars": 100000,
+    "page_chars": 5000,
+    "plan_output_tokens": 4000,
+    "synthesis_output_tokens": 30000,
+    "repair_output_tokens": 12000
+  },
+  "provider_contract": {
+    "model": {
+      "proxy_url": "http://127.0.0.1:9878/responses",
+      "name": "gpt-5.6-sol",
+      "reasoning_effort": "low",
+      "service_tier": "priority",
+      "timeout_seconds": 180,
+      "max_retries": 2
+    },
+    "search": {
+      "provider": "anthropic-server-web-search",
+      "model": "claude-haiku-4-5-20251001",
+      "timeout_seconds": 90,
+      "max_retries": 2,
+      "workers": 4,
+      "fetch_workers": 8,
+      "fetch_timeout_seconds": 20,
+      "server_search_max_uses_per_query": 1,
+      "server_search_auto_fetch_disabled": true,
+      "explicit_page_fetches_share_task_cap": true
+    },
+    "credentials_environment_only_not_persisted_hashed_or_emitted": true
+  },
+  "gate_contract": {
+    "minimum_model_generated_tables": 15,
+    "maximum_fallback_tables": 1,
+    "maximum_hard_deadline_fallbacks": 1,
+    "maximum_p95_wall_seconds": 600,
+    "maximum_mean_system_tokens": 750000,
+    "maximum_mean_fetch_calls": 200,
+    "primary_or_repaired_only_counts_as_model_generated": true,
+    "schema_only_fallback_does_not_count_as_completion_improvement": true,
+    "go_authorizes_paired_dev64_design_only": true,
+    "go_does_not_authorize_dev64_full220_evaluator_or_leaderboard": true
+  },
+  "lease_contract": {
+    "path": "outputs/deepwide_benchmark_api.lease.lock",
+    "owner": "v24257_score_first_smoke16_v1",
+    "purpose": "bounded_label_blind_score_first_smoke16_engineering_gate",
+    "nonblocking_posix_flock_required": true,
+    "single_owner_across_all_16_tasks": true,
+    "parent_compatibility": {
+      "path": "results/v24195_lease_owner_compatibility_preregistration_v1_20260731.json",
+      "sha256": "60d431acda5a95a0ee8d5ea75b970fcdd42ca3190d6d6e6c6b30a0e79978b4d7",
+      "legacy_expected_active_finding": "v24195:unknown_lease_owner",
+      "append_only_overlay_may_suppress_only_exact_unknown_owner_finding": true,
+      "exact_live_runner_pid_owner_purpose_and_lock_holder_required": true
+    }
+  },
+  "execution": {
+    "runner_marker": "scripts/run_v24257_score_first_smoke.py",
+    "task_runner_marker": "scripts/run_v24257_score_first_task.py",
+    "watcher_marker": "scripts/watch_v24257_score_first_smoke.py",
+    "python_flags": [
+      "-I",
+      "-B"
+    ],
+    "activation_path": "results/v24257_score_first_smoke_activation_v1_20260802.json",
+    "execution_start_path": "results/v24257_score_first_smoke_execution_start_v1_20260802.json",
+    "output_root": "outputs/v24257_score_first_smoke16_v1_20260802",
+    "result_path": "results/v24257_score_first_smoke_result_v1_20260802.json",
+    "watcher_state_path": "outputs/v24257_score_first_smoke_watcher_state_v1_20260802.json",
+    "executor_concurrency": 1,
+    "parent_deadline_grace_seconds": 5,
+    "child_process_group_terminated_at_hard_deadline": true,
+    "forward_resume_or_selective_rerun_allowed": false,
+    "result_overwrite_allowed": false
+  },
+  "source_policy": {
+    "visible_question_and_same_pass_tool_results_only": true,
+    "mapping_gold_category_question_type_evaluator_score_read": false,
+    "same_run_evaluator_feedback_used_for_forward_or_tuning": false,
+    "question_query_url_page_prediction_or_answer_in_safe_progress": false,
+    "credential_value_persisted_hashed_or_emitted": false
+  },
+  "authorization": {
+    "activation_publish_after_protocol_freeze": true,
+    "single_smoke16_forward_after_activation_and_shared_lease": true,
+    "process_signal_restart_resume_rerun_skip_or_selective_retry": false,
+    "official_evaluator_call": false,
+    "paired_dev64_or_full220_launch": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "safe_freeze_boundary": {
+    "future_paths_present": [],
+    "shared_api_lease_active": false,
+    "existing_benchmark_or_watcher_signaled_restarted_modified_or_terminated": false,
+    "network_model_search_fetch_evaluator_or_api_called": false
+  },
+  "control_surface": {
+    "file_count": 13,
+    "manifest": {
+      "src/deepwide_agent/v24257_score_first_runtime.py": "c4e3f818d0306f53d40f641a7a580aa7238e0698d2863301fe8399d8e3c1fa3e",
+      "scripts/run_v24257_score_first_task.py": "07f27db40fae8399927c0e687eaf4f899b10cc24ac77cd06311deaf6b499bb50",
+      "scripts/run_v24257_score_first_smoke.py": "4c404527c81aaf6572ed7202f6dfc6630bb98b299a3f680552654424fbef5c73",
+      "scripts/preregister_v24257_score_first_smoke.py": "be96b8e90fbd0ff572cb5d9f16ba4554337ac1c25a7e78393e0a9f65ff089054",
+      "scripts/activate_v24257_score_first_smoke.py": "08eb3195363a40a85058df246e44fc56e3da84bc090d93465abdde4245cc2274",
+      "scripts/audit_v24257_score_first_smoke.py": "3811ad25a3e167ef796443b1798bb36a62133cc87896aa4ca73ff43acb7a8b7e",
+      "scripts/watch_v24257_score_first_smoke.py": "11cce99ba6967d1de9925969286ae86f343a5902ff13060736d75119ecaf7055",
+      "tests/test_v24257_score_first_runtime.py": "c2b240db253c6058dd356ef882204539325574638688ae375725e0ece61c136c",
+      "tests/test_run_v24257_score_first_smoke.py": "5aa488a03a904ca44f32ec655062786a4b8a9272015d9ab5020e82e2d3bab5e9",
+      "tests/test_preregister_v24257_score_first_smoke.py": "053c853db2616701c90560734175cb8acf4a6e9fa5ef7de7ee1d12553e88c3ab",
+      "tests/test_activate_v24257_score_first_smoke.py": "14287b29b119df19236c8522395a924dbf45c19241b66893505fbbff833de40b",
+      "tests/test_audit_v24257_score_first_smoke.py": "8786197c417a2be0cca24a1b911f823bc4a4ac1d5f110a9c7e7582bed6f1b38f",
+      "tests/test_watch_v24257_score_first_smoke.py": "b36b8b427aff7c39c326c01b970fcec40d84190a41bcb53614e1bf78af17958a"
+    },
+    "manifest_sha256": "6bc8e67ffc04059b718278c8f73b1b4a79879ca228d5d8027b2dec04aa25f300"
+  },
+  "decision_contract_sha256": "2ba906398d83d4429abeb7af9ddaf8435d529959e77c9e1442b0ee26a36a8711"
+}
