@@ -1,0 +1,142 @@
+{
+  "artifact_version": 1,
+  "role": "v24262_score_first_capacity_postresult_audit",
+  "created_at_unix": 1785678678,
+  "label_blind": true,
+  "protocol": {
+    "path": "results/v24262_score_first_capacity_preregistration_v1_20260802.json",
+    "sha256": "3780d225bd340bc7f61e37f423b38c9b8818e249ef382adfb096dd3ca4f22381"
+  },
+  "preactivation_audit": {
+    "path": "results/v24262_score_first_capacity_preactivation_audit_v1_20260802.json",
+    "sha256": "dde9eb2b669031e2ca3a6310ff7bb172eb4e6dcf2e6b63e17de338cf841122cb"
+  },
+  "activation": {
+    "path": "results/v24262_score_first_capacity_activation_v1_20260802.json",
+    "sha256": "8b2c9efcaebc7517fc6ce1f30fe5b8dad115760f7f5d4056e196d5a6f3e3251b"
+  },
+  "execution_start": {
+    "path": "results/v24262_score_first_capacity_execution_start_v1_20260802.json",
+    "sha256": "e334ad493eb77565491a4bb7fb5a08ce90ebd32582abb74eb3608e71a66bdbba",
+    "api_called_before_execution_start": false
+  },
+  "result": {
+    "path": "results/v24262_score_first_capacity_result_v1_20260802.json",
+    "sha256": "b2c4bbf8a9785ae1daf2f65a8e20156d197af87e357addeb14621341e132f926",
+    "payload_seal_valid": true,
+    "capacity_gate": "no_go",
+    "selected_executor_concurrency": 2,
+    "total_executions": 21,
+    "stopped_after_first_failed_level": true,
+    "levels": [
+      {
+        "concurrency": 1,
+        "executions": 3,
+        "model_generated": 3,
+        "fallbacks": 0,
+        "stage_failures": 0,
+        "median_wall_seconds": 37.922,
+        "p95_wall_seconds": 55.314,
+        "effective_speedup": 1.232574,
+        "effective_speedup_fraction": 1.232574,
+        "passed": true,
+        "findings": []
+      },
+      {
+        "concurrency": 2,
+        "executions": 6,
+        "model_generated": 6,
+        "fallbacks": 0,
+        "stage_failures": 0,
+        "median_wall_seconds": 43.4835,
+        "p95_wall_seconds": 93.194,
+        "effective_speedup": 1.950838,
+        "effective_speedup_fraction": 0.975419,
+        "passed": true,
+        "findings": []
+      },
+      {
+        "concurrency": 4,
+        "executions": 12,
+        "model_generated": 6,
+        "fallbacks": 6,
+        "matched_serial_fallbacks": 1,
+        "infrastructure_fallbacks": 0,
+        "stage_failures": 6,
+        "failure_types": {
+          "ModelRequestError": 6
+        },
+        "additional_model_attempts_vs_matched_serial": 13,
+        "additional_logical_search_failures_vs_matched_serial": 0,
+        "additional_fetch_failures_vs_matched_serial": 7,
+        "median_wall_seconds": 51.568,
+        "p95_wall_seconds": 78.307,
+        "mean_matched_token_ratio": 0.821332,
+        "mean_matched_fetch_ratio": 0.891973,
+        "effective_speedup": 3.396863,
+        "effective_speedup_fraction": 0.849216,
+        "passed": false,
+        "findings": [
+          "stage_failures_above_gate",
+          "model_generated_fraction_below_gate",
+          "additional_model_fallbacks_above_gate",
+          "additional_model_attempts_above_gate"
+        ]
+      }
+    ]
+  },
+  "failure_diagnosis": {
+    "synthesis_model_request_errors": 4,
+    "plan_model_request_errors": 2,
+    "search_failures_at_concurrency_4": 0,
+    "worker_or_hard_deadline_fallbacks_at_concurrency_4": 0,
+    "provider_attempts_at_concurrency_4": 40,
+    "provider_requests_at_concurrency_4": 26,
+    "safe_conclusion": "cross-task concurrency four overloads or destabilizes the GPT provider path before it destabilizes search, fetch, wall time, or child execution",
+    "next_single_change": "decouple executor concurrency from global GPT request concurrency and cap the latter at two"
+  },
+  "execution_closure": {
+    "runner_process_present_after_result": false,
+    "child_process_present_after_result": false,
+    "watcher_process_present_after_result": false,
+    "shared_api_lease_active": false,
+    "process_signal_restart_resume_skip_or_selective_retry": false,
+    "active_run_killed_or_quarantined": false,
+    "invalid_result_path": null
+  },
+  "source_policy": {
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "mapping_gold_category_question_type_split_evaluator_score_read": false,
+    "same_run_evaluator_feedback_used_for_forward_or_tuning": false,
+    "prediction_question_query_url_page_answer_opaque_id_or_credential_emitted_by_capacity_result_or_audit": false,
+    "network_model_search_fetch_or_evaluator_api_called_by_postresult_audit": false
+  },
+  "tests": {
+    "v24262_capacity": "15/15",
+    "v24261_executor": "3/3",
+    "v24259_aggregate": "2/2",
+    "v24259_normalizer": "11/11",
+    "v24257_runtime": "11/11",
+    "total": "42/42"
+  },
+  "authorization": {
+    "global_model_concurrency_cap_successor_design": true,
+    "global_model_concurrency_cap_successor_launch": false,
+    "official_evaluator_call": false,
+    "paired_dev64_launch": false,
+    "full220_launch": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "claims": {
+    "capacity_two_stable": true,
+    "capacity_four_stable": false,
+    "benchmark_quality_improvement_observed": false,
+    "paired_quality_result_available": false,
+    "sota": false
+  },
+  "audit_valid": true,
+  "audit_payload_sha256": "13f47de628563fc7974f12e7cc68359728404511ea0c94ad8b36bc7b87028b36"
+}

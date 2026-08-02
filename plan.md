@@ -1,8 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.82
+> 版本：5.83
 >
-> 更新：2026-08-02 13:15 UTC
+> 更新：2026-08-02 13:51 UTC
+>
+> **5.83 V2.42.62 full-pipeline capacity ladder（2026-08-02 13:51 UTC）：V2.42.61 工程 GO 后没有用 GPT-only synthetic probe 乐观外推，而是对同一冻结 label-blind score-first pipeline 做真实 `1/2/4/8/12 × 3 waves` 跨题并发阶梯。每题仍固定 `3 GPT / 8 search / 16 admitted fetch`、单题 `4 search workers / 8 fetch workers` 和同一 GPT-5.6/search provider；容量阶梯只改变同时运行的题数。12 个已消费 engineering tasks 只用于负载测量，不作独立质量评估；串行基线在 parent 全终局后投影为 position/latency/token/call/failure counts，未持久化或哈希题面、ID、query、URL、page、prediction 或 answer。runtime 继续只接受 `{opaque_id, question}`，无 evaluator。
+>
+> 真实结果 [`results/v24262_score_first_capacity_result_v1_20260802.json`](results/v24262_score_first_capacity_result_v1_20260802.json) 按预注册规则在首个失败档自动停止：`1×` 为 3/3 model-generated、0 stage failure，median/p95 `37.922/55.314s`，effective speedup `1.233×`；`2×` 为 6/6、0 failure，median/p95 `43.484/93.194s`，effective speedup `1.951×`、并行效率 `97.5%`，通过；`4×` 为 6/12 model-generated、6 fallback、6 stage failure，故失败并停止，未运行 8×/12×。4× 的 median/p95 仍仅 `51.568/78.307s`，effective speedup `3.397×`、并行效率 `84.9%`，没有 worker/hard-deadline fallback；search failure 为 0，matched token/fetch ratio 为 `0.821/0.892`。因此它不是搜索或抓页吞吐崩溃。
+>
+> 内容无关 post-terminal 诊断显示 6 个 stage failure 全为 `ModelRequestError`，其中 synthesis 4 次、plan 2 次；4× 的 26 个 GPT request 触发 40 个 provider attempt，比 matched serial 多 13 attempts。另有 2 个无 provider failure 的结构 fallback，其中 matched serial 本已有 1 个。结论是当前 GPT provider 路径在 4 个完整 task 并发下先失稳，搜索/fetch/child executor 尚未成为瓶颈。容量 gate 因最低要求为稳定 4× 而正确给出 **NO-GO**；当前只能冻结 `2× stable`，不能用 3.397× wall speedup 掩盖 50% model-generated rate。
+>
+> 下一单一结构修复是把跨题 executor concurrency 与 GPT request concurrency 解耦：允许 4+ 题并行做搜索/抓页，但用跨进程全局 semaphore 将同时 GPT 请求固定在已验证稳定的 2；等待 semaphore 的时间必须计入原 600s task wall，不能扩大模型调用/重试/search/fetch 预算。先对同一 1/2/4/8/12×3 schedule 做 append-only successor；仍在首个不稳定档停。只有至少稳定 4× 后才进入 paired dev64 设计；本轮未调用 evaluator、未启动 dev64/220、没有质量提升或 SOTA 结论。定向 capacity/executor/aggregate/normalizer/runtime 回归 `42/42`，post-result audit 延续 label-blind 且未 kill/quarantine 任一运行。**
 >
 > **5.82 V2.42.61 deterministic-normalizer smoke16 全终局（2026-08-02 13:15 UTC）：四五十分钟不是搜索 API 的正常时延，而是旧 R1 整题 workflow 的设计性放大。旧 R1 的精确全集统计为 `220/220 = 47 completed + 173 failed`、累计 task wall `650,717.636s`，即 `2,957.807s = 49.30min/task`；每题平均约 `31.86 GPT calls / 93.04 logical search calls / 764.40 fetch attempts`。planning、anchor、scope、candidate/coverage、mention-gap、row enrichment/refinement、membership/attribute/unknown-cell recovery 各阶段重复领预算，且失败题也平均跑约 48.6 分钟后才由晚期 fail-closed contract 归零。这个 `49.30min` 是总 task-wall/220，不是某次查询的网络时延；220 题近串行才把全集放大到约 7.5 天累计 task wall。
 >
