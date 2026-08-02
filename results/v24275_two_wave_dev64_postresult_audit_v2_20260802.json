@@ -1,0 +1,148 @@
+{
+  "artifact_version": 1,
+  "role": "v24275_two_wave_dev64_postresult_audit",
+  "created_at_unix": 1785714668,
+  "label_blind": true,
+  "protocol_sha256": "d93e80642c787d02de55f0487d541f223bc938f68a03efaf40f9a912a69cf2e9",
+  "preactivation_audit_sha256": "48c4a137c6c5d1b0408c4c660c7505065af3707b2c24288653873434527e4826",
+  "activation_sha256": "ce633d8978aa9d263b33f63349a41378e99d5ca083f9b4d06f9e7bfc626cd020",
+  "execution_start_sha256": "7cf230f57830db1f6a1b1739139e82c1080bd1a6457f53d7b5e526293a9388ae",
+  "forward_result_sha256": "c7d2428f01690919bdb3cc91c0ae76b9987029de58c6b96fbdbc999512460f10",
+  "final_result_sha256": "f70ee9ca9619e2b3c72fdfd1831e377eff9380f6fc8d28d7f312bd00cb9e36a1",
+  "result": {
+    "status": "development_gate_no_go",
+    "selected_per_arm": 64,
+    "control": {
+      "runtime_completed": 64,
+      "runtime_failed": 0,
+      "evaluator_valid": 63,
+      "evaluator_invalid_or_not_run": 1,
+      "whole_table_successes": 5,
+      "entity_acc": 0.71875,
+      "f1_by_row": 0.260919472710786,
+      "f1_by_item": 0.4160648686711124,
+      "column_f1": 0.49376357050418723,
+      "quality_composite": 0.47237447797152143,
+      "score": 0.078125,
+      "model_generated_tables": 63,
+      "fallback_tables": 1,
+      "search_total_tokens": 1916683,
+      "task_wall_sum_seconds": 3906.078
+    },
+    "candidate": {
+      "runtime_completed": 64,
+      "runtime_failed": 0,
+      "evaluator_valid": 63,
+      "evaluator_invalid_or_not_run": 1,
+      "whole_table_successes": 6,
+      "entity_acc": 0.703125,
+      "f1_by_row": 0.25868585732981564,
+      "f1_by_item": 0.4062026775930972,
+      "column_f1": 0.48329147210302936,
+      "quality_composite": 0.46282625175648556,
+      "score": 0.09375,
+      "model_generated_tables": 62,
+      "fallback_tables": 2,
+      "search_total_tokens": 1904764,
+      "task_wall_sum_seconds": 3042.177
+    },
+    "candidate_retrieval_health": {
+      "retrieval_completed": 64,
+      "retrieval_failed": 0,
+      "unrecoverable_search_failures": 0,
+      "cache_misses": 0,
+      "cache_serve_network_fetches": 0,
+      "hard_fetch_deadline_failures": 5,
+      "fetch_helper_failures": 0
+    },
+    "decision": {
+      "status": "no_go",
+      "passed": false,
+      "checks": {
+        "search_token_ratio": false,
+        "task_wall_sum_ratio": false,
+        "quality_composite_delta": true,
+        "entity_acc_delta": true,
+        "f1_by_row_delta": true,
+        "f1_by_item_delta": true,
+        "column_f1_delta": true,
+        "whole_table_success_delta": true,
+        "model_generated_table_delta": true,
+        "candidate_retrieval_failures": true,
+        "candidate_unrecoverable_search_failures": true,
+        "candidate_cache_misses": true,
+        "candidate_cache_serve_network_fetches": true,
+        "candidate_hard_fetch_deadline_failures": false,
+        "candidate_fetch_helper_failures": true
+      },
+      "candidate_minus_control": {
+        "quality_composite": -0.009548226215035871,
+        "entity_acc": -0.015625,
+        "f1_by_row": -0.0022336153809703885,
+        "f1_by_item": -0.009862191078015226,
+        "column_f1": -0.01047209840115787,
+        "whole_table_successes": 1,
+        "model_generated_tables": -1
+      },
+      "search_token_ratio": 0.9937814442972573,
+      "task_wall_sum_ratio": 0.778831605513254,
+      "gate": {
+        "maximum_search_token_ratio": 0.7,
+        "maximum_task_wall_sum_ratio": 0.5,
+        "minimum_quality_composite_delta": -0.01,
+        "minimum_entity_acc_delta": -0.03125,
+        "minimum_f1_by_row_delta": -0.02,
+        "minimum_f1_by_item_delta": -0.02,
+        "minimum_column_f1_delta": -0.02,
+        "minimum_whole_table_success_delta": 0,
+        "minimum_model_generated_table_delta": -1,
+        "candidate_retrieval_failures_maximum": 0,
+        "candidate_unrecoverable_search_failures_maximum": 0,
+        "candidate_cache_misses_maximum": 0,
+        "candidate_cache_serve_network_fetches_maximum": 0,
+        "candidate_hard_fetch_deadline_failures_maximum": 0,
+        "candidate_fetch_helper_failures_maximum": 0
+      },
+      "go_scope": "exact220_design_only_not_launch"
+    },
+    "claims": {
+      "development_gate_only": true,
+      "independent_candidate_rollout_vs_frozen_control": true,
+      "strict_shared_random_prefix_causal_ablation": false,
+      "public_full220_result": false,
+      "avg_at_4": false,
+      "leaderboard_submitted": false,
+      "sota": false
+    }
+  },
+  "execution_closure": {
+    "runner_process_present_after_result": false,
+    "child_process_present_after_result": false,
+    "finalizer_process_present_after_result": false,
+    "shared_api_lease_active": false,
+    "process_signal_restart_skip_selective_retry_or_error_revaluation": false,
+    "active_run_killed_or_quarantined": false,
+    "invalid_result_path": null
+  },
+  "source_policy": {
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "mapping_control_prediction_gold_category_question_type_split_evaluator_score_read_by_forward": false,
+    "historical_control_predictions_opened_only_after_candidate_exact64_freeze": true,
+    "mapping_gold_and_evaluator_opened_only_after_candidate_exact64_freeze": true,
+    "both_arms_fully_evaluated_with_same_current_judge": true,
+    "old_evaluator_rows_reused": false,
+    "selective_changed_prediction_evaluation": false,
+    "same_run_evaluator_feedback_used_for_forward_or_prediction_selection": false
+  },
+  "authorization": {
+    "exact220_design": false,
+    "new_exact220_launch": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "findings": [],
+  "audit_valid": true,
+  "audit_payload_sha256": "69cd47eff9f4938e464b1acddbd422df95c1afb4194a2db3a576838d8847d218"
+}
