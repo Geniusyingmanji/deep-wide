@@ -1,0 +1,111 @@
+{
+  "artifact_version": 1,
+  "role": "v24269_task_union_nonbenchmark_smoke_result",
+  "protocol_id": "v24269_task_union_discovery_nonbenchmark_smoke_v1",
+  "created_at_unix": 1785699254,
+  "status": "engineering_go_budget_equivalence_pending",
+  "label_blind": true,
+  "benchmark_content_used": false,
+  "task_question_query_url_host_page_prediction_answer_opaque_id_or_credential_emitted": false,
+  "process": {
+    "exit_code": 0,
+    "wall_seconds": 16.719,
+    "terminal_result": true,
+    "completion_kind": "normalized_primary",
+    "model_generated_table": true
+  },
+  "accounting": {
+    "task_elapsed_seconds": 16.473,
+    "model_requests": 2,
+    "model_slot_acquisitions": 2,
+    "model_slot_wait_seconds": 0.000157,
+    "admitted_search_queries": 1,
+    "admitted_fetch_targets": 11,
+    "hosted_search_http_calls": 1,
+    "hosted_search_tool_calls": 1,
+    "effective_search_failures": 0,
+    "actual_fetch_calls": 11,
+    "fetch_failures": 0,
+    "system_total_tokens": 26286,
+    "model_total_tokens": 13940,
+    "search_total_tokens": 12346
+  },
+  "discovery_union": {
+    "logical_query_count": 1,
+    "raw_batch_count": 1,
+    "raw_query_local_result_count": 3,
+    "raw_action_source_count": 11,
+    "raw_query_local_mapping_failure_count": 0,
+    "raw_unrecoverable_failure_count": 0,
+    "union_source_count": 11,
+    "duplicate_source_count": 3,
+    "fetch_requested_source_count": 11,
+    "fetch_returned_batch_count": 11,
+    "fetch_usable_page_count": 11,
+    "provider_narrative_or_snippet_forwarded": false,
+    "source_broadcast_to_logical_queries": false,
+    "fetched_page_text_is_only_active_evidence": true
+  },
+  "stage_seconds": {
+    "plan": 4.030695,
+    "search": 5.493696,
+    "fetch": 5.171052,
+    "synthesis": 1.746476,
+    "repair": null
+  },
+  "table_shape": {
+    "row_count": 4,
+    "column_count": 3,
+    "cell_count": 12,
+    "unknown_cell_count": 0,
+    "unknown_cell_ratio": 0.0
+  },
+  "gate": {
+    "child_exit_zero": true,
+    "terminal_v24269_result": true,
+    "parent_v24268_and_v24259_downcasts_valid": true,
+    "model_generated_table_required": true,
+    "model_slot_receipt_present_and_valid": true,
+    "model_slot_acquisitions_equal_actual_model_requests": true,
+    "union_source_count_minimum_one": true,
+    "fetch_requested_source_count_minimum_one": true,
+    "fetch_usable_page_count_minimum_one": true,
+    "raw_unrecoverable_failure_count_maximum_zero": true,
+    "effective_search_or_fetch_failures_maximum_zero": true,
+    "provider_narrative_or_snippet_forwarded": false,
+    "source_broadcast_to_logical_queries": false,
+    "telemetry_contains_content_or_privileged_metadata": false,
+    "shared_lease_released_after_terminal": true,
+    "engineering_passed": true,
+    "benchmark_promotion_allowed": false,
+    "findings": [
+      "task_local_source_union_and_real_page_fetch_are_operational",
+      "one_logical_query_exposed_eleven_union_sources_before_the_existing_global_fetch_cap",
+      "per_query_top_three_budget_equivalence_requires_an_append_only_union_cap"
+    ]
+  },
+  "diagnosis": {
+    "v24268_zero_fetch_failure_reproduced": false,
+    "keyless_batch_search_request_reduction_mechanism_operational": true,
+    "real_page_fetch_mechanism_operational": true,
+    "same_width_budget_equivalence_proven": false,
+    "safe_successor": "cap the deterministic task-local union at logical_query_count times search_results_per_query, never above the existing global fetch cap; then run a new nonbenchmark smoke before paired development evaluation"
+  },
+  "provenance": {
+    "protocol_sha256": "617b2f1cecdc71483e6a3354c6b0dd89cfe671248e902ae827bd0987f9ef034c",
+    "ignored_result_sha256": "14efd982b6e0f35bc089b9e25347d02648ceb8ff365071bafdd574702b1218a9",
+    "ignored_model_slot_receipt_sha256": "679cb93e332df5307779335263c8a34a667b8e6e6dd989006954906b720efedf",
+    "ignored_safe_progress_sha256": "659051ec2c2fa1934991502689367bf41d0b93535a28ee5bb525fa6c967246ff",
+    "lease_observation_sha256": "0f094e62e8111adc336708af1270180da3e2ccdd3d15f1507a46ff9f8c92add0"
+  },
+  "authorization": {
+    "rerun_same_smoke": false,
+    "benchmark_forward": false,
+    "dev64": false,
+    "exact220": false,
+    "evaluator": false,
+    "leaderboard_submission": false,
+    "sota_claim": false,
+    "append_only_budget_equivalent_successor_design": true
+  }
+}

@@ -1,8 +1,14 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.90
+> 版本：5.91
 >
-> 更新：2026-08-02 19:26 UTC
+> 更新：2026-08-02 19:34 UTC
+>
+> **5.91 V2.42.69 task-local discovery union 非 benchmark smoke 工程 GO、预算等价待补（2026-08-02 19:34 UTC）：针对 V2.42.68 的 0-URL/0-fetch NO-GO，append-only wrapper 不修改 frozen native parser，而把同一 `search_many` effect 的 query-local citations 与 action sources 合并为单个 task-local discovery batch；URL 全局去重，不复制到每条 query，不转发 provider narrative/snippet，只有 deterministic fetch 成功后的 page text 进入 synthesis。仅精确 `no query-local URL citation` 映射失败可被非空 union 抵消，transport/provider sibling failure 保留。完整 downcast、privileged-input pre-effect rejection、unrecoverable sibling failure 与 parent 回归共 `36/36` 通过；实现和协议已推送 `5855c72 / 656c818`。
+>
+> 唯一新非 benchmark smoke 自然终态：进程 `16.719s`、task `16.473s`、`normalized_primary`、`2 GPT requests = 2 slot acquisitions`；阶段为 plan `4.031s`、hosted search `5.494s`、fetch `5.171s`、synthesis `1.746s`。一次 hosted-search request 产生 task-union，真实执行 `11` fetch 且 `11/11` 获得可用页面，effective search/fetch failure 均为 0；telemetry/union receipt 无题面、query、URL、host、page、prediction、ID 或凭据，lease 自然释放。因此 V2.42.68 的 0-fetch failure 已修复，keyless batch + real-page path 工程可用。
+>
+> 但本轮 planner 只提出 1 条 query，provider 暴露 `3 query-local + 11 action sources`，task union 去重后仍有 11 个 source；虽未越过全局 16-target cap，却越过冻结 `top3/query` 的等预算语义。故权威结果 [`results/v24269_task_union_nonbenchmark_smoke_result_v1_20260802.json`](results/v24269_task_union_nonbenchmark_smoke_result_v1_20260802.json) 只能写 `engineering_go_budget_equivalence_pending`，不授权 dev64/220/evaluator。下一 V2.42.70 必须在 wrapper 内确定性限制 union 到 `min(global_fetch_cap, logical_query_count × search_results_per_query)`；截断只按首次出现顺序，不看内容/score。新 smoke 证明实际 fetch≤等预算 cap 后，才进入同输入 provider paired gate。**
 >
 > **5.90 V2.42.68 keyless batched same-width 非 benchmark smoke 为 NO-GO（2026-08-02 19:26 UTC）：独立公开查询探针曾证明 4 条逻辑查询可由一次 9878 hosted-search 请求在 `14.6s / 16,065 tokens` 返回 4 个 query-local batches，因此新增 append-only candidate，完全保留 V2.42.67 的 visible boundary、planning/synthesis prompt、GPT-5.6、`8 query / 16 target / top3` cap、page fetcher、normalizer、repair 和 total fallback，只把 Anthropic 每 query 一次请求换成 keyless Azure-native batch，并新增不含内容的逐 effect latency/yield/table-shape telemetry。实现与 native-search/GPT-limiter/total-fallback 联合回归 `32/32`，代码及预注册已分别推送 `6cfdb3a / 47b4ddf`。
 >
