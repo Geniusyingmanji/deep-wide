@@ -1,0 +1,181 @@
+{
+  "artifact_version": 1,
+  "role": "v24271_keyless_dev64_postresult_erratum_audit",
+  "created_at_unix": 1785707049,
+  "label_blind": true,
+  "protocol_sha256": "14115729b8bd46d21fa3db845c4f6d38a6c5283f8c322cd6a6a7b2185cecb30c",
+  "forward_protocol_sha256": "6c16a135eb466dd2cc383c3826bac7ea941ef42b15accd015d9c5986533978c3",
+  "preactivation_audit_sha256": "2af814f0bb276e994ca6ef8f6966cb69447d96de2843e68407aa3c61b17d4af4",
+  "activation_sha256": "a3cfdddbf30b1313af73172054e10c36f545198b48fab03722f7ff8b5fac52ae",
+  "execution_start_sha256": "7ff7c3dc5383f7c4dc2d4a38ba6779e8ecbd788b410847fd208c69143e1cc46b",
+  "forward_result_sha256": "c83b53222bff57399e5043218fe786c6633d12a3fe105f97aeca7755b3a60679",
+  "forward_erratum_sha256": "fc3d23eb6d73da3774cfeba8ce7387552593e50e1610f4af7b9997fe9f1582f2",
+  "final_result_sha256": "29d7f3534adc0e6c0e51a2476a6a91ab52094edd8973f3e261dfeec9e9a9f31d",
+  "forward": {
+    "selected": 64,
+    "terminal_predictions": 64,
+    "model_generated_tables": 63,
+    "fallback_tables": 1,
+    "cost_totals": {
+      "model_attempts": 132,
+      "model_input_tokens": 1112397,
+      "model_output_tokens": 119913,
+      "model_requests": 132,
+      "model_total_tokens": 1232310,
+      "search_calls": 76,
+      "search_failures": 0,
+      "search_fetch_calls": 1065,
+      "search_fetch_failures": 313,
+      "search_input_tokens": 1816738,
+      "search_output_tokens": 99945,
+      "search_tool_calls": 203,
+      "search_total_tokens": 1916683,
+      "system_total_tokens": 3148993
+    },
+    "stage_seconds_sum": {
+      "fetch": 761.055823,
+      "plan": 322.319347,
+      "repair": 25.01749,
+      "search": 1515.802811,
+      "synthesis": 1278.744027
+    },
+    "wall_seconds_sum": 3906.078,
+    "shared_model_receipts": {
+      "actual_model_requests": 132,
+      "all_acquisitions_match_actual_requests": true,
+      "children": 64,
+      "invalid": 0,
+      "present": 64,
+      "slot_acquisitions": 132,
+      "valid": 64
+    }
+  },
+  "result": {
+    "status": "development_gate_no_go",
+    "selected_per_arm": 64,
+    "control": {
+      "runtime_completed": 64,
+      "runtime_failed": 0,
+      "evaluator_valid": 60,
+      "evaluator_invalid_or_not_run": 4,
+      "whole_table_successes": 4,
+      "entity_acc": 0.703125,
+      "f1_by_row": 0.2811655222555785,
+      "f1_by_item": 0.425883527592058,
+      "column_f1": 0.49038134619573304,
+      "quality_composite": 0.47513884901084236,
+      "score": 0.0625,
+      "model_generated_tables": 62,
+      "fallback_tables": 2,
+      "search_total_tokens": 8201552,
+      "task_wall_sum_seconds": 3677.568,
+      "unrecoverable_provider_failures": 0
+    },
+    "candidate": {
+      "runtime_completed": 64,
+      "runtime_failed": 0,
+      "evaluator_valid": 63,
+      "evaluator_invalid_or_not_run": 1,
+      "whole_table_successes": 5,
+      "entity_acc": 0.734375,
+      "f1_by_row": 0.2649403186284343,
+      "f1_by_item": 0.4267468375671075,
+      "column_f1": 0.5157049315080483,
+      "quality_composite": 0.48544177192589755,
+      "score": 0.078125,
+      "model_generated_tables": 63,
+      "fallback_tables": 1,
+      "search_total_tokens": 1916683,
+      "task_wall_sum_seconds": 3906.078,
+      "unrecoverable_provider_failures": 0
+    },
+    "decision": {
+      "status": "no_go",
+      "passed": false,
+      "checks": {
+        "search_token_ratio": true,
+        "task_wall_sum_ratio": false,
+        "quality_composite_delta": true,
+        "entity_acc_delta": true,
+        "f1_by_row_delta": true,
+        "f1_by_item_delta": true,
+        "column_f1_delta": true,
+        "whole_table_success_delta": true,
+        "model_generated_table_delta": true,
+        "candidate_unrecoverable_provider_failures": true
+      },
+      "candidate_minus_control": {
+        "quality_composite": 0.01030292291505519,
+        "entity_acc": 0.03125,
+        "f1_by_row": -0.01622520362714419,
+        "f1_by_item": 0.0008633099750495199,
+        "column_f1": 0.025323585312315267,
+        "whole_table_successes": 1,
+        "model_generated_tables": 1
+      },
+      "search_token_ratio": 0.23369759772296755,
+      "task_wall_sum_ratio": 1.0621361726010232,
+      "gate": {
+        "maximum_search_token_ratio": 0.35,
+        "maximum_task_wall_sum_ratio": 0.5,
+        "minimum_quality_composite_delta": -0.01,
+        "minimum_entity_acc_delta": -0.03125,
+        "minimum_f1_by_row_delta": -0.02,
+        "minimum_f1_by_item_delta": -0.02,
+        "minimum_column_f1_delta": -0.02,
+        "minimum_whole_table_success_delta": 0,
+        "minimum_model_generated_table_delta": -1,
+        "candidate_unrecoverable_provider_failures_maximum": 0
+      },
+      "go_scope": "entropy_voc_successor_design_only"
+    },
+    "claims": {
+      "development_gate_only": true,
+      "independent_candidate_rollout_vs_frozen_control": true,
+      "strict_shared_random_prefix_causal_ablation": false,
+      "public_full220_result": false,
+      "avg_at_4": false,
+      "leaderboard_submitted": false,
+      "sota": false
+    }
+  },
+  "execution_closure": {
+    "runner_process_present_after_result": false,
+    "child_process_present_after_result": false,
+    "frozen_or_erratum_finalizer_present_after_result": false,
+    "shared_api_lease_active": false,
+    "stale_inactive_lease_file_present": true,
+    "process_signal_restart_skip_selective_retry_or_error_revaluation": false,
+    "active_run_killed_or_quarantined": false,
+    "invalid_result_path": null
+  },
+  "source_policy": {
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "mapping_control_prediction_gold_category_question_type_split_evaluator_score_read_by_forward": false,
+    "candidate_exact64_freeze_before_control_mapping_gold_or_evaluator_open": true,
+    "both_arms_fully_evaluated_with_same_current_judge": true,
+    "old_evaluator_rows_reused": false,
+    "selective_changed_prediction_evaluation": false,
+    "same_run_evaluator_feedback_used_for_forward_or_prediction_selection": false,
+    "credential_value_persisted_hashed_or_emitted": false
+  },
+  "authorization": {
+    "entropy_voc_successor_design": false,
+    "new_exact220_launch": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "frozen_postaudit_failure": {
+    "observed": true,
+    "failure_type": "KeyError",
+    "missing_key": "forward_contract_payload_sha256",
+    "cause": "full_protocol_passed_to_frozen_forward_only_validator_after_single_field_alias_erratum",
+    "frozen_files_modified_or_relaxed": false,
+    "independent_erratum_audit_used": true
+  },
+  "findings": [],
+  "audit_valid": true,
+  "audit_payload_sha256": "8dd74c82f57e234b623404e99d5a6b64658db570834eb7ac5e696c64d56f90f7"
+}
