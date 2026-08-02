@@ -1,8 +1,14 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.89
+> 版本：5.90
 >
-> 更新：2026-08-02 19:12 UTC
+> 更新：2026-08-02 19:26 UTC
+>
+> **5.90 V2.42.68 keyless batched same-width 非 benchmark smoke 为 NO-GO（2026-08-02 19:26 UTC）：独立公开查询探针曾证明 4 条逻辑查询可由一次 9878 hosted-search 请求在 `14.6s / 16,065 tokens` 返回 4 个 query-local batches，因此新增 append-only candidate，完全保留 V2.42.67 的 visible boundary、planning/synthesis prompt、GPT-5.6、`8 query / 16 target / top3` cap、page fetcher、normalizer、repair 和 total fallback，只把 Anthropic 每 query 一次请求换成 keyless Azure-native batch，并新增不含内容的逐 effect latency/yield/table-shape telemetry。实现与 native-search/GPT-limiter/total-fallback 联合回归 `32/32`，代码及预注册已分别推送 `6cfdb3a / 47b4ddf`。
+>
+> 唯一预注册的非 benchmark 完整 smoke 自然终态为 `14.77s / normalized_primary / 2 GPT requests = 2 slot acquisitions`，但按工程门严格判 **NO-GO**：planner 只提出 2 条逻辑 query，hosted search 虽只用 1 个 HTTP call，却对 `2/2` batches 都没有 query-local URL，计 2 failures，故 `0 fetch`；最终 4×3 表来自模型在 search synthesis/一般知识上的生成，不能冒充检索成功。native parser 对多 query 只接受 section-local `url_citation` span，并有意拒绝把 action-level sources 广播到所有 query；这是正确 fail-closed 边界。权威 content-free 结果为 [`results/v24268_keyless_nonbenchmark_smoke_result_v1_20260802.json`](results/v24268_keyless_nonbenchmark_smoke_result_v1_20260802.json)。同 smoke 禁止重跑，也不授权 dev64/220/evaluator。
+>
+> 下一 V2.42.69 只修 discovery-lead 归属：允许同一 task 内的 action source union 作为待抓取 lead，但 provider narrative/citation content 仍不得作为 active evidence；只有 deterministic public-page fetch 成功后的 page text 才能进入 synthesis。source union 不按 query 复制 credit，fetch 全局去重并继续受 16-target cap。先用 synthetic parser tests 证明无跨任务/跨 batch source 泄漏、无 URL broadcast 计数膨胀，再以新非 benchmark 任务做 successor smoke；只有 search/fetch 两阶段都真实命中且 content-free telemetry/receipt 通过，才进入同输入 paired provider gate。**
 >
 > **5.89 V2.42.67 exact-220 已完成、审计并推送（2026-08-02 19:12 UTC）：唯一 cold forward 在精确 `220/220` terminal 后冻结 predictions，随后才打开 mapping/query/answer/gold/evaluator。forward 为 `217 model-generated + 3 fallback`，`454` 次实际 GPT request 与 `454` 次全局 slot acquisition 精确一致；post-result audit `findings=[]`，runtime 仍只接收 `{opaque_id, question}`，无 category/question_type/split/gold/evaluator feedback 路由。官方 evaluator 在固定 220 分母下得到 `206 valid + 14 failure-as-zero`，whole-table success `7/220 = 3.1818%`、Entity `69.0909%`、Row F1 `20.1856%`、Item F1 `34.6810%`、Column F1 `41.4591%`、quality composite `0.413541`。14 个 evaluator error 不选择性重评。权威结果为 [`results/v24267_exact220_result_v1_20260802.json`](results/v24267_exact220_result_v1_20260802.json)，审计为 [`results/v24267_exact220_postresult_audit_v1_20260802.json`](results/v24267_exact220_postresult_audit_v1_20260802.json)。
 >

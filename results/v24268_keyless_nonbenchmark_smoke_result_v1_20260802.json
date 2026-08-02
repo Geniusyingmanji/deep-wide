@@ -1,0 +1,96 @@
+{
+  "artifact_version": 1,
+  "role": "v24268_keyless_nonbenchmark_smoke_result",
+  "protocol_id": "v24268_keyless_batched_same_width_nonbenchmark_smoke_v1",
+  "created_at_unix": 1785698772,
+  "status": "no_go",
+  "label_blind": true,
+  "benchmark_content_used": false,
+  "task_question_query_url_host_page_prediction_answer_opaque_id_or_credential_emitted": false,
+  "process": {
+    "exit_code": 0,
+    "wall_seconds": 14.77,
+    "terminal_result": true,
+    "completion_kind": "normalized_primary",
+    "model_generated_table": true
+  },
+  "accounting": {
+    "task_elapsed_seconds": 14.567,
+    "model_requests": 2,
+    "model_attempts": 2,
+    "model_slot_acquisitions": 2,
+    "model_slot_wait_seconds": 0.000141,
+    "admitted_search_queries": 2,
+    "admitted_fetch_targets": 0,
+    "hosted_search_http_calls": 1,
+    "hosted_search_tool_calls": 1,
+    "hosted_search_failures": 2,
+    "returned_search_batches": 2,
+    "usable_search_results": 0,
+    "unique_search_urls": 0,
+    "unique_search_hosts": 0,
+    "fetch_calls": 0,
+    "fetch_failures": 0,
+    "system_total_tokens": 14195,
+    "model_total_tokens": 962,
+    "search_total_tokens": 13233
+  },
+  "stage_seconds": {
+    "plan": 3.370466,
+    "search": 8.791892,
+    "fetch": null,
+    "synthesis": 2.333303,
+    "repair": null
+  },
+  "table_shape": {
+    "row_count": 4,
+    "column_count": 3,
+    "cell_count": 12,
+    "unknown_cell_count": 0,
+    "unknown_cell_ratio": 0.0
+  },
+  "gate": {
+    "child_exit_zero": true,
+    "terminal_v24268_result": true,
+    "parent_v24259_downcast_valid": true,
+    "model_generated_table_required": true,
+    "model_slot_receipt_present_and_valid": true,
+    "model_slot_acquisitions_equal_actual_model_requests": true,
+    "logical_search_batches_equal_admitted_queries": true,
+    "hosted_search_http_calls_at_most_four": true,
+    "search_or_fetch_stage_failure_allowed": false,
+    "search_or_fetch_stage_failure_absent": false,
+    "telemetry_contains_content_or_privileged_metadata": false,
+    "shared_lease_released_after_terminal": true,
+    "passed": false,
+    "findings": [
+      "hosted_search_returned_no_query_local_url_for_any_logical_query",
+      "all_logical_search_batches_counted_as_failures",
+      "page_fetch_stage_was_not_reached"
+    ]
+  },
+  "diagnosis": {
+    "fast_wall_time_may_be_claimed_as_success": false,
+    "generated_table_may_be_used_as_retrieval_quality_evidence": false,
+    "provider_response_had_usable_query_local_discovery_leads": false,
+    "likely_boundary": "multi-query native parser requires section-local URL citation spans and deliberately refuses to broadcast action-level sources across queries",
+    "safe_successor": "bind a task-local union of action sources as discovery leads only, fetch pages deterministically, and keep fetched page text as the sole active evidence; never broadcast provider narrative as evidence"
+  },
+  "provenance": {
+    "protocol_sha256": "e6fdeabd5261c3207005e9bad22a3eca79aa230aa5110d2d4abf1f01e8ca6720",
+    "ignored_result_sha256": "904e5f7fc3fd58bc88649e0217e8fbba089b4a67d6f491e8a779e512a0bd0167",
+    "ignored_model_slot_receipt_sha256": "8cf83dc8441560b7d2317a68c5ef4881e71232c340280cf123afb7499c69efc6",
+    "ignored_safe_progress_sha256": "5afc51144c4b7d0219844022c032d991c1cfd712ec0c23136e3379f423b00c07",
+    "lease_observation_sha256": "3158f9b9649a9105192e2eefbb20e490364b490537a5cd293841b01d1d4fbb84"
+  },
+  "authorization": {
+    "rerun_same_smoke": false,
+    "benchmark_forward": false,
+    "dev64": false,
+    "exact220": false,
+    "evaluator": false,
+    "leaderboard_submission": false,
+    "sota_claim": false,
+    "append_only_successor_design": true
+  }
+}
