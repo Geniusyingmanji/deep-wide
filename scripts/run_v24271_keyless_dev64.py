@@ -388,7 +388,7 @@ def validate_activation(root: Path, protocol: dict[str, Any]) -> dict[str, Any]:
         or value.get("shared_api_lease_active_before_activation") is not False
         or value.get("network_model_search_fetch_evaluator_or_api_called") is not False
         or value.get(
-            "mapping_control_prediction_gold_category_question_type_split_evaluator_score_read"
+            "mapping_gold_category_question_type_split_evaluator_score_read"
         )
         is not False
         or value.get("new_exact220_or_sota_authorized") is not False
