@@ -1,8 +1,14 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.87
+> 版本：5.88
 >
-> 更新：2026-08-02 16:52 UTC
+> 更新：2026-08-02 17:08 UTC
+>
+> **5.88 V2.42.67 total-fallback fresh exact-220 已安全启动（2026-08-02 17:08 UTC）：V2.42.66 已隔离且禁止复用；append-only successor 不改正常 planning/search/fetch/synthesis/normalization/repair、prompt、provider 或 `600s / 3 GPT / 8 query / 16 target` 单题预算，只把异常边界统一降级为内容无关单列 `Result/Unknown`。totality 现覆盖原 pipe-header、最终 validator、child result/receipt/safe-progress JSON 损坏及 parent future 异常；冻结的 220 个可见任务逐题 synthetic fallback 均通过 canonical validator，模拟第 66 个 future 抛同类异常时仍得到 `220/220` terminal outcomes。特权字段在任何 effect 前拒绝，异常文本不落结果，实际 model request 与全局 slot acquisition 继续精确对账。
+>
+> 定向 exact-220/totality `18/18`、V2.42.57–67 跨版本回归 `130/130`，compile、diff、credential literal、concrete task-ID 与 forward privileged-field 扫描通过。协议 SHA `04ce6c7f…a63a9c`、preactivation audit SHA `6e5fe613…13027` 且 `launch_authorized=true/findings=[]`；activation 明确 `220 / executor=4 / GPT cap=2`、激活前 lease 空闲、零 network/evaluator/label read。实现、protocol、activation 与 execution-start 已分别提交推送至 `632980f / 44498b3 / 3562a09 / 7fa79d9`；其他健康 benchmark/watcher 未 signal、restart 或 duplicate launch。
+>
+> 唯一 fresh cold forward session `deepwide-v24267-exact220-v1` 已启动；execution-start 后约 31 秒出现首个 content-free terminal，两分钟时为 `8/220`、4 child 持续运行、观测吞吐 `3.45 task/min`、条件 forward ETA 约 `61min`，与 V2.42.64 的约 63min 外推一致。该 ETA 不是承诺，当前仍无 prediction freeze、evaluator 或全集分数；必须先自然达到 exact `220/220` 并封存 predictions，之后才允许打开 mapping/query/answer/gold/evaluator。任何 forward/evaluator failure 均固定分母计零，禁止 resume、补题、选择性重跑、同轮反馈调参、Avg@4/leaderboard/SOTA 宣称。**
 >
 > **5.87 V2.42.66 exact-220 start invalidated before any score（2026-08-02 16:52 UTC）：paired dev64 GO 后按冻结 `4× / GPT cap=2 / V2.42.59 / 220` 启动唯一 cold forward；前 65 个 content-free terminal progress 正常，mapping/evaluator 始终未打开。第 66 个 child 已写 terminal safe-progress 与合法 `3 requests = 3 slot acquisitions` receipt，但未写 result；parent 应生成 failure-as-zero fallback，却因可见列名抽取器把题面同一行 Markdown 示例中的 `|` 保留为一个 66 字符列名，generic fallback 生成器又把这些 pipe 写回 header，而 canonical validator 把它们解释成额外单元格，最终抛 `ValueError: score-first prediction is not canonical Markdown`。这是 executor/fallback contract bug，不是搜索/GPT/evaluator failure，也无 label leakage。
 >
