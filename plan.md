@@ -1,8 +1,14 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.83
+> 版本：5.84
 >
-> 更新：2026-08-02 13:51 UTC
+> 更新：2026-08-02 14:20 UTC
+>
+> **5.84 V2.42.63 global GPT concurrency limiter（2026-08-02 14:20 UTC）：针对 V2.42.62 在 4× 出现 6 个 `ModelRequestError`、search failure=0 的唯一瓶颈，实现并真实启用跨进程 GPT slot pool。每个 logical `model.complete()`（含其内部 retries）必须持有 2 个 advisory file lock 之一；search/fetch 保持锁外，slot wait 计入原 600s task wall，不增加模型/search/fetch/retry 预算。每个 child 原子写内容无关 receipt，parent 强制 `acquisitions == model requests`，receipt 缺失/重封/不匹配即 infrastructure fallback。4 个独立进程的机械测试实测 GPT 临界区最大并发严格为 2，search-like work 仍可 4 路并行；symlink/路径逃逸、bool/int 漂移和重封内容注入均 fail closed。
+>
+> V2.42.63 真实 capacity run 的 9/9 forward 均 model-generated、0 `ModelRequestError`、0 stage/infrastructure failure、9/9 receipt 有效；18 个 logical GPT requests 对应精确 18 acquisitions。`1×` 3/3 通过，median/p95 `45.403/56.931s`；`2×` 6/6 内容成功，median `47.331s`，slot max wait 仅 `0.000085s`，证明 limiter 没有在 2× 制造排队。可是同一冻结任务中一个 page-projection batch 从 retrieval terminal `22.848s` 延长到 task terminal `205.811s`；它只有 2 GPT requests/2 attempts、0 search failure。该随机 fetch 尾部使 6 样本的 matched-task p95 ratio=`3.737` 超过旧 gate `3.5`，runner 按预注册规则在 2× 停止，未执行目标 4×/8×/12×。
+>
+> 因而本轮只证明 limiter 机制真实有效以及 1×/2× 没有模型失败，**没有证明 4× 已修复**；capacity gate 正确为 NO-GO，不能把 9/9 completion 外推为 4×。下一步不是修改结果或放宽 600s 熔断，而是 append-only 定向执行完整 `4/8/12 × 3 waves`：保持同任务、模型、prompt、provider、slot cap=2 与所有单题预算，主 gate 直接检验 model-generated rate、`ModelRequestError`、receipt、absolute p95≤600s、wave throughput 和 token/fetch ratio；匹配题随机 fetch p95 只作诊断，不再在目标 4× 之前触发早停。若 4× 仍出现模型错误则 limiter 假设失败；若 4× 成功再看 8×/12× 的首个不稳定档。仍不调用 evaluator/dev64/220，不宣称质量提升或 SOTA。V2.42.57→63 定向回归 `61/61`。**
 >
 > **5.83 V2.42.62 full-pipeline capacity ladder（2026-08-02 13:51 UTC）：V2.42.61 工程 GO 后没有用 GPT-only synthetic probe 乐观外推，而是对同一冻结 label-blind score-first pipeline 做真实 `1/2/4/8/12 × 3 waves` 跨题并发阶梯。每题仍固定 `3 GPT / 8 search / 16 admitted fetch`、单题 `4 search workers / 8 fetch workers` 和同一 GPT-5.6/search provider；容量阶梯只改变同时运行的题数。12 个已消费 engineering tasks 只用于负载测量，不作独立质量评估；串行基线在 parent 全终局后投影为 position/latency/token/call/failure counts，未持久化或哈希题面、ID、query、URL、page、prediction 或 answer。runtime 继续只接受 `{opaque_id, question}`，无 evaluator。
 >

@@ -1,0 +1,121 @@
+{
+  "artifact_version": 1,
+  "role": "v24263_model_limited_capacity_postresult_audit",
+  "created_at_unix": 1785680405,
+  "label_blind": true,
+  "protocol_sha256": "78d7760f1cf9a07cc3458040baf32c811d686bd1d5c45bd8ed4e0e24c4682532",
+  "preactivation_audit_sha256": "2dcaf54c0ff20285aa3245279fdcbe0bc0d43e3ad6b2a44e2d1d20e7395c099b",
+  "activation_sha256": "729482d4471074c805c0a6be69f818369776450720eebe0099b6fa826a832a47",
+  "execution_start_sha256": "bfdc1cae7cdc3175b75e79c7ff3dec105caa2d523ddcdedd032eb9b876e9e1b0",
+  "result": {
+    "path": "results/v24263_model_limited_capacity_result_v1_20260802.json",
+    "sha256": "dfe7b47f20ecc34478340ab3f6ca681f268a4dae13f0bec5b81d3b151f9b2e2e",
+    "payload_seal_valid": true,
+    "capacity_gate": "no_go",
+    "selected_executor_concurrency": 1,
+    "total_executions": 9,
+    "stopped_after_first_failed_level": true,
+    "target_concurrency_four_executed": false,
+    "levels": [
+      {
+        "concurrency": 1,
+        "executions": 3,
+        "model_generated": 3,
+        "stage_failures": 0,
+        "infrastructure_fallbacks": 0,
+        "model_slot_receipt_invalid_count": 0,
+        "model_slot_acquisitions": 6,
+        "model_slot_max_wait_seconds": 0.000116,
+        "median_wall_seconds": 45.403,
+        "p95_wall_seconds": 56.931,
+        "passed": true,
+        "findings": []
+      },
+      {
+        "concurrency": 2,
+        "executions": 6,
+        "model_generated": 6,
+        "stage_failures": 0,
+        "infrastructure_fallbacks": 0,
+        "model_slot_receipt_invalid_count": 0,
+        "model_slot_acquisitions": 12,
+        "model_slot_max_wait_seconds": 0.000085,
+        "median_wall_seconds": 47.331,
+        "p95_wall_seconds": 205.811,
+        "p95_matched_wall_ratio": 3.737194,
+        "passed": false,
+        "findings": [
+          "p95_matched_wall_ratio_above_gate"
+        ]
+      }
+    ]
+  },
+  "mechanism_evidence": {
+    "global_model_slot_cap": 2,
+    "logical_model_requests": 18,
+    "valid_model_slot_receipts": 9,
+    "model_slot_acquisitions": 18,
+    "model_slot_receipt_invalid_count": 0,
+    "model_request_errors": 0,
+    "search_failures": 0,
+    "hard_deadline_or_worker_fallbacks": 0,
+    "limiter_mechanically_active": true,
+    "concurrency_four_failure_hypothesis_tested": false
+  },
+  "diagnosis": {
+    "blocking_stage": "page_projection",
+    "single_long_tail_elapsed_seconds": 205.811,
+    "single_long_tail_retrieval_terminal_seconds": 22.848,
+    "long_tail_model_attempts": 2,
+    "long_tail_model_requests": 2,
+    "long_tail_search_failures": 0,
+    "safe_conclusion": "the limiter was active and eliminated model errors at one and two task concurrency, but the run stopped before concurrency four because one stochastic page-fetch batch exceeded the matched-task p95 ratio",
+    "next_experiment": "run the frozen four/eight/twelve task schedule with the same limiter and a provider-focused completion gate while retaining the absolute six-hundred-second task deadline"
+  },
+  "execution_closure": {
+    "runner_process_present_after_result": false,
+    "child_process_present_after_result": false,
+    "watcher_process_present_after_result": false,
+    "shared_api_lease_active": false,
+    "process_signal_restart_resume_skip_or_selective_retry": false,
+    "active_run_killed_or_quarantined": false,
+    "invalid_result_path": null
+  },
+  "source_policy": {
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "mapping_gold_category_question_type_split_evaluator_score_read": false,
+    "same_run_evaluator_feedback_used_for_forward_or_tuning": false,
+    "prediction_question_query_url_page_answer_opaque_id_or_credential_emitted_by_result_or_audit": false,
+    "network_model_search_fetch_or_evaluator_api_called_by_postresult_audit": false
+  },
+  "tests": {
+    "v24263_limiter": "6/6",
+    "v24263_integration": "13/13",
+    "v24262_capacity": "15/15",
+    "v24261_executor": "3/3",
+    "v24259_aggregate": "2/2",
+    "v24259_normalizer": "11/11",
+    "v24257_runtime": "11/11",
+    "total": "61/61"
+  },
+  "authorization": {
+    "targeted_four_eight_twelve_capacity_design": true,
+    "targeted_four_eight_twelve_capacity_launch": false,
+    "official_evaluator_call": false,
+    "paired_dev64_launch": false,
+    "full220_launch": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "claims": {
+    "limiter_mechanism_valid": true,
+    "concurrency_four_improved": false,
+    "benchmark_quality_improvement_observed": false,
+    "paired_quality_result_available": false,
+    "sota": false
+  },
+  "audit_valid": true,
+  "audit_payload_sha256": "4e3a44a69df9588893eb4213b77c8aa57253917e73c0f30f0b4cd0a8053f5f81"
+}
