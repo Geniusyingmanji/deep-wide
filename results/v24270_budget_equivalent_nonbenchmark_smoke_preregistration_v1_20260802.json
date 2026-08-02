@@ -1,0 +1,100 @@
+{
+  "artifact_version": 1,
+  "role": "v24270_budget_equivalent_nonbenchmark_smoke_preregistration",
+  "protocol_id": "v24270_budget_equivalent_task_union_nonbenchmark_smoke_v1",
+  "created_at_unix": 1785699459,
+  "git_head": "e9df35d00bd9df7f1bffd62694c89c9575ae45e4",
+  "label_blind": true,
+  "parent": {
+    "path": "results/v24269_task_union_nonbenchmark_smoke_result_v1_20260802.json",
+    "sha256": "99b31df9e3092f112817a0f01d299ff8517ef459434ea17b490cfcd9b7a809b4",
+    "same_smoke_rerun": false,
+    "partial_or_terminal_output_reused": false
+  },
+  "candidate": {
+    "policy_id": "v24270_budget_equivalent_task_union_v1",
+    "single_change": "stable-first-seen task-union truncation at min(global fetch cap, logical query count times frozen per-query top-k)",
+    "selection_uses_content_url_host_score_or_benchmark_metadata": false,
+    "provider_narrative_or_snippet_forwarded": false,
+    "only_successfully_fetched_page_text_may_enter_synthesis": true
+  },
+  "task_contract": {
+    "selected_count": 1,
+    "source": "new synthetic public-information task unrelated to DeepWideBench and distinct from V2.42.68/V2.42.69",
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "benchmark_question_id_mapping_split_category_gold_evaluator_or_score_used": false,
+    "task_question_prediction_query_url_page_or_answer_may_be_committed": false
+  },
+  "limits": {
+    "wall_seconds": 600,
+    "model_calls": 3,
+    "search_queries": 8,
+    "fetch_targets": 16,
+    "search_results_per_query": 3,
+    "evidence_chars": 100000,
+    "page_chars": 5000
+  },
+  "provider_contract": {
+    "proxy_url": "http://127.0.0.1:9878/responses",
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "low",
+    "service_tier": "priority",
+    "model_slot_cap": 2,
+    "search_provider": "azure-native-keyless-batched-budget-equivalent-task-union",
+    "search_batch_size": 8,
+    "search_workers": 1,
+    "search_context_size": "medium",
+    "server_auto_fetch_enabled": false,
+    "fetch_workers": 8,
+    "fetch_timeout_seconds": 20,
+    "credential_required_or_persisted": false
+  },
+  "gate_contract": {
+    "child_exit_zero": true,
+    "terminal_v24270_result": true,
+    "parent_v24269_v24268_v24259_downcasts_valid": true,
+    "model_generated_table_required": true,
+    "model_slot_receipt_present_and_valid": true,
+    "model_slot_acquisitions_equal_actual_model_requests": true,
+    "post_cap_source_count_at_most_logical_queries_times_three": true,
+    "post_cap_source_count_at_most_sixteen": true,
+    "fetch_requested_source_count_at_most_post_cap_source_count": true,
+    "fetch_usable_page_count_minimum": 1,
+    "raw_unrecoverable_failure_count_maximum": 0,
+    "effective_search_failures_maximum": 0,
+    "telemetry_and_receipts_contain_content_or_privileged_metadata": false,
+    "shared_lease_released_after_terminal": true
+  },
+  "source_manifest": {
+    "src/deepwide_agent/v24270_budget_equivalent_union.py": "433b7736eafa38522c754b9e4a47257eb78697266304e29decabb0182ab2458c",
+    "scripts/run_v24270_budget_equivalent_task.py": "9f02685086ad0cae7523814188f208696494840e587eee204f6757e5fd13fa15",
+    "src/deepwide_agent/v24269_task_union_discovery.py": "f8c439e9d4000788e2e9c3afef37e29ee21e655faf57921572628ac350beb9be",
+    "src/deepwide_agent/v24268_keyless_batched_runtime.py": "776d6724f2024ff82e2b851e7a367c1b1657abc6ec80dcebe97c6fb22f85a51a",
+    "src/deepwide_agent/v24267_total_fallback.py": "6c75ee5e87a671d3d1a7644ed430d59aba01dca0886e8b30706da24e2f49bf89",
+    "src/deepwide_agent/native_search.py": "cd0d6bfccf4b345b11274558bdcffb39d279697d183242baf811dfd56ac71e50",
+    "src/deepwide_agent/clients.py": "339d923973f07ebcd33cb12cee2c26103df70ed3aea1fc0a737ffd675ac06fbc",
+    "src/deepwide_agent/v24263_global_model_limiter.py": "050751273bf28520bb82799e5194b9b404c58fecf6c5a725cfea93da0d041497",
+    "scripts/deepwide_api_lease.py": "8d9cffa78617b458172307d3558c76e9370f045f531c2f5aaaceb866f5a78c7d"
+  },
+  "execution": {
+    "output_root": "outputs/v24270_budget_equivalent_nonbenchmark_smoke_v1_20260802",
+    "aggregate_result": "results/v24270_budget_equivalent_nonbenchmark_smoke_result_v1_20260802.json",
+    "lease_path": "outputs/deepwide_benchmark_api.lease.lock",
+    "lease_owner": "v24270_budget_equivalent_nonbenchmark_smoke_v1",
+    "no_resume_rerun_or_selective_retry": true
+  },
+  "authorization": {
+    "one_new_nonbenchmark_smoke": true,
+    "paired_dev_design_if_go": true,
+    "paired_dev_launch": false,
+    "benchmark_forward": false,
+    "exact220": false,
+    "evaluator": false,
+    "additional_rollout_or_avg4": false,
+    "leaderboard_submission": false,
+    "sota_claim": false
+  }
+}
