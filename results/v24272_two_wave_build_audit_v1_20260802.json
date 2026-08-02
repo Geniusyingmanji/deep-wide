@@ -1,0 +1,67 @@
+{
+  "artifact_version": 1,
+  "role": "v24272_two_wave_build_audit",
+  "created_at_unix": 1785707715,
+  "label_blind": true,
+  "parent_no_go_result": {
+    "path": "results/v24271_keyless_dev64_result_v1_20260802.json",
+    "sha256": "29d7f3534adc0e6c0e51a2476a6a91ab52094edd8973f3e261dfeec9e9a9f31d",
+    "status": "development_gate_no_go",
+    "decision_passed": false,
+    "only_failed_check": "task_wall_sum_ratio"
+  },
+  "surface_manifest": {
+    "src/deepwide_agent/v24272_two_wave_entropy_voc.py": "2e618c1ac0888650d12b42ab93feb043379fa7b5be0262ab1ae857cce05e8532",
+    "src/deepwide_agent/v24272_two_wave_retrieval.py": "2bdf33fe3fe7d182c730be9ad29abb766d1d04f970b546a86da15d5a33bb010d"
+  },
+  "static_audit": {
+    "surfaces": {
+      "src/deepwide_agent/v24272_two_wave_entropy_voc.py": {
+        "sha256": "2e618c1ac0888650d12b42ab93feb043379fa7b5be0262ab1ae857cce05e8532",
+        "forbidden_imports": [],
+        "forbidden_direct_calls": [],
+        "forbidden_process_or_environment_attributes": [],
+        "privileged_runtime_key_accesses": [],
+        "credential_literal_present": false,
+        "concrete_opaque_id_present": false,
+        "passed": true
+      },
+      "src/deepwide_agent/v24272_two_wave_retrieval.py": {
+        "sha256": "2bdf33fe3fe7d182c730be9ad29abb766d1d04f970b546a86da15d5a33bb010d",
+        "forbidden_imports": [],
+        "forbidden_direct_calls": [],
+        "forbidden_process_or_environment_attributes": [],
+        "privileged_runtime_key_accesses": [],
+        "credential_literal_present": false,
+        "concrete_opaque_id_present": false,
+        "passed": true
+      }
+    },
+    "all_surfaces_passed": true,
+    "network_and_effects_only_via_injected_search_adapter": true,
+    "controller_is_pure_and_receipt_replay_validated": true
+  },
+  "synthetic_replay": {
+    "stop_decision": "stop",
+    "stop_reason": "first_wave_sufficient",
+    "stop_receipt_sha256": "a49b1727dc26b8efc11f362df0765082cb64b7d6f38a41ada2b69927027660fc",
+    "expand_decision": "expand",
+    "expand_reason": "positive_entropy_voc",
+    "expand_receipt_sha256": "46d9d87b724243b7aa33a1c7b1efdda2e9be57262df84fc0cd2449186f3d8527",
+    "question_query_url_host_page_prediction_answer_task_id_or_credential_emitted": false,
+    "mapping_gold_category_question_type_split_evaluator_score_or_reward_read": false,
+    "network_model_search_fetch_or_evaluator_called": false
+  },
+  "claim_scope": "build_only_transport_evidence_uncertainty_not_benchmark_quality_reward_or_causal_credit",
+  "authorization": {
+    "dev_benchmark_launch": false,
+    "exact220_launch": false,
+    "evaluator_call": false,
+    "leaderboard_submission": false,
+    "sota_claim": false,
+    "training_credit_assignment": false
+  },
+  "findings": [],
+  "audit_valid": true,
+  "audit_payload_sha256": "dcb2608535331fd72e080c776db58aa3a2034d94ed93c767883be34cbb92d804"
+}
