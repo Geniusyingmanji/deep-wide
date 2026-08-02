@@ -86,6 +86,9 @@ CAPACITY_STAIRCASE = Path(
 CAPACITY_EXTENSION = Path(
     "results/v24274_neutral_capacity_extension_v1_20260802.json"
 )
+HARD_DEADLINE_CAPACITY = Path(
+    "results/v24276_hard_deadline_capacity_v1_20260802.json"
+)
 
 FORWARD_FILES = (
     "src/deepwide_agent/__init__.py",
@@ -177,6 +180,7 @@ def _parents(root: Path) -> dict[str, Any]:
         NEUTRAL_FULL_PROBE,
         CAPACITY_STAIRCASE,
         CAPACITY_EXTENSION,
+        HARD_DEADLINE_CAPACITY,
     )
     for path in paths:
         _ordinary(root, path)
@@ -188,6 +192,7 @@ def _parents(root: Path) -> dict[str, Any]:
     neutral = read_object(root / NEUTRAL_FULL_PROBE)
     capacity = read_object(root / CAPACITY_STAIRCASE)
     extension = read_object(root / CAPACITY_EXTENSION)
+    hard_capacity = read_object(root / HARD_DEADLINE_CAPACITY)
     if (
         control_protocol.get("role")
         != "v24271_keyless_candidate_vs_frozen_control_dev64_preregistration"
@@ -218,6 +223,37 @@ def _parents(root: Path) -> dict[str, Any]:
         or extension.get("all_requested_levels_passed") is not False
         or [level.get("passed") for level in extension.get("levels", [])]
         != [True, False]
+        or hard_capacity.get("role") != "v24276_hard_deadline_capacity"
+        or hard_capacity.get("passed") is not True
+        or hard_capacity.get("concurrency") != EXECUTOR_CONCURRENCY
+        or not _sealed(hard_capacity, "result_payload_sha256")
+        or hard_capacity.get("limits") != LIMITS
+        or hard_capacity.get("two_wave_policy") != TWO_WAVE_POLICY
+        or hard_capacity.get("hard_fetch_contract")
+        != {
+            "per_url_total_wall_deadline_seconds": SEARCH[
+                "hard_fetch_deadline_seconds"
+            ],
+            "url_passed_over_stdin_not_argv": True,
+            "helper_process_group_terminated_on_deadline": True,
+        }
+        or any(
+            hard_capacity.get("summary", {}).get(name) != expected
+            for name, expected in {
+                "selected": EXECUTOR_CONCURRENCY,
+                "terminal": EXECUTOR_CONCURRENCY,
+                "model_generated": EXECUTOR_CONCURRENCY,
+                "fallback": 0,
+                "forward_or_retrieval_failures": 0,
+                "hard_fetch_deadline_failures": 0,
+                "fetch_helper_failures": 0,
+                "unrecoverable_search_failures": 0,
+                "cache_misses": 0,
+                "cache_serve_network_fetches": 0,
+            }.items()
+        )
+        or not all(hard_capacity.get("summary", {}).get("checks", {}).values())
+        or any(hard_capacity.get("authorization", {}).values())
     ):
         raise RuntimeError("V2.42.75 parent identity drifted")
     evaluator = control_protocol.get("evaluator_contract")
@@ -249,6 +285,7 @@ def _parents(root: Path) -> dict[str, Any]:
         "neutral": neutral,
         "capacity": capacity,
         "extension": extension,
+        "hard_capacity": hard_capacity,
         "evaluator": evaluator,
         "task_contract": task_contract,
         "ids": list(ids),
@@ -312,6 +349,18 @@ def build_protocol(
                 "sha256": sha256(root / CAPACITY_EXTENSION),
                 "highest_passing_concurrency": 8,
                 "concurrency_16_passed": False,
+            },
+            "hard_deadline_capacity_gate": {
+                "path": str(HARD_DEADLINE_CAPACITY),
+                "sha256": sha256(root / HARD_DEADLINE_CAPACITY),
+                "concurrency": EXECUTOR_CONCURRENCY,
+                "passed": True,
+                "batch_wall_seconds": parents["hard_capacity"]["summary"][
+                    "batch_wall_seconds"
+                ],
+                "task_wall_max_seconds": parents["hard_capacity"]["summary"][
+                    "task_wall_max_seconds"
+                ],
             },
             "historical_control_prediction_freeze_runtime_summary_mapping_gold_or_evaluator_rows_opened_or_hashed": False,
         },
@@ -569,6 +618,7 @@ def validate_protocol(
         ("neutral_full_task_probe", NEUTRAL_FULL_PROBE),
         ("neutral_capacity_staircase", CAPACITY_STAIRCASE),
         ("neutral_capacity_extension", CAPACITY_EXTENSION),
+        ("hard_deadline_capacity_gate", HARD_DEADLINE_CAPACITY),
     ):
         if value["parents"][key]["sha256"] != sha256(root / path_):
             raise RuntimeError(f"V2.42.75 parent hash drifted: {key}")

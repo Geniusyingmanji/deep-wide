@@ -103,6 +103,10 @@ class V24275TwoWaveDev64Tests(unittest.TestCase):
         self.assertEqual(value["two_wave_policy"]["wave2_queries"], 2)
         self.assertEqual(value["decision_contract"]["maximum_search_token_ratio"], 0.70)
         self.assertEqual(value["decision_contract"]["maximum_task_wall_sum_ratio"], 0.50)
+        self.assertTrue(value["parents"]["hard_deadline_capacity_gate"]["passed"])
+        self.assertEqual(
+            value["parents"]["hard_deadline_capacity_gate"]["concurrency"], 8
+        )
         self.assertFalse(value["authorization"]["new_exact220_launch"])
         self.assertFalse(
             value["authorization"]["leaderboard_submission_or_sota_claim"]
