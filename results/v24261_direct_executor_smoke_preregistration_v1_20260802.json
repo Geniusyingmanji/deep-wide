@@ -1,0 +1,162 @@
+{
+  "artifact_version": 1,
+  "role": "v24261_direct_executor_smoke_preregistration",
+  "protocol_id": "v24261_direct_executor_smoke16_v1",
+  "created_at_unix": 1785675094,
+  "label_blind": true,
+  "parents": {
+    "protocol": {
+      "path": "results/v24260_import_bootstrap_smoke_preregistration_v1_20260802.json",
+      "sha256": "60a34c8f3f1e582e8b059e2d6ba0e71b1de199b29608f9aeb2f2337c6ce4371b"
+    },
+    "execution_start": {
+      "path": "results/v24260_import_bootstrap_smoke_execution_start_v1_20260802.json",
+      "sha256": "aa205b5760d309cbeb4338976d142ea95f030cb461ef8dc1f0e487f920c977d7"
+    },
+    "runner_log": {
+      "path": "outputs/v24260_import_bootstrap_smoke_runner_v1_20260802.log",
+      "sha256": "80e6ca9610b66e6fccdef547f592bacf027bb1cc8b7868645be238cedeaaa1c2",
+      "contents_emitted": false
+    },
+    "pre_popen_residue_counts": {
+      "visible_task_files": 1,
+      "progress_files": 0,
+      "result_files": 0
+    },
+    "network_model_search_fetch_evaluator_or_api_called": false
+  },
+  "single_change": {
+    "mechanism": "direct_task_command_and_popen_without_runtime_monkeypatch",
+    "parent_executor": "scripts/run_v24260_score_first_smoke.py",
+    "runtime_monkeypatch_used": false,
+    "run_one_task_failure_injection_popen_count": 1,
+    "child_runtime_normalizer_model_prompt_search_provider_budget_selection_and_gate_unchanged": true
+  },
+  "task_contract": {
+    "manifest": {
+      "path": "outputs/runtime_manifest_v1_repro/manifest.jsonl",
+      "sha256": "4e394daf67e0bdc7d1fe247d4781945334026c0065ec7666d298f18f4b7180fb",
+      "row_schema": [
+        "opaque_id",
+        "question"
+      ]
+    },
+    "id_source": {
+      "path": "configs/full220_v2403_r1_devval_s04.ids",
+      "sha256": "79ba11a41c186daa80e8779e8fa2c1b47e7907f8e398d817dedb43099333d69c"
+    },
+    "selection_rule": "same_frozen_first_16_devval_ids_full_fresh_cold_start",
+    "selected_count": 16,
+    "selected_opaque_ids_sha256": "0ce5098b8b14e99f1ec5d812962d9eed8d476d7c3cc956748ed05b2445e606c4",
+    "selected_opaque_ids_persisted_or_emitted": false,
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "already_consumed_engineering_smoke_not_independent_evaluation": true,
+    "category_question_type_split_mapping_gold_score_used_for_selection": false,
+    "selective_parent_failure_rerun": false
+  },
+  "limits": {
+    "wall_seconds": 600,
+    "model_calls": 3,
+    "search_queries": 8,
+    "fetch_targets": 16,
+    "search_results_per_query": 3,
+    "evidence_chars": 100000,
+    "page_chars": 5000,
+    "plan_output_tokens": 4000,
+    "synthesis_output_tokens": 30000,
+    "repair_output_tokens": 12000
+  },
+  "provider_contract": {
+    "model": {
+      "proxy_url": "http://127.0.0.1:9878/responses",
+      "name": "gpt-5.6-sol",
+      "reasoning_effort": "low",
+      "service_tier": "priority",
+      "timeout_seconds": 180,
+      "max_retries": 2
+    },
+    "search": {
+      "provider": "anthropic-server-web-search",
+      "model": "claude-haiku-4-5-20251001",
+      "timeout_seconds": 90,
+      "max_retries": 2,
+      "workers": 4,
+      "fetch_workers": 8,
+      "fetch_timeout_seconds": 20,
+      "server_search_max_uses_per_query": 1,
+      "server_search_auto_fetch_disabled": true,
+      "explicit_page_fetches_share_task_cap": true
+    },
+    "credentials_environment_only_not_persisted_hashed_or_emitted": true
+  },
+  "gate_contract": {
+    "minimum_model_generated_tables": 15,
+    "maximum_fallback_tables": 1,
+    "maximum_hard_deadline_fallbacks": 1,
+    "maximum_p95_wall_seconds": 600,
+    "maximum_mean_system_tokens": 750000,
+    "maximum_mean_fetch_calls": 200,
+    "primary_or_repaired_only_counts_as_model_generated": true,
+    "schema_only_fallback_does_not_count_as_completion_improvement": true,
+    "go_authorizes_paired_dev64_design_only": true,
+    "go_does_not_authorize_dev64_full220_evaluator_or_leaderboard": true,
+    "model_generated_kinds": [
+      "primary",
+      "repaired",
+      "normalized_primary",
+      "normalized_repaired"
+    ],
+    "normalized_table_requires_no_nonempty_factual_cell_rewrite": true
+  },
+  "lease_contract": {
+    "path": "outputs/deepwide_benchmark_api.lease.lock",
+    "owner": "v24261_direct_executor_smoke16_v1",
+    "purpose": "direct_non_monkeypatch_v24259_normalizer_smoke16",
+    "single_owner_across_all_16_tasks": true
+  },
+  "execution": {
+    "runner_marker": "scripts/run_v24261_score_first_smoke.py",
+    "task_runner_marker": "scripts/v24260_successor/run_v24259_score_first_task.py",
+    "watcher_marker": "scripts/watch_v24261_direct_executor_smoke.py",
+    "activation_path": "results/v24261_direct_executor_smoke_activation_v1_20260802.json",
+    "execution_start_path": "results/v24261_direct_executor_smoke_execution_start_v1_20260802.json",
+    "output_root": "outputs/v24261_direct_executor_smoke16_v1_20260802",
+    "result_path": "results/v24261_direct_executor_smoke_result_v1_20260802.json",
+    "watcher_state_path": "outputs/v24261_direct_executor_smoke_watcher_state_v1_20260802.json",
+    "executor_concurrency": 1,
+    "parent_deadline_grace_seconds": 5,
+    "forward_resume_or_selective_rerun_allowed": false
+  },
+  "source_policy": {
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "mapping_gold_category_question_type_evaluator_score_read": false,
+    "same_run_evaluator_feedback_used_for_forward_or_tuning": false,
+    "credential_value_persisted_hashed_or_emitted": false
+  },
+  "authorization": {
+    "single_fresh_smoke16_after_activation_and_lease": true,
+    "process_signal_restart_resume_skip_or_selective_retry": false,
+    "official_evaluator_call": false,
+    "paired_dev64_or_full220_launch": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "control_surface": {
+    "file_count": 6,
+    "manifest": {
+      "scripts/run_v24261_score_first_smoke.py": "0e347231c1bc31b92227fb8ce059029fb37fcc9018d68bf6676055fef2813990",
+      "scripts/preregister_v24261_direct_executor_smoke.py": "845a1033a9be2b0db6ce412aafe74073e1549845f1aad08b7a235c6c55659d2e",
+      "scripts/activate_v24261_direct_executor_smoke.py": "826d90a837c862457fc4e7e6bcf6cf9a4fe6f3ad51d5f67126429bae9eda7904",
+      "scripts/audit_v24261_direct_executor_smoke.py": "11ada3b53473c4c673a19740fca1c4b7171fd6bc686005c8d38d8c7afffc8092",
+      "scripts/watch_v24261_direct_executor_smoke.py": "a2fee29d21da4b618ccf4b2066857882cf39a54685e5264a611feb06938d3fbf",
+      "tests/test_v24261_direct_executor_smoke.py": "2e654e82f0134cefbf08c754150ea4b33aa1be25495251aa75ebe90cf920f965"
+    },
+    "manifest_sha256": "6458d5cf965552352efa673e84777e5ef59ef6349173ee21a2cea439eb71d516"
+  },
+  "decision_contract_sha256": "9beaa3bc2b00db8298b0428a8ddec7dd66d90d36789c6ad03d4d4b6766c8793c"
+}
