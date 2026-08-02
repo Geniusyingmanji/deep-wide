@@ -1,8 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.84
+> 版本：5.85
 >
-> 更新：2026-08-02 14:20 UTC
+> 更新：2026-08-02 15:00 UTC
+>
+> **5.85 V2.42.64 targeted 4/8/12 capacity 全终局（2026-08-02 15:00 UTC）：为避免 V2.42.63 被一个随机 matched-task fetch 尾部在 2× 误停，append-only 冻结并真实运行 `4/8/12 × 3 waves`。任务、prompt、GPT-5.6、Anthropic search、单题 `600s / 3 GPT / 8 logical search / 16 admitted fetch`、search/fetch workers、provider retry 与全局 GPT slot cap=2 全部保持不变；matched-task wall ratio 只作诊断，但 absolute p95≤600s、effective speedup≥1.5×、model-generated≥90%、token/fetch ratio≤1.5，以及任何 stage/infrastructure/`ModelRequestError`/invalid-receipt 均继续 fail closed。4× 的 12 个冻结 task 精确各运行一次，不选择成功题；全实验在首个失败档自然停止，无 resume/rerun/selective retry。
+>
+> 权威结果 [`results/v24264_targeted_capacity_result_v1_20260802.json`](results/v24264_targeted_capacity_result_v1_20260802.json) 为 capacity **GO**、固定 executor concurrency=`4`。4×：`12/12 terminal = 11 model-generated + 1 matched baseline fallback`，0 stage/infrastructure failure、0 `ModelRequestError`、12/12 slot receipt 有效，median/p95 `57.275/80.057s`，effective speedup `3.407×`、并行效率 `85.2%`、throughput `0.05814 task/s`，matched token/fetch ratio `1.015/1.028`，通过。8×：`24/24 terminal = 22 model-generated + 2 matched baseline fallback`，仍为 0 stage/infrastructure/模型/receipt failure，但 median/p95 升至 `77.358/210.813s`，effective speedup 仅 `2.183×`、throughput 降至 `0.03725 task/s`，并出现额外 logical-search/fetch failures，故失败并停止，12× 未运行。结论是 GPT limiter 已把模型路径稳定到至少 8 个 task 并发，但端到端最优安全档是 4×，8× 已由搜索/抓页而非 GPT 限制。
+>
+> 两次 200s 级尾部的代码根因也已定位：`native_search._fetch_url()` 的 `fetch_timeout=20s` 是每个 HTTP redirect hop/流式 read timeout，不是单 URL 总截止；一个 URL 最多 5 hops，而 16 个目标由 8 workers 分两批执行，最坏可放大到约 `5×20s×2=200s`，DNS、分块读取与 PDF 转换也没有共享 monotonic batch deadline。这解释了 V2.42.63 的 `205.811s` 和 V2.42.64 8× 的 `210.813s` p95。下一单一工程修复应是 monotonic per-URL + per-batch deadline、限制 redirect hops，并在 deadline 后不等待 executor context manager 中的残余 future；该修复先做新鲜 latency smoke/capacity，不改变本轮结果。
+>
+> 4× 实测吞吐把 220 题 forward 的工程外推从旧 R1 的 7.5 天降到约 `220/0.05814=3,784s≈63min`；这不是承诺，也不含 evaluator。post-result audit 确认 36/36 receipt 有效、runner/child/watcher/lease 自然闭合，runtime 始终只读 `{opaque_id, question}`，未读 category/question_type/split/mapping/gold/evaluator/score，未调用 evaluator。V2.42.57→64 精确回归 `80/80`，V2.42.64 定向新增后 `15/15`；广泛 643 项 discovery 中 641 项通过、2 个历史模块仅因 `python -I` 自身缺仓库路径而 import error，不计作本链产品失败。下一关键路径冻结为：**固定 4× → 同输入/模型/预算 paired dev64（两臂 prediction 全冻结后才离线 evaluator）→ 质量门通过后唯一 fresh exact-220**。当前仍无 paired quality、正式候选 220 分数或 SOTA 证据。**
 >
 > **5.84 V2.42.63 global GPT concurrency limiter（2026-08-02 14:20 UTC）：针对 V2.42.62 在 4× 出现 6 个 `ModelRequestError`、search failure=0 的唯一瓶颈，实现并真实启用跨进程 GPT slot pool。每个 logical `model.complete()`（含其内部 retries）必须持有 2 个 advisory file lock 之一；search/fetch 保持锁外，slot wait 计入原 600s task wall，不增加模型/search/fetch/retry 预算。每个 child 原子写内容无关 receipt，parent 强制 `acquisitions == model requests`，receipt 缺失/重封/不匹配即 infrastructure fallback。4 个独立进程的机械测试实测 GPT 临界区最大并发严格为 2，search-like work 仍可 4 路并行；symlink/路径逃逸、bool/int 漂移和重封内容注入均 fail closed。
 >
