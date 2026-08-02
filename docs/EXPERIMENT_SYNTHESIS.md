@@ -1,16 +1,28 @@
 # Experiment synthesis and evidence ledger
 
-Last evidence refresh: **2026-08-01 07:45:17 UTC** for the frozen V2.40.3 R1 failure census. This document separates measured quality, diagnostic evidence, implementation audits, and waiting control processes so that the large log collection is not mistaken for a large set of benchmark results.
+Last evidence refresh: **2026-08-02 19:12:25 UTC** for the audited V2.42.67 exact-220 result. This document separates measured quality, diagnostic evidence, implementation audits, and waiting control processes so that the large log collection is not mistaken for a large set of benchmark results.
 
 ## Executive conclusions
 
-1. **There is no current paper-ready benchmark result.** The only full-220 quality reference is a historical GPT-5.5 single rollout. The current V2.40.3 R1 run has not opened the evaluator or gold mapping and is therefore a forward-engineering and failure-census run, not a score.
+1. **There is now one audited current full-220 single-rollout result, but no SOTA or Avg@4 result.** V2.42.67 froze all 220 predictions before evaluator access and reports 3.1818% whole-table success, 69.09% Entity accuracy, 20.19% Row F1, 34.68% Item F1, and 41.46% Column F1 with all 14 evaluator errors retained as zeros. It is a consumed public-resource single rollout, not held out and not directly equivalent to published Avg@4 results.
 2. **Known R1 failures are dominated by validation, semantics, provenance, and output contracts.** At the latest snapshot, 200/220 tasks are terminal: 40 completed and 160 failed. At least 121 of the 160 failures are in explicitly named structural, semantic, provenance, or contract categories. Infrastructure abort and exhausted retryable model requests account for only 4 failures.
 3. **Truncation is a major semantic-validation mechanism.** Of the 25 stage-semantic-validation failures, 21 had every terminal semantic attempt's primary output truncated. Fixing prompt/output budgeting and structured continuation is a higher-priority intervention than adding more downstream controllers.
 4. **Retrieval and final entity selection are separate bottlenecks.** In the two-task anchor diagnostic, the official entity was present among candidates in 7 of 8 task-round observations, while exact final entity selection remained 0/8.
 5. **The replays validate local invariants, not metric gains.** They show that alias canonicalization, mixed row domains, fixed-slot binding, membership predicates, attribute isolation, and column-fair query construction behave as intended on consumed states. They do not measure completion, F1, held-out generalization, cost reduction, or leaderboard improvement.
 6. **V2.42.21–V2.42.44 are implementation/build audits.** They establish that specific modules or candidate adapters exist under tested contracts. They report no production runtime integration, real provider evaluation, benchmark score, quality/cost improvement, training improvement, or SOTA evidence.
-7. **The next trustworthy quality comparison must be fresh and cold-start.** Finish R1 for terminal failure accounting, address the dominant validation/truncation modes, then run the frozen same-task gate and a fresh exact-220 evaluation with evaluator isolation and failures counted as zero. Watcher liveness and preregistration are not substitutes for that experiment.
+7. **The next experiment should be a paired adaptive-retrieval gate, not another immediate full run.** V2.42.67 already supplies the isolated exact-220 baseline. Its 60m55s forward spent 82.45% of system tokens in search transport because almost every task exhausted the fixed retrieval allowance. Instrument content-free stage/yield telemetry, test a same-cap two-wave delta-expansion policy on consumed dev64, and promote only if quality is safe while retrieval work materially falls.
+
+## Audited V2.42.67 exact-220 result
+
+| Protocol | Whole-table success | Entity accuracy | Row F1 | Item F1 | Column F1 | Quality composite |
+|---|---:|---:|---:|---:|---:|---:|
+| V2.42.67, full 220, one cold rollout, failure-as-zero | 7/220 = 3.1818% | 69.0909% | 20.1856% | 34.6810% | 41.4591% | 0.413541 |
+
+The forward produced 217 model-generated tables and three canonical fallbacks. The official evaluator returned 206 valid rows and 14 terminal errors; the denominator remains 220 and no error was selectively re-evaluated. The post-result audit reports no findings, no mapping/gold/evaluator access before the exact-220 prediction freeze, and no label-based routing.
+
+Forward wall time was 3,655 seconds (60m55s). The subsequent evaluator took 3,031 seconds (50m31s), so that interval must not be described as search time. Aggregate per-task wall was 14,449.368 seconds; divided across four workers its ideal lower bound is 3,612.342 seconds, showing that outer scheduling was already about 98.8% efficient. The avoidable cost is inside each task: 1,744 logical searches, 3,600 fetch attempts, and 34.51M total tokens, of which 28.45M (82.45%) came from the search transport. The frozen efficiency diagnosis is `results/v24267_exact220_efficiency_diagnosis_v1_20260802.json`.
+
+This single rollout improves over the repository's historical GPT-5.5 single-run reference, but it is below the published A-MapReduce full-220 Avg@4 result on all five official metrics. It therefore supports a reliable current baseline and several engineering conclusions, not a leaderboard or SOTA claim.
 
 ## Evidence hierarchy
 

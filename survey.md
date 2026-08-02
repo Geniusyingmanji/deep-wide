@@ -1,8 +1,10 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
-> 检索截止：2026-08-01 03:17 UTC；项目证据更新：2026-08-01 12:35 UTC
+> 检索截止：2026-08-01 03:17 UTC；项目证据更新：2026-08-02 19:12 UTC
 >
 > 结论强度：这是基于公开文献的 novelty audit，不是“没有任何相关工作”的证明。2026 年文献多为尚未同行评审的 arXiv 预印本，文中将预印本结果视为作者报告，而非独立复现事实。
+
+项目证据现已越过“只有 build audit”的阶段，但尚未验证熵/VOC 方法本身。V2.42.67 在严格 label-blind、预测全冻结后才开放 evaluator 的 full-220 单轮中得到 Success `3.1818%`、Entity `69.0909%`、Row/Item/Column F1 `20.1856/34.6810/41.4591%`；它优于仓库历史 GPT-5.5 单轮参考，但低于 A-MapReduce full-220 Avg@4，且协议不是 Avg@4，不能称 SOTA。该 run 使用固定 `8 query / 16 fetch target`，使 search transport 占 `82.45%` tokens；这只证明需要自适应 allocation，不证明信息熵已经带来收益。下一可证伪实验必须把熵/VOC policy 与同 cap 的固定两波、coverage heuristic 和无熵 delta-search 做 paired 比较，并同时报告质量、work、wall 与 premature-stop error。
 
 V2.42.55 在 2026-08-01 12:18 UTC 把理论区分落实为可执行但仍 build-only 的 kernel。此前 V2.42.11 只预测单步 task contribution/token；它没有 finite-depth Bellman recursion，也不显式给出 pure IG、myopic terminal-loss VOC 与 descendant option value。新 kernel 在同一个 content-free、校准 transition DAG 上计算三者，并复现 high-IG/low-value、low-IG/high-value 和 myopic-zero/dynamic-positive bridge 三类反例；depth=1 与 myopic 精确等价，缺 calibration 则 abstain，cycle/unreachable/概率或预算非法则 fail closed。定向实现/审计 18/18，v3 回执 SHA f285ba53…9f447。这只证明算法合同，不证明真实 DeepWide 四层损失或 transition 已校准，更没有 runtime/dev64/exact-220 效果；因此 Search as Computation Allocation 的 novelty 边界不变：贡献候选是四层终端风险的任务化与经验校准，不是 Bellman VOC 或信息熵公式本身。
 

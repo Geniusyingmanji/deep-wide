@@ -1,8 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.88
+> 版本：5.89
 >
-> 更新：2026-08-02 17:08 UTC
+> 更新：2026-08-02 19:12 UTC
+>
+> **5.89 V2.42.67 exact-220 已完成、审计并推送（2026-08-02 19:12 UTC）：唯一 cold forward 在精确 `220/220` terminal 后冻结 predictions，随后才打开 mapping/query/answer/gold/evaluator。forward 为 `217 model-generated + 3 fallback`，`454` 次实际 GPT request 与 `454` 次全局 slot acquisition 精确一致；post-result audit `findings=[]`，runtime 仍只接收 `{opaque_id, question}`，无 category/question_type/split/gold/evaluator feedback 路由。官方 evaluator 在固定 220 分母下得到 `206 valid + 14 failure-as-zero`，whole-table success `7/220 = 3.1818%`、Entity `69.0909%`、Row F1 `20.1856%`、Item F1 `34.6810%`、Column F1 `41.4591%`、quality composite `0.413541`。14 个 evaluator error 不选择性重评。权威结果为 [`results/v24267_exact220_result_v1_20260802.json`](results/v24267_exact220_result_v1_20260802.json)，审计为 [`results/v24267_exact220_postresult_audit_v1_20260802.json`](results/v24267_exact220_postresult_audit_v1_20260802.json)。
+>
+> 该单轮相对历史 GPT-5.5 单轮参考在 success、Entity、Row/Item/Column F1 与 composite 均有小幅提升，但协议不是 Avg@4；相对 DeepWideSearch WebSailor/Claude 的公开 Avg@4，success/Row/Item 更高而 CE/Column 略低；相对 A-MapReduce full-220 Avg@4 的 `4.43 / 79.09 / 26.44 / 42.11 / 51.78` 五项仍全面落后。因此当前是可靠全集单轮结果，不是 SOTA，也不授权额外三轮、leaderboard submission 或 SOTA claim。
+>
+> 性能口径已纠正：没有单次搜索耗时 40–50 分钟。forward 全集墙钟 `3655s = 60m55s`，220 个单题 wall 累计 `14,449.368s`，4 路理论下限 `3612.342s`，调度效率约 `98.8%`；冻结后的官方 evaluator 另耗 `3031s = 50m31s`。瓶颈是每题平均 `65.68s` 的固定工作量：`212/220` 搜满 8 query、`196/220` 领满 16 fetch target，总计 `1,744` logical searches、`3,600` actual fetches、`34.51M` tokens，其中 search transport `28.45M = 82.45%`。旧 run 没有持久化逐阶段时长或 query-prefix yield，不能从终态轨迹伪造第几波应停止；内容无关效率诊断见 [`results/v24267_exact220_efficiency_diagnosis_v1_20260802.json`](results/v24267_exact220_efficiency_diagnosis_v1_20260802.json)。
+>
+> 下一主线不直接再跑 220 或 Avg@4。先做 append-only label-blind successor：保持单题总 cap 不增加，把检索改为 `首波 2–3 query / 4–6 pages → 内容无关 coverage/yield telemetry → 仅对缺口做 delta expansion`，并记录 planning/search/fetch/synthesis/repair/slot-wait 时长、唯一 source 增量、抓取成功数、表行数与 unknown-cell ratio；不得记录题面、query、URL、页面或 prediction。信息熵/VOC 只能在这些可观测量经开发集校准后控制继续/停止，不能按 benchmark label 或同轮 evaluator 分数路由。先做无网络单测和非 benchmark provider probe，再在已消费 dev64 上 paired 比较质量、wall、tokens 与 failures；质量安全且至少显著降低 retrieval work 才允许新的 exact-220。**
 >
 > **5.88 V2.42.67 total-fallback fresh exact-220 已安全启动（2026-08-02 17:08 UTC）：V2.42.66 已隔离且禁止复用；append-only successor 不改正常 planning/search/fetch/synthesis/normalization/repair、prompt、provider 或 `600s / 3 GPT / 8 query / 16 target` 单题预算，只把异常边界统一降级为内容无关单列 `Result/Unknown`。totality 现覆盖原 pipe-header、最终 validator、child result/receipt/safe-progress JSON 损坏及 parent future 异常；冻结的 220 个可见任务逐题 synthetic fallback 均通过 canonical validator，模拟第 66 个 future 抛同类异常时仍得到 `220/220` terminal outcomes。特权字段在任何 effect 前拒绝，异常文本不落结果，实际 model request 与全局 slot acquisition 继续精确对账。
 >

@@ -1,0 +1,72 @@
+{
+  "artifact_version": 1,
+  "role": "v24267_exact220_efficiency_diagnosis",
+  "created_at_utc": "2026-08-02T19:12:25Z",
+  "source_result": "results/v24267_exact220_result_v1_20260802.json",
+  "source_forward_result": "results/v24267_exact220_forward_result_v1_20260802.json",
+  "source_postresult_audit": "results/v24267_exact220_postresult_audit_v1_20260802.json",
+  "protocol_id": "v24267_v24259_total_fallback_single_cold_exact220_v1",
+  "label_blind": true,
+  "contains_question_query_url_page_prediction_answer_opaque_id_or_credential": false,
+  "timing": {
+    "forward_wall_seconds": 3655,
+    "forward_wall_minutes": 60.916667,
+    "official_evaluator_wall_seconds": 3031,
+    "official_evaluator_wall_minutes": 50.516667,
+    "end_to_end_wall_seconds": 6686,
+    "end_to_end_wall_minutes": 111.433333,
+    "sum_task_wall_seconds": 14449.368,
+    "mean_task_wall_seconds": 65.678945,
+    "median_task_wall_seconds": 56.8,
+    "p95_task_wall_seconds": 124.41,
+    "max_task_wall_seconds": 226.087,
+    "four_worker_ideal_lower_bound_seconds": 3612.342,
+    "four_worker_schedule_efficiency": 0.988328
+  },
+  "work": {
+    "tasks": 220,
+    "model_requests": 454,
+    "logical_search_calls": 1744,
+    "admitted_fetch_targets": 3448,
+    "actual_fetch_calls": 3600,
+    "fetch_failures": 894,
+    "tasks_with_fetch_failure": 213,
+    "tasks_using_all_eight_queries": 212,
+    "tasks_using_all_sixteen_fetch_targets": 196,
+    "tasks_with_two_model_calls": 206,
+    "tasks_with_three_model_calls": 14,
+    "aggregate_model_slot_wait_seconds": 1673.834067
+  },
+  "tokens": {
+    "system_total": 34507952,
+    "model_total": 6054479,
+    "search_total": 28453473,
+    "search_fraction": 0.824533,
+    "mean_system_total_per_task": 156854.327273
+  },
+  "result": {
+    "whole_table_success": 0.031818181818181815,
+    "entity_acc": 0.6909090909090909,
+    "f1_by_row": 0.2018556327224154,
+    "f1_by_item": 0.34680986542379966,
+    "column_f1": 0.4145910832175294,
+    "quality_composite": 0.4135414180682089,
+    "evaluator_valid": 206,
+    "evaluator_failure_as_zero": 14
+  },
+  "diagnosis": {
+    "single_search_took_forty_to_fifty_minutes": false,
+    "forward_concurrency_was_effective": true,
+    "primary_cost_amplifier": "nearly every task exhausts the fixed eight-query and sixteen-target retrieval allowance",
+    "stage_timing_available_in_parent_run": false,
+    "counterfactual_query_prefix_replay_available": false,
+    "safe_next_measurement": "content-free per-stage timing and retrieval-yield telemetry",
+    "safe_next_candidate": "same-cap two-wave retrieval with observable-yield stopping and delta-only expansion"
+  },
+  "claims": {
+    "full220_single_rollout": true,
+    "avg_at_4": false,
+    "leaderboard_submitted": false,
+    "sota": false
+  }
+}
