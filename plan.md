@@ -1,8 +1,18 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.80
+> 版本：5.81
 >
-> 更新：2026-08-01 12:55 UTC
+> 更新：2026-08-02 12:28 UTC
+>
+> **5.81 V2.42.57/58 score-first smoke16 全终局（2026-08-02 12:28 UTC）：先纠正耗时口径。旧 R1 的 `49.3min/task` 是整题端到端 wall，不是一次搜索 API 调用；但它仍然不合理，因为旧 runtime 平均每题串联约 `31.9` 次 GPT、`93.0` 次逻辑搜索、`764.4` 次 fetch，并让 planning、anchor、scope、candidate/coverage、mention-gap、row enrichment/refinement、membership/attribute/unknown-cell recovery 逐阶段重复领预算。220 题又基本按 shard/task 串行；173 个失败题平均仍消耗 `48.6min`，最后被晚期 fail-closed contract 整题归零。因此七天级 wall 是 pipeline 设计性放大，不是 DeepWideBench 只有 220 题却天然需要七天，也不是搜索 API 单次需要四五十分钟。
+>
+> 新隔离 label-blind score-first runtime 只接受精确 `{opaque_id, question}`，为整题共享一个 `600s / 3 GPT / 8 search queries / 16 admitted fetch targets` 总预算，使用 GPT-5.6 low reasoning、一次可选格式 repair、真实子进程组硬截止；provider/格式失败输出 schema-valid fallback，但 fallback 不计入模型生成完成率。safe progress 只保存阶段与用量计数，不保存题面、query、URL、页面、prediction 或 answer；category/question_type/split/mapping/gold/evaluator/score 在任何网络 effect 前拒绝。定向 runtime/executor/协议/激活/audit/watcher 联合 `31/31`，append-only 启动 successor 后全链 `36/36`；compile、credential/concrete-ID 扫描、active-forward zero-import 与 privileged-field AST 审计通过。
+>
+> 首次 V2.42.57 runner 在 execution-start、shared lease 和任何 API 前因漏定义 `RUNNER_MARKER` fail closed；零调用封存回执 [`results/v24257_score_first_smoke_start_failure_v1_20260802.json`](results/v24257_score_first_smoke_start_failure_v1_20260802.json) 固定 `execution_start/output/result/lease/API/prediction = false/absent`。V2.42.58 append-only successor 只在 byte-frozen runner 前定义该常量，模型、prompt、任务选择、预算与 gate 均不变；它绑定并保留原 watcher PID/start-ticks，禁止 signal/restart/new watcher、parent retry/resume、evaluator/dev64/full220。执行时 lease overlay 精确识别唯一 runner，只临时豁免预注册的 `v24195:unknown_lease_owner`，所有其他历史 critical findings 原样保留。
+>
+> 权威 smoke16 结果 [`results/v24257_score_first_smoke_result_v1_20260802.json`](results/v24257_score_first_smoke_result_v1_20260802.json) 为 `16/16 terminal = 14 primary + 2 best_effort_fallback`，无 hard-deadline fallback；mean wall `46.013s`、p95/max `67.640s`，mean system tokens `148,220.812`、mean actual search `7.94`、mean actual fetch `16.375`、mean GPT requests `2.125`。相对 R1 mean wall `2,957.23s`，同机真实 GPT-5.6+搜索下约 `64.3×` 加速；按 smoke 均值，220 题纯串行约 `2.81h`，8 路理想下限约 `21min`，实际 ETA 必须由后续 1/2/4/8/12×3 capacity ladder 实测，不能把理想线性外推当承诺。`600s` 是熔断上限，不是目标耗时。
+>
+> 工程 gate 正确判定 **NO-GO**：要求 `>=15/16` model-generated 且 fallback `<=1`，实际为 `14/16` 与 `2`。两个失败都不是搜索不足：均在 8 search/16 fetch 后因 exact-header Markdown contract 未满足而 fallback；一题 repair 请求为 `ModelRequestError`，另一题 repair 正常返回但仍未形成 exact table。故 wall/token/fetch 目标已大幅通过，唯一下一结构性修复是 **deterministic table normalization**：从候选中按可见列数/列名做有界解析、重排与 canonical render，仅当无法恢复时才消耗一次 GPT repair；不得读取 evaluator 或把 schema fallback 计为完成。先做新的 label-blind smoke16 gate；通过后才设计 paired dev64 与容量阶梯，当前不授权 dev64/full220/evaluator，也没有 benchmark quality 提升或 SOTA 结论。**
 >
 > **5.80 DeepWideBench score-first 纠偏（2026-08-01 12:55 UTC）：八天没有完整结果的主因已经量化，不是 watcher 静默或 GPT-5.6 全面不可用。冻结 R1 的 queue 按 shard 串行，当前 shard 也只有一个 task worker；安全 aggregate 为 `209/220 = 42 completed + 167 failed`。209 个终止任务累计 `612,533s = 170.1h` task wall、`534.6M` system tokens 和 `157,863` 次 fetch，均值为每题 `48.8min / 2.56M system tokens / 755 fetches`。失败任务占终止项 `79.9%`，又消耗了总 wall 的 `78.9%` 和 system tokens 的 `72.0%`。只有 3 个失败属于 model-request exhaustion；主失败是 candidate/merge validation `42`、other forward `36`、stage semantic validation `27`、anchor unresolved `20`、row-enrichment validation `13`、coverage gate `9` 和 visible-date contract `8`。因此根因是“单题过深、全局近串行、研究级 fail-closed 校验把可降级答案变成零分”，而不是简单增加重试或 API key 能解决。
 >
