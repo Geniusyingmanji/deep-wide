@@ -1,8 +1,14 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.91
+> 版本：5.92
 >
-> 更新：2026-08-02 19:34 UTC
+> 更新：2026-08-02 19:39 UTC
+>
+> **5.92 V2.42.70 budget-equivalent task union 非 benchmark 工程 GO（2026-08-02 19:39 UTC）：针对 V2.42.69 的 1-query/11-source 预算缺口，append-only cap 按首次出现顺序将 task-union 限制为 `min(16, logical_query_count × top3)`；选择不读内容、URL/host、provider score 或 benchmark metadata，receipt 绑定截断前后数量与 parent discovery receipt。合成 1-query/11-source 完整 runtime 只 admission/fetch 3 source；多次调用共享 global cap；top-k/config/receipt 篡改 fail closed。V2.42.67–70、native-search、limiter 全链回归 `40/40`，实现与预注册已推送 `e9df35d / 5d1fef2`。
+>
+> 唯一新非 benchmark smoke 自然终态：进程 `19.480s`、task `19.268s`、`normalized_primary`、`2 GPT requests = 2 slot acquisitions`。planner 给 2 query；provider task-union 有 20 个去重 source，cap 稳定截断为 `6 = 2×3`，实际 `6 fetch / 6 usable pages / 0 failures`。阶段 plan/search/fetch/synthesis 为 `2.663/10.762/0.958/4.846s`；总 `24,330` tokens，其中 search `15,822`。所有 parent validators、cap/discovery/telemetry receipts、内容扫描和 lease release 通过。权威工件为 [`results/v24270_budget_equivalent_nonbenchmark_smoke_result_v1_20260802.json`](results/v24270_budget_equivalent_nonbenchmark_smoke_result_v1_20260802.json)。
+>
+> 与 V2.42.67 全集单题均值相比，本次不同非 benchmark 任务的描述性 wall ratio 为 `0.293`、search-token ratio `0.122`；这只支持约 3.4×/8.2× 的候选工程降幅，不是因果质量比较。V2.42.70 现只授权 paired-dev **设计**：下一步应在已消费 development tasks 上比较 frozen V2.42.67 Anthropic transport 与 V2.42.70 keyless batch transport，保持同 visible input、GPT prompt/model、query/fetch/top-k cap、normalizer/repair/evaluator；两臂各自 fresh cold forward 且 predictions 都冻结后才评估，failure-as-zero。门槛至少要求 Row/Item/Column/Entity 和 whole-table 不出现预注册材料退化，同时 wall/search tokens 显著下降。任何 GO 前不启动新 220。**
 >
 > **5.91 V2.42.69 task-local discovery union 非 benchmark smoke 工程 GO、预算等价待补（2026-08-02 19:34 UTC）：针对 V2.42.68 的 0-URL/0-fetch NO-GO，append-only wrapper 不修改 frozen native parser，而把同一 `search_many` effect 的 query-local citations 与 action sources 合并为单个 task-local discovery batch；URL 全局去重，不复制到每条 query，不转发 provider narrative/snippet，只有 deterministic fetch 成功后的 page text 进入 synthesis。仅精确 `no query-local URL citation` 映射失败可被非空 union 抵消，transport/provider sibling failure 保留。完整 downcast、privileged-input pre-effect rejection、unrecoverable sibling failure 与 parent 回归共 `36/36` 通过；实现和协议已推送 `5855c72 / 656c818`。
 >

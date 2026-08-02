@@ -1,0 +1,118 @@
+{
+  "artifact_version": 1,
+  "role": "v24270_budget_equivalent_nonbenchmark_smoke_result",
+  "protocol_id": "v24270_budget_equivalent_task_union_nonbenchmark_smoke_v1",
+  "created_at_unix": 1785699595,
+  "status": "engineering_go",
+  "label_blind": true,
+  "benchmark_content_used": false,
+  "task_question_query_url_host_page_prediction_answer_opaque_id_or_credential_emitted": false,
+  "process": {
+    "exit_code": 0,
+    "wall_seconds": 19.48,
+    "terminal_result": true,
+    "completion_kind": "normalized_primary",
+    "model_generated_table": true
+  },
+  "accounting": {
+    "task_elapsed_seconds": 19.268,
+    "model_requests": 2,
+    "model_slot_acquisitions": 2,
+    "model_slot_wait_seconds": 0.000144,
+    "admitted_search_queries": 2,
+    "admitted_fetch_targets": 6,
+    "hosted_search_http_calls": 1,
+    "hosted_search_tool_calls": 2,
+    "effective_search_failures": 0,
+    "actual_fetch_calls": 6,
+    "fetch_failures": 0,
+    "system_total_tokens": 24330,
+    "search_total_tokens": 15822
+  },
+  "budget_equivalence": {
+    "logical_query_count": 2,
+    "search_results_per_query": 3,
+    "declared_query_result_capacity": 6,
+    "global_fetch_cap": 16,
+    "pre_cap_source_count": 20,
+    "post_cap_source_count": 6,
+    "truncated_source_count": 14,
+    "fetch_requested_source_count": 6,
+    "fetch_usable_page_count": 6,
+    "selection_policy": "stable_first_seen_without_content_or_score_ranking",
+    "content_score_url_host_or_benchmark_metadata_used_for_selection": false
+  },
+  "discovery_boundary": {
+    "raw_query_local_mapping_failure_count": 2,
+    "raw_unrecoverable_failure_count": 0,
+    "provider_narrative_or_snippet_forwarded": false,
+    "source_broadcast_to_logical_queries": false,
+    "fetched_page_text_is_only_active_evidence": true
+  },
+  "stage_seconds": {
+    "plan": 2.663281,
+    "search": 10.761525,
+    "fetch": 0.958486,
+    "synthesis": 4.846287,
+    "repair": null
+  },
+  "table_shape": {
+    "row_count": 4,
+    "column_count": 3,
+    "cell_count": 12,
+    "unknown_cell_count": 0,
+    "unknown_cell_ratio": 0.0
+  },
+  "gate": {
+    "child_exit_zero": true,
+    "terminal_v24270_result": true,
+    "parent_v24269_v24268_v24259_downcasts_valid": true,
+    "model_generated_table_required": true,
+    "model_slot_receipt_present_and_valid": true,
+    "model_slot_acquisitions_equal_actual_model_requests": true,
+    "post_cap_source_count_at_most_logical_queries_times_three": true,
+    "post_cap_source_count_at_most_sixteen": true,
+    "fetch_requested_source_count_at_most_post_cap_source_count": true,
+    "fetch_usable_page_count_minimum_one": true,
+    "raw_unrecoverable_failure_count_maximum_zero": true,
+    "effective_search_failures_maximum_zero": true,
+    "telemetry_and_receipts_contain_content_or_privileged_metadata": false,
+    "shared_lease_released_after_terminal": true,
+    "engineering_passed": true,
+    "paired_dev_design_authorized": true,
+    "paired_dev_launch_authorized": false
+  },
+  "comparison_to_v24267_full220_mean": {
+    "different_nonbenchmark_task_and_not_a_causal_quality_comparison": true,
+    "v24267_mean_task_wall_seconds": 65.678945,
+    "candidate_task_wall_seconds": 19.268,
+    "descriptive_wall_ratio": 0.293366,
+    "v24267_mean_search_tokens_per_task": 129333.968182,
+    "candidate_search_tokens": 15822,
+    "descriptive_search_token_ratio": 0.122333
+  },
+  "claims": {
+    "keyless_batched_budget_equivalent_engineering_path_operational": true,
+    "benchmark_quality_measured": false,
+    "benchmark_improvement": false,
+    "entropy_or_voc_effect_measured": false,
+    "sota": false
+  },
+  "provenance": {
+    "protocol_sha256": "ba36b796c03fdc4ce9136f081b38fd32064ab9558d80edfb091b0d57b3a191c2",
+    "ignored_result_sha256": "0060e0c5df5b634036a1a8d169e3bafe92f46facc40858db6f8862996a146dd3",
+    "ignored_model_slot_receipt_sha256": "db0e78ccdd910f63cd41b833999e0ce1aeb850f570a28aea11393e2466a5a774",
+    "ignored_safe_progress_sha256": "f13fd29e1a73ad6fbaf5a4448dfab031774621e26aef72b64aea09ce36ccb943",
+    "lease_observation_sha256": "d2b55ab248b875ad4f396f1bcca896a93b07261e1d08ba4b26f8408863c12d6d"
+  },
+  "authorization": {
+    "rerun_same_smoke": false,
+    "paired_dev_design": true,
+    "paired_dev_launch": false,
+    "benchmark_forward": false,
+    "exact220": false,
+    "evaluator": false,
+    "leaderboard_submission": false,
+    "sota_claim": false
+  }
+}
