@@ -1,0 +1,93 @@
+{
+  "artifact_version": 1,
+  "role": "v24273_two_wave_task_build_audit",
+  "created_at_unix": 1785708272,
+  "label_blind": true,
+  "parent_no_go_result": {
+    "path": "results/v24271_keyless_dev64_result_v1_20260802.json",
+    "sha256": "29d7f3534adc0e6c0e51a2476a6a91ab52094edd8973f3e261dfeec9e9a9f31d",
+    "status": "development_gate_no_go",
+    "decision_passed": false
+  },
+  "parent_build_audit": {
+    "path": "results/v24272_two_wave_build_audit_v1_20260802.json",
+    "sha256": "6e364f3acc9a01f170807a1c13db9c5bb58d38975d13800ad4e804f79a8b9ee7",
+    "audit_valid": true
+  },
+  "surface_manifest": {
+    "src/deepwide_agent/v24272_two_wave_entropy_voc.py": "2e618c1ac0888650d12b42ab93feb043379fa7b5be0262ab1ae857cce05e8532",
+    "src/deepwide_agent/v24272_two_wave_retrieval.py": "2bdf33fe3fe7d182c730be9ad29abb766d1d04f970b546a86da15d5a33bb010d",
+    "src/deepwide_agent/v24273_two_wave_task_runtime.py": "1abe5b2ef6e85471d79e3da8c95d85437e477db043194acdb060e6690a9ea1e0"
+  },
+  "static_audit": {
+    "surfaces": {
+      "src/deepwide_agent/v24272_two_wave_entropy_voc.py": {
+        "sha256": "2e618c1ac0888650d12b42ab93feb043379fa7b5be0262ab1ae857cce05e8532",
+        "forbidden_imports": [],
+        "forbidden_direct_calls": [],
+        "forbidden_process_or_environment_attributes": [],
+        "script_imports": [],
+        "privileged_exact_key_accesses": [],
+        "strict_false_composite_attestation_occurrences": 3,
+        "credential_literal_present": false,
+        "concrete_opaque_id_present": false,
+        "evaluator_or_historical_control_path_literal_present": false,
+        "passed": true
+      },
+      "src/deepwide_agent/v24272_two_wave_retrieval.py": {
+        "sha256": "2bdf33fe3fe7d182c730be9ad29abb766d1d04f970b546a86da15d5a33bb010d",
+        "forbidden_imports": [],
+        "forbidden_direct_calls": [],
+        "forbidden_process_or_environment_attributes": [],
+        "script_imports": [],
+        "privileged_exact_key_accesses": [],
+        "strict_false_composite_attestation_occurrences": 3,
+        "credential_literal_present": false,
+        "concrete_opaque_id_present": false,
+        "evaluator_or_historical_control_path_literal_present": false,
+        "passed": true
+      },
+      "src/deepwide_agent/v24273_two_wave_task_runtime.py": {
+        "sha256": "1abe5b2ef6e85471d79e3da8c95d85437e477db043194acdb060e6690a9ea1e0",
+        "forbidden_imports": [],
+        "forbidden_direct_calls": [],
+        "forbidden_process_or_environment_attributes": [],
+        "script_imports": [],
+        "privileged_exact_key_accesses": [],
+        "strict_false_composite_attestation_occurrences": 5,
+        "credential_literal_present": false,
+        "concrete_opaque_id_present": false,
+        "evaluator_or_historical_control_path_literal_present": false,
+        "passed": true
+      }
+    },
+    "all_surfaces_passed": true,
+    "injected_clients_are_only_effect_surface": true,
+    "composite_receipt_attestation_is_not_benchmark_metadata": true
+  },
+  "integration_contract": {
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "maximum_queries": 4,
+    "maximum_fetch_attempts": 10,
+    "cache_serve_network_fetches": 0,
+    "redirect_aliases_supported": true,
+    "search_or_fetch_exception_returns_content_free_failed_receipt": true,
+    "control_flow_interruptions_converted_to_predictions": false,
+    "network_model_search_fetch_or_evaluator_called_by_audit": false
+  },
+  "claim_scope": "build_only_runtime_integration_not_benchmark_quality_reward_or_causal_credit",
+  "authorization": {
+    "dev_benchmark_launch": false,
+    "exact220_launch": false,
+    "evaluator_call": false,
+    "leaderboard_submission": false,
+    "sota_claim": false,
+    "training_credit_assignment": false
+  },
+  "findings": [],
+  "audit_valid": true,
+  "audit_payload_sha256": "e051dc60045083848cfc72758c71b46a139ef93bc780d1ece8444f9df5b48dc2"
+}
