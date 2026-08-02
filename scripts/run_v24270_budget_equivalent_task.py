@@ -4,6 +4,8 @@
 from __future__ import annotations
 
 import argparse
+import json
+import os
 import sys
 from pathlib import Path
 
@@ -28,12 +30,67 @@ from deepwide_agent.v24270_budget_equivalent_union import (  # noqa: E402
     run_v24270_task,
     validate_v24270_result,
 )
-from scripts.run_v24257_score_first_task import (  # noqa: E402
-    _atomic_new,
-    _atomic_progress,
-    _ordinary_under,
-    _read_object,
-)
+
+
+def _ordinary_under(path: Path, root: Path) -> Path:
+    target = path.resolve(strict=False)
+    base = root.resolve()
+    if not target.is_relative_to(base):
+        raise ValueError("V2.42.70 task path escaped its allowed root")
+    if path.is_symlink() or target.is_symlink():
+        raise ValueError("V2.42.70 task path may not be a symlink")
+    return target
+
+
+def _read_object(path: Path) -> dict:
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise ValueError("expected a JSON object")
+    return value
+
+
+def _atomic_new(path: Path, value: dict) -> None:
+    if path.exists() or path.is_symlink():
+        raise FileExistsError(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(f".{path.name}.{os.getpid()}.tmp")
+    descriptor = os.open(
+        temporary, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600
+    )
+    try:
+        with os.fdopen(descriptor, "w", encoding="utf-8") as handle:
+            json.dump(value, handle, ensure_ascii=False, sort_keys=True)
+            handle.write("\n")
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary, path)
+    except BaseException:
+        try:
+            os.unlink(temporary)
+        except FileNotFoundError:
+            pass
+        raise
+
+
+def _atomic_progress(path: Path, value: dict) -> None:
+    if (
+        value.get("role") != "v24257_score_first_safe_progress"
+        or value.get("contains_question_query_url_page_prediction_or_answer")
+        is not False
+        or value.get("mapping_gold_evaluator_or_score_read") is not False
+    ):
+        raise ValueError("unsafe progress payload")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(f".{path.name}.{os.getpid()}.tmp")
+    descriptor = os.open(
+        temporary, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600
+    )
+    with os.fdopen(descriptor, "w", encoding="utf-8") as handle:
+        json.dump(value, handle, ensure_ascii=False, sort_keys=True)
+        handle.write("\n")
+        handle.flush()
+        os.fsync(handle.fileno())
+    os.replace(temporary, path)
 
 
 def main() -> None:
