@@ -1,0 +1,188 @@
+{
+  "artifact_version": 1,
+  "role": "v24259_deterministic_normalizer_smoke_preregistration",
+  "protocol_id": "v24259_deterministic_normalizer_smoke16_v1",
+  "created_at_unix": 1785674366,
+  "label_blind": true,
+  "parents": {
+    "protocol": {
+      "path": "results/v24257_score_first_smoke_preregistration_v1_20260802.json",
+      "sha256": "f00cbfa62d097f351108e4ff2ceb5bcf1dc1bc5f8af65dd45877c9bfc6054e6b"
+    },
+    "result": {
+      "path": "results/v24257_score_first_smoke_result_v1_20260802.json",
+      "sha256": "6e9f22b697e229a6e2aa6b3894cd959b8dd3547e42cae0738d9db36495f8f490"
+    },
+    "postresult_audit": {
+      "path": "results/v24257_score_first_smoke_audit_v1_20260802_postresult.json",
+      "sha256": "7fd5294f21a531dee8232edb1439c9a5fb5dfabf4797292cf0df5434808437bc"
+    },
+    "no_go": {
+      "model_generated_tables": 14,
+      "fallback_tables": 2,
+      "findings": [
+        "model_generated_table_count_below_gate",
+        "fallback_table_count_above_gate"
+      ]
+    }
+  },
+  "single_change": {
+    "mechanism": "deterministic_visible_column_markdown_normalization_before_model_repair",
+    "allowed": [
+      "canonical_pipe_frame_and_separator",
+      "exact_visible_header_reorder",
+      "equal_arity_visible_header_replacement",
+      "generic_index_column_drop",
+      "empty_cell_explicit_unknown_marker"
+    ],
+    "nonempty_factual_cell_rewrite": false,
+    "partial_malformed_row_deletion": false,
+    "ambiguous_extra_column_drop": false,
+    "model_prompt_search_provider_budget_selection_and_gate_unchanged": true
+  },
+  "task_contract": {
+    "manifest": {
+      "path": "outputs/runtime_manifest_v1_repro/manifest.jsonl",
+      "sha256": "4e394daf67e0bdc7d1fe247d4781945334026c0065ec7666d298f18f4b7180fb",
+      "row_schema": [
+        "opaque_id",
+        "question"
+      ]
+    },
+    "id_source": {
+      "path": "configs/full220_v2403_r1_devval_s04.ids",
+      "sha256": "79ba11a41c186daa80e8779e8fa2c1b47e7907f8e398d817dedb43099333d69c"
+    },
+    "selection_rule": "same_frozen_first_16_devval_ids_as_v24257_full_fresh_cold_start",
+    "selected_count": 16,
+    "selected_opaque_ids_sha256": "0ce5098b8b14e99f1ec5d812962d9eed8d476d7c3cc956748ed05b2445e606c4",
+    "selected_opaque_ids_persisted_or_emitted": false,
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "already_consumed_engineering_smoke_not_independent_evaluation": true,
+    "category_question_type_split_mapping_gold_score_used_for_selection": false,
+    "selective_parent_failure_rerun": false
+  },
+  "limits": {
+    "wall_seconds": 600,
+    "model_calls": 3,
+    "search_queries": 8,
+    "fetch_targets": 16,
+    "search_results_per_query": 3,
+    "evidence_chars": 100000,
+    "page_chars": 5000,
+    "plan_output_tokens": 4000,
+    "synthesis_output_tokens": 30000,
+    "repair_output_tokens": 12000
+  },
+  "provider_contract": {
+    "model": {
+      "proxy_url": "http://127.0.0.1:9878/responses",
+      "name": "gpt-5.6-sol",
+      "reasoning_effort": "low",
+      "service_tier": "priority",
+      "timeout_seconds": 180,
+      "max_retries": 2
+    },
+    "search": {
+      "provider": "anthropic-server-web-search",
+      "model": "claude-haiku-4-5-20251001",
+      "timeout_seconds": 90,
+      "max_retries": 2,
+      "workers": 4,
+      "fetch_workers": 8,
+      "fetch_timeout_seconds": 20,
+      "server_search_max_uses_per_query": 1,
+      "server_search_auto_fetch_disabled": true,
+      "explicit_page_fetches_share_task_cap": true
+    },
+    "credentials_environment_only_not_persisted_hashed_or_emitted": true
+  },
+  "gate_contract": {
+    "minimum_model_generated_tables": 15,
+    "maximum_fallback_tables": 1,
+    "maximum_hard_deadline_fallbacks": 1,
+    "maximum_p95_wall_seconds": 600,
+    "maximum_mean_system_tokens": 750000,
+    "maximum_mean_fetch_calls": 200,
+    "primary_or_repaired_only_counts_as_model_generated": true,
+    "schema_only_fallback_does_not_count_as_completion_improvement": true,
+    "go_authorizes_paired_dev64_design_only": true,
+    "go_does_not_authorize_dev64_full220_evaluator_or_leaderboard": true,
+    "model_generated_kinds": [
+      "primary",
+      "repaired",
+      "normalized_primary",
+      "normalized_repaired"
+    ],
+    "normalized_table_requires_no_nonempty_factual_cell_rewrite": true
+  },
+  "lease_contract": {
+    "path": "outputs/deepwide_benchmark_api.lease.lock",
+    "owner": "v24259_deterministic_normalizer_smoke16_v1",
+    "purpose": "label_blind_deterministic_table_normalizer_smoke16_gate",
+    "nonblocking_posix_flock_required": true,
+    "single_owner_across_all_16_tasks": true,
+    "legacy_expected_finding": "v24195:unknown_lease_owner",
+    "suppress_only_when_exact_runner_identity_valid": true
+  },
+  "execution": {
+    "runner_marker": "scripts/run_v24259_score_first_smoke.py",
+    "task_runner_marker": "scripts/run_v24259_score_first_task.py",
+    "watcher_marker": "scripts/watch_v24259_deterministic_normalizer_smoke.py",
+    "activation_path": "results/v24259_deterministic_normalizer_smoke_activation_v1_20260802.json",
+    "execution_start_path": "results/v24259_deterministic_normalizer_smoke_execution_start_v1_20260802.json",
+    "output_root": "outputs/v24259_deterministic_normalizer_smoke16_v1_20260802",
+    "result_path": "results/v24259_deterministic_normalizer_smoke_result_v1_20260802.json",
+    "watcher_state_path": "outputs/v24259_deterministic_normalizer_smoke_watcher_state_v1_20260802.json",
+    "executor_concurrency": 1,
+    "parent_deadline_grace_seconds": 5,
+    "forward_resume_or_selective_rerun_allowed": false,
+    "result_overwrite_allowed": false
+  },
+  "source_policy": {
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "visible_question_same_pass_candidate_and_tool_results_only": true,
+    "mapping_gold_category_question_type_evaluator_score_read": false,
+    "same_run_evaluator_feedback_used_for_forward_or_tuning": false,
+    "question_query_url_page_prediction_or_answer_in_safe_progress": false,
+    "credential_value_persisted_hashed_or_emitted": false
+  },
+  "authorization": {
+    "activation_publish_after_protocol_freeze": true,
+    "single_fresh_smoke16_forward_after_activation_and_shared_lease": true,
+    "process_signal_restart_resume_skip_or_selective_retry": false,
+    "official_evaluator_call": false,
+    "paired_dev64_or_full220_launch": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "safe_freeze_boundary": {
+    "future_paths_present": [],
+    "shared_api_lease_active": false,
+    "existing_benchmark_or_watcher_signaled_restarted_modified_or_terminated": false,
+    "network_model_search_fetch_evaluator_or_api_called": false
+  },
+  "control_surface": {
+    "file_count": 11,
+    "manifest": {
+      "src/deepwide_agent/v24259_deterministic_table_normalizer.py": "bc2ed6ae62cd68cf908ff2c50f59caa37cf6f57d9d12ab3db5294cf39b2c5f91",
+      "scripts/run_v24259_score_first_task.py": "14f423fd338a7cfd1d96889b487bfe9b8e53635e63770e3938bada098de6469e",
+      "scripts/run_v24259_score_first_smoke.py": "85d60d30e2c815475019fa5afe644b9a6e8cbe28580b6f5c80c9fd5f3ca3b012",
+      "scripts/preregister_v24259_deterministic_normalizer_smoke.py": "8be827d7413949e9c6dcb87201093ec31ef1268f0a8e350df93f336b82cf4827",
+      "scripts/activate_v24259_deterministic_normalizer_smoke.py": "6b6f7072fb93c7bd54ff315908f3cb057febc95ed610d04b3e3c50890588364f",
+      "scripts/audit_v24259_deterministic_normalizer_smoke.py": "f212ba841f47d73d924ce818ba26589fcc2836c1719193b41f72fe1f7753e5be",
+      "scripts/watch_v24259_deterministic_normalizer_smoke.py": "fe78bc5f860af3f5105a4e8aa9dee50884ebfef0c6256f6150d39759b00aa00e",
+      "tests/test_v24259_deterministic_table_normalizer.py": "afc346366c61802bc3844a033ad0afacd058cc8f245d105c083a2dc8ddaf68d3",
+      "tests/test_run_v24259_score_first_smoke.py": "caf1a94c0715aedb28f54be03d3c79613f73b8199764d6e115cf99a42354579b",
+      "tests/test_v24259_deterministic_normalizer_protocol.py": "19e8d0f211e0bd8e42003b1f340402bbf1596ca77fe78335dfaba5e13fe105a3",
+      "tests/test_audit_v24259_deterministic_normalizer_smoke.py": "bf33bb13f987f02dabcd38fa834f6b1e0e006636a8f44e4866f33c92d22dead1"
+    },
+    "manifest_sha256": "5321bd5122ba440a90f618362a99f40ef03552ae1f7581a34f9c6f348d1feee1"
+  },
+  "decision_contract_sha256": "865dd7c656204b04ef5931ff7c831684fbd58e4752a22ec47504e33d400f5f3c"
+}
