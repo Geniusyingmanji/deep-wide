@@ -1,0 +1,101 @@
+{
+  "artifact_version": 1,
+  "role": "v24269_task_union_nonbenchmark_smoke_preregistration",
+  "protocol_id": "v24269_task_union_discovery_nonbenchmark_smoke_v1",
+  "created_at_unix": 1785699111,
+  "git_head": "5855c7288f82cb2676feccc7ca267e80cef5a1d6",
+  "label_blind": true,
+  "parent_no_go": {
+    "path": "results/v24268_keyless_nonbenchmark_smoke_result_v1_20260802.json",
+    "sha256": "ea82802ac8864500704bd9e269e53cc79988e45d805a0ae67dc410950ded30c8",
+    "same_smoke_rerun": false,
+    "partial_or_terminal_output_reused": false
+  },
+  "candidate": {
+    "policy_id": "v24269_task_local_source_union_v1",
+    "single_change": "deduplicate query-local citations and action-level sources within one task into one discovery-only lead batch when section-local URL mapping is absent",
+    "provider_narrative_or_snippet_forwarded": false,
+    "source_broadcast_to_logical_queries": false,
+    "only_successfully_fetched_page_text_may_enter_synthesis": true,
+    "non_mapping_provider_or_transport_failures_may_be_erased": false
+  },
+  "task_contract": {
+    "selected_count": 1,
+    "source": "new synthetic public-information task unrelated to DeepWideBench and distinct from V2.42.68",
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "benchmark_question_id_mapping_split_category_gold_evaluator_or_score_used": false,
+    "task_question_prediction_query_url_page_or_answer_may_be_committed": false
+  },
+  "limits": {
+    "wall_seconds": 600,
+    "model_calls": 3,
+    "search_queries": 8,
+    "fetch_targets": 16,
+    "search_results_per_query": 3,
+    "evidence_chars": 100000,
+    "page_chars": 5000
+  },
+  "provider_contract": {
+    "proxy_url": "http://127.0.0.1:9878/responses",
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "low",
+    "service_tier": "priority",
+    "model_slot_cap": 2,
+    "search_provider": "azure-native-keyless-batched-task-union",
+    "search_batch_size": 8,
+    "search_workers": 1,
+    "search_context_size": "medium",
+    "server_auto_fetch_enabled": false,
+    "fetch_workers": 8,
+    "fetch_timeout_seconds": 20,
+    "credential_required_or_persisted": false
+  },
+  "gate_contract": {
+    "child_exit_zero": true,
+    "terminal_v24269_result": true,
+    "parent_v24268_and_v24259_downcasts_valid": true,
+    "model_generated_table_required": true,
+    "model_slot_receipt_present_and_valid": true,
+    "model_slot_acquisitions_equal_actual_model_requests": true,
+    "union_source_count_minimum": 1,
+    "fetch_requested_source_count_minimum": 1,
+    "fetch_usable_page_count_minimum": 1,
+    "raw_unrecoverable_failure_count_maximum": 0,
+    "effective_search_or_fetch_failures_maximum": 0,
+    "provider_narrative_or_snippet_forwarded": false,
+    "source_broadcast_to_logical_queries": false,
+    "telemetry_contains_content_or_privileged_metadata": false,
+    "shared_lease_released_after_terminal": true
+  },
+  "source_manifest": {
+    "src/deepwide_agent/v24269_task_union_discovery.py": "f8c439e9d4000788e2e9c3afef37e29ee21e655faf57921572628ac350beb9be",
+    "scripts/run_v24269_task_union_task.py": "f28bb6e0f736dc745f9b6a4915c08f8c79deda945f2dfa1835825004c71b3f39",
+    "src/deepwide_agent/v24268_keyless_batched_runtime.py": "776d6724f2024ff82e2b851e7a367c1b1657abc6ec80dcebe97c6fb22f85a51a",
+    "scripts/run_v24268_keyless_batched_task.py": "dbff17e9e10c031761a353b433acb510e379395ccfee4acc5e32c3d01a73b5c0",
+    "src/deepwide_agent/v24267_total_fallback.py": "6c75ee5e87a671d3d1a7644ed430d59aba01dca0886e8b30706da24e2f49bf89",
+    "src/deepwide_agent/native_search.py": "cd0d6bfccf4b345b11274558bdcffb39d279697d183242baf811dfd56ac71e50",
+    "src/deepwide_agent/clients.py": "339d923973f07ebcd33cb12cee2c26103df70ed3aea1fc0a737ffd675ac06fbc",
+    "src/deepwide_agent/v24263_global_model_limiter.py": "050751273bf28520bb82799e5194b9b404c58fecf6c5a725cfea93da0d041497",
+    "scripts/deepwide_api_lease.py": "8d9cffa78617b458172307d3558c76e9370f045f531c2f5aaaceb866f5a78c7d"
+  },
+  "execution": {
+    "output_root": "outputs/v24269_task_union_nonbenchmark_smoke_v1_20260802",
+    "aggregate_result": "results/v24269_task_union_nonbenchmark_smoke_result_v1_20260802.json",
+    "lease_path": "outputs/deepwide_benchmark_api.lease.lock",
+    "lease_owner": "v24269_task_union_nonbenchmark_smoke_v1",
+    "no_resume_rerun_or_selective_retry": true
+  },
+  "authorization": {
+    "one_new_nonbenchmark_smoke": true,
+    "benchmark_forward": false,
+    "dev64": false,
+    "exact220": false,
+    "evaluator": false,
+    "additional_rollout_or_avg4": false,
+    "leaderboard_submission": false,
+    "sota_claim": false
+  }
+}
