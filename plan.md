@@ -1,8 +1,14 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.86
+> 版本：5.87
 >
-> 更新：2026-08-02 16:08 UTC
+> 更新：2026-08-02 16:52 UTC
+>
+> **5.87 V2.42.66 exact-220 start invalidated before any score（2026-08-02 16:52 UTC）：paired dev64 GO 后按冻结 `4× / GPT cap=2 / V2.42.59 / 220` 启动唯一 cold forward；前 65 个 content-free terminal progress 正常，mapping/evaluator 始终未打开。第 66 个 child 已写 terminal safe-progress 与合法 `3 requests = 3 slot acquisitions` receipt，但未写 result；parent 应生成 failure-as-zero fallback，却因可见列名抽取器把题面同一行 Markdown 示例中的 `|` 保留为一个 66 字符列名，generic fallback 生成器又把这些 pipe 写回 header，而 canonical validator 把它们解释成额外单元格，最终抛 `ValueError: score-first prediction is not canonical Markdown`。这是 executor/fallback contract bug，不是搜索/GPT/evaluator failure，也无 label leakage。
+>
+> Parent exception 发生后 `ThreadPoolExecutor` context 仍等待已提交 futures，content-free aggregate progress 固定在 `65/220`，后续 child 一度继续自然执行；在纯函数零网络重放确认异常且本地 fallback 修复曾短暂触碰 frozen source 后，该 run 已同时满足 parent-harness failure 与 mixed-code 风险，故按 fail-closed 原则精确停止 V2.42.66 runner/孤儿 child，其他 benchmark/watcher 未触碰。共享 lease 已释放；execution/partial output/log 全部隔离到 `results|outputs/DO_NOT_USE_invalid_v24266_exact220_fallback_header_20260802/`。权威 invalid audit 明确：无 forward result、无 prediction freeze、无 evaluator、无 score，partial predictions 不得报告或喂给 successor，禁止 resume/补题/selective retry。
+>
+> 下一 append-only V2.42.67 只修 fallback totality：历史 V2.42.57/65/66 frozen source 已恢复原字节；新独立 successor 在 fallback 可见列含 `|/newline`、重复/空 normalization 或不能由 canonical grammar 表示时，降级为内容无关单列 `Result/Unknown`，不修改任何正常 model candidate、prompt、search/fetch/model budget、4×/2-slot 调度或 evaluator。需先用合成 pipe-header、worker nonzero/receipt、exact-220 scheduler、label-blind 与重封测试证明 parent 对每个 child outcome 都 total；然后全 220 从新目录冷启动，绝不复用 V2.42.66 的任何逐题输出。当前仍没有候选 220 分数或 SOTA 证据。**
 >
 > **5.86 V2.42.65 shared-prefix paired dev64 全终局（2026-08-02 16:08 UTC）：针对 V2.42.59 deterministic Markdown normalizer 做同题、同 planning/search/fetch/synthesis、同模型随机前缀的严格 paired ablation。每题只执行一次共享前缀，原始 synthesis 后才分成 control V2.42.57 与 candidate V2.42.59；若两臂都需 repair，只共享一次 repair response，并按各臂实际需要记反事实成本。forward 仍只接受精确 `{opaque_id, question}`；两份 exact-64 prediction freeze 之前不打开或哈希 mapping/query/answer/gold/evaluator。executor 固定 V2.42.64 已验证的 `4×`，GPT 全局 slot cap=`2`，无 resume/rerun/skip/selective retry。
 >
