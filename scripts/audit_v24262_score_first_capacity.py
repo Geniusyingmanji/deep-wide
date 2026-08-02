@@ -93,7 +93,7 @@ def build_report(root: Path = ROOT, *, now: int | None = None) -> dict[str, Any]
         "allowed_provider_search_rank_accesses": sorted(
             set(privileged).intersection(allowed_privileged)
         ),
-        "privileged_accesses_are_fail_closed_input_rejections_only": not unexpected,
+        "unexpected_benchmark_privileged_field_accesses_absent": not unexpected,
         "credential_literal_hits": secret_hits,
         "shared_api_lease_active": lease.get("active") is True,
         "protected_existing_processes_signaled_restarted_or_stopped": False,
