@@ -14,6 +14,7 @@ if str(ROOT / "src") not in sys.path:
 
 from deepwide_agent.v24270_budget_equivalent_union import (  # noqa: E402
     BudgetEquivalentTaskUnionSearchClient,
+    build_v24270_fallback_result,
     run_v24270_task,
     validate_receipt,
     validate_v24270_result,
@@ -183,6 +184,35 @@ class V24270BudgetEquivalentUnionTests(unittest.TestCase):
         self.assertEqual(result["budget"]["admitted_fetch_targets"], 3)
         self.assertEqual(result["cost"]["search"]["failures"], 0)
         self.assertNotIn("example", json.dumps(cap))
+
+    def test_total_fallback_preserves_v24270_schema_and_content_boundary(self) -> None:
+        result = build_v24270_fallback_result(
+            {**TASK, "question": "Table column names: Name | Value | Example."},
+            limits=ScoreFirstLimits(
+                wall_seconds=120,
+                search_queries=8,
+                fetch_targets=16,
+                search_results_per_query=3,
+            ),
+            completion_kind="worker_failure_fallback",
+            failure_stage="parent_executor",
+            failure_type="SyntheticFailure",
+            elapsed_seconds=7.0,
+        )
+        validate_v24270_result(result)
+        self.assertEqual(result["completion_kind"], "worker_failure_fallback")
+        self.assertEqual(result["columns"], ["Result"])
+        self.assertEqual(result["budget_equivalence"]["post_cap_source_count"], 0)
+        self.assertEqual(result["discovery_union"]["union_source_count"], 0)
+        encoded = json.dumps(
+            {
+                "telemetry": result["telemetry"],
+                "discovery": result["discovery_union"],
+                "cap": result["budget_equivalence"],
+            },
+            ensure_ascii=False,
+        )
+        self.assertNotIn("Name | Value", encoded)
 
 
 if __name__ == "__main__":

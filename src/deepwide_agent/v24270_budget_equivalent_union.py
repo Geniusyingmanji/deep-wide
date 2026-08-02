@@ -8,13 +8,20 @@ from collections.abc import Mapping, Sequence
 from typing import Any
 
 from .v24257_score_first_runtime import ScoreFirstLimits
-from .v24268_keyless_batched_runtime import run_v24268_task
+from .v24268_keyless_batched_runtime import (
+    POLICY_ID as V24268_POLICY_ID,
+    RESULT_ROLE as V24268_RESULT_ROLE,
+    _table_stats,
+    run_v24268_task,
+    validate_telemetry,
+)
 from .v24269_task_union_discovery import (
     POLICY_ID as PARENT_POLICY_ID,
     RESULT_ROLE as PARENT_RESULT_ROLE,
     TaskUnionDiscoverySearchClient,
     validate_v24269_result,
 )
+from .v24267_total_fallback import build_total_fallback_result
 
 
 POLICY_ID = "v24270_budget_equivalent_task_union_v1"
@@ -246,6 +253,89 @@ def run_v24270_task(
     return result
 
 
+class _EmptySearch:
+    calls = 0
+    failures = 0
+    tool_calls = 0
+    fetch_calls = 0
+    fetch_failures = 0
+    input_tokens = 0
+    output_tokens = 0
+    total_tokens = 0
+
+
+def build_v24270_fallback_result(
+    task: Mapping[str, Any],
+    *,
+    limits: ScoreFirstLimits,
+    completion_kind: str,
+    failure_stage: str,
+    failure_type: str,
+    elapsed_seconds: float,
+    last_progress: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Total terminal fallback preserving the full V2.42.70 schema."""
+
+    parent59 = build_total_fallback_result(
+        task,
+        limits=limits,
+        completion_kind=completion_kind,
+        failure_stage=failure_stage,
+        failure_type=failure_type,
+        elapsed_seconds=elapsed_seconds,
+        last_progress=last_progress,
+    )
+    telemetry = {
+        "artifact_version": 1,
+        "role": "v24268_content_free_stage_telemetry",
+        "model_events": [],
+        "search_events": [],
+        "table": _table_stats(
+            str(parent59["prediction"]), len(parent59["columns"])
+        ),
+        "transport": {
+            "provider": "azure-native-keyless-batched",
+            "batch_size": 8,
+            "search_workers": 1,
+            "fetch_workers": 8,
+            "fetch_timeout_seconds": 20,
+            "server_auto_fetch_enabled": False,
+        },
+        "instrumented_seconds": 0.0,
+        "contains_question_query_url_host_page_candidate_prediction_answer_opaque_id_or_credential": False,
+        "mapping_gold_category_question_type_split_evaluator_score_read": False,
+    }
+    validate_telemetry(telemetry)
+    base68 = dict(parent59)
+    base68["role"] = V24268_RESULT_ROLE
+    base68["policy_id"] = V24268_POLICY_ID
+    base68["telemetry"] = telemetry
+
+    union = TaskUnionDiscoverySearchClient(_EmptySearch())
+    parent69 = dict(base68)
+    parent69["role"] = PARENT_RESULT_ROLE
+    parent69["policy_id"] = PARENT_POLICY_ID
+    parent69["discovery_union"] = union.receipt()
+    validate_v24269_result(parent69)
+
+    capped = BudgetEquivalentTaskUnionSearchClient(
+        _EmptySearch(),
+        search_results_per_query=limits.search_results_per_query,
+        global_fetch_cap=limits.fetch_targets,
+    )
+    result = dict(parent69)
+    result["role"] = RESULT_ROLE
+    result["policy_id"] = POLICY_ID
+    cap = capped.receipt()
+    cap["parent_discovery_receipt_sha256"] = payload_sha256(
+        result["discovery_union"]
+    )
+    validate_receipt(cap)
+    result["budget_equivalence"] = cap
+    validate_v24270_result(result)
+    return result
+
+
 def validate_v24270_result(value: Mapping[str, Any]) -> None:
     if value.get("role") != RESULT_ROLE or value.get("policy_id") != POLICY_ID:
         raise ValueError("V2.42.70 result identity drifted")
@@ -269,6 +359,7 @@ __all__ = [
     "BudgetEquivalentTaskUnionSearchClient",
     "POLICY_ID",
     "RESULT_ROLE",
+    "build_v24270_fallback_result",
     "run_v24270_task",
     "validate_receipt",
     "validate_v24270_result",
