@@ -1,0 +1,248 @@
+{
+  "artifact_version": 1,
+  "role": "v24307_v24306_postterminal_diagnosis",
+  "created_at_unix": 1785743191,
+  "parents": {
+    "result_sha256": "ce12e9f3cbcf45db862f46dd23fff593d0fd26719e2d113e141a6c1873e22956",
+    "postresult_audit_sha256": "63193bcbd2af826a3212672cb679ae69fc3cd4be7994fe1362b97216b181c1f8",
+    "forward_result_sha256": "261a8b3ef480ef1606f7ff93f28eb0eeb52fa8bff5a640b165f83d9bc4319158"
+  },
+  "boundary": {
+    "postterminal_only": true,
+    "fixed_denominator_failure_as_zero": true,
+    "fed_back_into_v24306_forward": false,
+    "v24306_rerun_resume_skip_or_selective_retry": false,
+    "evaluator_error_revaluation": false,
+    "question_prediction_answer_opaque_id_url_page_gold_or_label_emitted": false,
+    "network_model_search_fetch_or_evaluator_called": false
+  },
+  "quality_summary": {
+    "decision": "no_go",
+    "failed_checks": [
+      "candidate_recovery_attempts",
+      "candidate_recovery_successes",
+      "hard_fetch_deadline_failures",
+      "paired_bootstrap_interval_width"
+    ],
+    "candidate_minus_baseline": {
+      "quality_composite": 0.04259656978726328,
+      "entity_acc": 0.0625,
+      "f1_by_row": 0.0038360232616808376,
+      "f1_by_item": 0.03708398157462417,
+      "column_f1": 0.06696627431274804,
+      "whole_table_successes": 0,
+      "model_generated_tables": 4
+    },
+    "paired_uncertainty": {
+      "task_count": 64,
+      "bootstrap_unit": "paired_frozen_task",
+      "seed": 24303,
+      "resamples": 10000,
+      "estimand": "mean paired failure-as-zero quality composite delta on fresh dev64",
+      "mean": 0.04259656978726326,
+      "median": 0.0,
+      "positive": 22,
+      "zero": 21,
+      "negative": 21,
+      "minimum": -0.9147727272727273,
+      "maximum": 0.8888888888888888,
+      "percentile_95_interval": [
+        -0.040509884694860436,
+        0.12577294837023031
+      ],
+      "interval_width": 0.16628283306509076,
+      "fixed_denominator_failure_as_zero": true,
+      "predictions_frozen_before_evaluator": true,
+      "confirmatory_development_gate": true,
+      "future_population_or_sota_inference": false
+    },
+    "candidate_fallback_tables": 0,
+    "baseline_fallback_tables": 4,
+    "shared_forward_wall_seconds": 1660.434161,
+    "shared_forward_wall_ratio_vs_v24303": 1.8248022932672756
+  },
+  "forward_failure_taxonomy": {
+    "baseline": [
+      {
+        "position": 18,
+        "completion_kind": "worker_failure_fallback",
+        "taxonomy": "parent_worker_or_envelope_failure_zero_effect_unobservable",
+        "elapsed_seconds": 0.0,
+        "model_calls": 0,
+        "model_attempts": 0,
+        "search_calls": 0,
+        "fetch_calls": 0,
+        "zero_effect": true,
+        "files": {
+          "visible_task.json": true,
+          "safe_progress.json": true,
+          "result.json": false,
+          "model_slot_receipt.json": false,
+          "transport_health.json": false
+        }
+      },
+      {
+        "position": 26,
+        "completion_kind": "best_effort_fallback",
+        "taxonomy": "synthesis_provider_failure",
+        "elapsed_seconds": 43.029,
+        "model_calls": 2,
+        "model_attempts": 3,
+        "search_calls": 4,
+        "fetch_calls": 0,
+        "zero_effect": false,
+        "files": {
+          "visible_task.json": true,
+          "safe_progress.json": true,
+          "result.json": true,
+          "model_slot_receipt.json": true,
+          "transport_health.json": true
+        }
+      },
+      {
+        "position": 51,
+        "completion_kind": "worker_failure_fallback",
+        "taxonomy": "parent_worker_or_envelope_failure_zero_effect_unobservable",
+        "elapsed_seconds": 0.0,
+        "model_calls": 0,
+        "model_attempts": 0,
+        "search_calls": 0,
+        "fetch_calls": 0,
+        "zero_effect": true,
+        "files": {
+          "visible_task.json": true,
+          "safe_progress.json": true,
+          "result.json": false,
+          "model_slot_receipt.json": false,
+          "transport_health.json": false
+        }
+      },
+      {
+        "position": 55,
+        "completion_kind": "best_effort_fallback",
+        "taxonomy": "synthesis_provider_failure",
+        "elapsed_seconds": 135.987,
+        "model_calls": 2,
+        "model_attempts": 3,
+        "search_calls": 4,
+        "fetch_calls": 0,
+        "zero_effect": false,
+        "files": {
+          "visible_task.json": true,
+          "safe_progress.json": true,
+          "result.json": true,
+          "model_slot_receipt.json": true,
+          "transport_health.json": true
+        }
+      }
+    ],
+    "candidate": [],
+    "baseline_zero_effect_unobservable_positions": [
+      18,
+      51
+    ],
+    "baseline_synthesis_provider_failure_positions": [
+      26,
+      55
+    ],
+    "candidate_recovery_natural_engagement": 0,
+    "candidate_recovery_provider_failures": 0
+  },
+  "transport": {
+    "hard_fetch_deadline_positions": {
+      "baseline": [
+        1,
+        4,
+        16,
+        21,
+        25
+      ],
+      "candidate": [
+        4,
+        29
+      ]
+    },
+    "hard_fetch_deadline_counts": {
+      "baseline": 5,
+      "candidate": 2
+    },
+    "fetch_helper_failures": {
+      "baseline": 0,
+      "candidate": 0
+    },
+    "deadline_events_overlap_fallback_positions": {
+      "baseline": [],
+      "candidate": []
+    }
+  },
+  "evaluator_health": {
+    "baseline": {
+      "count": 2,
+      "positions": [
+        42,
+        50
+      ],
+      "taxonomy": {
+        "official_evaluator_internal_error": 2
+      },
+      "selective_revaluation": false
+    },
+    "candidate": {
+      "count": 1,
+      "positions": [
+        50
+      ],
+      "taxonomy": {
+        "official_evaluator_internal_error": 1
+      },
+      "selective_revaluation": false
+    }
+  },
+  "conclusions": {
+    "candidate_point_estimate_positive": true,
+    "candidate_bootstrap_lower_bound_passed": true,
+    "candidate_bootstrap_interval_width_passed": false,
+    "quality_gain_attributable_to_recovery": false,
+    "cap2_transport_reliability_regressed": false,
+    "parent_zero_effect_observability_complete": false,
+    "hard_fetch_deadline_is_primary_fallback_cause": false,
+    "exact220_authorized": false,
+    "sota_supported": false
+  },
+  "next_work": {
+    "priority": "content_free_child_exit_observability_before_new_benchmark",
+    "required_receipt": [
+      "child_return_code",
+      "timed_out",
+      "receipt_present",
+      "transport_present",
+      "result_envelope_present",
+      "failure_taxonomy"
+    ],
+    "prohibited_receipt_content": [
+      "question",
+      "opaque_id",
+      "prompt",
+      "response",
+      "prediction",
+      "url",
+      "page",
+      "credential",
+      "gold",
+      "category"
+    ],
+    "no_budget_or_policy_change": true,
+    "benchmark_external_fault_injection_first": true,
+    "additional_dev64_or_exact220": false
+  },
+  "authorization": {
+    "child_exit_observability_design": true,
+    "child_exit_observability_benchmark_external_test": true,
+    "additional_dev64": false,
+    "exact220": false,
+    "evaluator_call": false,
+    "leaderboard_submission": false,
+    "sota_claim": false
+  },
+  "diagnosis_payload_sha256": "b10aab457da4d75db9983e6314b4a14353d98970dd3f2d4c36abdf5591cfa316"
+}
