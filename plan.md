@@ -1,6 +1,12 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.98
+> 版本：5.99
+>
+> **5.99 V2.42.85 single-query/top6 下 `low` vs `medium` context 中性门为 NO-GO（2026-08-03 00:56 UTC）：固定 V2.42.84 的每组第一条 primary query、top6、single-shot task-union、6 source/fetch 与 25s per-URL hard deadline，只改变 hosted-search context。16 组公开文档配对两臂均 `16/16 terminal`，无 arm exception、recursive split、unrecoverable failure、hard fetch deadline 或 helper failure；全程不读 benchmark manifest/题面/mapping/gold/prediction/evaluator，不保存 query/URL/host/page/task ID 或凭据。**
+>
+> medium/low 的 admission `90/96`、usable pages `86/92`（ratio `1.0698`）、usable chars `342999/378896`（`1.1047`）、host sum `37/40`（`1.0811`），low 产出更多；但 input/total token 仅 `198329→189574` / `203025→194262`（ratio `0.9559/0.9568`），远未达 `≤0.90/≤0.92`。search wall ratio `0.9681 > 0.95`，task wall ratio `1.0038 > 0.97`，逐题 input 方向仅 `9 better / 7 worse < 10`；medium 还有 1 个 effective query-local search failure，而预注册要求两臂均为 0。因此多个独立 gate 失败，结论严格 NO-GO。权威结果为 [`results/v24285_single_query_context_pair_result_v1_20260803.json`](results/v24285_single_query_context_pair_result_v1_20260803.json)，seal 已重验、lease 自然释放，未 kill/quarantine 任何运行。
+>
+> Azure hosted-search 的局部成本微调至此停止：V2.42.78 否定 two-query `low`，V2.42.79 否定 reasoning/schema 格式杠杆，V2.42.81 证明 no-split 只修复罕见长尾，V2.42.84 的单主查询降 wall 但 token 未过，V2.42.85 则否定单查询下的 low-context 交互。下一主线不再调这些参数，而是转向 **direct search API + deterministic page fetch**：V2.42.82 已实现 answer/snippet/score/raw-content 全丢弃的 URL-lead 投影，V2.42.83 已实现 header-only、no-trust-env、no-redirect、内存 key rotation 客户端，相关 `3+16+22` 与 `4+17` 测试已通过并推送。live provider 门只等 `TAVILY_API_KEYS` 以环境变量注入；明文 token 不得进入 shell command、argv、文件、hash、result 或 git。
 >
 > **5.98 V2.42.84 `2 queries × top3` vs `1 primary query × top6` 中性门为 NO-GO（2026-08-03 00:50 UTC）：两臂保持同一 `medium` hosted-search context、single-shot task-union、最多 6 个 source/fetch、25s per-URL hard deadline，并在 16 组固定公开文档 query pair 上同 wave 配对；candidate 只执行每组冻结的第一条 primary query。全程不读取 benchmark manifest/题面/mapping/gold/prediction/evaluator，不调用独立 generation model，结果不保存 query/URL/host/page/task ID 或凭据。两臂均 `16/16 terminal`，无 exception、effective/unrecoverable search failure、recursive split、hard fetch deadline 或 helper failure。**
 >
