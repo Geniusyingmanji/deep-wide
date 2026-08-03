@@ -61,7 +61,10 @@ RECEIPT_KEYS = frozenset(
         "recovery_enabled",
         "model_call_cap",
         "effect_attribution_complete",
+        "effect_count_complete",
         "unattributed_model_effects",
+        "admitted_model_effects_upper_bound",
+        "provider_attempt_count_complete",
         "effects_by_stage",
         "total_effects_admitted",
         "synthesis_initial_model_request_error",
@@ -98,7 +101,10 @@ def _project(arm: str, parent: Mapping[str, Any]) -> dict[str, Any]:
         "recovery_enabled": True,
         "model_call_cap": 3,
         "effect_attribution_complete": True,
+        "effect_count_complete": True,
         "unattributed_model_effects": 0,
+        "admitted_model_effects_upper_bound": int(parent["total_effects_admitted"]),
+        "provider_attempt_count_complete": True,
         "effects_by_stage": dict(parent["effects_by_stage"]),
         "total_effects_admitted": int(parent["total_effects_admitted"]),
         "synthesis_initial_model_request_error": bool(
@@ -138,7 +144,10 @@ def zero_effect_receipt(arm: str) -> dict[str, Any]:
         "recovery_enabled": True,
         "model_call_cap": 3,
         "effect_attribution_complete": True,
+        "effect_count_complete": True,
         "unattributed_model_effects": 0,
+        "admitted_model_effects_upper_bound": 0,
+        "provider_attempt_count_complete": True,
         "effects_by_stage": {
             "plan": 0,
             "synthesis_initial": 0,
@@ -163,16 +172,31 @@ def zero_effect_receipt(arm: str) -> dict[str, Any]:
 
 
 def parent_exit_receipt(
-    arm: str, *, provider_requests: int, provider_attempts: int
+    arm: str,
+    *,
+    provider_requests_lower_bound: int,
+    provider_attempts_lower_bound: int,
+    admitted_model_effects_upper_bound: int,
+    effect_count_complete: bool,
+    provider_attempt_count_complete: bool = False,
 ) -> dict[str, Any]:
     if (
         arm not in ARMS
-        or isinstance(provider_requests, bool)
-        or not isinstance(provider_requests, int)
-        or not 0 <= provider_requests <= 3
-        or isinstance(provider_attempts, bool)
-        or not isinstance(provider_attempts, int)
-        or provider_attempts < provider_requests
+        or isinstance(provider_requests_lower_bound, bool)
+        or not isinstance(provider_requests_lower_bound, int)
+        or not 0 <= provider_requests_lower_bound <= 3
+        or isinstance(provider_attempts_lower_bound, bool)
+        or not isinstance(provider_attempts_lower_bound, int)
+        or provider_attempts_lower_bound < provider_requests_lower_bound
+        or isinstance(admitted_model_effects_upper_bound, bool)
+        or not isinstance(admitted_model_effects_upper_bound, int)
+        or not provider_requests_lower_bound
+        <= admitted_model_effects_upper_bound
+        <= 3
+        or not isinstance(effect_count_complete, bool)
+        or not isinstance(provider_attempt_count_complete, bool)
+        or effect_count_complete
+        and admitted_model_effects_upper_bound != provider_requests_lower_bound
     ):
         raise ValueError("V2.43.10 parent-exit accounting is invalid")
     value = {
@@ -183,21 +207,24 @@ def parent_exit_receipt(
         "recovery_enabled": True,
         "model_call_cap": 3,
         "effect_attribution_complete": False,
-        "unattributed_model_effects": provider_requests,
+        "effect_count_complete": effect_count_complete,
+        "unattributed_model_effects": provider_requests_lower_bound,
+        "admitted_model_effects_upper_bound": admitted_model_effects_upper_bound,
+        "provider_attempt_count_complete": provider_attempt_count_complete,
         "effects_by_stage": {
             "plan": 0,
             "synthesis_initial": 0,
             "synthesis_recovery": 0,
             "repair": 0,
         },
-        "total_effects_admitted": provider_requests,
+        "total_effects_admitted": provider_requests_lower_bound,
         "synthesis_initial_model_request_error": False,
         "synthesis_recovery_attempted": False,
         "synthesis_recovery_succeeded": False,
         "synthesis_recovery_model_request_error": False,
         "repair_blocked_after_recovery": False,
-        "provider_requests_delta": provider_requests,
-        "provider_attempts_delta": provider_attempts,
+        "provider_requests_delta": provider_requests_lower_bound,
+        "provider_attempts_delta": provider_attempts_lower_bound,
         "fourth_model_effect": False,
         "question_prompt_response_prediction_answer_opaque_id_or_credential_emitted": False,
         "mapping_gold_category_question_type_split_evaluator_score_or_reward_read": False,
@@ -220,6 +247,7 @@ def validate_receipt(value: Mapping[str, Any]) -> None:
     requests = value.get("provider_requests_delta")
     attempts = value.get("provider_attempts_delta")
     unattributed = value.get("unattributed_model_effects")
+    upper = value.get("admitted_model_effects_upper_bound")
     if (
         set(value) != RECEIPT_KEYS
         or value.get("artifact_version") != 1
@@ -229,6 +257,8 @@ def validate_receipt(value: Mapping[str, Any]) -> None:
         or value.get("recovery_enabled") is not True
         or value.get("model_call_cap") != 3
         or not isinstance(value.get("effect_attribution_complete"), bool)
+        or not isinstance(value.get("effect_count_complete"), bool)
+        or not isinstance(value.get("provider_attempt_count_complete"), bool)
         or value.get("fourth_model_effect") is not False
         or value.get(
             "question_prompt_response_prediction_answer_opaque_id_or_credential_emitted"
@@ -253,6 +283,9 @@ def validate_receipt(value: Mapping[str, Any]) -> None:
         or isinstance(unattributed, bool)
         or not isinstance(unattributed, int)
         or unattributed < 0
+        or isinstance(upper, bool)
+        or not isinstance(upper, int)
+        or not total <= upper <= 3
         or total != sum(effects.values()) + unattributed
         or not 0 <= total <= 3
         or value["effect_attribution_complete"]
@@ -263,6 +296,10 @@ def validate_receipt(value: Mapping[str, Any]) -> None:
             or any(effects.values())
             or any(value.get(name) for name in flags)
         )
+        or value["effect_count_complete"]
+        and upper != total
+        or value["provider_attempt_count_complete"]
+        and not value["effect_count_complete"]
         or isinstance(requests, bool)
         or not isinstance(requests, int)
         or requests != total

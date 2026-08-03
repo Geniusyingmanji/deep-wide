@@ -165,11 +165,18 @@ class V24310PairedDevRuntimeTests(unittest.TestCase):
 
     def test_parent_exit_preserves_effect_count_without_guessing_stage(self) -> None:
         value = parent_exit_receipt(
-            "baseline", provider_requests=3, provider_attempts=5
+            "baseline",
+            provider_requests_lower_bound=2,
+            provider_attempts_lower_bound=5,
+            admitted_model_effects_upper_bound=3,
+            effect_count_complete=False,
         )
         self.assertFalse(value["effect_attribution_complete"])
-        self.assertEqual(value["unattributed_model_effects"], 3)
-        self.assertEqual(value["total_effects_admitted"], 3)
+        self.assertFalse(value["effect_count_complete"])
+        self.assertFalse(value["provider_attempt_count_complete"])
+        self.assertEqual(value["unattributed_model_effects"], 2)
+        self.assertEqual(value["total_effects_admitted"], 2)
+        self.assertEqual(value["admitted_model_effects_upper_bound"], 3)
         self.assertFalse(any(value["effects_by_stage"].values()))
         self.assertEqual(value["provider_attempts_delta"], 5)
 
