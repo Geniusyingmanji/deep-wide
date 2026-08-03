@@ -1,6 +1,14 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.00
+> 版本：6.01
+>
+> **6.01 V2.43.11 common-recovery retrieval-allocation paired-dev64 冻结候选（2026-08-03 09:13 UTC）：当前完整 220 最佳仍是 V2.42.67 的 `7/220=3.1818%`、Composite `0.413541`；更快的 V2.42.87 为 `5/220=2.2727%`、Composite `0.395991`，虽将 forward `3655s→1589.5s`、tokens `34.51M→7.31M`，但质量退化，不能作为刷榜 successor。V2.43.06 dev64 的 candidate Composite 点估计 `+0.042597` 也因 recovery 未自然触发、CI 宽度 `0.166283>0.16` 与 hard-fetch deadline 超门而严格 NO-GO。因此下一步不是立即再跑220，而是用 fresh paired-dev64 隔离唯一自然可达 treatment：baseline=visible-schema `6+4`，candidate=visible-schema `6+2+2` staged reserve；两臂共享 GPT-5.6、prompt、search/fetch、三次 model-call 上限、cap=2 和同一 bounded synthesis recovery。
+>
+> 新 runner 固定两臂各64题、各4 worker、交错提交，总 executor=8、global GPT slot=2；forward 输入仍仅 `{opaque_id, question}`。V2.43.09 child-terminal/parent-exit 收据已接入真实 subprocess，parent 对 success/nonzero/timeout/缺坏 result/model/transport 工件均 create-exclusive 落盘；即使 parent 层异常也必须生成固定分母 fallback。V2.43.10 receipt 现在同时给出已知 model effect 下界、保守上界、effect-count/attempt-count 完整性，不再把 parent crash 后已发生 effect 错归零。两臂64/64 predictions 全部冻结后才允许首次打开 mapping/evaluator；禁止 resume、skip、选择性补题、error 重评或同轮反馈调参。
+>
+> 冻结候选 harness `8/8` 通过，其中真实无网络子进程 smoke 覆盖完整 success 收据链和 nonzero-with-terminal fallback，并检查 terminal receipt 最后落盘；V2.43.10/V2.42.99 为 `8/8+8/8`，V2.43.08/09 observability/integration 为 `9/9+5/5+5/5+3/3`，label-blind WebSwarm adapter/audit 为 `18/18+4/4`。协议内存重建得到 27 个 forward、9 个 control 依赖，唯一特权词命中为 provider 排序的合法 `clients.py:score`，无 benchmark label/gold/evaluator routing 或凭据字面量；V2.43.06 冻结 runner/task/contract 哈希仍为 `ced8a6f1… / 1e377bfe… / 097a0887…`，保护 watcher PID 795336/3061652 原身份健康。
+>
+> 最终 decision 不要求随机 recovery 必须自然触发；它要求两臂 `recovery_enabled=64`，candidate-only staged-reserve 至少有 tail/selected/usable-page 激活，且分别约束 parent receipt=64、valid child/model/transport receipt、non-success parent exit≤2、incomplete effect count≤2、无 fourth effect、无 helper failure、两臂完整评测、paired bootstrap 和相对 V2.43.06 wall。缺 parent receipt 或不完整 effect 只会令最终门 NO-GO，不得阻断固定分母 prediction freeze。evaluator lease 必须在任何 mapping/evaluator resource 打开或 evaluator 目录创建前取得，lease busy 零副作用退出。当前尚未创建 activation、未调用 benchmark/model/search/evaluator；正式 contract/protocol/preaudit 提交后才允许 create-exclusive 激活。只有本轮 fresh dev64 严格 GO 才能设计新的 fresh exact-220，仍不直接授权启动、Avg@4、leaderboard 或 SOTA 声明。**
 >
 > **6.00 V2.42.86 visible-schema safety + additive stage timing 为工程 GO、benchmark 质量未证明（2026-08-03 01:40 UTC）：针对用户质疑的“搜索四五十分钟”，重新核对 V2.42.67 后确认该数字是 prediction freeze 后官方 evaluator 的 `3031s=50.52m`，不是单题搜索；旧 exact-220 forward 为 `3655s=60.92m`、4 题并发，单题完整 pipeline 均值/中位数 `65.68/56.8s`，但父 run 没有 stage wall telemetry，不能把单题总时长归因给 search。V2.42.73 外层 telemetry 又把 two-wave `search_many()` 内发生的真实 page fetch 一并记成 `search`，随后 cache serve 记成 `fetch`，阶段名仍会误导。V2.42.86 因而追加严格加和的 content-free receipt，分开 `plan / provider hosted-search / real network fetch / controller+adapter / cache serve / synthesis / repair / unattributed runtime`，且验证内层 search+fetch+overhead 必须精确回到外层 retrieval envelope，再与全部 model/cache event 回到 instrumented wall。
 >
