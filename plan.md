@@ -2263,6 +2263,15 @@ terminal-only shadow aggregate 已覆盖 7 个终态中的 5 个有信号任务�
 5. 可靠性回归不来自 retrieval transport：candidate hard-fetch deadline 为 `3`，低于 baseline 的 `6`，两臂 fetch-helper failure 均 `0`；7 个 fallback 也均无 retrieval failure。baseline 唯一 fallback 是 synthesis provider failure；candidate 6 个 fallback 精确为 `5 synthesis + 1 repair` model-stage provider failure。candidate 多出的 5 个 fallback 因此是 provider/model-stage 随机可靠性问题，而不是 cache、tail 选择或 fetch deadline 越界。
 6. 下一门先在 benchmark 外实现中性 provider-failure recovery：仅当 synthesis 逻辑请求失败且原 `model_calls=3` 仍有未使用槽时，允许第三个逻辑调用做 bounded full synthesis recovery；不得增加 3-call 上限、query/fetch/token 上限，不得复用 V2.42.97 逐题结果或重评。repair failure 已用满三次逻辑调用，继续 fail-closed。须先证明普通成功/正常 repair 路径不变、只恢复具体 synthesis provider failure、receipt/slot acquisition 精确、墙钟仍有余量且 label-blind；随后才能另行决定是否有新的独立 paired dev gate，仍不能直接跑 220。
 
+### V2.42.99–V2.43.02 bounded synthesis recovery 结论（2026-08-03 05:52 UTC）
+
+1. V2.42.99 已在原 `model_calls=3` 硬上限内实现 bounded synthesis provider recovery：仅当初次 synthesis 抛 `ModelRequestError` 且第三个逻辑槽仍未使用时，第三槽重做完整 synthesis；普通成功与普通 repair 路径不变，repair failure、任意非 provider exception 和恢复后非法输出都不产生第四个 effect。联合故障注入覆盖成功、repair、双重 provider failure、第四槽阻断、content-free receipt、真实 global-slot wrapper 与 privileged-input-before-effect rejection。
+2. V2.43.00 单任务真实 keyless GPT-5.6 中性门为 GO：`3` 个逻辑 effect/请求/占槽精确一致，顺序为本地 plan、注入 synthesis failure、真实第三槽 recovery；最终 primary，search/fetch 为 0，墙钟 `3.725536s`。该门只证明单任务恢复机制，不测自然失败率或 benchmark quality。
+3. 首个 V2.43.01 八并发激活在获取共享 API lease 后、任何模型或网络 effect 前 fail-closed：中性 `opaque_id` 不满足生产 `task_[0-9a-f]{24}` 契约，`validate_visible_task` 抛 `ValueError`。零效应审计确认 model/provider/slot/search/fetch/evaluator 均为 0，result/decision/postaudit 均未创建，lease 当秒自然释放，受保护 watcher PID `795336/3061652` 的启动身份不变；父协议禁止重试或 resume。
+4. Append-only V2.43.02 的唯一修正是把 8 个中性 ID 改为合法、互异的 24 位小写十六进制 opaque ID，并在授权前让 8/8 逐一通过同一个生产 `validate_visible_task`。问题、prompt、模型、fault injection、每题 3-call、8 workers、共享 8 slots、recovery-inside-slot barrier、门限与所有 non-authorization 均不变；preactivation audit `findings=[]`。
+5. V2.43.02 唯一真实八并发探针严格 GO：`8/8 primary`，总墙钟 `3.104019s`，task-wall-sum `19.071283s`；plan/initial-synthesis/recovery effect 各 `8`、repair `0`，总 logical requests/provider attempts/slot acquisitions 均为 `24`，真实 recovery HTTP requests `8`。barrier arrivals/participants 为 `8/8`、broken/failure 为 `0`，因此机械证明 8 个 recovery 同时持有共享 8 槽；第四 effect、search、fetch 均为 0。post-result audit `findings=[]`，未持久化 task ID/question/prompt/response/prediction/hash 或凭据，未打开 benchmark manifest/mapping/gold/category/question_type/split/evaluator/score。
+6. 严格 claim scope：以上只证明并发 provider-recovery 工程可靠性，不证明自然 failure frequency、质量因果收益或 SOTA。当前只授权新的 fresh paired-dev64 **设计**，仍不授权启动、evaluator、exact-220 或 leaderboard claim。下一步必须冻结 baseline=`V2.42.96 staged reserve without synthesis recovery`、candidate=`V2.42.99 same staged reserve plus bounded recovery` 的同题 fresh paired-dev64；输入仍仅 `{opaque_id, question}`，两臂预测完全冻结后才能打开 mapping/evaluator，固定 64 分母、failure-as-zero、无 resume/skip/selective retry/re-evaluation，并同时设置 quality、fallback/model-generated、成本、机制激活和 evaluator-health 门。
+
 ## 15. 完成定义
 
 项目只有在以下条件全部满足时才算完成：
