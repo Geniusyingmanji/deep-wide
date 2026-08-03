@@ -1,6 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.01
+> 版本：6.02
+>
+> **6.02 V2.43.11 common-recovery retrieval-allocation paired-dev64 已全终局且严格 NO-GO（2026-08-03 09:52 UTC）：唯一 fresh interleaved forward 双臂各 `64/64` 终态并先冻结 predictions，随后才打开 mapping/evaluator；baseline/candidate 各由4个 exact16 worker 完整评测，固定64分母、failure-as-zero、无 resume/skip/selective retry/error re-evaluation。forward 墙钟 `1745.984905s=29.10m`，为 V2.43.06 的 `1.051523×`；双臂 evaluator 并行墙钟 `323.933401s=5.40m`。runner/finalizer 自然退出，lease 释放，两个保护 watcher 原身份健康，post-result audit `findings=[]`。
+>
+> baseline=`6+4`+common recovery：`63` model-generated、1 fallback、3 evaluator-invalid，whole-table `4/64=6.25%`，Entity/Row/Item/Column `0.656250/0.243982/0.412986/0.495005`，Composite `0.452056`，tokens `2,171,386`。candidate=`6+2+2` staged reserve+同一 recovery：`61` model-generated、3 fallback、3 evaluator-invalid，whole-table同为 `4/64`，Entity/Row/Item/Column `0.656250/0.241990/0.405315/0.492810`，Composite `0.449091`，tokens `2,227,766`。candidate 相对 baseline：Composite `-0.002964`、Item F1 `-0.007671`、model-generated `-2`、token `+2.60%`、task-wall-sum `+1.55%`；没有质量或成本收益。
+>
+> candidate staged reserve 确实自然激活：6个 reserved-stage task、3个 low-coverage-diversity tail、12次 reserved fetch、9个 usable page，且没有额外 hosted-search request、cache miss/refetch 或 fourth model effect；因此 NO-GO 不是“机制未触发”。paired bootstrap（seed 24303、10,000）均值 `-0.002964`、中位数0、正/零/负 `18/27/19`，95% CI `[-0.083681,+0.075856]`，宽度 `0.159537` 过宽且下界低于 `-0.05`。共同 recovery 只在 baseline 自然触发1次且成功，candidate 0次；这说明 provider recovery confound 已被对称授权，但本轮随机需求不对称，不能把差异归因于 recovery。
+>
+> 关键工程失败也独立否决 promotion：baseline/candidate parent success 为 `63/61`、fallback `1/3`、effect-count incomplete `1/3`、valid child/model/transport receipt `63/61`，candidate 超过预注册上限2；hard-fetch deadline 为 `4/5`，candidate 超过上限4；两臂 evaluator-invalid 都为3，超过上限2。最终15个失败 checks 包含 Composite、Item F1、model-generated/fallback、paired lower bound、收据完整性、non-success/incomplete effects、deadline 与 evaluator invalid。不得删除这些门、选择性补跑失败题、重评 evaluator error 或据此启动220。当前完整220最佳仍是 V2.42.67 的 `7/220=3.1818%`、Composite `0.413541`，没有 SOTA。
+>
+> 下一优化方向从“继续改 retrieval allocation”转为 reliability-first：先对 V2.43.11 已冻结目录做不读题面/预测/答案/标签的 artifact-presence 与 parent-exit 链诊断，区分 child 真实未落盘、parent 在验收/投影阶段抛错、transport receipt 缺失及 hard-fetch deadline；修复必须是 append-only totality/observability，不得改写 V2.43.11 工件。只有 benchmark-external fault injection 和新的 fresh paired-dev64 同时证明 parent receipt/effect count `64/64`、fallback 不增、deadline≤4 且质量不退化，才可重新考虑 exact-220 设计。**
 >
 > **6.01 V2.43.11 common-recovery retrieval-allocation paired-dev64 冻结候选（2026-08-03 09:13 UTC）：当前完整 220 最佳仍是 V2.42.67 的 `7/220=3.1818%`、Composite `0.413541`；更快的 V2.42.87 为 `5/220=2.2727%`、Composite `0.395991`，虽将 forward `3655s→1589.5s`、tokens `34.51M→7.31M`，但质量退化，不能作为刷榜 successor。V2.43.06 dev64 的 candidate Composite 点估计 `+0.042597` 也因 recovery 未自然触发、CI 宽度 `0.166283>0.16` 与 hard-fetch deadline 超门而严格 NO-GO。因此下一步不是立即再跑220，而是用 fresh paired-dev64 隔离唯一自然可达 treatment：baseline=visible-schema `6+4`，candidate=visible-schema `6+2+2` staged reserve；两臂共享 GPT-5.6、prompt、search/fetch、三次 model-call 上限、cap=2 和同一 bounded synthesis recovery。
 >
