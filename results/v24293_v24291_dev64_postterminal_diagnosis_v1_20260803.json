@@ -1,0 +1,205 @@
+{
+  "artifact_version": 1,
+  "role": "v24293_v24291_dev64_postterminal_diagnosis",
+  "created_at_unix": 1785730914,
+  "parents": {
+    "result_sha256": "35a057c6ffc6f70a689c40a560f5007a4d36c5ccfb42dbdde4dbd9b2d0872503",
+    "postresult_audit_sha256": "3890c55dd32a90959655578e45dc3fbb27281d0c9bb801113b8d045c74e99655",
+    "recovery_postresult_audit_sha256": "f12d703bd231a940b1656d8c612926b42a5a45633818d5a4c1a43769d85efcfc",
+    "control_summary_sha256": "35c27a8265b8f31b357e36d28e185fc605c5a55bda99fa1e0104f559f7b51692",
+    "candidate_summary_sha256": "d5b58a937daa399ec2fbfdd13a89598751251230c4351e59082aead18382b958",
+    "candidate_runtime_sha256": "6961fd1fc5c12c309b6d6a307118c9c6b40a4332ac971d9be3e26a3f9f313c55"
+  },
+  "boundary": {
+    "selected_per_arm": 64,
+    "fixed_denominator_failure_as_zero": true,
+    "candidate_prediction_freeze_preceded_evaluator": true,
+    "same_judge_full_both_arm_evaluation": true,
+    "postterminal_only": true,
+    "fed_back_into_same_forward": false,
+    "question_prediction_answer_instance_or_opaque_id_emitted": false
+  },
+  "result_summary": {
+    "decision": "no_go",
+    "failed_checks": [
+      "candidate_evaluator_invalid_or_not_run",
+      "rescue_triggered_tasks"
+    ],
+    "candidate_minus_control": {
+      "quality_composite": 0.010945847777290074,
+      "entity_acc": 0.015625,
+      "f1_by_row": 0.008852648262237806,
+      "f1_by_item": 0.006707320799599903,
+      "column_f1": 0.012598422047322477,
+      "whole_table_successes": 0,
+      "model_generated_tables": 0
+    },
+    "system_token_ratio": 0.9992171125955938,
+    "task_wall_sum_ratio": 0.9671129408214605,
+    "changed_predictions": 62,
+    "identical_predictions": 2
+  },
+  "paired_groups": {
+    "expand:coverage_sufficient": {
+      "selected": 4,
+      "candidate_evaluator_valid": 4,
+      "control_evaluator_valid": 4,
+      "whole_table_score_delta_sum": 1.0,
+      "mean_candidate_minus_control": {
+        "entity_acc": 0.25,
+        "f1_by_row": 0.0023809523809524002,
+        "f1_by_item": 0.17886904761904762,
+        "column_f1": 0.25,
+        "quality_composite": 0.17031250000000003
+      },
+      "paired_composite_distribution": {
+        "count": 4,
+        "mean": 0.17031250000000003,
+        "median": 0.009821428571428578,
+        "positive": 2,
+        "zero": 1,
+        "negative": 1,
+        "minimum": -0.013392857142857123,
+        "maximum": 0.675
+      }
+    },
+    "expand:no_tail_or_remaining_budget": {
+      "selected": 2,
+      "candidate_evaluator_valid": 2,
+      "control_evaluator_valid": 2,
+      "whole_table_score_delta_sum": 0.0,
+      "mean_candidate_minus_control": {
+        "entity_acc": 0.0,
+        "f1_by_row": 0.0,
+        "f1_by_item": 0.008928571428571425,
+        "column_f1": 0.0,
+        "quality_composite": 0.002232142857142856
+      },
+      "paired_composite_distribution": {
+        "count": 2,
+        "mean": 0.002232142857142856,
+        "median": 0.002232142857142856,
+        "positive": 1,
+        "zero": 1,
+        "negative": 0,
+        "minimum": 0.0,
+        "maximum": 0.004464285714285712
+      }
+    },
+    "stop:controller_stop": {
+      "selected": 58,
+      "candidate_evaluator_valid": 55,
+      "control_evaluator_valid": 56,
+      "whole_table_score_delta_sum": -1.0,
+      "mean_candidate_minus_control": {
+        "entity_acc": 0.0,
+        "f1_by_row": 0.009604235849300206,
+        "f1_by_item": -0.005242496588947243,
+        "column_f1": -0.0033396722236441303,
+        "quality_composite": 0.00025551675917720977
+      },
+      "paired_composite_distribution": {
+        "count": 58,
+        "mean": 0.00025551675917720977,
+        "median": 0.0,
+        "positive": 20,
+        "zero": 19,
+        "negative": 19,
+        "minimum": -0.8888888888888888,
+        "maximum": 0.9715909090909091
+      }
+    }
+  },
+  "paired_all64_composite": {
+    "count": 64,
+    "mean": 0.010945847777290062,
+    "median": 0.0,
+    "positive": 23,
+    "zero": 21,
+    "negative": 20,
+    "minimum": -0.8888888888888888,
+    "maximum": 0.9715909090909091,
+    "exploratory_task_bootstrap": {
+      "seed": 24293,
+      "resamples": 10000,
+      "estimand": "mean paired composite delta on the fixed consumed dev-validation64 only",
+      "percentile_95_interval": [
+        -0.06832170665987009,
+        0.0884049873304921
+      ],
+      "future_task_or_held_out_population_inference": false,
+      "confirmatory": false
+    }
+  },
+  "mechanism_activation": {
+    "controller_stop": 58,
+    "controller_expand": 6,
+    "rescue_triggered": 0,
+    "budget_blocked_low_coverage_tasks": 2,
+    "budget_blocked_aggregate": {
+      "tail_candidates": [
+        58,
+        87
+      ],
+      "remaining_fetch_capacity": [
+        0,
+        0
+      ],
+      "usable_pages_before_rescue": [
+        2,
+        3
+      ],
+      "required_column_count": [
+        5,
+        14
+      ]
+    }
+  },
+  "evaluator_health": {
+    "control": {
+      "selected": 64,
+      "evaluator_valid": 62,
+      "evaluator_invalid": 2,
+      "error_taxonomy": {
+        "official_evaluator_internal_error": 2
+      },
+      "selective_revaluation_performed": false
+    },
+    "candidate": {
+      "selected": 64,
+      "evaluator_valid": 61,
+      "evaluator_invalid": 3,
+      "error_taxonomy": {
+        "official_evaluator_internal_error": 2,
+        "official_evaluator_out_of_range_metric": 1
+      },
+      "selective_revaluation_performed": false
+    }
+  },
+  "conclusions": {
+    "quality_direction_positive": true,
+    "whole_table_improved": false,
+    "quality_gain_statistically_resolved": false,
+    "quality_gain_attributable_to_rescue": false,
+    "rescue_mechanism_engaged": false,
+    "reserved_tail_capacity_required_before_any_new_benchmark": true,
+    "exact220_authorized": false,
+    "sota": false
+  },
+  "next_experiment": {
+    "stage": "neutral_and_synthetic_only",
+    "policy": "within the same ten-fetch cap, reserve two post-expand slots and select top-ranked versus diversity-tail adaptively after eight fetch outcomes",
+    "nominal_schedule": "6_first_wave_plus_2_second_wave_plus_2_reserved",
+    "additional_hosted_search_requests": 0,
+    "maximum_total_fetches": 10,
+    "benchmark_dev64_or_exact220_launch": false
+  },
+  "authorization": {
+    "training_credit_assignment": false,
+    "additional_dev64": false,
+    "exact220": false,
+    "leaderboard_submission": false,
+    "sota_claim": false
+  },
+  "diagnosis_payload_sha256": "476060670407601f2d5ee40a4ee419dea3635be81f66fca56e5301ec262bd7b7"
+}

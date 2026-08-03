@@ -2241,6 +2241,17 @@ terminal-only shadow aggregate 已覆盖 7 个终态中的 5 个有信号任务�
 
 2026-07-25 16:57 UTC 的历史快照为 `terminal=10, completed=4, failed=6, remaining=210`；截至 17:49 UTC 的当前权威快照已更新为 `terminal=12, completed=4, failed=8, remaining=208`。116 个 shadow snapshots 覆盖 10 个有信号终态任务；completed/failed 的 anchor normalized entropy 中位数分别约为 0.051/0.327，但最新 snapshot 所处阶段不同。100 个可计算 observational entropy delta 的均值为 0.033 nats、中位数仍为 0，范围含负值；任何 controller threshold、因果 credit 或质量增益结论仍不成立。当前第 13 题处于 scope，263 evidence、9 model traces、54 searches、455 fetches，0 search-stage error，checkpoint 非 stale。
 
+### V2.42.87–93 当前权威结论与下一门（2026-08-03 04:20 UTC）
+
+1. 当前最新的公开全集仍是经审计的 V2.42.87 单 rollout exact-220：whole-table `5/220 = 2.27%`，Composite `0.395991`，Entity `0.636364`，Row/Item/Column F1 `0.188062/0.341520/0.418019`，forward `1589.53s`、8-worker evaluator `520.51s`。它不是 SOTA，且低于 V2.42.67 的 `7/220`、Composite `0.413541`。不得把任何 dev64 结果替代全集或写成 SOTA。
+2. V2.42.91 已完成一次独立 candidate dev64 forward 与 control/candidate 两臂各 64 题的 fresh 全量评测。candidate forward 为 `64/64`、0 fallback、`416.64s`、2,280,789 tokens；候选预测先于 control/mapping/evaluator 冻结。两臂均固定分母 64、failure-as-zero、同一 GPT-5.6 judge、每臂 `4×16`，没有 resume、skip、选择性 retry 或 error re-evaluation。
+3. control→candidate：Composite `0.436551→0.447497`（`+0.010946`），Entity `+0.015625`，Row/Item/Column F1 `+0.008853/+0.006707/+0.012598`，whole-table 均为 `4/64`；token ratio `0.9992`，task-wall-sum ratio `0.9671`。但是预注册结论严格为 NO-GO：candidate evaluator-invalid `3>2`，且 rescue-triggered `0<1`。V2.42.91/92 post-result audit 均零 findings；因此不授权 fresh exact-220。
+4. V2.42.93 post-terminal paired 诊断禁止反馈到同一 forward。全 64 Composite delta 的均值 `+0.010946`、中位数 `0`、正/零/负 `23/21/20`，固定 seed 10,000 次探索性 task bootstrap 95% 区间约 `[-0.0683,+0.0884]`，不能声称统计上已分辨。58 个 stop 任务平均 `+0.000256`；4 个 expand 后 coverage-sufficient 任务平均 `+0.170313`；2 个真正低覆盖任务平均 `+0.002232`。总提升由极少数高方差 expand 样本主导，不能归因于 rescue。
+5. rescue 未触发的根因是预算编排而非 tail 缺失：两个 expand+low-coverage 任务分别仍有 `58/87` 个 same-response tail candidates，但冻结的 `6+4` 已用满 10 个 fetch，remaining capacity 均为 0。下一版不得放宽门、追加补跑或增加 hosted-search 请求；先在 benchmark 外实现并测试同一 10-fetch cap 的 staged reserve：`6 first-wave + 2 second-wave + 2 reserved`。第 9–10 个 fetch 在看到前 8 个 fetch outcome 后，在原 top-ranked continuation 与 host/content-diversity tail 间做 label-blind 选择；coverage sufficient 时应保持原 top-ranked 行为，low coverage 时才改选 tail。
+6. staged-reserve 的进入条件：中性/合成故障注入证明 stop 路径不变、expand+sufficient 路径不劣化、expand+low-coverage 必须实际激活 reserved slots、总 query≤4/总 fetch≤10、新增 hosted-search request=0、cache miss=0、网络 fetch 不越界、receipt 可重算且不含问题/URL/页面/预测/凭据。通过只授权新的独立 dev64 设计；仍须预注册 effect-engagement 最低样本、固定 evaluator-invalid failure-as-zero 门和 paired uncertainty。只有新的 dev64 同时通过质量、成本、机制激活与 evaluator-health 门，才可设计而不能直接启动 fresh 220。
+7. evaluator invalid taxonomy 仅作离线诊断：control 为 2 个 internal error；candidate 为 2 个 internal error + 1 个 upstream out-of-range column metric。禁止选择性重评这 5 个结果；未来实验应在预注册前以 evaluator 故障注入验证固定分母/越界隔离，不得用同一题重评来消除 NO-GO。
+8. V2.42.92 仅是 evaluator-only fail-closed recovery：首次 finalizer 因缺失 `CONTROL_RESULT` 导入在 evaluator root/API 前退出；恢复协议绑定失败日志与旧 freeze，只注入两个既有 control path 常量并完整 fresh 评测两臂。它没有 forward、额外 rollout 或 exact-220 权限。保护 watcher PID `795336`、`3061652` 继续只读保留，不重启或重复启动。
+
 ## 15. 完成定义
 
 项目只有在以下条件全部满足时才算完成：
