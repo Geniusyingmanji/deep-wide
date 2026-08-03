@@ -1,6 +1,12 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.13
+> 版本：6.14
+>
+> **6.14 V2.43.22 V2.43.20 post-freeze paired 机制诊断（2026-08-03）：在双臂预测、evaluator与NO-GO结果全部冻结后，按 opaque ID 仅在内存中配对，公开工件不含题面、ID、预测、instance ID或evaluator文本，也不调用网络/model/search/fetch/evaluator。candidate 真正执行 reserved stage 的13题平均 Composite delta `-0.050713`，Entity/Row/Item/Column delta 均为负；未执行的51题仅 `-0.008291`。最关键的 route stratum：baseline stop/candidate stop 的47题近乎持平 `+0.001220`，baseline stop/candidate expand 的11题为 `-0.061556`，baseline expand/candidate stop 的4题为 `-0.120042`，两臂都expand的2题为 `+0.008922`。**
+>
+> **这支持“当前 reserve/expand 高风险且未把19张额外usable page转化为质量”，但不能把全部差值解释成 reserve 的因果效应：同一题两臂独立采样 plan、首波retrieval、controller与synthesis，15/64题 controller route 不一致；V2.43.14 同一dev64曾得 `+0.051394`，V2.43.20反为 `-0.016908`，delta符号翻转，说明 upstream sampling/judge variance materially confounded。故现有设计不是 strict shared-random-prefix causal ablation。**
+>
+> **下一 successor 只能设计、不得启动：共享 visible-only plan、相同首波query与前6页证据，在共享前缀后才分叉；entropy signal 改为 reliability-weighted、cell-conditional information gain，不再用页数/字符数或无条件新颖性替代任务价值；reserve evidence 与 core context 隔离，只有独立来源交叉佐证且降低目标cell不确定性时才允许覆盖core claim。禁止在同一64题上调参后再作确认性结论，也不授权exact-220。权威诊断为 `results/v24322_v24320_paired_dev64_diagnosis_v1_20260803.json`，复算/内容隔离/successor-contract测试 `3/3`。**
 >
 > **6.13 V2.43.20 fresh paired-dev64 完整终态 NO-GO（2026-08-03）：128 个 interleaved forward task 自然完成，baseline/candidate 均 `64/64` parent success，child/model/transport receipt 各64，non-success parent exit、incomplete effect count、第四model effect均0；三元守恒分别为 baseline `logical 130 = provider 128 + rejected 2`、candidate `130 = 127 + 3`。forward 墙钟 `1603.373735s = 26.72min`，比同规模 V2.43.14 的 `1669.403504s` 快3.96%；全程0题超过180秒、0个195秒 parent hard timeout。V2.43.15 的 outer-totality/slot-accounting/静态search timeout 三类可靠性问题因此在真实128-task并发下闭合，但这不等于质量提升。**
 >
