@@ -1,6 +1,12 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.97
+> 版本：5.98
+>
+> **5.98 V2.42.84 `2 queries × top3` vs `1 primary query × top6` 中性门为 NO-GO（2026-08-03 00:50 UTC）：两臂保持同一 `medium` hosted-search context、single-shot task-union、最多 6 个 source/fetch、25s per-URL hard deadline，并在 16 组固定公开文档 query pair 上同 wave 配对；candidate 只执行每组冻结的第一条 primary query。全程不读取 benchmark manifest/题面/mapping/gold/prediction/evaluator，不调用独立 generation model，结果不保存 query/URL/host/page/task ID 或凭据。两臂均 `16/16 terminal`，无 exception、effective/unrecoverable search failure、recursive split、hard fetch deadline 或 helper failure。**
+>
+> control/candidate 均 admission/fetch `96/96`；candidate usable pages `92→96`（ratio `1.0435`）、usable chars `382708→405970`（`1.0608`），说明不是靠减少页面产出省成本；host sum `44→34`（`0.7727`）仍高于冻结下限 `0.75`，但提示单主查询的来源多样性风险。candidate 将 search wall `163.348→121.169s`（`0.7418`）、累计 task wall `181.838→149.140s`（`0.8202`），且 13/16 配对题在 input token、total token 和 wall 上更好；但 input token `235341→196261`（`0.8339 > 0.80`）、total token `242418→200458`（`0.8269 > 0.82`），因此两个冻结 token gate 失败，严格 NO-GO，不能事后放宽门槛追认。权威结果为 [`results/v24284_query_width_pair_result_v1_20260803.json`](results/v24284_query_width_pair_result_v1_20260803.json)，seal 已重验、lease 自然释放，未 kill/quarantine 任一运行。
+>
+> 该结果证明 query-width 是比递归拆分更强的固定成本杠杆，但单独缩到一条 query 尚未达到预注册 token 降幅。下一正交实验只检验未覆盖的交互：在冻结 `one primary query × top6 + single-shot` 下配对 `medium` 与 `low` context。V2.42.78 的 low NO-GO 来自 two-query 路径，且被一次递归长尾放大；V2.42.84 证明 single-query 永不需要 query marker 映射/递归，因此不能用旧负结果替代该交互实测。新门必须保留 6-source/page/char/host yield，并要求 low 严格降低 input/total tokens 与 wall；不通过则停止 Azure hosted-search 微调，转向已实现但等待环境凭据注入的 direct-search page-projection 路径（V2.42.82/83）。
 >
 > **5.97 V2.42.81 shared-root `recursive split` vs `single-shot task-union` 中性门为 NO-GO（2026-08-03 00:37 UTC）：为避免两次独立 hosted search 的随机性，16 组固定公开文档 query pair 每组只共享一个 root response；只有 control 在 root marker 不完整时依照旧 `_run_chunk` 发送递归 suffix requests，candidate 则只把 root action sources 一次性交给 task-union。两臂各自 fetch 各自稳定 first-seen+top-k 选中的最多 6 个页面，不共享 page result。全过程不读 benchmark manifest/题面/mapping/gold/prediction/evaluator，不调用独立 generation model，result 不保存 query/URL/host/page/task ID 或凭据。**
 >
