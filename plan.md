@@ -2316,6 +2316,13 @@ terminal-only shadow aggregate 已覆盖 7 个终态中的 5 个有信号任务�
 3. preregistration 逐链验证 V2.43.08 的 V1 invalidation、V2 protocol/probe/decision/postaudit，并绑定 V2.43.06 三个冻结哈希。冻结前集成测试 `8/8` 通过；唯一 benchmark-external真实 launcher/child synthetic probe 创建 `9/9` parent receipt，taxonomy 精确匹配预注册期望。network/model/search/fetch/evaluator effect ledger 全零，未读取 task、manifest、mapping、gold、类别、question type、split、evaluator 或 score；source manifest 无漂移，post-audit `findings=[]`，临时目录已清除。
 4. 严格结论为 **neutral runner integration GO**，只授权下一次 paired-dev64 的 append-only **设计**，不授权 launch、evaluator 或 exact-220。下一设计固定 baseline=`6+4` 与 candidate=`6+2+2`，两臂都使用 cap=2、同一 bounded synthesis recovery、同一 visible-only task/model/prompt/search/fetch/model-call/token/wall budget，并接入 V2.43.09 child/parent exit receipts；只有新 protocol、dependency manifest、label-blind preactivation audit 和 benchmark 外真实 runner smoke 全部冻结并提交后，才可另行创建 launch activation。
 
+### V2.43.10 common-recovery retrieval-allocation runtime build（2026-08-03 08:23 UTC）
+
+1. 新 runtime 直接复用已审计的 V2.42.99 bounded synthesis recovery wrapper，而不是拼接 V2.42.97 与 V2.43.03 的不兼容 arm 语义。baseline 调用 V2.42.86 visible-schema `6+4`，candidate 调用 V2.42.96 visible-schema `6+2+2`；两臂均启用同一个三调用 recovery wrapper，未知异常只以 V2.43.08 固定粗粒度枚举进入 total fallback。
+2. 新实验 receipt 对两臂使用同一固定 schema，`recovery_enabled=true`、model-call cap=3，并绑定 plan/initial synthesis/recovery/repair effect、provider requests/attempts 与 fourth-effect=false。双重 provider failure 仍保留真实 `3` 次 effect/request 账本，不会错误投影为 zero-effect；normal success/repair 不误触发 recovery。
+3. 当前 build-only 新测试 `7/7`、V2.42.99 回归 `8/8` 通过：故障注入下两臂 receipt 除 arm 外完全一致；baseline 精确执行 `6+4`，candidate 精确执行 `6+2+2` 且 reserved stage 不增加 hosted-search request；privileged input 在任何 model/search effect 前拒绝；receipt 不含题目、opaque ID、预测或异常消息。
+4. 这一步尚未创建 paired-dev64 protocol、runner、activation 或 evaluator，不授权任何 benchmark effect。下一步是以该 runtime、cap=2 和 V2.43.09 receipts 构建 create-exclusive forward contract/runner，并先完成 benchmark 外真实 child/parent smoke、dependency/hash audit 与 label-blind preactivation gate。
+
 ## 15. 完成定义
 
 项目只有在以下条件全部满足时才算完成：
