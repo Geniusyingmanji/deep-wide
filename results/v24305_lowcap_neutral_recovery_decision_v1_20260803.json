@@ -1,0 +1,92 @@
+{
+  "artifact_version": 1,
+  "role": "v24305_lowcap_neutral_recovery_decision",
+  "protocol_id": "v24305_lowcap_neutral_recovery_reliability_v1",
+  "created_at_unix": 1785740179,
+  "status": "lowcap_neutral_reliability_go",
+  "passed": true,
+  "checks": {
+    "wall_seconds": true,
+    "task_count": true,
+    "executor_workers": true,
+    "global_model_slot_cap": true,
+    "start_barrier_participants": true,
+    "recovery_tracker_entries": true,
+    "recovery_tracker_exits": true,
+    "recovery_tracker_active_final": true,
+    "minimum_peak_real_recovery_concurrency": true,
+    "maximum_peak_real_recovery_concurrency": true,
+    "recovery_successes": true,
+    "recovery_provider_failures": true,
+    "unexpected_failures": true,
+    "total_effects_admitted": true,
+    "logical_provider_requests": true,
+    "provider_attempts": true,
+    "slot_acquisitions": true,
+    "workers_with_nontrivial_slot_wait": true,
+    "fourth_provider_effects": true,
+    "search_calls": true,
+    "fetch_calls": true
+  },
+  "failed_checks": [],
+  "observed": {
+    "wall_seconds": 9.252337,
+    "task_count": 8,
+    "executor_workers": 8,
+    "start_barrier_participants": 8,
+    "global_model_slot_cap": 2,
+    "recovery_tracker": {
+      "entries": 8,
+      "exits": 8,
+      "active_final": 0,
+      "peak": 2
+    },
+    "recovery_successes": 8,
+    "recovery_provider_failures": 0,
+    "unexpected_failures": 0,
+    "effects_by_stage": {
+      "plan": 8,
+      "synthesis_initial": 8,
+      "synthesis_recovery": 8,
+      "repair": 0
+    },
+    "total_effects_admitted": 24,
+    "logical_provider_requests": 24,
+    "provider_attempts": 24,
+    "slot_acquisitions": 24,
+    "workers_with_nontrivial_slot_wait": 6,
+    "total_slot_wait_seconds": 28.872615,
+    "maximum_worker_slot_wait_seconds": 7.500438,
+    "fourth_provider_effects": 0,
+    "real_recovery_calls": 8,
+    "real_recovery_successes": 8,
+    "real_recovery_failures": 0,
+    "search_calls": 0,
+    "fetch_calls": 0,
+    "task_wall_sum_seconds": 46.45073
+  },
+  "provenance": {
+    "parent_sha256": "b12e2f163fb75e106b63d0d939932321e52dd102b832091aad9b4025c164f817",
+    "protocol_sha256": "66a8e442508b1db718d286fd893d32daeea42885a7f013aa38df80c9bb577708",
+    "preactivation_audit_sha256": "ef80d86ae25f453019b45e85f34d922454dc1674d62e48a46a3ff35642c5ee72",
+    "activation_sha256": "881ecdab49741192e1de7fb8b828ba68e7289616499350a60ef8824fb703b2a8",
+    "execution_start_sha256": "8f705259a32e38b255358fb55afdb2c28be03481df05cdb0deabb6ff19602f75",
+    "result_sha256": "14162924fe6511998172114c7a402537f7b550afb7d944d557daae80529a6d31",
+    "surface_manifest_sha256": "bd42c6b8378d6e8f4d9bfcad81f18bb3774193672828b200093a3225e70d1090"
+  },
+  "claim_scope": {
+    "eight_executor_two_gpt_slot_fault_injected_recovery_reliability": true,
+    "natural_failure_frequency_measured": false,
+    "benchmark_quality_measured": false,
+    "causal_quality_improvement_proven": false,
+    "sota_supported": false
+  },
+  "authorization": {
+    "successor_fresh_paired_dev64_design": true,
+    "successor_fresh_paired_dev64_launch": false,
+    "exact220_launch": false,
+    "evaluator_call": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "decision_payload_sha256": "174104fc614260483b6fc1b647159db5e78941fcbd61f6a993a5b9db883dc303"
+}
