@@ -373,18 +373,13 @@ def _bound_relations(segment: _Segment, kind: str) -> list[tuple[_Relation, str,
         and item.start - segment.entity_end <= MAXIMUM_FORWARD_RELATION_DISTANCE
     ]
     if forward:
-        nearest = min(item[2] for item in forward)
-        return [item for item in forward if item[2] == nearest]
-    leading = [
+        return forward
+    return [
         (item, "leading", segment.entity_start - item.end)
         for item in relations
         if item.end <= segment.entity_start
         and segment.entity_start - item.end <= MAXIMUM_LEADING_RELATION_DISTANCE
     ]
-    if not leading:
-        return []
-    nearest = min(item[2] for item in leading)
-    return [item for item in leading if item[2] == nearest]
 
 
 def _project_pages(

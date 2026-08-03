@@ -68,19 +68,21 @@ class V24365EntitySegmentProjectionTests(unittest.TestCase):
         )
         self.assertEqual(projected_values(catalog, alpha), {digest("2025")})
 
-    def test_nearest_forward_relation_wins_inside_target_segment(self) -> None:
+    def test_multiple_target_segment_relations_remain_visible_as_conflict(self) -> None:
         alpha = CellTarget("Alpha", "Founding year", "Unknown")
         catalog = build_target_segment_catalog(
             [alpha],
             [
                 page(
                     "one.example",
-                    "Alpha was founded in 2025, after a predecessor was established in 2024",
+                    "Alpha was founded in 2025 and was established in 2024",
                 )
             ],
             [],
         )
-        self.assertEqual(projected_values(catalog, alpha), {digest("2025")})
+        self.assertEqual(
+            projected_values(catalog, alpha), {digest("2025"), digest("2024")}
+        )
 
     def test_forward_relation_precedes_nearby_leading_relation(self) -> None:
         alpha = CellTarget("Alpha", "Founding year", "Unknown")
