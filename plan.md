@@ -1,6 +1,12 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.95
+> 版本：5.96
+>
+> **5.96 V2.42.79 synthesis factorial 中性门为 NO-GO（2026-08-03 00:15 UTC）：在不读取 benchmark manifest/题面/mapping/gold/prediction/evaluator、不调用搜索或 fetch 的前提下，对 8 个合成表格 case 完成 `reasoning low/none × free Markdown/strict JSON` 的 32 个单请求配对因子实验。四臂均 `8/8 terminal`，且每臂 72/72 个单元格与预注册合成值精确相等，因此成本比较没有用丢内容换速度。**
+>
+> 以 `low_free` 的 `1940 tokens / 17.802s` 为基准：`none_free` 为 `1913 / 18.007s`（token ratio `0.9861`、wall ratio `1.0115`），关闭 reasoning 几乎不节省端到端成本；`low_strict` 和 `none_strict` 都为 `2432 tokens`（ratio `1.2536`），wall ratio 分别 `1.0739/1.1354`，JSON schema 请求体反而增加 input bytes/tokens 与延迟。三个 candidate 均未达到预注册的 token+wall 联合门，`eligible_candidates=[]`，所以保留 `low + free Markdown`，禁止用本结果启动 dev64/exact220 或宣称质量/SOTA。权威工件为 [`results/v24279_synthesis_factorial_result_v1_20260803.json`](results/v24279_synthesis_factorial_result_v1_20260803.json)，result seal 与 4/4 定向测试已重验，凭据扫描为空。
+>
+> 下一个可归因的成本杠杆转向 native-search **request count**：当同一 multi-query response 的 query-local citation marker 不完整时，现有 `AzureNativeSearchClient._run_chunk` 会递归二分并重发请求；但 V2.42.69 task-union 只需该 action 的 source union，并不需将每个 URL 强制归因到单个 query。下一门因此是固定公开文档 query pair 上的 `recursive split` vs `single-shot no-split task-union`；必须同时保持 source/page/usable-char yield、无新 transport failure，并严格降低 hosted-search calls、tokens 和 wall，才能进入新 successor 冻结。
 >
 >
 > **5.95 V2.42.78 `low` vs `medium` search context 中性配对为 NO-GO（2026-08-03 00:14 UTC）：在不调用生成模型或 evaluator 的 8 组固定公开文档 query pair 上，每组同波并行运行 medium/low；两臂共享精确 2 query、top3、6 fetch、25s per-URL hard deadline，分两波且每波 8 arm。结果仅保存 calls/tokens/source/page/char/wall 与 transport counters，不保存 query、URL、page、prediction 或 benchmark 内容。两臂均 `8/8 terminal`、`48 admitted/fetched`，无 exception、unrecoverable search、hard deadline 或 helper failure，medium/low usable pages `46/47`、chars `184686/198568`，所以不是用低产出换成本。
