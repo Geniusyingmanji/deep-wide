@@ -1,6 +1,10 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.17
+> 版本：6.18
+>
+> **6.18 V2.43.26 deadline-safe shared-prefix runner/subprocess integration GO（2026-08-03）：V2.43.25 pair runtime已接入V2.43.13 deadline-aware global model slot limiter、V2.43.16 hosted-search/fetch absolute deadline与V2.43.09 child/parent terminal receipt。model/search必须共享同一absolute deadline、cleanup reserve与minimum attempt；complete result的model三元现场满足 `logical admissions = slot acquisitions(provider requests) + slot timeouts(pre-provider rejection)`，provider attempts独立计数。fetch effect精确满足 `fetch_calls = hard-fetch helper launches + deadline pre-launch rejects`；hosted-search attempts与HTTP calls因transport exception/retry不被伪造成相等，只由固定transport-health schema审计。sealed envelope内嵌model-slot/transport receipt，同时父进程读取独立receipt文件并要求byte-equivalent；独立文件合法但与envelope漂移也必须fail closed。**
+>
+> **真实本地subprocess覆盖11种模式，parent taxonomy全部精确：success、slot-reject与reserve-failure均为完整 `success` result；nonzero、timeout、缺result、缺model、缺transport分别进入专门taxonomy；坏result、合法重签名model drift、合法transport drift均为 `result_envelope_invalid`。slot-reject在cleanup reserve内使3个logical model admission全部provider前拒绝，正确闭合为 `3=0 acquisitions+3 timeouts`并返回identity candidate；reserve fetch三helper失败仍保留baseline、candidate identity且不整题降为Unknown。V2.43.26/V2.43.25/deadline search/model/parent-child receipt联合回归 `48/48`；权威审计 `results/v24326_runner_integration_build_audit_v1_20260803.json` 的 `findings=[]`，privileged AST access和credential literal为空，远程network/model/search/fetch/evaluator effect全0，保护watcher身份未变。严格授权仅为一次benchmark外neutral transport smoke的设计；尚无activation，不授权remote smoke launch、benchmark、additional dev64、exact-220、evaluator、leaderboard或SOTA。**
 >
 > **6.17 V2.43.25 shared-prefix entropy-gated cell revision runtime build GO（2026-08-03）：下一质量机制不再把baseline/candidate各跑一次。每题只从visible-only `{opaque_id, question}`执行一次plan、一次4-query hosted-search，并从同一冻结候选序列稳定分配 `7 core + 3 reserve` fetch target；baseline仅看7个core page，candidate以baseline为不可删除底板，最多用第三次model admission提出reserve revision。无可信reserve、transport/revision失败或全部cell被隔离时，candidate必须byte-identical handoff，消除V2.43.20独立采样与无证据expand造成的随机退化；plan/core search/fetch均不得在branch中重放。baseline synthesis若失败，第三次调用优先做共享core recovery且不再fetch reserve，保持质量恢复与candidate revision互斥、总model admission≤3。**
 >

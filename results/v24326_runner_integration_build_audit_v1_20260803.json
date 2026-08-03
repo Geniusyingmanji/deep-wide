@@ -1,0 +1,167 @@
+{
+  "artifact_version": 1,
+  "role": "v24326_runner_integration_build_audit",
+  "created_at_unix": 1785771188,
+  "parent_audit": {
+    "path": "results/v24325_shared_prefix_revision_runtime_build_audit_v1_20260803.json",
+    "sha256": "458bbf226c4a568716d3f3898db8332e704f7c4f89184c3ee9092eb8df9b7bf0"
+  },
+  "source_manifest": {
+    "src/deepwide_agent/v24309_runner_exit_integration.py": "18c1b4e0ed06769f3925c4bd3448ef907bf66a45ef33c342ef0d0192a1ac26d8",
+    "src/deepwide_agent/v24312_deadline_reliability.py": "2adaab53f558f101b65d842417097e3782038a3d24fbcc6de6259ac609f762b4",
+    "src/deepwide_agent/v24313_runner_integration.py": "8438b0d1b125c12e17eb5137e89edcbbed6d3dcb9e19f8bb739738c88d548905",
+    "src/deepwide_agent/v24316_deadline_search.py": "dd5ded612bfecb624f38d5d86d379be1e973dbbd6df55084157cb33a758b3260",
+    "src/deepwide_agent/v24325_shared_prefix_revision_runtime.py": "e1a3dda0c5e4cdeb2de5c3c4e54944f6542863779b96022c07ace32400612fed",
+    "src/deepwide_agent/v24326_runner_integration.py": "d2050dc8f2cd21823b3376ee0118ddeb86ed631d7625eeaa93dfdd58eda9c611",
+    "tests/fixtures/v24326_synthetic_child.py": "aba9e660b3ef9eaeb8d686d0e8e75c31239cfb0728ac9be53677b5cf46c9228e",
+    "tests/test_v24326_runner_integration.py": "2887ffe52a195b459498cb7d4a4d1fc3dae344c88470ed55065469d20c13f29c",
+    "tests/test_v24326_subprocess_integration.py": "a8661d09c65fb4a6a821c76f7bf43d98c123a387713b1f96f9e471a716a6988b",
+    "scripts/audit_v24326_runner_integration.py": "1e725ccdd4cb4b9f68ad66738e2c36fb7552659057de2c01c2e059f6b98cdac7"
+  },
+  "source_manifest_sha256": "5368ca0242845c516155107ec3d32bb69404110bbb7df90cdcec77fe35210f7c",
+  "focused_and_dependency_tests": [
+    {
+      "file": "test_v24326_runner_integration.py",
+      "test_count": 4,
+      "passed": true
+    },
+    {
+      "file": "test_v24326_subprocess_integration.py",
+      "test_count": 3,
+      "passed": true
+    },
+    {
+      "file": "test_v24325_shared_prefix_revision_runtime.py",
+      "test_count": 13,
+      "passed": true
+    },
+    {
+      "file": "test_v24316_deadline_search.py",
+      "test_count": 7,
+      "passed": true
+    },
+    {
+      "file": "test_v24312_deadline_reliability.py",
+      "test_count": 7,
+      "passed": true
+    },
+    {
+      "file": "test_v24309_runner_exit_integration.py",
+      "test_count": 5,
+      "passed": true
+    },
+    {
+      "file": "test_v24308_child_exit_observability.py",
+      "test_count": 9,
+      "passed": true
+    }
+  ],
+  "test_count": 48,
+  "subprocess_fault_matrix": {
+    "expected_taxonomy": {
+      "success": "success",
+      "slot_reject": "success",
+      "reserve_failure": "success",
+      "nonzero": "child_nonzero_with_terminal_receipt",
+      "timeout": "hard_deadline_timeout",
+      "missing_result": "zero_exit_missing_result_envelope",
+      "missing_model": "model_receipt_missing_or_invalid",
+      "missing_transport": "transport_receipt_missing_or_invalid",
+      "invalid_result": "result_envelope_invalid",
+      "drift_model": "result_envelope_invalid",
+      "drift_transport": "result_envelope_invalid"
+    },
+    "observed_taxonomy": {
+      "success": "success",
+      "slot_reject": "success",
+      "reserve_failure": "success",
+      "nonzero": "child_nonzero_with_terminal_receipt",
+      "timeout": "hard_deadline_timeout",
+      "missing_result": "zero_exit_missing_result_envelope",
+      "missing_model": "model_receipt_missing_or_invalid",
+      "missing_transport": "transport_receipt_missing_or_invalid",
+      "invalid_result": "result_envelope_invalid",
+      "drift_model": "result_envelope_invalid",
+      "drift_transport": "result_envelope_invalid"
+    },
+    "exact_taxonomy_match": true,
+    "authoritative_local_children": 11,
+    "test_local_children": 11,
+    "total_local_children_this_audit": 22,
+    "temporary_directories_remaining": false
+  },
+  "behavior_observation": {
+    "success": {
+      "admitted_cell_changes": 1,
+      "model_conservation": true,
+      "fetch_conservation": true
+    },
+    "slot_reject": {
+      "complete_result": true,
+      "pre_provider_rejections": 3,
+      "slot_timeouts": 3,
+      "identity_handoff": true
+    },
+    "reserve_failure": {
+      "complete_result": true,
+      "identity_handoff": true,
+      "fetch_helper_failures": 3
+    },
+    "independent_receipt_drift_fail_closed": {
+      "model": true,
+      "transport": true
+    }
+  },
+  "privileged_field_accesses": [],
+  "credential_literal_hits": [],
+  "subprocess_or_test_process_present": false,
+  "protected_watchers": [
+    {
+      "pid": 795336,
+      "marker": "scripts/watch_v2415_r1_checkpoint_liveness.py",
+      "start_ticks": 713986317
+    },
+    {
+      "pid": 3061652,
+      "marker": "scripts/watch_v24218_exact220_executor.py",
+      "start_ticks": 747569004
+    }
+  ],
+  "external_effect_ledger": {
+    "remote_network": 0,
+    "model_provider": 0,
+    "hosted_search": 0,
+    "fetch": 0,
+    "evaluator": 0,
+    "local_subprocess_children": 22
+  },
+  "source_policy": {
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "deadline_model_and_search_required_by_type": true,
+    "shared_absolute_deadline_required": true,
+    "independent_receipt_files_cross_checked_with_envelope": true,
+    "mapping_gold_category_question_type_split_evaluator_score_or_reward_read": false,
+    "active_benchmark_or_watcher_signaled_restarted_or_modified": false
+  },
+  "claim_scope": {
+    "real_local_subprocess_boundary": true,
+    "model_slot_and_fetch_health_cross_artifact_conservation": true,
+    "slot_and_reserve_failures_return_complete_identity_results": true,
+    "real_remote_model_or_search_transport_tested": false,
+    "benchmark_quality_improvement": false
+  },
+  "findings": [],
+  "audit_valid": true,
+  "authorization": {
+    "one_benchmark_external_neutral_transport_smoke_design": true,
+    "neutral_transport_smoke_launch": false,
+    "benchmark_launch": false,
+    "additional_dev64_or_exact220": false,
+    "evaluator": false,
+    "leaderboard_or_sota": false
+  },
+  "audit_payload_sha256": "33ec6a15654b1f3e4b611a9043943988595f6e8217a5ddf9398d7121d0a6a01e"
+}
