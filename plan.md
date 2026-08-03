@@ -2301,6 +2301,14 @@ terminal-only shadow aggregate 已覆盖 7 个终态中的 5 个有信号任务�
 7. hard-fetch deadline positions 为 baseline `1/4/16/21/25`、candidate `4/29`，与任一 fallback 均不重合；fetch-helper failure 两臂均为 0。因此 deadline 超门是 transport-health gate failure，但不是 4 个 fallback 的主因。evaluator internal-error positions 为 baseline `42/50`、candidate `50`，未重评。
 8. 新刷榜顺序调整为“先修可观测性，再重测自然可达质量机制”：先实现 content-free child-exit receipt，至少包含 return code、timeout、result/receipt/transport presence 和粗粒度 failure taxonomy，明确禁止题目、ID、prompt/response、预测、URL/page、凭据、gold/category；用 benchmark 外故障注入证明正常、非零退出、timeout、缺 envelope 和 receipt drift 均可分辨且不增加模型/search/fetch effect。通过后优先重测 V2.42.97 的自然可达 staged-reserve treatment（baseline `6+4` vs candidate `6+2+2`），两臂都使用 cap=2 与 bounded recovery，以消除 provider reliability confound；不得再把随机零触发 recovery ablation 当刷榜主线。仍需新的 fresh paired-dev64 严格 GO 才可设计而不能直接启动 exact-220。
 
+### V2.43.08 content-free child-exit observability（2026-08-03 07:58 UTC）
+
+1. V2.43.08 已实现严格定长字段的 child terminal receipt 与 parent exit receipt。parent taxonomy 可区分 `success`、hard-deadline timeout、非零退出且有/无合法 child receipt、零退出但缺 result envelope、坏 envelope、缺/坏 model receipt、缺/坏 transport receipt，以及 parent subprocess launch exception；presence/validity、return-code/timeout/launch-exception 的自相矛盾组合和重签名附加字段均 fail closed。
+2. child terminal receipt 在 result/model/transport marker 写完后才 create-exclusive 写入，布尔位描述已经发生的文件系统效果；timeout 以独立 process group 启动并整组终止。probe directory 必须是仓库 `outputs/` 下的普通目录，禁止 symlink 或越界路径。receipt 仅允许 stage、粗粒度 exception type、return code、timeout、耗时与 presence/validity，不允许题目、opaque ID、prompt/response、预测、URL/page、凭据、mapping/gold/category/question_type/split/evaluator/score。
+3. 首次 V1 probe 后的负向审计发现 free-form `exception_type` 虽为标识符格式，仍可能被误用来编码 opaque ID 或凭据；因此 V1 的 content-free、GO 与 integration-design claims 已由 append-only invalidation 工件明确标记 `invalid_do_not_use`，所有授权为 false。V1 文件保留且不改写，但不得作为有效证据引用。V2 只允许固定粗粒度异常枚举，未知类名映射为 `UnknownError` 且完全不读取 exception message。
+4. 修正后的冻结前聚焦测试为 `14/14` 通过，并通过隔离模式语法编译。V2 的唯一 benchmark-external synthetic subprocess probe 覆盖 9 个模式，`9/9` 与预注册 taxonomy 精确一致；network/model/search/fetch/evaluator effect ledger 全为 0，未读取 benchmark manifest、mapping、gold、类别、question type、split、evaluator 或 score。V2 source manifest 冻结后逐文件 SHA-256 复核无漂移，post-result audit `findings=[]`，临时目录已清除。
+5. 严格结论为 **V2 neutral observability GO**，只授权 append-only future-runner integration design；不授权 benchmark dev64、exact-220、evaluator、leaderboard 或 SOTA。下一步不得修改 V2.43.03/06 的冻结 runner/hash，而应在新版本 runner/task 中接入 child terminal 与 parent exit receipt，并先用 benchmark 外 fault injection 验证真实 runner 的 success/timeout/nonzero/missing-envelope 路径。只有 integration gate 通过，才可冻结新的 staged-reserve paired-dev64：baseline=`6+4`、candidate=`6+2+2`，两臂均 cap=2 且启用同一 bounded synthesis recovery，从而把 treatment 收窄为自然可达的 retrieval scheduling 差异；仍需 fresh 64 严格 GO 才能设计后续 exact-220。
+
 ## 15. 完成定义
 
 项目只有在以下条件全部满足时才算完成：

@@ -1,0 +1,52 @@
+{
+  "artifact_version": 1,
+  "role": "v24308_child_exit_observability_preregistration",
+  "protocol_id": "v24308_benchmark_external_child_exit_observability_v1",
+  "created_at_unix": 1785743704,
+  "parent": {
+    "path": "results/v24307_v24306_postterminal_diagnosis_v1_20260803.json",
+    "sha256": "e689265ad1dc6a3d5de4eb81194d0e275fc6057ef5c87efc19b994ee2834b898"
+  },
+  "modes": [
+    "success",
+    "nonzero_with_receipt",
+    "nonzero_without_receipt",
+    "zero_missing_envelope",
+    "invalid_envelope",
+    "missing_model_receipt",
+    "missing_transport_receipt",
+    "timeout",
+    "parent_launch_exception"
+  ],
+  "expected_taxonomy": {
+    "success": "success",
+    "nonzero_with_receipt": "child_nonzero_with_terminal_receipt",
+    "nonzero_without_receipt": "child_nonzero_without_terminal_receipt",
+    "zero_missing_envelope": "zero_exit_missing_result_envelope",
+    "invalid_envelope": "result_envelope_invalid",
+    "missing_model_receipt": "model_receipt_missing_or_invalid",
+    "missing_transport_receipt": "transport_receipt_missing_or_invalid",
+    "timeout": "hard_deadline_timeout",
+    "parent_launch_exception": "parent_subprocess_exception"
+  },
+  "timeout_seconds": 0.15,
+  "synthetic_subprocess_only": true,
+  "runtime_input_question_or_opaque_id": false,
+  "network_model_search_fetch_or_evaluator_calls": 0,
+  "benchmark_manifest_mapping_gold_category_question_type_split_evaluator_score_read": false,
+  "source_manifest": {
+    "src/deepwide_agent/v24308_child_exit_observability.py": "869b7db7d8adc5fa4c380a1381cec38bdf51b258289231551a1dc300d6ff3ca6",
+    "scripts/v24308_neutral_child_exit_observability.py": "181b6fa2fb72af1c6517c3fb56bfbd145c1d2c9ad05fdc356f9c410937fe880b",
+    "tests/test_v24308_child_exit_observability.py": "ec8720e7c576f8520fc4f2af32a73ded0ff09333daf2f14c08e64cb937cef0ac",
+    "tests/test_v24308_neutral_child_exit_observability.py": "a7a7c63f097b006fcd4ea67b2389d9b81ed6464cd85f38e8386c2f7c674587e6"
+  },
+  "source_manifest_sha256": "49a4afb624b70fa71eea4cbef9684d4f4935118064ef5876c7e62f97b80cbce8",
+  "authorization": {
+    "one_benchmark_external_probe": true,
+    "benchmark_dev64": false,
+    "exact220": false,
+    "evaluator": false,
+    "leaderboard_or_sota": false
+  },
+  "protocol_payload_sha256": "b492ad2a7821a5b341e2765f2bde6f0d1bfafa2af4c4dd70121f068b8c4e1bb4"
+}

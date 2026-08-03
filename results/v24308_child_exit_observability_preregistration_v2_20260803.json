@@ -1,0 +1,56 @@
+{
+  "artifact_version": 1,
+  "role": "v24308_child_exit_observability_preregistration",
+  "protocol_id": "v24308_benchmark_external_child_exit_observability_v2",
+  "created_at_unix": 1785744040,
+  "parent": {
+    "path": "results/v24307_v24306_postterminal_diagnosis_v1_20260803.json",
+    "sha256": "e689265ad1dc6a3d5de4eb81194d0e275fc6057ef5c87efc19b994ee2834b898"
+  },
+  "predecessor_invalidation": {
+    "path": "results/v24308_child_exit_observability_v1_invalidation_v1_20260803.json",
+    "sha256": "7d8adbedd508c5a799088269a50228b698cb9ffada0dbefaae1ac7f78fd62451"
+  },
+  "modes": [
+    "success",
+    "nonzero_with_receipt",
+    "nonzero_without_receipt",
+    "zero_missing_envelope",
+    "invalid_envelope",
+    "missing_model_receipt",
+    "missing_transport_receipt",
+    "timeout",
+    "parent_launch_exception"
+  ],
+  "expected_taxonomy": {
+    "success": "success",
+    "nonzero_with_receipt": "child_nonzero_with_terminal_receipt",
+    "nonzero_without_receipt": "child_nonzero_without_terminal_receipt",
+    "zero_missing_envelope": "zero_exit_missing_result_envelope",
+    "invalid_envelope": "result_envelope_invalid",
+    "missing_model_receipt": "model_receipt_missing_or_invalid",
+    "missing_transport_receipt": "transport_receipt_missing_or_invalid",
+    "timeout": "hard_deadline_timeout",
+    "parent_launch_exception": "parent_subprocess_exception"
+  },
+  "timeout_seconds": 0.15,
+  "synthetic_subprocess_only": true,
+  "runtime_input_question_or_opaque_id": false,
+  "network_model_search_fetch_or_evaluator_calls": 0,
+  "benchmark_manifest_mapping_gold_category_question_type_split_evaluator_score_read": false,
+  "source_manifest": {
+    "src/deepwide_agent/v24308_child_exit_observability.py": "27b2ffbfc748f960cfdc25919eb73d0ab0bc45f358bb3718518bdfd83b797d33",
+    "scripts/v24308_neutral_child_exit_observability.py": "dd9c12e5b2f3b506b2a46cedffc260fe7cf1e523e4989fc2a8b39e6f5369d3ca",
+    "tests/test_v24308_child_exit_observability.py": "9fa8f4f76b02e8ea6b6affc2a03bdd02163a33fabfbf8103ef39d4cccb38579e",
+    "tests/test_v24308_neutral_child_exit_observability.py": "987574aa498224df92e30c51352b15d89c56b57b1d9fcd249773ed6422bcc5a4"
+  },
+  "source_manifest_sha256": "9ea9ea8400a100114147eaa86020594238986129af194d066866570aee5dfdb9",
+  "authorization": {
+    "one_benchmark_external_probe": true,
+    "benchmark_dev64": false,
+    "exact220": false,
+    "evaluator": false,
+    "leaderboard_or_sota": false
+  },
+  "protocol_payload_sha256": "4c41d79344ed3eabdd6c8822c374a08385c5f57ea2b2713e5295cd0c769f6847"
+}
