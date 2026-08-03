@@ -1,0 +1,239 @@
+{
+  "artifact_version": 1,
+  "role": "v24285_neutral_single_query_context_pair_preregistration",
+  "protocol_id": "v24285_single_query_top6_low_vs_medium_neutral_pair_v1",
+  "created_at_unix": 1785718496,
+  "scope": "neutral_public_documentation_single_query_context_pair_only",
+  "pair_contract": {
+    "pair_count": 16,
+    "waves": 4,
+    "pairs_per_wave": 4,
+    "arm_concurrency": 8,
+    "contexts": [
+      "medium",
+      "low"
+    ],
+    "queries_per_arm": 1,
+    "results_per_query": 6,
+    "fetch_cap": 6,
+    "same_primary_query_within_pair": true,
+    "same_single_shot_task_union_transport": true,
+    "query_set_sha256": "ddbbb00002d955bea772495c8018178f2fa4d456a05adc6a55def66409843895",
+    "neutral_query_value_or_direct_hash_persisted_in_result": false,
+    "schedule": [
+      [
+        {
+          "pair": 1,
+          "context": "medium"
+        },
+        {
+          "pair": 1,
+          "context": "low"
+        },
+        {
+          "pair": 2,
+          "context": "low"
+        },
+        {
+          "pair": 2,
+          "context": "medium"
+        },
+        {
+          "pair": 3,
+          "context": "medium"
+        },
+        {
+          "pair": 3,
+          "context": "low"
+        },
+        {
+          "pair": 4,
+          "context": "low"
+        },
+        {
+          "pair": 4,
+          "context": "medium"
+        }
+      ],
+      [
+        {
+          "pair": 5,
+          "context": "medium"
+        },
+        {
+          "pair": 5,
+          "context": "low"
+        },
+        {
+          "pair": 6,
+          "context": "low"
+        },
+        {
+          "pair": 6,
+          "context": "medium"
+        },
+        {
+          "pair": 7,
+          "context": "medium"
+        },
+        {
+          "pair": 7,
+          "context": "low"
+        },
+        {
+          "pair": 8,
+          "context": "low"
+        },
+        {
+          "pair": 8,
+          "context": "medium"
+        }
+      ],
+      [
+        {
+          "pair": 9,
+          "context": "medium"
+        },
+        {
+          "pair": 9,
+          "context": "low"
+        },
+        {
+          "pair": 10,
+          "context": "low"
+        },
+        {
+          "pair": 10,
+          "context": "medium"
+        },
+        {
+          "pair": 11,
+          "context": "medium"
+        },
+        {
+          "pair": 11,
+          "context": "low"
+        },
+        {
+          "pair": 12,
+          "context": "low"
+        },
+        {
+          "pair": 12,
+          "context": "medium"
+        }
+      ],
+      [
+        {
+          "pair": 13,
+          "context": "medium"
+        },
+        {
+          "pair": 13,
+          "context": "low"
+        },
+        {
+          "pair": 14,
+          "context": "low"
+        },
+        {
+          "pair": 14,
+          "context": "medium"
+        },
+        {
+          "pair": 15,
+          "context": "medium"
+        },
+        {
+          "pair": 15,
+          "context": "low"
+        },
+        {
+          "pair": 16,
+          "context": "low"
+        },
+        {
+          "pair": 16,
+          "context": "medium"
+        }
+      ]
+    ]
+  },
+  "provider": {
+    "endpoint": "http://127.0.0.1:9878/responses",
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "low",
+    "service_tier": "priority",
+    "timeout_seconds": 180,
+    "max_retries": 2,
+    "batch_size": 8,
+    "workers": 1,
+    "max_output_tokens": 7000,
+    "fetch_workers": 8,
+    "fetch_timeout_seconds": 20,
+    "hard_fetch_deadline_seconds": 25,
+    "max_page_chars": 5000
+  },
+  "gates": {
+    "maximum_low_over_medium_search_calls": 1.0,
+    "maximum_low_over_medium_input_tokens": 0.9,
+    "maximum_low_over_medium_total_tokens": 0.92,
+    "maximum_low_over_medium_search_seconds": 0.95,
+    "maximum_low_over_medium_wall_seconds": 0.97,
+    "minimum_low_over_medium_admitted_sources": 0.95,
+    "minimum_low_over_medium_usable_pages": 0.9,
+    "minimum_low_over_medium_usable_chars": 0.75,
+    "minimum_low_over_medium_unique_hosts": 0.75,
+    "minimum_pairs_with_lower_low_input_tokens": 10,
+    "minimum_admitted_sources_per_arm": 80,
+    "minimum_usable_pages_per_arm": 72,
+    "minimum_usable_chars_per_arm": 100000,
+    "maximum_batch_wall_seconds": 300.0,
+    "maximum_effective_search_failures_per_arm": 0,
+    "maximum_unrecoverable_search_failures_per_arm": 0,
+    "maximum_hard_fetch_deadlines_per_arm": 0,
+    "maximum_fetch_helper_failures_per_arm": 0
+  },
+  "lease": {
+    "path": "outputs/deepwide_benchmark_api.lease.lock",
+    "owner": "v24285_single_query_context_pair_v1",
+    "purpose": "neutral_single_query_top6_low_vs_medium_context_pair",
+    "nonblocking_single_owner": true
+  },
+  "forward_manifest": {
+    "src/deepwide_agent/clients.py": "339d923973f07ebcd33cb12cee2c26103df70ed3aea1fc0a737ffd675ac06fbc",
+    "src/deepwide_agent/native_search.py": "cd0d6bfccf4b345b11274558bdcffb39d279697d183242baf811dfd56ac71e50",
+    "src/deepwide_agent/v24257_score_first_runtime.py": "c4e3f818d0306f53d40f641a7a580aa7238e0698d2863301fe8399d8e3c1fa3e",
+    "src/deepwide_agent/v24269_task_union_discovery.py": "f8c439e9d4000788e2e9c3afef37e29ee21e655faf57921572628ac350beb9be",
+    "src/deepwide_agent/v24270_budget_equivalent_union.py": "fd1e2a208c773dd00c38560e0aeca5d9bec293bac408e1899391bc40da01b944",
+    "src/deepwide_agent/v24275_forward_contract.py": "d983fb74d8bca2860b2c316671cdc4a4849db6c7f3178180051e4790ec50abe6",
+    "src/deepwide_agent/v24275_hard_deadline_fetch.py": "eae9df25815941f40ebfb5634d418067d7a4d145d6831937768229920c032c89",
+    "src/deepwide_agent/v24280_task_union_single_shot.py": "112b8a349141e986de4f7d94c0fcb201693ee961c9fff9eeda29f297415e1142",
+    "scripts/deepwide_api_lease.py": "8d9cffa78617b458172307d3558c76e9370f045f531c2f5aaaceb866f5a78c7d",
+    "scripts/run_v24275_fetch_helper.py": "19a29cc6189e17c9aacdf543fc1b78fb07c5ea6615a7d5ec5b0e7d8fd2c4062c",
+    "scripts/preregister_v24281_single_shot_pair.py": "13cd498e5182932c7252925a906461828e43dfd9ad21092dca047cc3fd221a80",
+    "scripts/probe_v24284_query_width_pair.py": "9e7dece2ae07bebdc3a361973afc165874cba8c0bee03acc1768faec45bc553f",
+    "scripts/preregister_v24285_single_query_context_pair.py": "8def1c2112a9a3665c1155b0ae5f9b46517b112cdb0f41520906f3d036ff0aaf",
+    "scripts/probe_v24285_single_query_context_pair.py": "2099f6c1060a5a1b426f701a7792b5a124058e56166f2fffeca065b66e453407"
+  },
+  "forward_manifest_sha256": "d9a7548c63193a8c33390d0851e9aab77ec162207225872549bb4167bbe51c83",
+  "control_manifest": {
+    "tests/test_probe_v24285_single_query_context_pair.py": "ed646cc3dfeae1b5c7b8763930e01151265f2977957a64519ca72590eeb884ed"
+  },
+  "control_manifest_sha256": "f31d5cd06668e2321f9b22b18fe975d7cc2dba1899422cb0716aef2a7743c69b",
+  "source_policy": {
+    "benchmark_manifest_mapping_gold_prediction_or_evaluator_read": false,
+    "benchmark_question_query_url_host_page_prediction_answer_task_id_or_hash_persisted": false,
+    "credential_value_read_persisted_hashed_or_emitted": false,
+    "standalone_generation_or_official_evaluator_called": false
+  },
+  "authorization": {
+    "benchmark_launch": false,
+    "dev64_launch": false,
+    "exact220_launch": false,
+    "evaluator_call": false,
+    "training_credit_assignment": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "protocol_payload_sha256": "9deb0e3f93a69e565c2ae78f274e2fd30352fc2cfa81886553cdc3d1b8ce8439"
+}
