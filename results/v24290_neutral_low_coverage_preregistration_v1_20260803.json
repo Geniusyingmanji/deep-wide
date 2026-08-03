@@ -1,0 +1,100 @@
+{
+  "artifact_version": 1,
+  "role": "v24290_neutral_low_coverage_preregistration",
+  "protocol_id": "v24290_neutral_fault_injected_low_coverage_rescue_v1",
+  "created_at_unix": 1785727530,
+  "scope": "one_fault_injected_neutral_public_documentation_rescue_probe",
+  "fault_injection": {
+    "kind": "first_wave_visible_source_miss_after_real_provider_call",
+    "real_first_wave_provider_call_counted": true,
+    "only_first_wave_returned_source_batches_masked_in_memory": true,
+    "second_wave_and_tail_provider_sources_unmodified": true,
+    "claim_scope": "mechanism_robustness_not_natural_frequency_or_benchmark_quality"
+  },
+  "task_contract": {
+    "synthetic_visible_task_only": true,
+    "task_count": 1,
+    "expected_column_count": 5,
+    "question_value_or_hash_persisted_in_result": false,
+    "benchmark_manifest_or_task_opened": false
+  },
+  "provider": {
+    "proxy_url": "http://127.0.0.1:9878/responses",
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "low",
+    "service_tier": "priority",
+    "timeout_seconds": 180,
+    "max_retries": 2,
+    "search_context_size": "medium",
+    "search_batch_size": 8,
+    "fetch_workers": 8,
+    "fetch_timeout_seconds": 20
+  },
+  "retrieval_contract": {
+    "maximum_queries": 4,
+    "maximum_fetches": 10,
+    "maximum_rescue_fetches": 4,
+    "minimum_total_usable_pages": 4,
+    "minimum_total_unique_hosts": 2,
+    "content_chars_per_column": 1200,
+    "maximum_pre_rescue_retrieval_seconds": 60,
+    "same_response_tail_only": true,
+    "additional_hosted_search_request_for_rescue": false
+  },
+  "gates": {
+    "maximum_wall_seconds": 45.0,
+    "required_completion_kinds": [
+      "primary",
+      "normalized_primary"
+    ],
+    "required_controller_decision": "expand",
+    "required_rescue_triggered": true,
+    "minimum_rescue_fetches": 1,
+    "minimum_rescue_usable_pages": 1,
+    "usable_pages_after_must_exceed_before": true,
+    "content_chars_after_must_exceed_before": true,
+    "maximum_total_fetches": 10,
+    "maximum_total_queries": 4,
+    "maximum_hosted_search_requests_added_by_rescue": 0,
+    "required_provider_search_calls_unchanged_during_rescue": true,
+    "maximum_cache_misses": 0,
+    "maximum_cache_serve_network_fetches": 0,
+    "minimum_output_rows": 1,
+    "required_output_columns": 5,
+    "timing_additivity_required": true
+  },
+  "lease": {
+    "path": "outputs/deepwide_benchmark_api.lease.lock",
+    "owner": "v24290_neutral_low_coverage_probe_v1",
+    "purpose": "neutral_public_documentation_low_coverage_tail_rescue",
+    "nonblocking_single_owner": true
+  },
+  "parents": {
+    "results/v24290_low_coverage_task_build_audit_v1_20260803.json": "627016df7a8bd3feacb61eb55e773022a76a5815d345e4ea972b4e05cbaab06c"
+  },
+  "surface_manifest": {
+    "src/deepwide_agent/v24289_low_coverage_rescue.py": "efef2ec4e1b0991d3811a3760584c9c52ce371532c3e945a1783303beb0d047e",
+    "src/deepwide_agent/v24290_low_coverage_task_runtime.py": "6c0979b490e10225e24ff607adf118934ff298bf5548d9b5e4eacc86705dc0dd",
+    "scripts/probe_v24290_neutral_low_coverage.py": "091cb4cc444eeddd9bed45bbace7fc3ff40024e7c24cbfa1376b06e72b015ad8",
+    "tests/test_v24289_low_coverage_rescue.py": "a5788e60b871be6246a71692150cc4183a79f3eb8458195e01f6f7cecb1917e7",
+    "tests/test_v24290_low_coverage_task_runtime.py": "f84669c5a22679648bb09795c1d1a21ebb883a1b48748084cc875cccb7b74f06",
+    "tests/test_probe_v24290_neutral_low_coverage.py": "1e13461e5f168a1d2dcc47502e8382abddc7eb8977335da66b67f96d4eaec28a"
+  },
+  "surface_manifest_sha256": "f3a293caf95a9e75bfaebb9c33174edc6ebb2a50cd7c9c4f855f662a8dfc5aaf",
+  "source_policy": {
+    "benchmark_manifest_mapping_gold_prediction_or_evaluator_read": false,
+    "question_field_query_url_host_page_prediction_answer_task_id_or_hash_persisted": false,
+    "credential_value_read_persisted_hashed_or_emitted": false,
+    "official_evaluator_called": false
+  },
+  "authorization": {
+    "one_fault_injected_neutral_probe": true,
+    "benchmark_launch": false,
+    "dev64_launch": false,
+    "exact220_launch": false,
+    "evaluator_call": false,
+    "training_credit_assignment": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "protocol_payload_sha256": "85f5b3283dbf169dfabe6ad9408ca5cd2153516ac55d9022ae2bc1e9a398c549"
+}
