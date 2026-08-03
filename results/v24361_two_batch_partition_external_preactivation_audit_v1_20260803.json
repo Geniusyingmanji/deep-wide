@@ -1,0 +1,53 @@
+{
+  "artifact_version": 1,
+  "role": "v24361_two_batch_partition_external_preactivation_audit",
+  "protocol_id": "v24361_two_batch_partition_external_gate_v1",
+  "created_at_unix": 1785795322,
+  "checks": {
+    "protocol_valid_and_sealed": true,
+    "fixed_external_task_batch_partition_vector_frozen": true,
+    "focused_tests": {
+      "tests/test_v24355_explicit_partition_runtime.py": true,
+      "tests/test_v24358_two_batch_discovery.py": true,
+      "tests/test_v24359_two_batch_partition_runtime.py": true,
+      "tests/test_v24360_two_batch_partition_runner.py": true,
+      "tests/test_v24361_two_batch_partition_external_gate.py": true
+    },
+    "keyless_proxy_listening_without_api_request": true,
+    "shared_api_lease_inactive": true,
+    "protocol_commit_pushed": true,
+    "worktree_clean": true,
+    "future_surface_pristine": true,
+    "protected_watchers_unchanged": true,
+    "benchmark_or_evaluator_surface_authorized": false
+  },
+  "protected_watchers": [
+    {
+      "pid": 795336,
+      "marker": "scripts/watch_v2415_r1_checkpoint_liveness.py",
+      "start_ticks": 713986317
+    },
+    {
+      "pid": 3061652,
+      "marker": "scripts/watch_v24218_exact220_executor.py",
+      "start_ticks": 747569004
+    }
+  ],
+  "findings": [],
+  "audit_valid": true,
+  "launch_authorized": true,
+  "provenance": {
+    "protocol_sha256": "2910f1d864ebdd1abd751677532cd0c5daa1fdbb0167585c286d0eb592d911d6",
+    "parent_sha256": "ff20a742bf828f6f81265e5a85a8569cb2fcae5631579736217584743eab5df5",
+    "surface_manifest_sha256": "fb2f79f20715a6f604590afddff134446f2d5ef0d499341f6cf9be937041623b",
+    "head": "35cfe61ede41378b93954093ea5aa1c595cb7723",
+    "target_main": "35cfe61ede41378b93954093ea5aa1c595cb7723"
+  },
+  "authorization": {
+    "one_external_two_batch_partition_probe_launch": true,
+    "benchmark_launch": false,
+    "additional_dev64_or_exact220": false,
+    "evaluator": false
+  },
+  "audit_payload_sha256": "fb7da716e445ba29b1857993218117772962f81fd204b1d07deb9acc0d797b8f"
+}
