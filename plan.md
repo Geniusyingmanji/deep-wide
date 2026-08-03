@@ -1,6 +1,12 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.11
+> 版本：6.12
+>
+> **6.12 V2.43.20 paired-dev64 冻结与 preactivation GO（2026-08-03）：append-only successor 保持 V2.43.14 的同一冻结 dev64、两臂交错、baseline `6+4`、candidate `6+2+2`、共同 recovery、prompt/model/evaluator、单题 `3 model / 4 query / 10 fetch / 180s`、总 executor=8 与全局 GPT cap=2 不变；唯一运行时变化是接入 V2.43.19 child/parent projection、V2.43.18 model/cache 两条守恒和 V2.43.16 model/search 共享 absolute deadline。forward 输入仍精确为 `{opaque_id, question}`，mapping/gold/category/question_type/split/evaluator/score 在双臂 `64/64` prediction freeze 前不可读取。**
+>
+> **新总账不再错误要求 logical admissions 等于 slot acquisitions，而是逐题及全臂机械验证 `logical = provider requests + pre-provider rejections`、`provider requests = slot acquisitions`、`pre-provider rejections = slot timeouts`；parent nonzero/timeout/缺坏工件只能产生 fixed-denominator fallback 与 effect lower/upper bounds，永久 `effect_count_complete=false`。V2.43.16 的 hosted-search attempts/deadline failures、fetch deadline rejections、hard-fetch failures 与 deadline-exhausted task 现在进入 arm summary 和 GO gate，不再只藏在单题 receipt。**
+>
+> **冻结前真实本地无网 subprocess smoke 覆盖 success、slot rejection、cache deferral 与 nonzero；deadline stop 必须是完整 child success envelope，结构失败不得伪装成功。V2.43.20/V2.43.19/V2.43.18/V2.43.16 聚焦回归 `34/34`，32 个 forward 依赖的 privileged-field AST 唯一命中是 `clients.py` 普通搜索结果相关性 `score`，允许项外命中为空；credential literal为空，remote network/model/search/fetch/evaluator effect全0。preactivation audit `findings=[]`、`launch_authorized=true`，保护 watcher PID `795336/3061652` 的 start ticks 仍为 `713986317/747569004`；activation/execution/output 均尚未创建。权威冻结工件为 `results/v24320_paired_dev64_forward_contract_v1_20260803.json`、`results/v24320_paired_dev64_preregistration_v1_20260803.json`、`results/v24320_paired_dev64_preactivation_audit_v1_20260803.json`。下一步必须先提交推送冻结工件，再 create-exclusive activation 并另行提交推送，之后才允许首个远程 effect；双臂 `64/64` 和所有完整性门通过后才可打开 evaluator，paired GO 后才设计新的 exact-220。**
 >
 > **6.11 V2.43.19 deadline-safe real runner integration GO（2026-08-03）：新 benchmark-agnostic runner 将 V2.43.18 两条守恒、V2.43.16 hosted-search/fetch absolute deadline、V2.43.13 model slot/provider deadline 与 V2.43.09 child/parent receipt 串入同一真实 subprocess 边界。model/search 必须共享 exact absolute deadline、cleanup reserve 与 minimum-attempt；正常 child 的 sealed result bundle 现场交叉要求 `logical admissions = slot acquisitions(provider requests) + slot timeouts(pre-provider rejection)`。parent 在 nonzero/timeout/缺坏 artifact 时只发布 `logical/provider/rejection` 下界与 cap=3 上界，`effect_count_complete=false`，不再因 model receipt 存在就伪造 exact equality或zero effect。
 >
