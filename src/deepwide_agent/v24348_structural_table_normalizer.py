@@ -29,6 +29,7 @@ RESULT_KEYS = frozenset(
         "artifact_version",
         "role",
         "policy_id",
+        "unknown_marker",
         "input_table",
         "normalized_table",
         "normalization_receipt",
@@ -121,6 +122,10 @@ def _normalized(value: object) -> str:
     return base._support_normalize(value)
 
 
+def _identity(value: object) -> str:
+    return "" if base._is_unknown(value) else _normalized(value)
+
+
 def _representative(group: Sequence[tuple[int, list[str]]]) -> tuple[int, list[str]]:
     if not group:
         raise ValueError("V2.43.48 identity group is empty")
@@ -141,7 +146,7 @@ def _compute(table: str, *, unknown_marker: str) -> dict[str, Any]:
 
     groups: OrderedDict[str, list[tuple[int, list[str]]]] = OrderedDict()
     for ordinal, row in enumerate(raw_rows):
-        groups.setdefault(_normalized(row[0]), []).append((ordinal, list(row)))
+        groups.setdefault(_identity(row[0]), []).append((ordinal, list(row)))
 
     output: list[list[str]] = []
     duplicate_groups = 0
@@ -186,13 +191,13 @@ def _compute(table: str, *, unknown_marker: str) -> dict[str, Any]:
     canonical, errors = base.extract_valid_markdown_table(normalized_table, columns)
     if canonical != normalized_table or errors:
         raise ValueError("V2.43.48 normalized table is not canonical")
-    output_keys = [_normalized(row[0]) for row in output]
+    output_keys = [_identity(row[0]) for row in output]
     nonempty_unique_inputs = {
         identity for identity, group in groups.items() if identity and len(group) == 1
     }
     output_key_set = set(output_keys)
     safe_targets = sum(
-        len(columns) - 1 for row in output if _normalized(row[0])
+        len(columns) - 1 for row in output if _identity(row[0])
     )
     receipt = {
         "artifact_version": 1,
@@ -226,6 +231,7 @@ def _compute(table: str, *, unknown_marker: str) -> dict[str, Any]:
         "artifact_version": 1,
         "role": ROLE,
         "policy_id": POLICY_ID,
+        "unknown_marker": marker,
         "input_table": table,
         "normalized_table": normalized_table,
         "normalization_receipt": receipt,
@@ -313,6 +319,8 @@ def validate_normalization_result(
         or value.get("artifact_version") != 1
         or value.get("role") != ROLE
         or value.get("policy_id") != POLICY_ID
+        or not isinstance(value.get("unknown_marker"), str)
+        or _unknown_marker(value.get("unknown_marker")) != value.get("unknown_marker")
         or not isinstance(value.get("input_table"), str)
         or not isinstance(value.get("normalized_table"), str)
         or not isinstance(value.get("normalization_receipt"), Mapping)
@@ -320,7 +328,9 @@ def validate_normalization_result(
     ):
         raise ValueError("V2.43.48 normalization result identity drifted")
     validate_normalization_receipt(value["normalization_receipt"])
-    expected = _compute(value["input_table"], unknown_marker=unknown_marker)
+    if _unknown_marker(unknown_marker) != value["unknown_marker"]:
+        raise ValueError("V2.43.48 normalization marker drifted")
+    expected = _compute(value["input_table"], unknown_marker=value["unknown_marker"])
     if dict(value) != expected:
         raise ValueError("V2.43.48 normalization replay drifted")
     return dict(value)
@@ -343,7 +353,7 @@ def semantic_targets(
     targets = [
         CellTarget(row[0], columns[column_index], row[column_index])
         for row in rows
-        if _normalized(row[0])
+        if _identity(row[0])
         for column_index in range(1, len(columns))
     ]
     targets.sort(

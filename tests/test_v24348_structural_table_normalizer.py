@@ -132,6 +132,23 @@ class V24348StructuralTableNormalizerTests(unittest.TestCase):
         _, rows = base._table_matrix(value["normalized_table"])
         self.assertEqual(rows, [["Alpha", "Five", "Six"]])
 
+    def test_unknown_identity_is_quarantined_like_empty_identity(self) -> None:
+        raw = table([["Unknown", "One", "Two"], ["Alpha", "Three", "Four"]])
+        value = normalize_baseline_table(raw)
+        receipt = value["normalization_receipt"]
+        self.assertEqual(receipt["empty_identity_row_count"], 1)
+        _, rows = base._table_matrix(value["normalized_table"])
+        self.assertEqual(rows, [["Alpha", "Three", "Four"]])
+
+    def test_non_english_unknown_marker_replays_exactly(self) -> None:
+        raw = table([["Alpha-A", "一", "三"], ["Alpha A", "二", "三"]])
+        value = normalize_baseline_table(raw, unknown_marker="未知")
+        validate_normalization_result(value, unknown_marker="未知")
+        self.assertEqual(value["unknown_marker"], "未知")
+        self.assertIn("| Alpha-A | 未知 | 三 |", value["normalized_table"])
+        with self.assertRaises(ValueError):
+            validate_normalization_result(value, unknown_marker="Unknown")
+
     def test_normalized_result_passes_legacy_candidate_row_preservation(self) -> None:
         raw = table([["Alpha-A", "One", "Three"], ["Alpha A", "Two", "Three"]])
         normalized = normalize_baseline_table(raw)["normalized_table"]
