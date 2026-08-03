@@ -1,6 +1,10 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.22
+> 版本：6.23
+>
+> **6.23 V2.43.61 two-batch host-union 外部门已冻结为严格 NO-GO（2026-08-03）：控制面、protocol、preaudit、activation、execution-start 分别以提交 `c559cc7/35cfe61/44dd649/99d4f2a/02b5678` 推送后才发生首个 effect；唯一一次12题外部 probe 在 `121.325s` 自然完成，result/decision/postaudit 依次以 `ea63ebc/655bcd8` 冻结推送。全程 `12/12` terminal+structural pass、精确 two-batch=`12/12`、recursive split=`0/12`、slot/provider/search/fetch deadline 与 helper failure均0、10-fetch守恒和 hidden prompt exclusion 全通过，lease自然释放，保护 watcher 身份不变。**
+>
+> **该轮已经解决 V2.43.57 的 discovery coverage 根因：两批 search 从 `1,648` 个 URL leads 得到 `317` 个 registrable-host union，`12/12` 题均≥10 host并选满 `120/120` source；仍只执行 `24` hosted-search calls 与 `120` fetch。parent eligible support 从 `0/12` 提升到 `2/12`、共3个 support set，并自然产生2个 nonidentity parent candidate，说明 host union 的机制方向有效。但两个 candidate 均被单 hidden verifier host 回退，final nonidentity=`0`、utility-aligned task/entropy credit=`0`，最终只失败 `utility_aligned_tasks/final_nonidentity_tasks`，因此禁止 dev64/exact-220/evaluator/SOTA。当前瓶颈已从“搜不到独立 host”转为“单 verifier host 的低检验功效或真实独立冲突”。V2.43.54 的规则要求 verifier 至少支持 candidate，且 baseline support 与任一 conflict 都为0；单页缺失/不提及即回退，所以本轮 content-free aggregate 不能把2次回退解释成 candidate 必错。下一 append-only successor 在相同4 logical query、2 search batch、10 fetch、GPT cap与 label-blind边界内改为满容量 `8 proposal + 2 hidden verifier`；两个 hidden pages仍绝不进入 parent prompt，任一独立 conflict仍回退。必须先在全新 benchmark-external task vector 上证明自然 retention，而不是复跑本轮12题；未 GO 前仍不授权 paired dev64。**
 >
 > **6.22 V2.43.57 结论与 V2.43.58–60 two-batch discovery successor（2026-08-03）：V2.43.57 benchmark-external 真实网页门在 `86.647s` 内完成 `12/12`，显式冻结分区 `12/12` 重放一致、parent catalog `12/12` 存在、hidden page `10/12` 可用，且 slot/provider/search/fetch deadline 与 helper failure 全为0；这确认了 runtime/transport 可靠性与 9+1 隔离，不是质量 GO。关键失败是 parent eligible support task=`0`、candidate task=`0`、utility-aligned entropy credit=`0`。12题合计只有 `58 proposal sources + 11 verifier sources`，即平均 proposal source `4.83/task`；根因已收窄为单个 hosted-search batch 的独立 host 覆盖不足，而不是分区重放或 hidden-verifier 工程故障。V2.43.57 永久冻结为 NO-GO，禁止重跑或追认 dev64/exact-220 权限。**
 >
