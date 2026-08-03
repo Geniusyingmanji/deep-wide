@@ -1,0 +1,77 @@
+{
+  "artifact_version": 1,
+  "role": "v24286_neutral_full_task_preregistration",
+  "protocol_id": "v24286_neutral_visible_schema_attributed_timing_v1",
+  "created_at_unix": 1785721058,
+  "scope": "one_neutral_public_documentation_schema_and_attributed_latency_probe",
+  "task_contract": {
+    "synthetic_visible_task_only": true,
+    "task_count": 1,
+    "expected_column_count": 3,
+    "question_value_or_hash_persisted_in_result": false,
+    "benchmark_manifest_or_task_opened": false
+  },
+  "provider": {
+    "proxy_url": "http://127.0.0.1:9878/responses",
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "low",
+    "service_tier": "priority",
+    "timeout_seconds": 180,
+    "max_retries": 2,
+    "search_context_size": "medium",
+    "search_batch_size": 8,
+    "fetch_workers": 8,
+    "fetch_timeout_seconds": 20
+  },
+  "gates": {
+    "maximum_wall_seconds": 35.0,
+    "required_completion_kind": [
+      "primary",
+      "normalized_primary"
+    ],
+    "required_visible_schema_status": "applied",
+    "required_visible_schema_columns": 3,
+    "required_retrieval_status": "completed",
+    "maximum_cache_misses": 0,
+    "maximum_network_fetches_during_cache_serve": 0,
+    "maximum_task_wall_seconds": 35.0,
+    "timing_additivity_required": true,
+    "maximum_model_requests": 3,
+    "maximum_search_queries": 4,
+    "maximum_fetch_attempts": 10
+  },
+  "lease": {
+    "path": "outputs/deepwide_benchmark_api.lease.lock",
+    "owner": "v24286_neutral_full_task_probe_v1",
+    "purpose": "neutral_public_documentation_schema_and_attributed_latency_probe",
+    "nonblocking_single_owner": true
+  },
+  "parents": {
+    "results/v24286_visible_schema_timing_build_audit_v1_20260803.json": "84ec5cd9d89d7c998b9262fc99b660b945377944c450fdf3881950459cbbfefd",
+    "results/v24275_two_wave_dev64_result_v2_20260802.json": "f70ee9ca9619e2b3c72fdfd1831e377eff9380f6fc8d28d7f312bd00cb9e36a1"
+  },
+  "surface_manifest": {
+    "src/deepwide_agent/v24286_visible_schema_runtime.py": "0ef6c31beca9a776bc8ecb1ff8e0c2dd50b42821dd77e6e3b1ecdd7e78cb6dce",
+    "scripts/preregister_v24286_neutral_full_task.py": "d439fa96e7fbfaad489e7b8e2b3eb95ea96ce3c4a1846b994aa86249ed7cd8aa",
+    "scripts/probe_v24286_neutral_full_task.py": "9fb9896f5969359e76f1eb272c6a656385d75d93de3b55f1be302bd6305e7da2",
+    "tests/test_v24286_visible_schema_runtime.py": "5b92aad01fdb1057f40e5e2610bc49dc2a2a8b179855ace92bff550741ede460",
+    "tests/test_probe_v24286_neutral_full_task.py": "3d858ae9aeb00c02828f5b5137715a19a71f5a8d4cbc1c4fadb702bcc6778bb5"
+  },
+  "surface_manifest_sha256": "5b4f671493fef4042bd7a172adf38b7b12b7178d1756875a397fa26f1a0a4af5",
+  "source_policy": {
+    "benchmark_manifest_mapping_gold_prediction_or_evaluator_read": false,
+    "question_field_query_url_host_page_prediction_answer_task_id_or_hash_persisted": false,
+    "credential_value_read_persisted_hashed_or_emitted": false,
+    "official_evaluator_called": false
+  },
+  "authorization": {
+    "one_neutral_provider_probe": true,
+    "benchmark_launch": false,
+    "dev64_launch": false,
+    "exact220_launch": false,
+    "evaluator_call": false,
+    "training_credit_assignment": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "protocol_payload_sha256": "d3dc053ce6cc70aa60fd782c2352c4a385015f77982ac01704cbfd478de3b95e"
+}

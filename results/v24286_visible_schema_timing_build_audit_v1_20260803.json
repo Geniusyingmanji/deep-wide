@@ -1,0 +1,70 @@
+{
+  "artifact_version": 1,
+  "role": "v24286_visible_schema_timing_build_audit",
+  "created_at_unix": 1785720852,
+  "label_blind": true,
+  "parents": {
+    "exact220_forward": {
+      "path": "results/v24267_exact220_forward_result_v1_20260802.json",
+      "sha256": "bb02b48cfecac4dca4b2daed0910aef52bbf00ade9ddae9e616ad37565a5db44"
+    },
+    "exact220_result": {
+      "path": "results/v24267_exact220_result_v1_20260802.json",
+      "sha256": "0e08df141b1c34726bc04673fcb5c56f98b4aab08df906c2d7f35b568b6932eb"
+    },
+    "two_wave_dev64_no_go": {
+      "path": "results/v24275_two_wave_dev64_result_v2_20260802.json",
+      "sha256": "f70ee9ca9619e2b3c72fdfd1831e377eff9380f6fc8d28d7f312bd00cb9e36a1"
+    }
+  },
+  "surface_manifest": {
+    "src/deepwide_agent/v24286_visible_schema_runtime.py": "0ef6c31beca9a776bc8ecb1ff8e0c2dd50b42821dd77e6e3b1ecdd7e78cb6dce",
+    "tests/test_v24286_visible_schema_runtime.py": "5b92aad01fdb1057f40e5e2610bc49dc2a2a8b179855ace92bff550741ede460"
+  },
+  "static_audit": {
+    "sha256": "0ef6c31beca9a776bc8ecb1ff8e0c2dd50b42821dd77e6e3b1ecdd7e78cb6dce",
+    "forbidden_imports": [],
+    "privileged_exact_key_accesses": [],
+    "credential_literal_present": false,
+    "concrete_opaque_id_present": false,
+    "benchmark_evaluator_or_result_path_literal_present": false,
+    "passed": true
+  },
+  "frozen_exact220_mechanical_replay": {
+    "selected": 220,
+    "robust_schema_available": 194,
+    "legacy_schema_available": 201,
+    "same_visible_schema": 165,
+    "changed_visible_schema": 28,
+    "legacy_only_schema": 8,
+    "robust_only_schema": 1,
+    "both_schema_absent": 18,
+    "existing_rectangular_predictions": 220,
+    "existing_predictions_with_ascii_quotes": 6,
+    "existing_predictions_with_escaped_pipes": 0,
+    "question_column_prediction_or_opaque_id_persisted": false
+  },
+  "evaluator_failure_taxonomy": {
+    "official_evaluator_empty_inner_dataframe_bug": 11,
+    "official_evaluator_out_of_range_metric_bug": 1,
+    "forward_csv_quote_parser_risk": 1,
+    "forward_duplicate_mapping_column_risk": 1
+  },
+  "timing_diagnosis": {
+    "single_search_took_forty_to_fifty_minutes": false,
+    "old_outer_search_event_mixes_network_fetch": true,
+    "new_receipt_separates_provider_search_network_fetch_cache_controller_and_model": true,
+    "historical_exact220_stage_timing_recoverable_retroactively": false
+  },
+  "candidate_scope": "build_only_visible_schema_reliability_and_additive_timing_not_quality_improvement_or_evaluator_bug_fix",
+  "authorization": {
+    "model_search_fetch_or_evaluator_call": false,
+    "dev64_launch": false,
+    "exact220_launch": false,
+    "leaderboard_submission_or_sota_claim": false,
+    "training_credit_assignment": false
+  },
+  "findings": [],
+  "audit_valid": true,
+  "audit_payload_sha256": "13681b34058ce5a0b23e5d9e9cb79b8e3da2ec7140b951f33b76838c8b68588f"
+}
