@@ -1,6 +1,12 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.08
+> 版本：6.09
+>
+> **6.09 V2.43.17 V2.43.15 outer-totality content-free 根因诊断（2026-08-03）：在 `220/220` predictions 已冻结且 evaluator 永久关闭后，只读取18个已知 fallback 位置的 safe-progress、model/transport/child/parent receipt 与数字机制账本；未读取或发布题面、opaque ID、prompt/response、预测、query、URL/page、mapping/gold/category/question_type/split/evaluator/score，也未调用网络、模型、search/fetch 或 evaluator。18/18 都在 model receipt 时显示 task deadline exhausted，parent envelope 均 success，真实 `slot acquisitions == provider requests`。
+>
+> 其中17例有 model-slot timeout：16例最后安全阶段为 `page_projection_terminal`、1例为 `synthesis_terminal`。旧 recovery receipt 把 budget 的 logical model admission 强制等同于真实 provider request；deadline limiter 在 slot acquisition 后、provider request 前安全拒绝时，两者合法不等，随后 progress/result validator 将其误杀为 `ValidationError`。另1例 position 118 在 `183.901s` 到达 terminal、0 slot timeout：retrieval 已抓到5个 usable page，但 wall budget耗尽使 cache-serve admission 为0；旧 cache validator 强制 `usable == requested == returned`，把合法的5个 deadline-deferred page误判为 effect drift，且旧 fallback 投影又丢失已发生 model event。故 successor 必须机械满足两条新守恒：`logical admission = provider request + pre-provider rejection`；`cached usable = served + deadline-deferred`，不能简单放宽或删除 validator。
+>
+> 权威诊断为 `results/v24317_v24315_outer_totality_diagnosis_v1_20260803.json`，闭合/label-blind audit 为 `results/v24317_v24315_outer_totality_diagnosis_audit_v1_20260803.json`，最终定向重建 `5/5`、audit `findings=[]`，保护 watcher 身份未变；它只授权 append-only accounting fix 设计，不授权 benchmark/evaluator/重跑/leaderboard/SOTA。下一步 V2.43.18 需在新 receipt schema 中显式记录按 stage 的 pre-provider rejection 与 deadline-deferred page，修复 total fallback 的 admitted-event reconstruction，并与 V2.43.16 hosted-search/fetch absolute deadline 一起通过 benchmark-external fault matrix；V2.43.15 的冻结文件不得修改。**
 >
 > **6.08 V2.43.15 fresh exact-220 终态 NO-GO（2026-08-03）：唯一 cold forward 已自然到达 `220/220` prediction freeze，墙钟 `3041.558286s = 50.69min`，产生 `199` 个 model-generated 与 `21` 个 failure-as-zero fallback；冻结前始终只使用 `{opaque_id, question}`，未打开或 hash mapping/gold/category/question_type/split/evaluator/score。磁盘 `220/220` sealed parent receipt 均合法，其中 `218 success + 2 hard_deadline_timeout`；两题都在约 `195.00s` 被 parent 强杀，content-free progress 均停在 `plan_terminal`，各已有1次 model request、尚无 hosted-search terminal call。对应 child/result/model/transport receipt 只有 `218/220`，冻结 summary 的 effect-count complete 也只有 `218/220`，第四 model effect 为0。
 >
