@@ -1,8 +1,22 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.92
+> 版本：5.94
 >
-> 更新：2026-08-02 19:39 UTC
+> 更新：2026-08-02 23:59 UTC
+>
+> **5.94 V2.42.77 冻结后机制诊断与刷榜策略修正（2026-08-02 23:59 UTC）：V2.42.75 的去内容逐题配对诊断只在两臂 64/64 终态后按 opaque ID join，发布物不含 ID、题面、query、URL、页面、预测、答案、category、split 或逐题 score/cost row；它是已消费 dev64 的 observational diagnosis，不提供因果 credit，也不授权 benchmark/evaluator。权威工件 [`results/v24277_v24275_postterminal_mechanism_diagnosis_v1_20260802.json`](results/v24277_v24275_postterminal_mechanism_diagnosis_v1_20260802.json) 绑定所有 control/candidate runtime、summary、两臂 evaluator summary、final result 与 post-audit hash。**
+>
+> 配对机制结论：64/64 题 fetch 都下降，`1065→409`（`−61.60%`），51/64 题更快，单题累计 wall 平均 `−13.50s`；模型输入 token `1.112M→0.475M`，system token `3.149M→2.496M`。但原生 search call `76→81`、tool call `203→222`、search input token `1.817M→1.847M`，最终 search total token 只降 `0.62%`。根因是 `medium` hosted-search context 的固定输入成本不随 fetch 数下降；57 个 stop 任务平均 search token `30.8K→26.8K`，7 个 expand 任务却从 `23.3K→53.5K`。retrieval 阶段累计 wall ratio 为 `0.659`，但 synthesis `1278.7→1271.7s`、ratio=`0.9945`，所以仅削 fetch 不可能把全任务累计 wall 压到旧门的 `0.5`。
+>
+> 刷榜策略因此更新，但绝不追认 V2.42.75 为 GO：下一步先在非 benchmark 公开文档任务上做 `search_context_size low vs medium` 配对，验证 search-input token、action/source yield、usable-page yield、wall 与 transport；再做更紧的结构化 synthesis output 配对。只有两个正交杠杆都通过中性门，才冻结 successor。未来成本门改为“绝对 batch SLO + throughput/并行效率 + total-token Pareto + 质量非退化”，不再要求一个已很快候选相对历史 control 再砍 50% 累计 task wall；任何新门必须预注册并用于新实验，不能改写本轮结论。entropy/VOC 目标改为 **calibrated expected terminal-loss reduction / predicted native-search token cost**，而不是 page novelty EIG 或 fetch 数本身。
+>
+> dev64 已被 V2.42.71/75 逐题使用，不能再充当独立 confirmation。下一正式确认若启动，主报告必须单列历史上已评估但未进入 V2.42.75 逐题诊断/阈值拟合的 test-156，并同时发布 all-220；仍使用固定 156/220 分母、failure-as-zero、fresh root、no-resume、prediction freeze before evaluator。V2.42.75 NO-GO 当前明确禁止 exact220、Avg@4、leaderboard 与 SOTA claim。**
+>
+> **5.93 V2.42.75 两波 entropy/VOC dev64 全终局为 NO-GO（2026-08-02 23:51 UTC）：严格 label-blind forward 只读 `{opaque_id, question}`，固定 8 task 并发与 8 GPT slots；candidate 在约 `405s=6m45s` 完成 exact `64/64` 并先冻结 predictions，随后才首次读取历史逐题 control、mapping/gold/evaluator。candidate 为 `62 model-generated + 2 fallback`，64/64 model-slot receipt 有效，`132` actual GPT requests 与 `132` acquisitions 精确一致；两臂随后用同一冻结 GPT-5.6 judge fresh 完整评测 64/64，failure-as-zero。没有 active run 被停止、重启、恢复或选择性重评。**
+>
+> 保守 64 分母结果：control/candidate 的 Entity 为 `0.718750/0.703125`，Row F1 `0.260919/0.258686`，Item F1 `0.416065/0.406203`，Column F1 `0.493764/0.483291`，quality composite `0.472374/0.462826`，whole-table success `5/64→6/64`；两臂均 `63 evaluator-valid + 1 failure-as-zero`。候选质量差 `−0.009548` 在预注册容忍线内且 whole-table 多 1，但 gate 仍严格失败：search-token ratio `0.9938 > 0.70`、task-wall-sum ratio `0.7788 > 0.50`、409 个 helper fetch 中有 5 次 25s hard deadline（分布在 3 题）而门要求 0。最终状态 `development_gate_no_go`，权威结果为 [`results/v24275_two_wave_dev64_result_v2_20260802.json`](results/v24275_two_wave_dev64_result_v2_20260802.json)。
+>
+> `gca-leakage-audit` post-result audit 最初在写文件前暴露冻结脚本缺失 `_sealed` 的 `NameError`。未修改冻结文件或重跑任何 forward/evaluator；窄兼容 erratum 精确绑定原 auditor 与全部结果 hash，仅在内存注入项目通用纯 seal predicate，联合回归 `99/99`。最终原格式 audit [`results/v24275_two_wave_dev64_postresult_audit_v2_20260802.json`](results/v24275_two_wave_dev64_postresult_audit_v2_20260802.json) 为 `findings=[]/audit_valid=true`，erratum 为 [`results/v24275_two_wave_dev64_postresult_audit_erratum_v1_20260802.json`](results/v24275_two_wave_dev64_postresult_audit_erratum_v1_20260802.json)；runner/child/finalizer 均退出、lease 空闲、invalid path 为空。**
 >
 > **5.92 V2.42.70 budget-equivalent task union 非 benchmark 工程 GO（2026-08-02 19:39 UTC）：针对 V2.42.69 的 1-query/11-source 预算缺口，append-only cap 按首次出现顺序将 task-union 限制为 `min(16, logical_query_count × top3)`；选择不读内容、URL/host、provider score 或 benchmark metadata，receipt 绑定截断前后数量与 parent discovery receipt。合成 1-query/11-source 完整 runtime 只 admission/fetch 3 source；多次调用共享 global cap；top-k/config/receipt 篡改 fail closed。V2.42.67–70、native-search、limiter 全链回归 `40/40`，实现与预注册已推送 `e9df35d / 5d1fef2`。
 >
