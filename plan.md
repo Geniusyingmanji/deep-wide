@@ -1,6 +1,12 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.14
+> 版本：6.15
+>
+> **6.15 V2.43.23 shared-prefix cell-conditional entropy benchmark-external 原型 GO（2026-08-03）：针对 V2.43.22 的“route不一致+页新颖性不等于任务价值”，新增纯函数、无I/O evidence-admission kernel。两臂必须引用同一 sealed prefix：visible-only plan、planned query vector、first-wave search receipt与core evidence vector hash完全相同，分叉点固定在core evidence freeze之后、reserve与synthesis之前；baseline context为core-only，candidate只能通过admission receipt追加reserve support或在强交叉佐证下override。该合同显式披露两臂仍是两个独立synthesis call、RNG未共享，因此只称 strict shared-upstream-prefix ablation，不称reserve effect fully causally identified。**
+>
+> **Entropy signal 不再使用raw page novelty/字符数作为task value：每个匿名目标cell持有严格正的hypothesis prior，reserve evidence提供likelihood ratio；source reliability、host/source independence、fetch integrity、corroborating/conflicting source count共同形成 reliability tempering，按 power likelihood 更新 posterior。主信号为相对共享core prior的 conditional entropy reduction，同时记录 posterior-prior KL information gain；低可靠、单来源、fetch不完整、冲突不足以override或entropy不降的证据全部隔离在reserve context，不能污染core synthesis。即使低可靠证据有100万字符也必须 `core_only`；冲突证据只有更高 reliability、至少3个corroborating sources且entropy reduction≥0.08 nats才可override。**
+>
+> **行为矩阵 `8/8` 覆盖可靠支持admit、百万字符低可靠quarantine、单源quarantine、弱冲突禁override、强独立冲突通过高门、entropy-increasing evidence quarantine、receipt replay/tamper fail closed与prefix mismatch fail-before-pair。所有receipt exact-schema、sealed、content-free；audit `findings=[]`，privileged AST access/credential literal为空，remote network/model/search/fetch/evaluator effect全0，watcher身份未变。权威审计为 `results/v24323_shared_prefix_cell_entropy_build_audit_v1_20260803.json`；只授权 shared-prefix runtime design，不授权runtime/benchmark launch、additional dev64、exact-220或SOTA。下一步必须把共享前缀接入真实本地subprocess并证明只有candidate reserve-admission/context不同，再选择未被本轮调参污染的fresh开发样本。**
 >
 > **6.14 V2.43.22 V2.43.20 post-freeze paired 机制诊断（2026-08-03）：在双臂预测、evaluator与NO-GO结果全部冻结后，按 opaque ID 仅在内存中配对，公开工件不含题面、ID、预测、instance ID或evaluator文本，也不调用网络/model/search/fetch/evaluator。candidate 真正执行 reserved stage 的13题平均 Composite delta `-0.050713`，Entity/Row/Item/Column delta 均为负；未执行的51题仅 `-0.008291`。最关键的 route stratum：baseline stop/candidate stop 的47题近乎持平 `+0.001220`，baseline stop/candidate expand 的11题为 `-0.061556`，baseline expand/candidate stop 的4题为 `-0.120042`，两臂都expand的2题为 `+0.008922`。**
 >
