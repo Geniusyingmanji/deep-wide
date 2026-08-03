@@ -1,0 +1,173 @@
+{
+  "artifact_version": 1,
+  "role": "v24304_v24303_recovery_transport_postterminal_diagnosis",
+  "created_at_unix": 1785739769,
+  "parents": {
+    "v24303_result_sha256": "353f5b92853bbc534dd431653765bb72eebdf3069c218d6ea0a2a324851da50b",
+    "v24303_postresult_audit_sha256": "38b0eaeac64f3d630d01f06d68ea15208062184efefac414ea389c173c9b7e52",
+    "v24303_forward_result_sha256": "68d1c00fb58acad9003d353aa60b75e6aa8087f6a4667ff9b66cf4e3dba13571",
+    "v24303_forward_contract_sha256": "7bfd26f277a824570f9a77459da933b2dbb2acd1c913cc5c1c0d4a00f4631d3a",
+    "v24262_capacity_postresult_audit_sha256": "123f9a2cf3f557eda20fb34d7bedc1172704668593609492f8176c112378f171"
+  },
+  "boundary": {
+    "postterminal_only": true,
+    "parent_decision": "no_go",
+    "fixed_denominator_failure_as_zero": true,
+    "fed_back_into_v24303_forward": false,
+    "v24303_rerun_resume_skip_or_selective_retry": false,
+    "evaluator_error_revaluation": false,
+    "question_prediction_answer_opaque_id_url_page_gold_or_label_emitted": false,
+    "network_model_search_fetch_or_evaluator_called": false
+  },
+  "recovery_transport": {
+    "attempts": 7,
+    "successes": 4,
+    "provider_failures": 3,
+    "success_positions": [
+      4,
+      13,
+      18,
+      19
+    ],
+    "failure_positions": [
+      2,
+      14,
+      20
+    ],
+    "success_provider_attempts": [
+      5,
+      4,
+      4,
+      5
+    ],
+    "failure_provider_attempts": [
+      5,
+      5,
+      6
+    ],
+    "success_task_wall_seconds": {
+      "count": 4,
+      "minimum": 49.01,
+      "median": 51.296,
+      "maximum": 113.198
+    },
+    "failure_task_wall_seconds": {
+      "count": 3,
+      "minimum": 14.193,
+      "median": 33.962,
+      "maximum": 46.649
+    },
+    "success_synthesis_model_seconds": {
+      "count": 4,
+      "minimum": 25.267225,
+      "median": 26.5441625,
+      "maximum": 62.293661
+    },
+    "failure_synthesis_model_seconds": {
+      "count": 3,
+      "minimum": 6.965893,
+      "median": 9.824435,
+      "maximum": 10.329117
+    },
+    "all_recovery_slot_wait_seconds": {
+      "count": 7,
+      "minimum": 0.00024,
+      "median": 0.00037,
+      "maximum": 0.000562
+    },
+    "all_recovery_slot_max_wait_seconds": {
+      "count": 7,
+      "minimum": 0.000119,
+      "median": 0.000182,
+      "maximum": 0.000223
+    },
+    "all_failures_had_provider_internal_retries": true,
+    "wall_clock_task_start_timestamps_available": false,
+    "failure_burst_clustering_identifiable": false,
+    "position_is_not_a_wall_clock_timestamp": true
+  },
+  "concurrency_evidence": {
+    "v24303_executor_workers": 8,
+    "v24303_global_model_slot_cap": 8,
+    "v24303_all_slot_acquisitions_match_requests": true,
+    "v24303_recovery_slot_waits_show_effective_throttling": false,
+    "v24262_cap2": {
+      "executions": 6,
+      "fallbacks": 0,
+      "stage_failures": 0,
+      "passed": true
+    },
+    "v24262_cap4": {
+      "executions": 12,
+      "fallbacks": 6,
+      "stage_failures": 6,
+      "provider_attempts": 40,
+      "passed": false
+    },
+    "cap8_caused_v24303_failures_proven": false,
+    "cap2_is_best_supported_next_transport_setting": true
+  },
+  "evaluator_health": {
+    "baseline": {
+      "selected": 64,
+      "valid": 62,
+      "invalid_or_not_run": 2,
+      "invalid_positions": [
+        4,
+        56
+      ],
+      "taxonomy": {
+        "official_evaluator_internal_error": 2
+      },
+      "selective_revaluation_performed": false
+    },
+    "candidate": {
+      "selected": 64,
+      "valid": 61,
+      "invalid_or_not_run": 3,
+      "invalid_positions": [
+        4,
+        42,
+        50
+      ],
+      "taxonomy": {
+        "official_evaluator_internal_error": 3
+      },
+      "selective_revaluation_performed": false
+    }
+  },
+  "conclusions": {
+    "bounded_recovery_reduced_fallbacks": true,
+    "recovery_path_fully_reliable": false,
+    "failures_explained_by_absent_retries": false,
+    "failure_time_burst_claim_supported": false,
+    "historical_capacity_evidence_supports_global_model_cap2": true,
+    "new_paired_dev64_authorized": false,
+    "exact220_authorized": false,
+    "sota_supported": false
+  },
+  "next_experiment": {
+    "stage": "benchmark_external_low_model_concurrency_recovery_reliability_gate",
+    "executor_workers": 8,
+    "global_model_slot_cap": 2,
+    "recovery_only_independent_cap": null,
+    "recovery_cooldown_seconds": 0,
+    "model_calls_per_task": 3,
+    "search_calls": 0,
+    "fetch_calls": 0,
+    "required_recovery_successes": 8,
+    "required_recovery_provider_failures": 0,
+    "required_peak_real_recovery_concurrency_at_most": 2,
+    "benchmark_dev64_or_exact220_launch": false
+  },
+  "authorization": {
+    "one_benchmark_external_low_cap_reliability_gate_design": true,
+    "one_benchmark_external_low_cap_reliability_gate_launch": false,
+    "additional_dev64": false,
+    "exact220": false,
+    "evaluator_call": false,
+    "leaderboard_submission": false,
+    "sota_claim": false
+  },
+  "diagnosis_payload_sha256": "043eb87370ae1a81b61d14b27046a92d4607788fb30192a7139818f09048b4f9"
+}
