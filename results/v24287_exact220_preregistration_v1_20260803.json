@@ -1,0 +1,106 @@
+{
+  "artifact_version": 1,
+  "role": "v24287_exact220_preregistration",
+  "protocol_id": "v24287_v24286_visible_schema_two_wave_exact220_v1",
+  "created_at_unix": 1785723519,
+  "forward_contract_sha256": "6d23b4763e3d71253283a98fbf41101457e496f8d073de09f9589f9015bbb9e4",
+  "selected_count": 220,
+  "forward_concurrency": 8,
+  "evaluator_workers": 8,
+  "evaluator_contract": {
+    "release_seal": {
+      "path": "results/full220_v2403_r1_20260725_finalize_seal.json",
+      "sha256": "6353c3d1caa05fc67f750570d3b3e5909d23945cc69b63f479a47c23d6b3c63f"
+    },
+    "released_evaluator_contract": {
+      "path": "outputs/full220_v2403_r1_eval_20260725/run_config.json",
+      "sha256": "b1040a303a71955b8b8d669c497e24100ec2d8de06d73aa30c3496d69a8559e1"
+    },
+    "mapping": {
+      "path": "outputs/runtime_manifest_v1_repro/evaluator_mapping.jsonl",
+      "sha256": "3d6f8f71e8136f5a3fe9385e2511e50a367e220dd84e790ba3c7dec975ab5d86"
+    },
+    "query_data": {
+      "path": "external/Marco-Search-Agent/Marco-DeepResearch-Family/DeepWideSearch/data/overall_20250916.jsonl",
+      "sha256": "4dd18df4ab8d166f14a1458f884fd8e0652f970764e245e868d75947daa5e5cf"
+    },
+    "answer_corpus": {
+      "root": "external/Marco-Search-Agent/Marco-DeepResearch-Family/DeepWideSearch/data/overall_20250916_tables",
+      "manifest_sha256": "5ddc76dd9e9fa4a7080f84e824de6230c62101d2375dee72a0f508b7cfa4ec7e"
+    },
+    "evaluator_source": {
+      "manifest_sha256": "2829e4808226bd35e4e312f024ceded3a9bc2b1e923493e06503278e382ba061"
+    },
+    "judge": {
+      "proxy_url": "http://127.0.0.1:9878/responses",
+      "model": "gpt-5.6-sol",
+      "reasoning_effort": "low",
+      "max_output_tokens": 8192,
+      "timeout_seconds": 600,
+      "max_retries": 12
+    },
+    "recovery_policy": {
+      "explicit_resume_required": true,
+      "committed_success_or_error_is_terminal": true,
+      "committed_rows_must_be_exact_prediction_prefix": true,
+      "canonical_result_file_atomic_replace_per_task": true,
+      "selective_error_retry_allowed": false
+    },
+    "mapping_query_answer_or_gold_bytes_opened_or_hashed": false
+  },
+  "evaluation_contract": {
+    "all_220_predictions_frozen_before_mapping_query_answer_or_evaluator_open": true,
+    "fixed_contiguous_eight_way_partition_in_prediction_order": true,
+    "official_evaluator_on_every_frozen_prediction_exactly_once": true,
+    "worker_error_rows_are_terminal_failure_as_zero": true,
+    "selective_retry_revaluation_or_prediction_selection": false,
+    "report_groups": [
+      "test_156",
+      "dev_validation_64",
+      "all_220"
+    ],
+    "conservative_denominators": {
+      "test_156": 156,
+      "all_220": 220
+    }
+  },
+  "outputs": {
+    "forward_contract": "results/v24287_exact220_forward_contract_v1_20260803.json",
+    "preactivation_audit": "results/v24287_exact220_preactivation_audit_v1_20260803.json",
+    "activation": "results/v24287_exact220_activation_v1_20260803.json",
+    "execution_start": "results/v24287_exact220_execution_start_v1_20260803.json",
+    "forward_result": "results/v24287_exact220_forward_result_v1_20260803.json",
+    "evaluator_root": "outputs/v24287_exact220_v1_20260803/evaluator",
+    "final_result": "results/v24287_exact220_result_v1_20260803.json",
+    "postresult_audit": "results/v24287_exact220_postresult_audit_v1_20260803.json"
+  },
+  "control_manifest": {
+    "scripts/preregister_v24287_exact220.py": "eef1aec7c23ada3fe74f89c38dc0db5dae0792e8e9375141d17b3e7a086c56d2",
+    "scripts/audit_v24287_exact220.py": "f0aa074f8377bd575b6ce73bef1a7502309ec22da4e43ab335097c2b05156007",
+    "scripts/activate_v24287_exact220.py": "3866a415f8f15bf81b87b3d5b50509b31145d1f457c0f4188275d46a0012c503",
+    "scripts/finalize_v24287_exact220.py": "31e55e6d8825f810125897395abb746ad9ba1cffa595e8dc463b1d173e55eed2",
+    "scripts/run_official_eval_local.py": "ab3d3ba3f15143d9f0f46816d7b9eb61f3f8915172dc14fe50d02b96b645c1ca",
+    "scripts/finalize_fullset_rollout.py": "3e886b73cca2b011853a605091eab0d13004de5edee95b14627d1706d69808e5",
+    "scripts/audit_v24187_phase_liveness.py": "ff776dafe18d2455cf74dbe953d8590b7e36b43bcda658043791f3e27d4b3fd4",
+    "scripts/audit_v24195_lease_owner_compatibility.py": "e0eae4427df3b58db4778d940c417ac1211b03032c9284af7560e015d4a8c4e6",
+    "scripts/preregister_v24259_deterministic_normalizer_smoke.py": "8be827d7413949e9c6dcb87201093ec31ef1268f0a8e350df93f336b82cf4827",
+    "scripts/audit_v24286_visible_schema_timing.py": "35d20734823017f573890bec4cbd23a662d7d9cb4189600d4b212eccd5661550",
+    "tests/test_v24286_visible_schema_runtime.py": "5b92aad01fdb1057f40e5e2610bc49dc2a2a8b179855ace92bff550741ede460",
+    "tests/test_v24287_exact220.py": "895d5b0fd090e2fb61799ece5dd417819fd3b51bbabc746a5a3e8b3767f6be98"
+  },
+  "control_manifest_sha256": "371282740d22856babfaa3d5718f41a6475497418df4cfde19c4fa25448cddfa",
+  "source_policy": {
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "forward_mapping_gold_category_question_type_split_evaluator_score_read": false,
+    "same_run_evaluator_feedback_used_for_forward_or_prediction_selection": false
+  },
+  "authorization": {
+    "single_fresh_exact220_forward": true,
+    "post_freeze_exact220_evaluation": true,
+    "additional_rollout_avg4_leaderboard_submission_or_sota_claim": false
+  },
+  "protocol_payload_sha256": "f6fc1ac75cc0805befe7084c6ee7c494f3c46489e96f02f35aaa19285c6f5c36"
+}
