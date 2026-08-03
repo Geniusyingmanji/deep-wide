@@ -1,8 +1,11 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.94
+> 版本：5.95
 >
-> 更新：2026-08-02 23:59 UTC
+>
+> **5.95 V2.42.78 `low` vs `medium` search context 中性配对为 NO-GO（2026-08-03 00:14 UTC）：在不调用生成模型或 evaluator 的 8 组固定公开文档 query pair 上，每组同波并行运行 medium/low；两臂共享精确 2 query、top3、6 fetch、25s per-URL hard deadline，分两波且每波 8 arm。结果仅保存 calls/tokens/source/page/char/wall 与 transport counters，不保存 query、URL、page、prediction 或 benchmark 内容。两臂均 `8/8 terminal`、`48 admitted/fetched`，无 exception、unrecoverable search、hard deadline 或 helper failure，medium/low usable pages `46/47`、chars `184686/198568`，所以不是用低产出换成本。
+>
+> 但 `low/medium` search input-token ratio=`1.0905`、total-token ratio=`1.0875`、wall-sum ratio=`1.2222`，均未改善；search calls `8→10`，逐对 input tokens 仅 3/8 low 更好、5/8 更差。机制证据指向 low context 在一组两-query response 上更易触发不完整映射和递归拆分，从而抵消甚至反转 context 节省。故 `low` 分支停止，保留 `medium`；本结果不授权 dev64/220。权威工件为 [`results/v24278_search_context_pair_result_v1_20260803.json`](results/v24278_search_context_pair_result_v1_20260803.json)。下一正交杠杆是 bounded structured synthesis：V2.42.75 synthesis 平均 `19.87s`、9/64 超 30s，model output token 与 synthesis wall 的 Pearson `0.834`，而 synthesis cap 30K 并非实际约束（实际总输出最大约 5K）。因此应配对测试 `reasoning=low` 自由 Markdown 与 `reasoning=none` strict structured rows，并以行/列/非空单元格、grounded value preservation、token 和 wall 共同 gate，不能直接靠截断。**
 >
 > **5.94 V2.42.77 冻结后机制诊断与刷榜策略修正（2026-08-02 23:59 UTC）：V2.42.75 的去内容逐题配对诊断只在两臂 64/64 终态后按 opaque ID join，发布物不含 ID、题面、query、URL、页面、预测、答案、category、split 或逐题 score/cost row；它是已消费 dev64 的 observational diagnosis，不提供因果 credit，也不授权 benchmark/evaluator。权威工件 [`results/v24277_v24275_postterminal_mechanism_diagnosis_v1_20260802.json`](results/v24277_v24275_postterminal_mechanism_diagnosis_v1_20260802.json) 绑定所有 control/candidate runtime、summary、两臂 evaluator summary、final result 与 post-audit hash。**
 >
