@@ -1,6 +1,12 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.02
+> 版本：6.08
+>
+> **6.08 V2.43.15 fresh exact-220 终态 NO-GO（2026-08-03）：唯一 cold forward 已自然到达 `220/220` prediction freeze，墙钟 `3041.558286s = 50.69min`，产生 `199` 个 model-generated 与 `21` 个 failure-as-zero fallback；冻结前始终只使用 `{opaque_id, question}`，未打开或 hash mapping/gold/category/question_type/split/evaluator/score。磁盘 `220/220` sealed parent receipt 均合法，其中 `218 success + 2 hard_deadline_timeout`；两题都在约 `195.00s` 被 parent 强杀，content-free progress 均停在 `plan_terminal`，各已有1次 model request、尚无 hosted-search terminal call。对应 child/result/model/transport receipt 只有 `218/220`，冻结 summary 的 effect-count complete 也只有 `218/220`，第四 model effect 为0。
+>
+> 因此预注册 forward gate 在 `non_success_parent_exits`、`incomplete_effect_counts`、`valid_child_terminal_receipts`、`valid_model_slot_receipts`、`valid_transport_receipts` 五项失败；该轮被永久标记为 evaluator-blocked **NO-GO**，不得 resume、补跑、选择性 retry、打开 same-run evaluator、提交 leaderboard 或声称 SOTA。`benchmark_score_available=false` 不是“220题没有跑完”，而是“220份预测虽已冻结，但工程完整性门未通过，按协议没有评测”。另有18个 result envelope 记录 `v24312_outer_totality / ValidationError`（16个在 page projection、1个 synthesis、1个 terminal），它们已有正 evidence 和完整 effect receipt，指向 totality/accounting validator 误杀而非标签泄漏。
+>
+> 权威发布为 `results/v24315_exact220_forward_nogo_v1_20260803.json`，闭合/label-blind audit 为 `results/v24315_exact220_forward_nogo_audit_v1_20260803.json`，后者 `findings=[]`；NO-GO 专用测试 `5/5`、V2.43.16 deadline 测试 `7/7`，旧 V2.43.15 启动前套件现场重跑 `14/15`，唯一失败是终态后 preactivation audit 正确因 activation 已存在而返回 `launch_authorized=false`，历史测试仍断言启动前应为 true，不是 successor 回归也不得篡改冻结测试来消除。runner/child/lease 均已闭合，保护 watcher PID `795336/3061652` 的 marker/start-ticks 仍为 `713986317/747569004`，未 signal/restart。下一步必须 append-only 集成 V2.43.16 共享 absolute-deadline 修复，同时修正 timeout parent outcome projection 与18例 outer-totality accounting；先通过 benchmark-external slow-search/clock/fault-injection、真实 runner subprocess、receipt totality 与 label-blind preactivation gate，再冻结新的 fresh paired-dev64。不得改写 V2.43.15 目录或用其预测打开 evaluator；当前可报告的最佳完整220仍是 V2.42.67：`7/220=3.1818%`、Composite `0.413541`，不是 SOTA。**
 >
 > **6.07 V2.43.16 hosted-search/fetch absolute-deadline build-only 修复（2026-08-03）：V2.43.15 运行到 `17/220` 时出现首个 parent `hard_deadline_timeout`；content-free receipt 显示 parent 在 `195.009184s` 强杀、child/result/model/transport receipt 均缺失，而 safe progress 停在 `plan_terminal`：规划仅 `9.866s`、1次model request，search cost仍为0。这排除 model slot acquisition，定位到 hosted search仍用静态180秒 timeout/retry/backoff、未共享 task absolute deadline。该诊断未读取题目、ID、预测、URL、mapping/gold/category/question_type/split/evaluator/score，也未 signal/restart/resume/rerun 当前执行。
 >
