@@ -1,0 +1,114 @@
+{
+  "artifact_version": 1,
+  "role": "v24327_neutral_transport_preregistration",
+  "protocol_id": "v24327_neutral_real_shared_prefix_transport_smoke_v1",
+  "created_at_unix": 1785771690,
+  "parent": {
+    "path": "results/v24326_runner_integration_build_audit_v1_20260803.json",
+    "sha256": "6bb180049880364b0ac6baf295da2a4a2589208201d4089dc19e81ea3046b347"
+  },
+  "scope": "one_benchmark_external_real_gpt_search_fetch_shared_prefix_task",
+  "task_contract": {
+    "task_count": 1,
+    "synthetic_identifier_not_selected_from_benchmark": true,
+    "runtime_input_keys_exactly_opaque_id_and_question": true,
+    "task_validated_before_activation": true,
+    "task_identifier_question_query_url_page_prediction_response_or_hash_persisted": false,
+    "benchmark_manifest_mapping_gold_category_question_type_split_evaluator_score_opened": false
+  },
+  "provider": {
+    "proxy_url": "http://127.0.0.1:9878/responses",
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "low",
+    "service_tier": "priority",
+    "timeout_seconds": 180,
+    "max_retries": 2
+  },
+  "search": {
+    "same_keyless_proxy": true,
+    "batch_size": 8,
+    "workers": 1,
+    "context_size": "medium",
+    "max_output_tokens": 7000,
+    "fetch_workers": 8,
+    "fetch_timeout_seconds": 20,
+    "hard_fetch_deadline_seconds": 25,
+    "server_auto_fetch_enabled": false
+  },
+  "budget": {
+    "wall_seconds": 180,
+    "parent_timeout_seconds": 200,
+    "model_calls": 3,
+    "search_queries": 4,
+    "fetch_targets": 10,
+    "core_fetch_targets": 7,
+    "reserve_fetch_targets": 3,
+    "model_slot_cap": 2,
+    "fixed_single_task_no_resume_or_retry": true
+  },
+  "gates": {
+    "maximum_wall_seconds": 200,
+    "required_parent_taxonomy": "success",
+    "required_result_status": "completed",
+    "required_effect_accounting_complete": true,
+    "required_prefix_status": "frozen",
+    "required_prefix_producer_execution_count": 1,
+    "required_repeated_upstream_effects": 0,
+    "required_logical_model_admissions": 3,
+    "required_provider_model_requests": 3,
+    "minimum_provider_model_attempts": 3,
+    "required_pre_provider_model_rejections": 0,
+    "required_slot_acquisitions": 3,
+    "required_slot_timeouts": 0,
+    "required_core_logical_queries": 4,
+    "minimum_search_provider_effects": 1,
+    "maximum_search_provider_effects": 2,
+    "required_core_fetch_targets": 7,
+    "required_reserve_fetch_targets": 3,
+    "minimum_core_usable_pages": 1,
+    "minimum_reserve_usable_pages": 1,
+    "maximum_hard_fetch_deadline_failures": 3,
+    "maximum_fetch_helper_failures": 5,
+    "required_deadline_exhausted": false
+  },
+  "lease": {
+    "path": "outputs/deepwide_benchmark_api.lease.lock",
+    "owner": "v24327_neutral_transport_smoke_v1",
+    "purpose": "benchmark_external_real_shared_prefix_transport_smoke",
+    "nonblocking_single_owner": true
+  },
+  "surface_manifest": {
+    "src/deepwide_agent/clients.py": "339d923973f07ebcd33cb12cee2c26103df70ed3aea1fc0a737ffd675ac06fbc",
+    "src/deepwide_agent/native_search.py": "cd0d6bfccf4b345b11274558bdcffb39d279697d183242baf811dfd56ac71e50",
+    "src/deepwide_agent/v24257_score_first_runtime.py": "c4e3f818d0306f53d40f641a7a580aa7238e0698d2863301fe8399d8e3c1fa3e",
+    "src/deepwide_agent/v24263_global_model_limiter.py": "050751273bf28520bb82799e5194b9b404c58fecf6c5a725cfea93da0d041497",
+    "src/deepwide_agent/v24287_hard_deadline_fetch.py": "da4ee0fb7ffaf99389c6c6c0a5d8f075b72e15bd99a1e72f534ccc3f29cde468",
+    "src/deepwide_agent/v24309_runner_exit_integration.py": "18c1b4e0ed06769f3925c4bd3448ef907bf66a45ef33c342ef0d0192a1ac26d8",
+    "src/deepwide_agent/v24312_deadline_reliability.py": "2adaab53f558f101b65d842417097e3782038a3d24fbcc6de6259ac609f762b4",
+    "src/deepwide_agent/v24313_runner_integration.py": "8438b0d1b125c12e17eb5137e89edcbbed6d3dcb9e19f8bb739738c88d548905",
+    "src/deepwide_agent/v24316_deadline_search.py": "dd5ded612bfecb624f38d5d86d379be1e973dbbd6df55084157cb33a758b3260",
+    "src/deepwide_agent/v24325_shared_prefix_revision_runtime.py": "e1a3dda0c5e4cdeb2de5c3c4e54944f6542863779b96022c07ace32400612fed",
+    "src/deepwide_agent/v24326_runner_integration.py": "d2050dc8f2cd21823b3376ee0118ddeb86ed631d7625eeaa93dfdd58eda9c611",
+    "scripts/run_v24287_fetch_helper.py": "2e3fc41859eb9eacd5f87abbe947e7e2b3fd25a1bd2d0365bd4a26e8e25ab7e7",
+    "scripts/deepwide_api_lease.py": "8d9cffa78617b458172307d3558c76e9370f045f531c2f5aaaceb866f5a78c7d",
+    "scripts/audit_v24195_lease_owner_compatibility.py": "e0eae4427df3b58db4778d940c417ac1211b03032c9284af7560e015d4a8c4e6",
+    "scripts/v24327_neutral_transport_smoke.py": "ffd4c999513a60269608a0ec13cdfc53569b9bf86100d0d4e270294d1d91a132",
+    "tests/test_v24327_neutral_transport_smoke.py": "439e68cd59fb0b8a6b1c4200b826fd4924c60440316d61e677ad8cf9b0e7d6a2"
+  },
+  "surface_manifest_sha256": "d0fbf508de0024616af8f62ea97bf3671f16b337767a0509fd111e6c66e6f768",
+  "source_policy": {
+    "benchmark_manifest_mapping_gold_category_question_type_split_evaluator_score_read": false,
+    "task_identifier_question_query_url_page_prediction_response_or_hash_persisted": false,
+    "credential_value_read_persisted_hashed_or_emitted": false,
+    "official_evaluator_called": false
+  },
+  "authorization": {
+    "one_neutral_transport_smoke_design": true,
+    "neutral_transport_smoke_launch": false,
+    "benchmark_launch": false,
+    "additional_dev64_or_exact220": false,
+    "evaluator": false,
+    "leaderboard_or_sota": false
+  },
+  "protocol_payload_sha256": "05b2ac14837d06fc7d271c46e88d1ff0ac286d1fabd96c1d8479db7b04dd2e60"
+}
