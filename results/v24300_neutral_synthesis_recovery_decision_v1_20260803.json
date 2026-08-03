@@ -1,0 +1,86 @@
+{
+  "artifact_version": 1,
+  "role": "v24300_neutral_synthesis_recovery_decision",
+  "protocol_id": "v24300_neutral_real_provider_bounded_synthesis_recovery_v1",
+  "created_at_unix": 1785735469,
+  "status": "neutral_mechanism_go",
+  "passed": true,
+  "checks": {
+    "wall_seconds": true,
+    "completion_kind": true,
+    "model_call_cap": true,
+    "total_effects_admitted": true,
+    "provider_requests": true,
+    "provider_attempts": true,
+    "plan_effects": true,
+    "initial_synthesis_effects": true,
+    "recovery_effects": true,
+    "repair_effects": true,
+    "initial_synthesis_model_request_error": true,
+    "recovery_attempted": true,
+    "recovery_succeeded": true,
+    "recovery_model_request_error": true,
+    "repair_blocked": true,
+    "slot_acquisitions": true,
+    "search_calls": true,
+    "fetch_calls": true,
+    "no_fourth_provider_effect": true
+  },
+  "failed_checks": [],
+  "observed": {
+    "wall_seconds": 3.725536,
+    "completion_kind": "primary",
+    "model_budget": {
+      "limit": 3,
+      "admitted": 3,
+      "provider_requests": 3,
+      "provider_attempts": 3,
+      "slot_acquisitions": 3,
+      "fourth_provider_effect": false
+    },
+    "recovery": {
+      "effects_by_stage": {
+        "plan": 1,
+        "synthesis_initial": 1,
+        "synthesis_recovery": 1,
+        "repair": 0
+      },
+      "total_effects_admitted": 3,
+      "initial_synthesis_model_request_error": true,
+      "recovery_eligible": true,
+      "recovery_admitted": true,
+      "recovery_attempted": true,
+      "recovery_succeeded": true,
+      "recovery_model_request_error": false,
+      "repair_blocked_after_recovery": false,
+      "local_plan_returns": 1,
+      "injected_initial_synthesis_failures": 1,
+      "real_recovery_requests": 1
+    },
+    "search": {
+      "calls": 0,
+      "fetch_calls": 0
+    }
+  },
+  "provenance": {
+    "protocol_sha256": "806370422a37fcfd6d3a252ce7226a6b1adf3d1f80c09f35e1eb3718ef03ee3f",
+    "result_sha256": "978f58442bb7ba7c93d609c326229acf24ad4cc8fb017fa37d73147e41fff379",
+    "surface_manifest_sha256": "7838bc8bf71be1c6cc798daed125252d79b1983bad283dbde9111c135d03217a"
+  },
+  "claim_scope": {
+    "fault_injected_real_provider_recovery_robustness": true,
+    "natural_failure_frequency_measured": false,
+    "benchmark_quality_measured": false,
+    "causal_quality_improvement_proven": false,
+    "sota_supported": false
+  },
+  "authorization": {
+    "successor_dev64_design": true,
+    "successor_dev64_launch": false,
+    "exact220_launch": false,
+    "evaluator_call": false,
+    "training_credit_assignment": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "decision_payload_sha256": "cb96fec30ff709c840130ac25eadc9106eedc6762ea7614fcfadb212536d1354"
+}
