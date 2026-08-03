@@ -1,0 +1,119 @@
+{
+  "artifact_version": 1,
+  "role": "v24315_exact220_preregistration",
+  "protocol_id": "v24315_v24314_deadline_aware_staged_reserve_exact220_v1",
+  "created_at_unix": 1785757007,
+  "forward_contract_sha256": "31b5d0404ed12eabedc73812dda57cba081c532aef19822410872ea6ca99b569",
+  "selected_count": 220,
+  "forward_concurrency": 8,
+  "forward_acceptance_gate": {
+    "required_terminal_predictions": 220,
+    "required_parent_exit_receipts": 220,
+    "required_valid_child_terminal_receipts": 220,
+    "required_valid_model_slot_receipts": 220,
+    "required_valid_transport_receipts": 220,
+    "maximum_non_success_parent_exits": 0,
+    "maximum_incomplete_effect_counts": 0,
+    "maximum_fourth_model_effects": 0
+  },
+  "evaluator_workers": 8,
+  "evaluator_contract": {
+    "release_seal": {
+      "path": "results/full220_v2403_r1_20260725_finalize_seal.json",
+      "sha256": "6353c3d1caa05fc67f750570d3b3e5909d23945cc69b63f479a47c23d6b3c63f"
+    },
+    "released_evaluator_contract": {
+      "path": "outputs/full220_v2403_r1_eval_20260725/run_config.json",
+      "sha256": "b1040a303a71955b8b8d669c497e24100ec2d8de06d73aa30c3496d69a8559e1"
+    },
+    "mapping": {
+      "path": "outputs/runtime_manifest_v1_repro/evaluator_mapping.jsonl",
+      "sha256": "3d6f8f71e8136f5a3fe9385e2511e50a367e220dd84e790ba3c7dec975ab5d86"
+    },
+    "query_data": {
+      "path": "external/Marco-Search-Agent/Marco-DeepResearch-Family/DeepWideSearch/data/overall_20250916.jsonl",
+      "sha256": "4dd18df4ab8d166f14a1458f884fd8e0652f970764e245e868d75947daa5e5cf"
+    },
+    "answer_corpus": {
+      "root": "external/Marco-Search-Agent/Marco-DeepResearch-Family/DeepWideSearch/data/overall_20250916_tables",
+      "manifest_sha256": "5ddc76dd9e9fa4a7080f84e824de6230c62101d2375dee72a0f508b7cfa4ec7e"
+    },
+    "evaluator_source": {
+      "manifest_sha256": "2829e4808226bd35e4e312f024ceded3a9bc2b1e923493e06503278e382ba061"
+    },
+    "judge": {
+      "proxy_url": "http://127.0.0.1:9878/responses",
+      "model": "gpt-5.6-sol",
+      "reasoning_effort": "low",
+      "max_output_tokens": 8192,
+      "timeout_seconds": 600,
+      "max_retries": 12
+    },
+    "recovery_policy": {
+      "explicit_resume_required": true,
+      "committed_success_or_error_is_terminal": true,
+      "committed_rows_must_be_exact_prediction_prefix": true,
+      "canonical_result_file_atomic_replace_per_task": true,
+      "selective_error_retry_allowed": false
+    },
+    "mapping_query_answer_or_gold_bytes_opened_or_hashed": false
+  },
+  "evaluation_contract": {
+    "all_220_predictions_frozen_before_mapping_query_answer_or_evaluator_open": true,
+    "fixed_contiguous_eight_way_partition_in_prediction_order": true,
+    "official_evaluator_on_every_frozen_prediction_exactly_once": true,
+    "worker_error_rows_are_terminal_failure_as_zero": true,
+    "selective_retry_revaluation_or_prediction_selection": false,
+    "report_groups": [
+      "test_156",
+      "dev_validation_64",
+      "all_220"
+    ],
+    "conservative_denominators": {
+      "test_156": 156,
+      "all_220": 220
+    }
+  },
+  "outputs": {
+    "forward_contract": "results/v24315_exact220_forward_contract_v1_20260803.json",
+    "preactivation_audit": "results/v24315_exact220_preactivation_audit_v1_20260803.json",
+    "activation": "results/v24315_exact220_activation_v1_20260803.json",
+    "execution_start": "results/v24315_exact220_execution_start_v1_20260803.json",
+    "forward_result": "results/v24315_exact220_forward_result_v1_20260803.json",
+    "evaluator_root": "outputs/v24315_exact220_v1_20260803/evaluator",
+    "final_result": "results/v24315_exact220_result_v1_20260803.json",
+    "postresult_audit": "results/v24315_exact220_postresult_audit_v1_20260803.json"
+  },
+  "control_manifest": {
+    "scripts/preregister_v24315_exact220.py": "7a9b96b0b14f3e473afd4c200ea1bbf0fd408ca1c15c037854f028a4e9ecd0dd",
+    "scripts/probe_v24315_exact220_runner.py": "40de7f76badfbb313f4f1d9008b436d4dfa74b49dc721030709b39f52a66cb3f",
+    "scripts/audit_v24315_exact220.py": "7823e7ab760cbac29ed4189f603d216a1f83d0e2585de84fdb450309353aeda7",
+    "scripts/activate_v24315_exact220.py": "0dd3447c574356a5df9307a1b10d2eda75333c8c76f61976af8ebbf360aeadad",
+    "scripts/finalize_v24315_exact220.py": "144ae2a4cc8852d3178b98922d4dcd9f97e94cbcbe75967c8529abc21a0283fc",
+    "scripts/run_official_eval_local.py": "ab3d3ba3f15143d9f0f46816d7b9eb61f3f8915172dc14fe50d02b96b645c1ca",
+    "scripts/finalize_fullset_rollout.py": "3e886b73cca2b011853a605091eab0d13004de5edee95b14627d1706d69808e5",
+    "scripts/audit_v24187_phase_liveness.py": "ff776dafe18d2455cf74dbe953d8590b7e36b43bcda658043791f3e27d4b3fd4",
+    "scripts/audit_v24195_lease_owner_compatibility.py": "e0eae4427df3b58db4778d940c417ac1211b03032c9284af7560e015d4a8c4e6",
+    "scripts/preregister_v24259_deterministic_normalizer_smoke.py": "8be827d7413949e9c6dcb87201093ec31ef1268f0a8e350df93f336b82cf4827",
+    "tests/test_v24310_paired_dev_runtime.py": "b02c3d972f8346d736e6d9b2d17db1ed32d3f9ffffcfc00b2d72a4a2f5097dfc",
+    "tests/test_v24312_deadline_reliability.py": "9bad52aba8feae9b329cd30b8f914c09dd2a37083c2e90b903463d4c3847ccd7",
+    "tests/test_v24313_runner_integration.py": "cb75e2b58acf1cf3939beb11a0683096aed9c1c39433119910a8460d563d6fa5",
+    "tests/test_v24315_exact220.py": "8b7b72f4ba8c2ad654c98c9d42677b7b9bfc64862683091d9367797b3705537c",
+    "tests/fixtures/v24315_synthetic_child.py": "2a60273e78d43a3bb91db53a990c841d73d7545e5222d19fc3420abe487b7ab0"
+  },
+  "control_manifest_sha256": "4fed89785f1d2068c35be2fcca83971a2146743a553985a797fa8993e32d1e24",
+  "source_policy": {
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "forward_mapping_gold_category_question_type_split_evaluator_score_read": false,
+    "same_run_evaluator_feedback_used_for_forward_or_prediction_selection": false
+  },
+  "authorization": {
+    "single_fresh_exact220_forward": true,
+    "post_freeze_exact220_evaluation": true,
+    "additional_rollout_avg4_leaderboard_submission_or_sota_claim": false
+  },
+  "protocol_payload_sha256": "8281bb8095e64f9b3b5349aa5ed840fdeff49ee0ef5940d8a6070971b6aed9c2"
+}
