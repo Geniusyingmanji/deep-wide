@@ -1,0 +1,104 @@
+{
+  "artifact_version": 1,
+  "role": "v24328_capacity_preregistration",
+  "protocol_id": "v24328_shared_prefix_capacity_staircase_v1",
+  "created_at_unix": 1785772936,
+  "parents": {
+    "results/v24327_neutral_transport_decision_v1_20260803.json": "01f3aeb293982444e4e31eeb918348e9a6575b1e3102f874eea53bbdc6d29c4d",
+    "results/v24327_neutral_transport_postresult_audit_v1_20260803.json": "818f07d45eb01611d7d6b5fede90be63d864978f74028f0138b0ff8dccfda152"
+  },
+  "scope": "benchmark_external_shared_prefix_pair_capacity_only",
+  "task_contract": {
+    "levels": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "level_task_counts": {
+      "1": 1,
+      "2": 2,
+      "4": 4,
+      "8": 8
+    },
+    "synthetic_tasks_not_selected_from_benchmark": true,
+    "runtime_input_keys_exactly_opaque_id_and_question": true,
+    "task_text_identifier_query_url_page_prediction_or_hash_persisted": false,
+    "same_neutral_workload_prefix_repeated_across_levels_for_capacity": true,
+    "no_resume_retry_skip_or_selective_rerun": true
+  },
+  "provider": {
+    "proxy_url": "http://127.0.0.1:9878/responses",
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "low",
+    "service_tier": "priority",
+    "model_slot_cap": 2
+  },
+  "runtime": {
+    "policy": "v24326_deadline_shared_prefix_runner_integration_v1",
+    "model_slot_cap": 2,
+    "model_calls_per_task_maximum": 3,
+    "logical_queries_per_task_maximum": 4,
+    "fetch_targets_per_task_maximum": 10,
+    "core_fetch_target": 7,
+    "reserve_fetch_target": 3,
+    "task_wall_seconds": 180,
+    "parent_timeout_seconds": 200,
+    "batch_wall_ceilings_seconds": {
+      "1": 90.0,
+      "2": 120.0,
+      "4": 180.0,
+      "8": 300.0
+    },
+    "stop_on_first_failed_level": true,
+    "recommended_executor_rule": "maximum_observed_throughput_among_passing_levels_tie_lower_executor"
+  },
+  "gates": {
+    "all_levels_required": true,
+    "all_tasks_parent_success_and_artifacts_valid": true,
+    "all_tasks_effect_accounting_complete": true,
+    "all_tasks_prefix_frozen_once": true,
+    "all_tasks_core_reserve_fetch_targets_exactly_7_3": true,
+    "all_tasks_core_and_reserve_have_usable_pages": true,
+    "all_tasks_zero_slot_timeout_or_provider_deadline_failure": true,
+    "all_tasks_zero_hard_fetch_deadline_or_helper_failure": true,
+    "all_tasks_zero_repeated_upstream_effect": true,
+    "all_tasks_model_and_fetch_conservation": true,
+    "batch_wall_within_frozen_ceiling": true
+  },
+  "surface_manifest": {
+    "src/deepwide_agent/clients.py": "339d923973f07ebcd33cb12cee2c26103df70ed3aea1fc0a737ffd675ac06fbc",
+    "src/deepwide_agent/native_search.py": "cd0d6bfccf4b345b11274558bdcffb39d279697d183242baf811dfd56ac71e50",
+    "src/deepwide_agent/v24257_score_first_runtime.py": "c4e3f818d0306f53d40f641a7a580aa7238e0698d2863301fe8399d8e3c1fa3e",
+    "src/deepwide_agent/v24263_global_model_limiter.py": "050751273bf28520bb82799e5194b9b404c58fecf6c5a725cfea93da0d041497",
+    "src/deepwide_agent/v24287_hard_deadline_fetch.py": "da4ee0fb7ffaf99389c6c6c0a5d8f075b72e15bd99a1e72f534ccc3f29cde468",
+    "src/deepwide_agent/v24309_runner_exit_integration.py": "18c1b4e0ed06769f3925c4bd3448ef907bf66a45ef33c342ef0d0192a1ac26d8",
+    "src/deepwide_agent/v24312_deadline_reliability.py": "2adaab53f558f101b65d842417097e3782038a3d24fbcc6de6259ac609f762b4",
+    "src/deepwide_agent/v24313_runner_integration.py": "8438b0d1b125c12e17eb5137e89edcbbed6d3dcb9e19f8bb739738c88d548905",
+    "src/deepwide_agent/v24316_deadline_search.py": "dd5ded612bfecb624f38d5d86d379be1e973dbbd6df55084157cb33a758b3260",
+    "src/deepwide_agent/v24323_shared_prefix_cell_entropy.py": "f1c282c32d785c5d947f8b8612d4d023c88d6ac8ebf17a63648dd0b6c2a8f89f",
+    "src/deepwide_agent/v24324_shared_prefix_runner.py": "6027ce8d6ae18440bf624d86f62daf1c86609115153765d54b4f4c39f3bdb735",
+    "src/deepwide_agent/v24325_shared_prefix_revision_runtime.py": "e1a3dda0c5e4cdeb2de5c3c4e54944f6542863779b96022c07ace32400612fed",
+    "src/deepwide_agent/v24326_runner_integration.py": "d2050dc8f2cd21823b3376ee0118ddeb86ed631d7625eeaa93dfdd58eda9c611",
+    "scripts/run_v24287_fetch_helper.py": "2e3fc41859eb9eacd5f87abbe947e7e2b3fd25a1bd2d0365bd4a26e8e25ab7e7",
+    "scripts/deepwide_api_lease.py": "8d9cffa78617b458172307d3558c76e9370f045f531c2f5aaaceb866f5a78c7d",
+    "scripts/v24328_shared_prefix_capacity_staircase.py": "a8b43f851380a5ebf1afc807215c735e4c2d078f06ea0d975e9568b2b69a99a8",
+    "tests/test_v24328_shared_prefix_capacity_staircase.py": "e988d29cb73452731a1c3840a72c7857baad0f088217ca3e6130f6825a91fe09"
+  },
+  "surface_manifest_sha256": "628a6795f83b7638054e2657c1f24d6fade8a1a9120c300bba60465c169c9cad",
+  "source_policy": {
+    "benchmark_manifest_mapping_gold_category_question_type_split_evaluator_score_read": false,
+    "task_text_identifier_query_url_page_prediction_response_or_hash_persisted": false,
+    "credential_value_read_persisted_hashed_or_emitted": false,
+    "official_evaluator_called": false
+  },
+  "authorization": {
+    "capacity_staircase_design": true,
+    "capacity_staircase_launch": false,
+    "paired_benchmark_launch": false,
+    "exact220": false,
+    "evaluator": false,
+    "leaderboard_or_sota": false
+  },
+  "protocol_payload_sha256": "e7eb3bc1c3a3ccb35193e1f299939afdf97555b615ede5db9739cee3d29484ea"
+}
