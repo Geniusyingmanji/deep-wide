@@ -2309,6 +2309,13 @@ terminal-only shadow aggregate 已覆盖 7 个终态中的 5 个有信号任务�
 4. 修正后的冻结前聚焦测试为 `14/14` 通过，并通过隔离模式语法编译。V2 的唯一 benchmark-external synthetic subprocess probe 覆盖 9 个模式，`9/9` 与预注册 taxonomy 精确一致；network/model/search/fetch/evaluator effect ledger 全为 0，未读取 benchmark manifest、mapping、gold、类别、question type、split、evaluator 或 score。V2 source manifest 冻结后逐文件 SHA-256 复核无漂移，post-result audit `findings=[]`，临时目录已清除。
 5. 严格结论为 **V2 neutral observability GO**，只授权 append-only future-runner integration design；不授权 benchmark dev64、exact-220、evaluator、leaderboard 或 SOTA。下一步不得修改 V2.43.03/06 的冻结 runner/hash，而应在新版本 runner/task 中接入 child terminal 与 parent exit receipt，并先用 benchmark 外 fault injection 验证真实 runner 的 success/timeout/nonzero/missing-envelope 路径。只有 integration gate 通过，才可冻结新的 staged-reserve paired-dev64：baseline=`6+4`、candidate=`6+2+2`，两臂均 cap=2 且启用同一 bounded synthesis recovery，从而把 treatment 收窄为自然可达的 retrieval scheduling 差异；仍需 fresh 64 严格 GO 才能设计后续 exact-220。
 
+### V2.43.09 append-only runner-exit integration（2026-08-03 08:10 UTC）
+
+1. V2.43.09 在新文件中把 V2.43.08 的 sealed receipt 接入 reusable child terminalizer 与 parent subprocess launcher，未修改 V2.43.06 runner、task 或 forward contract；三者 SHA-256 仍分别为 `ced8a6f1…`、`1e377bfe…`、`097a0887…`。child 在 result/model/transport effects 完成后最后 create-exclusive 写 terminal receipt，异常类经固定枚举粗化，未知类映射为 `UnknownError` 且不读取异常 message。
+2. parent launcher 不记录 command、environment、异常消息或 artifact 内容，只记录 return code、timeout、presence/validity 和固定 failure taxonomy；artifact names 必须是互异 basename，task directory 必须是 output root 下普通目录。launch exception、timeout、nonzero、有/无 child receipt、缺/坏 result/model/transport artifact 均写入一个 sealed parent-exit receipt；timeout 使用独立 process group 并终止整组。
+3. preregistration 逐链验证 V2.43.08 的 V1 invalidation、V2 protocol/probe/decision/postaudit，并绑定 V2.43.06 三个冻结哈希。冻结前集成测试 `8/8` 通过；唯一 benchmark-external真实 launcher/child synthetic probe 创建 `9/9` parent receipt，taxonomy 精确匹配预注册期望。network/model/search/fetch/evaluator effect ledger 全零，未读取 task、manifest、mapping、gold、类别、question type、split、evaluator 或 score；source manifest 无漂移，post-audit `findings=[]`，临时目录已清除。
+4. 严格结论为 **neutral runner integration GO**，只授权下一次 paired-dev64 的 append-only **设计**，不授权 launch、evaluator 或 exact-220。下一设计固定 baseline=`6+4` 与 candidate=`6+2+2`，两臂都使用 cap=2、同一 bounded synthesis recovery、同一 visible-only task/model/prompt/search/fetch/model-call/token/wall budget，并接入 V2.43.09 child/parent exit receipts；只有新 protocol、dependency manifest、label-blind preactivation audit 和 benchmark 外真实 runner smoke 全部冻结并提交后，才可另行创建 launch activation。
+
 ## 15. 完成定义
 
 项目只有在以下条件全部满足时才算完成：

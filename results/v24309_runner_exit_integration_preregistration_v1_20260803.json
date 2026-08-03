@@ -1,0 +1,57 @@
+{
+  "artifact_version": 1,
+  "role": "v24309_runner_exit_integration_preregistration",
+  "protocol_id": "v24309_benchmark_external_runner_exit_integration_v1",
+  "created_at_unix": 1785744536,
+  "parents": {
+    "results/v24308_child_exit_observability_decision_v2_20260803.json": "b32232ec1055929b1ca8ea9a80cba2a11dcd27103b3e029508122d5a647b965c",
+    "results/v24308_child_exit_observability_postresult_audit_v2_20260803.json": "1478c4e045f9cea54f55aeb158cb540546cd116855e07fe4ff57d953e6ce8ff6"
+  },
+  "frozen_v24306_sha256": {
+    "scripts/run_v24306_paired_dev64.py": "ced8a6f16cb984f3fb69798ceac7d41750004d2781842d928ecec85c516ab73d",
+    "scripts/run_v24306_paired_dev64_task.py": "1e377bfe5d4ad10292bf72b9634cf27ea6a9d97fbec3a49c1b03a360f50b8e56",
+    "results/v24306_paired_dev64_forward_contract_v1_20260803.json": "097a08877296642b9046bb88fa90e1b00917c82103329454bf238c90eaae5530"
+  },
+  "modes": [
+    "success",
+    "nonzero_with_receipt",
+    "nonzero_without_receipt",
+    "zero_missing_envelope",
+    "invalid_envelope",
+    "missing_model_receipt",
+    "missing_transport_receipt",
+    "timeout",
+    "parent_launch_exception"
+  ],
+  "expected_taxonomy": {
+    "success": "success",
+    "nonzero_with_receipt": "child_nonzero_with_terminal_receipt",
+    "nonzero_without_receipt": "child_nonzero_without_terminal_receipt",
+    "zero_missing_envelope": "zero_exit_missing_result_envelope",
+    "invalid_envelope": "result_envelope_invalid",
+    "missing_model_receipt": "model_receipt_missing_or_invalid",
+    "missing_transport_receipt": "transport_receipt_missing_or_invalid",
+    "timeout": "hard_deadline_timeout",
+    "parent_launch_exception": "parent_subprocess_exception"
+  },
+  "timeout_seconds": 0.15,
+  "synthetic_subprocess_only": true,
+  "runtime_input_question_or_opaque_id": false,
+  "network_model_search_fetch_or_evaluator_calls": 0,
+  "benchmark_manifest_mapping_gold_category_question_type_split_evaluator_score_read": false,
+  "source_manifest": {
+    "src/deepwide_agent/v24309_runner_exit_integration.py": "18c1b4e0ed06769f3925c4bd3448ef907bf66a45ef33c342ef0d0192a1ac26d8",
+    "scripts/v24309_neutral_runner_exit_integration.py": "934f69d985ad594e4c4e0fae8e0cfada8e59873137ec048cfdad120e5f8638bc",
+    "tests/test_v24309_runner_exit_integration.py": "82d17ba271468fcee5db495986bf27f4bff298fc56f95eeeb1d37e6adeecc502",
+    "tests/test_v24309_neutral_runner_exit_integration.py": "f08477b81436d932ce8e13dba35c1dc006ccb03a5f609e3c1412de0a3d7b78e8"
+  },
+  "source_manifest_sha256": "c826230fb0949df6cc82ba189e797bbe9287b1abfddaa733d3852e99f99940a6",
+  "authorization": {
+    "one_benchmark_external_integration_probe": true,
+    "future_paired_dev64_design": false,
+    "future_paired_dev64_launch": false,
+    "exact220": false,
+    "evaluator": false
+  },
+  "protocol_payload_sha256": "1efe8aa397af0ba5e84513b180522505f25bbae70a6bf22c79c5af77604b761e"
+}
