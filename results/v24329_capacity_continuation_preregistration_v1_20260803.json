@@ -1,0 +1,90 @@
+{
+  "artifact_version": 1,
+  "role": "v24329_capacity_continuation_preregistration",
+  "protocol_id": "v24329_capacity_retry_continuation_v1",
+  "created_at_unix": 1785773280,
+  "scope": "append_only_capacity_retry_continuation_without_level_one_rerun",
+  "parent_artifacts": {
+    "results/v24328_capacity_preregistration_v1_20260803.json": "2646cdca86edc2801d9dd712e6b9e6b0fe83cc8ae4c7372f68aee60adcdbfd56",
+    "results/v24328_capacity_preactivation_audit_v1_20260803.json": "d7905aa875a458fa73ae70409ec214658850d59d9f1e335d8ad7e91ffa74f3bb",
+    "results/v24328_capacity_activation_v1_20260803.json": "5f92a6c7d7384a68597dc811de1692d1c5380e16c8dd0ddf9fe9e26b770d2fad",
+    "results/v24328_capacity_execution_start_v1_20260803.json": "77daf5599dfdea698f67ab6281b8d29b87eaf74d0c1b640ebb75f4d992de269b",
+    "results/v24328_capacity_result_v1_20260803.json": "d0a5f506cda9a463f5ef58fa48a0a113c01e89bf8dd2fce4196add99daf474cb",
+    "results/v24328_capacity_decision_v1_20260803.json": "85f58fa04050c543c64e29596694c679b52b48fdc2e983f36d45c8393800d53d",
+    "results/v24328_capacity_postresult_audit_v1_20260803.json": "9cbf31092c23185468aab22eea62d7171357982e3157238098b4f6cf4e3eb8aa"
+  },
+  "parent_diagnosis": {
+    "levels_present": [
+      1
+    ],
+    "level_one_parent_success": true,
+    "level_one_failed_task_checks": [
+      "no_model_retry"
+    ],
+    "level_one_failed_level_checks": [
+      "all_tasks_passed"
+    ],
+    "provider_model_requests": 3,
+    "provider_model_attempts": 4,
+    "retry_count": 1,
+    "all_non_retry_task_checks_passed": true,
+    "parent_postaudit_findings": []
+  },
+  "continuation_contract": {
+    "inherited_levels": [
+      1
+    ],
+    "new_remote_levels": [
+      2,
+      4,
+      8
+    ],
+    "all_levels": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "level_one_remote_effect_repeated": false,
+    "level_one_projection_recomputed_from_content_free_frozen_parent": true,
+    "single_changed_check": "no_model_retry_to_provider_attempts_within_frozen_retry_budget",
+    "provider_max_retries_unchanged": 2,
+    "provider_requests_attempts_and_wall_cost_all_retained": true,
+    "stop_on_first_failed_new_level": true,
+    "runtime_input_keys_exactly_opaque_id_and_question": true,
+    "no_resume_retry_task_skip_or_selective_rerun": true
+  },
+  "inherited_level_one": {
+    "batch_wall_seconds": 30.22393,
+    "throughput_tasks_per_minute": 1.985182,
+    "passed_under_corrected_check": true
+  },
+  "provider": {
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "low",
+    "service_tier": "priority",
+    "model_slot_cap": 2,
+    "max_retries": 2
+  },
+  "surface_manifest": {
+    "scripts/v24328_shared_prefix_capacity_staircase.py": "a8b43f851380a5ebf1afc807215c735e4c2d078f06ea0d975e9568b2b69a99a8",
+    "scripts/v24329_capacity_retry_continuation.py": "e929ac57804d6c055a613cfa9babb2dd1666169dbffe2a646c4f12ac935df05f",
+    "tests/test_v24329_capacity_retry_continuation.py": "a70cf7a66e81d72c1fd869d4a896dbf6ae66001c7b3a09c853e2ba33a14a7f04"
+  },
+  "surface_manifest_sha256": "be785bd28be0df7609c1c92daeef6df6789b051574172b18588fe42c1112e6b1",
+  "source_policy": {
+    "benchmark_manifest_mapping_gold_category_question_type_split_evaluator_score_read": false,
+    "task_text_identifier_query_url_page_prediction_response_or_hash_persisted": false,
+    "credential_value_read_persisted_hashed_or_emitted": false,
+    "official_evaluator_called": false
+  },
+  "authorization": {
+    "capacity_continuation_design": true,
+    "capacity_continuation_launch": false,
+    "paired_benchmark_launch": false,
+    "exact220": false,
+    "evaluator": false,
+    "leaderboard_or_sota": false
+  },
+  "protocol_payload_sha256": "d758d801c8962aba8efe1da0ae3bd172667fd27b9d80ee74ee2aada24b6a822c"
+}
