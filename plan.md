@@ -1,6 +1,12 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.12
+> 版本：6.13
+>
+> **6.13 V2.43.20 fresh paired-dev64 完整终态 NO-GO（2026-08-03）：128 个 interleaved forward task 自然完成，baseline/candidate 均 `64/64` parent success，child/model/transport receipt 各64，non-success parent exit、incomplete effect count、第四model effect均0；三元守恒分别为 baseline `logical 130 = provider 128 + rejected 2`、candidate `130 = 127 + 3`。forward 墙钟 `1603.373735s = 26.72min`，比同规模 V2.43.14 的 `1669.403504s` 快3.96%；全程0题超过180秒、0个195秒 parent hard timeout。V2.43.15 的 outer-totality/slot-accounting/静态search timeout 三类可靠性问题因此在真实128-task并发下闭合，但这不等于质量提升。**
+>
+> **V2.43.21 guard 19项完整性检查全true后才首次打开 mapping/evaluator；两臂各4个16题 worker、总8 worker，完整128份 evaluator terminal outcome，墙钟 `302.727185s`，固定分母 failure-as-zero，无 resume、补题、选择性retry或error revaluation。baseline `5/64`、Composite `0.468169`、Entity `0.671875`、Row/Item/Column F1 `0.252553/0.425792/0.522456`；candidate 同为 `5/64`，但 Composite `0.451261`、Entity `0.625000`、Row/Item/Column F1 `0.234474/0.430835/0.514735`。candidate-minus-baseline Composite `-0.016908`，paired bootstrap 95% CI `[-0.083491, 0.050713]`，正/零/负题为 `15/26/23`，没有证据支持 staged reserve 提升。**
+>
+> **严格门为 `development_gate_no_go`：失败项包括 quality composite/entity/row/column、candidate evaluator invalid 4>2、fallback 3>2、model-generated -1、fallback delta、baseline hard-fetch deadline failure 5>4、两臂各1个 synthesis recovery provider failure，以及 paired CI lower bound低于-0.05。candidate 额外 retrieval 确实触发：13个expand、7个low-coverage diversity tail、26 reserved fetches、19 usable pages，但代价为 token ratio 1.0473、task-wall ratio 1.0060，未转化为质量；因此当前 `6+2+2` staged reserve 不授权 exact-220，也不得声称提升/SOTA。post-result audit `findings=[]`，runner/child/evaluator均退出、lease释放、watcher PID `795336/3061652`身份未变。权威结果为 `results/v24320_paired_dev64_result_v1_20260803.json` 与 `results/v24320_paired_dev64_postresult_audit_v1_20260803.json`。下一步只允许冻结后的 paired failure analysis；不得重跑、调参后复用同一64题作确认性门，也不得直接启动exact-220。**
 >
 > **6.12 V2.43.20 paired-dev64 冻结与 preactivation GO（2026-08-03）：append-only successor 保持 V2.43.14 的同一冻结 dev64、两臂交错、baseline `6+4`、candidate `6+2+2`、共同 recovery、prompt/model/evaluator、单题 `3 model / 4 query / 10 fetch / 180s`、总 executor=8 与全局 GPT cap=2 不变；唯一运行时变化是接入 V2.43.19 child/parent projection、V2.43.18 model/cache 两条守恒和 V2.43.16 model/search 共享 absolute deadline。forward 输入仍精确为 `{opaque_id, question}`，mapping/gold/category/question_type/split/evaluator/score 在双臂 `64/64` prediction freeze 前不可读取。**
 >
