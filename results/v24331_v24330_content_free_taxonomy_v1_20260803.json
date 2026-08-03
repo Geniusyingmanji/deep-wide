@@ -1,0 +1,214 @@
+{
+  "artifact_version": 1,
+  "role": "v24331_v24330_content_free_postterminal_taxonomy",
+  "protocol_id": "v24330_shared_prefix_entropy_paired_exact220_v1",
+  "created_at_unix": 1785781310,
+  "parents": {
+    "forward_nogo_sha256": "e7c6c565d6c318cb748a285ec348c118cf7d5d5a972dd1535b8fbca519be0a04",
+    "forward_nogo_audit_sha256": "279558327783e425bb698490c82e74795d26fb1d811c90b9122b67e24b93dd55",
+    "forward_nogo_diagnostic_sha256": "27aad54a4e6a17a65e1eef3cd6a36b94f373d69a9283a4b80d8a09269c3d6885",
+    "forward_nogo_result_payload_sha256": "41a3ba62aa291fc478e3a94f04a8514e3d2d15e9b392e909870389e9737c94f4",
+    "forward_nogo_audit_payload_sha256": "a1e04a0192dac741cb12eba9168c3498f90f3aaeb902599d6f03190da0abde82",
+    "forward_nogo_diagnostic_payload_sha256": "c0cb8de4cd4f20b0931b2ecd826738ca8f5fb8183c9631b69123593feaf352ef"
+  },
+  "boundary": {
+    "postterminal_only": true,
+    "both_exact220_arm_freezes_preexisted": true,
+    "same_run_forward_resume_retry_rerun_or_selective_retry": false,
+    "mapping_gold_category_question_type_split_evaluator_or_score_read": false,
+    "network_model_search_fetch_or_evaluator_called": false,
+    "task_identifier_question_query_url_page_cell_value_evidence_id_or_prediction_emitted": false,
+    "per_task_hash_or_position_emitted": false
+  },
+  "aggregate": {
+    "selected_tasks": 220,
+    "completion_kinds": {
+      "identity_fallback": 85,
+      "identity_no_reserve": 135
+    },
+    "prefix_status": {
+      "frozen": 135,
+      "runtime_fallback": 63,
+      "unavailable": 22
+    },
+    "fallback_types": {
+      "ValidationError": 63,
+      "none": 157
+    },
+    "attributed_model_stage_vectors": {
+      "plan+baseline_synthesis": 22,
+      "plan+baseline_synthesis+baseline_recovery": 23,
+      "plan+baseline_synthesis+candidate_revision": 112,
+      "unattributed": 63
+    },
+    "recoverable_failure_stages": {
+      "baseline_recovery": 16,
+      "baseline_synthesis": 17,
+      "candidate_revision": 22,
+      "plan": 4
+    },
+    "recoverable_failure_types": {
+      "ModelRequestError": 59
+    },
+    "effect_accounting": {
+      "complete_tasks": 157,
+      "incomplete_tasks": 63,
+      "complete_task_totals": {
+        "logical_model_admissions": 449,
+        "provider_model_requests": 413,
+        "provider_model_attempts": 434,
+        "pre_provider_model_rejections": 36,
+        "slot_acquisitions": 413,
+        "slot_timeouts": 36
+      },
+      "incomplete_task_independent_lower_bounds": {
+        "slot_acquisitions": 171,
+        "slot_timeouts": 11,
+        "unattributed_model_effects_lower_bound": 171,
+        "unattributed_model_attempts_lower_bound": 177,
+        "unattributed_search_effects_lower_bound": 84,
+        "unattributed_fetch_effects_lower_bound": 583
+      },
+      "complete_subset_conservation_verified": true,
+      "incomplete_semantic_last_stage_available": false,
+      "incomplete_stage_inferred_or_imputed": false,
+      "global_equality_asserted_across_incomplete_lower_bounds": false
+    },
+    "admission": {
+      "proposed_cell_changes": 19,
+      "admitted_cell_changes": 0,
+      "credited_conditional_entropy_reduction_nats": 0.0,
+      "dispositions": {
+        "quarantine_fetch_integrity": 11,
+        "quarantine_insufficient_independence": 8
+      },
+      "source_support_strata": [
+        {
+          "disposition": "quarantine_fetch_integrity",
+          "baseline_cell_state": "known",
+          "fetch_integrity": false,
+          "independent_sources": 0,
+          "corroborating_sources": 0,
+          "declared_evidence_has_characters": true,
+          "count": 2
+        },
+        {
+          "disposition": "quarantine_fetch_integrity",
+          "baseline_cell_state": "unknown",
+          "fetch_integrity": false,
+          "independent_sources": 0,
+          "corroborating_sources": 0,
+          "declared_evidence_has_characters": false,
+          "count": 8
+        },
+        {
+          "disposition": "quarantine_fetch_integrity",
+          "baseline_cell_state": "unknown",
+          "fetch_integrity": false,
+          "independent_sources": 0,
+          "corroborating_sources": 0,
+          "declared_evidence_has_characters": true,
+          "count": 1
+        },
+        {
+          "disposition": "quarantine_insufficient_independence",
+          "baseline_cell_state": "known",
+          "fetch_integrity": true,
+          "independent_sources": 1,
+          "corroborating_sources": 1,
+          "declared_evidence_has_characters": true,
+          "count": 4
+        },
+        {
+          "disposition": "quarantine_insufficient_independence",
+          "baseline_cell_state": "unknown",
+          "fetch_integrity": true,
+          "independent_sources": 1,
+          "corroborating_sources": 1,
+          "declared_evidence_has_characters": true,
+          "count": 4
+        }
+      ]
+    },
+    "transport": {
+      "totals": {
+        "deadline_exhausted_tasks": 53,
+        "fetch_deadline_rejections": 0,
+        "fetch_helper_failures": 1,
+        "hard_fetch_deadline_failures": 23,
+        "hard_fetch_helper_calls": 1898,
+        "hosted_search_attempts": 289,
+        "hosted_search_deadline_failures": 1,
+        "provider_deadline_failures": 20,
+        "slot_acquisitions": 584,
+        "slot_timeouts": 47
+      },
+      "deadline_or_health_patterns": {
+        "fetch_helper_failure": 1,
+        "hard_fetch_deadline": 10,
+        "none": 156,
+        "provider_deadline+deadline_exhausted": 13,
+        "provider_deadline+hard_fetch_deadline+deadline_exhausted": 1,
+        "slot_timeout+deadline_exhausted": 27,
+        "slot_timeout+hard_fetch_deadline+deadline_exhausted": 5,
+        "slot_timeout+hosted_search_deadline+deadline_exhausted": 1,
+        "slot_timeout+provider_deadline+deadline_exhausted": 6
+      },
+      "complete_task_patterns": {
+        "hard_fetch_deadline": 9,
+        "none": 110,
+        "provider_deadline+deadline_exhausted": 9,
+        "provider_deadline+hard_fetch_deadline+deadline_exhausted": 1,
+        "slot_timeout+deadline_exhausted": 18,
+        "slot_timeout+hard_fetch_deadline+deadline_exhausted": 3,
+        "slot_timeout+hosted_search_deadline+deadline_exhausted": 1,
+        "slot_timeout+provider_deadline+deadline_exhausted": 6
+      },
+      "incomplete_task_patterns": {
+        "fetch_helper_failure": 1,
+        "hard_fetch_deadline": 1,
+        "none": 46,
+        "provider_deadline+deadline_exhausted": 4,
+        "slot_timeout+deadline_exhausted": 9,
+        "slot_timeout+hard_fetch_deadline+deadline_exhausted": 2
+      },
+      "incomplete_tasks_with_deadline_flag": 16,
+      "incomplete_tasks_with_any_transport_health_event": 17,
+      "incomplete_tasks_without_transport_health_event": 46
+    }
+  },
+  "conclusions": {
+    "entropy_threshold_was_primary_admission_bottleneck": false,
+    "evidence_binding_or_source_independence_was_primary_admission_bottleneck": true,
+    "all_incomplete_fallbacks_explained_by_deadline_or_transport_health": false,
+    "incomplete_semantic_stage_recoverable_from_frozen_receipts": false,
+    "aggregate_validator_requires_complete_and_incomplete_strata": true,
+    "same_run_evaluation_authorized": false,
+    "new_exact220_authorized": false,
+    "quality_improvement_demonstrated": false,
+    "sota_supported": false
+  },
+  "next_work": {
+    "aggregate_validator": "strict conservation for complete tasks; independent lower bounds only for incomplete tasks; promotion still fails above frozen incomplete-task gate",
+    "fault_matrix": [
+      "complete_success",
+      "complete_fallback",
+      "incomplete_fallback_valid_lower_bounds",
+      "tampered_lower_bound_rejection"
+    ],
+    "evidence_admission": "construct eligible two-host unknown support and three-host override sets before revision; keep invalid citations quarantined",
+    "benchmark_external_before_new_benchmark": true
+  },
+  "authorization": {
+    "append_only_aggregate_validator_design": true,
+    "benchmark_external_fault_matrix": true,
+    "benchmark_external_evidence_admission_test": true,
+    "same_run_evaluator": false,
+    "same_run_forward_resume_retry_or_rerun": false,
+    "additional_dev64": false,
+    "new_exact220": false,
+    "leaderboard_submission": false,
+    "sota_claim": false
+  },
+  "taxonomy_payload_sha256": "2355afca7000ebb2eb9b7d57e22c1b28677b17b67f523645a70fbc971df4cb50"
+}
