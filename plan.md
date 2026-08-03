@@ -1,6 +1,10 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.19
+> 版本：6.20
+>
+> **6.20 V2.43.28–29 shared-prefix真实容量阶梯（2026-08-03）：V2.43.28 level-1 完整成功，`7 core + 3 reserve`、3 provider requests、0 slot/fetch deadline、`30.21s`；但实现附加的 `no_model_retry` 检查因一次 provider 内部重试（3 requests / 4 attempts）触发严格 NO-GO。该检查不在冻结容量目标中，且 retry 已完整计入请求尝试、token 与墙钟，故原结果原样冻结、审计并提交，未改写或重跑。append-only V2.43.29 只把该检查改为“provider attempts 不超过既有 `max_retries=2` 预算”，绑定旧 level-1 全部 content-free 账本，并明确 `level_one_remote_effect_repeated=false`；随后只执行未运行的 executor=`2/4/8`。**
+>
+> **V2.43.29 四级严格 GO：executor `1/2/4/8` 的 batch wall 分别 `30.22/23.24/26.59/36.02s`，吞吐 `1.99/5.16/9.03/13.33 task/min`；8-executor 级 24 requests=24 attempts=24 slot acquisitions、0 slot timeout/provider deadline、80 fetch、0 hard-fetch deadline/helper failure，task p95=max=`35.99s`，总 slot wait `64.23s`、单次最大 wait `9.03s`。因此在 GPT cap=2 下冻结推荐 executor=8。按同一中性负载外推 220 题约 `990.42s=16.5min`，这仅是 capacity-only projection，不是 benchmark ETA 或质量结论。四级均为同一 synthetic visible-only workload，未打开 benchmark manifest/mapping/gold/category/question_type/split/evaluator/score，未持久化 task/question/query/URL/page/prediction/response/hash；postaudit `findings=[]`、lease released、保护 watcher 身份不变。该门只授权 fresh shared-prefix paired benchmark protocol 设计，不直接授权 launch、exact220、evaluator 或 SOTA。**
 >
 > **6.19 V2.43.27 benchmark-external真实GPT-5.6/search/fetch中性transport smoke严格GO（2026-08-03）：在protocol/preaudit、activation、execution-start三次独立提交推送后，唯一一次one-shot任务通过shared lease运行；没有resume、retry整题、补跑、benchmark manifest/mapping/gold/evaluator读取。parent在 `21.553134s` 完整success，child/result/model/transport receipt全部存在且合法，临时目录已删除。真实账本为3 logical model admissions=3 provider requests=3 slot acquisitions+0 slot timeout，provider attempts=3；4个logical query由1次hosted-search provider effect完成；core/reserve fetch target=`7/3`，network fetch=`7/3`，usable page=`6/3`，总fetch failure=1但hard deadline/helper failure均0。prefix producer精确1次，branch repeated upstream effect=0，deadline未耗尽。**
 >
