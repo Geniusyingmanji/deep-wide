@@ -1,6 +1,12 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.16
+> 版本：6.17
+>
+> **6.17 V2.43.25 shared-prefix entropy-gated cell revision runtime build GO（2026-08-03）：下一质量机制不再把baseline/candidate各跑一次。每题只从visible-only `{opaque_id, question}`执行一次plan、一次4-query hosted-search，并从同一冻结候选序列稳定分配 `7 core + 3 reserve` fetch target；baseline仅看7个core page，candidate以baseline为不可删除底板，最多用第三次model admission提出reserve revision。无可信reserve、transport/revision失败或全部cell被隔离时，candidate必须byte-identical handoff，消除V2.43.20独立采样与无证据expand造成的随机退化；plan/core search/fetch均不得在branch中重放。baseline synthesis若失败，第三次调用优先做共享core recovery且不再fetch reserve，保持质量恢复与candidate revision互斥、总model admission≤3。**
+>
+> **信息熵现在直接成为可审计cell credit：每个新增/改动cell必须声明reserve evidence ID；所有ID必须存在，页面须在标准化局部窗口内同时出现目标行实体与新值。填unknown至少需2个独立host，覆盖已有值至少需3个独立host并通过更高corroborated-override entropy门；相反旧值在reserve页中的实体局部命中计为conflict。单源、同host重复、伪ID、只有常见值而无目标实体、删行或未声明改变全部隔离；最终candidate的每个实际改变由 old/new/row/column binding hash 与可重放entropy receipt复核，credit为被接受cell的 conditional entropy reduction之和。logical model admission机械满足 `logical=provider request+pre-provider rejection`；provider attempts独立计数，异常total fallback保留model/search/fetch effect lower bounds而不伪造零效应。**
+>
+> **V2.43.25及V2.43.24/V2.43.23/visible-schema/task-union/score-first联合回归 `48/48`；权威审计 `results/v24325_shared_prefix_revision_runtime_build_audit_v1_20260803.json` 的 `findings=[]`，runtime privileged-field AST access、network-client constructor import、credential literal均为空，离线审计外部network/model/search/fetch/evaluator effect全0，保护watcher身份未变。严格授权仅为production runner integration design；尚未接入真实deadline model/search/subprocess、未测试真实transport，不授权benchmark launch、additional dev64、exact-220、evaluator、leaderboard或SOTA，也不声称质量提升或完全因果识别。下一步必须在新append-only runner中接入V2.43.16 deadline search、V2.43.13 model limiter和V2.43.09 parent/child receipt，先做benchmark外真实本地subprocess与中性GPT-5.6 transport smoke，再冻结未污染paired样本与activation。**
 >
 > **6.16 V2.43.24 shared-prefix 真实本地 subprocess 集成 GO（2026-08-03）：V2.43.23 的同一 sealed prefix bundle 现在由两个真实 child process 只读消费；prefix producer 精确执行1次，文件在双臂前后 SHA-256 不变，plan/query/first-wave/core-evidence identity完全相同。每个 branch 的 effect receipt 机械要求 repeated plan/search/fetch effect全0，pair总账由两臂真实 effect/transport receipt重算而非写死；跨工件 arm/receipt 漂移、错prefix与伪造重复upstream effect均 fail closed。baseline固定 `core_only`；candidate 的 context action 必须逐字等于可重放的 cell-conditional entropy admission receipt，可靠交叉佐证进入 `append_reserve_support`，百万字符但低可靠证据仍隔离为 `core_only`。**
 >
