@@ -1,6 +1,12 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.09
+> 版本：6.10
+>
+> **6.10 V2.43.18 deadline-conserving accounting build GO（2026-08-03）：append-only runtime 未修改 V2.42.57/73/96/99、V2.43.10/12/16 任一旧文件，也未改变 prompt、模型、三次 model-call、四 query、十 fetch 或两臂 retrieval schedule。新 sealed model receipt 显式按 `plan / synthesis_initial / synthesis_recovery / repair` 分开 logical admission、provider request/attempt 与 pre-provider rejection，并机械要求 `logical = provider + rejected`；若 synthesis 在 provider 前已被 deadline/slot 拒绝，不再在 cleanup reserve 内发第二个必败 recovery。新 sealed cache receipt 对 baseline `6+4` 与 candidate `6+2+2` 同时要求 `cached usable = returned + deadline-deferred`、`requested = returned + miss`，deadline 后未 serve 的缓存页不再被误判为 effect drift。
+>
+> benchmark-external fault matrix `8/8` 覆盖两臂正常成功、initial-synthesis pre-provider rejection、recovery pre-provider rejection、repair rejection、baseline/candidate cache deferral、双 receipt tamper 与 privileged input effect-before-reject；父链 V2.42.73 `8/8`、V2.42.96 `7/7`、V2.43.10 `8/8`、V2.43.12 `7/7`、V2.43.16 `7/7`，合计 `45/45`。全程 remote network/model/search/fetch/evaluator effect 为0，runtime privileged-field AST access为空，receipt 不输出题面、ID、prompt/response、预测、query、URL/page或凭据。V1 build audit 的实现/测试均通过，但其多行源码 hook 使用脆弱字面匹配，产生唯一 `conservation_or_budget_hook_absent` 假阴性且正确未授权；V1 已 append-only 失效。权威 V2 audit 为 `results/v24318_deadline_conservation_build_audit_v2_20260803.json`，`findings=[]`。
+>
+> 严格 claim scope：这只证明两条 deadline accounting 守恒在 synthetic fault matrix 下闭合，不证明自然 fallback 频率、质量提升或 SOTA，只授权 future runner integration design。下一步必须在新 V2.43.19 child/parent runner 中同时接入 V2.43.18 runtime 与 V2.43.16 search/fetch absolute deadline；parent timeout projection 必须复用三元 receipt、不得把 receipt presence 错写为 exact provider/effect equality。先以真实本地 subprocess 覆盖 success、pre-provider reject、cache deferral、nonzero、timeout、缺/坏 envelope 和 receipt drift，并完成 label-blind preactivation audit，才能冻结新的 fresh paired-dev64；当前不授权 benchmark/evaluator。**
 >
 > **6.09 V2.43.17 V2.43.15 outer-totality content-free 根因诊断（2026-08-03）：在 `220/220` predictions 已冻结且 evaluator 永久关闭后，只读取18个已知 fallback 位置的 safe-progress、model/transport/child/parent receipt 与数字机制账本；未读取或发布题面、opaque ID、prompt/response、预测、query、URL/page、mapping/gold/category/question_type/split/evaluator/score，也未调用网络、模型、search/fetch 或 evaluator。18/18 都在 model receipt 时显示 task deadline exhausted，parent envelope 均 success，真实 `slot acquisitions == provider requests`。
 >
