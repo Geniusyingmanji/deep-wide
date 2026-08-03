@@ -1,6 +1,10 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.15
+> 版本：6.16
+>
+> **6.16 V2.43.24 shared-prefix 真实本地 subprocess 集成 GO（2026-08-03）：V2.43.23 的同一 sealed prefix bundle 现在由两个真实 child process 只读消费；prefix producer 精确执行1次，文件在双臂前后 SHA-256 不变，plan/query/first-wave/core-evidence identity完全相同。每个 branch 的 effect receipt 机械要求 repeated plan/search/fetch effect全0，pair总账由两臂真实 effect/transport receipt重算而非写死；跨工件 arm/receipt 漂移、错prefix与伪造重复upstream effect均 fail closed。baseline固定 `core_only`；candidate 的 context action 必须逐字等于可重放的 cell-conditional entropy admission receipt，可靠交叉佐证进入 `append_reserve_support`，百万字符但低可靠证据仍隔离为 `core_only`。**
+>
+> **真实故障矩阵8个child的parent taxonomy全部精确：baseline/candidate/低可靠candidate成功，wrong-prefix与duplicate-upstream为 `result_envelope_invalid`，nonzero为 `child_nonzero_with_terminal_receipt`，timeout为 `hard_deadline_timeout`，缺result为 `zero_exit_missing_result_envelope`。V2.43.24及V2.43.23/V2.43.09/V2.43.08回归共 `27/27`；权威审计 `results/v24324_shared_prefix_subprocess_build_audit_v1_20260803.json` 的 `findings=[]`，privileged-field AST access、network-capable import、credential literal均为空，remote network/model/search/fetch/evaluator effect全0，保护watcher身份未变。严格授权仅为未污染 fresh paired benchmark 的设计；不授权benchmark launch、additional dev64、evaluator、exact-220、leaderboard或SOTA。下一步须先冻结真实 visible-only shared-prefix runner、未使用过的开发题ID与固定预算，再独立提交 activation；两个synthesis仍独立且RNG未共享，故当前仍不能声称 reserve effect 完全因果识别或质量提升。**
 >
 > **6.15 V2.43.23 shared-prefix cell-conditional entropy benchmark-external 原型 GO（2026-08-03）：针对 V2.43.22 的“route不一致+页新颖性不等于任务价值”，新增纯函数、无I/O evidence-admission kernel。两臂必须引用同一 sealed prefix：visible-only plan、planned query vector、first-wave search receipt与core evidence vector hash完全相同，分叉点固定在core evidence freeze之后、reserve与synthesis之前；baseline context为core-only，candidate只能通过admission receipt追加reserve support或在强交叉佐证下override。该合同显式披露两臂仍是两个独立synthesis call、RNG未共享，因此只称 strict shared-upstream-prefix ablation，不称reserve effect fully causally identified。**
 >

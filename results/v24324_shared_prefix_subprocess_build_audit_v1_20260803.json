@@ -1,0 +1,233 @@
+{
+  "artifact_version": 1,
+  "role": "v24324_shared_prefix_subprocess_build_audit",
+  "created_at_unix": 1785769115,
+  "parent_audit": {
+    "path": "results/v24323_shared_prefix_cell_entropy_build_audit_v1_20260803.json",
+    "sha256": "ea5badbf2da02039d4d94bbfd4b5265707ae406a89da43436d3f3108c85f13c6"
+  },
+  "source_manifest": {
+    "src/deepwide_agent/v24308_child_exit_observability.py": "27b2ffbfc748f960cfdc25919eb73d0ab0bc45f358bb3718518bdfd83b797d33",
+    "src/deepwide_agent/v24309_runner_exit_integration.py": "18c1b4e0ed06769f3925c4bd3448ef907bf66a45ef33c342ef0d0192a1ac26d8",
+    "src/deepwide_agent/v24323_shared_prefix_cell_entropy.py": "f1c282c32d785c5d947f8b8612d4d023c88d6ac8ebf17a63648dd0b6c2a8f89f",
+    "src/deepwide_agent/v24324_shared_prefix_runner.py": "6027ce8d6ae18440bf624d86f62daf1c86609115153765d54b4f4c39f3bdb735",
+    "tests/fixtures/v24324_shared_prefix_child.py": "f2292bf44406174829acd2db6dc0baa085774ebbbe29355665b1656e8eb1d471",
+    "tests/test_v24324_shared_prefix_subprocess.py": "e08dd78854442f4dd45cb996d0a81ca1b86c549d5d6f3215d260cf8d5831b647",
+    "scripts/audit_v24324_shared_prefix_subprocess.py": "8c9fe39db84cfb51a0cff7a98470a50abec0bd1fbc5a5bb9c5f6d5a296750e1d"
+  },
+  "source_manifest_sha256": "2093270b49952b32ce782b535446d01e49208d14c36db2f229d8abe42f874fe1",
+  "focused_and_dependency_tests": [
+    {
+      "file": "test_v24324_shared_prefix_subprocess.py",
+      "test_count": 5,
+      "passed": true
+    },
+    {
+      "file": "test_v24323_shared_prefix_cell_entropy.py",
+      "test_count": 8,
+      "passed": true
+    },
+    {
+      "file": "test_v24309_runner_exit_integration.py",
+      "test_count": 5,
+      "passed": true
+    },
+    {
+      "file": "test_v24308_child_exit_observability.py",
+      "test_count": 9,
+      "passed": true
+    }
+  ],
+  "test_count": 27,
+  "subprocess_fault_matrix": {
+    "modes": {
+      "baseline_success": {
+        "expected_taxonomy": "success",
+        "failure_taxonomy": "success",
+        "child_terminal_receipt_present": true,
+        "child_terminal_receipt_valid": true,
+        "result_envelope_present": true,
+        "result_envelope_valid": true,
+        "model_receipt_present": true,
+        "model_receipt_valid": true,
+        "transport_receipt_present": true,
+        "transport_receipt_valid": true
+      },
+      "candidate_success": {
+        "expected_taxonomy": "success",
+        "failure_taxonomy": "success",
+        "child_terminal_receipt_present": true,
+        "child_terminal_receipt_valid": true,
+        "result_envelope_present": true,
+        "result_envelope_valid": true,
+        "model_receipt_present": true,
+        "model_receipt_valid": true,
+        "transport_receipt_present": true,
+        "transport_receipt_valid": true
+      },
+      "candidate_unreliable": {
+        "expected_taxonomy": "success",
+        "failure_taxonomy": "success",
+        "child_terminal_receipt_present": true,
+        "child_terminal_receipt_valid": true,
+        "result_envelope_present": true,
+        "result_envelope_valid": true,
+        "model_receipt_present": true,
+        "model_receipt_valid": true,
+        "transport_receipt_present": true,
+        "transport_receipt_valid": true
+      },
+      "wrong_prefix": {
+        "expected_taxonomy": "result_envelope_invalid",
+        "failure_taxonomy": "result_envelope_invalid",
+        "child_terminal_receipt_present": true,
+        "child_terminal_receipt_valid": true,
+        "result_envelope_present": true,
+        "result_envelope_valid": false,
+        "model_receipt_present": true,
+        "model_receipt_valid": true,
+        "transport_receipt_present": true,
+        "transport_receipt_valid": true
+      },
+      "duplicate_upstream": {
+        "expected_taxonomy": "result_envelope_invalid",
+        "failure_taxonomy": "result_envelope_invalid",
+        "child_terminal_receipt_present": true,
+        "child_terminal_receipt_valid": true,
+        "result_envelope_present": true,
+        "result_envelope_valid": false,
+        "model_receipt_present": true,
+        "model_receipt_valid": false,
+        "transport_receipt_present": true,
+        "transport_receipt_valid": true
+      },
+      "nonzero": {
+        "expected_taxonomy": "child_nonzero_with_terminal_receipt",
+        "failure_taxonomy": "child_nonzero_with_terminal_receipt",
+        "child_terminal_receipt_present": true,
+        "child_terminal_receipt_valid": true,
+        "result_envelope_present": false,
+        "result_envelope_valid": false,
+        "model_receipt_present": false,
+        "model_receipt_valid": false,
+        "transport_receipt_present": false,
+        "transport_receipt_valid": false
+      },
+      "timeout": {
+        "expected_taxonomy": "hard_deadline_timeout",
+        "failure_taxonomy": "hard_deadline_timeout",
+        "child_terminal_receipt_present": false,
+        "child_terminal_receipt_valid": false,
+        "result_envelope_present": false,
+        "result_envelope_valid": false,
+        "model_receipt_present": false,
+        "model_receipt_valid": false,
+        "transport_receipt_present": false,
+        "transport_receipt_valid": false
+      },
+      "missing_result": {
+        "expected_taxonomy": "zero_exit_missing_result_envelope",
+        "failure_taxonomy": "zero_exit_missing_result_envelope",
+        "child_terminal_receipt_present": true,
+        "child_terminal_receipt_valid": true,
+        "result_envelope_present": false,
+        "result_envelope_valid": false,
+        "model_receipt_present": true,
+        "model_receipt_valid": true,
+        "transport_receipt_present": true,
+        "transport_receipt_valid": true
+      }
+    },
+    "observed_taxonomy": {
+      "baseline_success": "success",
+      "candidate_success": "success",
+      "candidate_unreliable": "success",
+      "wrong_prefix": "result_envelope_invalid",
+      "duplicate_upstream": "result_envelope_invalid",
+      "nonzero": "child_nonzero_with_terminal_receipt",
+      "timeout": "hard_deadline_timeout",
+      "missing_result": "zero_exit_missing_result_envelope"
+    },
+    "expected_taxonomy": {
+      "baseline_success": "success",
+      "candidate_success": "success",
+      "candidate_unreliable": "success",
+      "wrong_prefix": "result_envelope_invalid",
+      "duplicate_upstream": "result_envelope_invalid",
+      "nonzero": "child_nonzero_with_terminal_receipt",
+      "timeout": "hard_deadline_timeout",
+      "missing_result": "zero_exit_missing_result_envelope"
+    },
+    "exact_taxonomy_match": true,
+    "authoritative_probe_local_children": 8,
+    "focused_test_local_children": 8,
+    "total_local_children_this_audit": 16,
+    "temporary_directories_remaining": false
+  },
+  "shared_prefix_observation": {
+    "prefix_bundle_payload_sha256": "e33da5f6b818fdda84653189aee3131254dff79d8e236db8ab4aa19a100e546b",
+    "prefix_file_sha256": "52aeebc986e6457f0943064b4c8dd24bb604430aeee2a4d8b1ca941901304190",
+    "producer_execution_count": 1,
+    "file_unchanged_across_both_branches": true,
+    "plan_query_first_wave_core_evidence_exact": true,
+    "total_repeated_upstream_effects": 0
+  },
+  "context_admission_observation": {
+    "baseline_context_action": "core_only",
+    "candidate_context_action": "append_reserve_support",
+    "candidate_disposition": "admit_support",
+    "candidate_conditional_entropy_reduction_nats": 0.634964023572,
+    "unreliable_million_character_context_action": "core_only",
+    "unreliable_million_character_disposition": "quarantine_low_reliability",
+    "cross_artifact_receipt_drift_fails_closed": true
+  },
+  "external_effect_ledger": {
+    "remote_network": 0,
+    "model_provider": 0,
+    "hosted_search": 0,
+    "fetch": 0,
+    "evaluator": 0
+  },
+  "privileged_field_accesses": [],
+  "network_capable_imports": [],
+  "credential_literal_hits": [],
+  "subprocess_or_test_process_present": false,
+  "protected_watchers": [
+    {
+      "pid": 795336,
+      "marker": "scripts/watch_v2415_r1_checkpoint_liveness.py",
+      "start_ticks": 713986317
+    },
+    {
+      "pid": 3061652,
+      "marker": "scripts/watch_v24218_exact220_executor.py",
+      "start_ticks": 747569004
+    }
+  ],
+  "source_policy": {
+    "benchmark_external": true,
+    "runtime_input_question_or_opaque_id": false,
+    "question_prompt_response_query_url_page_prediction_answer_opaque_id_or_credential_emitted": false,
+    "mapping_gold_category_question_type_split_evaluator_score_or_reward_read": false,
+    "active_benchmark_or_watcher_signaled_restarted_or_modified": false
+  },
+  "claim_scope": {
+    "real_local_subprocess_shared_prefix_boundary": true,
+    "one_prefix_file_used_unchanged_by_both_branches": true,
+    "upstream_plan_search_fetch_not_repeated_by_branches": true,
+    "candidate_context_action_bound_to_entropy_admission": true,
+    "synthesis_randomness_shared": false,
+    "reserve_effect_fully_causally_identified": false,
+    "benchmark_quality_improvement": false
+  },
+  "findings": [],
+  "audit_valid": true,
+  "authorization": {
+    "fresh_uncontaminated_paired_benchmark_design": true,
+    "benchmark_launch": false,
+    "additional_dev64_or_exact220": false,
+    "evaluator": false,
+    "leaderboard_or_sota": false
+  },
+  "audit_payload_sha256": "6ffac66d3c341875de11b362a4db5224795673c28e7d03d5cec37f41c4efb320"
+}
