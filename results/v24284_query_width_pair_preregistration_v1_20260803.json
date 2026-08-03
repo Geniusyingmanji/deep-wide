@@ -1,0 +1,247 @@
+{
+  "artifact_version": 1,
+  "role": "v24284_neutral_query_width_pair_preregistration",
+  "protocol_id": "v24284_two_top3_vs_one_top6_neutral_pair_v1",
+  "created_at_unix": 1785718124,
+  "scope": "neutral_public_documentation_query_width_pair_only",
+  "pair_contract": {
+    "pair_count": 16,
+    "waves": 4,
+    "pairs_per_wave": 4,
+    "arm_concurrency": 8,
+    "arms": [
+      "two_top3",
+      "one_top6"
+    ],
+    "arm_config": {
+      "two_top3": {
+        "query_count": 2,
+        "results_per_query": 3
+      },
+      "one_top6": {
+        "query_count": 1,
+        "results_per_query": 6
+      }
+    },
+    "same_fetch_cap_per_arm": 6,
+    "same_medium_context_and_single_shot_transport": true,
+    "one_top6_uses_first_primary_query_only": true,
+    "query_set_sha256": "bc8a702ca8bf35d0f573c63ebf8c63b73b89e6ac9f895f06870aa50ae96cfa07",
+    "neutral_query_value_or_direct_hash_persisted_in_result": false,
+    "schedule": [
+      [
+        {
+          "pair": 1,
+          "arm": "two_top3"
+        },
+        {
+          "pair": 1,
+          "arm": "one_top6"
+        },
+        {
+          "pair": 2,
+          "arm": "one_top6"
+        },
+        {
+          "pair": 2,
+          "arm": "two_top3"
+        },
+        {
+          "pair": 3,
+          "arm": "two_top3"
+        },
+        {
+          "pair": 3,
+          "arm": "one_top6"
+        },
+        {
+          "pair": 4,
+          "arm": "one_top6"
+        },
+        {
+          "pair": 4,
+          "arm": "two_top3"
+        }
+      ],
+      [
+        {
+          "pair": 5,
+          "arm": "two_top3"
+        },
+        {
+          "pair": 5,
+          "arm": "one_top6"
+        },
+        {
+          "pair": 6,
+          "arm": "one_top6"
+        },
+        {
+          "pair": 6,
+          "arm": "two_top3"
+        },
+        {
+          "pair": 7,
+          "arm": "two_top3"
+        },
+        {
+          "pair": 7,
+          "arm": "one_top6"
+        },
+        {
+          "pair": 8,
+          "arm": "one_top6"
+        },
+        {
+          "pair": 8,
+          "arm": "two_top3"
+        }
+      ],
+      [
+        {
+          "pair": 9,
+          "arm": "two_top3"
+        },
+        {
+          "pair": 9,
+          "arm": "one_top6"
+        },
+        {
+          "pair": 10,
+          "arm": "one_top6"
+        },
+        {
+          "pair": 10,
+          "arm": "two_top3"
+        },
+        {
+          "pair": 11,
+          "arm": "two_top3"
+        },
+        {
+          "pair": 11,
+          "arm": "one_top6"
+        },
+        {
+          "pair": 12,
+          "arm": "one_top6"
+        },
+        {
+          "pair": 12,
+          "arm": "two_top3"
+        }
+      ],
+      [
+        {
+          "pair": 13,
+          "arm": "two_top3"
+        },
+        {
+          "pair": 13,
+          "arm": "one_top6"
+        },
+        {
+          "pair": 14,
+          "arm": "one_top6"
+        },
+        {
+          "pair": 14,
+          "arm": "two_top3"
+        },
+        {
+          "pair": 15,
+          "arm": "two_top3"
+        },
+        {
+          "pair": 15,
+          "arm": "one_top6"
+        },
+        {
+          "pair": 16,
+          "arm": "one_top6"
+        },
+        {
+          "pair": 16,
+          "arm": "two_top3"
+        }
+      ]
+    ]
+  },
+  "provider": {
+    "endpoint": "http://127.0.0.1:9878/responses",
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "low",
+    "service_tier": "priority",
+    "timeout_seconds": 180,
+    "max_retries": 2,
+    "batch_size": 8,
+    "workers": 1,
+    "search_context_size": "medium",
+    "max_output_tokens": 7000,
+    "fetch_workers": 8,
+    "fetch_timeout_seconds": 20,
+    "hard_fetch_deadline_seconds": 25,
+    "max_page_chars": 5000
+  },
+  "gates": {
+    "maximum_one_top6_over_two_top3_search_calls": 1.0,
+    "maximum_one_top6_over_two_top3_input_tokens": 0.8,
+    "maximum_one_top6_over_two_top3_total_tokens": 0.82,
+    "maximum_one_top6_over_two_top3_search_seconds": 0.9,
+    "maximum_one_top6_over_two_top3_wall_seconds": 0.92,
+    "minimum_one_top6_over_two_top3_admitted_sources": 0.95,
+    "minimum_one_top6_over_two_top3_usable_pages": 0.9,
+    "minimum_one_top6_over_two_top3_usable_chars": 0.75,
+    "minimum_one_top6_over_two_top3_unique_hosts": 0.75,
+    "minimum_pairs_with_lower_candidate_input_tokens": 12,
+    "minimum_admitted_sources_per_arm": 80,
+    "minimum_usable_pages_per_arm": 72,
+    "minimum_usable_chars_per_arm": 100000,
+    "maximum_batch_wall_seconds": 300.0,
+    "maximum_effective_search_failures_per_arm": 0,
+    "maximum_unrecoverable_search_failures_per_arm": 0,
+    "maximum_hard_fetch_deadlines_per_arm": 0,
+    "maximum_fetch_helper_failures_per_arm": 0
+  },
+  "lease": {
+    "path": "outputs/deepwide_benchmark_api.lease.lock",
+    "owner": "v24284_query_width_pair_v1",
+    "purpose": "neutral_two_top3_vs_one_top6_query_width_pair",
+    "nonblocking_single_owner": true
+  },
+  "forward_manifest": {
+    "src/deepwide_agent/clients.py": "339d923973f07ebcd33cb12cee2c26103df70ed3aea1fc0a737ffd675ac06fbc",
+    "src/deepwide_agent/native_search.py": "cd0d6bfccf4b345b11274558bdcffb39d279697d183242baf811dfd56ac71e50",
+    "src/deepwide_agent/v24257_score_first_runtime.py": "c4e3f818d0306f53d40f641a7a580aa7238e0698d2863301fe8399d8e3c1fa3e",
+    "src/deepwide_agent/v24269_task_union_discovery.py": "f8c439e9d4000788e2e9c3afef37e29ee21e655faf57921572628ac350beb9be",
+    "src/deepwide_agent/v24270_budget_equivalent_union.py": "fd1e2a208c773dd00c38560e0aeca5d9bec293bac408e1899391bc40da01b944",
+    "src/deepwide_agent/v24275_forward_contract.py": "d983fb74d8bca2860b2c316671cdc4a4849db6c7f3178180051e4790ec50abe6",
+    "src/deepwide_agent/v24275_hard_deadline_fetch.py": "eae9df25815941f40ebfb5634d418067d7a4d145d6831937768229920c032c89",
+    "src/deepwide_agent/v24280_task_union_single_shot.py": "112b8a349141e986de4f7d94c0fcb201693ee961c9fff9eeda29f297415e1142",
+    "scripts/deepwide_api_lease.py": "8d9cffa78617b458172307d3558c76e9370f045f531c2f5aaaceb866f5a78c7d",
+    "scripts/run_v24275_fetch_helper.py": "19a29cc6189e17c9aacdf543fc1b78fb07c5ea6615a7d5ec5b0e7d8fd2c4062c",
+    "scripts/preregister_v24281_single_shot_pair.py": "13cd498e5182932c7252925a906461828e43dfd9ad21092dca047cc3fd221a80",
+    "scripts/preregister_v24284_query_width_pair.py": "e19387dac8d05bb8ef9896674ef33affe3205718e70dc3244a8ad87d0222eb0b",
+    "scripts/probe_v24284_query_width_pair.py": "9e7dece2ae07bebdc3a361973afc165874cba8c0bee03acc1768faec45bc553f"
+  },
+  "forward_manifest_sha256": "73b4c2fcbdb702f4f533e4599a6eb746631a4f20eab190c6b94d819757013c3a",
+  "control_manifest": {
+    "tests/test_probe_v24284_query_width_pair.py": "8146575d2240cd9a80ce9467019b11d814573e3c6d77030c3b46b2d25b07ebfe"
+  },
+  "control_manifest_sha256": "cd917ff15e4aad71697b40e82d821c5a76499e7f3bf6dab6084bf50937378d22",
+  "source_policy": {
+    "benchmark_manifest_mapping_gold_prediction_or_evaluator_read": false,
+    "benchmark_question_query_url_host_page_prediction_answer_task_id_or_hash_persisted": false,
+    "credential_value_read_persisted_hashed_or_emitted": false,
+    "standalone_generation_or_official_evaluator_called": false
+  },
+  "authorization": {
+    "benchmark_launch": false,
+    "dev64_launch": false,
+    "exact220_launch": false,
+    "evaluator_call": false,
+    "training_credit_assignment": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "protocol_payload_sha256": "2b2b30194ca09574baa31ee51d4e8915e049046876cd6c435659f4840c23a596"
+}
