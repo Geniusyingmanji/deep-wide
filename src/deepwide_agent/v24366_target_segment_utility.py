@@ -342,6 +342,10 @@ def _compute(
             item
             for item in target_projections
             if item["normalized_value_sha256"] != candidate_hash
+            and (
+                baseline_hash is None
+                or item["normalized_value_sha256"] != baseline_hash
+            )
         ]
         candidate_sources = {
             verifier_source_by_ordinal[int(item["page_ordinal"])]

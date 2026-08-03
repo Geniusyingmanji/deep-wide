@@ -215,6 +215,9 @@ class V24366TargetSegmentUtilityTests(unittest.TestCase):
             verifier_hosts=["verifier.example"],
         )
         self.assertEqual(value["verification_status_counts"], {"verifier_supports_baseline": 1})
+        record = value["verification_records"][0]
+        self.assertEqual(record["verifier_baseline_source_count"], 1)
+        self.assertEqual(record["verifier_conflicting_source_count"], 0)
 
     def test_binding_tamper_gets_zero_proposal_and_utility_credit(self) -> None:
         proposal = proposal_catalog()
