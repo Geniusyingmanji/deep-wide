@@ -1,0 +1,101 @@
+{
+  "artifact_version": 1,
+  "role": "v24292_dev64_evaluator_recovery_preregistration",
+  "protocol_id": "v24292_v24291_pre_evaluator_failure_recovery_v1",
+  "created_at_unix": 1785730247,
+  "scope": "evaluator_only_recovery_after_fail_closed_pre_evaluator_name_error",
+  "parent": {
+    "v24291_protocol": {
+      "path": "results/v24291_dev64_preregistration_v1_20260803.json",
+      "sha256": "7882e5a3e30d31708fe75cf3f9be5900be972cc059ac69eb76fde39458389914"
+    },
+    "v24291_forward_result": {
+      "path": "results/v24291_dev64_forward_result_v1_20260803.json",
+      "sha256": "ad9d8793d19e833e749f16f2d2a5c1b54e43b55321b56bc9bf12b81c65d468a3"
+    },
+    "v24291_candidate_prediction_freeze": {
+      "path": "outputs/v24291_low_coverage_dev64_v1_20260803/candidate_prediction_freeze.json",
+      "sha256": "1ab72a894a0a374818845abbc5d4295e23d647b171cb9fa7531fc63c1cf480cb"
+    },
+    "selected": 64,
+    "candidate_exact64_before_control_or_evaluator_open": true
+  },
+  "failed_attempt": {
+    "path": "outputs/v24291_dev64_finalizer_v1_20260803.log",
+    "sha256": "a3d624166cc2b93fc3ca52eb7c582b17363b630f1a973756387932f08a88b9af",
+    "exception": "NameError: name 'CONTROL_RESULT' is not defined",
+    "failed_call": "load_control_after_candidate",
+    "failed_before_live_evaluator_validation": true,
+    "failed_before_evaluator_root_creation": true,
+    "failed_before_evaluator_worker_or_api_call": true,
+    "evaluator_root_absent_after_failure": true
+  },
+  "recovery_adapter": {
+    "unmodified_frozen_finalizer": "scripts/finalize_v24291_dev64.py",
+    "inject_existing_constant_CONTROL_RESULT": "results/v24287_exact220_result_v1_20260803.json",
+    "inject_existing_constant_CONTROL_POSTAUDIT": "results/v24287_exact220_postresult_audit_v1_20260803.json",
+    "hold_outer_nonblocking_lease_before_any_recovery_surface": true,
+    "replace_nested_same_process_lease_only_with_outer_lease_assertion": true,
+    "forward_code_prediction_or_freeze_modified": false
+  },
+  "evaluation_contract": {
+    "arms": [
+      "control",
+      "candidate"
+    ],
+    "selected_per_arm": 64,
+    "fixed_denominator_per_arm": 64,
+    "workers_per_arm": 4,
+    "total_parallel_workers": 8,
+    "fixed_contiguous_partition_sizes_per_arm": [
+      16,
+      16,
+      16,
+      16
+    ],
+    "fresh_evaluator_root": "outputs/v24291_low_coverage_dev64_v1_20260803/evaluator",
+    "resume": false,
+    "selective_retry_or_error_revaluation": false,
+    "old_evaluator_rows_reused": false
+  },
+  "lease": {
+    "path": "outputs/deepwide_benchmark_api.lease.lock",
+    "owner": "v24292_dev64_evaluator_recovery_v1",
+    "purpose": "fresh_full_both_arm_dev64_evaluator_after_pre_evaluator_control_failure",
+    "nonblocking_single_owner": true
+  },
+  "result_paths": {
+    "execution_start": "results/v24292_dev64_evaluator_recovery_execution_start_v1_20260803.json",
+    "v24291_final_result": "results/v24291_dev64_result_v1_20260803.json",
+    "recovery_result": "results/v24292_dev64_evaluator_recovery_result_v1_20260803.json",
+    "v24291_postresult_audit": "results/v24291_dev64_postresult_audit_v1_20260803.json",
+    "recovery_postresult_audit": "results/v24292_dev64_evaluator_recovery_postresult_audit_v1_20260803.json"
+  },
+  "source_manifest": {
+    "scripts/v24292_dev64_evaluator_recovery.py": "7babc74d6ecfd57dd9e8e61a32fcaf4f74d1e5d97626fcc60901d0a5df389aec",
+    "scripts/finalize_v24291_dev64.py": "b066f854cd8bc7a7c44004d531f70c769eaacd1736b304f44b86ee3b3e437eef",
+    "scripts/preregister_v24291_dev64.py": "18945ad233612eb6626b85752feb0025c56f2cf765c1fc120bd1f7ee3c0b9c35",
+    "scripts/audit_v24291_dev64.py": "81bb07d29cace5d2bd0ac68de56571c12890dc45896b194545ae1c1339758fd3",
+    "tests/test_v24292_dev64_evaluator_recovery.py": "7f8affa7a984fe5e06718f82c47f2222b244ae4da66128bbd66f2c595afaf6f9"
+  },
+  "source_manifest_sha256": "66c7430e95b60c93c1479b2fe95f5c01c253beb900914851f1b33dbc9c4b53b4",
+  "source_policy": {
+    "candidate_forward_runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "candidate_prediction_freeze_precedes_recovery": true,
+    "forward_rerun_resume_skip_or_prediction_mutation": false,
+    "mapping_gold_evaluator_feedback_used_for_candidate_forward_or_selection": false,
+    "credential_value_persisted_hashed_or_emitted": false
+  },
+  "authorization": {
+    "one_fresh_full_both_arm_dev64_evaluation": true,
+    "forward_call_or_rerun": false,
+    "evaluator_resume_selective_retry_or_revaluation": false,
+    "additional_dev64_or_exact220": false,
+    "leaderboard_submission": false,
+    "sota_claim": false
+  },
+  "protocol_payload_sha256": "e1b6c9b0c5bc024833a8cfac557e747ae970e261618d60cc97a6e4bb970b5c98"
+}
