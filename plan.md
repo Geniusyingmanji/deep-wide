@@ -1,6 +1,12 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.18
+> 版本：6.19
+>
+> **6.19 V2.43.27 benchmark-external真实GPT-5.6/search/fetch中性transport smoke严格GO（2026-08-03）：在protocol/preaudit、activation、execution-start三次独立提交推送后，唯一一次one-shot任务通过shared lease运行；没有resume、retry整题、补跑、benchmark manifest/mapping/gold/evaluator读取。parent在 `21.553134s` 完整success，child/result/model/transport receipt全部存在且合法，临时目录已删除。真实账本为3 logical model admissions=3 provider requests=3 slot acquisitions+0 slot timeout，provider attempts=3；4个logical query由1次hosted-search provider effect完成；core/reserve fetch target=`7/3`，network fetch=`7/3`，usable page=`6/3`，总fetch failure=1但hard deadline/helper failure均0。prefix producer精确1次，branch repeated upstream effect=0，deadline未耗尽。**
+>
+> **该中性任务的revision提出0个cell change，因此candidate正确byte-identical handoff；这证明真实transport和保守无证据退化路径，不证明entropy提高benchmark质量。预注册25个mechanical gate全部通过，decision=`neutral_transport_go`；权威工件为 `results/v24327_neutral_transport_probe_v1_20260803.json`、`results/v24327_neutral_transport_decision_v1_20260803.json` 与 `results/v24327_neutral_transport_postresult_audit_v1_20260803.json`，postaudit `findings=[]`、lease inactive、watcher身份未变、未持久化task/question/query/URL/page/prediction/response/hash。旧CLI finalizer在GNU timeout wrapper下曾把wrapper argv误识别为同脚本进程而fail-closed；没有重跑remote smoke，随后以同一冻结`finalize()`通过 `python -c` 避免wrapper假阳性并只发布缺失postaudit。**
+>
+> **运行时结论修正：新框架单题搜索不是四五十分钟；本次真实端到端约21.6秒。`21.6×220/8≈9.9分钟`仅是忽略GPT全局cap=2、服务抖动与长尾的executor-only乐观下界，不能作为全集ETA；正式时间必须先跑 `1/2/4/8 executor × cap2` 的benchmark外容量阶梯，再冻结安全并发。这个观测已否定“7.5天是搜索本身必需”的解释，但不能由一个中性任务外推220墙钟。V2.43.27只授权fresh、未被V2.43.20调参污染的paired benchmark设计，不授权launch、additional dev64、exact-220、evaluator、leaderboard或SOTA。下一步应冻结真实paired runner：同一每题pair同时输出baseline/candidate，baseline为7-core synthesis，candidate仅接受3-reserve entropy-gated cell revision；不再运行两个独立arm，从而将paired64从128个独立forward压缩为64个shared-prefix task。**
 >
 > **6.18 V2.43.26 deadline-safe shared-prefix runner/subprocess integration GO（2026-08-03）：V2.43.25 pair runtime已接入V2.43.13 deadline-aware global model slot limiter、V2.43.16 hosted-search/fetch absolute deadline与V2.43.09 child/parent terminal receipt。model/search必须共享同一absolute deadline、cleanup reserve与minimum attempt；complete result的model三元现场满足 `logical admissions = slot acquisitions(provider requests) + slot timeouts(pre-provider rejection)`，provider attempts独立计数。fetch effect精确满足 `fetch_calls = hard-fetch helper launches + deadline pre-launch rejects`；hosted-search attempts与HTTP calls因transport exception/retry不被伪造成相等，只由固定transport-health schema审计。sealed envelope内嵌model-slot/transport receipt，同时父进程读取独立receipt文件并要求byte-equivalent；独立文件合法但与envelope漂移也必须fail closed。**
 >
