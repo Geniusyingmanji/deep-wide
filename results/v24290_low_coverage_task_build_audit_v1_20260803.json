@@ -1,0 +1,89 @@
+{
+  "artifact_version": 1,
+  "role": "v24290_low_coverage_task_build_audit",
+  "created_at_unix": 1785727272,
+  "label_blind": true,
+  "parent_diagnosis": {
+    "path": "results/v24288_v24287_exact220_diagnosis_v1_20260803.json",
+    "sha256": "ca6e5a545a3d5872e749dd98d20df99fa271248dea7e3063cec7d5dc3a33cf95",
+    "stop_tasks": 175,
+    "expand_tasks": 43,
+    "expand_low_coverage_tasks": 23,
+    "causal_claim_available": false
+  },
+  "surface_manifest": {
+    "src/deepwide_agent/v24289_low_coverage_rescue.py": "efef2ec4e1b0991d3811a3760584c9c52ce371532c3e945a1783303beb0d047e",
+    "src/deepwide_agent/v24290_low_coverage_task_runtime.py": "6c0979b490e10225e24ff607adf118934ff298bf5548d9b5e4eacc86705dc0dd",
+    "tests/test_v24289_low_coverage_rescue.py": "a5788e60b871be6246a71692150cc4183a79f3eb8458195e01f6f7cecb1917e7",
+    "tests/test_v24290_low_coverage_task_runtime.py": "f84669c5a22679648bb09795c1d1a21ebb883a1b48748084cc875cccb7b74f06"
+  },
+  "static_audit": {
+    "files": {
+      "src/deepwide_agent/v24289_low_coverage_rescue.py": {
+        "sha256": "efef2ec4e1b0991d3811a3760584c9c52ce371532c3e945a1783303beb0d047e",
+        "forbidden_imports": [],
+        "privileged_exact_key_accesses": [],
+        "benchmark_evaluator_or_diagnosis_path_literals": [],
+        "credential_literal_present": false,
+        "concrete_opaque_id_present": false,
+        "passed": true
+      },
+      "src/deepwide_agent/v24290_low_coverage_task_runtime.py": {
+        "sha256": "6c0979b490e10225e24ff607adf118934ff298bf5548d9b5e4eacc86705dc0dd",
+        "forbidden_imports": [],
+        "privileged_exact_key_accesses": [],
+        "benchmark_evaluator_or_diagnosis_path_literals": [],
+        "credential_literal_present": false,
+        "concrete_opaque_id_present": false,
+        "passed": true
+      }
+    },
+    "runtime_visible_boundary_validation_precedes_effect_adapter": true,
+    "passed": true
+  },
+  "synthetic_replay": {
+    "selected": 2,
+    "terminal": 2,
+    "stop": {
+      "controller_decision": "stop",
+      "rescue_triggered": false,
+      "provider_search_calls_added_by_rescue": 0,
+      "fetches_attempted": 6
+    },
+    "low_coverage": {
+      "controller_decision": "expand",
+      "rescue_triggered": true,
+      "provider_search_calls_added_by_rescue": 0,
+      "usable_pages_before": 1,
+      "usable_pages_after": 5,
+      "rescue_fetches": 4,
+      "total_fetches": 8
+    },
+    "question_query_url_host_page_prediction_answer_opaque_id_or_credential_persisted": false,
+    "network_model_search_fetch_or_evaluator_called": false
+  },
+  "candidate_scope": {
+    "same_response_deterministic_tail_only": true,
+    "maximum_total_queries": 4,
+    "maximum_total_fetch_attempts": 10,
+    "maximum_rescue_fetch_attempts": 4,
+    "maximum_pre_rescue_retrieval_seconds": 60,
+    "normal_stop_path_has_zero_rescue_effects": true,
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "benchmark_calibrated_or_quality_proven": false
+  },
+  "authorization": {
+    "one_neutral_public_documentation_probe": false,
+    "dev64_launch": false,
+    "exact220_launch": false,
+    "evaluator_call": false,
+    "training_credit_assignment": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "findings": [],
+  "audit_valid": true,
+  "audit_payload_sha256": "30ce94461d6f3d4f15552b9f52934267133a74c60c833c665ed9831ac0c1218d"
+}

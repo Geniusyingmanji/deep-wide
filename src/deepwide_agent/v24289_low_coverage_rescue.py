@@ -38,6 +38,45 @@ from .v24272_two_wave_retrieval import _content_fingerprint, _effective_policy, 
 
 POLICY_ID = "v24289_label_blind_low_coverage_tail_rescue_build_only_v1"
 RECEIPT_ROLE = "v24289_low_coverage_tail_rescue_receipt"
+WAVE_KEYS = frozenset(
+    {
+        "queries_executed",
+        "sources_discovered",
+        "fetches_attempted",
+        "usable_pages",
+        "novel_pages",
+        "new_unique_hosts",
+        "content_chars",
+        "search_seconds",
+        "fetch_seconds",
+        "unrecoverable_search_failures",
+    }
+)
+TOTAL_KEYS = frozenset(
+    (WAVE_KEYS - {"new_unique_hosts"}) | {"unique_hosts"}
+)
+RESCUE_KEYS = frozenset(
+    {
+        "triggered",
+        "reason",
+        "tail_candidates",
+        "fetches_attempted",
+        "usable_pages",
+        "novel_pages",
+        "new_unique_hosts",
+        "content_chars",
+        "fetch_seconds",
+    }
+)
+RESCUE_REASONS = frozenset(
+    {
+        "low_coverage_tail_available",
+        "controller_stop",
+        "coverage_sufficient",
+        "latency_ceiling",
+        "no_tail_or_remaining_budget",
+    }
+)
 RECEIPT_KEYS = frozenset(
     {
         "artifact_version",
@@ -56,6 +95,10 @@ RECEIPT_KEYS = frozenset(
         "total_before_rescue",
         "rescue",
         "total",
+        "controller_search_invocations_before_rescue",
+        "controller_search_invocations_after_rescue",
+        "provider_search_calls_before_rescue",
+        "provider_search_calls_after_rescue",
         "hosted_search_requests_added_by_rescue",
         "same_response_deterministic_tail_only",
         "provider_narrative_or_snippet_forwarded",
@@ -115,6 +158,55 @@ def _queries(values: Sequence[str]) -> list[str]:
 
 def _elapsed(started: float, monotonic: Callable[[], float]) -> float:
     return round(max(0.0, float(monotonic()) - float(started)), 6)
+
+
+def _nonnegative_integer(value: object, *, label: str) -> int:
+    if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+        raise ValueError(f"V2.42.89 {label} is not a nonnegative integer")
+    return value
+
+
+def _nonnegative_number(value: object, *, label: str) -> float:
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        raise ValueError(f"V2.42.89 {label} is not numeric")
+    number = float(value)
+    if not math.isfinite(number) or number < 0:
+        raise ValueError(f"V2.42.89 {label} is invalid")
+    return number
+
+
+def _validate_wave(value: Mapping[str, Any], *, label: str) -> None:
+    if set(value) != WAVE_KEYS:
+        raise ValueError(f"V2.42.89 {label} wave schema drifted")
+    for name in WAVE_KEYS - {"search_seconds", "fetch_seconds"}:
+        _nonnegative_integer(value.get(name), label=f"{label} {name}")
+    for name in ("search_seconds", "fetch_seconds"):
+        _nonnegative_number(value.get(name), label=f"{label} {name}")
+    if (
+        value["sources_discovered"] != value["fetches_attempted"]
+        or value["usable_pages"] > value["fetches_attempted"]
+        or value["novel_pages"] > value["usable_pages"]
+        or value["new_unique_hosts"] > value["usable_pages"]
+        or value["unrecoverable_search_failures"] > value["queries_executed"]
+    ):
+        raise ValueError(f"V2.42.89 {label} wave accounting drifted")
+
+
+def _validate_total(value: Mapping[str, Any], *, label: str) -> None:
+    if set(value) != TOTAL_KEYS:
+        raise ValueError(f"V2.42.89 {label} total schema drifted")
+    for name in TOTAL_KEYS - {"search_seconds", "fetch_seconds"}:
+        _nonnegative_integer(value.get(name), label=f"{label} {name}")
+    for name in ("search_seconds", "fetch_seconds"):
+        _nonnegative_number(value.get(name), label=f"{label} {name}")
+    if (
+        value["sources_discovered"] != value["fetches_attempted"]
+        or value["usable_pages"] > value["fetches_attempted"]
+        or value["novel_pages"] > value["usable_pages"]
+        or value["unique_hosts"] > value["usable_pages"]
+        or value["unrecoverable_search_failures"] > value["queries_executed"]
+    ):
+        raise ValueError(f"V2.42.89 {label} total accounting drifted")
 
 
 def _page_stats(
@@ -318,11 +410,15 @@ def run_low_coverage_rescue(
     remaining = max(0, global_cap - int(total_before["fetches_attempted"]))
     low = _low_coverage(total_before, columns=required_column_count, policy=rescue)
     latency_ok = total_before["search_seconds"] + total_before["fetch_seconds"] <= rescue.maximum_pre_rescue_retrieval_seconds
+    controller_search_before_rescue = int(union.search_invocations)
+    provider_search_before_rescue = max(0, int(getattr(search, "calls", 0) or 0))
     rescue_leads = unique_tail[: min(rescue.maximum_rescue_fetches, remaining)] if controller["decision"] == "expand" and low and latency_ok else []
     rescue_fetch_started = float(monotonic())
     rescue_pages = union.fetch_urls(rescue_leads) if rescue_leads else []
     rescue_fetch_seconds = _elapsed(rescue_fetch_started, monotonic) if rescue_leads else 0.0
     rescue_page_stats, fingerprints, hosts = _page_stats(rescue_pages, prior_fingerprints=fingerprints, prior_hosts=hosts)
+    controller_search_after_rescue = int(union.search_invocations)
+    provider_search_after_rescue = max(0, int(getattr(search, "calls", 0) or 0))
     rescue_stage = {
         "triggered": bool(rescue_leads),
         "reason": (
@@ -364,7 +460,13 @@ def run_low_coverage_rescue(
         "total_before_rescue": total_before,
         "rescue": rescue_stage,
         "total": total,
-        "hosted_search_requests_added_by_rescue": 0,
+        "controller_search_invocations_before_rescue": controller_search_before_rescue,
+        "controller_search_invocations_after_rescue": controller_search_after_rescue,
+        "provider_search_calls_before_rescue": provider_search_before_rescue,
+        "provider_search_calls_after_rescue": provider_search_after_rescue,
+        "hosted_search_requests_added_by_rescue": max(
+            0, provider_search_after_rescue - provider_search_before_rescue
+        ),
         "same_response_deterministic_tail_only": True,
         "provider_narrative_or_snippet_forwarded": False,
         "fetched_page_text_is_only_active_evidence": True,
@@ -405,10 +507,94 @@ def validate_receipt(value: Mapping[str, Any]) -> None:
     ):
         raise ValueError("V2.42.89 rescue receipt identity drifted")
     RescuePolicy(**dict(policy)).validate()
+    two_wave = value.get("two_wave_policy")
+    first = value.get("first_wave")
+    second = value.get("second_wave")
+    if not isinstance(two_wave, Mapping) or not isinstance(first, Mapping) or not isinstance(second, Mapping):
+        raise ValueError("V2.42.89 nested policy or wave is absent")
+    frozen_two_wave = TwoWavePolicy(**dict(two_wave))
+    frozen_two_wave.validate()
+    _validate_wave(first, label="first")
+    _validate_wave(second, label="second")
+    _validate_total(total_before, label="pre-rescue")
+    _validate_total(total, label="final")
     controller = value.get("controller")
     if not isinstance(controller, Mapping):
         raise ValueError("V2.42.89 controller receipt is absent")
     validate_controller_receipt(controller)
+    if dict(controller.get("policy") or {}) != dict(two_wave):
+        raise ValueError("V2.42.89 controller policy binding drifted")
+    if (
+        controller.get("first_wave", {}).get("queries_executed") != first["queries_executed"]
+        or controller.get("first_wave", {}).get("sources_discovered") != first["sources_discovered"]
+        or controller.get("first_wave", {}).get("fetches_attempted") != first["fetches_attempted"]
+        or controller.get("first_wave", {}).get("usable_pages") != first["usable_pages"]
+        or controller.get("first_wave", {}).get("novel_pages") != first["novel_pages"]
+        or controller.get("first_wave", {}).get("unique_hosts") != first["new_unique_hosts"]
+        or controller.get("first_wave", {}).get("content_chars") != first["content_chars"]
+        or controller.get("first_wave", {}).get("search_seconds") != first["search_seconds"]
+        or controller.get("first_wave", {}).get("fetch_seconds") != first["fetch_seconds"]
+        or controller.get("first_wave", {}).get("unrecoverable_search_failures")
+        != first["unrecoverable_search_failures"]
+    ):
+        raise ValueError("V2.42.89 controller observation binding drifted")
+    if set(rescue) != RESCUE_KEYS or not isinstance(rescue.get("triggered"), bool) or rescue.get("reason") not in RESCUE_REASONS:
+        raise ValueError("V2.42.89 rescue stage schema drifted")
+    for name in RESCUE_KEYS - {"triggered", "reason", "fetch_seconds"}:
+        _nonnegative_integer(rescue.get(name), label=f"rescue {name}")
+    _nonnegative_number(rescue.get("fetch_seconds"), label="rescue fetch seconds")
+    if (
+        rescue["usable_pages"] > rescue["fetches_attempted"]
+        or rescue["novel_pages"] > rescue["usable_pages"]
+        or rescue["new_unique_hosts"] > rescue["usable_pages"]
+    ):
+        raise ValueError("V2.42.89 rescue stage accounting drifted")
+    before_expected = {
+        "queries_executed": first["queries_executed"] + second["queries_executed"],
+        "sources_discovered": first["sources_discovered"] + second["sources_discovered"],
+        "fetches_attempted": first["fetches_attempted"] + second["fetches_attempted"],
+        "usable_pages": first["usable_pages"] + second["usable_pages"],
+        "novel_pages": first["novel_pages"] + second["novel_pages"],
+        "content_chars": first["content_chars"] + second["content_chars"],
+        "search_seconds": round(float(first["search_seconds"]) + float(second["search_seconds"]), 6),
+        "fetch_seconds": round(float(first["fetch_seconds"]) + float(second["fetch_seconds"]), 6),
+        "unrecoverable_search_failures": first["unrecoverable_search_failures"] + second["unrecoverable_search_failures"],
+    }
+    if any(total_before[name] != expected for name, expected in before_expected.items()):
+        raise ValueError("V2.42.89 pre-rescue total does not equal its waves")
+    if total_before["unique_hosts"] != first["new_unique_hosts"] + second["new_unique_hosts"]:
+        raise ValueError("V2.42.89 pre-rescue host accounting drifted")
+    decision = controller.get("decision")
+    if decision == "stop" and any(second[name] for name in WAVE_KEYS):
+        raise ValueError("V2.42.89 stop decision retained a second-wave effect")
+    if decision == "expand" and second["queries_executed"] != controller.get("delta_budget", {}).get("queries"):
+        raise ValueError("V2.42.89 expand decision did not consume its query delta")
+    rescue_config = RescuePolicy(**dict(policy))
+    low = _low_coverage(total_before, columns=int(value.get("required_column_count", 0)), policy=rescue_config)
+    latency_ok = (
+        float(total_before["search_seconds"]) + float(total_before["fetch_seconds"])
+        <= rescue_config.maximum_pre_rescue_retrieval_seconds
+    )
+    remaining = max(0, frozen_two_wave.wave1_fetches + frozen_two_wave.wave2_fetches - int(total_before["fetches_attempted"]))
+    should_trigger = decision == "expand" and low and latency_ok and rescue["tail_candidates"] > 0 and remaining > 0
+    expected_fetches = min(rescue_config.maximum_rescue_fetches, remaining, int(rescue["tail_candidates"])) if should_trigger else 0
+    expected_reason = (
+        "low_coverage_tail_available" if should_trigger else
+        "controller_stop" if decision == "stop" else
+        "coverage_sufficient" if not low else
+        "latency_ceiling" if not latency_ok else
+        "no_tail_or_remaining_budget"
+    )
+    if rescue["triggered"] != should_trigger or rescue["fetches_attempted"] != expected_fetches or rescue["reason"] != expected_reason:
+        raise ValueError("V2.42.89 rescue trigger predicate drifted")
+    for name in (
+        "controller_search_invocations_before_rescue",
+        "controller_search_invocations_after_rescue",
+        "provider_search_calls_before_rescue",
+        "provider_search_calls_after_rescue",
+        "hosted_search_requests_added_by_rescue",
+    ):
+        _nonnegative_integer(value.get(name), label=name)
     if (
         int(rescue.get("fetches_attempted", -1)) > int(policy["maximum_rescue_fetches"])
         or int(total["queries_executed"]) != int(total_before["queries_executed"])
@@ -418,6 +604,11 @@ def validate_receipt(value: Mapping[str, Any]) -> None:
         or int(total["content_chars"]) != int(total_before["content_chars"]) + int(rescue["content_chars"])
         or (not rescue.get("triggered") and int(rescue["fetches_attempted"]) != 0)
         or (rescue.get("triggered") and value.get("controller", {}).get("decision") != "expand")
+        or value["controller_search_invocations_before_rescue"]
+        != value["controller_search_invocations_after_rescue"]
+        or value["provider_search_calls_before_rescue"]
+        != value["provider_search_calls_after_rescue"]
+        or value["hosted_search_requests_added_by_rescue"] != 0
     ):
         raise ValueError("V2.42.89 rescue accounting drifted")
 
