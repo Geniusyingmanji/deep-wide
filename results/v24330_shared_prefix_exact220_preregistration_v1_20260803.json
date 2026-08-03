@@ -1,0 +1,170 @@
+{
+  "artifact_version": 1,
+  "role": "v24330_shared_prefix_exact220_preregistration",
+  "protocol_id": "v24330_shared_prefix_entropy_paired_exact220_v1",
+  "created_at_unix": 1785776091,
+  "forward_contract_sha256": "09e00aa9749c6600d4d827f6c9220f35c4899db69ccd0fb9fe08560132200d79",
+  "selected_pair_tasks": 220,
+  "prediction_rows_per_arm": 220,
+  "forward_concurrency": 8,
+  "model_slot_cap": 2,
+  "evaluator_workers_per_arm": 8,
+  "total_evaluator_workers": 16,
+  "comparison_contract": {
+    "single_shared_prefix_forward_per_task": true,
+    "baseline_core_only_candidate_entropy_gated_reserve": true,
+    "baseline_rows_never_deleted": true,
+    "unsupported_candidate_changes_revert_to_baseline": true,
+    "both_arms_frozen_before_mapping_or_evaluator_open": true,
+    "same_task_forward_failure_counts_zero_for_both_arms": true,
+    "no_single_arm_retry_or_revaluation": true,
+    "public_reused_tasks_not_unseen_or_strict_held_out": true,
+    "test156_primary_mechanism_report_not_future_population_claim": true,
+    "all220_complete_secondary_report": true
+  },
+  "evaluation_contract": {
+    "fixed_eight_contiguous_workers_per_arm": true,
+    "all_frozen_completed_predictions_evaluated_once": true,
+    "forward_and_evaluator_failure_as_zero": true,
+    "catastrophic_worker_failure_becomes_terminal_error_rows_no_retry": true,
+    "selective_retry_error_revaluation_or_prediction_selection": false,
+    "report_groups": [
+      "test_156",
+      "all_220"
+    ],
+    "conservative_denominators": {
+      "test_156": 156,
+      "all_220": 220
+    }
+  },
+  "decision_contract": {
+    "primary_report_group": "test_156",
+    "secondary_complete_group": "all_220",
+    "minimum_test156_quality_composite_delta": 0.0,
+    "minimum_test156_entity_acc_delta": -0.01,
+    "minimum_test156_f1_by_row_delta": 0.0,
+    "minimum_test156_f1_by_item_delta": 0.0,
+    "minimum_test156_column_f1_delta": 0.0,
+    "minimum_all220_quality_composite_delta": 0.0,
+    "minimum_all220_whole_table_success_delta": 0,
+    "minimum_candidate_all220_whole_table_successes": 8,
+    "minimum_candidate_all220_quality_composite": 0.4135414180682089,
+    "maximum_candidate_evaluator_invalid_or_not_run": 14,
+    "maximum_candidate_minus_baseline_evaluator_invalid": 2,
+    "maximum_failed_pair_tasks": 5,
+    "minimum_candidate_nonidentity_tasks": 1,
+    "minimum_admitted_cell_changes": 1,
+    "minimum_credited_conditional_entropy_reduction_nats": 1e-06,
+    "required_repeated_upstream_effects": 0,
+    "maximum_slot_timeouts": 0,
+    "maximum_provider_deadline_failures": 0,
+    "maximum_hard_fetch_deadline_failures": 4,
+    "maximum_fetch_helper_failures": 4,
+    "maximum_hosted_search_deadline_failures": 4,
+    "maximum_fetch_deadline_rejections": 4,
+    "maximum_deadline_exhausted_tasks": 4,
+    "minimum_test156_paired_bootstrap_95_lower_bound": -0.03,
+    "maximum_test156_paired_bootstrap_95_interval_width": 0.1,
+    "minimum_test156_paired_median_delta": 0.0,
+    "paired_bootstrap_seed": 24330,
+    "paired_bootstrap_resamples": 10000
+  },
+  "evaluator_contract": {
+    "release_seal": {
+      "path": "results/full220_v2403_r1_20260725_finalize_seal.json",
+      "sha256": "6353c3d1caa05fc67f750570d3b3e5909d23945cc69b63f479a47c23d6b3c63f"
+    },
+    "released_evaluator_contract": {
+      "path": "outputs/full220_v2403_r1_eval_20260725/run_config.json",
+      "sha256": "b1040a303a71955b8b8d669c497e24100ec2d8de06d73aa30c3496d69a8559e1"
+    },
+    "mapping": {
+      "path": "outputs/runtime_manifest_v1_repro/evaluator_mapping.jsonl",
+      "sha256": "3d6f8f71e8136f5a3fe9385e2511e50a367e220dd84e790ba3c7dec975ab5d86"
+    },
+    "query_data": {
+      "path": "external/Marco-Search-Agent/Marco-DeepResearch-Family/DeepWideSearch/data/overall_20250916.jsonl",
+      "sha256": "4dd18df4ab8d166f14a1458f884fd8e0652f970764e245e868d75947daa5e5cf"
+    },
+    "answer_corpus": {
+      "root": "external/Marco-Search-Agent/Marco-DeepResearch-Family/DeepWideSearch/data/overall_20250916_tables",
+      "manifest_sha256": "5ddc76dd9e9fa4a7080f84e824de6230c62101d2375dee72a0f508b7cfa4ec7e"
+    },
+    "evaluator_source": {
+      "manifest_sha256": "2829e4808226bd35e4e312f024ceded3a9bc2b1e923493e06503278e382ba061"
+    },
+    "judge": {
+      "proxy_url": "http://127.0.0.1:9878/responses",
+      "model": "gpt-5.6-sol",
+      "reasoning_effort": "low",
+      "max_output_tokens": 8192,
+      "timeout_seconds": 600,
+      "max_retries": 12
+    },
+    "recovery_policy": {
+      "explicit_resume_required": true,
+      "committed_success_or_error_is_terminal": true,
+      "committed_rows_must_be_exact_prediction_prefix": true,
+      "canonical_result_file_atomic_replace_per_task": true,
+      "selective_error_retry_allowed": false
+    },
+    "mapping_query_answer_or_gold_bytes_opened_or_hashed": false
+  },
+  "lease_contract": {
+    "path": "outputs/deepwide_benchmark_api.lease.lock",
+    "forward_owner": "v24330_shared_prefix_paired_exact220_forward_v1",
+    "forward_purpose": "label_blind_shared_prefix_paired_exact220_forward",
+    "evaluator_owner": "v24330_shared_prefix_paired_exact220_evaluator_v1",
+    "evaluator_purpose": "postfreeze_both_arm_exact220_official_evaluator"
+  },
+  "outputs": {
+    "forward_contract": "results/v24330_shared_prefix_exact220_forward_contract_v1_20260803.json",
+    "preactivation_audit": "results/v24330_shared_prefix_exact220_preactivation_audit_v1_20260803.json",
+    "activation": "results/v24330_shared_prefix_exact220_activation_v1_20260803.json",
+    "execution_start": "results/v24330_shared_prefix_exact220_execution_start_v1_20260803.json",
+    "forward_result": "results/v24330_shared_prefix_exact220_forward_result_v1_20260803.json",
+    "evaluator_gate": "results/v24330_shared_prefix_exact220_evaluator_gate_v1_20260803.json",
+    "evaluator_start": "results/v24330_shared_prefix_exact220_evaluator_start_v1_20260803.json",
+    "evaluator_root": "outputs/v24330_shared_prefix_exact220_v1_20260803/postfreeze_evaluator",
+    "final_result": "results/v24330_shared_prefix_exact220_result_v1_20260803.json",
+    "postresult_audit": "results/v24330_shared_prefix_exact220_postresult_audit_v1_20260803.json"
+  },
+  "control_manifest": {
+    "scripts/v24330_shared_prefix_exact220_control.py": "eb8453371ced017022cb1a2e0cabd7c55a8ad88f8933d7fa20077b6948cae0b8",
+    "scripts/finalize_v24330_shared_prefix_exact220.py": "71a3914c202179be1e945cc7a1c56b1e83d771dd833a51ae7fe733fbe4426e14",
+    "scripts/run_official_eval_local.py": "ab3d3ba3f15143d9f0f46816d7b9eb61f3f8915172dc14fe50d02b96b645c1ca",
+    "scripts/finalize_fullset_rollout.py": "3e886b73cca2b011853a605091eab0d13004de5edee95b14627d1706d69808e5",
+    "scripts/audit_v24187_phase_liveness.py": "ff776dafe18d2455cf74dbe953d8590b7e36b43bcda658043791f3e27d4b3fd4",
+    "scripts/audit_v24195_lease_owner_compatibility.py": "e0eae4427df3b58db4778d940c417ac1211b03032c9284af7560e015d4a8c4e6",
+    "tests/test_v24330_shared_prefix_exact220.py": "4524039cbd21aeac6e0267ddf7122327589e67dc11b7d6058bd1535bde22f67b",
+    "tests/test_finalize_v24330_shared_prefix_exact220.py": "ad0f3dd984c59411de8051a4e2eafc7cddaee41ff88088420b93a94db7473e1a"
+  },
+  "control_manifest_sha256": "e61e4556de8f635cace30771edc975fc285a86ecceb5b0020e897946e88d1451",
+  "source_policy": {
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "forward_mapping_gold_category_question_type_split_evaluator_score_read": false,
+    "mapping_query_answer_evaluator_open_only_after_both_220_freezes": true,
+    "same_run_evaluator_feedback_used_for_forward_or_prediction_selection": false
+  },
+  "claims": {
+    "fresh_execution": true,
+    "public_task_set_reused": true,
+    "historically_unseen_or_strict_held_out": false,
+    "future_population_inference": false,
+    "avg_at_4": false,
+    "leaderboard_submission": false,
+    "sota_claim_before_result": false
+  },
+  "authorization": {
+    "single_shared_prefix_paired_exact220_forward": true,
+    "postfreeze_both_arm_exact220_evaluation": true,
+    "additional_rollout_resume_skip_selective_retry": false,
+    "avg_at_4": false,
+    "leaderboard_submission": false,
+    "sota_claim": false
+  },
+  "protocol_payload_sha256": "b3c62d0cfdae4162690dbbe255c5cbf4cf427ca801d18905d6c84ac2f984b13b"
+}
