@@ -1,0 +1,111 @@
+{
+  "artifact_version": 1,
+  "role": "v24332_v24330_stratified_effect_aggregate_result",
+  "protocol_id": "v24330_shared_prefix_entropy_paired_exact220_v1",
+  "created_at_unix": 1785781651,
+  "parents": {
+    "v24331_taxonomy_path": "results/v24331_v24330_content_free_taxonomy_v1_20260803.json",
+    "v24331_taxonomy_sha256": "4e93bd759fcd02404e7ae152e61933faca46dda922a67f0e985cbee2cc6e6536",
+    "v24330_forward_nogo_sha256": "e7c6c565d6c318cb748a285ec348c118cf7d5d5a972dd1535b8fbca519be0a04"
+  },
+  "source": {
+    "path": "src/deepwide_agent/v24332_stratified_effect_aggregate.py",
+    "sha256": "6f8596b7feb5c39bbd8015c9c301cbf91ac5ede02293b0b2cb7f14c468d55c8a"
+  },
+  "aggregate": {
+    "artifact_version": 1,
+    "role": "v24332_stratified_effect_aggregate",
+    "policy_id": "v24332_complete_conservation_incomplete_independent_bounds_v1",
+    "selected_tasks": 220,
+    "terminal_kinds": {
+      "complete_fallback": 22,
+      "complete_success": 135,
+      "incomplete_fallback": 63
+    },
+    "complete_tasks": 157,
+    "incomplete_tasks": 63,
+    "complete_task_totals": {
+      "logical_model_admissions": 449,
+      "provider_model_requests": 413,
+      "provider_model_attempts": 434,
+      "pre_provider_model_rejections": 36,
+      "slot_acquisitions": 413,
+      "slot_timeouts": 36
+    },
+    "incomplete_task_independent_lower_bounds": {
+      "slot_acquisitions": 171,
+      "slot_timeouts": 11,
+      "provider_deadline_failures": 4,
+      "hosted_search_attempts": 84,
+      "hosted_search_deadline_failures": 0,
+      "hard_fetch_helper_calls": 583,
+      "hard_fetch_deadline_failures": 4,
+      "fetch_helper_failures": 1,
+      "fetch_deadline_rejections": 0,
+      "deadline_exhausted_tasks": 15,
+      "unattributed_model_effects_lower_bound": 171,
+      "unattributed_model_attempts_lower_bound": 177,
+      "unattributed_search_effects_lower_bound": 84,
+      "unattributed_fetch_effects_lower_bound": 583
+    },
+    "complete_subset_conservation_verified": true,
+    "incomplete_lower_bounds_verified": true,
+    "incomplete_semantic_last_stage_available": false,
+    "incomplete_stage_inferred_or_imputed": false,
+    "global_equality_asserted_across_incomplete_lower_bounds": false,
+    "maximum_incomplete_tasks": 0,
+    "promotion_checks": {
+      "complete_subset_conservation": true,
+      "incomplete_lower_bounds": true,
+      "incomplete_task_count": false
+    },
+    "promotion_passed": false,
+    "aggregate_payload_sha256": "3169b1f90fc7ea963fc5afc8e22b0223161711a78e08fae9d889221238da315e"
+  },
+  "decision": {
+    "status": "validator_correct_forward_still_no_go",
+    "structural_accounting_valid": true,
+    "promotion_passed": false,
+    "failed_checks": [
+      "incomplete_task_count"
+    ],
+    "same_run_evaluation_authorized": false,
+    "new_exact220_authorized": false
+  },
+  "fault_matrix_contract": {
+    "test_path": "tests/test_v24332_stratified_effect_aggregate.py",
+    "required_cases": [
+      "complete_success",
+      "complete_fallback",
+      "incomplete_fallback_valid_lower_bounds",
+      "tampered_lower_bound_rejection"
+    ],
+    "benchmark_external": true,
+    "remote_effects": 0
+  },
+  "boundary": {
+    "postterminal_only": true,
+    "task_receipts_projected_in_memory": 220,
+    "per_task_receipt_identifier_position_hash_or_content_emitted": false,
+    "mapping_gold_category_question_type_split_evaluator_score_read": false,
+    "network_model_search_fetch_or_evaluator_called": false,
+    "same_run_forward_resume_retry_rerun_or_selective_retry": false
+  },
+  "claims": {
+    "aggregate_validator_bug_fixed_append_only": true,
+    "v24330_mechanism_activated": false,
+    "quality_improvement_demonstrated": false,
+    "benchmark_score_available": false,
+    "sota": false
+  },
+  "authorization": {
+    "benchmark_external_evidence_admission_successor": true,
+    "same_run_evaluator": false,
+    "same_run_forward_resume_retry_or_rerun": false,
+    "additional_dev64": false,
+    "new_exact220": false,
+    "leaderboard_submission": false,
+    "sota_claim": false
+  },
+  "result_payload_sha256": "16ccc900f19bfd4757efe17ebc7340e202917d5a31c60e78f462f648e1320934"
+}
