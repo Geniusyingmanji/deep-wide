@@ -1,0 +1,241 @@
+{
+  "artifact_version": 1,
+  "role": "v24298_v24297_paired_dev64_postterminal_diagnosis",
+  "created_at_unix": 1785734816,
+  "parents": {
+    "result_sha256": "3f240fc8010f84ac31b945b2393d8738f1153aa01f583e21c2353fe790b8b4d2",
+    "postresult_audit_sha256": "1ec7551e2dcef3e70b6f005928d5f8ce5aca80485c786d1624b15abd9b8058db",
+    "forward_result_sha256": "43ae5788e4aa2c23b2c95a4ab9545ef0a577418b86dc154e98c14c62f5e96c11",
+    "baseline_summary_sha256": "a11372fb88ed91bfbd1fb96e2d9f9f21ae24376a4e032d965126e1914a62164e",
+    "candidate_summary_sha256": "2e13cf9279c358938be443de4bf44ac6d7ae0420200eec5f197e25efc958849a"
+  },
+  "boundary": {
+    "selected_per_arm": 64,
+    "fixed_denominator_failure_as_zero": true,
+    "both_arm_prediction_freezes_preceded_evaluator": true,
+    "same_judge_full_both_arm_evaluation": true,
+    "postterminal_only": true,
+    "fed_back_into_same_forward": false,
+    "selective_retry_or_error_revaluation": false,
+    "question_prediction_answer_instance_or_opaque_id_emitted": false
+  },
+  "result_summary": {
+    "decision": "no_go",
+    "failed_checks": [
+      "baseline_fallback_tables",
+      "candidate_fallback_tables",
+      "model_generated_table_delta"
+    ],
+    "candidate_minus_baseline": {
+      "quality_composite": 0.022667697493416072,
+      "entity_acc": 0.0,
+      "f1_by_row": 0.026817919341802388,
+      "f1_by_item": 0.03257765805052515,
+      "column_f1": 0.03127521258133681,
+      "whole_table_successes": 1,
+      "model_generated_tables": -5
+    },
+    "system_token_ratio": 0.9968206943486747,
+    "task_wall_sum_ratio": 0.9703406161985156
+  },
+  "reliability": {
+    "failure_taxonomy": {
+      "baseline": {
+        "fallback_count": 1,
+        "all_failed_model_events_by_stage": {
+          "plan": 2,
+          "synthesis": 1
+        },
+        "fallback_failed_model_events_by_stage": {
+          "synthesis": 1
+        },
+        "fallback_with_retrieval_failure": 0,
+        "fallback_with_fetch_helper_failure": 0
+      },
+      "candidate": {
+        "fallback_count": 6,
+        "all_failed_model_events_by_stage": {
+          "plan": 1,
+          "repair": 1,
+          "synthesis": 5
+        },
+        "fallback_failed_model_events_by_stage": {
+          "repair": 1,
+          "synthesis": 5
+        },
+        "fallback_with_retrieval_failure": 0,
+        "fallback_with_fetch_helper_failure": 0
+      }
+    },
+    "transport": {
+      "baseline": {
+        "hard_fetch_deadline_failures": 6,
+        "fetch_helper_failures": 0
+      },
+      "candidate": {
+        "hard_fetch_deadline_failures": 3,
+        "fetch_helper_failures": 0
+      }
+    },
+    "fallback_pairs": [
+      {
+        "position": 5,
+        "baseline_completion_kind": "primary",
+        "candidate_completion_kind": "best_effort_fallback",
+        "baseline_failed_model_stages": [],
+        "candidate_failed_model_stages": [
+          "synthesis"
+        ],
+        "candidate_reserved_reason": "low_coverage_diversity_tail",
+        "paired_composite_delta": 0.0
+      },
+      {
+        "position": 18,
+        "baseline_completion_kind": "primary",
+        "candidate_completion_kind": "best_effort_fallback",
+        "baseline_failed_model_stages": [],
+        "candidate_failed_model_stages": [
+          "synthesis"
+        ],
+        "candidate_reserved_reason": "no_reserved_candidates",
+        "paired_composite_delta": -0.6968390804597702
+      },
+      {
+        "position": 30,
+        "baseline_completion_kind": "primary",
+        "candidate_completion_kind": "best_effort_fallback",
+        "baseline_failed_model_stages": [],
+        "candidate_failed_model_stages": [
+          "synthesis"
+        ],
+        "candidate_reserved_reason": "controller_stop",
+        "paired_composite_delta": -1.0
+      },
+      {
+        "position": 31,
+        "baseline_completion_kind": "primary",
+        "candidate_completion_kind": "best_effort_fallback",
+        "baseline_failed_model_stages": [],
+        "candidate_failed_model_stages": [
+          "synthesis"
+        ],
+        "candidate_reserved_reason": "controller_stop",
+        "paired_composite_delta": -0.63
+      },
+      {
+        "position": 34,
+        "baseline_completion_kind": "best_effort_fallback",
+        "candidate_completion_kind": "primary",
+        "baseline_failed_model_stages": [
+          "synthesis"
+        ],
+        "candidate_failed_model_stages": [],
+        "candidate_reserved_reason": "no_reserved_candidates",
+        "paired_composite_delta": 0.8333333333333334
+      },
+      {
+        "position": 35,
+        "baseline_completion_kind": "primary",
+        "candidate_completion_kind": "best_effort_fallback",
+        "baseline_failed_model_stages": [],
+        "candidate_failed_model_stages": [
+          "synthesis"
+        ],
+        "candidate_reserved_reason": "no_reserved_candidates",
+        "paired_composite_delta": 0.0
+      },
+      {
+        "position": 42,
+        "baseline_completion_kind": "repaired",
+        "candidate_completion_kind": "best_effort_fallback",
+        "baseline_failed_model_stages": [],
+        "candidate_failed_model_stages": [
+          "repair"
+        ],
+        "candidate_reserved_reason": "controller_stop",
+        "paired_composite_delta": 0.0
+      }
+    ],
+    "candidate_extra_fallbacks": 5
+  },
+  "paired_quality": {
+    "all64_composite": {
+      "count": 64,
+      "mean": 0.02266769749341608,
+      "median": 0.0,
+      "positive": 27,
+      "zero": 24,
+      "negative": 13,
+      "minimum": -1.0,
+      "maximum": 0.8333333333333334,
+      "exploratory_task_bootstrap": {
+        "seed": 24298,
+        "resamples": 10000,
+        "estimand": "mean paired composite delta on frozen fresh dev64 only",
+        "percentile_95_interval": [
+          -0.048977769426626606,
+          0.09537077007160666
+        ],
+        "future_task_or_held_out_population_inference": false,
+        "confirmatory": false
+      }
+    },
+    "candidate_path_groups": {
+      "low_coverage_diversity_tail": {
+        "count": 10,
+        "mean": 0.016663417299286866,
+        "median": 0.0,
+        "positive": 4,
+        "zero": 5,
+        "negative": 1,
+        "minimum": -0.008101851851851832,
+        "maximum": 0.11750000000000002
+      },
+      "other_candidate_paths": {
+        "count": 54,
+        "mean": 0.023779601233069637,
+        "median": 0.0,
+        "positive": 23,
+        "zero": 19,
+        "negative": 12,
+        "minimum": -1.0,
+        "maximum": 0.8333333333333334
+      }
+    }
+  },
+  "mechanism_activation": {
+    "low_coverage_diversity_tail_tasks": 10,
+    "selected_tail_count": 20,
+    "reserved_usable_pages": 22,
+    "hosted_search_requests_added_by_reserved": 0,
+    "cache_miss_count": 0,
+    "cache_serve_network_fetches": 0
+  },
+  "conclusions": {
+    "quality_direction_positive": true,
+    "mechanism_naturally_engaged": true,
+    "candidate_transport_worse_than_baseline": false,
+    "candidate_extra_fallbacks_explained_by_model_stage_failures": true,
+    "reliability_gate_passed": false,
+    "exact220_authorized": false,
+    "sota": false
+  },
+  "next_experiment": {
+    "stage": "neutral_provider_failure_recovery_before_any_new_benchmark",
+    "target": "reuse only an otherwise-unused third logical model-call slot after synthesis provider failure; preserve the three-call cap and all retrieval budgets",
+    "must_not": [
+      "rerun_or_revalue_v24297_tasks",
+      "increase_search_query_or_fetch_budget",
+      "read_mapping_gold_category_question_type_or_evaluator_at_runtime"
+    ],
+    "benchmark_dev64_or_exact220_launch": false
+  },
+  "authorization": {
+    "training_credit_assignment": false,
+    "additional_dev64": false,
+    "exact220": false,
+    "leaderboard_submission": false,
+    "sota_claim": false
+  },
+  "diagnosis_payload_sha256": "2b78a28f22990acea9c819208040c0d6548ed90badffffa8340b1aa5088f1e40"
+}
