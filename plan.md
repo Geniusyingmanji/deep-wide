@@ -2445,6 +2445,16 @@ terminal-only shadow aggregate 已覆盖 7 个终态中的 5 个有信号任务�
 3. 当前 build-only 新测试 `8/8`、V2.42.99 回归 `8/8` 通过：故障注入下两臂 receipt 除 arm 外完全一致；baseline 精确执行 `6+4`，candidate 精确执行 `6+2+2` 且 reserved stage 不增加 hosted-search request；privileged input 在任何 model/search effect 前拒绝；receipt 不含题目、opaque ID、预测或异常消息。若 child 在已有模型 effect 后异常退出，parent-exit projection 用 `effect_attribution_complete=false` 与 `unattributed_model_effects` 保留已知请求数，不猜测 stage，也不伪造 zero-effect。
 4. 这一步尚未创建 paired-dev64 protocol、runner、activation 或 evaluator，不授权任何 benchmark effect。下一步是以该 runtime、cap=2 和 V2.43.09 receipts 构建 create-exclusive forward contract/runner，并先完成 benchmark 外真实 child/parent smoke、dependency/hash audit 与 label-blind preactivation gate。
 
+### V2.43.42–46 语义支持熵门与 fresh paired-dev64 结论（2026-08-03 20:13 UTC）
+
+1. V2.43.42/43 将原先只在账本中出现的熵信号改成可重放的 active treatment：baseline 与 candidate 共享同一批原始搜索/抓取页面，candidate 只增加程序化语义投影、多 host 支持集和确定性条件熵门。forward 输入严格为 `{opaque_id, question}`，禁止读取 category、question_type、split、mapping、gold、evaluator 或 score。
+2. V2.43.45 的 12 个 benchmark-external real-web task 在 8 路 executor、全局 2 个 GPT 槽下 `12/12` 成功，墙钟 `95.795s`；11 个任务产生 66 个语义投影，2 个任务形成 6 个合格支持集，最终 1 个 candidate 非恒等、2 个单元格被接纳且熵 credit 为正。该门只证明自然网页上机制可激活，不证明 benchmark 质量。
+3. V2.43.46 是一次 fresh、single-shared-forward paired dev64：固定 64 个 dev+validation opaque ID，baseline/candidate 共享 plan/search/fetch/raw pages，只有 candidate 使用语义支持与熵门。8 路 task executor 受全局 2 个 model slot 限制；双臂各 `64/64` 成功并在 evaluator 打开前冻结，forward `825.430s`，无 resume、skip、selective retry 或 rerun。
+4. 机制实际激活但覆盖稀疏：3 个任务产生 16 个语义投影，4 个任务形成 55 个合格支持集，4 个任务获准调用 revision model，3 个进入 revision gate，2 个 candidate 非恒等；共提出并接纳 6 个单元格变化，累计 credited conditional entropy reduction `1.859574 nats`。这证明“熵增益可驱动 credit/admission”，但不证明 credit 与 evaluator utility 对齐。
+5. 双臂冻结后才运行当前同一 GPT-5.6 evaluator。baseline 64 行各评一次；candidate 的 62 个同 prediction-hash 行逐行复用对应 baseline evaluator row，只对 2 个变化预测新评，避免 evaluator 随机性伪装成 treatment effect。两臂均为 whole-table `4/64=6.25%`、Composite `0.299693`、Entity `0.453125`、Row/Item/Column F1 `0.139842/0.267887/0.337919`，所有 paired quality delta 精确为 0；bootstrap 64/64 task delta 也全为 0。
+6. V2.43.46 严格 **NO-GO**。质量没有退化，但 6 个获熵 credit 的格子没有带来任何 evaluator 增益；同时只有 `43/64` task 有完整 shared-raw/fetch-before-baseline/effect accounting，发生 1 次 slot timeout、2 次 provider deadline、6 次 hard-fetch deadline、2 个 deadline-exhausted task。post-result audit `findings=[]`，mapping 仅在双臂 freeze 后打开，受保护 watcher identity 未变；不授权 exact-220、额外 dev64、leaderboard 或 SOTA。
+7. 下一步不得针对已评分的 2 个变化任务调阈值，也不得复跑/重评 V2.43.46。先做 append-only benchmark-external transport gate：将 per-task hard deadline 分解为排队时间与 provider/fetch active time，确保 slot wait 不消耗模型执行预算，并要求完整 effect accounting、shared raw pages 与 fetch-before-baseline 达到全覆盖。随后在 benchmark-external synthetic/real-web counterfactual set 上把 credit 从“条件熵下降”升级为 `entropy reduction × independent support novelty × contradiction safety × downstream sensitivity`，要求已接纳变化能改变一个与 proposal 独立的 deterministic verifier outcome；只有 transport 与 utility-alignment 两门均 GO，才冻结新的 fresh paired-dev64。该 dev64 严格 GO 后才可设计新的完整 220。
+
 ## 15. 完成定义
 
 项目只有在以下条件全部满足时才算完成：
