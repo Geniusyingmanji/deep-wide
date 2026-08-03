@@ -2320,7 +2320,7 @@ terminal-only shadow aggregate 已覆盖 7 个终态中的 5 个有信号任务�
 
 1. 新 runtime 直接复用已审计的 V2.42.99 bounded synthesis recovery wrapper，而不是拼接 V2.42.97 与 V2.43.03 的不兼容 arm 语义。baseline 调用 V2.42.86 visible-schema `6+4`，candidate 调用 V2.42.96 visible-schema `6+2+2`；两臂均启用同一个三调用 recovery wrapper，未知异常只以 V2.43.08 固定粗粒度枚举进入 total fallback。
 2. 新实验 receipt 对两臂使用同一固定 schema，`recovery_enabled=true`、model-call cap=3，并绑定 plan/initial synthesis/recovery/repair effect、provider requests/attempts 与 fourth-effect=false。双重 provider failure 仍保留真实 `3` 次 effect/request 账本，不会错误投影为 zero-effect；normal success/repair 不误触发 recovery。
-3. 当前 build-only 新测试 `7/7`、V2.42.99 回归 `8/8` 通过：故障注入下两臂 receipt 除 arm 外完全一致；baseline 精确执行 `6+4`，candidate 精确执行 `6+2+2` 且 reserved stage 不增加 hosted-search request；privileged input 在任何 model/search effect 前拒绝；receipt 不含题目、opaque ID、预测或异常消息。
+3. 当前 build-only 新测试 `8/8`、V2.42.99 回归 `8/8` 通过：故障注入下两臂 receipt 除 arm 外完全一致；baseline 精确执行 `6+4`，candidate 精确执行 `6+2+2` 且 reserved stage 不增加 hosted-search request；privileged input 在任何 model/search effect 前拒绝；receipt 不含题目、opaque ID、预测或异常消息。若 child 在已有模型 effect 后异常退出，parent-exit projection 用 `effect_attribution_complete=false` 与 `unattributed_model_effects` 保留已知请求数，不猜测 stage，也不伪造 zero-effect。
 4. 这一步尚未创建 paired-dev64 protocol、runner、activation 或 evaluator，不授权任何 benchmark effect。下一步是以该 runtime、cap=2 和 V2.43.09 receipts 构建 create-exclusive forward contract/runner，并先完成 benchmark 外真实 child/parent smoke、dependency/hash audit 与 label-blind preactivation gate。
 
 ## 15. 完成定义

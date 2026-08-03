@@ -18,6 +18,7 @@ from deepwide_agent.v24272_two_wave_entropy_voc import TwoWavePolicy  # noqa: E4
 from deepwide_agent.v24294_staged_reserve import StagedReservePolicy  # noqa: E402
 from deepwide_agent.v24310_paired_dev_runtime import (  # noqa: E402
     RECEIPT_FIELD,
+    parent_exit_receipt,
     run_v24310_task,
     validate_v24310_result,
 )
@@ -161,6 +162,16 @@ class V24310PairedDevRuntimeTests(unittest.TestCase):
             "| a |",
         ):
             self.assertNotIn(forbidden.casefold(), encoded)
+
+    def test_parent_exit_preserves_effect_count_without_guessing_stage(self) -> None:
+        value = parent_exit_receipt(
+            "baseline", provider_requests=3, provider_attempts=5
+        )
+        self.assertFalse(value["effect_attribution_complete"])
+        self.assertEqual(value["unattributed_model_effects"], 3)
+        self.assertEqual(value["total_effects_admitted"], 3)
+        self.assertFalse(any(value["effects_by_stage"].values()))
+        self.assertEqual(value["provider_attempts_delta"], 5)
 
 
 if __name__ == "__main__":
