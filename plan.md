@@ -2251,6 +2251,8 @@ terminal-only shadow aggregate 已覆盖 7 个终态中的 5 个有信号任务�
 6. staged-reserve 的进入条件：中性/合成故障注入证明 stop 路径不变、expand+sufficient 路径不劣化、expand+low-coverage 必须实际激活 reserved slots、总 query≤4/总 fetch≤10、新增 hosted-search request=0、cache miss=0、网络 fetch 不越界、receipt 可重算且不含问题/URL/页面/预测/凭据。通过只授权新的独立 dev64 设计；仍须预注册 effect-engagement 最低样本、固定 evaluator-invalid failure-as-zero 门和 paired uncertainty。只有新的 dev64 同时通过质量、成本、机制激活与 evaluator-health 门，才可设计而不能直接启动 fresh 220。
 7. evaluator invalid taxonomy 仅作离线诊断：control 为 2 个 internal error；candidate 为 2 个 internal error + 1 个 upstream out-of-range column metric。禁止选择性重评这 5 个结果；未来实验应在预注册前以 evaluator 故障注入验证固定分母/越界隔离，不得用同一题重评来消除 NO-GO。
 8. V2.42.92 仅是 evaluator-only fail-closed recovery：首次 finalizer 因缺失 `CONTROL_RESULT` 导入在 evaluator root/API 前退出；恢复协议绑定失败日志与旧 freeze，只注入两个既有 control path 常量并完整 fresh 评测两臂。它没有 forward、额外 rollout 或 exact-220 权限。保护 watcher PID `795336`、`3061652` 继续只读保留，不重启或重复启动。
+9. V2.42.94 已实现 benchmark 外的 staged reserve 内核，固定 `6 first + 2 observation + 2 reserved`，总 query/fetch 上限仍为 `4/10`。stop 路径无 reserved effect；expand+coverage-sufficient 使用原 ranked continuation；expand+low-coverage 才选择与 ranked continuation 互斥、优先 unseen-host 的 same-response tail；reserved 阶段不新增 hosted-search request。V2.42.72/89/90/94/95 联合回归为 `26/26`，label-blind/secret scan 通过。
+10. V2.42.95 真实 keyless GPT-5.6 中性故障注入门为 GO（18/18）：真实执行前 8 个 fetch 但仅在内存屏蔽其结果，最后 2 个 reserved fetch 原样返回；观察到 `4 queries / 10 fetches`、tail `2`、reserved usable pages `2`、content chars `0→8,874`、reserved 新增 hosted-search `0`、墙钟 `16.66s`。该结果只证明机制稳健性，不测自然触发频率或 benchmark quality；只授权 successor dev64 的设计，`successor_dev64_launch=false`、`exact220_launch=false`。下一步须先冻结总 candidate runtime/forward contract、效应激活门和 evaluator-health failure-as-zero 门，再审计并另行决定是否启动一次新的独立 dev64。
 
 ## 15. 完成定义
 
