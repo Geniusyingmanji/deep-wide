@@ -1,6 +1,12 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.10
+> 版本：6.11
+>
+> **6.11 V2.43.19 deadline-safe real runner integration GO（2026-08-03）：新 benchmark-agnostic runner 将 V2.43.18 两条守恒、V2.43.16 hosted-search/fetch absolute deadline、V2.43.13 model slot/provider deadline 与 V2.43.09 child/parent receipt 串入同一真实 subprocess 边界。model/search 必须共享 exact absolute deadline、cleanup reserve 与 minimum-attempt；正常 child 的 sealed result bundle 现场交叉要求 `logical admissions = slot acquisitions(provider requests) + slot timeouts(pre-provider rejection)`。parent 在 nonzero/timeout/缺坏 artifact 时只发布 `logical/provider/rejection` 下界与 cap=3 上界，`effect_count_complete=false`，不再因 model receipt 存在就伪造 exact equality或zero effect。
+>
+> protocol 在远程提交 `8947de0` 前冻结，随后唯一正式 benchmark-external probe 启动11个本地 Python child：baseline/candidate success、slot reject、两臂 cache defer 均为完整 parent `success` envelope；slot reject 精确为 `logical=2 / provider=0 / rejected=2`。nonzero、hard timeout、missing/invalid result、missing model、missing transport 六类 taxonomy 与预注册完全一致，均未伪装成功。remote network/model provider/hosted-search/fetch/evaluator effect 全0，临时目录与 child 全清除。定向/编排测试 `13/13`，post-audit `findings=[]`、privileged AST access与credential literal均空，保护 watcher PID `795336/3061652` 身份未变。
+>
+> 权威工件为 `results/v24319_runner_integration_preregistration_v1_20260803.json`、`results/v24319_runner_integration_probe_v1_20260803.json`、`results/v24319_runner_integration_decision_v1_20260803.json`、`results/v24319_runner_integration_postresult_audit_v1_20260803.json`。严格结论只为 neutral runner integration GO：授权下一次 fresh paired-dev64 **设计**，`paired_dev64_launch=false`、exact220/evaluator/leaderboard/SOTA全 false。下一设计应保持 V2.43.14 的同题交错64×2、executor=8、global GPT cap=2、prompt/model/`6+4` vs `6+2+2`/共同 recovery/预算/evaluator不变，只把两臂 runner升级为 V2.43.19；必须冻结 dependency manifest、forward contract、preactivation audit、真实无网 smoke与 launch activation 后，才可另行启动。**
 >
 > **6.10 V2.43.18 deadline-conserving accounting build GO（2026-08-03）：append-only runtime 未修改 V2.42.57/73/96/99、V2.43.10/12/16 任一旧文件，也未改变 prompt、模型、三次 model-call、四 query、十 fetch 或两臂 retrieval schedule。新 fixed-schema model receipt 显式按 `plan / synthesis_initial / synthesis_recovery / repair` 分开 logical admission、provider request/attempt 与 pre-provider rejection，并机械要求 `logical = provider + rejected`；若 synthesis 在 provider 前已被 deadline/slot 拒绝，不再在 cleanup reserve 内发第二个必败 recovery。新 fixed-schema cache receipt 对 baseline `6+4` 与 candidate `6+2+2` 同时要求 `cached usable = returned + deadline-deferred`、`requested = returned + miss`，deadline 后未 serve 的缓存页不再被误判为 effect drift；两张 receipt 依靠 exact-schema 与交叉守恒 fail closed，未来 V2.43.19 再对完整 result/receipt bundle 做 SHA-256 sealed envelope。
 >
