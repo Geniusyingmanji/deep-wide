@@ -1,0 +1,43 @@
+{
+  "artifact_version": 1,
+  "role": "v24321_v24320_evaluator_guard_preregistration",
+  "policy_id": "v24321_v24320_fail_closed_evaluator_guard_v1",
+  "created_at_unix": 1785765964,
+  "parent_provenance": {
+    "forward_contract_sha256": "599514fa9a03aaca75c65d3f814d6b25538927227e197f6d55ca490b5c75bd72",
+    "protocol_sha256": "45e244296882764cf8b5e3c3da6d3250ba05bd318b3ce3e0b5bd04c2c916a200",
+    "activation_sha256": "18ab2acc047f2c90a41a3023a838ce6db76906e9b88849265f2f96ce2c37af1b",
+    "execution_start_sha256": "223bd11fc5c8152b90140b75483f153ee6365da64e744f48ceaa3ab907f067a2"
+  },
+  "required_checks": [
+    "both arms exact64 and frozen",
+    "64 valid parent, child, model, and transport receipts per arm",
+    "64 accepted parent successes and zero non-success per arm",
+    "zero incomplete effect counts and exact conservation per arm",
+    "runner and children absent; shared lease inactive",
+    "protected watcher identities unchanged",
+    "evaluator surface absent before positive decision"
+  ],
+  "source_manifest": {
+    "src/deepwide_agent/v24321_v24320_evaluator_guard.py": "10fd1868d456f0b041a3f77c3cd05eecb0cf9ce9bef28df6e91c5dbc22adb795",
+    "scripts/preregister_v24321_v24320_evaluator_guard.py": "f82784f35b2af1c3c83ab774b527b60fa13f0cc3d842d619e5087ffcf0c96d91",
+    "scripts/publish_v24321_v24320_evaluator_gate.py": "1af15031fddb659346ecace6ac47c777b76dba042c388bf3e4d2678b7d8714d3",
+    "scripts/finalize_v24320_guarded_by_v24321.py": "6cc8efe7cc44159382a551799175edf2474e7935e629e71e2a0e863a3f959aad",
+    "tests/test_v24321_v24320_evaluator_guard.py": "51d01d9a5c7caa41f2a5e881a8a68defe5e926e79dddf86394c254002435a494"
+  },
+  "source_manifest_sha256": "cbb6531a62f4f9752299ee197f66af220242c62be609e61568d6eeb6f8fb1c03",
+  "source_policy": {
+    "runtime_boundary_unchanged": [
+      "opaque_id",
+      "question"
+    ],
+    "mapping_gold_category_question_type_split_evaluator_score_read": false,
+    "network_model_search_fetch_or_evaluator_called": false
+  },
+  "authorization": {
+    "publish_guard_after_forward_freeze": true,
+    "evaluator_before_positive_guard": false,
+    "exact220_leaderboard_or_sota": false
+  },
+  "preregistration_payload_sha256": "069d2fcf5d2bed2671e09b70e422a0c120ee282a5bef78d3e39c7f7f7178f13d"
+}
