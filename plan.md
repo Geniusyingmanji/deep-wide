@@ -1,6 +1,12 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：5.96
+> 版本：5.97
+>
+> **5.97 V2.42.81 shared-root `recursive split` vs `single-shot task-union` 中性门为 NO-GO（2026-08-03 00:37 UTC）：为避免两次独立 hosted search 的随机性，16 组固定公开文档 query pair 每组只共享一个 root response；只有 control 在 root marker 不完整时依照旧 `_run_chunk` 发送递归 suffix requests，candidate 则只把 root action sources 一次性交给 task-union。两臂各自 fetch 各自稳定 first-seen+top-k 选中的最多 6 个页面，不共享 page result。全过程不读 benchmark manifest/题面/mapping/gold/prediction/evaluator，不调用独立 generation model，result 不保存 query/URL/host/page/task ID 或凭据。**
+>
+> 两臂均 `16/16 terminal`，无 arm exception、effective/unrecoverable search failure、hard fetch deadline 或 helper failure。control/candidate 均 admission/fetch `96/96`，usable pages `94/93`（ratio `0.9894`）、usable chars `381836/376244`（`0.9854`）、host sum `45/43`（`0.9556`），证据产出保持。candidate 将 HTTP search calls `18→16`（`0.8889`）、search wall `184.947→160.548s`（`0.8681`）、累计 task wall `214.487→180.484s`（`0.8415`）；但 input/total search token 仅 `253607→235887` / `261612→243310`（均约 `0.930`），未达预注册 `≤0.90/≤0.92`，因而严格 NO-GO。权威结果为 [`results/v24281_single_shot_pair_result_v1_20260803.json`](results/v24281_single_shot_pair_result_v1_20260803.json)，result seal 已现场重验，lease 自然释放，未 kill/quarantine 任何运行。
+>
+> 机制上，16 组仅 1 组真正触发 2 个 suffix request，节省几乎全集中在该组；其余 15 组两臂 search token 逐组精确相同。因此 single-shot 是有效的长尾延迟修复，但不是 native hosted-search 高 token 的主解，当前不并入正式 successor，也不授权 dev64/220。下一成本杠杆必须作用于每题固定主体：先优先做 direct search API（Tavily）vs Azure hosted-search 的中性同-query/page-yield/cost 配对，因为 direct API 不消耗 GPT hosted-search input tokens；若 live key 不可用，则作为正交方案比较 `wave1_queries=1` 与现有 `2`，只在 calibrated terminal-risk 不足时扩展。两条都必须先过不含 benchmark/evaluator 的中性门。
 >
 > **5.96 V2.42.79 synthesis factorial 中性门为 NO-GO（2026-08-03 00:15 UTC）：在不读取 benchmark manifest/题面/mapping/gold/prediction/evaluator、不调用搜索或 fetch 的前提下，对 8 个合成表格 case 完成 `reasoning low/none × free Markdown/strict JSON` 的 32 个单请求配对因子实验。四臂均 `8/8 terminal`，且每臂 72/72 个单元格与预注册合成值精确相等，因此成本比较没有用丢内容换速度。**
 >
