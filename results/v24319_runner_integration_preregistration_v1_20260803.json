@@ -1,0 +1,68 @@
+{
+  "artifact_version": 1,
+  "role": "v24319_runner_integration_preregistration",
+  "protocol_id": "v24319_benchmark_external_deadline_conservation_runner_v1",
+  "created_at_unix": 1785763557,
+  "parents": {
+    "results/v24318_deadline_conservation_build_audit_v2_20260803.json": "22f806c62ff23c973473de68830fe7ea8f7f928e3672411d52de9496e6b70d5b",
+    "results/v24316_deadline_search_build_audit_v3_20260803.json": "b3e49e06a26a16ddfebc04be68d527a29bd49df7a3b9ffb9449dd7e162cebd54",
+    "results/v24317_v24315_outer_totality_diagnosis_audit_v1_20260803.json": "dd9cab611c61d9cf7c2cfa284068fcaafb8036e0a62588ec06eedae5004ae26a"
+  },
+  "modes": [
+    "success_baseline",
+    "success_candidate",
+    "slot_reject",
+    "cache_defer_baseline",
+    "cache_defer_candidate",
+    "nonzero",
+    "timeout",
+    "missing_result",
+    "invalid_result",
+    "missing_model",
+    "missing_transport"
+  ],
+  "expected_parent_taxonomy": {
+    "success_baseline": "success",
+    "success_candidate": "success",
+    "slot_reject": "success",
+    "cache_defer_baseline": "success",
+    "cache_defer_candidate": "success",
+    "nonzero": "child_nonzero_with_terminal_receipt",
+    "timeout": "hard_deadline_timeout",
+    "missing_result": "zero_exit_missing_result_envelope",
+    "invalid_result": "result_envelope_invalid",
+    "missing_model": "model_receipt_missing_or_invalid",
+    "missing_transport": "transport_receipt_missing_or_invalid"
+  },
+  "real_local_subprocess_children": 11,
+  "runtime_boundary": [
+    "opaque_id",
+    "question"
+  ],
+  "synthetic_visible_tasks_only": true,
+  "model_slot_cap": 2,
+  "model_search_absolute_deadline_shared": true,
+  "deadline_stops_must_be_complete_success_envelopes": true,
+  "structural_failures_must_not_be_success": true,
+  "incomplete_parent_projection_must_not_claim_complete_effect_count": true,
+  "external_network_model_search_fetch_or_evaluator_calls": 0,
+  "benchmark_manifest_mapping_gold_category_question_type_split_evaluator_score_read": false,
+  "source_manifest": {
+    "src/deepwide_agent/v24319_runner_integration.py": "8ee591e25066688ef270e8679a68faeb0f0ef6a47ecb4dadf7d6d3488e6674b3",
+    "scripts/v24319_neutral_runner_integration.py": "a7d7540eeb26c9ad3d96396540b11b102a40b58dc314bc5bf48dab3cad3a3780",
+    "tests/test_v24319_runner_integration.py": "7828bcd3b90105c116805cdbe8095fe94d0c2d2a4ac80a14647ec18bd6d0b34e",
+    "tests/test_v24319_subprocess_integration.py": "8c0f69355711dd4acf979bc6443e75c9360312055d88a05974580b086911988f",
+    "tests/test_v24319_neutral_runner_integration.py": "1a2c52cebf5102cc90f67cd89a0f6429b15b1afb799685f5144e3484a3d4e54b",
+    "tests/fixtures/v24319_synthetic_child.py": "c5134c33374cf5f9b94065781f5309c188b21a9a06f9133a12cf7df2d67ebed4"
+  },
+  "source_manifest_sha256": "a45786c10a71170f7ca7fddbbb4cc287477baa449af34ad2ab0d9000d2b4281e",
+  "authorization": {
+    "one_benchmark_external_runner_probe": true,
+    "future_paired_dev64_design": false,
+    "paired_dev64_launch": false,
+    "exact220": false,
+    "evaluator": false,
+    "leaderboard_or_sota": false
+  },
+  "protocol_payload_sha256": "e74bb6355a61bb77e4881d545b3cccc4fc9854d6afe7864f4bebc1b329cdcb6f"
+}
