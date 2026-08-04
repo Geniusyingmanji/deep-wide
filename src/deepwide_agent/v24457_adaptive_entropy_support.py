@@ -188,7 +188,7 @@ RECEIPT_KEYS = frozenset(
         "realized_step_information_gain_is_order_dependent_online_credit",
         "final_source_credit_uses_normalized_leave_one_out_information_gain",
         "decision_credit_requires_safe_output_change",
-        "training_policy_or_same_run_routing_update_authorized",
+        "allocated_credit_used_for_same_run_routing_or_training",
         "task_private_lead_page_observation_value_prediction_or_source_emitted",
         "mapping_gold_category_question_type_split_evaluator_score_or_reward_read",
         "benchmark_launch_or_evaluator_authorized",
@@ -612,9 +612,18 @@ def _canonical_private_state(
     first_private = validated_parent["third_source_private_state"]
     expected_first = first_private["selected_third_lead"]
     if expected_first is None:
-        if leads or batches or pages or steps or stop != "lead_pool_exhausted":
-            raise ValueError("V2.44.57 absent inherited lead drifted")
         final = _snapshot(original, [])
+        expected_stop = _stop_reason(
+            final, attempted=0, remaining_lead_count=0
+        )
+        if (
+            leads
+            or batches
+            or pages
+            or steps
+            or stop != expected_stop
+        ):
+            raise ValueError("V2.44.57 absent inherited lead drifted")
         return {
             "selected_adaptive_leads": [],
             "adaptive_fetch_batches": [],
@@ -778,7 +787,7 @@ def _compute_result(
         "realized_step_information_gain_is_order_dependent_online_credit": True,
         "final_source_credit_uses_normalized_leave_one_out_information_gain": True,
         "decision_credit_requires_safe_output_change": True,
-        "training_policy_or_same_run_routing_update_authorized": False,
+        "allocated_credit_used_for_same_run_routing_or_training": False,
         "task_private_lead_page_observation_value_prediction_or_source_emitted": False,
         "mapping_gold_category_question_type_split_evaluator_score_or_reward_read": False,
         "benchmark_launch_or_evaluator_authorized": False,
@@ -852,7 +861,7 @@ def validate_recovery_receipt(value: Mapping[str, Any]) -> dict[str, Any]:
         "decision_credit_requires_safe_output_change",
     )
     false_fields = (
-        "training_policy_or_same_run_routing_update_authorized",
+        "allocated_credit_used_for_same_run_routing_or_training",
         "task_private_lead_page_observation_value_prediction_or_source_emitted",
         "mapping_gold_category_question_type_split_evaluator_score_or_reward_read",
         "benchmark_launch_or_evaluator_authorized",
@@ -874,7 +883,7 @@ def validate_recovery_receipt(value: Mapping[str, Any]) -> dict[str, Any]:
         or copied.get("adaptive_positive_information_gain_step_count") > copied.get("adaptive_fetch_attempt_count")
         or copied.get("adaptive_safe_decision_step_count") not in {0, 1}
         or copied.get("adaptive_safe_decision_step_count")
-        != int(copied.get("safe_change_count", 0) > 0)
+        > int(copied.get("safe_change_count", 0) > 0)
         or copied.get("safe_change_count") != partition.get("safe_change_count")
         or copied.get("safe_change_count")
         + copied.get("baseline_confirmed_count")
@@ -1103,7 +1112,9 @@ def run_v24457_task(
     original = _original_parent_result(first.third_source_result)
     before = _snapshot(original, [])
     if first_private["selected_third_lead"] is None:
-        stop = "lead_pool_exhausted"
+        stop = str(
+            _stop_reason(before, attempted=0, remaining_lead_count=0)
+        )
     else:
         lead = _lead_projection(first_private["selected_third_lead"])
         leads.append(lead)

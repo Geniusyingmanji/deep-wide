@@ -137,6 +137,26 @@ class V24457AdaptiveEntropySupportTests(unittest.TestCase):
         self.assertEqual(receipt["safe_change_count"], 1)
         self.assertGreater(receipt["final_decision_credit_total_nats"], 0)
 
+    def test_absent_frozen_third_lead_is_zero_fetch_terminal(self) -> None:
+        temporary = tempfile.TemporaryDirectory(dir=ROOT / "outputs")
+        self.addCleanup(temporary.cleanup)
+        clock = AdvancingClock()
+        model, search = parent_clients(Path(temporary.name), clock, third=False)
+        outcome = run_v24457_task(
+            TASK,
+            model=model,
+            search=search,
+            partition_seed_sha256=SEED,
+            limits=limits(),
+            monotonic=clock,
+        )
+        receipt = outcome.adaptive_result["adaptive_support_receipt"]
+        self.assertEqual(receipt["adaptive_fetch_attempt_count"], 0)
+        self.assertEqual(receipt["adaptive_usable_page_count"], 0)
+        self.assertEqual(receipt["stop_reason"], "lead_pool_exhausted")
+        self.assertEqual(receipt["safe_change_count"], 0)
+        self.assertEqual(receipt["final_decision_credit_total_nats"], 0)
+
     def test_third_additional_source_can_cross_unchanged_gate(self) -> None:
         outcome, model, search = self.run_case("delayed_safe")
         receipt = outcome.adaptive_result["adaptive_support_receipt"]
