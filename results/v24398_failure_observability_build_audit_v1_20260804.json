@@ -1,0 +1,118 @@
+{
+  "artifact_version": 1,
+  "role": "v24398_failure_observability_build_audit",
+  "created_at_unix": 1785823220,
+  "parent": {
+    "path": "results/v24396_v24395_failure_observability_diagnosis_v1_20260804.json",
+    "sha256": "eae248728f7567976cc5621c43d1d298a0e9bba7d1f30d599ee025bfa569b493"
+  },
+  "source_manifest": {
+    "src/deepwide_agent/v24397_failure_observability.py": "bdc294105641cb8510319afa4c439b749947a94a5aca1db8d530d2a561376deb",
+    "tests/test_v24397_failure_observability.py": "427649c813be5af66f9a7a84c9fa79fbdc8f57c847cc4cf44fa734e6a1dec078",
+    "scripts/diagnose_v24396_v24395_failure_observability.py": "db4d3d6818af290421d2316d2dbc74101941bda30453fa0f8e90d17821149089",
+    "tests/test_v24396_failure_observability_diagnosis.py": "d4519ca7dbb5927f53df44f999e54547e39c9e6cf719b6a2040e185f25a12486",
+    "scripts/audit_v24398_failure_observability_build.py": "53fe1d19421fbe6cb94b68a6a3e7cc533d1305e2609f05123151f60e0cb8f521"
+  },
+  "source_manifest_sha256": "1b3417cd2f1a8c79a66a62fab2f6bfdfaaa49e0b1fef2d0cfb283d802a63940c",
+  "git": {
+    "head": "9c7c6dad9bbf0d4e36fc3c385f8d881a3918a4b9",
+    "target_main": "9c7c6dad9bbf0d4e36fc3c385f8d881a3918a4b9",
+    "head_equals_target_main": true,
+    "worktree_clean": true,
+    "all_sources_tracked": true
+  },
+  "tests": {
+    "suites": [
+      {
+        "path": "tests/test_v24308_child_exit_observability.py",
+        "passed": true,
+        "test_count": 9
+      },
+      {
+        "path": "tests/test_v24309_runner_exit_integration.py",
+        "passed": true,
+        "test_count": 5
+      },
+      {
+        "path": "tests/test_v24312_deadline_reliability.py",
+        "passed": true,
+        "test_count": 7
+      },
+      {
+        "path": "tests/test_v24391_uncertainty_active_evidence_runner.py",
+        "passed": true,
+        "test_count": 4
+      },
+      {
+        "path": "tests/test_v24396_failure_observability_diagnosis.py",
+        "passed": true,
+        "test_count": 3
+      },
+      {
+        "path": "tests/test_v24397_failure_observability.py",
+        "passed": true,
+        "test_count": 6
+      }
+    ],
+    "passed": true,
+    "test_count": 34,
+    "network_model_search_fetch_or_evaluator_called": false
+  },
+  "mechanism_evidence": {
+    "non_success_parent_bypasses_success_only_envelope_projection": true,
+    "parent_exit_taxonomy_is_preserved": true,
+    "child_stage_and_coarse_exception_are_preserved": true,
+    "failure_snapshot_binds_partial_receipt_hashes": true,
+    "partial_model_and_transport_counts_are_lower_bounds": true,
+    "parent_hard_timeout_is_distinct_from_partial_deadline_exhaustion": true,
+    "unobserved_effect_tasks_are_counted_explicitly": true,
+    "successful_terminal_effects_remain_exact": true,
+    "task_private_content_is_absent_from_observations": true,
+    "tampered_effect_scope_is_rejected": true
+  },
+  "privileged_field_accesses": [],
+  "evaluator_imports": [],
+  "credential_literal_hits": [],
+  "closure": {
+    "shared_api_lease_active": false,
+    "protected_watchers": [
+      {
+        "pid": 795336,
+        "marker": "scripts/watch_v2415_r1_checkpoint_liveness.py",
+        "start_ticks": 713986317
+      },
+      {
+        "pid": 3061652,
+        "marker": "scripts/watch_v24218_exact220_executor.py",
+        "start_ticks": 747569004
+      }
+    ],
+    "protected_watchers_unchanged": true,
+    "active_run_killed_or_quarantined": false,
+    "process_signal_restart_resume_rerun_skip_or_selective_retry": false
+  },
+  "source_policy": {
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "failure_observation_boundary": [
+      "parent_exit_receipt",
+      "child_terminal_receipt",
+      "content_free_partial_effect_receipts"
+    ],
+    "mapping_gold_category_question_type_split_evaluator_score_or_reward_read": false,
+    "task_private_content_emitted_to_observation": false,
+    "remote_network_model_search_fetch_or_evaluator_called_by_audit": false
+  },
+  "findings": [],
+  "audit_valid": true,
+  "authorization": {
+    "failure_observability_runner_integration_design": true,
+    "external_probe_launch": false,
+    "benchmark_launch": false,
+    "evaluator": false,
+    "leaderboard_or_sota": false
+  },
+  "audit_payload_sha256": "3af48a780f351c4195b5ed9b3801d3304fc8c33dfe7bcdf9f23737be8d01d3eb"
+}
