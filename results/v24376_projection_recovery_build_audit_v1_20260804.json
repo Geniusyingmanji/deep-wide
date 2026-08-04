@@ -1,0 +1,121 @@
+{
+  "artifact_version": 1,
+  "role": "v24376_projection_recovery_build_audit",
+  "created_at_unix": 1785805556,
+  "parents": {
+    "results/v24374_batch_stratified_external_result_v1_20260804.json": "55bd66fba96f4c9f10e5ff9c7185aedb16471adb01dee338186a44fa44c363e1",
+    "results/v24374_batch_stratified_external_decision_v1_20260804.json": "9ab9d4f34a199e65389fdfc8bb366076e809b439d9e9bf78df3ad03af0ca1fe1",
+    "results/v24374_batch_stratified_external_postresult_audit_v1_20260804.json": "7336e124f3e9eb2059ad91b2c81ef2b8b266862a31d28b433255c48dd15694c0"
+  },
+  "parent_no_go_evidence": {
+    "selected": 16,
+    "terminal_success_tasks": 0,
+    "structurally_passed_tasks": 0,
+    "completion_kinds": {
+      "None": 16
+    },
+    "persisted_model_requests": 0,
+    "persisted_search_calls": 0,
+    "persisted_fetch_calls": 0,
+    "private_task_artifacts_retained": false,
+    "same_external_task_rerun_or_revaluation_authorized": false,
+    "mechanism_conclusion_from_zeroed_projection_authorized": false
+  },
+  "source_manifest": {
+    "scripts/v24375_batch_stratified_projection_recovery.py": "3e17fe3fc3a319824a857fc0278a36a30617c8f3cc6eb6cfeb48832f6a7b44b6",
+    "tests/test_v24375_batch_stratified_projection_recovery.py": "fe97108a590b7f82e1f7f478d817ea4dfd8ef0c32de2b79737e3bd290622836c",
+    "scripts/audit_v24376_projection_recovery_build.py": "635d487d7c5ad4adccb76d14e3df122397cded12c03008d9f0e7930d03962a61"
+  },
+  "source_manifest_sha256": "352ebde1ea7308785e43669e9eac3842ea8f079fd1a0dde65d6c62a12c6cd369",
+  "git": {
+    "head": "985e2724e34d0edff21609337d2bd3fde32741aa",
+    "target_main": "985e2724e34d0edff21609337d2bd3fde32741aa",
+    "head_equals_target_main": true,
+    "worktree_clean": true,
+    "all_sources_tracked": true
+  },
+  "tests": {
+    "suites": [
+      {
+        "path": "tests/test_v24371_batch_stratified_verifier_runtime.py",
+        "passed": true,
+        "test_count": 7
+      },
+      {
+        "path": "tests/test_v24372_batch_stratified_verifier_runner.py",
+        "passed": true,
+        "test_count": 3
+      },
+      {
+        "path": "tests/test_v24374_batch_stratified_external_gate.py",
+        "passed": true,
+        "test_count": 8
+      },
+      {
+        "path": "tests/test_v24375_batch_stratified_projection_recovery.py",
+        "passed": true,
+        "test_count": 3
+      }
+    ],
+    "passed": true,
+    "test_count": 21,
+    "network_model_search_fetch_or_evaluator_called": false
+  },
+  "mechanism_evidence": {
+    "frozen_v24374_projector_rejects_valid_synthetic_success_envelope": true,
+    "extra_parent_depth_is_the_reproduced_root_cause": true,
+    "append_only_projector_restores_four_queries": true,
+    "append_only_projector_restores_five_plus_five_selection": true,
+    "append_only_projector_restores_four_plus_one_per_batch_partition": true,
+    "append_only_projector_restores_three_model_and_ten_fetch_accounting": true,
+    "envelope_and_parent_tamper_fail_closed": true,
+    "v24374_source_and_result_artifacts_not_modified": true,
+    "v24374_private_task_artifacts_not_reconstructed": true,
+    "v24374_remote_tasks_not_resumed_retried_rerun_or_revalued": true
+  },
+  "privileged_field_accesses": [],
+  "evaluator_imports": [],
+  "credential_literal_hits": [],
+  "closure": {
+    "shared_api_lease_active": false,
+    "v24375_processes": [],
+    "protected_watchers": [
+      {
+        "pid": 795336,
+        "marker": "scripts/watch_v2415_r1_checkpoint_liveness.py",
+        "start_ticks": 713986317
+      },
+      {
+        "pid": 3061652,
+        "marker": "scripts/watch_v24218_exact220_executor.py",
+        "start_ticks": 747569004
+      }
+    ],
+    "protected_watchers_unchanged": true,
+    "active_run_killed_or_quarantined": false,
+    "process_signal_restart_resume_rerun_skip_or_selective_retry": false
+  },
+  "source_policy": {
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "mapping_gold_category_question_type_split_evaluator_score_or_reward_read": false,
+    "task_private_content_emitted_to_public_receipt": false,
+    "remote_network_model_search_fetch_or_evaluator_called_by_audit": false
+  },
+  "findings": [],
+  "audit_valid": true,
+  "authorization": {
+    "fresh_external_gate_design": true,
+    "fresh_external_gate_launch": false,
+    "same_v24374_task_rerun_or_revaluation": false,
+    "benchmark_launch": false,
+    "same_run_evaluator": false,
+    "additional_dev64": false,
+    "new_exact220": false,
+    "leaderboard_submission": false,
+    "sota_claim": false
+  },
+  "audit_payload_sha256": "dc057bc58c161042d4b6e7825c557cfcff6ff1f91edb64aa227676ab4832ec8b"
+}
