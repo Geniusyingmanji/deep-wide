@@ -2,6 +2,8 @@
 
 > 版本：6.24
 >
+> **6.24a V2.43.74 外部门控制面 NO-GO 与 V2.43.75 诊断（2026-08-04）：V2.43.74 按 protocol→preaudit→activation→execution-start 四次独立提交推送后，只运行一次16题全新实体组；公开结果为16/16 local projection failure，因私有临时目录按协议删除，不能据此重建、重评或声称搜索/模型机制失败。append-only V2.43.75 用真实结构的 synthetic V2.43.72 envelope 复现：冻结 projector 对 nested parent 多下钻一层，必然把 discovery/core 读为空并拒绝成功 envelope；修正 projector 在本地恢复4 queries、5+5、4+1/4+1、3 model、10 fetch，且 tamper fail-closed。V2.43.74 永久 NO-GO、禁止重跑同一任务；V2.43.75 只授权新的 fresh external gate设计，未产生 benchmark 分数。**
+>
 > **6.24 V2.43.70→73 batch-stratified verifier build（2026-08-04）：V2.43.70 在全新16题外部门发现559个 registrable hosts、14题完整8+2，却只有1个 parent candidate，两个 verifier 都没有独立支持，utility credit/net gain均0，严格 NO-GO。进一步审计定位到 first-10 截断：V2.43.58 串接两批后只把前10 host交给分区，第一批≥10时第二批贡献为0。append-only V2.43.71–72 已在 fetch/candidate/entropy/evaluator 前仅用 visible query、URL/title 与 registrable source 构造5+5，并保证每批4 proposal+1 verifier；2 search/10 fetch/3 model effects不变，冲突与缺支持仍fail closed。V2.43.73 build audit 93/93，privileged access/evaluator import/credential literal均0，`findings=[]`；只授权全新 external gate设计，尚无新的dev64/exact-220分数。详见本文“V2.43.70→73”节。**
 >
 > **6.23 V2.43.61 two-batch host-union 外部门已冻结为严格 NO-GO（2026-08-03）：控制面、protocol、preaudit、activation、execution-start 分别以提交 `c559cc7/35cfe61/44dd649/99d4f2a/02b5678` 推送后才发生首个 effect；唯一一次12题外部 probe 在 `121.325s` 自然完成，result/decision/postaudit 依次以 `ea63ebc/655bcd8` 冻结推送。全程 `12/12` terminal+structural pass、精确 two-batch=`12/12`、recursive split=`0/12`、slot/provider/search/fetch deadline 与 helper failure均0、10-fetch守恒和 hidden prompt exclusion 全通过，lease自然释放，保护 watcher 身份不变。**
