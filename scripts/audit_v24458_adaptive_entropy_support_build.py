@@ -15,6 +15,7 @@ import json
 import math
 import os
 import re
+import subprocess
 import sys
 import time
 from pathlib import Path
@@ -60,8 +61,8 @@ SOURCES = (
 )
 RUNTIME_SOURCES = (SOURCES[1],)
 TEST_SUITES = (
-    (SOURCES[2], 6, "adaptive_mechanism"),
-    (SOURCES[4], 5, "audit_control"),
+    (SOURCES[2], 6, "adaptive_mechanism", 900),
+    (SOURCES[4], 5, "audit_control", 360),
 )
 EXPECTED_MECHANISM_TEST_COUNT = 6
 EXPECTED_CONTROL_TEST_COUNT = 5
@@ -125,6 +126,35 @@ def _validate_parents() -> tuple[dict[str, Any], dict[str, Any]]:
     return parent, diagnosis
 
 
+def _run_test(relative: Path, *, timeout_seconds: int) -> bool:
+    if (
+        isinstance(timeout_seconds, bool)
+        or not isinstance(timeout_seconds, int)
+        or timeout_seconds < 1
+        or timeout_seconds > 900
+    ):
+        raise ValueError("V2.44.58 test timeout is outside the frozen bound")
+    completed = subprocess.run(
+        [str(ROOT / ".venv-eval/bin/python"), "-I", "-B", str(ROOT / relative), "-q"],
+        cwd=ROOT,
+        env={
+            "HOME": os.environ.get("HOME", str(Path.home())),
+            "USER": os.environ.get("USER", "azureuser"),
+            "LOGNAME": os.environ.get("LOGNAME", "azureuser"),
+            "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+            "PYTHONDONTWRITEBYTECODE": "1",
+            "PYTHONNOUSERSITE": "1",
+            "PYTHONSAFEPATH": "1",
+        },
+        stdin=subprocess.DEVNULL,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+        timeout=timeout_seconds,
+        check=False,
+    )
+    return completed.returncode == 0
+
+
 def build_audit(*, now: int | None = None) -> dict[str, Any]:
     _validate_parents()
     if (
@@ -146,11 +176,12 @@ def build_audit(*, now: int | None = None) -> dict[str, Any]:
     suites = [
         {
             "path": str(path),
-            "passed": base._run_test(path),
+            "passed": _run_test(path, timeout_seconds=timeout_seconds),
             "test_count": count,
             "scope": scope,
+            "timeout_seconds": timeout_seconds,
         }
-        for path, count, scope in TEST_SUITES
+        for path, count, scope, timeout_seconds in TEST_SUITES
     ]
     test_count = sum(item["test_count"] for item in suites)
     secret_hits = [

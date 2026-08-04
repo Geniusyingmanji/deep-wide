@@ -28,7 +28,7 @@ class V24458AdaptiveEntropySupportBuildAuditTests(unittest.TestCase):
         with (
             patch.object(target.base, "_tracked", return_value=True),
             patch.object(target.base, "_git", side_effect=clean_git),
-            patch.object(target.base, "_run_test", return_value=True),
+            patch.object(target, "_run_test", return_value=True),
             patch.object(
                 target,
                 "protected_watcher_snapshot",
@@ -50,6 +50,10 @@ class V24458AdaptiveEntropySupportBuildAuditTests(unittest.TestCase):
         self.assertTrue(value["audit_valid"])
         self.assertEqual(value["tests"]["test_count"], 11)
         self.assertEqual(value["tests"]["mechanism_test_count"], 6)
+        self.assertEqual(
+            [item["timeout_seconds"] for item in value["tests"]["suites"]],
+            [900, 360],
+        )
         self.assertEqual(value["mechanism_evidence"]["maximum_additional_fetches"], 3)
         self.assertFalse(value["mechanism_evidence"]["thresholds_relaxed"])
         self.assertTrue(
