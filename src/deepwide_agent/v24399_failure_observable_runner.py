@@ -160,12 +160,33 @@ def run_and_persist_uncertainty_task(
 
     envelope = build_envelope(outcome)
     validate_envelope(envelope)
-    # Result is written last.  If serialization fails, the ordinary child
-    # terminal receipt truthfully records which independent receipts exist.
-    writer(MODEL_NAME, outcome.model_slot_receipt)
-    writer(TRANSPORT_NAME, outcome.transport_health)
-    writer(SEARCH_NAME, outcome.search_single_shot_receipt)
-    writer(RESULT_NAME, envelope)
+    # Result is written last.  A mid-serialization failure binds exactly the
+    # independent receipts that were already made durable, never hypothetical
+    # effects that existed only in memory.
+    model_written = False
+    transport_written = False
+    search_written = False
+    try:
+        writer(MODEL_NAME, outcome.model_slot_receipt)
+        model_written = True
+        writer(TRANSPORT_NAME, outcome.transport_health)
+        transport_written = True
+        writer(SEARCH_NAME, outcome.search_single_shot_receipt)
+        search_written = True
+        writer(RESULT_NAME, envelope)
+    except BaseException as error:
+        snapshot = build_failure_snapshot(
+            error,
+            failure_stage="artifact_serialization",
+            model_receipt=(outcome.model_slot_receipt if model_written else None),
+            transport_health=(outcome.transport_health if transport_written else None),
+            search_receipt=(
+                outcome.search_single_shot_receipt if search_written else None
+            ),
+            expected_model_cap=expected_model_cap,
+        )
+        writer(FAILURE_NAME, snapshot)
+        raise
     return outcome
 
 

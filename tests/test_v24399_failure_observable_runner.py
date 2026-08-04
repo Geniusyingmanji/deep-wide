@@ -254,6 +254,37 @@ class V24399FailureObservableRunnerTests(unittest.TestCase):
         self.assertEqual(observation["parent_taxonomy"], "hard_deadline_timeout")
         self.assertEqual(observation["deadline_evidence"], "parent_hard_timeout")
 
+    def test_mid_serialization_failure_binds_only_durable_receipts(self) -> None:
+        directory = self.make_directory()
+        clock = Clock()
+        model, search = clients(directory, clock, deadline=300)
+        ordinary_writer = writer(directory)
+
+        def fail_after_model(name: str, value) -> None:
+            if name == TRANSPORT_NAME:
+                raise OSError("private serialization detail")
+            ordinary_writer(name, value)
+
+        with self.assertRaises(OSError):
+            run_and_persist_uncertainty_task(
+                TASK,
+                model_factory=lambda: model,
+                search_factory=lambda: search,
+                partition_seed_sha256=SEED,
+                limits=limits(),
+                monotonic=clock,
+                expected_model_cap=2,
+                writer=fail_after_model,
+            )
+        self.assertTrue((directory / MODEL_NAME).is_file())
+        self.assertFalse((directory / TRANSPORT_NAME).exists())
+        self.assertTrue((directory / FAILURE_NAME).is_file())
+        snapshot = json.loads((directory / FAILURE_NAME).read_text(encoding="utf-8"))
+        self.assertEqual(snapshot["failure_stage"], "artifact_serialization")
+        self.assertTrue(snapshot["model_receipt_present"])
+        self.assertFalse(snapshot["transport_receipt_present"])
+        self.assertFalse(snapshot["search_receipt_present"])
+
     def test_failure_snapshot_receipt_hash_tamper_is_rejected(self) -> None:
         directory = self.make_directory()
         clock = Clock()
