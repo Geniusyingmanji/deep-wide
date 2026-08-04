@@ -171,6 +171,12 @@ class V24421StructuredProjectionObservabilityTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate_projection_observability(altered)
 
+    def test_json_round_trip_does_not_depend_on_reason_key_order(self) -> None:
+        current = catalog("Alpha\nFounded | 2007")
+        value = build_projection_observability(current)
+        decoded = json.loads(json.dumps(value, sort_keys=True))
+        validate_projection_observability(decoded, catalog=current)
+
 
 if __name__ == "__main__":
     unittest.main()

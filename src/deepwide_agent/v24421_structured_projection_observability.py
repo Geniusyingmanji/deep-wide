@@ -283,7 +283,7 @@ def validate_projection_observability(
             )
         )
         or not isinstance(reasons, Mapping)
-        or tuple(reasons) != REASONS
+        or set(reasons) != set(REASONS)
         or any(
             isinstance(reasons.get(name), bool)
             or not isinstance(reasons.get(name), int)
