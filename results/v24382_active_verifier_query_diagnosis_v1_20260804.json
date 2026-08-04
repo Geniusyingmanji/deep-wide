@@ -1,0 +1,73 @@
+{
+  "artifact_version": 1,
+  "role": "v24382_active_verifier_query_diagnosis",
+  "policy_id": "v24382_candidate_conditioned_active_verifier_query_diagnosis_v1",
+  "created_at_unix": 1785812549,
+  "parents": {
+    "results/v24381_adaptive_heldout_external_result_v1_20260804.json": "059a8c29b6ac3815c2873881ae289dea155b87457f3ba92de5c366ccf09b38f5",
+    "results/v24381_adaptive_heldout_external_decision_v1_20260804.json": "343e23e39a8e230caa78dbf526e7b5750fa140f095cb4fec077800a941a9029c",
+    "results/v24381_adaptive_heldout_external_postresult_audit_v1_20260804.json": "f96f027a85ab35e385935c08cc28233e2ee5fe23e884cf45dad2907ce2f06c69"
+  },
+  "observed_no_go": {
+    "selected": 16,
+    "terminal_success_tasks": 16,
+    "structurally_passed_tasks": 16,
+    "batch_wall_seconds": 157.239572,
+    "preverification_nonidentity_tasks": 2,
+    "preverification_candidate_changed_cells": 2,
+    "selected_verifier_sources": 4,
+    "hidden_verifier_pages": 3,
+    "verification_record_count": 4,
+    "verifier_semantic_projection_count": 0,
+    "no_independent_candidate_support_records": 4,
+    "selected_proposal_entropy_nats": 0.381290277253,
+    "adaptive_retained_candidate_changed_cells": 0,
+    "utility_aligned_entropy_credit_nats": 0.0
+  },
+  "diagnosis": {
+    "proposal_generation_is_not_the_terminal_failure": true,
+    "transport_or_deadline_is_not_the_terminal_failure": true,
+    "candidate_conditioned_source_selection_but_not_search": true,
+    "pre_candidate_heldout_pool_has_zero_semantic_projection": true,
+    "all_verification_records_lack_independent_candidate_support": true,
+    "proposal_entropy_does_not_receive_utility_credit": true,
+    "root_cause": "candidate_target_unavailable_when_verifier_source_pool_was_searched"
+  },
+  "successor_contract": {
+    "candidate_and_support_freeze_precedes_verifier_query_generation": true,
+    "verifier_queries_use_only_visible_question_and_frozen_row_column_value": true,
+    "maximum_selected_candidate_targets": 2,
+    "maximum_active_verifier_logical_queries": 2,
+    "active_verifier_queries_execute_as_one_nonrecursive_batch": true,
+    "maximum_total_hosted_search_batches": 3,
+    "maximum_total_logical_queries": 6,
+    "proposal_fetch_cap": 8,
+    "active_verifier_fetch_cap": 2,
+    "total_fetch_cap": 10,
+    "model_call_cap": 3,
+    "active_verifier_sources_must_be_disjoint_from_proposal_sources": true,
+    "active_verifier_page_cannot_generate_or_edit_candidate_value": true,
+    "active_verifier_can_only_retain_or_revert_frozen_candidate": true,
+    "go_requires_selected_verified_candidate_change": true,
+    "go_requires_positive_utility_aligned_entropy_credit": true
+  },
+  "source_policy": {
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "benchmark_manifest_mapping_gold_category_question_type_split_evaluator_score_or_reward_read": false,
+    "task_question_query_url_page_prediction_candidate_value_or_evidence_id_persisted": false,
+    "network_model_search_fetch_or_evaluator_called_by_diagnosis": false
+  },
+  "authorization": {
+    "active_verifier_runtime_and_runner_design": true,
+    "external_probe_design": false,
+    "external_probe_launch": false,
+    "paired_dev64": false,
+    "new_exact220": false,
+    "evaluator": false,
+    "leaderboard_or_sota": false
+  },
+  "diagnosis_payload_sha256": "3513031c5f406d7fd21a803a6514431d693d9571e02ebbae3a7135bd26191f40"
+}
