@@ -11,6 +11,7 @@ evaluator call and authorizes only design of a new disjoint external protocol.
 from __future__ import annotations
 
 import json
+import math
 import os
 import re
 import subprocess
@@ -136,7 +137,8 @@ def _environment() -> dict[str, str]:
     }
 
 
-def _run_test(path: Path, timeout: int) -> bool:
+def _run_test(path: Path, timeout: int) -> dict[str, Any]:
+    started = time.monotonic()
     completed = subprocess.run(
         [str(ROOT / ".venv-eval/bin/python"), "-I", "-B", str(ROOT / path), "-q"],
         cwd=ROOT,
@@ -147,23 +149,50 @@ def _run_test(path: Path, timeout: int) -> bool:
         timeout=timeout,
         check=False,
     )
-    return completed.returncode == 0
+    return {
+        "passed": completed.returncode == 0,
+        "return_code": completed.returncode,
+        "elapsed_seconds": round(max(0.0, time.monotonic() - started), 6),
+    }
+
+
+def _suite_records_valid(value: object) -> bool:
+    if not isinstance(value, list) or len(value) != len(TEST_SUITES):
+        return False
+    for item, (path, count, timeout, scope) in zip(value, TEST_SUITES, strict=True):
+        if not isinstance(item, Mapping):
+            return False
+        elapsed = item.get("elapsed_seconds")
+        if (
+            item.get("path") != str(path)
+            or item.get("test_count") != count
+            or item.get("timeout_seconds") != timeout
+            or item.get("scope") != scope
+            or item.get("passed") is not True
+            or item.get("return_code") != 0
+            or isinstance(elapsed, bool)
+            or not isinstance(elapsed, (int, float))
+            or not math.isfinite(elapsed)
+            or elapsed <= 0
+        ):
+            return False
+    return True
 
 
 def build_audit(*, now: int | None = None) -> dict[str, Any]:
     _validate_parent()
     manifest = {str(path): sha256(base._ordinary(path)) for path in SOURCES}
     frozen = {str(path): sha256(base._ordinary(path)) for path in FROZEN_PARENTS}
-    suites = [
-        {
+    suites = []
+    for path, count, timeout, scope in TEST_SUITES:
+        execution = _run_test(path, timeout)
+        suites.append({
             "path": str(path),
             "test_count": count,
             "timeout_seconds": timeout,
             "scope": scope,
-            "passed": _run_test(path, timeout),
-        }
-        for path, count, timeout, scope in TEST_SUITES
-    ]
+            **execution,
+        })
     accesses: list[str] = []
     imports: list[str] = []
     for path in RUNTIME_SOURCES:
@@ -189,7 +218,7 @@ def build_audit(*, now: int | None = None) -> dict[str, Any]:
         findings.append("v24468_71_source_worktree_not_clean")
     if not tracked:
         findings.append("v24468_71_source_not_tracked")
-    if test_count != EXPECTED_TEST_COUNT or any(not item["passed"] for item in suites):
+    if test_count != EXPECTED_TEST_COUNT or not _suite_records_valid(suites):
         findings.append("v24464_71_test_failure_or_count_drifted")
     if accesses:
         findings.append("privileged_field_access_in_v24468_70_runtime")
@@ -270,15 +299,13 @@ def validate_audit(value: Mapping[str, Any]) -> dict[str, Any]:
     seal = unsigned.pop("audit_payload_sha256", None)
     authorization = copied.get("authorization")
     mechanism = copied.get("mechanism_evidence")
+    suites = copied.get("tests", {}).get("suites")
     valid = copied.get("findings") == []
     if (
         copied.get("artifact_version") != 1
         or copied.get("role") != "v24471_bounded_adaptive_build_audit"
         or copied.get("tests", {}).get("test_count") != EXPECTED_TEST_COUNT
-        or not all(
-            item.get("passed") is True
-            for item in copied.get("tests", {}).get("suites", [])
-        )
+        or not _suite_records_valid(suites)
         or copied.get("audit_valid") is not valid
         or not isinstance(mechanism, Mapping)
         or any(

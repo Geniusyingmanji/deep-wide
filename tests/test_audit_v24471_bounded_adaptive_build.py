@@ -20,7 +20,11 @@ class V24471BoundedAdaptiveBuildAuditTests(unittest.TestCase):
     def build_valid(self) -> dict:
         with (
             patch.object(target, "_validate_parent"),
-            patch.object(target, "_run_test", return_value=True),
+            patch.object(
+                target,
+                "_run_test",
+                return_value={"passed": True, "return_code": 0, "elapsed_seconds": 1.0},
+            ),
             patch.object(target.base, "_tracked", return_value=True),
             patch.object(
                 target.base,
@@ -44,6 +48,7 @@ class V24471BoundedAdaptiveBuildAuditTests(unittest.TestCase):
         value = self.build_valid()
         self.assertTrue(value["audit_valid"])
         self.assertEqual(value["tests"]["test_count"], 37)
+        self.assertTrue(target._suite_records_valid(value["tests"]["suites"]))
         self.assertTrue(
             value["authorization"]["fresh_disjoint_external_protocol_design"]
         )
@@ -58,7 +63,7 @@ class V24471BoundedAdaptiveBuildAuditTests(unittest.TestCase):
             self.assertEqual(accesses, [])
             self.assertEqual(imports, [])
 
-    def test_resealed_launch_or_same_population_tamper_fails(self) -> None:
+    def test_resealed_authorization_or_test_evidence_tamper_fails(self) -> None:
         cases = (
             (
                 "launch",
@@ -71,6 +76,22 @@ class V24471BoundedAdaptiveBuildAuditTests(unittest.TestCase):
                 lambda value: value["mechanism_evidence"].__setitem__(
                     "same_v24466_population_rerun_allowed", True
                 ),
+            ),
+            (
+                "nonzero_return_code",
+                lambda value: value["tests"]["suites"][0].__setitem__(
+                    "return_code", 1
+                ),
+            ),
+            (
+                "zero_elapsed",
+                lambda value: value["tests"]["suites"][0].__setitem__(
+                    "elapsed_seconds", 0.0
+                ),
+            ),
+            (
+                "missing_suite",
+                lambda value: value["tests"]["suites"].pop(),
             ),
         )
         for name, alter in cases:
@@ -85,7 +106,11 @@ class V24471BoundedAdaptiveBuildAuditTests(unittest.TestCase):
     def test_failed_suite_closes_design_authorization(self) -> None:
         with (
             patch.object(target, "_validate_parent"),
-            patch.object(target, "_run_test", return_value=False),
+            patch.object(
+                target,
+                "_run_test",
+                return_value={"passed": False, "return_code": 1, "elapsed_seconds": 1.0},
+            ),
             patch.object(target.base, "_tracked", return_value=True),
             patch.object(
                 target.base,
