@@ -1,0 +1,142 @@
+{
+  "artifact_version": 1,
+  "role": "v24467_v24466_total_wall_diagnosis",
+  "created_at_unix": 1785865324,
+  "parents": {
+    "result": {
+      "path": "results/v24466_single_validation_external_result_v1_20260804.json",
+      "sha256": "3ca56a3db756d0e71b3a91f92af6f0dbcc64beba8bc2eda266f82235983fe34b"
+    },
+    "decision": {
+      "path": "results/v24466_single_validation_external_decision_v1_20260804.json",
+      "sha256": "bf800cddd6730f772e6c162643d450daba7425a30d3a9313ded75f44d9154240"
+    },
+    "postresult_audit": {
+      "path": "results/v24466_single_validation_external_postresult_audit_v1_20260804.json",
+      "sha256": "041a6b1a847d27f8047a0297ce12971527803639073f61c1af9c44d77620e902"
+    },
+    "single_validation_build_audit": {
+      "path": "results/v24465_single_validation_adaptive_build_audit_v1_20260804.json",
+      "sha256": "fc1ccf473f9971df8faf849e8a7b23803b038966439a75b1f0d6e678679ec0be"
+    }
+  },
+  "public_observation": {
+    "selected": 8,
+    "one_wave": true,
+    "effect_deadline_seconds": 190,
+    "parent_timeout_seconds": 255,
+    "terminal_reserve_seconds": 65,
+    "batch_wall_seconds": 255.183467,
+    "parent_hard_timeout_tasks": 8,
+    "failure_snapshot_tasks": 0,
+    "unobserved_effect_tasks": 8,
+    "child_wall_p95_seconds": 255.023751,
+    "certificate_validation_invocations": 0,
+    "recursive_historical_semantic_replay_tasks": 0
+  },
+  "loopback_counterexample": {
+    "scope": "ephemeral_127_0_0_1_slow_drip_http_only",
+    "configured_total_deadline_seconds": 0.35,
+    "configured_cleanup_reserve_seconds": 0.1,
+    "configured_initial_effect_window_seconds": 0.25,
+    "drip_interval_seconds": 0.012,
+    "model": {
+      "elapsed_seconds": 1.26583,
+      "returned_success": true,
+      "remaining_effect_seconds_after_return": 0.0,
+      "returned_after_total_deadline": true
+    },
+    "hosted_search": {
+      "elapsed_seconds": 1.776594,
+      "returned_success": true,
+      "remaining_effect_seconds_after_return": 0.0,
+      "returned_after_total_deadline": true
+    },
+    "both_returned_success_after_total_deadline": true,
+    "external_network_model_search_fetch_or_evaluator_called": false,
+    "benchmark_task_or_private_content_used": false
+  },
+  "validation_budget_evidence": {
+    "synthetic_complete_validation_wall_seconds": 32.659375,
+    "synthetic_fast_persistence_p95_seconds": 0.0133,
+    "synthetic_profile_is_not_external_latency_estimate": true,
+    "real_external_validation_wall_seconds_observed": false,
+    "real_external_terminal_reserve_adequacy_proven": false
+  },
+  "diagnosis": {
+    "requests_timeout_is_inactivity_not_total_wall_counterexample_proven": true,
+    "current_model_and_hosted_search_can_return_success_after_absolute_deadline": true,
+    "total_wall_gap_is_sufficient_to_allow_effect_overrun": true,
+    "total_wall_gap_proven_as_unique_v24466_cause": false,
+    "exact_v24466_blocking_call_or_validation_stage_identifiable": false,
+    "private_task_directories_were_deleted_before_diagnosis": true,
+    "duplicate_post_validation_recursive_envelope_replay_was_removed": true,
+    "first_complete_semantic_validation_remains_before_terminal_persistence": true,
+    "first_complete_validation_has_independent_total_wall_bound": false,
+    "future_true_total_wall_effect_guard_required": true,
+    "future_content_free_stage_checkpoint_required": true,
+    "future_bounded_single_validation_finalize_required": true,
+    "same_v24466_population_rerun_allowed": false,
+    "benchmark_quality_measured": false,
+    "sota_supported": false
+  },
+  "source_invariants": {
+    "model_requests_timeout_is_clamped_to_remaining_effect_seconds": true,
+    "hosted_search_timeout_is_clamped_to_remaining_effect_seconds": true,
+    "model_request_path_has_no_hard_total_wall_timer_or_process_boundary": true,
+    "hosted_search_request_path_has_no_hard_total_wall_timer_or_process_boundary": true,
+    "single_validation_still_waits_for_complete_v24457_validation_before_capability": true,
+    "v24466_effect_and_parent_deadlines_leave_frozen_65_second_reserve": true
+  },
+  "source_manifest": {
+    "src/deepwide_agent/v24312_deadline_reliability.py": "2adaab53f558f101b65d842417097e3782038a3d24fbcc6de6259ac609f762b4",
+    "src/deepwide_agent/v24316_deadline_search.py": "dd5ded612bfecb624f38d5d86d379be1e973dbbd6df55084157cb33a758b3260",
+    "src/deepwide_agent/v24464_single_validation_adaptive_persistence.py": "89ac48faab95c86932613dc03f5b247303356aa706e0dcaef57c3bdff599bcb5",
+    "scripts/v24466_single_validation_adaptive_external_gate.py": "49bb560424f8f8041c91e1eca71db4b288270974bf01a03690b714f60387d9ed",
+    "scripts/diagnose_v24467_v24466_total_wall.py": "6b89820c45116bbd0c36112fee5f614e90be7cda6499809133b36278430d12b2",
+    "tests/test_diagnose_v24467_v24466_total_wall.py": "0b29838e6bd3d3d04ad5f41da0c32bcf5678eeca1c9c8fd4941054440f9cc49a"
+  },
+  "source_manifest_sha256": "05e1328e55554a07736ed71577aa5f662358c2eff3d91e6d09d487388c27b1e7",
+  "git": {
+    "head": "b3189e9d4ddd139b2ed2e9fbcb18b13d4bf00ace",
+    "target_main": "b3189e9d4ddd139b2ed2e9fbcb18b13d4bf00ace",
+    "head_equals_target_main": true,
+    "worktree_clean": true,
+    "all_sources_tracked": true
+  },
+  "closure": {
+    "shared_api_lease_active": false,
+    "protected_watchers": [
+      {
+        "pid": 795336,
+        "marker": "scripts/watch_v2415_r1_checkpoint_liveness.py",
+        "start_ticks": 713986317
+      },
+      {
+        "pid": 3061652,
+        "marker": "scripts/watch_v24218_exact220_executor.py",
+        "start_ticks": 747569004
+      }
+    ],
+    "protected_watchers_unchanged": true,
+    "local_loopback_http_probe_called": true,
+    "external_network_model_search_fetch_or_evaluator_called": false,
+    "benchmark_manifest_mapping_gold_category_question_type_split_evaluator_score_read": false,
+    "v24466_private_task_directories_reopened": false,
+    "v24466_rerun_resume_retry_or_selective_revaluation": false
+  },
+  "credential_literal_hits": [],
+  "findings": [],
+  "diagnosis_valid": true,
+  "authorization": {
+    "true_total_wall_effect_guard_design": true,
+    "content_free_stage_checkpoint_design": true,
+    "bounded_single_validation_finalize_design": true,
+    "external_probe_launch": false,
+    "paired_dev64": false,
+    "exact220": false,
+    "evaluator": false,
+    "leaderboard_or_sota": false
+  },
+  "diagnosis_payload_sha256": "ff4521c0785147f5ea6f7d9e8119da254f6c610986e802b72bea8d64dd95ca90"
+}
