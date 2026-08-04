@@ -1,0 +1,107 @@
+{
+  "artifact_version": 1,
+  "role": "v24435_v24434_title_timeout_diagnosis",
+  "created_at_unix": 1785838580,
+  "parent": {
+    "result": {
+      "path": "results/v24434_title_anchor_external_result_v1_20260804.json",
+      "sha256": "94b93a0a1f724590eeb1cbce8646bd35f9e3a80ad52b62d766977fa4e76250bd"
+    },
+    "decision": {
+      "path": "results/v24434_title_anchor_external_decision_v1_20260804.json",
+      "sha256": "866b895b701115cf379acaa1ee5175a3bc198de7a7a5df1c7c183bc08e1fcf06"
+    },
+    "postresult_audit": {
+      "path": "results/v24434_title_anchor_external_postresult_audit_v1_20260804.json",
+      "sha256": "b88f96e65f6e1da89152f0b632da6a3922ed8cd5afa3d1ab62c7451f95b74218"
+    }
+  },
+  "public_observation": {
+    "selected": 16,
+    "success_tasks": 12,
+    "parent_hard_timeout_tasks": 4,
+    "fully_observed_effect_tasks": 12,
+    "unobserved_effect_tasks": 4,
+    "batch_wall_seconds": 435.322321,
+    "slot_total_wait_seconds": 25.887149,
+    "slot_max_wait_seconds": 8.989329,
+    "slot_timeouts": 0,
+    "active_pages": 20,
+    "title_unique_anchor_pages": 17,
+    "title_ambiguous_or_absent_anchor_pages": 3,
+    "title_projections": 0,
+    "title_novel_observations": 0,
+    "title_positive_epistemic_tasks": 2,
+    "title_safe_change_tasks": 0,
+    "title_positive_information_gain_total_nats": 0.44197027824,
+    "title_decision_credit_total_nats": 0.0
+  },
+  "diagnosis": {
+    "global_model_slot_timeout_observed": false,
+    "parent_hard_timeout_observed": true,
+    "exact_blocking_child_effect_identifiable": false,
+    "per_effect_timeout_equals_full_task_budget": true,
+    "bounded_per_effect_timeout_is_required_next_evidence": true,
+    "title_alignment_succeeded_on_most_observed_active_pages": true,
+    "title_alignment_fraction": 0.85,
+    "strict_title_label_projection_conversion_observed": false,
+    "narrative_label_present_vs_parser_false_negative_identifiable": false,
+    "narrative_label_present_vs_parser_false_negative": "unidentifiable",
+    "counts_only_narrative_rejection_taxonomy_is_required_next_evidence": true,
+    "information_gain_without_decision_credit_observed": true,
+    "entropy_quality_improvement_proven": false,
+    "benchmark_quality_measured": false
+  },
+  "source_invariants": {
+    "strict_title_parser_accepts_only_key_value_lines": true,
+    "hosted_search_timeout_is_minimum_of_static_and_remaining": true,
+    "v24434_static_search_timeout_equals_task_wall": true,
+    "v24434_parent_timeout_exceeds_task_wall": true
+  },
+  "source_manifest": {
+    "src/deepwide_agent/v24428_unique_title_anchor_projection.py": "5fe801b5d3a41d0c176f2d38af232aea0601e64ee151f6c23314c4899679a18a",
+    "src/deepwide_agent/v24316_deadline_search.py": "dd5ded612bfecb624f38d5d86d379be1e973dbbd6df55084157cb33a758b3260",
+    "scripts/v24434_title_anchor_external_gate.py": "87d0ab0000dcf14d8f462a25f662ffdff597822cc845b55c0f67b39c996d70ac",
+    "scripts/diagnose_v24435_v24434_title_timeout.py": "85b44c5f43f57c05461063612931c19d34921338e42eded79805e351b5fe6940"
+  },
+  "source_manifest_sha256": "d30e73cc14a6b365b4c588d2e093464167b32fa2f2330bc801601dad4f095d6a",
+  "git": {
+    "head": "6a9085bdf01601bf77c576a16b3d7cfc4bff6614",
+    "target_main": "6a9085bdf01601bf77c576a16b3d7cfc4bff6614",
+    "head_equals_target_main": true,
+    "worktree_clean": true,
+    "all_sources_tracked": true
+  },
+  "closure": {
+    "shared_api_lease_active": false,
+    "protected_watchers": [
+      {
+        "pid": 795336,
+        "marker": "scripts/watch_v2415_r1_checkpoint_liveness.py",
+        "start_ticks": 713986317
+      },
+      {
+        "pid": 3061652,
+        "marker": "scripts/watch_v24218_exact220_executor.py",
+        "start_ticks": 747569004
+      }
+    ],
+    "protected_watchers_unchanged": true,
+    "v24434_private_task_directories_reopened": false,
+    "v24434_rerun_resume_retry_or_selective_revaluation": false,
+    "network_model_search_fetch_or_evaluator_called_by_diagnosis": false
+  },
+  "credential_literal_hits": [],
+  "findings": [],
+  "diagnosis_valid": true,
+  "authorization": {
+    "bounded_per_effect_timeout_design": true,
+    "counts_only_narrative_label_taxonomy_design": true,
+    "external_probe_launch": false,
+    "paired_dev64": false,
+    "exact220": false,
+    "evaluator": false,
+    "leaderboard_or_sota": false
+  },
+  "diagnosis_payload_sha256": "1443683d438b17d0c33302c125eb2428e7012d96633727b0ae8a146ce7ddc95c"
+}
