@@ -18,9 +18,11 @@ for path in (ROOT, ROOT / "src", ROOT / "tests"):
 
 from deepwide_agent.v24309_runner_exit_integration import _new_json  # noqa: E402
 from deepwide_agent.v24492_targeted_timed_parent import (  # noqa: E402
+    failure_projection,
     run_targeted_parent_with_separated_budget,
     run_targeted_worker,
     supervise_targeted_worker_with_separated_budget,
+    validate_failure_projection,
 )
 from test_v24342_semantic_active_runtime import limits  # noqa: E402
 from test_v24390_uncertainty_active_evidence_runtime import SEED, TASK  # noqa: E402
@@ -92,6 +94,15 @@ def process_mode(args: argparse.Namespace) -> int:
 
 
 class V24492TargetedTimedParentTests(unittest.TestCase):
+    def test_failure_projection_is_separate_content_free_zero_schema(self) -> None:
+        value = validate_failure_projection(failure_projection(3))
+        self.assertEqual(value["ordinal"], 3)
+        self.assertEqual(value["status"], "failure_as_zero")
+        self.assertFalse(value["passed"])
+        self.assertFalse(value["projection_consumed_validated_capability"])
+        self.assertEqual(value["additional_fetch_effects"], 0)
+        self.assertEqual(value["decision_credit_total_nats_after_targeted_search"], 0)
+
     def test_real_parent_supervisor_worker_chain_uses_targeted_capability(self) -> None:
         with tempfile.TemporaryDirectory(dir=ROOT / "outputs") as temporary:
             output_root = Path(temporary)
