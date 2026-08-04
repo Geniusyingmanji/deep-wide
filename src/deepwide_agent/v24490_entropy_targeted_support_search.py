@@ -1115,23 +1115,23 @@ def validate_effect_delta_receipt(value: Mapping[str, Any]) -> dict[str, Any]:
     return copied
 
 
-def run_v24490_task(
-    task: Mapping[str, Any],
+def _run_targeted_stage_from_v24457_outcome(
+    first: parent.IntegratedAdaptiveEntropySupportOutcome,
     *,
     model: Any,
     search: Any,
-    partition_seed_sha256: str,
-    limits: Any,
-    monotonic: Callable[[], float],
 ) -> IntegratedEntropyTargetedSupportOutcome:
-    first = parent.run_v24457_task(
-        task,
-        model=model,
-        search=search,
-        partition_seed_sha256=partition_seed_sha256,
-        limits=limits,
-        monotonic=monotonic,
-    )
+    """Append the targeted stage to one already-completed V2.44.57 outcome.
+
+    This helper deliberately does not call :func:`validate_result`.  The
+    legacy public entrypoint below retains that validation, while the
+    proof-carrying V2.44.91 integration performs one complete targeted
+    cross-artifact validation after constructing its parent envelope.  The
+    typed parent outcome is never accepted from a serialized runtime input.
+    """
+
+    if not isinstance(first, parent.IntegratedAdaptiveEntropySupportOutcome):
+        raise TypeError("V2.44.90 targeted continuation requires V2.44.57 outcome")
     before_model = copy.deepcopy(first.model_slot_receipt)
     before_transport = copy.deepcopy(first.transport_health)
     before_search = copy.deepcopy(first.search_single_shot_receipt)
@@ -1165,7 +1165,6 @@ def run_v24490_task(
         "targeted_union_receipt": union_receipt,
     }
     result = _compute_result(first.adaptive_result, private)
-    validate_result(result)
     after_model = model.receipt()
     after_transport = search.transport_health()
     after_search = search.single_shot_receipt()
@@ -1191,6 +1190,32 @@ def run_v24490_task(
         search_single_shot_receipt=after_search,
         effect_delta_receipt=effect,
     )
+
+
+def run_v24490_task(
+    task: Mapping[str, Any],
+    *,
+    model: Any,
+    search: Any,
+    partition_seed_sha256: str,
+    limits: Any,
+    monotonic: Callable[[], float],
+) -> IntegratedEntropyTargetedSupportOutcome:
+    first = parent.run_v24457_task(
+        task,
+        model=model,
+        search=search,
+        partition_seed_sha256=partition_seed_sha256,
+        limits=limits,
+        monotonic=monotonic,
+    )
+    outcome = _run_targeted_stage_from_v24457_outcome(
+        first,
+        model=model,
+        search=search,
+    )
+    validate_result(outcome.targeted_result)
+    return outcome
 
 
 __all__ = [
