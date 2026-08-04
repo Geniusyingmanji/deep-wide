@@ -1,6 +1,10 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.24
+> 版本：6.25
+>
+> **6.25 V2.44.52 外部门控终局与 V2.44.53 双根因诊断（2026-08-04）：V2.44.52 的唯一一次全新16题 external gate 已自然完成并严格 NO-GO；result、decision、postaudit 分别封存至提交 `71c9508/7ad624a`。14题成功、2题 parent hard timeout，batch wall `537.758s>480s`；成功题 parent-side validation 中位/p95 为 `46.825/58.640s`，counts-only projection 仅 `0.000141/0.000238s`，因此 projection 不是瓶颈。离线301,252-byte合成 envelope 的单次父验证耗时 `6.818s`、约1,909万次函数调用，其中完整嵌套语义 replay 累计 `6.753s`；该 profile 不调用网络，也不外推为真实任务时延，但与外部门控共同支持“父侧递归重算是材料级成本”。append-only successor 改用 proof-carrying terminal artifact：child 在冻结代码内完成一次完整语义验证后，certificate 绑定 result/model/transport/search 精确文件字节；parent 独立检查普通文件、外层 seal、字节 hash、独立 receipt 等价与紧凑 effect/entropy invariant，禁止再递归重算全部历史 pipeline。必须先通过 synthetic equivalence/tamper matrix 且 parent p95≤1s，才可设计新的 external gate。**
+>
+> **机制结论与性能结论必须分开：14个成功目标全部落在 `insufficient_support_count`，10题拿到可用第三页并产生 `2.947147 nats` 正信息增益，但 safe change与decision credit均为0；所以“一个额外第三来源足够把熵增益转成安全决策”已被本轮外部数据否证。不得放松3-source/2-source、posterior或margin阈值追认成功。后续只能从已冻结、source-disjoint leads 做有界自适应支持获取，安全决策或预算耗尽即停，不增加model/query/search batch；最大额外fetch数须另行预注册。必须使用全新外部实体组，严禁重跑V2.44.52人口。机制+可靠性+时延门通过后才允许 fresh paired-dev64；dev64 GO 后才允许新的完整220。当前可信完整220最佳仍为V2.42.67：`7/220=3.1818%`、Entity `69.09%`、Composite `0.413541`，未提交排行榜、非Avg@4、不是SOTA。权威诊断：`results/v24453_v24452_validation_and_support_diagnosis_v1_20260804.json`。**
 >
 > **6.24a V2.43.74 外部门控制面 NO-GO 与 V2.43.75 诊断（2026-08-04）：V2.43.74 按 protocol→preaudit→activation→execution-start 四次独立提交推送后，只运行一次16题全新实体组；公开结果为16/16 local projection failure，因私有临时目录按协议删除，不能据此重建、重评或声称搜索/模型机制失败。append-only V2.43.75 用真实结构的 synthetic V2.43.72 envelope 复现：冻结 projector 对 nested parent 多下钻一层，必然把 discovery/core 读为空并拒绝成功 envelope；修正 projector 在本地恢复4 queries、5+5、4+1/4+1、3 model、10 fetch，且 tamper fail-closed。V2.43.74 永久 NO-GO、禁止重跑同一任务；V2.43.75 只授权新的 fresh external gate设计，未产生 benchmark 分数。**
 >
