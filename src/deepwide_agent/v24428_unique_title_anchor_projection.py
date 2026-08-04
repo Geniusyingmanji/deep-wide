@@ -172,24 +172,25 @@ def _unique_title_row(
 
 
 def _labelled_years(
-    lines: Sequence[str], labels: frozenset[str]
+    lines: Sequence[str],
+    labels: frozenset[str],
+    *,
+    anchored_row: str,
+    all_rows: Sequence[str],
 ) -> list[tuple[str, str, int]]:
     output: dict[tuple[str, str, int], tuple[str, str, int]] = {}
     for index, line in enumerate(lines[:MAXIMUM_TITLE_RECORD_LINES]):
+        cells = base._cells(line)
+        first_cell = cells[0] if cells else line
+        if any(
+            base._entity_equal(first_cell, other)
+            for other in all_rows
+            if not base._entity_equal(other, anchored_row)
+        ):
+            break
         bound = base._label_value(line, labels)
         if bound is not None:
             label, year = bound
-            output[(label, year, index + 1)] = (label, year, index + 1)
-        cells = base._cells(line)
-        if cells is None or len(cells) < 2:
-            continue
-        for label_index in range(0, len(cells) - 1):
-            if not base._label_equal(cells[label_index], labels):
-                continue
-            year = base._year(cells[label_index + 1])
-            if year is None:
-                continue
-            label = _normalize(cells[label_index])
             output[(label, year, index + 1)] = (label, year, index + 1)
     return [output[key] for key in sorted(output, key=lambda item: (item[2], item))]
 
@@ -212,7 +213,12 @@ def _title_projections(
         labels = base._accepted_labels(target)
         if not labels:
             continue
-        labelled = _labelled_years(lines, labels)
+        labelled = _labelled_years(
+            lines,
+            labels,
+            anchored_row=anchored_row,
+            all_rows=[row_key for row_key, _ in _visible_rows(cells)],
+        )
         distinct_years = {year for _, year, _ in labelled}
         if len(distinct_years) != 1:
             continue

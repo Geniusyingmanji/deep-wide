@@ -75,7 +75,8 @@ class V24428UniqueTitleAnchorProjectionTests(unittest.TestCase):
             BASELINE,
             [page("Premier League clubs", "Founded | 1886")],
         )
-        self.assertEqual(catalog["observations"], [])
+        self.assertEqual(values(catalog, "Arsenal"), set())
+        self.assertEqual(catalog["title_anchor_projection_count"], 0)
         self.assertEqual(catalog["unique_title_anchor_page_count"], 0)
         self.assertFalse(catalog["arbitrary_nearby_year_used_as_observation"])
 
@@ -84,7 +85,8 @@ class V24428UniqueTitleAnchorProjectionTests(unittest.TestCase):
             BASELINE,
             [page("Arsenal vs Chelsea - history", "Founded | 1886")],
         )
-        self.assertEqual(catalog["observations"], [])
+        self.assertEqual(values(catalog, "Arsenal"), set())
+        self.assertEqual(catalog["title_anchor_projection_count"], 0)
         self.assertEqual(catalog["ambiguous_or_absent_title_anchor_page_count"], 1)
 
     def test_conflicting_labelled_years_reject_the_page_target_pair(self) -> None:
@@ -99,6 +101,26 @@ class V24428UniqueTitleAnchorProjectionTests(unittest.TestCase):
         catalog = build_unique_title_anchor_projection(
             BASELINE,
             [page("Arsenal F.C.", "Won a cup in 1886\nLatest season | 2026")],
+        )
+        self.assertEqual(catalog["observations"], [])
+
+    def test_other_visible_entity_record_stops_title_scope(self) -> None:
+        catalog = build_unique_title_anchor_projection(
+            BASELINE,
+            [
+                page(
+                    "Arsenal F.C.",
+                    "Official history\nChelsea | Founded | 1905\nFounded | 1886",
+                )
+            ],
+        )
+        self.assertEqual(values(catalog, "Arsenal"), set())
+        self.assertEqual(catalog["title_anchor_projection_count"], 0)
+
+    def test_multicolumn_row_cannot_supply_title_scoped_value(self) -> None:
+        catalog = build_unique_title_anchor_projection(
+            BASELINE,
+            [page("Arsenal F.C.", "Club | Founded | 1886")],
         )
         self.assertEqual(catalog["observations"], [])
 
