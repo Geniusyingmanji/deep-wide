@@ -1,0 +1,153 @@
+{
+  "artifact_version": 1,
+  "role": "v24456_proof_carrying_build_audit",
+  "created_at_unix": 1785852957,
+  "parent": {
+    "path": "results/v24453_v24452_validation_and_support_diagnosis_v1_20260804.json",
+    "sha256": "ea5c868ea8d86f380a30b12d92b719a27555adfd361a0857a898a7ed8df57c61"
+  },
+  "source_manifest": {
+    "src/deepwide_agent/v24448_serialized_third_source_envelope.py": "81767ed084b34a419538d3965dc9063d2168408bae159eccc3a64838d98d24ab",
+    "scripts/v24449_third_source_external_projection.py": "21b6d51b9d971720bb34fa34d839a5ce7e37829acecf74f9be5c3161f3905c51",
+    "src/deepwide_agent/v24454_proof_carrying_third_source_envelope.py": "5028576d6fecaa07367c4fa4f4c4c9bc2bca447348cd48395112b56db668cdab",
+    "src/deepwide_agent/v24455_proof_carrying_timed_runner.py": "72f1a21b0dbc73fcc6c7dc23e206a5169df7c1e0c2f324c6f6254871f09aed5b",
+    "tests/test_v24448_serialized_third_source_envelope.py": "215037d26aacaa5dd35bea33ab7e8027085fafe1d5b94768b89a4f31f11127e9",
+    "tests/test_v24449_third_source_external_projection.py": "80a29a41a827309d84231174b80315c2097f67431a057dda509498b1076293b9",
+    "tests/test_v24454_proof_carrying_third_source_envelope.py": "6b18e88c9fc6249523aa8833ee14186bfbc8f8d1ddcc959e81964ad96ca89c20",
+    "tests/test_v24455_proof_carrying_timed_runner.py": "d3d263c3e9f7bb0a32eef4abf5fe81de81a65acc3d01018c90c3587ac08c5626",
+    "scripts/audit_v24456_proof_carrying_build.py": "e4771293ad839855382e96eb76122d3d0eb023da72ee32f8ff4b75384411b96c",
+    "tests/test_audit_v24456_proof_carrying_build.py": "541ec5593bb4c7c6da5c6054fb582448c71ae6f2bb47bfbf130ad50c6e678e69"
+  },
+  "source_manifest_sha256": "9d6e495213574e4b3f72e160c2f9482e82e46f2f38adef99d45a6c8a28bb8bae",
+  "git": {
+    "head": "56d9daf02614244c782826668d30637fee84a271",
+    "target_main": "56d9daf02614244c782826668d30637fee84a271",
+    "head_equals_target_main": true,
+    "worktree_clean": true,
+    "all_sources_tracked": true
+  },
+  "tests": {
+    "suites": [
+      {
+        "path": "tests/test_v24448_serialized_third_source_envelope.py",
+        "passed": true,
+        "test_count": 4,
+        "scope": "complete_validator"
+      },
+      {
+        "path": "tests/test_v24449_third_source_external_projection.py",
+        "passed": true,
+        "test_count": 5,
+        "scope": "counts_projection"
+      },
+      {
+        "path": "tests/test_v24454_proof_carrying_third_source_envelope.py",
+        "passed": true,
+        "test_count": 7,
+        "scope": "proof_certificate"
+      },
+      {
+        "path": "tests/test_v24455_proof_carrying_timed_runner.py",
+        "passed": true,
+        "test_count": 5,
+        "scope": "proof_timed_runner"
+      },
+      {
+        "path": "tests/test_audit_v24456_proof_carrying_build.py",
+        "passed": true,
+        "test_count": 5,
+        "scope": "audit_control"
+      }
+    ],
+    "passed": true,
+    "test_count": 26,
+    "mechanism_test_count": 21,
+    "audit_control_test_count": 5,
+    "network_model_search_fetch_or_evaluator_called": false
+  },
+  "performance_evidence": {
+    "scope": "synthetic_test_fixture_only",
+    "repetitions": 5,
+    "certificate_validation_seconds": [
+      0.01595,
+      0.015744,
+      0.015718,
+      0.01568,
+      0.015391
+    ],
+    "certificate_validation_median_seconds": 0.015718,
+    "certificate_validation_p95_seconds": 0.01595,
+    "certificate_validation_max_seconds": 0.01595,
+    "parent_post_child_median_seconds": 0.016271,
+    "parent_post_child_p95_seconds": 0.016595,
+    "parent_post_child_max_seconds": 0.016595,
+    "ceiling_seconds": 1.0,
+    "ceiling_passed": true,
+    "network_model_search_fetch_or_evaluator_called": false,
+    "profile_is_not_external_latency_estimate": true
+  },
+  "proof_evidence": {
+    "complete_frozen_semantic_validation_runs_in_trusted_child": true,
+    "parent_binds_exact_result_model_transport_and_search_file_bytes": true,
+    "parent_requires_successful_child_terminal_receipt": true,
+    "parent_rejects_missing_extra_symlink_or_hash_drifted_artifacts": true,
+    "writer_input_and_durable_json_value_must_be_equal": true,
+    "resealed_private_content_tamper_rejected_by_exact_byte_certificate": true,
+    "projection_exactly_equal_to_complete_validator_on_synthetic_fixture": true,
+    "success_observation_consumes_validated_capability_receipts": true,
+    "failure_observation_preserves_partial_effect_lower_bounds": true,
+    "parent_recursive_historical_semantic_replay_tasks": 0,
+    "private_file_hashes_emitted_to_public_aggregate": false
+  },
+  "trust_boundary": {
+    "pinned_local_child_source_and_launch_manifest_are_trusted": true,
+    "certificate_is_independently_signed": false,
+    "certificate_is_remote_attestation": false,
+    "malicious_child_resistance_claimed": false,
+    "post_validation_persistence_drift_detection_claimed": true,
+    "serialization_drift_detection_claimed": true
+  },
+  "privileged_field_accesses": [],
+  "evaluator_imports": [],
+  "credential_literal_hits": [],
+  "closure": {
+    "shared_api_lease_active": false,
+    "protected_watchers": [
+      {
+        "pid": 795336,
+        "marker": "scripts/watch_v2415_r1_checkpoint_liveness.py",
+        "start_ticks": 713986317
+      },
+      {
+        "pid": 3061652,
+        "marker": "scripts/watch_v24218_exact220_executor.py",
+        "start_ticks": 747569004
+      }
+    ],
+    "protected_watchers_unchanged": true,
+    "external_probe_launched": false,
+    "benchmark_or_watcher_signaled_restarted_or_modified": false,
+    "active_run_killed_or_quarantined": false
+  },
+  "source_policy": {
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "mapping_gold_category_question_type_split_evaluator_score_or_reward_read": false,
+    "task_query_url_page_prediction_value_or_content_hash_emitted": false,
+    "remote_network_model_search_fetch_or_evaluator_called_by_audit": false
+  },
+  "findings": [],
+  "audit_valid": true,
+  "authorization": {
+    "adaptive_support_successor_offline_design": true,
+    "fresh_external_protocol_design": false,
+    "external_probe_launch": false,
+    "paired_dev64": false,
+    "exact220": false,
+    "evaluator": false,
+    "leaderboard_or_sota": false
+  },
+  "audit_payload_sha256": "203905db9d20db1646cad4c9a2230e744b7ea102b96bb0421d5e658efc0d0347"
+}
