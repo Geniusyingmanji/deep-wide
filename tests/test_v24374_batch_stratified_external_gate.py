@@ -410,4 +410,3 @@ class V24374BatchStratifiedExternalGateTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
