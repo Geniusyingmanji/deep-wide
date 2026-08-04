@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import math
 import sys
 import unittest
 from pathlib import Path
@@ -53,6 +54,20 @@ class V24388UncertaintyCreditTests(unittest.TestCase):
         self.assertFalse(
             catalog["target_selection_requires_preexisting_candidate_change"]
         )
+
+    def test_runtime_can_narrow_selection_under_global_two_target_cap(self) -> None:
+        baseline = """```markdown
+| Software | Initial release year | Country |
+| --- | --- | --- |
+| Alpha | 2020 | Unknown |
+```"""
+        catalog = build_uncertainty_catalog(
+            baseline, [], maximum_selected_targets=1
+        )
+        validate_uncertainty_catalog(catalog)
+        self.assertEqual(catalog["maximum_selected_targets"], 1)
+        self.assertEqual(len(catalog["selected_target_binding_sha256s"]), 1)
+        self.assertEqual(len(catalog["active_queries"]), 1)
 
     def test_baseline_confirmation_gets_epistemic_not_decision_credit(self) -> None:
         catalog = build_uncertainty_catalog(BASELINE, [])
@@ -117,6 +132,29 @@ class V24388UncertaintyCreditTests(unittest.TestCase):
         )
         self.assertEqual(result["receipt"]["safe_change_count"], 1)
         self.assertIn("| Alpha | 2022 |", result["final_prediction"])
+
+    def test_new_active_value_refines_frozen_other_without_rebuilding_prior(self) -> None:
+        catalog = build_uncertainty_catalog(BASELINE, [])
+        target = catalog["targets"][0]
+        self.assertEqual(target["hypotheses"], ["__current__", "__other__"])
+        result = apply_active_evidence(
+            catalog,
+            [
+                observation("2021", "one.example"),
+                observation("2021", "two.example"),
+                observation("2021", "three.example"),
+            ],
+        )
+        resolution = result["resolutions"][0]
+        # The known-cell current prior remains 0.65; only frozen OTHER=0.35
+        # is refined into the materialized alternative and residual OTHER.
+        expected_pre_entropy = -(
+            0.65 * math.log(0.65) + 2 * 0.175 * math.log(0.175)
+        )
+        self.assertAlmostEqual(
+            resolution["pre_active_entropy_nats"], expected_pre_entropy, places=11
+        )
+        self.assertEqual(resolution["status"], "safe_change")
 
     def test_conflicting_active_evidence_gets_no_positive_credit_or_change(self) -> None:
         catalog = build_uncertainty_catalog(

@@ -370,6 +370,91 @@ def _posterior(
     return [value / total for value in weights]
 
 
+def _posterior_from_base(
+    base: Sequence[float],
+    hypotheses: Sequence[str],
+    votes: Sequence[Mapping[str, str]],
+) -> list[float]:
+    """Apply only the supplied votes to an already-frozen posterior."""
+
+    if (
+        len(base) != len(hypotheses)
+        or len(hypotheses) < 2
+        or any(float(value) < 0 or not math.isfinite(float(value)) for value in base)
+        or not math.isclose(sum(float(value) for value in base), 1.0, abs_tol=1e-12)
+    ):
+        raise ValueError("V2.43.88 frozen posterior drifted")
+    index = {value: ordinal for ordinal, value in enumerate(hypotheses)}
+    logs = [math.log(max(float(value), 1e-300)) for value in base]
+    other_likelihood = (1.0 - FIXED_SOURCE_RELIABILITY) / (
+        len(hypotheses) - 1
+    )
+    for vote in votes:
+        chosen = index.get(str(vote["hypothesis"]), index[OTHER])
+        for ordinal in range(len(logs)):
+            likelihood = (
+                FIXED_SOURCE_RELIABILITY if ordinal == chosen else other_likelihood
+            )
+            logs[ordinal] += math.log(max(likelihood, 1e-300))
+    maximum = max(logs)
+    weights = [math.exp(value - maximum) for value in logs]
+    total = sum(weights)
+    return [value / total for value in weights]
+
+
+def _expanded_frozen_belief(
+    target: Mapping[str, Any],
+    active_votes: Sequence[Mapping[str, str]],
+) -> tuple[list[str], list[float], list[float]]:
+    """Refine frozen ``OTHER`` mass without rebuilding the prior.
+
+    Active evidence can reveal a concrete value that was represented only by
+    ``OTHER`` when the proposal catalog was frozen.  Such a value refines that
+    existing state; it must not change probability already assigned to the
+    current value or proposal alternatives.  The uncalibrated shadow model
+    splits the frozen ``OTHER`` mass uniformly across newly materialized
+    values and a residual ``OTHER`` bucket.
+    """
+
+    frozen_hypotheses = [str(value) for value in target["hypotheses"]]
+    frozen_prior = [float(value) for value in target["prior_probabilities"]]
+    frozen_posterior = [
+        float(value) for value in target["proposal_posterior_probabilities"]
+    ]
+    if (
+        len(frozen_hypotheses) != len(set(frozen_hypotheses))
+        or not frozen_hypotheses
+        or frozen_hypotheses[-1] != OTHER
+        or len(frozen_prior) != len(frozen_hypotheses)
+        or len(frozen_posterior) != len(frozen_hypotheses)
+        or not math.isclose(sum(frozen_prior), 1.0, abs_tol=2e-12)
+        or not math.isclose(sum(frozen_posterior), 1.0, abs_tol=2e-12)
+    ):
+        raise ValueError("V2.43.88 frozen belief identity drifted")
+    new_hypotheses = sorted(
+        {
+            str(vote["hypothesis"])
+            for vote in active_votes
+            if str(vote["hypothesis"])
+            not in {*frozen_hypotheses, CURRENT, OTHER}
+        }
+    )
+    if not new_hypotheses:
+        return frozen_hypotheses, frozen_prior, frozen_posterior
+    hypotheses = [*frozen_hypotheses[:-1], *new_hypotheses, OTHER]
+    divisor = len(new_hypotheses) + 1
+
+    def refine(values: Sequence[float]) -> list[float]:
+        other_mass = float(values[-1])
+        split = other_mass / divisor
+        output = [*map(float, values[:-1]), *([split] * len(new_hypotheses)), split]
+        if not math.isclose(sum(output), 1.0, abs_tol=2e-12):
+            raise ValueError("V2.43.88 OTHER refinement lost probability mass")
+        return output
+
+    return hypotheses, refine(frozen_prior), refine(frozen_posterior)
+
+
 def _entropy(probabilities: Sequence[float]) -> float:
     return -sum(
         float(value) * math.log(float(value))
@@ -410,7 +495,15 @@ def _active_query(target: Mapping[str, Any]) -> str:
 def _compute_catalog(
     baseline_prediction: str,
     proposal_observations: Sequence[Mapping[str, Any]],
+    *,
+    maximum_selected_targets: int = MAXIMUM_SELECTED_TARGETS,
 ) -> dict[str, Any]:
+    if (
+        isinstance(maximum_selected_targets, bool)
+        or not isinstance(maximum_selected_targets, int)
+        or not 1 <= maximum_selected_targets <= MAXIMUM_SELECTED_TARGETS
+    ):
+        raise ValueError("V2.43.88 selected-target cap drifted")
     observations = _canonical_observations(proposal_observations)
     targets = _baseline_targets(baseline_prediction)
     valid_identities = {
@@ -470,7 +563,7 @@ def _compute_catalog(
             int(item["proposal_independent_source_count"]),
             str(item["target_binding_sha256"]),
         ),
-    )[:MAXIMUM_SELECTED_TARGETS]
+    )[:maximum_selected_targets]
     selected_ids = [str(item["target_binding_sha256"]) for item in ranked]
     selected_set = set(selected_ids)
     for item in projected:
@@ -491,7 +584,7 @@ def _compute_catalog(
         "targets": projected,
         "selected_target_binding_sha256s": selected_ids,
         "active_queries": queries,
-        "maximum_selected_targets": MAXIMUM_SELECTED_TARGETS,
+        "maximum_selected_targets": maximum_selected_targets,
         "fixed_source_reliability": FIXED_SOURCE_RELIABILITY,
         "target_selection_requires_preexisting_candidate_change": False,
         "active_queries_use_only_frozen_row_and_column": True,
@@ -505,8 +598,14 @@ def _compute_catalog(
 def build_uncertainty_catalog(
     baseline_prediction: str,
     proposal_observations: Sequence[Mapping[str, Any]],
+    *,
+    maximum_selected_targets: int = MAXIMUM_SELECTED_TARGETS,
 ) -> dict[str, Any]:
-    value = _compute_catalog(baseline_prediction, proposal_observations)
+    value = _compute_catalog(
+        baseline_prediction,
+        proposal_observations,
+        maximum_selected_targets=maximum_selected_targets,
+    )
     validate_uncertainty_catalog(value)
     return value
 
@@ -527,13 +626,17 @@ def validate_uncertainty_catalog(value: Mapping[str, Any]) -> dict[str, Any]:
         or not isinstance(targets, list)
         or any(not isinstance(item, Mapping) or set(item) != TARGET_KEYS for item in targets)
         or not isinstance(selected, list)
-        or len(selected) > MAXIMUM_SELECTED_TARGETS
+        or isinstance(value.get("maximum_selected_targets"), bool)
+        or not isinstance(value.get("maximum_selected_targets"), int)
+        or not 1
+        <= value["maximum_selected_targets"]
+        <= MAXIMUM_SELECTED_TARGETS
+        or len(selected) > value["maximum_selected_targets"]
         or len(selected) != len(set(selected))
         or any(re.fullmatch(r"[0-9a-f]{64}", str(item)) is None for item in selected)
         or not isinstance(queries, list)
         or len(queries) != len(selected)
         or any(not isinstance(item, str) or not item for item in queries)
-        or value.get("maximum_selected_targets") != MAXIMUM_SELECTED_TARGETS
         or value.get("fixed_source_reliability") != FIXED_SOURCE_RELIABILITY
         or value.get("target_selection_requires_preexisting_candidate_change")
         is not False
@@ -548,7 +651,9 @@ def validate_uncertainty_catalog(value: Mapping[str, Any]) -> dict[str, Any]:
     ):
         raise ValueError("V2.43.88 uncertainty catalog identity drifted")
     expected = _compute_catalog(
-        str(value["baseline_prediction"]), value["proposal_observations"]
+        str(value["baseline_prediction"]),
+        value["proposal_observations"],
+        maximum_selected_targets=int(value["maximum_selected_targets"]),
     )
     if dict(value) != expected:
         raise ValueError("V2.43.88 uncertainty catalog replay drifted")
@@ -558,14 +663,13 @@ def validate_uncertainty_catalog(value: Mapping[str, Any]) -> dict[str, Any]:
 def _source_credit_records(
     target: Mapping[str, Any],
     hypotheses: Sequence[str],
-    prior: Sequence[float],
-    proposal_votes: Sequence[Mapping[str, str]],
+    proposal_posterior: Sequence[float],
     active_votes: Sequence[Mapping[str, str]],
     *,
     epistemic_credit: float,
     decision_credit: float,
 ) -> list[dict[str, Any]]:
-    combined = _posterior(prior, hypotheses, [*proposal_votes, *active_votes])
+    combined = _posterior_from_base(proposal_posterior, hypotheses, active_votes)
     combined_entropy = _entropy(combined)
     marginals: list[tuple[Mapping[str, str], float]] = []
     for ordinal, vote in enumerate(active_votes):
@@ -573,7 +677,7 @@ def _source_credit_records(
             item for index, item in enumerate(active_votes) if index != ordinal
         ]
         without_entropy = _entropy(
-            _posterior(prior, hypotheses, [*proposal_votes, *without])
+            _posterior_from_base(proposal_posterior, hypotheses, without)
         )
         marginals.append((vote, max(0.0, without_entropy - combined_entropy)))
     total = sum(value for _, value in marginals)
@@ -630,11 +734,11 @@ def _resolution(
     active_ambiguous: int,
 ) -> dict[str, Any]:
     proposal_votes = list(target["proposal_votes"])
-    hypotheses = _hypotheses(target, proposal_votes, active_votes)
-    prior = _prior(target, hypotheses)
-    proposal_posterior = _posterior(prior, hypotheses, proposal_votes)
+    hypotheses, prior, proposal_posterior = _expanded_frozen_belief(
+        target, active_votes
+    )
     combined_votes = [*proposal_votes, *active_votes]
-    combined = _posterior(prior, hypotheses, combined_votes)
+    combined = _posterior_from_base(proposal_posterior, hypotheses, active_votes)
     pre_entropy = _entropy(proposal_posterior)
     combined_entropy = _entropy(combined)
     signed_gain = pre_entropy - combined_entropy
@@ -702,7 +806,7 @@ def _resolution(
         final_value = displays[0]
     raw_marginals = []
     combined_entropy_value = _entropy(
-        _posterior(prior, hypotheses, combined_votes)
+        _posterior_from_base(proposal_posterior, hypotheses, active_votes)
     )
     for ordinal in range(len(active_votes)):
         without = [
@@ -711,7 +815,11 @@ def _resolution(
         raw_marginals.append(
             max(
                 0.0,
-                _entropy(_posterior(prior, hypotheses, [*proposal_votes, *without]))
+                _entropy(
+                    _posterior_from_base(
+                        proposal_posterior, hypotheses, without
+                    )
+                )
                 - combined_entropy_value,
             )
         )
@@ -720,8 +828,7 @@ def _resolution(
     records = _source_credit_records(
         target,
         hypotheses,
-        prior,
-        proposal_votes,
+        proposal_posterior,
         active_votes,
         epistemic_credit=epistemic,
         decision_credit=decision,
