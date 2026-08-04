@@ -1,0 +1,86 @@
+{
+  "artifact_version": 1,
+  "role": "v24396_v24395_failure_observability_diagnosis",
+  "created_at_unix": 1785822659,
+  "parents": {
+    "results/v24395_uncertainty_external_result_v1_20260804.json": "e86d3578a984e33315298f3ad89ce72841c85863401f98bbbf404676159173b6",
+    "results/v24395_uncertainty_external_decision_v1_20260804.json": "56f37e009add3eda3b70341655a14261de1d4f672d8995cf0f6c6eea8aa86641",
+    "results/v24395_uncertainty_external_postresult_audit_v1_20260804.json": "1b9430168f72b25f37462fe7f0b092afe582a39ed049aa7abf2d6fab8dcc09cb"
+  },
+  "source_manifest": {
+    "scripts/v24393_uncertainty_external_projection.py": "18785594e9c6caa6143f525fd3d1551e69bcf7abd59483a3d915297d35d13137",
+    "scripts/v24395_uncertainty_external_gate.py": "2bc3d1c6d728393feb2479e5198cde8259a0ee00ed7de36ba2de7b188ee759e2",
+    "src/deepwide_agent/v24308_child_exit_observability.py": "27b2ffbfc748f960cfdc25919eb73d0ab0bc45f358bb3718518bdfd83b797d33",
+    "src/deepwide_agent/v24309_runner_exit_integration.py": "18c1b4e0ed06769f3925c4bd3448ef907bf66a45ef33c342ef0d0192a1ac26d8",
+    "scripts/diagnose_v24396_v24395_failure_observability.py": "db4d3d6818af290421d2316d2dbc74101941bda30453fa0f8e90d17821149089"
+  },
+  "source_manifest_sha256": "bcaad5f6dac4754dd9aaea694068a122db5e2cdf9846a9e4c6bc71145cfae227",
+  "observed": {
+    "selected": 16,
+    "terminal_success_tasks": 1,
+    "synthetic_local_failure_rows": 15,
+    "reported_deadline_exhausted_tasks": 15,
+    "observable_success_model_requests": 3,
+    "observable_success_hosted_search_attempts": 5,
+    "observable_success_epistemic_credit_nats": 0.0
+  },
+  "controlled_reproduction": {
+    "injected_parent_taxonomy": "child_nonzero_with_terminal_receipt",
+    "run_one_raised_exception_type": "ValueError",
+    "outer_replacement_taxonomy": "local_projection_failure",
+    "outer_replacement_deadline_exhausted": true,
+    "outer_replacement_effect_counts_zero": true,
+    "underlying_taxonomy_preserved": false
+  },
+  "mechanical_conclusion": {
+    "v24395_no_go_remains_valid": true,
+    "non_success_parent_enters_success_only_projection_with_none_envelope": true,
+    "success_only_projection_raises_before_preserving_parent_taxonomy": true,
+    "outer_handler_replaces_any_exception_with_one_synthetic_row": true,
+    "synthetic_row_forces_deadline_exhausted_true": true,
+    "synthetic_row_zeros_partial_model_search_fetch_effects": true,
+    "temporary_task_directory_deleted_after_aggregation": true,
+    "underlying_fifteen_exit_taxonomies_recoverable_posthoc": false
+  },
+  "claim_audit": {
+    "supported": [
+      "v24395_external_gate_is_no_go",
+      "one_of_sixteen_tasks_has_a_valid_mechanism_projection",
+      "fifteen_rows_are_synthetic_local_projection_failures",
+      "the_one_observable_task_has_zero_epistemic_credit"
+    ],
+    "not_supported": [
+      "all_fifteen_failures_were_real_deadline_exhaustions",
+      "failed_tasks_made_no_model_search_or_fetch_effects",
+      "model_slot_capacity_is_the_root_cause",
+      "provider_or_search_health_is_proven_for_failed_tasks",
+      "population_level_entropy_mechanism_failure_is_proven"
+    ]
+  },
+  "required_fix": {
+    "branch_on_parent_taxonomy_before_success_envelope_projection": true,
+    "persist_content_free_child_stage_and_coarse_exception": true,
+    "persist_partial_model_and_transport_receipts_on_child_exception": true,
+    "aggregate_failure_taxonomy_and_partial_effect_counts_before_cleanup": true,
+    "keep_task_text_query_url_page_prediction_and_response_private": true
+  },
+  "source_policy": {
+    "runtime_input_or_task_private_content_read": false,
+    "mapping_gold_category_question_type_split_evaluator_score_or_reward_read": false,
+    "network_model_search_fetch_or_evaluator_called": false,
+    "same_run_resume_retry_rerun_or_revaluation": false,
+    "credential_value_read_persisted_hashed_or_emitted": false
+  },
+  "findings": [
+    "failure_taxonomy_and_partial_effects_collapsed"
+  ],
+  "diagnosis_valid": true,
+  "authorization": {
+    "append_only_failure_observability_fix_design": true,
+    "new_external_probe": false,
+    "benchmark_launch": false,
+    "evaluator": false,
+    "leaderboard_or_sota": false
+  },
+  "diagnosis_payload_sha256": "be865949de943144126a7997e035db00ee983f676c85fda2391a774f174ff20e"
+}
