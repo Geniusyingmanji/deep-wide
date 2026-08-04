@@ -1,0 +1,92 @@
+{
+  "artifact_version": 1,
+  "role": "v24387_identity_activation_dead_zone_diagnosis",
+  "policy_id": "v24387_identity_activation_dead_zone_diagnosis_v1",
+  "created_at_unix": 1785816583,
+  "parents": {
+    "results/v24386_active_verifier_external_result_v1_20260804.json": "e6c01cf300d60fca23ee0544b549b0ca073b77b27b4877b672842ba1101f7dcb",
+    "results/v24386_active_verifier_external_decision_v1_20260804.json": "99251d2f979914b2ba831699d014cc09d2cc2fe8a5133f344fbdc6de5bba0a62",
+    "results/v24386_active_verifier_external_postresult_audit_v1_20260804.json": "81b3d057ec85f8caa1fa6ce7a150a1a105eb15cd9d6a5f1ec27b95009145bc73"
+  },
+  "source_manifest": {
+    "src/deepwide_agent/v24333_programmatic_support_catalog.py": "e12444150b398667237063b4ef895e81db30631adba620a952c0ce0057e8b6a9",
+    "src/deepwide_agent/v24341_semantic_evidence_projection.py": "16f05c3eaab0c6c1a0807e8fd7d52762dfb9fc671fa904af0ac5d2d0d51f47d9",
+    "src/deepwide_agent/v24349_structural_semantic_runtime.py": "98c52091afb865cb37c9766f4efc43faa98c518993defc3f737f8856015aa24d",
+    "src/deepwide_agent/v24383_active_verifier_query_runtime.py": "84905d51d8762005970281cc3b7fbd60205d8247ff0022651b40577f2552229b"
+  },
+  "source_manifest_sha256": "fd1ca5f4e068609f702c35f66b050665dc60dfce87cac3b95676db29898bb2f2",
+  "observed_no_go": {
+    "selected": 16,
+    "terminal_success_tasks": 16,
+    "structurally_passed_tasks": 16,
+    "batch_wall_seconds": 152.095797,
+    "identity_no_reserve_tasks": 16,
+    "proposal_sources": 124,
+    "proposal_unselected_sources": 590,
+    "proposal_pages": 103,
+    "fetch_calls": 124,
+    "fetch_failures": 21,
+    "parent_semantic_catalog_tasks": 16,
+    "parent_eligible_support_tasks": 0,
+    "parent_eligible_support_set_count": 0,
+    "parent_candidate_tasks": 0,
+    "active_query_tasks": 0,
+    "model_requests": 32,
+    "model_attempts": 32,
+    "slot_timeouts": 0,
+    "provider_deadline_failures": 0,
+    "hosted_search_deadline_failures": 0,
+    "hard_fetch_deadline_failures": 0,
+    "fetch_helper_failures": 0,
+    "deadline_exhausted_tasks": 0,
+    "selected_proposal_entropy_nats": 0.0,
+    "utility_aligned_entropy_credit_nats": 0.0
+  },
+  "diagnosis": {
+    "proposal_acquisition_succeeded": true,
+    "baseline_synthesis_succeeded_without_recovery_failure": true,
+    "semantic_catalog_was_built_for_every_task": true,
+    "eligible_alternative_support_was_zero_for_every_task": true,
+    "candidate_revision_was_safely_short_circuited": true,
+    "active_verifier_cannot_activate_without_a_frozen_candidate": true,
+    "transport_or_deadline_is_not_the_terminal_failure": true,
+    "v24386_did_not_measure_active_query_effectiveness": true,
+    "root_cause": "candidate_revision_requires_preexisting_eligible_alternative_support_after_baseline_consumes_the_same_proposal_evidence"
+  },
+  "successor_contract": {
+    "baseline_freeze_precedes_uncertainty_target_selection": true,
+    "all_visible_cells_can_enter_uncertainty_catalog": true,
+    "active_target_selection_does_not_require_a_preexisting_candidate_change": true,
+    "target_score_uses_label_blind_support_disagreement_and_epistemic_uncertainty": true,
+    "active_queries_use_only_frozen_row_and_column_not_gold_or_evaluator": true,
+    "maximum_selected_targets": 2,
+    "maximum_active_logical_queries": 2,
+    "active_queries_execute_as_one_nonrecursive_batch": true,
+    "active_sources_must_be_disjoint_from_proposal_sources": true,
+    "combined_proposal_and_active_evidence_is_replayed_programmatically": true,
+    "new_candidate_value_requires_independent_source_support": true,
+    "epistemic_credit_uses_information_gain_even_when_baseline_is_confirmed": true,
+    "decision_credit_requires_a_safe_final_output_change": true,
+    "epistemic_and_decision_credit_are_reported_separately": true,
+    "same_v24386_task_rerun_or_revaluation_allowed": false
+  },
+  "source_policy": {
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "benchmark_manifest_mapping_gold_category_question_type_split_evaluator_score_or_reward_read": false,
+    "task_question_query_url_page_prediction_candidate_value_or_evidence_id_persisted": false,
+    "network_model_search_fetch_or_evaluator_called_by_diagnosis": false
+  },
+  "authorization": {
+    "uncertainty_catalog_and_active_evidence_design": true,
+    "external_probe_design": false,
+    "external_probe_launch": false,
+    "paired_dev64": false,
+    "new_exact220": false,
+    "evaluator": false,
+    "leaderboard_or_sota": false
+  },
+  "diagnosis_payload_sha256": "f5309682330b5f0c0453339df8c00e52f51b09a06f248da27b8edd691b25b163"
+}
