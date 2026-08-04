@@ -26,6 +26,7 @@ class V24487ValidationMemoBuildAuditTests(unittest.TestCase):
                 return_value={
                     "passed": True,
                     "return_code": 0,
+                    "timed_out": False,
                     "elapsed_seconds": 5.0,
                 },
             ),
@@ -111,8 +112,18 @@ class V24487ValidationMemoBuildAuditTests(unittest.TestCase):
 
     def test_slow_or_failed_worker_closes_authorization(self) -> None:
         for execution in (
-            {"passed": False, "return_code": 1, "elapsed_seconds": 5.0},
-            {"passed": True, "return_code": 0, "elapsed_seconds": 11.0},
+            {
+                "passed": False,
+                "return_code": 1,
+                "timed_out": False,
+                "elapsed_seconds": 5.0,
+            },
+            {
+                "passed": True,
+                "return_code": 0,
+                "timed_out": False,
+                "elapsed_seconds": 11.0,
+            },
         ):
             with self.subTest(execution=execution):
                 def run_test(path, _timeout):
@@ -121,6 +132,7 @@ class V24487ValidationMemoBuildAuditTests(unittest.TestCase):
                     return {
                         "passed": True,
                         "return_code": 0,
+                        "timed_out": False,
                         "elapsed_seconds": 5.0,
                     }
 

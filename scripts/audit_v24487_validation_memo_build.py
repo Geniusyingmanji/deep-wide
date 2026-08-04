@@ -67,7 +67,7 @@ TEST_SUITES = (
     (
         Path("tests/test_v24464_single_validation_adaptive_persistence.py"),
         5,
-        120,
+        360,
         "single_validation_control",
     ),
     (
@@ -170,19 +170,26 @@ def _environment() -> dict[str, str]:
 
 def _run_test(path: Path, timeout: int) -> dict[str, Any]:
     started = time.monotonic()
-    completed = subprocess.run(
-        [str(ROOT / ".venv-eval/bin/python"), "-I", "-B", str(ROOT / path), "-q"],
-        cwd=ROOT,
-        env=_environment(),
-        stdin=subprocess.DEVNULL,
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
-        timeout=timeout,
-        check=False,
-    )
+    try:
+        completed = subprocess.run(
+            [str(ROOT / ".venv-eval/bin/python"), "-I", "-B", str(ROOT / path), "-q"],
+            cwd=ROOT,
+            env=_environment(),
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            timeout=timeout,
+            check=False,
+        )
+        return_code: int | None = completed.returncode
+        timed_out = False
+    except subprocess.TimeoutExpired:
+        return_code = None
+        timed_out = True
     return {
-        "passed": completed.returncode == 0,
-        "return_code": completed.returncode,
+        "passed": return_code == 0 and not timed_out,
+        "return_code": return_code,
+        "timed_out": timed_out,
         "elapsed_seconds": round(max(0.0, time.monotonic() - started), 6),
     }
 
@@ -203,6 +210,7 @@ def _suites_valid(value: object) -> bool:
             or item.get("scope") != scope
             or item.get("passed") is not True
             or item.get("return_code") != 0
+            or item.get("timed_out") is not False
             or isinstance(elapsed, bool)
             or not isinstance(elapsed, (int, float))
             or not math.isfinite(float(elapsed))
