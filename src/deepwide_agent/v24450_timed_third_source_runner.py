@@ -37,6 +37,7 @@ from .v24399_failure_observable_runner import (
     RESULT_NAME,
     SEARCH_NAME,
     TRANSPORT_NAME,
+    build_directory_observation,
 )
 from .v24448_serialized_third_source_envelope import (
     ValidatedSerializedThirdSourceEnvelope,
@@ -111,6 +112,7 @@ AGGREGATE_KEYS = frozenset(
 class TimedThirdSourceOutcome:
     parent_receipt: dict[str, Any]
     mechanism_projection: dict[str, Any]
+    observation: dict[str, Any]
     timing_receipt: dict[str, Any]
 
 
@@ -312,6 +314,24 @@ def run_timed_observed_subprocess(
         finally:
             validation_wall += max(0.0, monotonic() - started)
 
+    def model_validator(value: Mapping[str, Any]) -> object:
+        nonlocal validation_wall
+        started = monotonic()
+        try:
+            return validate_model_receipt(
+                dict(value), expected_cap=expected_model_cap
+            )
+        finally:
+            validation_wall += max(0.0, monotonic() - started)
+
+    def transport_validator(value: Mapping[str, Any]) -> object:
+        nonlocal validation_wall
+        started = monotonic()
+        try:
+            return validate_transport_health(value)
+        finally:
+            validation_wall += max(0.0, monotonic() - started)
+
     base_popen = subprocess.Popen if popen is None else popen
 
     class TimedProcess:
@@ -351,10 +371,8 @@ def run_timed_observed_subprocess(
         environment=environment,
         timeout_seconds=timeout_seconds,
         result_validator=result_validator,
-        model_receipt_validator=lambda value: validate_model_receipt(
-            dict(value), expected_cap=expected_model_cap
-        ),
-        transport_receipt_validator=validate_transport_health,
+        model_receipt_validator=model_validator,
+        transport_receipt_validator=transport_validator,
         result_name=RESULT_NAME,
         model_receipt_name=MODEL_NAME,
         transport_receipt_name=TRANSPORT_NAME,
@@ -363,6 +381,16 @@ def run_timed_observed_subprocess(
         popen=timed_popen,
     )
     parent = validate_parent_receipt(outcome.receipt)
+    started = monotonic()
+    try:
+        observation = build_directory_observation(
+            ordinal,
+            parent,
+            directory=directory,
+            expected_model_cap=expected_model_cap,
+        )
+    finally:
+        validation_wall += max(0.0, monotonic() - started)
     mechanism = local_failure(ordinal)
     projection_wall = 0.0
     projection_invocations = 0
@@ -392,6 +420,7 @@ def run_timed_observed_subprocess(
     return TimedThirdSourceOutcome(
         parent_receipt=parent,
         mechanism_projection=mechanism,
+        observation=observation,
         timing_receipt=timing,
     )
 

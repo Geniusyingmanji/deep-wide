@@ -37,7 +37,7 @@ from scripts.audit_v24195_lease_owner_compatibility import (  # noqa: E402
 
 
 DATE = "20260804"
-AUDIT = Path(f"results/v24451_third_source_timing_build_audit_v1_{DATE}.json")
+AUDIT = Path(f"results/v24451_third_source_timing_build_audit_v2_{DATE}.json")
 PARENT = parent.DIAGNOSIS
 SOURCES = (
     Path("src/deepwide_agent/v24447_third_source_entropy_to_decision.py"),
@@ -185,6 +185,7 @@ def build_audit(*, now: int | None = None) -> dict[str, Any]:
         "timing_evidence": {
             "child_wait_wall_measured_before_parent_validation": True,
             "post_child_validation_wall_measured_separately": True,
+            "model_transport_and_failure_observation_validation_included": True,
             "projection_wall_measured_separately": True,
             "failure_as_zero_projection_explicit": True,
             "sum_median_p95_max_published": True,

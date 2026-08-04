@@ -140,17 +140,20 @@ class V24450TimedThirdSourceRunnerTests(unittest.TestCase):
                 environment={},
                 timeout_seconds=1,
                 expected_model_cap=2,
-                monotonic=SequenceClock([0, 5, 6, 8, 9, 12]),
+                monotonic=SequenceClock(
+                    [0, 5, 6, 8, 9, 12, 13, 14, 15, 17, 18, 21]
+                ),
                 popen=SuccessfulPopen,
             )
             timing = value.timing_receipt
             self.assertEqual(value.parent_receipt["failure_taxonomy"], "success")
             self.assertTrue(value.mechanism_projection["passed"])
             self.assertEqual(timing["child_wall_seconds"], 5.0)
-            self.assertEqual(timing["post_child_validation_wall_seconds"], 2.0)
+            self.assertEqual(timing["post_child_validation_wall_seconds"], 8.0)
             self.assertEqual(timing["projection_wall_seconds"], 3.0)
             self.assertEqual(timing["validation_invocations"], 1)
             self.assertEqual(timing["projection_invocations"], 1)
+            self.assertEqual(value.observation["parent_taxonomy"], "success")
 
     def test_failure_receipt_projects_zero_without_projection(self) -> None:
         parent = parent_receipt(
