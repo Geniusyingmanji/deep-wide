@@ -48,6 +48,15 @@ from .v24388_uncertainty_credit import (
     validate_active_evidence_result,
     validate_uncertainty_catalog,
 )
+from .v24397_failure_observability import build_failure_snapshot
+from .v24399_failure_observable_runner import (
+    FAILURE_NAME,
+    MODEL_NAME,
+    RESULT_NAME,
+    SEARCH_NAME,
+    TRANSPORT_NAME,
+    persist_failure_artifacts,
+)
 from .v24436_narrative_title_anchor_projection import (
     build_narrative_title_anchor_projection,
     validate_narrative_title_anchor_projection,
@@ -949,6 +958,74 @@ def build_envelope(outcome: IntegratedThirdSourceOutcome) -> dict[str, Any]:
     return value
 
 
+def run_and_persist_v24447_task(
+    task: Mapping[str, Any],
+    *,
+    model_factory: Callable[[], Any],
+    search_factory: Callable[[], Any],
+    partition_seed_sha256: str,
+    limits: Any,
+    monotonic: Callable[[], float],
+    expected_model_cap: int,
+    writer: Callable[[str, Mapping[str, Any]], None],
+) -> IntegratedThirdSourceOutcome:
+    """Run V2.44.47 and persist terminal artifacts with failure observability."""
+
+    model: Any = None
+    search: Any = None
+    stage = "model_construction"
+    try:
+        model = model_factory()
+        stage = "search_construction"
+        search = search_factory()
+        stage = "runtime"
+        outcome = run_v24447_task(
+            task,
+            model=model,
+            search=search,
+            partition_seed_sha256=partition_seed_sha256,
+            limits=limits,
+            monotonic=monotonic,
+        )
+    except BaseException as error:
+        persist_failure_artifacts(
+            error,
+            failure_stage=stage,
+            model=model,
+            search=search,
+            expected_model_cap=expected_model_cap,
+            writer=writer,
+        )
+        raise
+
+    envelope = build_envelope(outcome)
+    model_written = False
+    transport_written = False
+    search_written = False
+    try:
+        writer(MODEL_NAME, outcome.model_slot_receipt)
+        model_written = True
+        writer(TRANSPORT_NAME, outcome.transport_health)
+        transport_written = True
+        writer(SEARCH_NAME, outcome.search_single_shot_receipt)
+        search_written = True
+        writer(RESULT_NAME, envelope)
+    except BaseException as error:
+        snapshot = build_failure_snapshot(
+            error,
+            failure_stage="artifact_serialization",
+            model_receipt=(outcome.model_slot_receipt if model_written else None),
+            transport_health=(outcome.transport_health if transport_written else None),
+            search_receipt=(
+                outcome.search_single_shot_receipt if search_written else None
+            ),
+            expected_model_cap=expected_model_cap,
+        )
+        writer(FAILURE_NAME, snapshot)
+        raise
+    return outcome
+
+
 def validate_envelope(value: Mapping[str, Any]) -> dict[str, Any]:
     copied = dict(value)
     unsigned = dict(copied)
@@ -1010,11 +1087,16 @@ __all__ = [
     "MAXIMUM_ACTIVE_SOURCES",
     "MAXIMUM_ADDITIONAL_FETCHES",
     "MAXIMUM_TOTAL_FETCHES",
+    "FAILURE_NAME",
+    "MODEL_NAME",
     "POLICY_ID",
     "RESULT_ROLE",
+    "RESULT_NAME",
+    "SEARCH_NAME",
     "THRESHOLD_PARTITION_FIELDS",
     "build_effect_delta_receipt",
     "build_envelope",
+    "run_and_persist_v24447_task",
     "run_v24447_task",
     "select_third_source",
     "threshold_failure_partition",
@@ -1022,4 +1104,5 @@ __all__ = [
     "validate_envelope",
     "validate_recovery_receipt",
     "validate_result",
+    "TRANSPORT_NAME",
 ]

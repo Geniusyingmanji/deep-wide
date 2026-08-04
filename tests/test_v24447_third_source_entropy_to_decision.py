@@ -21,6 +21,7 @@ from deepwide_agent.v24447_third_source_entropy_to_decision import (  # noqa: E4
     MAXIMUM_TOTAL_FETCHES,
     THRESHOLD_PARTITION_FIELDS,
     build_envelope,
+    run_and_persist_v24447_task,
     run_v24447_task,
     select_third_source,
     validate_effect_delta_receipt,
@@ -181,6 +182,36 @@ class V24447ThirdSourceEntropyToDecisionTests(unittest.TestCase):
                 altered["envelope_payload_sha256"] = payload_sha256(altered)
                 with self.assertRaises(ValueError):
                     validate_envelope(altered)
+
+    def test_persisted_wrapper_writes_terminal_artifacts(self) -> None:
+        temporary = tempfile.TemporaryDirectory(dir=ROOT / "outputs")
+        self.addCleanup(temporary.cleanup)
+        output = Path(temporary.name)
+        clock = AdvancingClock()
+        model, search = clients(output, clock, third=True)
+        artifacts = {}
+        outcome = run_and_persist_v24447_task(
+            TASK,
+            model_factory=lambda: model,
+            search_factory=lambda: search,
+            partition_seed_sha256=SEED,
+            limits=limits(),
+            monotonic=clock,
+            expected_model_cap=2,
+            writer=lambda name, value: artifacts.__setitem__(name, copy.deepcopy(value)),
+        )
+        self.assertEqual(
+            set(artifacts),
+            {
+                "model_slot_receipt.json",
+                "transport_health.json",
+                "search_single_shot_receipt.json",
+                "result.json",
+            },
+        )
+        self.assertEqual(
+            artifacts["result.json"], build_envelope(outcome)
+        )
 
 
 if __name__ == "__main__":
