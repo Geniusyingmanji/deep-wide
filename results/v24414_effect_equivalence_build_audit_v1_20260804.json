@@ -1,0 +1,94 @@
+{
+  "artifact_version": 1,
+  "role": "v24414_effect_equivalence_build_audit",
+  "created_at_unix": 1785829705,
+  "parent": {
+    "path": "results/v24412_v24411_receipt_snapshot_diagnosis_v1_20260804.json",
+    "sha256": "b18be8480416ad119edcd81c1d1e08a0a9dc6068ba1d4d8df6c2692a2b8a801b"
+  },
+  "source_manifest": {
+    "src/deepwide_agent/v24413_effect_equivalence.py": "a03df81a3b0d7f20c94fae25de0459a254a26587ad71468a8607e5032008bf53",
+    "tests/test_v24413_effect_equivalence.py": "2d9ba8aecd60ed4c11a1e46bd8a7676a0585b0dcdd5eb7744724143cf9b69660",
+    "scripts/audit_v24414_effect_equivalence_build.py": "f734524b9e4a4fdd90d34664d134b8c4b53eb12c73ea7bebe02dc28cc67d78ec"
+  },
+  "source_manifest_sha256": "3e4bde1bf6b4117016a5b751b18dbfc170c13fd9ed48a7fa9333da026fa21846",
+  "git": {
+    "head": "f4083ae14cc80917cb593ffdea19a9e8e2a6c939",
+    "target_main": "f4083ae14cc80917cb593ffdea19a9e8e2a6c939",
+    "head_equals_target_main": true,
+    "worktree_clean": true,
+    "all_sources_tracked": true
+  },
+  "tests": {
+    "suites": [
+      {
+        "path": "tests/test_v24412_receipt_snapshot_diagnosis.py",
+        "passed": true,
+        "test_count": 2
+      },
+      {
+        "path": "tests/test_v24413_effect_equivalence.py",
+        "passed": true,
+        "test_count": 7
+      }
+    ],
+    "passed": true,
+    "test_count": 9,
+    "network_model_search_fetch_or_evaluator_called": false
+  },
+  "mechanism_evidence": {
+    "advancing_clock_without_effect_change_is_equivalent": true,
+    "model_effect_counter_change_is_rejected": true,
+    "transport_effect_counter_change_is_rejected": true,
+    "search_shape_change_is_rejected": true,
+    "remaining_time_must_be_nonincreasing": true,
+    "deadline_state_must_be_monotonic": true,
+    "effect_and_static_fields_require_exact_equality": true,
+    "observation_time_state_is_not_task_value_or_external_effect": true,
+    "successful_attestation_is_replay_sealed": true,
+    "external_population_information_gain_not_yet_measured": true,
+    "benchmark_quality_not_yet_measured": true
+  },
+  "privileged_field_accesses": [],
+  "evaluator_imports": [],
+  "credential_literal_hits": [],
+  "closure": {
+    "shared_api_lease_active": false,
+    "protected_watchers": [
+      {
+        "pid": 795336,
+        "marker": "scripts/watch_v2415_r1_checkpoint_liveness.py",
+        "start_ticks": 713986317
+      },
+      {
+        "pid": 3061652,
+        "marker": "scripts/watch_v24218_exact220_executor.py",
+        "start_ticks": 747569004
+      }
+    ],
+    "protected_watchers_unchanged": true,
+    "v24411_rerun_resume_retry_or_selective_revaluation": false,
+    "active_run_killed_or_quarantined": false
+  },
+  "source_policy": {
+    "runtime_boundary": [
+      "content_free_model_receipt_before_after",
+      "content_free_transport_receipt_before_after",
+      "content_free_search_shape_receipt_before_after"
+    ],
+    "mapping_gold_category_question_type_split_evaluator_score_or_reward_read": false,
+    "task_private_content_read_or_emitted": false,
+    "remote_network_model_search_fetch_or_evaluator_called_by_audit": false
+  },
+  "findings": [],
+  "audit_valid": true,
+  "authorization": {
+    "effect_equivalence_runner_successor_design": true,
+    "external_probe_launch": false,
+    "paired_dev64": false,
+    "exact220": false,
+    "evaluator": false,
+    "leaderboard_or_sota": false
+  },
+  "audit_payload_sha256": "547435ba50e47acf3482997b2b8fc0a70c456006a4d2fe4bbbfcc38930ca5ae7"
+}
