@@ -1,0 +1,150 @@
+{
+  "artifact_version": 1,
+  "role": "v24489_v24488_support_conversion_diagnosis",
+  "created_at_unix": 1785878271,
+  "parents": {
+    "result": {
+      "path": "results/v24488_memoized_external_result_v1_20260804.json",
+      "sha256": "3f9662c03dfc0391977a66db4da40bb1584a95329f7b0f632075fd78ade67c3f"
+    },
+    "decision": {
+      "path": "results/v24488_memoized_external_decision_v1_20260804.json",
+      "sha256": "7a2234956d7c104367a9675850c8442e85985be3e25a29d0dbb9986e7663e3b3"
+    },
+    "postaudit": {
+      "path": "results/v24488_memoized_external_postresult_audit_v1_20260804.json",
+      "sha256": "626d24314777be456e707c367abd551527b2d30256108be2c49ecabbf4ab4dda"
+    },
+    "previous_timeout_result": {
+      "path": "results/v24484_separated_budget_external_result_v1_20260804.json",
+      "sha256": "df4ec9b4150b118ddc9bb3bba4b1cb4a0edb673d819dee8b8a36181a02ae96d5"
+    }
+  },
+  "external_gate_evidence": {
+    "selected": 8,
+    "batch_wall_seconds": 108.366926,
+    "worker_success_tasks": 8,
+    "worker_hard_timeout_tasks": 0,
+    "complete_validation_entered_tasks": 8,
+    "complete_validation_returned_tasks": 8,
+    "parent_certificate_validation_wall_p95_seconds": 0.070087,
+    "fully_observed_effect_tasks": 8,
+    "unobserved_effect_tasks": 0,
+    "adaptive_additional_fetch_calls": 12,
+    "adaptive_additional_fetch_effects": 12,
+    "support_unreachable_tasks": 7,
+    "budget_exhausted_tasks": 1,
+    "safe_decision_tasks": 0,
+    "candidate_changed_cell_count": 1,
+    "safe_change_count": 0,
+    "acquisition_credit_total_nats": 0.441970278242,
+    "positive_information_gain_total_nats": 1.807141910325,
+    "epistemic_credit_total_nats": 1.807141910325,
+    "decision_credit_total_nats": 0.0,
+    "all_threshold_partitions_exact": true,
+    "all_effects_conserved": true,
+    "all_single_validation_attested": true
+  },
+  "cross_population_timing_context": {
+    "v24484_batch_wall_seconds": 220.338439,
+    "v24484_worker_success_tasks": 0,
+    "v24484_worker_hard_timeout_tasks": 8,
+    "v24488_batch_wall_seconds": 108.366926,
+    "v24488_worker_success_tasks": 8,
+    "populations_are_different_so_timing_delta_is_not_a_paired_quality_effect": true
+  },
+  "root_cause_findings": {
+    "execution_scoped_validation_completion_gate_passed": true,
+    "reliability_latency_and_parent_validation_gates_passed": true,
+    "previous_all_worker_timeout_failure_not_observed": true,
+    "positive_information_gain_without_safe_decision_observed": true,
+    "positive_epistemic_credit_is_not_decision_credit": true,
+    "frozen_lead_only_support_was_sufficient_on_this_population": false,
+    "seven_of_eight_tasks_stopped_when_remaining_frozen_support_was_unreachable": true,
+    "more_worker_or_parent_wall_time_is_primary_successor": false,
+    "support_posterior_or_margin_threshold_relaxation_supported": false,
+    "entropy_conditioned_targeted_search_causal_benefit_proven": false
+  },
+  "successor_work_order": {
+    "never_rerun_v24488_population": true,
+    "preserve_runtime_boundary_exactly_opaque_id_and_question": true,
+    "preserve_known_unknown_support_posterior_and_margin_thresholds": true,
+    "preserve_decision_credit_requires_safe_output_change": true,
+    "target_selection_uses_only_current_validated_entropy_and_support_deficit": true,
+    "target_query_uses_only_frozen_visible_row_column_and_leading_alternative": true,
+    "maximum_targeted_cells": 1,
+    "maximum_additional_logical_queries": 2,
+    "maximum_additional_search_batches": 1,
+    "maximum_additional_provider_search_calls": 1,
+    "maximum_additional_source_disjoint_fetches": 3,
+    "additional_model_requests": 0,
+    "new_sources_disjoint_from_all_proposal_active_and_adaptive_sources": true,
+    "targeted_pages_never_enter_model_prompt": true,
+    "posterior_source_credit_and_decision_credit_replayed_unchanged": true,
+    "synthetic_safe_unreachable_empty_and_tamper_paths_required": true,
+    "proof_carrying_worker_integration_required_before_external_effect": true,
+    "fresh_external_population_required_after_offline_build_go": true,
+    "paired_dev64_only_after_external_mechanism_go": true,
+    "exact220_only_after_fresh_paired_dev64_go": true
+  },
+  "source_manifest": {
+    "src/deepwide_agent/v24457_adaptive_entropy_support.py": "56661ca6a46c74ff55eba27ccd3347f56eb8826bb277e7f923bfb2d53d1bbbcb",
+    "src/deepwide_agent/v24485_execution_scoped_validation_memo.py": "12bed048ae6fb98c3ad89816eb8a14badd583c6933a85d50ec571cd9a446055b",
+    "src/deepwide_agent/v24486_memoized_worker_integration.py": "59d61bbe6c49b4244d63e52bd580a7345219bbdf1e76d768509fffe3ce598cef",
+    "scripts/v24488_memoized_external_gate.py": "02f94d148f777a25c5ca7ecd3b189e4951d19af388358eeaae5d064e11253050",
+    "scripts/diagnose_v24489_v24488_support_conversion.py": "8cb3f54fedab05cf049e57e79448d75d2e4f6f766c37d2907566b808c43cf0df",
+    "tests/test_diagnose_v24489_v24488_support_conversion.py": "cdbc16a4b9720a2fd7f300fa4ee10ed755b611c60eb839e5367484fb24821933"
+  },
+  "source_manifest_sha256": "e6c0742f1f83b7001f152714090b269146aced8a04ac12f7a908578b54a76f99",
+  "privileged_field_accesses": [],
+  "evaluator_imports": [],
+  "credential_literal_hits": [],
+  "git": {
+    "head": "f9deeb60345e294d9d430c493dbc773fffe79394",
+    "target_main": "f9deeb60345e294d9d430c493dbc773fffe79394",
+    "head_equals_target_main": true,
+    "worktree_clean": true,
+    "all_sources_tracked": true
+  },
+  "closure": {
+    "shared_api_lease_active": false,
+    "protected_watchers": [
+      {
+        "pid": 795336,
+        "marker": "scripts/watch_v2415_r1_checkpoint_liveness.py",
+        "start_ticks": 713986317
+      },
+      {
+        "pid": 3061652,
+        "marker": "scripts/watch_v24218_exact220_executor.py",
+        "start_ticks": 747569004
+      }
+    ],
+    "protected_watchers_unchanged": true,
+    "network_model_search_fetch_or_evaluator_called_by_diagnosis": false,
+    "active_run_killed_or_quarantined": false
+  },
+  "source_policy": {
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "task_question_query_url_page_prediction_candidate_value_or_content_hash_emitted": false,
+    "mapping_gold_category_question_type_split_evaluator_score_or_reward_read": false,
+    "same_run_evaluator_feedback_used": false
+  },
+  "findings": [],
+  "diagnosis_valid": true,
+  "authorization": {
+    "entropy_conditioned_targeted_support_offline_design": true,
+    "synthetic_mechanism_and_tamper_tests": true,
+    "proof_carrying_worker_integration_design": false,
+    "fresh_external_protocol_design": false,
+    "external_probe_launch": false,
+    "paired_dev64": false,
+    "exact220": false,
+    "evaluator": false,
+    "leaderboard_or_sota": false
+  },
+  "diagnosis_payload_sha256": "29b59df503fb33060017369d02630ead028a501bc2dcb36420161a362d55ed43"
+}
