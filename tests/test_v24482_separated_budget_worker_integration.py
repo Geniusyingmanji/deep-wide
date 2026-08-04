@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import argparse
 import sys
+import tempfile
+import time
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
@@ -8,12 +11,17 @@ from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
-for path in (ROOT, ROOT / "src"):
+for path in (ROOT, ROOT / "src", ROOT / "tests"):
     if str(path) not in sys.path:
         sys.path.insert(0, str(path))
 
 from deepwide_agent import (  # noqa: E402
     v24482_separated_budget_worker_integration as target,
+)
+from test_v24470_bounded_adaptive_integration import (  # noqa: E402
+    MANIFEST,
+    run_worker_mode as run_frozen_worker_mode,
+    writer,
 )
 
 
@@ -94,6 +102,58 @@ class V24482SeparatedBudgetWorkerIntegrationTests(unittest.TestCase):
             [target.DEADLINE_ORIGIN_ARGUMENT, "1000.0"],
         )
 
+    def test_real_parent_supervisor_worker_chain_preserves_one_origin(self) -> None:
+        with tempfile.TemporaryDirectory(dir=ROOT / "outputs") as temporary:
+            output_root = Path(temporary)
+            directory = output_root / "task"
+            checkpoint = output_root / "checkpoint"
+            fixture = output_root / "fixture"
+            directory.mkdir()
+            checkpoint.mkdir()
+            fixture.mkdir()
+            command = [
+                str(ROOT / ".venv-eval/bin/python"),
+                "-I",
+                "-B",
+                str(Path(__file__).resolve()),
+                "supervisor",
+                "--behavior",
+                "success",
+                "--stage",
+                "complete_validation_entered",
+                "--directory",
+                str(directory),
+                "--checkpoint-directory",
+                str(checkpoint),
+                "--output-root",
+                str(output_root),
+                "--fixture",
+                str(fixture),
+            ]
+            started = time.monotonic()
+            outcome = target.run_parent_with_separated_budget(
+                ordinal=1,
+                cwd=ROOT,
+                output_root=output_root,
+                directory=directory,
+                checkpoint_directory=checkpoint,
+                supervisor_command=command,
+                expected_model_cap=2,
+                expected_validator_manifest_sha256=MANIFEST,
+            )
+            elapsed = time.monotonic() - started
+        self.assertLess(elapsed, 70.0)
+        self.assertEqual(
+            outcome.proof.parent_receipt["failure_taxonomy"], "success"
+        )
+        self.assertTrue(outcome.proof.adaptive_projection["passed"])
+        self.assertFalse(outcome.supervision_receipt["worker_hard_timeout"])
+        self.assertEqual(outcome.supervision_receipt["return_code"], 0)
+        self.assertEqual(outcome.supervision_receipt["last_stage"], "worker_complete")
+        self.assertTrue(
+            outcome.supervision_receipt["complete_validation_returned"]
+        )
+
     def test_expired_worker_retains_only_minimal_cleanup_window(self) -> None:
         captured: dict = {}
         with patch.object(
@@ -144,5 +204,59 @@ class V24482SeparatedBudgetWorkerIntegrationTests(unittest.TestCase):
         self.assertEqual(imports, [])
 
 
-if __name__ == "__main__":
+def run_process_mode(args: argparse.Namespace) -> int:
+    if args.command == "worker":
+        return run_frozen_worker_mode(args)
+    directory = Path(args.directory)
+    checkpoint = Path(args.checkpoint_directory)
+    worker_command = [
+        str(ROOT / ".venv-eval/bin/python"),
+        "-I",
+        "-B",
+        str(Path(__file__).resolve()),
+        "worker",
+        "--behavior",
+        args.behavior,
+        "--stage",
+        args.stage,
+        "--directory",
+        str(directory),
+        "--checkpoint-directory",
+        str(checkpoint),
+        "--output-root",
+        args.output_root,
+        "--fixture",
+        args.fixture,
+    ]
+    target.supervise_worker_with_separated_budget(
+        ordinal=1,
+        cwd=ROOT,
+        output_root=Path(args.output_root),
+        directory=directory,
+        checkpoint_directory=checkpoint,
+        worker_command=worker_command,
+        deadline_origin=args.deadline_origin_monotonic,
+        expected_model_cap=2,
+        writer=writer(directory),
+    )
+    return 0
+
+
+def main() -> None:
+    if len(sys.argv) > 1 and sys.argv[1] in {"worker", "supervisor"}:
+        parser = argparse.ArgumentParser()
+        parser.add_argument("command")
+        parser.add_argument("--behavior", required=True)
+        parser.add_argument("--stage", required=True)
+        parser.add_argument("--directory", required=True)
+        parser.add_argument("--checkpoint-directory", required=True)
+        parser.add_argument("--output-root", required=True)
+        parser.add_argument("--fixture", required=True)
+        parser.add_argument(target.DEADLINE_ORIGIN_ARGUMENT, required=True)
+        args = parser.parse_args()
+        raise SystemExit(run_process_mode(args))
     unittest.main()
+
+
+if __name__ == "__main__":
+    main()
