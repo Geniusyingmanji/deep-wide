@@ -1,0 +1,137 @@
+{
+  "artifact_version": 1,
+  "role": "v24473_v24472_nominal_transport_diagnosis",
+  "created_at_unix": 1785870766,
+  "parents": {
+    "result": {
+      "path": "results/v24472_bounded_adaptive_external_result_v1_20260804.json",
+      "sha256": "ca7d2c8565a5fd17829893c74f11737bb2f051391284a78f2b3e85a0b509fd3c"
+    },
+    "decision": {
+      "path": "results/v24472_bounded_adaptive_external_decision_v1_20260804.json",
+      "sha256": "af5b4aa9867ecb0ea1bb18fd1b7648c331bb0181137174f8ea7ef3929037f368"
+    },
+    "postaudit": {
+      "path": "results/v24472_bounded_adaptive_external_postresult_audit_v1_20260804.json",
+      "sha256": "0c858a5f9f3d8241a514263b5c5b0c8b1d6c0db3c1c7f95cfc94d35bc28f12e8"
+    }
+  },
+  "source_manifest": {
+    "src/deepwide_agent/v24438_bounded_narrative_effect_runner.py": "a93d6206d68d446decec67a4a49ee9ccbf3d3b1842763cb6a44ea13bef654a7f",
+    "src/deepwide_agent/v24470_bounded_adaptive_integration.py": "ed460e590f90913732165792f4638b2f7bb7ce286f76fee1437752caa1b8fe51",
+    "scripts/diagnose_v24473_v24472_nominal_transport.py": "a66e5b3601a075dd3d27a22a20e5ae9bcc4dcd9045e54bd0953c2c99eb43523b",
+    "tests/test_diagnose_v24473_v24472_nominal_transport.py": "586e2f84157d2254c0a9020f157489c16e95783d79445e145ff95b6747439ab7"
+  },
+  "source_manifest_sha256": "a2541c7a9d3ffdbc2a6d0a7a0cc0267c6d264cd60d782a0709364aaaa08712d5",
+  "public_observation": {
+    "selected": 8,
+    "worker_nonzero_tasks": 8,
+    "worker_hard_timeout_tasks": 0,
+    "checkpoint_chain_valid_tasks": 8,
+    "last_stage_counts": {
+      "runtime_entered": 8
+    },
+    "child_exception_type_counts": {
+      "ValidationError": 8
+    },
+    "failure_stage_counts": {
+      "runtime": 8
+    },
+    "fully_observed_effect_tasks": 8,
+    "model_effect_started_lower_bound": 0,
+    "hosted_search_effect_started_lower_bound": 0,
+    "public_fetch_effect_started_lower_bound": 0
+  },
+  "construction_probe": {
+    "scope": "local_constructor_and_nominal_contract_only",
+    "formal_search_type": "HardTotalWallUncertaintyNativeSearchClient",
+    "legacy_required_search_type": "UncertaintyDeadlineAwareNativeSearchClient",
+    "formal_search_is_legacy_nominal_instance": false,
+    "formal_search_is_hard_total_wall_instance": true,
+    "legacy_contract_exception_type": "ValueError",
+    "legacy_contract_exception_message": "V2.44.38 requires deadline-aware search transport",
+    "model_effect_surface_unchanged": true,
+    "model_remaining_seconds_nonincreasing": true,
+    "transport_receipt_unchanged": true,
+    "search_receipt_unchanged": true,
+    "provider_model_acquisitions": 0,
+    "hosted_search_attempts": 0,
+    "hard_fetch_helper_calls": 0,
+    "compatible_class_is_legacy_nominal_subclass": true,
+    "compatible_class_is_hard_total_wall_subclass": true,
+    "compatible_class_request_method_owner": "HardTotalWallNativeSearchClient",
+    "compatible_class_mro": [
+      "CompatibleHardSearch",
+      "HardTotalWallUncertaintyNativeSearchClient",
+      "UncertaintyDeadlineAwareNativeSearchClient",
+      "TaskUnionSingleShotMixin",
+      "HardTotalWallNativeSearchClient",
+      "DeadlineAwareNativeSearchClient",
+      "HardDeadlineNativeSearchClient",
+      "AzureNativeSearchClient",
+      "object"
+    ],
+    "external_network_model_search_fetch_or_evaluator_called": false,
+    "benchmark_task_or_private_content_used": false
+  },
+  "source_invariants": {
+    "legacy_contract_uses_nominal_search_isinstance": true,
+    "legacy_rejection_occurs_before_remaining_or_effect_use": true,
+    "hard_search_class_omits_legacy_nominal_base": true,
+    "hard_search_class_retains_task_union_and_hard_transport": true
+  },
+  "diagnosis": {
+    "formal_hard_search_rejected_by_legacy_nominal_contract": true,
+    "rejection_precedes_any_model_search_or_fetch_effect": true,
+    "public_failure_signature_matches_local_contract_rejection": true,
+    "private_v24472_traceback_available": false,
+    "nominal_mismatch_proven_as_unique_private_v24472_exception": false,
+    "append_only_multiple_inheritance_compatibility_is_feasible": true,
+    "hard_total_wall_request_resolution_can_remain_first": true,
+    "same_v24472_population_rerun_allowed": false
+  },
+  "source_policy": {
+    "runtime_input_keys_exactly_opaque_id_and_question": true,
+    "benchmark_manifest_mapping_gold_category_question_type_split_evaluator_score_read": false,
+    "construction_probe_network_model_search_fetch_or_evaluator_called": false,
+    "construction_probe_task_or_private_content_used": false
+  },
+  "git": {
+    "head": "fd57c978931825cbd272dd2c4396e35f41379c15",
+    "target_main": "fd57c978931825cbd272dd2c4396e35f41379c15",
+    "head_equals_target_main": true,
+    "worktree_clean": true,
+    "all_sources_tracked": true
+  },
+  "closure": {
+    "shared_api_lease_active": false,
+    "protected_watchers": [
+      {
+        "pid": 795336,
+        "marker": "scripts/watch_v2415_r1_checkpoint_liveness.py",
+        "start_ticks": 713986317
+      },
+      {
+        "pid": 3061652,
+        "marker": "scripts/watch_v24218_exact220_executor.py",
+        "start_ticks": 747569004
+      }
+    ],
+    "protected_watchers_unchanged": true,
+    "active_run_killed_or_quarantined": false
+  },
+  "credential_literal_hits": [],
+  "findings": [],
+  "diagnosis_valid": true,
+  "authorization": {
+    "append_only_nominal_compatibility_design": true,
+    "local_synthetic_integration_test_design": true,
+    "same_v24472_population_rerun": false,
+    "external_probe_launch": false,
+    "paired_dev64": false,
+    "exact220": false,
+    "evaluator": false,
+    "leaderboard_or_sota": false
+  },
+  "diagnosis_payload_sha256": "2d62fe481a7109e969415f043676e6df338bbec615e823c6737b943fd8d81f6b"
+}
