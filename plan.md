@@ -1,6 +1,8 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.23
+> 版本：6.24
+>
+> **6.24 V2.43.70→73 batch-stratified verifier build（2026-08-04）：V2.43.70 在全新16题外部门发现559个 registrable hosts、14题完整8+2，却只有1个 parent candidate，两个 verifier 都没有独立支持，utility credit/net gain均0，严格 NO-GO。进一步审计定位到 first-10 截断：V2.43.58 串接两批后只把前10 host交给分区，第一批≥10时第二批贡献为0。append-only V2.43.71–72 已在 fetch/candidate/entropy/evaluator 前仅用 visible query、URL/title 与 registrable source 构造5+5，并保证每批4 proposal+1 verifier；2 search/10 fetch/3 model effects不变，冲突与缺支持仍fail closed。V2.43.73 build audit 93/93，privileged access/evaluator import/credential literal均0，`findings=[]`；只授权全新 external gate设计，尚无新的dev64/exact-220分数。详见本文“V2.43.70→73”节。**
 >
 > **6.23 V2.43.61 two-batch host-union 外部门已冻结为严格 NO-GO（2026-08-03）：控制面、protocol、preaudit、activation、execution-start 分别以提交 `c559cc7/35cfe61/44dd649/99d4f2a/02b5678` 推送后才发生首个 effect；唯一一次12题外部 probe 在 `121.325s` 自然完成，result/decision/postaudit 依次以 `ea63ebc/655bcd8` 冻结推送。全程 `12/12` terminal+structural pass、精确 two-batch=`12/12`、recursive split=`0/12`、slot/provider/search/fetch deadline 与 helper failure均0、10-fetch守恒和 hidden prompt exclusion 全通过，lease自然释放，保护 watcher 身份不变。**
 >
@@ -2476,3 +2478,17 @@ terminal-only shadow aggregate 已覆盖 7 个终态中的 5 个有信号任务�
 - 文献与 non-claims 覆盖 2026-07-21 的直接近邻，包括 Forage V2、Shared Discovery Paradox、ECHO、TRACE、LOTAPO、STAMP、RICE-PO、SIOP、CVT-RL、InfoPO、AEM、SELAUR、STRIDE、APPO、PivoARL、A²TGPO 与 T²PO；
 - 文献与 non-claims 还覆盖 2026-07-30/31 的 Search as Computation Allocation、SearchArt、CAST、AttriMem、MisKnow-Agent、FinanceHarness、BM25 Wins at Scale、MagicSelector、TSDS、Scaling LLM-Driven MAS、Bayesian MAS monitor、n-Clue、Auto Research、Conformal Cascade 与 MemHarness，并落实 IG/VOC、global-ranking、joint-stop/defer、合取完整性、outer intervention transfer、memory reconstruction、误导证据、PIT 和 tool-shift 对照；
 - 失败 gate 被如实报告，标题和摘要按证据强度降级。
+## V2.43.70→73：从“搜到很多 host”转向“候选前跨批验证覆盖”（2026-08-04 UTC）
+
+当前可信全集基线仍是 V2.42.67：single rollout exact-220 的保守 whole-table score 为 `7/220=3.1818%`，quality composite `0.413541`，Entity `69.09%`；它不是 Avg@4、未提交榜单、不是 SOTA。V2.43.30 虽完成 baseline/candidate 各 220 个 terminal forward，但候选臂没有非 identity 任务，按冻结 forward gate 停在 evaluator 前，所以不能报告为新 benchmark 分数。
+
+V2.43.70 的第三组全新 16-task 外部门给出了更精确的根因。它在 233.43 秒内得到 559 个 registrable hosts，14 个任务完成 8+2，产生 2 个 parent-eligible support sets 和 1 个 parent candidate；目标实体 projector 已消除旧 character-window 假冲突，但两个 hidden verifier 均未提供候选值独立支持，最终 utility credit 与 net gain 都为 0，严格 NO-GO。后续代码审计发现问题不只是“hash 随机”：V2.43.58 先串接两批 host，再把前 10 个交给 V2.43.62。第一批只要有至少 10 个独立 host，第二批即使发现数百来源，也会在 fetch/partition 前被完全截断。因此“559-host discovery coverage”并不等于“8+2 中存在跨批 verifier coverage”。
+
+V2.43.71–72 已作为 append-only successor 实现并推送，不修改 V2.43.58–70 的冻结历史。它在页面抓取、candidate、entropy 和 evaluator 之前，只使用 visible query batch、URL/title 和 registrable source provenance，确定性构造完整容量 `5+5` host vector；随后复用旧 hash partition，并机械保证每批各 `4 proposal + 1 hidden verifier`。该设计不新增 effect：仍为 2 search、至多 10 fetch、至多 3 model calls。合成反例已证明旧 first-10 会让 batch-2 为 0/10；新版本则跨批 5/5，真实 target-bound conflict 仍回退，缺少独立支持时保留 proposal entropy 但 utility-aligned credit 为 0，query/raw lead/selection/receipt/parent/transport tamper 均 fail closed。
+
+V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-field access=0，evaluator import=0，credential literal=0；两个受保护 watcher identity 未变化，shared API lease inactive，且 audit 没有发起网络、模型、搜索、fetch 或 evaluator。当前 gate 顺序为：
+
+1. 先为 V2.43.71–72 建立 create-exclusive external protocol/preaudit/activation/start；使用与 V2.43.70 及此前外部门实体完全不重叠的全新组，只运行一次，禁止 NO-GO 后 resume/retry/重评。
+2. external 必须同时满足：terminal/transport 结构门、完整 `5+5→4+1/4+1`、至少一个 exactly-bound parent candidate、至少一个 independent verified candidate、utility-aligned entropy credit > 0、final nonidentity/net cell gain > 0。只提高 host/query 覆盖而没有最终 utility gain 仍是 NO-GO。
+3. external GO 后才允许设计 fresh paired dev64；dev64 要求 candidate 对 baseline 有 failure-as-zero 的 paired quality gain、无明显成本/可靠性退化且机制确实激活。NO-GO 不调阈值、不挑题、不复用 evaluator 反馈。
+4. dev64 GO 后才允许新的 fixed-policy exact-220。完整 220 必须 fresh roots、固定并发/预算、220/220 terminal 后才开 evaluator；失败计 0，禁止选择性补题。只有完成相同协议比较、Avg@4/榜单提交后才能讨论 SOTA。

@@ -975,3 +975,16 @@ V2.19 针对这两个 label-blind 机制做了 evidence-continuity 修复。它�
 176. Li, M., Kaizhan-Lee & Bareinboim, E. **Counterfactual Shapley Credit Assignment.** *Reinforcement Learning Journal* / RLC (2026); arXiv:2607.16999v1. https://arxiv.org/abs/2607.16999
 177. Li, Y. et al. **Agent-UCT: Upper Confidence Bounds Applied to Trees for Agentic Workflow Optimization with Cost-Awareness.** arXiv:2607.24162v2 (2026). https://arxiv.org/abs/2607.24162
 178. Zhang, N. et al. **MICA: Multi-granularity Intertemporal Credit Assignment for Long-Horizon Emotional Support Dialogue.** arXiv:2603.06194v3 (2026). https://arxiv.org/abs/2603.06194
+## 2026-08-04 补充：source-volume 不是 verifier coverage，entropy 必须对齐 utility
+
+V2.43.70 的真实外部门提供了一个对 Deep/Wide 搜索设计很重要的反例：发现 559 个 registrable hosts 并不保证最终验证覆盖。若系统先按返回顺序截取前 10 个来源，再随机保留两个 verifier，则后发现的 query/batch strata 可能完全没有进入 proposal 或 verifier 集。这个失败和近期工作中的几个观点相互印证：Diverse Query Initialization 强调初始化分散性，但分散 query 若在 source selection 处被 first-k 截断，其收益不会传到下游；conjunctive cross-page retrieval 关注“所需证据是否共同覆盖”，而非单纯 source 数；Bridge Evidence 区分静态检索相关性与对最终决策的因果 utility；Context Gathering Decision Process 则提示 acquisition policy 应按下游 belief/decision value 设计，而不能把更多网页当作目标本身。
+
+因此当前实现把创新点进一步收紧为三层账本，而不是笼统的“entropy reward”：
+
+- `proposal information gain`：独立 proposal source 对某个精确 entity-column-value support set 的条件熵下降；
+- `verification outcome`：候选前冻结的、与 proposal source 不相交的 hidden verifier 是否对同一 target/value 提供支持、支持 baseline 或产生冲突；
+- `utility-aligned entropy credit`：只有 exactly-bound、独立支持且无 target-bound conflict 的 proposal entropy 才获得最终 credit。
+
+这比“哪个网页看起来信息量大就给哪个 step credit”更可行。原始 surprisal、页面新颖度、字符数或 source count 都可能奖励噪声、误导证据与重复信息；V2.43.70 恰好显示 proposal entropy 可以为正而最终 utility 为零。对于 credit assignment，合适的量不是无条件信息增益，而是受来源独立性、目标绑定与反事实 utility 约束的增益：`credit(e) = I(Y; e | state, prior evidence) × verified_utility(e)`。其中 `verified_utility` 不能由同一 proposal 自证，需要预留的独立 evidence stratum 或未来 outer intervention；否则会把“系统相信得更坚定”误写成“系统更正确”。这与 CIGPO 的 contextual information gain、Bridge Evidence 的 causal utility、CGDP/POMDP acquisition view、MICA/TRIAGE/step-level graph credit 的长程归因问题相接，但当前方案的可区分点是把 entropy、verifier outcome 和 downstream utility 以可重放 receipt 显式分离。
+
+V2.43.71 的 batch-stratified prefilter 是这一观点的工程化实例：完整容量先从两个 discovery batch 各取 5 个 registrable hosts，再让每批各贡献 4 proposal 和 1 hidden verifier；它只读 visible query、URL/title 与 source provenance，发生在 fetch/candidate/entropy/evaluator 之前。合成测试显示它修复了 first-10 对第二批的完全遮蔽，并保持 2 search/10 fetch/3 model effects；但它目前仍只是 coverage mechanism evidence。只有全新外部门出现独立支持、正 utility credit 与最终 net gain，随后 paired dev64 和 exact-220 质量提升，才能把它升级为 benchmark 或论文主结论。
