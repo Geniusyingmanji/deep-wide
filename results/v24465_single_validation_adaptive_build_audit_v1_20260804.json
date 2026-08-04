@@ -1,0 +1,174 @@
+{
+  "artifact_version": 1,
+  "role": "v24465_single_validation_adaptive_build_audit",
+  "created_at_unix": 1785862658,
+  "parents": {
+    "proof_build": {
+      "path": "results/v24462_proof_carrying_adaptive_build_audit_v1_20260804.json",
+      "sha256": "0bc71ac561372e67bc259594ebb91a149639ba047e8f4ccbcb7230439837fc0f"
+    },
+    "failed_external_result": {
+      "path": "results/v24463_adaptive_proof_external_result_v1_20260804.json",
+      "sha256": "6f9aef05809375ef7392e7e622c5da43ed9787d58bbb42c5501fd36c0fa7db2d"
+    },
+    "failed_external_decision": {
+      "path": "results/v24463_adaptive_proof_external_decision_v1_20260804.json",
+      "sha256": "bf7a16a69f8ba5f8ee73b41a2d8058ebb462afbdd523df36598c8c592541ad22"
+    },
+    "failed_external_postaudit": {
+      "path": "results/v24463_adaptive_proof_external_postresult_audit_v1_20260804.json",
+      "sha256": "ba4c800628087a146295d31bf56b804dcb366e9c01fed85cd5ad0726614795f1"
+    }
+  },
+  "source_manifest": {
+    "src/deepwide_agent/v24457_adaptive_entropy_support.py": "56661ca6a46c74ff55eba27ccd3347f56eb8826bb277e7f923bfb2d53d1bbbcb",
+    "src/deepwide_agent/v24459_proof_carrying_adaptive_entropy_support.py": "76ab50ca2f2d82622ce7cc31fd8a3f1b48d9bb2e4eb8e1250e3b212e4bfc0e81",
+    "src/deepwide_agent/v24464_single_validation_adaptive_persistence.py": "89ac48faab95c86932613dc03f5b247303356aa706e0dcaef57c3bdff599bcb5",
+    "tests/test_v24457_adaptive_entropy_support.py": "b252ad4303f443644555d9763095d400228f65bdc5d3b15da1141607eecadb44",
+    "tests/test_v24459_proof_carrying_adaptive_entropy_support.py": "5838ab98552435840d3e9bbd46f2be79e62b5dcfe369bf9001d467a7ec075044",
+    "tests/test_v24464_single_validation_adaptive_persistence.py": "6001e86481f35b529349894fffca58efd600ef64146bfd5f41fb098f12e27908",
+    "scripts/audit_v24465_single_validation_adaptive_build.py": "6ed58cf2dca4b6f7cc7a516132f4b17c646a627859aee0d58d2ef311cbbca82e",
+    "tests/test_audit_v24465_single_validation_adaptive_build.py": "2fbfa20bd0f4a566dbdd25ca53ff56253c5004b0d9fb8360e0aa46de32a35026"
+  },
+  "source_manifest_sha256": "52a6ad651f880500589e6543ab7960241156891e0d5dbec42f0b209623c3cb89",
+  "git": {
+    "head": "e0e68ce715feceafef3731d5522d55066ea3aa8c",
+    "target_main": "e0e68ce715feceafef3731d5522d55066ea3aa8c",
+    "head_equals_target_main": true,
+    "worktree_clean": true,
+    "all_sources_tracked": true
+  },
+  "tests": {
+    "suites": [
+      {
+        "path": "tests/test_v24457_adaptive_entropy_support.py",
+        "passed": true,
+        "test_count": 6,
+        "scope": "adaptive_semantic_regression",
+        "timeout_seconds": 900
+      },
+      {
+        "path": "tests/test_v24459_proof_carrying_adaptive_entropy_support.py",
+        "passed": true,
+        "test_count": 7,
+        "scope": "adaptive_proof_regression",
+        "timeout_seconds": 360
+      },
+      {
+        "path": "tests/test_v24464_single_validation_adaptive_persistence.py",
+        "passed": true,
+        "test_count": 5,
+        "scope": "single_validation_persistence",
+        "timeout_seconds": 360
+      },
+      {
+        "path": "tests/test_audit_v24465_single_validation_adaptive_build.py",
+        "passed": true,
+        "test_count": 5,
+        "scope": "audit_control",
+        "timeout_seconds": 360
+      }
+    ],
+    "passed": true,
+    "test_count": 23,
+    "mechanism_test_count": 18,
+    "audit_control_test_count": 5,
+    "network_model_search_fetch_or_evaluator_called": false
+  },
+  "failed_run_evidence": {
+    "selected": 16,
+    "parent_hard_timeout_tasks": 16,
+    "success_tasks": 0,
+    "unobserved_effect_tasks": 16,
+    "certificate_validation_invocations": 0,
+    "batch_wall_seconds": 510.329164,
+    "frozen_batch_wall_ceiling_seconds": 480.0,
+    "mechanism_quality_was_not_evaluable": true,
+    "same_population_rerun_authorized": false
+  },
+  "performance_evidence": {
+    "scope": "synthetic_test_fixture_only",
+    "repetitions": 3,
+    "complete_validation_wall_seconds": 32.659375,
+    "recursive_envelope_seconds": [
+      14.494345,
+      14.242432,
+      14.419174
+    ],
+    "recursive_envelope_median_seconds": 14.419174,
+    "recursive_envelope_p95_seconds": 14.494345,
+    "fast_envelope_seconds": [
+      0.0133,
+      0.011806,
+      0.013027
+    ],
+    "fast_envelope_median_seconds": 0.013027,
+    "fast_envelope_p95_seconds": 0.0133,
+    "fast_envelope_p95_ceiling_seconds": 1.0,
+    "fast_envelope_ceiling_passed": true,
+    "fast_and_recursive_envelope_values_equal": true,
+    "minimum_future_terminal_reserve_seconds": 45.0,
+    "terminal_reserve_exceeds_fast_p95_seconds": true,
+    "network_model_search_fetch_or_evaluator_called": false,
+    "profile_is_not_external_latency_estimate": true
+  },
+  "single_validation_evidence": {
+    "frozen_v24457_complete_cross_artifact_validation_preserved": true,
+    "complete_semantic_validation_count_per_successful_child": 1,
+    "second_recursive_envelope_validation_removed": true,
+    "mechanical_envelope_equals_frozen_recursive_envelope": true,
+    "compact_outer_shell_and_receipts_still_validated": true,
+    "v24459_exact_byte_certificate_preserved": true,
+    "v24459_parent_capability_validation_preserved": true,
+    "future_effect_deadline_must_precede_parent_timeout_by_at_least_seconds": 45.0
+  },
+  "trust_boundary": {
+    "pinned_local_child_source_and_launch_manifest_are_trusted": true,
+    "certificate_is_independently_signed": false,
+    "certificate_is_remote_attestation": false,
+    "malicious_child_resistance_claimed": false
+  },
+  "privileged_field_accesses": [],
+  "evaluator_imports": [],
+  "credential_literal_hits": [],
+  "closure": {
+    "shared_api_lease_active": false,
+    "protected_watchers": [
+      {
+        "pid": 795336,
+        "marker": "scripts/watch_v2415_r1_checkpoint_liveness.py",
+        "start_ticks": 713986317
+      },
+      {
+        "pid": 3061652,
+        "marker": "scripts/watch_v24218_exact220_executor.py",
+        "start_ticks": 747569004
+      }
+    ],
+    "protected_watchers_unchanged": true,
+    "external_probe_launched": false,
+    "benchmark_or_watcher_signaled_restarted_or_modified": false,
+    "active_run_killed_or_quarantined": false
+  },
+  "source_policy": {
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "mapping_gold_category_question_type_split_evaluator_score_or_reward_read": false,
+    "task_query_url_page_prediction_value_or_content_hash_emitted": false,
+    "remote_network_model_search_fetch_or_evaluator_called_by_audit": false
+  },
+  "findings": [],
+  "audit_valid": true,
+  "authorization": {
+    "fresh_external_protocol_design": true,
+    "same_v24463_population_rerun": false,
+    "external_probe_launch": false,
+    "paired_dev64": false,
+    "exact220": false,
+    "evaluator": false,
+    "leaderboard_or_sota": false
+  },
+  "audit_payload_sha256": "6e98c115747010bd4632b15153b68cddba7e233544c3d838801a0c2c9b889157"
+}
