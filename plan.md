@@ -2753,3 +2753,9 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 2. 失败前 some/all workers 可能已产生外部 effect，但计数不可恢复；ThreadPool context 已自然闭合，runner/child 均退出、临时目录清除、lease 释放、watcher identity 不变。没有 public result、decision 或 postaudit，没有 evaluator/benchmark score，也没有 strict-joint 结果可报告。
 3. V2.45.68 create-only quarantine `results/DO_NOT_USE_invalid_v24567_concurrent_protocol_context_20260805/invalid_run_audit.json` 为 `findings=[]`、`audit_valid=true`、payload seal 通过；该 8-task/64-entity population 永久禁止 resume/retry/rerun/re-evaluation，普通 result/decision/postaudit 均禁止发布。
 4. 下一 freshness 基线更新为 `444 questions / 3552 entities`。当前仅授权 concurrent protocol validator repair 设计；修复必须有 8-way barrier/concurrency regression 并先做 clean-build audit，之后才能设计全新 disjoint successor，不授权直接 launch、dev64、exact-220、evaluator、leaderboard 或 SOTA。
+
+### V2.45.69：serialized strict protocol validator repair（2026-08-05 UTC）
+
+1. 新 append-only repair 冻结 V2.45.67 原 validator，并用 module-owned `threading.RLock` 覆盖完整的 nested `configured_base → frozen validate_protocol` 临界区；不修改冻结 runner，也不改变 task/model/search/fetch/evidence/credit/budget/evaluator 行为。
+2. 8-way barrier 强制并发测试中 8 个 validator 全部成功且 observed critical-section `maximum_active=1`；同线程嵌套验证证明可重入，合成异常后下一次验证成功证明锁释放。
+3. 定向测试 `5/5`，runtime AST label-blind。下一步必须先提交修复并从 clean、`HEAD==target/main` 状态做含多轮并发 stress 的 build audit；audit GO 前不授权新 population protocol 设计或 launch。
