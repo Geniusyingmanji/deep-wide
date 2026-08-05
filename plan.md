@@ -2726,3 +2726,9 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 1. V2.45.61 的两个 task marginal 不能证明 changed legacy choice 与 one-observation plan 来自同一 task；新 append-only successor 增加精确 joint：`one-observation reachable plan + changed legacy entropy choice + selected alias + new observation + positive IG/action credit + safe change + decision credit` 必须同题共现。
 2. strict joint 由 V2.45.61 row 的 capability-proven字段机械复算；public success row 仍不能重新摄入为 proof，failure 为 exact-zero。joint 只声明 task-level co-occurrence，不声明 planner call/query/lead/source/page causality。
 3. V2.45.61/64 联合回归 `11/11`，V2.45.64 精确 `5/5`；AST label-blind、credential scan、watcher 与 lease 检查均通过。下一步接 bounded parent 与 clean-build audit；当前不授权 external protocol publication 或 launch。
+
+### V2.45.65：bounded strict reachability/conversion parent（2026-08-05 UTC）
+
+1. V2.45.62 的 audited parent functions 通过 closure-free `FunctionType` 副本绑定 V2.45.64 strict projector；生产 runtime 不修改任何 module global，V2.45.62 原函数/projector identity 前后保持不变，8-way parent 并发不依赖共享 patch context。
+2. 真实 parent→supervisor→worker chain 恰好验证一次 V2.45.57 capability、投影一次 V2.45.64 strict row；nonzero child 保持 strict failure-as-zero 与 effect lower bound，预算继续为单 origin `150/220/245/255s`。
+3. V2.45.61/62/64/65 联合回归 `20/20`，V2.45.65 精确 `5/5`；两个新 runtime source AST label-blind，credential scan 0，watcher identity 不变、lease inactive。下一步必须 clean-build audit；当前不授权 external protocol publication/launch、dev64 或 exact-220。
