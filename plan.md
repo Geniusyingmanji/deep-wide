@@ -2694,3 +2694,10 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 2. 真实 parent→supervisor→worker synthetic 子进程链成功；父侧恰好验证一次 V2.45.57 capability、投影一次 V2.45.58 success row，planner sibling 在父侧只读验证，不递归重放 task/page/value/planner 语义。
 3. 独立非零 child 故障注入保持 `child_nonzero_without_terminal_receipt`，输出 exact content-free failure-as-zero row；observation 保留 `unobserved_lower_bound` 私有 effect 下界，failure row 明确不声称未观察到的私有 effect 为 0。
 4. V2.45.49/50/55/57/58/59 联合回归 `38/38`，runtime AST privileged-field access/evaluator import 为 0，credential literal scan 为 0；两个 protected watcher identity 未变，shared API lease inactive。下一步必须从 clean、`HEAD==target/main` 状态生成 V2.45.60 build audit；在严格 GO 前不授权 fresh external protocol/launch、paired dev64、exact-220、evaluator、leaderboard 或 SOTA。
+
+### V2.45.60：bounded decision-reachability clean-build audit GO（2026-08-05 UTC）
+
+1. 审计器/测试先独立提交推送，再从 clean、`HEAD==target/main==a07c913` 状态运行 V2.45.49/50/55/57/58/59/60 共 `45/45` tests；`findings=[]`、`audit_valid=true`，audit payload seal 复核通过。
+2. 审计确认真实 parent/supervisor/worker synthetic chain、exact one V2.45.57 capability validation、one V2.45.58 projection、nonzero-child failure-as-zero、partial effect lower-bound 与 `150/220/245/255s` 单 origin 预算；query/model/search/fetch budget 和所有 frozen evidence/safe-change 门均未改变。
+3. 六个 runtime source 的 AST privileged-field access/evaluator import 与全部 source/test/control credential literal 均为 0；runtime boundary 仍为 `{opaque_id, question}`。两个 protected watcher identity 不变，shared API lease inactive；审计未调用 network/model/search/fetch/evaluator，也未打开历史私有 task/query/URL/page/source/value/prediction。
+4. GO 仅授权以 `436 questions / 3488 entities` 为历史基线设计 fresh disjoint bounded decision-reachability external protocol；不授权 activation/launch、paired dev64、exact-220、evaluator、leaderboard 或 SOTA。V2.45.54 旧人口仍禁止 resume/retry/rerun/re-evaluation。
