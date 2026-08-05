@@ -2608,3 +2608,10 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 2. 联合计数只声明同一 task 共现，不声明某一 lead 导致 observation 或 information gain；该限制是 receipt 的强制真值字段，协调重封为因果结论会 fail closed。
 3. action credit 语义完全继承 V2.45.33：plan、query/selection activity、selected source 与 new observation 同时存在后，才分配 frozen targeted-stage positive information/epistemic delta；decision credit 仍额外要求 safe output improvement 与 changed cell。alias surface hit 本身既不是 eligibility 条件，也不直接得到 credit。
 4. 真实 synthetic worker 路径如实得到 surface hit=0、new observation=0、action credit=0；显式正合成 receipt 验证三联 joint=1 时 information/epistemic/decision credit 的守恒。V2.45.33/47/48 共 17/17 定向回归通过；下一步是新的 proof-carrying sibling certificate 与 total aggregate，尚不授权 external launch。
+
+### V2.45.49：proof-carrying alias/action joint capability（2026-08-05 UTC）
+
+1. 保持冻结 V2.45.25 task artifact surface byte-for-byte 不变；新的 execution-scoped sibling directory 只含 V2.45.48 joint receipt 与 certificate。certificate 绑定 joint receipt、alias result、outer alias certificate 的 exact bytes、ordinal 与 validator manifest。
+2. worker 在创建 sibling directory 或任何 model/search/fetch effect 前验证 runtime task 恰好只有 `{opaque_id, question}`；含 category 等 privileged field 的 task fail closed。父侧先验证冻结 V2.45.25 proof，再验证 sibling exact surface/bytes/certificate，随后才铸造无法由 raw mapping 构造的 opaque capability。
+3. 父侧 capability validation 是 read-only，不调用 joint receipt builder，不重放 task/page/acquisition semantics。receipt/certificate/alias result/outer certificate 任一 byte 漂移、manifest 漂移、extra file 或 symlink 均 fail closed；certificate 明示同题 joint 不等于 lead-level causality。
+4. 当前 synthetic worker/proof 测试 7/7，模型/搜索/fetch effect 与前驱保持 `2/4/5`，runtime AST label-blind。下一步把 capability 接入 total row/aggregate 并完成 clean-build audit；尚不授权 external launch、dev64 或 exact-220。
