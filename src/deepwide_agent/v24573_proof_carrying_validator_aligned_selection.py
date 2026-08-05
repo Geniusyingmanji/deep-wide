@@ -393,12 +393,24 @@ supervise_worker_with_separated_budget = (
 )
 budget_vector_seconds = parent_proof.budget_vector_seconds
 
+# The audited V2.45.62 bounded-parent function resolves these two names from
+# its privately frozen ``proof`` global.  Export explicit successor adapters
+# so that the copied function validates the V2.45.73 capability without
+# changing its control flow or falling back to the V2.45.57 validator.
+ValidatedProofCarryingDecisionReachability = (
+    ValidatedProofCarryingValidatorAlignedSelection
+)
+validate_proof_carrying_decision_reachability_bundle = (
+    validate_proof_carrying_validator_aligned_bundle
+)
+
 
 __all__ = [
     "AUXILIARY_NAMES",
     "CERTIFICATE_NAME",
     "POLICY_ID",
     "RECEIPT_NAME",
+    "ValidatedProofCarryingDecisionReachability",
     "ValidatedProofCarryingValidatorAlignedSelection",
     "auxiliary_directory",
     "budget_vector_seconds",
@@ -406,5 +418,6 @@ __all__ = [
     "run_worker",
     "supervise_worker_with_separated_budget",
     "validate_certificate",
+    "validate_proof_carrying_decision_reachability_bundle",
     "validate_proof_carrying_validator_aligned_bundle",
 ]
