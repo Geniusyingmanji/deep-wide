@@ -2579,3 +2579,18 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 3. 唯一一次 one-wave external 在 `179.701232s` 内完成，8/8 worker、parent、certificate、capability 和 complete validation 全成功；0 timeout/exception/provider/search/fetch failure，parent compact validation P95 `0.246663s`，临时私有目录已清理且 lease 已释放。effect ledger 为 16 次 model acquisition、25 次 hosted search attempt、85 次 hard-fetch helper call；memo 为 64 misses、6487 hits、0 mismatch。
 4. 机制漏斗自然激活但未转成 decision credit：`target_plan=1`、`reserve_engaged=1`、`reserve_selected_source=1`、`reserve_usable_page=1`，随后 `reserve_new_observation=0`、support/conflict observation 均 0、safe-change improvement=0、positive incremental decision credit=0。机制门因此严格 **NO-GO**；reliability、parent validation、latency 虽均通过，也不授权 paired dev64、exact-220、evaluator、leaderboard 或 SOTA，该人口永久禁止 resume/retry/re-evaluation。
 5. 下一步只授权 content-free 结构诊断与全新 successor 设计：检查 reserve observation extractor 的 target binding/normalization/visible-value matching 是否在 usable page 后造成结构性丢失，但不得读取已清理 task/query/URL/page/value，不得针对该人口调参。只有新的 benchmark-external 人口严格 GO 后才可重新考虑 fresh paired dev64。
+
+### V2.45.02–45：alias-title acquisition 与 action-credit 外部门结论（2026-08-05 UTC）
+
+1. V2.45.02–36 依次完成 record-bound title、保守 visible-row alias、proof-carrying capability、alias-seeded acquisition、action-level entropy credit 与 total projection。运行时边界始终严格为 `{opaque_id, question}`；alias 仅是 retrieval/ranking hint，本身不获得 vote、source、entropy 或 decision credit。3/2-source、posterior `0.8`、margin `1`、normalized leave-one-out information gain 与 safe-output change 门均未放宽。
+2. V2.45.37、39、41、43 分别暴露 action schema、并发 validator、capability 二次登记和动态 callback recursion 缺陷；每批已消耗人口均按 `DO_NOT_USE_invalid_*` 隔离，禁止 resume、retry、补跑或普通 result/decision/postaudit。V2.45.38/40/42/44 逐项修复并从 clean、`HEAD==target/main` 状态冻结。
+3. V2.45.45 是修复后的首个可信 action-credit external gate：8/8 worker/certificate/capability 成功，batch wall `139.310481s`，reliability、parent validation、latency 全通过。漏斗为 target-plan `7`、acquisition-active task `6`、selected source `21`、usable page `17`、new observation `1`；423 条 visible lead、63 条 selected lead 中，旧 title-only alias matcher 命中均为 0。
+4. 批次 raw information/epistemic gain 均为 `0.209371236041 nats`，但 action information/epistemic/decision credit 均为 0，safe-change improvement 为 0，因此严格 **NO-GO**，不授权 paired dev64、exact-220、evaluator、leaderboard 或 SOTA。当前可信 exact-220 最好结果仍是 V2.42.67 的 `7/220=3.1818%`、Entity `0.690909`、Composite `0.413541`，单 rollout、未上榜、非 SOTA。
+5. V2.45.45 消耗后历史 freshness 基线固定为 `428 questions / 3424 entities`。任何新 external population 必须 literal/canonical 双重不重叠；旧失败或 NO-GO 人口均不得恢复或重评。
+
+### V2.45.46：alias-action 逐题相关性不可恢复诊断（2026-08-05 UTC）
+
+1. 诊断只读取 V2.45.45 已冻结的 public result/decision/postaudit；未打开 task、question、opaque ID、query、URL、page、source、value、prediction、临时执行目录、mapping 或 evaluator，也未调用 network/model/search/fetch/process。
+2. 公开 aggregate 能分别证明：至少一题产生新 targeted observation，且至少一题产生正 raw information gain；但 opaque capability 在聚合后已销毁，aggregate 没有保留二者的逐题 joint distribution。因此不能证明新 observation 与 `0.209371236041 nats` 来自同一题，不能证明该增益由 alias-seeded action 导致，也不能对历史人口追授 action credit。
+3. 下一 append-only successor 必须发布 title/full/core/initialism 与 normalized-URL/full/core/initialism 的固定词表计数，并发布 `active&&gain`、`new observation&&alias hit`、`new observation&&selected alias hit`、`selected alias hit&&gain` 的逐题联合计数。query 文本绝不能自证 alias hit；匹配只能使用 visible title 和规范化 URL。
+4. alias hint 继续不得直接获得 credit；source/posterior/margin/leave-one-out/safe-change/decision-credit 门保持不变。先完成 proof-carrying 可观测性构件与 build audit，再为全新 `428/3424` 后人口设计一次性 external gate；只有 external GO 才允许 paired dev64，dev64 GO 后才允许新 exact-220。
