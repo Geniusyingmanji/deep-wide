@@ -2720,3 +2720,9 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 2. 审计确认 success 只能由 V2.45.57 opaque capability 生成；两个 conversion joint 可从 task row 精确复算，public success mapping 不能重新摄入为 proof；joint 不声明 call/lead-level causality。bounded parent 无全局 projector binding 或共享 parent state，failure 保持 exact-zero 与私有 effect lower bound。
 3. 七个 runtime source 的 AST privileged-field access/evaluator import 与全部 source/test/control credential literal 均为 0；两个 protected watcher identity 不变，shared API lease inactive，未调用 network/model/search/fetch/evaluator，未打开历史私有内容。
 4. GO 仅授权以 `436 questions / 3488 entities` 为基线设计 fresh disjoint bounded reachability-conversion external protocol；不授权 activation/launch、paired dev64、exact-220、evaluator、leaderboard 或 SOTA，V2.45.54 人口仍永久禁止重跑或重评。
+
+### V2.45.64：strict same-task reachability/conversion joint（2026-08-05 UTC）
+
+1. V2.45.61 的两个 task marginal 不能证明 changed legacy choice 与 one-observation plan 来自同一 task；新 append-only successor 增加精确 joint：`one-observation reachable plan + changed legacy entropy choice + selected alias + new observation + positive IG/action credit + safe change + decision credit` 必须同题共现。
+2. strict joint 由 V2.45.61 row 的 capability-proven字段机械复算；public success row 仍不能重新摄入为 proof，failure 为 exact-zero。joint 只声明 task-level co-occurrence，不声明 planner call/query/lead/source/page causality。
+3. V2.45.61/64 联合回归 `11/11`，V2.45.64 精确 `5/5`；AST label-blind、credential scan、watcher 与 lease 检查均通过。下一步接 bounded parent 与 clean-build audit；当前不授权 external protocol publication 或 launch。
