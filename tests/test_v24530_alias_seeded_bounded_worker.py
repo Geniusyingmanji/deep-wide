@@ -67,7 +67,7 @@ class V24530AliasSeededBoundedWorkerTests(unittest.TestCase):
         self.assertEqual(search.request_invocations, 4)
         self.assertEqual(search.fetch_invocations, 5)
 
-    def test_missing_acquisition_activity_fails_closed(self) -> None:
+    def test_activity_must_exactly_match_target_plan_presence(self) -> None:
         fake = {
             "policy_id": "v24529_visible_row_alias_seeded_target_acquisition_v1",
             "binding_count": 3,
@@ -97,10 +97,58 @@ class V24530AliasSeededBoundedWorkerTests(unittest.TestCase):
         with (
             patch(
                 "deepwide_agent.v24530_alias_seeded_bounded_worker.parent.run_alias_title_worker",
-                return_value={},
+                return_value={"alias_title_receipt": {"selected_target_count": 1}},
+            ),
+            patch(
+                "deepwide_agent.v24530_alias_seeded_bounded_worker.validate_alias_title_receipt",
+                side_effect=lambda value: value,
             ),
             patch.object(AliasSeededTargetAcquisition, "content_free_receipt", return_value=fake),
-            self.assertRaisesRegex(RuntimeError, "did not execute"),
+            self.assertRaisesRegex(RuntimeError, "activity/plan drifted"),
+        ):
+            run_alias_seeded_worker()
+
+        with (
+            patch(
+                "deepwide_agent.v24530_alias_seeded_bounded_worker.parent.run_alias_title_worker",
+                return_value={"alias_title_receipt": {"selected_target_count": 0}},
+            ),
+            patch(
+                "deepwide_agent.v24530_alias_seeded_bounded_worker.validate_alias_title_receipt",
+                side_effect=lambda value: value,
+            ),
+            patch.object(
+                AliasSeededTargetAcquisition,
+                "content_free_receipt",
+                return_value=fake,
+            ),
+        ):
+            self.assertEqual(
+                run_alias_seeded_worker()["alias_title_receipt"][
+                    "selected_target_count"
+                ],
+                0,
+            )
+
+        active = dict(fake)
+        active["discovery_query_vector_calls"] = 1
+        active["alias_seeded_query_vector_calls"] = 1
+        active["lead_selection_calls"] = 1
+        with (
+            patch(
+                "deepwide_agent.v24530_alias_seeded_bounded_worker.parent.run_alias_title_worker",
+                return_value={"alias_title_receipt": {"selected_target_count": 0}},
+            ),
+            patch(
+                "deepwide_agent.v24530_alias_seeded_bounded_worker.validate_alias_title_receipt",
+                side_effect=lambda value: value,
+            ),
+            patch.object(
+                AliasSeededTargetAcquisition,
+                "content_free_receipt",
+                return_value=active,
+            ),
+            self.assertRaisesRegex(RuntimeError, "activity/plan drifted"),
         ):
             run_alias_seeded_worker()
 

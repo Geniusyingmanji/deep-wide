@@ -15,6 +15,7 @@ from .v24529_alias_seeded_target_acquisition import (
     AliasSeededTargetAcquisition,
     validate_receipt,
 )
+from .v24524_alias_title_integration import validate_alias_title_receipt
 
 
 POLICY_ID = "v24530_alias_seeded_bounded_worker_v1"
@@ -25,13 +26,21 @@ def run_alias_seeded_worker(*args: Any, **kwargs: Any) -> dict[str, Any]:
     with acquisition:
         result = parent.run_alias_title_worker(*args, **kwargs)
     receipt = validate_receipt(acquisition.content_free_receipt())
-    if (
+    alias_receipt = validate_alias_title_receipt(result["alias_title_receipt"])
+    target_count = alias_receipt["selected_target_count"]
+    query_calls = (
         receipt["targeted_query_vector_calls"]
         + receipt["discovery_query_vector_calls"]
-        < 1
-        or receipt["lead_selection_calls"] < 1
+    )
+    selection_calls = receipt["lead_selection_calls"]
+    if (
+        target_count not in {0, 1}
+        or target_count == 1
+        and (query_calls < 1 or selection_calls < 1)
+        or target_count == 0
+        and (query_calls != 0 or selection_calls != 0)
     ):
-        raise RuntimeError("V2.45.30 alias acquisition did not execute")
+        raise RuntimeError("V2.45.30 alias acquisition activity/plan drifted")
     return result
 
 
