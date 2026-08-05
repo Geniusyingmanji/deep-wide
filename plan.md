@@ -2594,3 +2594,10 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 2. 公开 aggregate 能分别证明：至少一题产生新 targeted observation，且至少一题产生正 raw information gain；但 opaque capability 在聚合后已销毁，aggregate 没有保留二者的逐题 joint distribution。因此不能证明新 observation 与 `0.209371236041 nats` 来自同一题，不能证明该增益由 alias-seeded action 导致，也不能对历史人口追授 action credit。
 3. 下一 append-only successor 必须发布 title/full/core/initialism 与 normalized-URL/full/core/initialism 的固定词表计数，并发布 `active&&gain`、`new observation&&alias hit`、`new observation&&selected alias hit`、`selected alias hit&&gain` 的逐题联合计数。query 文本绝不能自证 alias hit；匹配只能使用 visible title 和规范化 URL。
 4. alias hint 继续不得直接获得 credit；source/posterior/margin/leave-one-out/safe-change/decision-credit 门保持不变。先完成 proof-carrying 可观测性构件与 build audit，再为全新 `428/3424` 后人口设计一次性 external gate；只有 external GO 才允许 paired dev64，dev64 GO 后才允许新 exact-220。
+
+### V2.45.47：visible title + normalized URL alias 可观测性（2026-08-05 UTC）
+
+1. 新 append-only acquisition context 保留 V2.45.29 的两条逻辑 query、一个 search batch、最大 fetch 数与 alias-seeded query，只把 lead 优先级从 title-only 扩展为 visible title 或规范化 URL surface。未修改 page evidence、source independence、posterior、margin、leave-one-out、safe change 或 decision credit。
+2. 固定词表分别计数 title/URL 的 normalized-full、distinctive-core、visible-row-initialism 命中，并保留 selected lead 的同构计数与 title/URL union。一个 lead 可同时命中多个 mode，因此 mode 是诊断维度而非互斥标签。
+3. URL surface 只包含 canonical HTTP(S) hostname 与 percent-decoded path；query、fragment、userinfo 和 port 全部排除。query 中的 alias 只计入 `query_only_alias_surface_lead_count` 诊断，不能建立 surface hit、不能获得排序优先级，更不能自证 evidence 或 credit。
+4. alias surface 仍只是 acquisition hint，不获得 vote、source、entropy 或 decision credit。当前 synthetic 定向测试覆盖 full/core/initialism、hostname/path、query/fragment/userinfo 排除、排序预算、binding restoration、协调篡改与 AST label-blind；正式冻结后仍需接入 task-level action receipt、proof capability 和 total aggregate，尚不授权 external launch。
