@@ -2675,3 +2675,9 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 2. V2.45.54 的 opaque capability 已销毁，旧 8-task/64-entity 人口禁止 resume/retry/rerun/re-evaluation；下一 freshness 基线固定为 `436 questions / 3488 entities`。审计未打开历史私有 task/query/URL/page/source/value/prediction 或临时目录，也未调用 network/model/search/fetch/evaluator。
 3. 三个 planner runtime source 的 AST privileged-field access/evaluator import 与全部 source/test/control credential literal 均为 0；两个 protected watcher identity 不变，shared API lease inactive。合成反例再次证明 reachability-first 在 unchanged cap 下把 2-observation 目标换为 1-observation 目标，且单条匹配独立 observation 自然跨过全部冻结门。
 4. GO 只授权 decision-reachability planner 的 proof-carrying worker integration **设计**；不授权 fresh external protocol/launch、paired dev64、exact-220、evaluator、leaderboard 或 SOTA。下一步必须把 execution-scoped planner receipt 绑定进新的 sibling certificate/capability 与 bounded parent，并先做 synthetic real worker/subprocess audit；不得直接 patch 已冻结 V2.45.25/49/52/54。
+
+### V2.45.57：proof-carrying decision-reachability worker integration（2026-08-05 UTC）
+
+1. 新 worker 在 V2.45.49 外包一层 execution-scoped V2.45.55 planner context；V2.45.49 worker 完整返回且 context 恢复后，才在新的 sibling directory 写入 counts-only planner receipt 与 certificate。冻结的 V2.45.25 task surface、V2.45.49 joint sibling 和所有历史 artifacts 均保持 byte-for-byte 不变。
+2. certificate 绑定 V2.45.55 receipt 与 V2.45.49 receipt/certificate exact bytes；父侧必须先验证并铸造 V2.45.49 opaque capability，再验证新 sibling，且不能调用 `_selection` 重放 target/query/page/value/planner 语义。raw mapping、receipt/certificate/parent byte tamper、manifest drift、extra file、symlink 均 fail closed。
+3. 真实 synthetic worker 测试 7/7，通过 parent→successor capability 顺序、只读验证、privileged field before-directory/effect rejection、content-free receipt、binding restoration 与 AST label-blind。模型/search/fetch effect 与前驱保持 `2/4/5`；V2.45.49/55/57 联合回归 `21/21`。尚未接 total projection 或 bounded parent，不授权 external design/launch、dev64 或 exact-220。
