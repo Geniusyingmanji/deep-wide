@@ -177,9 +177,9 @@ TEST_SUITES = (
     *predecessor.TEST_SUITES,
     ("tests/test_audit_v24541_invalid_duplicate_capability.py", 5, 120),
     ("tests/test_audit_v24542_capability_reprojection_build.py", 5, 180),
-    ("tests/test_v24543_alias_action_credit_external_gate.py", 13, 480),
+    ("tests/test_v24543_alias_action_credit_external_gate.py", 14, 480),
 )
-EXPECTED_TEST_COUNT = predecessor.EXPECTED_TEST_COUNT + 23
+EXPECTED_TEST_COUNT = predecessor.EXPECTED_TEST_COUNT + 24
 
 
 _ORIGINAL_BUILD_PROTOCOL = predecessor.build_protocol
@@ -194,6 +194,8 @@ _ORIGINAL_VALIDATE_EXECUTION_START = predecessor.validate_execution_start
 _ORIGINAL_VALIDATE_PUBLIC_RESULT = predecessor.validate_public_result
 _ORIGINAL_RUN_PROBE = predecessor.run_probe
 _ORIGINAL_RUN_PROCESS_SUBCOMMAND = predecessor.run_process_subcommand
+_ORIGINAL_MECHANISM_PASSED = action_gate.mechanism_passed
+_ORIGINAL_DIAGNOSTIC_ROUTE = action_gate.diagnostic_route
 _FROZEN_PREDECESSOR_PROTOCOL_ID = predecessor.PROTOCOL_ID
 _FROZEN_PREDECESSOR_RECORD_BOUND_BINDING = copy.deepcopy(
     predecessor._record_bound_binding()
@@ -377,7 +379,7 @@ def _record_bound_binding() -> dict[str, Any]:
 
 
 def mechanism_passed(value: Mapping[str, Any]) -> bool:
-    return predecessor.mechanism_passed(value)
+    return _ORIGINAL_MECHANISM_PASSED(value)
 
 
 def diagnostic_route(
@@ -389,7 +391,7 @@ def diagnostic_route(
     parent_validation: bool,
     latency: bool,
 ) -> str:
-    return predecessor.diagnostic_route(
+    return _ORIGINAL_DIAGNOSTIC_ROUTE(
         mechanism,
         supervision,
         diagnostic=diagnostic,

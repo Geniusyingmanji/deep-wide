@@ -24,6 +24,12 @@ from deepwide_agent.v24320_forward_contract import payload_sha256  # noqa: E402
 from scripts import v24543_alias_action_credit_external_gate as target  # noqa: E402
 
 
+def passing_mechanism() -> dict:
+    from test_v24537_alias_action_credit_external_gate import passing_mechanism
+
+    return passing_mechanism()
+
+
 def reseal(value: dict, field: str) -> None:
     value.pop(field, None)
     value[field] = payload_sha256(value)
@@ -187,6 +193,36 @@ class V24543AliasActionCreditExternalGateTests(unittest.TestCase):
         source = (target.ROOT / "scripts/v24537_alias_action_credit_external_gate.py").read_text()
         self.assertIn("total.task_projection = _ORIGINAL_TASK_PROJECTION", source)
 
+    def test_callbacks_are_nonrecursive_inside_full_configured_context(self) -> None:
+        value = passing_mechanism()
+        supervision = {"worker_hard_timeout_tasks": 0, "worker_nonzero_tasks": 0}
+        self.assertTrue(target.mechanism_passed(value))
+        self.assertEqual(
+            target.diagnostic_route(
+                value,
+                supervision,
+                diagnostic=True,
+                reliability=True,
+                parent_validation=True,
+                latency=True,
+            ),
+            "fresh_paired_dev64_design",
+        )
+        with target.configured_predecessor(validators=True):
+            self.assertTrue(target.mechanism_passed(value))
+            self.assertEqual(
+                target.diagnostic_route(
+                    value,
+                    supervision,
+                    diagnostic=True,
+                    reliability=True,
+                    parent_validation=True,
+                    latency=True,
+                ),
+                "fresh_paired_dev64_design",
+            )
+            self.assertTrue(target.predecessor.mechanism_passed(value))
+
     def test_concurrent_protocol_validation_serializes_nested_module_patches(
         self,
     ) -> None:
@@ -282,7 +318,7 @@ class V24543AliasActionCreditExternalGateTests(unittest.TestCase):
                 start = target.build_execution_start(now=0)
                 write_json(ROOT / paths["EXECUTION_START"], start)
                 self.assertTrue(target.validate_execution_start()["execution_authorized"])
-        self.assertEqual(preaudit["checks"]["focused_tests"]["test_count"], 231)
+        self.assertEqual(preaudit["checks"]["focused_tests"]["test_count"], 232)
         self.assertFalse(start["benchmark_or_evaluator_authorized"])
 
     def test_worker_and_supervisor_cli_bind_execution_base(self) -> None:
