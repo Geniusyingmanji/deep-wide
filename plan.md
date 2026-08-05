@@ -2746,3 +2746,10 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 2. strict GO 要求同题同时具备 one-observation reachable plan、changed legacy entropy choice、selected alias surface、new observation、positive IG/action information/epistemic credit、safe change 与 positive decision credit；joint 不声明 call/query/lead/source/page causality，所有 3/2-source、posterior `0.8`、margin `1`、leave-one-out 与 safe-change 门不变。
 3. V2.45.57 capability 由一次性 collector 接到 V2.45.64 aggregate 和 V2.45.65 bounded parent；duplicate/late/missing context、二次 aggregate、capability/public-row mismatch 均 fail closed，退出时恢复 pure projector。worker/supervisor CLI smoke 验证实际 execution-base 绑定 strict runtime。
 4. protocol build/validate 与完整 V2.45.47/48/49/50/52/53/54/55/57/58/61/62/64/65/66/67 回归 `108/108` 通过；runtime AST privileged-field/evaluator import、credential literal 均为 0，watcher identity 不变、lease inactive。当前只冻结实现；必须依次独立提交 protocol→preaudit→activation→execution-start 后才允许唯一一次 launch，不授权 benchmark/evaluator/dev64/exact-220。
+
+### V2.45.67–68：唯一 wave 因 concurrent protocol context 竞态无效隔离（2026-08-05 UTC）
+
+1. protocol、108/108 preaudit、activation 与 execution-start 分别从 clean、`HEAD==target/main` 状态独立提交推送；唯一一次 V2.45.67 wave 启动后约 114 秒，在并发 parent 的 `validate_protocol` 中触发 frozen protocol drift。根因是多个 `_run_one` 同时进入会临时修改共享 `base` validator context，而 V2.45.67 只给 capability collector 加锁，protocol validator 本身没有锁。
+2. 失败前 some/all workers 可能已产生外部 effect，但计数不可恢复；ThreadPool context 已自然闭合，runner/child 均退出、临时目录清除、lease 释放、watcher identity 不变。没有 public result、decision 或 postaudit，没有 evaluator/benchmark score，也没有 strict-joint 结果可报告。
+3. V2.45.68 create-only quarantine `results/DO_NOT_USE_invalid_v24567_concurrent_protocol_context_20260805/invalid_run_audit.json` 为 `findings=[]`、`audit_valid=true`、payload seal 通过；该 8-task/64-entity population 永久禁止 resume/retry/rerun/re-evaluation，普通 result/decision/postaudit 均禁止发布。
+4. 下一 freshness 基线更新为 `444 questions / 3552 entities`。当前仅授权 concurrent protocol validator repair 设计；修复必须有 8-way barrier/concurrency regression 并先做 clean-build audit，之后才能设计全新 disjoint successor，不授权直接 launch、dev64、exact-220、evaluator、leaderboard 或 SOTA。
