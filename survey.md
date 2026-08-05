@@ -1,10 +1,12 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
-> 检索截止：2026-08-01 03:17 UTC；项目证据更新：2026-08-03 22:30 UTC
+> 检索截止：2026-08-01 03:17 UTC；项目证据更新：2026-08-05 20:35 UTC
 >
 > 结论强度：这是基于公开文献的 novelty audit，不是“没有任何相关工作”的证明。2026 年文献多为尚未同行评审的 arXiv 预印本，文中将预印本结果视为作者报告，而非独立复现事实。
 
 项目证据现已越过“只有 build audit”的阶段，但尚未验证熵/VOC 方法本身。V2.42.67 在严格 label-blind、预测全冻结后才开放 evaluator 的 full-220 单轮中得到 Success `3.1818%`、Entity `69.0909%`、Row/Item/Column F1 `20.1856/34.6810/41.4591%`；它优于仓库历史 GPT-5.5 单轮参考，但低于 A-MapReduce full-220 Avg@4，且协议不是 Avg@4，不能称 SOTA。V2.42.87 后续 full-220 只有 `5/220`、Composite `0.395991`，没有刷新最佳值。V2.43.30 虽在约62分钟完成两个共享前缀 arm 的 `220/220` forward，但 pair-summary 工程门 fail closed、且 candidate 全为 identity，未授权 evaluator，不能伪装成新 benchmark 分数。V2.43.57 benchmark-external 门进一步证明 9+1 hidden-verifier runtime 在12题上稳定，却得到 parent eligible support/candidate/entropy credit 全0；V2.43.61 的 two-batch registrable-host union 随后把12题全部选满10 host，parent eligible support从0提升到2题/3组并自然产生2个 candidate，说明 coverage 干预确实改变了目标机制。但单个 hidden verifier host 将2个 candidate 全部回退，独立 entropy credit仍为0；这既可能是真冲突，也可能是单页缺失/不提及导致的低检验功效，不能解释成质量收益或 candidate 必错。下一可证伪实验应在同一10-fetch cap下把9+1改为8+2，并在全新外部任务上验证独立 retention；只有通过后，才把熵/VOC policy 与同 cap 的固定两波、coverage heuristic 和无熵 delta-search做 paired benchmark 比较，同时报告质量、work、wall与 premature-stop error。
+
+2026-08-05 的 V2.45.87 又补充了一个更细的 acquisition 边界。修复 nested collector 后，唯一一次8题外部门在 `149.965s` 内得到 `8/8` worker/capability、零 timeout/nonzero/递归；pre-dedup preservation 在 `8/8` 任务触发，并保留195个同源附加候选，说明 exact-URL-before-source 去重与不可变 collector 确实可运行。但1,056个可见 lead 只有3个 title-surface hit，且全部来自已排除 source，最终 selected title hit、validator-aligned title replacement和其与 preservation 的同题共现均为0，所以严格 NO-GO。这个结果不支持“熵 credit 提升质量”，也不能证明 title validator 过严或搜索 provider 无法返回有效标题；它只把瓶颈从 collector/dedup 推进到 query surface、人口消歧后缀与 frozen title validator 的对齐。V2.45.89–93 因而在完全不增加 query/search/fetch/model 预算、不放松证据或 credit 门的前提下，把两条查询分别对齐 validator 的 full surface 与 core/initialism fallback，并完成 proof-carrying/total/private-parent build audit `72/72`。当前仍只授权全新外部协议设计，不能据此进入 dev64 或 exact-220。
 
 V2.42.55 在 2026-08-01 12:18 UTC 把理论区分落实为可执行但仍 build-only 的 kernel。此前 V2.42.11 只预测单步 task contribution/token；它没有 finite-depth Bellman recursion，也不显式给出 pure IG、myopic terminal-loss VOC 与 descendant option value。新 kernel 在同一个 content-free、校准 transition DAG 上计算三者，并复现 high-IG/low-value、low-IG/high-value 和 myopic-zero/dynamic-positive bridge 三类反例；depth=1 与 myopic 精确等价，缺 calibration 则 abstain，cycle/unreachable/概率或预算非法则 fail closed。定向实现/审计 18/18，v3 回执 SHA f285ba53…9f447。这只证明算法合同，不证明真实 DeepWide 四层损失或 transition 已校准，更没有 runtime/dev64/exact-220 效果；因此 Search as Computation Allocation 的 novelty 边界不变：贡献候选是四层终端风险的任务化与经验校准，不是 Bellman VOC 或信息熵公式本身。
 

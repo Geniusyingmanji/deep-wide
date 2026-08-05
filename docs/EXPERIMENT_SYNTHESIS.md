@@ -1,6 +1,6 @@
 # Experiment synthesis and evidence ledger
 
-Last evidence refresh: **2026-08-03 22:30 UTC**. This document separates measured quality, diagnostic evidence, implementation audits, and waiting control processes so that the large log collection is not mistaken for a large set of benchmark results.
+Last evidence refresh: **2026-08-05 20:35 UTC**. This document separates measured quality, diagnostic evidence, implementation audits, and waiting control processes so that the large log collection is not mistaken for a large set of benchmark results.
 
 ## Executive conclusions
 
@@ -11,6 +11,7 @@ Last evidence refresh: **2026-08-03 22:30 UTC**. This document separates measure
 5. **The replays validate local invariants, not metric gains.** They show that alias canonicalization, mixed row domains, fixed-slot binding, membership predicates, attribute isolation, and column-fair query construction behave as intended on consumed states. They do not measure completion, F1, held-out generalization, cost reduction, or leaderboard improvement.
 6. **V2.42.21–V2.42.44 are implementation/build audits.** They establish that specific modules or candidate adapters exist under tested contracts. They report no production runtime integration, real provider evaluation, benchmark score, quality/cost improvement, training improvement, or SOTA evidence.
 7. **Host discovery is no longer the immediate mechanism bottleneck; independent verifier power is.** V2.43.61 completed 12/12 external tasks in 121.325s with exact two-batch discovery, no recursive split, no deadline/slot/helper failures, and a conserved ten-fetch cap. It unioned 317 registrable hosts, selected 120/120 sources, raised eligible parent support from 0 to two tasks/three sets, and naturally produced two parent candidates. Both candidates were reverted by the one-host hidden verifier, leaving zero utility-aligned retention and a strict NO-GO. The next same-budget intervention is 8 proposal + 2 hidden verifier hosts on a fresh external task vector; dev64/exact-220 remain unauthorized.
+8. **The V2.45 collector repair is operationally valid, but title-validatable acquisition is still a strict mechanism NO-GO.** V2.45.87 ran one fresh 8-task/64-entity external wave after a 220/220 preactivation suite. It completed 8/8 workers and capabilities in 149.965s with no timeout, nonzero exit, recursive collector, lease, watcher, or post-audit finding. Pre-dedup preservation was active on all eight tasks and retained 195 same-source candidates; two tasks reached source-representative replacement. Yet all three observed title-surface hits belonged to excluded sources, leaving zero selected title hit and zero validator-aligned title replacement. V2.45.88 therefore authorizes only a query–validator alignment policy, not dev64 or exact-220. V2.45.89–93 implement that same-budget policy and pass a 72/72 clean-build audit; a fresh external protocol is not yet frozen or launched.
 
 ## Audited V2.42.67 exact-220 result
 
