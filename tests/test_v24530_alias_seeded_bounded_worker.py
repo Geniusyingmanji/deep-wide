@@ -21,6 +21,7 @@ from deepwide_agent.v24529_alias_seeded_target_acquisition import (  # noqa: E40
 from deepwide_agent.v24530_alias_seeded_bounded_worker import (  # noqa: E402
     budget_vector_seconds,
     run_alias_seeded_worker,
+    run_alias_seeded_worker_with_receipt,
 )
 from test_v24342_semantic_active_runtime import limits  # noqa: E402
 from test_v24390_uncertainty_active_evidence_runtime import SEED  # noqa: E402
@@ -46,7 +47,7 @@ class V24530AliasSeededBoundedWorkerTests(unittest.TestCase):
             with patch(
                 "deepwide_agent.v24469_bounded_worker_supervisor.bind_worker_to_parent"
             ):
-                result = run_alias_seeded_worker(
+                result, acquisition = run_alias_seeded_worker_with_receipt(
                     TASK,
                     ordinal=1,
                     expected_supervisor_pid=os.getpid(),
@@ -63,6 +64,12 @@ class V24530AliasSeededBoundedWorkerTests(unittest.TestCase):
                     validator_manifest_sha256=MANIFEST,
                 )
         self.assertGreater(result["alias_title_receipt"]["decision_credit_gain_nats"], 0)
+        self.assertGreater(acquisition["lead_selection_calls"], 0)
+        self.assertGreater(acquisition["selected_lead_count"], 0)
+        self.assertLessEqual(
+            acquisition["selected_alias_title_hit_lead_count"],
+            acquisition["selected_lead_count"],
+        )
         self.assertEqual(model.acquisitions, 2)
         self.assertEqual(search.request_invocations, 4)
         self.assertEqual(search.fetch_invocations, 5)
@@ -97,10 +104,25 @@ class V24530AliasSeededBoundedWorkerTests(unittest.TestCase):
         with (
             patch(
                 "deepwide_agent.v24530_alias_seeded_bounded_worker.parent.run_alias_title_worker",
-                return_value={"alias_title_receipt": {"selected_target_count": 1}},
+                return_value={
+                    "alias_title_receipt": {},
+                    "parent_result": {
+                        "parent_result": {
+                            "parent_result": {
+                                "targeted_support_receipt": {
+                                    "targeted_cell_count": 1
+                                }
+                            }
+                        }
+                    },
+                },
             ),
             patch(
                 "deepwide_agent.v24530_alias_seeded_bounded_worker.validate_alias_title_receipt",
+                side_effect=lambda value: value,
+            ),
+            patch(
+                "deepwide_agent.v24530_alias_seeded_bounded_worker.targeted.validate_recovery_receipt",
                 side_effect=lambda value: value,
             ),
             patch.object(AliasSeededTargetAcquisition, "content_free_receipt", return_value=fake),
@@ -111,10 +133,25 @@ class V24530AliasSeededBoundedWorkerTests(unittest.TestCase):
         with (
             patch(
                 "deepwide_agent.v24530_alias_seeded_bounded_worker.parent.run_alias_title_worker",
-                return_value={"alias_title_receipt": {"selected_target_count": 0}},
+                return_value={
+                    "alias_title_receipt": {},
+                    "parent_result": {
+                        "parent_result": {
+                            "parent_result": {
+                                "targeted_support_receipt": {
+                                    "targeted_cell_count": 0
+                                }
+                            }
+                        }
+                    },
+                },
             ),
             patch(
                 "deepwide_agent.v24530_alias_seeded_bounded_worker.validate_alias_title_receipt",
+                side_effect=lambda value: value,
+            ),
+            patch(
+                "deepwide_agent.v24530_alias_seeded_bounded_worker.targeted.validate_recovery_receipt",
                 side_effect=lambda value: value,
             ),
             patch.object(
@@ -124,10 +161,8 @@ class V24530AliasSeededBoundedWorkerTests(unittest.TestCase):
             ),
         ):
             self.assertEqual(
-                run_alias_seeded_worker()["alias_title_receipt"][
-                    "selected_target_count"
-                ],
-                0,
+                run_alias_seeded_worker()["alias_title_receipt"],
+                {},
             )
 
         active = dict(fake)
@@ -137,10 +172,25 @@ class V24530AliasSeededBoundedWorkerTests(unittest.TestCase):
         with (
             patch(
                 "deepwide_agent.v24530_alias_seeded_bounded_worker.parent.run_alias_title_worker",
-                return_value={"alias_title_receipt": {"selected_target_count": 0}},
+                return_value={
+                    "alias_title_receipt": {},
+                    "parent_result": {
+                        "parent_result": {
+                            "parent_result": {
+                                "targeted_support_receipt": {
+                                    "targeted_cell_count": 0
+                                }
+                            }
+                        }
+                    },
+                },
             ),
             patch(
                 "deepwide_agent.v24530_alias_seeded_bounded_worker.validate_alias_title_receipt",
+                side_effect=lambda value: value,
+            ),
+            patch(
+                "deepwide_agent.v24530_alias_seeded_bounded_worker.targeted.validate_recovery_receipt",
                 side_effect=lambda value: value,
             ),
             patch.object(
