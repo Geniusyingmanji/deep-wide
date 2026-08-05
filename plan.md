@@ -2615,3 +2615,10 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 2. worker 在创建 sibling directory 或任何 model/search/fetch effect 前验证 runtime task 恰好只有 `{opaque_id, question}`；含 category 等 privileged field 的 task fail closed。父侧先验证冻结 V2.45.25 proof，再验证 sibling exact surface/bytes/certificate，随后才铸造无法由 raw mapping 构造的 opaque capability。
 3. 父侧 capability validation 是 read-only，不调用 joint receipt builder，不重放 task/page/acquisition semantics。receipt/certificate/alias result/outer certificate 任一 byte 漂移、manifest 漂移、extra file 或 symlink 均 fail closed；certificate 明示同题 joint 不等于 lead-level causality。
 4. 当前 synthetic worker/proof 测试 7/7，模型/搜索/fetch effect 与前驱保持 `2/4/5`，runtime AST label-blind。下一步把 capability 接入 total row/aggregate 并完成 clean-build audit；尚不授权 external launch、dev64 或 exact-220。
+
+### V2.45.50：capability-only total alias/action joint projection（2026-08-05 UTC）
+
+1. success row 只接受 V2.45.49 opaque capability，保留全部 title/URL full/core/initialism、query-only、targeted conversion、raw gain、action credit 与六个 same-task joint；raw public success mapping 不能被重新摄入为 proof。
+2. failure row 是 exact content-free zero projection，但明确不声称失败任务的私有 effect 为 0。success/failure 混合 aggregate 保留固定分母、exact ordinal、父级 alias projection，以及 surface/joint/count/nats 的总量和 task-presence 计数。
+3. aggregate 强制守恒：三联 joint 的 row 0/1 总和必须等于对应 task count；action credit 不得超过 raw stage gain，decision credit 不得超过 epistemic credit；query-only、selected surface hit、new observation、raw gain、safe-change 与 regression 的 marginal task counts 均与 totals 一致。
+4. 当前 synthetic total projection 7/7：覆盖 positive triple joint、failure-as-zero、mixed denominator、capability-only、防协调篡改、content-free 与 AST label-blind。下一步从 clean、`HEAD==target/main` 状态生成 V2.45.51 build audit；build audit GO 也只授权 fresh external protocol 设计，不直接授权 launch。
