@@ -2601,3 +2601,10 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 2. 固定词表分别计数 title/URL 的 normalized-full、distinctive-core、visible-row-initialism 命中，并保留 selected lead 的同构计数与 title/URL union。一个 lead 可同时命中多个 mode，因此 mode 是诊断维度而非互斥标签。
 3. URL surface 只包含 canonical HTTP(S) hostname 与 percent-decoded path；query、fragment、userinfo 和 port 全部排除。query 中的 alias 只计入 `query_only_alias_surface_lead_count` 诊断，不能建立 surface hit、不能获得排序优先级，更不能自证 evidence 或 credit。
 4. alias surface 仍只是 acquisition hint，不获得 vote、source、entropy 或 decision credit。当前 synthetic 定向测试覆盖 full/core/initialism、hostname/path、query/fragment/userinfo 排除、排序预算、binding restoration、协调篡改与 AST label-blind；正式冻结后仍需接入 task-level action receipt、proof capability 和 total aggregate，尚不授权 external launch。
+
+### V2.45.48：task-level alias/action/entropy 联合计数（2026-08-05 UTC）
+
+1. 新 receipt 把一个已验证 V2.45.47 surface receipt 与同一任务已验证的 targeted-stage before/after transition 绑定，发布 `acquisition active&&positive IG`、`new observation&&alias hit`、`new observation&&selected alias hit`、`selected alias hit&&positive IG` 以及 `selected alias hit&&new observation&&positive IG` 六个 0/1 联合计数。
+2. 联合计数只声明同一 task 共现，不声明某一 lead 导致 observation 或 information gain；该限制是 receipt 的强制真值字段，协调重封为因果结论会 fail closed。
+3. action credit 语义完全继承 V2.45.33：plan、query/selection activity、selected source 与 new observation 同时存在后，才分配 frozen targeted-stage positive information/epistemic delta；decision credit 仍额外要求 safe output improvement 与 changed cell。alias surface hit 本身既不是 eligibility 条件，也不直接得到 credit。
+4. 真实 synthetic worker 路径如实得到 surface hit=0、new observation=0、action credit=0；显式正合成 receipt 验证三联 joint=1 时 information/epistemic/decision credit 的守恒。V2.45.33/47/48 共 17/17 定向回归通过；下一步是新的 proof-carrying sibling certificate 与 total aggregate，尚不授权 external launch。
