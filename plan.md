@@ -2630,3 +2630,10 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 3. 四个 runtime source 的 AST privileged-field access 与 evaluator import 均为 0；source/test/control artifact credential scan 为 0。runtime boundary 固定 `{opaque_id, question}`，query 不建立 alias hit，同题 joint 不声称 lead-level causality，source/posterior/margin/leave-one-out/safe-change/decision-credit 阈值未变。
 4. 两个 protected watcher PID/start-ticks/marker 完全一致，shared API lease inactive；审计未调用 network/model/search/fetch/evaluator，未打开历史私有页面或临时执行目录。
 5. GO 仅授权 fresh disjoint alias-joint external protocol **设计**；不授权 activation/launch、paired dev64、exact-220、evaluator、leaderboard 或 SOTA。下一步须接入 bounded parent/supervisor/worker total projection，并以新 `428/3424` 后人口冻结 protocol 与 preactivation audit。
+
+### V2.45.52：bounded alias/action joint parent（2026-08-05 UTC）
+
+1. V2.45.49 capability 与 V2.45.50 total projection 已接入现有 hard process-group supervisor、content-free stage journal、separated effect/worker/parent deadlines 和 failure observation；预算仍从一个 monotonic origin 继承 `150/220/245/255s`。
+2. 真实 parent→supervisor→worker synthetic 子进程链成功，父侧恰好验证一次 V2.45.49 capability、投影一次 V2.45.50 success row，未递归重放历史 task/page/acquisition semantics；同题 joint 继续不声称 lead-level causality。
+3. 独立非零 child 故障注入走 `child_nonzero_without_terminal_receipt`，输出 exact failure-as-zero row，并由 observation 保留 `unobserved_lower_bound` 私有 effect 下界；failure row 不声称私有 effect 为 0。
+4. 当前 bounded integration 4/4，含真实跨进程链、failure lower-bound、同源预算与 AST label-blind。下一步从 clean、远端同步 commit 生成 V2.45.53 build audit；严格 GO 也只授权新 external protocol 设计，不授权直接 launch。
