@@ -2687,3 +2687,10 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 1. success row 只接受 V2.45.57 opaque capability，完整保留 V2.45.50 的 alias surface、same-task joint、IG/action/decision credit 字段，再追加 planner selection、no-plan、1/2/3-observation plan、legacy-choice-changed 与 reachable-candidate counts；raw public success mapping 不能重新摄入为 proof。
 2. failure row 对所有新增 counts 精确归零，但 `decision_reachability_additional_private_effects_known_zero=false`；aggregate 保持 fixed denominator、exact ordinal、父级 joint/credit 守恒，并发布各 planner outcome 的 task-presence 与总计。projection 明确不声称 expected utility 或 causality。
 3. 定向测试 6/6，V2.45.49/50/55/57/58 联合回归 `34/34`；覆盖 mixed success/failure、capability-only、防协调篡改、content-free 与 AST label-blind。下一步接入 hard bounded parent 并做 clean-build audit；当前不授权 external design/launch、dev64 或 exact-220。
+
+### V2.45.59：bounded decision-reachability parent（2026-08-05 UTC）
+
+1. V2.45.57 capability 与 V2.45.58 total projection 已接入冻结的 hard process-group supervisor、content-free stage journal、separated effect/worker/parent deadlines 和 failure observation；预算继续由单一 monotonic origin 约束为 `150/220/245/255s`，未增加 query、model、search 或 fetch effect。
+2. 真实 parent→supervisor→worker synthetic 子进程链成功；父侧恰好验证一次 V2.45.57 capability、投影一次 V2.45.58 success row，planner sibling 在父侧只读验证，不递归重放 task/page/value/planner 语义。
+3. 独立非零 child 故障注入保持 `child_nonzero_without_terminal_receipt`，输出 exact content-free failure-as-zero row；observation 保留 `unobserved_lower_bound` 私有 effect 下界，failure row 明确不声称未观察到的私有 effect 为 0。
+4. V2.45.49/50/55/57/58/59 联合回归 `38/38`，runtime AST privileged-field access/evaluator import 为 0，credential literal scan 为 0；两个 protected watcher identity 未变，shared API lease inactive。下一步必须从 clean、`HEAD==target/main` 状态生成 V2.45.60 build audit；在严格 GO 前不授权 fresh external protocol/launch、paired dev64、exact-220、evaluator、leaderboard 或 SOTA。
