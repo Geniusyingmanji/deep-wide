@@ -233,9 +233,9 @@ TEST_SUITES = (
     ("tests/test_v24534_proof_carrying_alias_acquisition.py", 8, 360),
     ("tests/test_v24535_total_alias_acquisition_projection.py", 7, 180),
     ("tests/test_audit_v24536_alias_acquisition_credit_build.py", 7, 90),
-    ("tests/test_v24537_alias_action_credit_external_gate.py", 14, 360),
+    ("tests/test_v24537_alias_action_credit_external_gate.py", 16, 360),
 )
-EXPECTED_TEST_COUNT = predecessor.EXPECTED_TEST_COUNT + 41
+EXPECTED_TEST_COUNT = predecessor.EXPECTED_TEST_COUNT + 43
 
 
 _ORIGINAL_BUILD_PROTOCOL = predecessor.build_protocol
@@ -247,10 +247,14 @@ _ORIGINAL_BUILD_ACTIVATION = predecessor.build_activation
 _ORIGINAL_VALIDATE_ACTIVATION = predecessor.validate_activation
 _ORIGINAL_BUILD_EXECUTION_START = predecessor.build_execution_start
 _ORIGINAL_VALIDATE_EXECUTION_START = predecessor.validate_execution_start
-_ORIGINAL_VALIDATE_PUBLIC_RESULT = predecessor.validate_public_result
-_ORIGINAL_RUN_PROBE = predecessor.run_probe
-_ORIGINAL_RUN_PROCESS_SUBCOMMAND = predecessor.run_process_subcommand
 _ORIGINAL_TASK_PROJECTION = total.task_projection
+_REQUIRED_ACTION_AGGREGATE_KEYS = frozenset(
+    {
+        "acquisition_plan_tasks",
+        "total_acquisition_action_count_fields",
+        "total_acquisition_action_number_fields",
+    }
+)
 _FROZEN_PREDECESSOR_RECORD_BOUND_BINDING = copy.deepcopy(
     predecessor._record_bound_binding()
 )
@@ -260,6 +264,9 @@ _ACTIVE_COLLECTOR: _CapabilityCollector | None = None
 
 def _base() -> Any:
     return predecessor._base()
+
+
+_BASE_VALIDATE_PUBLIC_RESULT = _base().validate_public_result
 
 
 def _read(relative: Path) -> dict[str, Any]:
@@ -659,6 +666,33 @@ def _patched_core() -> dict[str, Any]:
 
 
 @contextmanager
+def configured_base() -> Iterator[None]:
+    """Install the action runtime directly on the V2.44.92 execution base.
+
+    Successor contexts are intentionally nested for control-plane validation,
+    but the actual batch aggregation happens in ``base.run_probe``.  Binding
+    only an outer successor's ``_patched_core`` is therefore insufficient: a
+    historical collector can otherwise restore the V2.45.26 alias aggregate
+    before the bottom-level aggregation call.
+    """
+
+    base = _base()
+    patches = _patched_core()
+    missing = object()
+    originals = {name: getattr(base, name, missing) for name in patches}
+    try:
+        for name, value in patches.items():
+            setattr(base, name, value)
+        yield
+    finally:
+        for name, value in originals.items():
+            if value is missing:
+                delattr(base, name)
+            else:
+                setattr(base, name, value)
+
+
+@contextmanager
 def configured_predecessor(*, runtime_bindings: bool = True) -> Iterator[None]:
     patches: dict[str, Any] = {
         "PROTOCOL_ID": PROTOCOL_ID,
@@ -730,6 +764,30 @@ def _outer_validators(*names: str) -> Iterator[None]:
     finally:
         for name, value in originals.items():
             setattr(predecessor, name, value)
+
+
+@contextmanager
+def _base_validators() -> Iterator[None]:
+    """Route the lowest execution base to the action protocol validators."""
+
+    base = _base()
+    patches = {
+        "validate_protocol": lambda _root=ROOT, value=None: validate_protocol(
+            value=value
+        ),
+        "validate_preaudit": lambda _root=ROOT: validate_preaudit(),
+        "validate_activation": lambda _root=ROOT: validate_activation(),
+        "validate_execution_start": lambda _root=ROOT: validate_execution_start(),
+        "validate_public_result": validate_public_result,
+    }
+    originals = {name: getattr(base, name) for name in patches}
+    try:
+        for name, value in patches.items():
+            setattr(base, name, value)
+        yield
+    finally:
+        for name, value in originals.items():
+            setattr(base, name, value)
 
 
 def build_protocol(
@@ -943,23 +1001,20 @@ def validate_execution_start() -> dict[str, Any]:
 
 
 def validate_public_result(value: Mapping[str, Any]) -> dict[str, Any]:
-    with configured_predecessor(runtime_bindings=False), _outer_validators(
-        "validate_protocol",
-        "validate_preaudit",
-        "validate_activation",
-        "validate_execution_start",
+    mechanism = value.get("mechanism_aggregate")
+    if (
+        not isinstance(mechanism, Mapping)
+        or not _REQUIRED_ACTION_AGGREGATE_KEYS.issubset(mechanism)
     ):
-        return _ORIGINAL_VALIDATE_PUBLIC_RESULT(value)
+        raise RuntimeError("V2.45.37 action aggregate schema is absent")
+    total.validate_aggregate(mechanism)
+    with configured_base():
+        return _BASE_VALIDATE_PUBLIC_RESULT(value)
 
 
 def run_probe() -> dict[str, Any]:
-    with capability_collection(), configured_predecessor(), _outer_validators(
-        "validate_protocol",
-        "validate_preaudit",
-        "validate_activation",
-        "validate_execution_start",
-    ):
-        return _ORIGINAL_RUN_PROBE()
+    with capability_collection(), configured_base(), _base_validators():
+        return _base().run_probe()
 
 
 def _decision_authorization(passed: bool) -> dict[str, bool]:
@@ -1117,13 +1172,9 @@ def validate_postaudit(
 
 
 def run_process_subcommand(args: argparse.Namespace) -> None:
-    with configured_predecessor(), _outer_validators(
-        "validate_protocol",
-        "validate_preaudit",
-        "validate_activation",
-        "validate_execution_start",
-    ):
-        _ORIGINAL_RUN_PROCESS_SUBCOMMAND(args)
+    base = _base()
+    with configured_base(), _base_validators():
+        base._worker(args) if args.command == "worker" else base._supervisor(args)
 
 
 def main() -> None:

@@ -7,7 +7,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
-from contextlib import ExitStack
+from contextlib import ExitStack, contextmanager
 from pathlib import Path
 from unittest.mock import patch
 
@@ -68,6 +68,42 @@ def passing_mechanism() -> dict:
         "acquisition_private_task_content_emitted": False,
         "acquisition_privileged_evaluator_content_read": False,
     }
+
+
+def legacy_alias_mechanism() -> dict:
+    """The exact aggregate family accidentally published by V2.45.37."""
+
+    value = passing_mechanism()
+    for name in (
+        "acquisition_plan_tasks",
+        "acquisition_activity_tasks",
+        "acquisition_selected_alias_title_hit_tasks",
+        "acquisition_new_observation_tasks",
+        "acquisition_positive_information_gain_tasks",
+        "acquisition_positive_epistemic_credit_tasks",
+        "acquisition_positive_decision_credit_tasks",
+        "acquisition_safe_change_improvement_tasks",
+        "acquisition_safe_change_regression_tasks",
+        "acquisition_decision_credit_regression_tasks",
+        "total_acquisition_action_count_fields",
+        "total_acquisition_action_number_fields",
+        "all_acquisition_success_rows_consumed_validated_capabilities",
+        "all_acquisition_failure_rows_are_content_free_zero_projections",
+        "acquisition_failure_rows_claim_zero_private_effects",
+        "acquisition_private_task_content_emitted",
+        "acquisition_privileged_evaluator_content_read",
+    ):
+        value.pop(name)
+    value.update(
+        {
+            "alias_anchor_tasks": 1,
+            "alias_observation_tasks": 1,
+            "alias_added_observation_tasks": 1,
+            "total_alias_stage_number_fields": {},
+            "all_alias_success_rows_consumed_validated_capabilities": True,
+        }
+    )
+    return value
 
 
 def cli_validator_smoke(command: str) -> int:
@@ -327,6 +363,249 @@ class V24537AliasActionCreditExternalGateTests(unittest.TestCase):
             with self.assertRaises(RuntimeError):
                 collector.aggregate([success, failure], selected=2)
 
+    def test_bottom_level_run_probe_uses_action_aggregate_schema(self) -> None:
+        """Exercise the real nested successor chain down to base.run_probe."""
+
+        base = target._base()
+        published: list[tuple[Path, dict]] = []
+
+        def project(ordinal: int, _capability: object) -> dict:
+            return {"ordinal": ordinal, "status": "validated_capability"}
+
+        def run_one(
+            _root: Path,
+            _output_root: Path,
+            _slots: Path,
+            _directory: Path,
+            _checkpoint: Path,
+            ordinal: int,
+        ) -> dict:
+            collector = target._ACTIVE_COLLECTOR
+            self.assertIsNotNone(collector)
+            self.assertIs(
+                base.run_targeted_worker,
+                target.proof.run_worker,
+            )
+            self.assertIs(
+                base.run_targeted_parent_with_separated_budget,
+                target.proof.run_parent_with_separated_budget,
+            )
+            self.assertIs(
+                base.aggregate_projections,
+                target.aggregate_action_projections,
+            )
+            self.assertIs(
+                base.validate_targeted_aggregate,
+                target.total.validate_aggregate,
+            )
+            self.assertIs(base._mechanism_passed, target.mechanism_passed)
+            return {
+                "mechanism": target.total.task_projection(ordinal, object()),
+                "observation": {},
+                "timing": {},
+                "supervision": {},
+            }
+
+        def aggregate_action(values: list[object], *, selected: int) -> dict:
+            self.assertEqual(len(values), selected)
+            self.assertEqual(selected, 8)
+            return passing_mechanism()
+
+        def validate_action(value: dict) -> dict:
+            copied = copy.deepcopy(dict(value))
+            self.assertTrue(
+                target._REQUIRED_ACTION_AGGREGATE_KEYS.issubset(copied)
+            )
+            return copied
+
+        def observation(_values: list[dict], *, selected: int) -> dict:
+            return {
+                "selected": selected,
+                "slot_timeouts_lower_bound": 0,
+                "provider_deadline_failures_lower_bound": 0,
+                "hosted_search_deadline_failures_lower_bound": 0,
+                "hard_fetch_deadline_failures_lower_bound": 0,
+                "fetch_helper_failures_lower_bound": 0,
+            }
+
+        def timing(_values: list[dict], *, selected: int) -> dict:
+            return {
+                "selected": selected,
+                "parent_success_tasks": selected,
+                "certificate_validation_invocations": selected,
+                "recursive_historical_semantic_replay_tasks": 0,
+                "parent_certificate_validation_wall_p95_seconds": 0.01,
+            }
+
+        def supervision(_values: list[dict], *, selected: int) -> dict:
+            return {
+                "selected": selected,
+                "worker_success_tasks": selected,
+                "worker_hard_timeout_tasks": 0,
+                "worker_nonzero_tasks": 0,
+                "complete_validation_returned_tasks": selected,
+                "worker_wall_max_seconds": 1.0,
+            }
+
+        @contextmanager
+        def lease(*_args: object, **_kwargs: object):
+            yield
+
+        with tempfile.TemporaryDirectory(dir=ROOT / "outputs") as temporary:
+            temporary_root = Path(temporary).relative_to(ROOT)
+            paths = {
+                name: temporary_root / f"{name.lower()}.json"
+                for name in (
+                    "PROTOCOL",
+                    "PREAUDIT",
+                    "ACTIVATION",
+                    "EXECUTION_START",
+                    "RESULT",
+                    "DECISION",
+                    "POSTAUDIT",
+                )
+            }
+            with ExitStack() as stack:
+                for name, path in paths.items():
+                    stack.enter_context(patch.object(target, name, path))
+                protocol = target.build_protocol(now=0, require_pristine=False)
+                write_json(ROOT / paths["PROTOCOL"], protocol)
+                tests = {
+                    "suites": [
+                        {"path": path, "test_count": count, "passed": True}
+                        for path, count, _timeout in target.TEST_SUITES
+                    ],
+                    "test_count": target.EXPECTED_TEST_COUNT,
+                    "passed": True,
+                    "network_model_search_fetch_or_evaluator_called": False,
+                }
+                stack.enter_context(
+                    patch.object(base, "_run_tests", return_value=tests)
+                )
+                stack.enter_context(
+                    patch.object(base, "_all_sources_tracked", return_value=True)
+                )
+                stack.enter_context(
+                    patch.object(base, "_port_listening", return_value=True)
+                )
+                stack.enter_context(
+                    patch.object(base, "lease_observation", return_value={"active": False})
+                )
+                stack.enter_context(patch.object(base, "_future", return_value=True))
+                stack.enter_context(
+                    patch.object(
+                        base,
+                        "_git",
+                        side_effect=lambda _root, *args: ""
+                        if args == ("status", "--porcelain")
+                        else "a" * 40,
+                    )
+                )
+                preaudit = target.build_preaudit(now=0)
+                write_json(ROOT / paths["PREAUDIT"], preaudit)
+                activation = target.build_activation(now=0)
+                write_json(ROOT / paths["ACTIVATION"], activation)
+                start = target.build_execution_start(now=0)
+                write_json(ROOT / paths["EXECUTION_START"], start)
+
+                stack.enter_context(
+                    patch.object(
+                        target,
+                        "_ORIGINAL_TASK_PROJECTION",
+                        side_effect=project,
+                    )
+                )
+                stack.enter_context(
+                    patch.object(
+                        target.total,
+                        "validate_total_row",
+                        side_effect=lambda value: dict(value),
+                    )
+                )
+                stack.enter_context(
+                    patch.object(
+                        target.total,
+                        "aggregate_projections",
+                        side_effect=aggregate_action,
+                    )
+                )
+                stack.enter_context(
+                    patch.object(
+                        target.total,
+                        "validate_aggregate",
+                        side_effect=validate_action,
+                    )
+                )
+                stack.enter_context(patch.object(base, "_run_one", side_effect=run_one))
+                stack.enter_context(
+                    patch.object(base, "aggregate_observations", side_effect=observation)
+                )
+                stack.enter_context(
+                    patch.object(base, "aggregate_stage_timings", side_effect=timing)
+                )
+                stack.enter_context(
+                    patch.object(
+                        base,
+                        "aggregate_supervision_receipts",
+                        side_effect=supervision,
+                    )
+                )
+                stack.enter_context(
+                    patch.object(
+                        base,
+                        "validate_observation_aggregate",
+                        side_effect=lambda value, expected_selected: dict(value),
+                    )
+                )
+                stack.enter_context(
+                    patch.object(
+                        base,
+                        "validate_stage_timing_aggregate",
+                        side_effect=lambda value: dict(value),
+                    )
+                )
+                stack.enter_context(
+                    patch.object(
+                        base,
+                        "validate_supervision_aggregate",
+                        side_effect=lambda value: dict(value),
+                    )
+                )
+                stack.enter_context(patch.object(base, "_git_ready", return_value=True))
+                stack.enter_context(
+                    patch.object(base, "acquire_deepwide_api_lease", lease)
+                )
+                stack.enter_context(
+                    patch.object(
+                        base,
+                        "publish",
+                        side_effect=lambda path, value: published.append(
+                            (path, copy.deepcopy(value))
+                        ),
+                    )
+                )
+                value = target.run_probe()
+
+        mechanism = value["mechanism_aggregate"]
+        self.assertIn("acquisition_plan_tasks", mechanism)
+        self.assertIn("total_acquisition_action_count_fields", mechanism)
+        self.assertIn("total_acquisition_action_number_fields", mechanism)
+        self.assertEqual(len(published), 1)
+
+    def test_public_result_rejects_legacy_alias_aggregate_schema(self) -> None:
+        legacy = {
+            "mechanism_aggregate": legacy_alias_mechanism(),
+        }
+        with (
+            patch.object(
+                target,
+                "_BASE_VALIDATE_PUBLIC_RESULT",
+                side_effect=lambda value: dict(value),
+            ),
+            self.assertRaisesRegex(RuntimeError, "action aggregate schema is absent"),
+        ):
+            target.validate_public_result(legacy)
+
     def test_frozen_protocol_builds_preaudit_activation_and_start(self) -> None:
         base = target._base()
         with tempfile.TemporaryDirectory(dir=ROOT / "outputs") as temporary:
@@ -384,7 +663,7 @@ class V24537AliasActionCreditExternalGateTests(unittest.TestCase):
                 start = target.build_execution_start(now=0)
                 write_json(ROOT / paths["EXECUTION_START"], start)
                 self.assertTrue(target.validate_execution_start()["execution_authorized"])
-        self.assertEqual(preaudit["checks"]["focused_tests"]["test_count"], 157)
+        self.assertEqual(preaudit["checks"]["focused_tests"]["test_count"], 159)
         self.assertFalse(start["benchmark_or_evaluator_authorized"])
 
     def test_worker_and_supervisor_cli_bind_action_runtime(self) -> None:
