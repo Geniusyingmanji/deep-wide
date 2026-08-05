@@ -225,6 +225,8 @@ class V24531AliasSeededExternalGateTests(unittest.TestCase):
     def test_mechanism_gate_requires_alias_entropy_and_decision_credit(self) -> None:
         value = passing_mechanism()
         self.assertTrue(target.mechanism_passed(value))
+        with target.configured_predecessor():
+            self.assertTrue(target.mechanism_passed(value))
         for field in (
             "success_tasks",
             "alias_anchor_tasks",
@@ -259,6 +261,18 @@ class V24531AliasSeededExternalGateTests(unittest.TestCase):
             ),
             "fresh_paired_dev64_design",
         )
+        with target.configured_predecessor():
+            self.assertEqual(
+                target.diagnostic_route(
+                    value,
+                    supervision,
+                    diagnostic=True,
+                    reliability=True,
+                    parent_validation=True,
+                    latency=True,
+                ),
+                "fresh_paired_dev64_design",
+            )
         changed = copy.deepcopy(value)
         changed["alias_anchor_tasks"] = 0
         self.assertEqual(

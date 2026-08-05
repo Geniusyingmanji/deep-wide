@@ -218,6 +218,8 @@ _ORIGINAL_VALIDATE_EXECUTION_START = predecessor.validate_execution_start
 _ORIGINAL_VALIDATE_PUBLIC_RESULT = predecessor.validate_public_result
 _ORIGINAL_RUN_PROBE = predecessor.run_probe
 _ORIGINAL_RUN_PROCESS_SUBCOMMAND = predecessor.run_process_subcommand
+_ORIGINAL_MECHANISM_PASSED = predecessor.mechanism_passed
+_ORIGINAL_DIAGNOSTIC_ROUTE = predecessor.diagnostic_route
 _FROZEN_PREDECESSOR_RECORD_BOUND_BINDING = copy.deepcopy(
     predecessor._record_bound_binding()
 )
@@ -392,7 +394,7 @@ def _record_bound_binding() -> dict[str, Any]:
 
 
 def mechanism_passed(value: Mapping[str, Any]) -> bool:
-    return predecessor.mechanism_passed(value)
+    return _ORIGINAL_MECHANISM_PASSED(value)
 
 
 def diagnostic_route(
@@ -404,7 +406,7 @@ def diagnostic_route(
     parent_validation: bool,
     latency: bool,
 ) -> str:
-    return predecessor.diagnostic_route(
+    return _ORIGINAL_DIAGNOSTIC_ROUTE(
         mechanism,
         supervision,
         diagnostic=diagnostic,
