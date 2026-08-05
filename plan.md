@@ -2701,3 +2701,9 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 2. 审计确认真实 parent/supervisor/worker synthetic chain、exact one V2.45.57 capability validation、one V2.45.58 projection、nonzero-child failure-as-zero、partial effect lower-bound 与 `150/220/245/255s` 单 origin 预算；query/model/search/fetch budget 和所有 frozen evidence/safe-change 门均未改变。
 3. 六个 runtime source 的 AST privileged-field access/evaluator import 与全部 source/test/control credential literal 均为 0；runtime boundary 仍为 `{opaque_id, question}`。两个 protected watcher identity 不变，shared API lease inactive；审计未调用 network/model/search/fetch/evaluator，也未打开历史私有 task/query/URL/page/source/value/prediction。
 4. GO 仅授权以 `436 questions / 3488 entities` 为历史基线设计 fresh disjoint bounded decision-reachability external protocol；不授权 activation/launch、paired dev64、exact-220、evaluator、leaderboard 或 SOTA。V2.45.54 旧人口仍禁止 resume/retry/rerun/re-evaluation。
+
+### V2.45.61：capability-only reachability/conversion task joint（2026-08-05 UTC）
+
+1. 新 projection 只接受 V2.45.57 opaque capability，在 V2.45.58 row 上发布两种可精确复算的 task-level 0/1 joint：`one-observation reachable plan + selected alias + new observation + positive IG/action credit + safe change + decision credit`，以及其中再要求 legacy entropy choice 被改变的更严格 joint。
+2. joint 只声明同一 task 共现，不声明某个 planner call、query、lead、source 或 page 导致 safe change；协调重封 joint 与各 marginal 不一致会 fail closed。public success row 不能重新摄入为 proof，failure 仍是 exact content-free zero 且不声称私有 effect 为 0。
+3. V2.45.55/57/58/59/61 联合回归 `30/30`，其中 joint 定向测试 `6/6`；覆盖正向 opaque capability、mixed success/failure 固定分母、防 row/aggregate 协调篡改、content-free 与 AST label-blind。下一步将该 projection 接入 bounded parent 和 fresh external gate；当前不授权 protocol publication、activation/launch、dev64 或 exact-220。
