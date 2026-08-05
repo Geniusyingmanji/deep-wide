@@ -354,14 +354,60 @@ class V24537AliasActionCreditExternalGateTests(unittest.TestCase):
                 },
             ),
         ):
-            collector = target._CapabilityCollector()
-            self.assertEqual(collector.project(1, capability), success)
+            with target.capability_collection() as collector:
+                self.assertEqual(target.total.task_projection(1, capability), success)
+                self.assertEqual(
+                    collector.aggregate([success, failure], selected=2),
+                    {"selected": 2, "proof_input_count": 2},
+                )
+                with self.assertRaises(RuntimeError):
+                    collector.aggregate([success, failure], selected=2)
+
+    def test_total_aggregate_uses_frozen_projector_without_reregistering(self) -> None:
+        """Regression for V2.45.41's duplicate-capability aggregate crash."""
+
+        capability = object()
+        success = {"ordinal": 1, "status": "validated_capability"}
+        calls: list[tuple[int, object]] = []
+
+        def pure_projector(ordinal: int, value: object) -> dict:
+            calls.append((ordinal, value))
+            return {"ordinal": ordinal, "status": "validated_capability"}
+
+        def aggregate_with_real_projection_shape(
+            values: list[object], *, selected: int
+        ) -> dict:
+            rows = [
+                target.total.task_projection(ordinal, value)
+                for ordinal, value in enumerate(values, 1)
+            ]
+            self.assertEqual(rows, [success])
+            self.assertIs(target.total.task_projection, pure_projector)
+            return {"selected": selected, "proof_input_count": len(values)}
+
+        with (
+            patch.object(target, "_ORIGINAL_TASK_PROJECTION", pure_projector),
+            patch.object(
+                target.total,
+                "validate_total_row",
+                side_effect=lambda value: dict(value),
+            ),
+            patch.object(
+                target.total,
+                "aggregate_projections",
+                side_effect=aggregate_with_real_projection_shape,
+            ),
+            target.capability_collection() as collector,
+        ):
+            self.assertEqual(target.total.task_projection(1, capability), success)
             self.assertEqual(
-                collector.aggregate([success, failure], selected=2),
-                {"selected": 2, "proof_input_count": 2},
+                collector.aggregate([success], selected=1),
+                {"selected": 1, "proof_input_count": 1},
             )
-            with self.assertRaises(RuntimeError):
-                collector.aggregate([success, failure], selected=2)
+            self.assertIs(
+                getattr(target.total.task_projection, "__self__", None), collector
+            )
+        self.assertEqual(calls, [(1, capability)] * 3)
 
     def test_bottom_level_run_probe_uses_action_aggregate_schema(self) -> None:
         """Exercise the real nested successor chain down to base.run_probe."""
@@ -663,7 +709,7 @@ class V24537AliasActionCreditExternalGateTests(unittest.TestCase):
                 start = target.build_execution_start(now=0)
                 write_json(ROOT / paths["EXECUTION_START"], start)
                 self.assertTrue(target.validate_execution_start()["execution_authorized"])
-        self.assertEqual(preaudit["checks"]["focused_tests"]["test_count"], 159)
+        self.assertEqual(preaudit["checks"]["focused_tests"]["test_count"], 160)
         self.assertFalse(start["benchmark_or_evaluator_authorized"])
 
     def test_worker_and_supervisor_cli_bind_action_runtime(self) -> None:

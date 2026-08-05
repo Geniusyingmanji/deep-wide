@@ -233,9 +233,9 @@ TEST_SUITES = (
     ("tests/test_v24534_proof_carrying_alias_acquisition.py", 8, 360),
     ("tests/test_v24535_total_alias_acquisition_projection.py", 7, 180),
     ("tests/test_audit_v24536_alias_acquisition_credit_build.py", 7, 90),
-    ("tests/test_v24537_alias_action_credit_external_gate.py", 16, 360),
+    ("tests/test_v24537_alias_action_credit_external_gate.py", 17, 360),
 )
-EXPECTED_TEST_COUNT = predecessor.EXPECTED_TEST_COUNT + 43
+EXPECTED_TEST_COUNT = predecessor.EXPECTED_TEST_COUNT + 44
 
 
 _ORIGINAL_BUILD_PROTOCOL = predecessor.build_protocol
@@ -482,7 +482,30 @@ class _CapabilityCollector:
                 proof_inputs.append(row)
         if capabilities or rows:
             raise RuntimeError("V2.45.37 unconsumed capability vector")
-        return total.aggregate_projections(proof_inputs, selected=selected)
+        # The collection context installs ``collector.project`` for the first
+        # public per-task projection.  The total aggregate projects each
+        # validated capability again to build private rows.  That second pass
+        # must use the frozen pure projector, otherwise it re-enters this
+        # collector and falsely reports every successful ordinal as a
+        # duplicate.  Keep the one-shot collector installed before and after
+        # the synchronous aggregate call.
+        installed_projector = total.task_projection
+        if (
+            getattr(installed_projector, "__self__", None) is not self
+            or getattr(installed_projector, "__func__", None)
+            is not type(self).project
+        ):
+            raise RuntimeError("V2.45.37 capability projector binding drifted")
+        total.task_projection = _ORIGINAL_TASK_PROJECTION
+        try:
+            return total.aggregate_projections(proof_inputs, selected=selected)
+        finally:
+            aggregate_projector_drifted = (
+                total.task_projection is not _ORIGINAL_TASK_PROJECTION
+            )
+            total.task_projection = installed_projector
+            if aggregate_projector_drifted:
+                raise RuntimeError("V2.45.37 aggregate projector drifted")
 
     def destroy(self) -> None:
         with self._lock:

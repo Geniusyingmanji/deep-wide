@@ -279,7 +279,7 @@ class V24539AliasActionCreditExternalGateTests(unittest.TestCase):
                 start = target.build_execution_start(now=0)
                 write_json(ROOT / paths["EXECUTION_START"], start)
                 self.assertTrue(target.validate_execution_start()["execution_authorized"])
-        self.assertEqual(preaudit["checks"]["focused_tests"]["test_count"], 183)
+        self.assertEqual(preaudit["checks"]["focused_tests"]["test_count"], 184)
         self.assertFalse(start["benchmark_or_evaluator_authorized"])
 
     def test_worker_and_supervisor_cli_bind_execution_base(self) -> None:
