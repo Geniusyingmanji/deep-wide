@@ -2759,3 +2759,10 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 1. 新 append-only repair 冻结 V2.45.67 原 validator，并用 module-owned `threading.RLock` 覆盖完整的 nested `configured_base → frozen validate_protocol` 临界区；不修改冻结 runner，也不改变 task/model/search/fetch/evidence/credit/budget/evaluator 行为。
 2. 8-way barrier 强制并发测试中 8 个 validator 全部成功且 observed critical-section `maximum_active=1`；同线程嵌套验证证明可重入，合成异常后下一次验证成功证明锁释放。
 3. 定向测试 `5/5`，runtime AST label-blind。下一步必须先提交修复并从 clean、`HEAD==target/main` 状态做含多轮并发 stress 的 build audit；audit GO 前不授权新 population protocol 设计或 launch。
+
+### V2.45.70：serialized protocol validator clean-build audit GO（2026-08-05 UTC）
+
+1. 审计器/测试先独立提交推送，再从 clean、`HEAD==target/main==f9061b8` 运行 V2.45.67/68/69/70 共 `29/29` tests；25 rounds×8 workers=`200/200` concurrent protocol validations 全部通过，`findings=[]`、`audit_valid=true`。
+2. V2.45.68 quarantine 封印与 `444 questions / 3552 entities` 下一基线重新验证；旧 V2.45.67 population 禁止 resume/retry/rerun/re-evaluation。RLock 覆盖完整 nested base patch/validation 临界区，但 task execution 在 validation 后仍并行，model/search/fetch/evaluator effect 与所有预算/安全门未改变。
+3. runtime AST privileged-field/evaluator import 与 credential scan 均为 0；watcher identity 不变，lease inactive，无 V2.45.67 进程，审计未调用任何外部服务或打开私有内容。
+4. GO 仅授权全新 disjoint strict reachability-conversion external protocol **设计**；不授权 activation/launch、paired dev64、exact-220、evaluator、leaderboard 或 SOTA。
