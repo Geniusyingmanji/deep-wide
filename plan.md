@@ -2713,3 +2713,10 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 1. V2.45.57 proof capability 与 V2.45.61 task-joint projection 已用独立 validator/projector path 接入 hard process-group supervisor；没有通过全局 monkey-patch 替换 V2.45.59 total binding，因此 8-way parent 并发不共享 projector 状态。
 2. 真实 parent→supervisor→worker synthetic chain 成功并恰好验证一次 capability、投影一次 joint row；非零 child 继续输出 exact failure-as-zero，observation 保留私有 effect lower bound。预算仍由单一 origin 限制为 `150/220/245/255s`。
 3. V2.45.55/57/58/61/62 联合回归 `30/30`，V2.45.62 定向测试 `4/4`；runtime AST privileged-field access/evaluator import 与 credential literal scan 均为 0。下一步必须先做 clean-build audit，再允许 fresh external protocol 设计；当前不授权 launch、dev64、exact-220 或 evaluator。
+
+### V2.45.63：reachability/conversion-joint clean-build audit GO（2026-08-05 UTC）
+
+1. 审计器/测试先独立提交推送，再从 clean、`HEAD==target/main==9d75594` 状态运行 V2.45.49/50/55/57/58/61/62/63 共 `51/51` tests；`findings=[]`、`audit_valid=true`，payload seal 复核通过。
+2. 审计确认 success 只能由 V2.45.57 opaque capability 生成；两个 conversion joint 可从 task row 精确复算，public success mapping 不能重新摄入为 proof；joint 不声明 call/lead-level causality。bounded parent 无全局 projector binding 或共享 parent state，failure 保持 exact-zero 与私有 effect lower bound。
+3. 七个 runtime source 的 AST privileged-field access/evaluator import 与全部 source/test/control credential literal 均为 0；两个 protected watcher identity 不变，shared API lease inactive，未调用 network/model/search/fetch/evaluator，未打开历史私有内容。
+4. GO 仅授权以 `436 questions / 3488 entities` 为基线设计 fresh disjoint bounded reachability-conversion external protocol；不授权 activation/launch、paired dev64、exact-220、evaluator、leaderboard 或 SOTA，V2.45.54 人口仍永久禁止重跑或重评。
