@@ -2681,3 +2681,9 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 1. 新 worker 在 V2.45.49 外包一层 execution-scoped V2.45.55 planner context；V2.45.49 worker 完整返回且 context 恢复后，才在新的 sibling directory 写入 counts-only planner receipt 与 certificate。冻结的 V2.45.25 task surface、V2.45.49 joint sibling 和所有历史 artifacts 均保持 byte-for-byte 不变。
 2. certificate 绑定 V2.45.55 receipt 与 V2.45.49 receipt/certificate exact bytes；父侧必须先验证并铸造 V2.45.49 opaque capability，再验证新 sibling，且不能调用 `_selection` 重放 target/query/page/value/planner 语义。raw mapping、receipt/certificate/parent byte tamper、manifest drift、extra file、symlink 均 fail closed。
 3. 真实 synthetic worker 测试 7/7，通过 parent→successor capability 顺序、只读验证、privileged field before-directory/effect rejection、content-free receipt、binding restoration 与 AST label-blind。模型/search/fetch effect 与前驱保持 `2/4/5`；V2.45.49/55/57 联合回归 `21/21`。尚未接 total projection 或 bounded parent，不授权 external design/launch、dev64 或 exact-220。
+
+### V2.45.58：capability-only total decision-reachability projection（2026-08-05 UTC）
+
+1. success row 只接受 V2.45.57 opaque capability，完整保留 V2.45.50 的 alias surface、same-task joint、IG/action/decision credit 字段，再追加 planner selection、no-plan、1/2/3-observation plan、legacy-choice-changed 与 reachable-candidate counts；raw public success mapping 不能重新摄入为 proof。
+2. failure row 对所有新增 counts 精确归零，但 `decision_reachability_additional_private_effects_known_zero=false`；aggregate 保持 fixed denominator、exact ordinal、父级 joint/credit 守恒，并发布各 planner outcome 的 task-presence 与总计。projection 明确不声称 expected utility 或 causality。
+3. 定向测试 6/6，V2.45.49/50/55/57/58 联合回归 `34/34`；覆盖 mixed success/failure、capability-only、防协调篡改、content-free 与 AST label-blind。下一步接入 hard bounded parent 并做 clean-build audit；当前不授权 external design/launch、dev64 或 exact-220。
