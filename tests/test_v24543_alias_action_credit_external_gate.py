@@ -222,6 +222,28 @@ class V24543AliasActionCreditExternalGateTests(unittest.TestCase):
                 "fresh_paired_dev64_design",
             )
             self.assertTrue(target.predecessor.mechanism_passed(value))
+            with (
+                target.predecessor.configured_predecessor(validators=True),
+                target.predecessor.predecessor.configured_predecessor(
+                    validators=True
+                ),
+                target.action_gate.configured_base(),
+            ):
+                base = target._base()
+                self.assertIs(base._mechanism_passed, target.mechanism_passed)
+                self.assertIs(base._diagnostic_route, target.diagnostic_route)
+                self.assertTrue(base._mechanism_passed(value))
+                self.assertEqual(
+                    base._diagnostic_route(
+                        value,
+                        supervision,
+                        diagnostic=True,
+                        reliability=True,
+                        parent_validation=True,
+                        latency=True,
+                    ),
+                    "fresh_paired_dev64_design",
+                )
 
     def test_concurrent_protocol_validation_serializes_nested_module_patches(
         self,
