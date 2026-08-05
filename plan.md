@@ -2637,3 +2637,10 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 2. 真实 parent→supervisor→worker synthetic 子进程链成功，父侧恰好验证一次 V2.45.49 capability、投影一次 V2.45.50 success row，未递归重放历史 task/page/acquisition semantics；同题 joint 继续不声称 lead-level causality。
 3. 独立非零 child 故障注入走 `child_nonzero_without_terminal_receipt`，输出 exact failure-as-zero row，并由 observation 保留 `unobserved_lower_bound` 私有 effect 下界；failure row 不声称私有 effect 为 0。
 4. 当前 bounded integration 4/4，含真实跨进程链、failure lower-bound、同源预算与 AST label-blind。下一步从 clean、远端同步 commit 生成 V2.45.53 build audit；严格 GO 也只授权新 external protocol 设计，不授权直接 launch。
+
+### V2.45.53：bounded alias/action joint build audit GO（2026-08-05 UTC）
+
+1. 审计器先提交推送，再从 clean、`HEAD==target/main==b1d6dec` 运行 V2.45.49/50/52/53 共 25/25 tests；`findings=[]`、`audit_valid=true`。
+2. 真实 parent/supervisor/worker synthetic chain、exact one-capability validation、one total-row projection、nonzero-child failure-as-zero、partial effect lower-bound 和 `150/220/245/255s` 单 origin 预算均通过。
+3. runtime AST privileged-field access/evaluator import 与 credential literal 均为 0；两个 protected watcher identity 不变，shared lease inactive，未调用 remote network/model/search/fetch/evaluator，未打开历史私有页面。
+4. GO 仅授权以 `428 questions / 3424 entities` 为历史基线设计 fresh disjoint bounded alias-joint external protocol；不授权 activation/launch、paired dev64、exact-220、evaluator、leaderboard 或 SOTA。
