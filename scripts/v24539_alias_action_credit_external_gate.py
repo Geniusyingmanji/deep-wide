@@ -13,6 +13,7 @@ import argparse
 import copy
 import json
 import sys
+import threading
 from collections.abc import Iterator, Mapping
 from contextlib import contextmanager
 from pathlib import Path
@@ -185,9 +186,9 @@ TEST_SUITES = (
     *predecessor.TEST_SUITES,
     ("tests/test_audit_v24537_invalid_action_schema.py", 5, 120),
     ("tests/test_audit_v24538_execution_base_binding_build.py", 6, 120),
-    ("tests/test_v24539_alias_action_credit_external_gate.py", 12, 360),
+    ("tests/test_v24539_alias_action_credit_external_gate.py", 13, 360),
 )
-EXPECTED_TEST_COUNT = predecessor.EXPECTED_TEST_COUNT + 23
+EXPECTED_TEST_COUNT = predecessor.EXPECTED_TEST_COUNT + 24
 
 
 _ORIGINAL_BUILD_PROTOCOL = predecessor.build_protocol
@@ -206,6 +207,7 @@ _FROZEN_PREDECESSOR_PROTOCOL_ID = predecessor.PROTOCOL_ID
 _FROZEN_PREDECESSOR_RECORD_BOUND_BINDING = copy.deepcopy(
     predecessor._record_bound_binding()
 )
+_PROTOCOL_VALIDATOR_LOCK = threading.RLock()
 
 
 def _base() -> Any:
@@ -539,7 +541,7 @@ def build_protocol(
     return validate_protocol(value=value)
 
 
-def validate_protocol(
+def _validate_protocol_unlocked(
     *, value: Mapping[str, Any] | None = None
 ) -> dict[str, Any]:
     copied = dict(value) if value is not None else _read(PROTOCOL)
@@ -585,6 +587,17 @@ def validate_protocol(
     ):
         raise RuntimeError("V2.45.39 protocol drifted")
     return copied
+
+
+def validate_protocol(
+    *, value: Mapping[str, Any] | None = None
+) -> dict[str, Any]:
+    # ``base.run_probe`` invokes protocol validation once per concurrent task.
+    # The inherited validators temporarily patch shared module bindings, so the
+    # full nested validation chain is one re-entrant critical section. Runtime
+    # task execution remains parallel after this short content-free check.
+    with _PROTOCOL_VALIDATOR_LOCK:
+        return _validate_protocol_unlocked(value=value)
 
 
 def build_preaudit(*, now: int | None = None) -> dict[str, Any]:

@@ -1,11 +1,14 @@
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import copy
 import json
 import subprocess
 import sys
 import tempfile
+import threading
+import time
 import unittest
 from contextlib import ExitStack
 from pathlib import Path
@@ -181,6 +184,44 @@ class V24539AliasActionCreditExternalGateTests(unittest.TestCase):
             target.predecessor.total.validate_aggregate,
         )
 
+    def test_concurrent_protocol_validation_serializes_nested_module_patches(
+        self,
+    ) -> None:
+        protocol = target.build_protocol(now=0, require_pristine=False)
+        original = target._ORIGINAL_VALIDATE_PROTOCOL
+        start = threading.Barrier(8)
+        state_lock = threading.Lock()
+        active = 0
+        maximum_active = 0
+
+        def observed_original(*args, **kwargs):
+            nonlocal active, maximum_active
+            with state_lock:
+                active += 1
+                maximum_active = max(maximum_active, active)
+            try:
+                time.sleep(0.02)
+                return original(*args, **kwargs)
+            finally:
+                with state_lock:
+                    active -= 1
+
+        def validate_once(_ordinal: int) -> str:
+            start.wait(timeout=5)
+            return target.validate_protocol(value=protocol)["protocol_id"]
+
+        with (
+            patch.object(
+                target,
+                "_ORIGINAL_VALIDATE_PROTOCOL",
+                side_effect=observed_original,
+            ),
+            concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool,
+        ):
+            values = list(pool.map(validate_once, range(8)))
+        self.assertEqual(values, [target.PROTOCOL_ID] * 8)
+        self.assertEqual(maximum_active, 1)
+
     def test_frozen_protocol_builds_preaudit_activation_and_start(self) -> None:
         base = target._base()
         with tempfile.TemporaryDirectory(dir=ROOT / "outputs") as temporary:
@@ -238,7 +279,7 @@ class V24539AliasActionCreditExternalGateTests(unittest.TestCase):
                 start = target.build_execution_start(now=0)
                 write_json(ROOT / paths["EXECUTION_START"], start)
                 self.assertTrue(target.validate_execution_start()["execution_authorized"])
-        self.assertEqual(preaudit["checks"]["focused_tests"]["test_count"], 182)
+        self.assertEqual(preaudit["checks"]["focused_tests"]["test_count"], 183)
         self.assertFalse(start["benchmark_or_evaluator_authorized"])
 
     def test_worker_and_supervisor_cli_bind_execution_base(self) -> None:
