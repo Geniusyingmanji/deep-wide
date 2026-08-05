@@ -2622,3 +2622,11 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 2. failure row 是 exact content-free zero projection，但明确不声称失败任务的私有 effect 为 0。success/failure 混合 aggregate 保留固定分母、exact ordinal、父级 alias projection，以及 surface/joint/count/nats 的总量和 task-presence 计数。
 3. aggregate 强制守恒：三联 joint 的 row 0/1 总和必须等于对应 task count；action credit 不得超过 raw stage gain，decision credit 不得超过 epistemic credit；query-only、selected surface hit、new observation、raw gain、safe-change 与 regression 的 marginal task counts 均与 totals 一致。
 4. 当前 synthetic total projection 7/7：覆盖 positive triple joint、failure-as-zero、mixed denominator、capability-only、防协调篡改、content-free 与 AST label-blind。下一步从 clean、`HEAD==target/main` 状态生成 V2.45.51 build audit；build audit GO 也只授权 fresh external protocol 设计，不直接授权 launch。
+
+### V2.45.51：alias/action joint build audit GO（2026-08-05 UTC）
+
+1. 审计器先独立提交推送，再从 clean、`HEAD==target/main==d6bddb1` 状态运行；V2.45.25/26/29/33/46/47/48/49/50/51 共 66/66 tests 通过，`findings=[]`、`audit_valid=true`。
+2. 审计重新验证 V2.45.45 result/decision/postaudit 的可信 NO-GO 与 V2.45.46 不可恢复相关性诊断；确认旧人口禁止 resume/retry/rerun，下一人口 freshness 基线仍为 `428 questions / 3424 entities`。
+3. 四个 runtime source 的 AST privileged-field access 与 evaluator import 均为 0；source/test/control artifact credential scan 为 0。runtime boundary 固定 `{opaque_id, question}`，query 不建立 alias hit，同题 joint 不声称 lead-level causality，source/posterior/margin/leave-one-out/safe-change/decision-credit 阈值未变。
+4. 两个 protected watcher PID/start-ticks/marker 完全一致，shared API lease inactive；审计未调用 network/model/search/fetch/evaluator，未打开历史私有页面或临时执行目录。
+5. GO 仅授权 fresh disjoint alias-joint external protocol **设计**；不授权 activation/launch、paired dev64、exact-220、evaluator、leaderboard 或 SOTA。下一步须接入 bounded parent/supervisor/worker total projection，并以新 `428/3424` 后人口冻结 protocol 与 preactivation audit。
