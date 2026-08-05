@@ -2707,3 +2707,9 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 1. 新 projection 只接受 V2.45.57 opaque capability，在 V2.45.58 row 上发布两种可精确复算的 task-level 0/1 joint：`one-observation reachable plan + selected alias + new observation + positive IG/action credit + safe change + decision credit`，以及其中再要求 legacy entropy choice 被改变的更严格 joint。
 2. joint 只声明同一 task 共现，不声明某个 planner call、query、lead、source 或 page 导致 safe change；协调重封 joint 与各 marginal 不一致会 fail closed。public success row 不能重新摄入为 proof，failure 仍是 exact content-free zero 且不声称私有 effect 为 0。
 3. V2.45.55/57/58/59/61 联合回归 `30/30`，其中 joint 定向测试 `6/6`；覆盖正向 opaque capability、mixed success/failure 固定分母、防 row/aggregate 协调篡改、content-free 与 AST label-blind。下一步将该 projection 接入 bounded parent 和 fresh external gate；当前不授权 protocol publication、activation/launch、dev64 或 exact-220。
+
+### V2.45.62：bounded reachability/conversion-joint parent（2026-08-05 UTC）
+
+1. V2.45.57 proof capability 与 V2.45.61 task-joint projection 已用独立 validator/projector path 接入 hard process-group supervisor；没有通过全局 monkey-patch 替换 V2.45.59 total binding，因此 8-way parent 并发不共享 projector 状态。
+2. 真实 parent→supervisor→worker synthetic chain 成功并恰好验证一次 capability、投影一次 joint row；非零 child 继续输出 exact failure-as-zero，observation 保留私有 effect lower bound。预算仍由单一 origin 限制为 `150/220/245/255s`。
+3. V2.45.55/57/58/61/62 联合回归 `30/30`，V2.45.62 定向测试 `4/4`；runtime AST privileged-field access/evaluator import 与 credential literal scan 均为 0。下一步必须先做 clean-build audit，再允许 fresh external protocol 设计；当前不授权 launch、dev64、exact-220 或 evaluator。
