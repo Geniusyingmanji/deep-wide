@@ -924,33 +924,49 @@ def run_v24496_task(
             limits=limits,
             monotonic=monotonic,
         )
-        validated_parent = parent.validate_result(first.targeted_result)
-        before_model = copy.deepcopy(first.model_slot_receipt)
-        before_transport = copy.deepcopy(first.transport_health)
-        before_search = copy.deepcopy(first.search_single_shot_receipt)
-        selected = _select_reserve_leads_from_validated(validated_parent)
-        batches = list(search.fetch_urls(selected)) if selected else []
-        pages = _canonical_reserve_pages(batches, selected)
-        private = {
-            "selected_reserve_leads": copy.deepcopy(selected),
-            "reserve_fetch_batches": copy.deepcopy(batches),
-            "reserve_pages": copy.deepcopy(pages),
-        }
-        result = _compute_result_from_validated(validated_parent, private)
-        after_model = model.receipt()
-        after_transport = search.transport_health()
-        after_search = search.single_shot_receipt()
-        effect = build_effect_delta_receipt(
-            model_before=before_model,
-            model_after=after_model,
-            transport_before=before_transport,
-            transport_after=after_transport,
-            search_before=before_search,
-            search_after=after_search,
-            reserve_receipt=result["reserve_support_receipt"],
-            expected_model_cap=int(after_model["slot_cap"]),
+        outcome = _run_reserve_stage_from_v24490_outcome(
+            first, model=model, search=search
         )
+        result = outcome.reserve_result
         validate_result(result)
+    return outcome
+
+
+def _run_reserve_stage_from_v24490_outcome(
+    first: parent.IntegratedEntropyTargetedSupportOutcome,
+    *,
+    model: Any,
+    search: Any,
+) -> IntegratedTargetedReserveOutcome:
+    """Continue reserve from one typed and already validated V2.44.90 outcome."""
+
+    if not isinstance(first, parent.IntegratedEntropyTargetedSupportOutcome):
+        raise TypeError("V2.44.96 reserve continuation requires V2.44.90 outcome")
+    before_model = copy.deepcopy(first.model_slot_receipt)
+    before_transport = copy.deepcopy(first.transport_health)
+    before_search = copy.deepcopy(first.search_single_shot_receipt)
+    selected = _select_reserve_leads_from_validated(first.targeted_result)
+    batches = list(search.fetch_urls(selected)) if selected else []
+    pages = _canonical_reserve_pages(batches, selected)
+    private = {
+        "selected_reserve_leads": copy.deepcopy(selected),
+        "reserve_fetch_batches": copy.deepcopy(batches),
+        "reserve_pages": copy.deepcopy(pages),
+    }
+    result = _compute_result_from_validated(first.targeted_result, private)
+    after_model = model.receipt()
+    after_transport = search.transport_health()
+    after_search = search.single_shot_receipt()
+    effect = build_effect_delta_receipt(
+        model_before=before_model,
+        model_after=after_model,
+        transport_before=before_transport,
+        transport_after=after_transport,
+        search_before=before_search,
+        search_after=after_search,
+        reserve_receipt=result["reserve_support_receipt"],
+        expected_model_cap=int(after_model["slot_cap"]),
+    )
     return IntegratedTargetedReserveOutcome(
         parent=first,
         reserve_result=result,
