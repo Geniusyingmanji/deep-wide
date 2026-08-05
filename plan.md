@@ -2732,3 +2732,10 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 1. V2.45.62 的 audited parent functions 通过 closure-free `FunctionType` 副本绑定 V2.45.64 strict projector；生产 runtime 不修改任何 module global，V2.45.62 原函数/projector identity 前后保持不变，8-way parent 并发不依赖共享 patch context。
 2. 真实 parent→supervisor→worker chain 恰好验证一次 V2.45.57 capability、投影一次 V2.45.64 strict row；nonzero child 保持 strict failure-as-zero 与 effect lower bound，预算继续为单 origin `150/220/245/255s`。
 3. V2.45.61/62/64/65 联合回归 `20/20`，V2.45.65 精确 `5/5`；两个新 runtime source AST label-blind，credential scan 0，watcher identity 不变、lease inactive。下一步必须 clean-build audit；当前不授权 external protocol publication/launch、dev64 或 exact-220。
+
+### V2.45.66：strict reachability/conversion clean-build audit GO（2026-08-05 UTC）
+
+1. 审计器/测试先独立提交推送，再从 clean、`HEAD==target/main==9a92d7d` 状态运行 V2.45.61/62/64/65/66 共 `27/27` tests；`findings=[]`、`audit_valid=true`。
+2. 审计确认 strict joint 同题要求 one-observation plan、changed legacy choice、alias/observation/positive-IG/action-credit/safe-change/decision-credit 全链；该 joint 机械复算且不声明 call/query/lead/source/page causality。public success mapping 不可作为 proof。
+3. V2.45.65 不使用 module-global projector patch 或共享 parent context，V2.45.62 function/projector identity 保持；failure exact-zero、私有 effect lower bound 与 `150/220/245/255s` 单 origin 预算不变。四个 runtime source AST/credential scan 均为 0，watcher identity 不变、lease inactive。
+4. GO 仅授权以 `436/3488` 为基线设计 fresh disjoint bounded strict reachability-conversion external protocol；不授权 activation/launch、dev64、exact-220、evaluator、leaderboard 或 SOTA。
