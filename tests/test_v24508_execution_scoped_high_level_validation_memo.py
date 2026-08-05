@@ -120,9 +120,20 @@ class V24508ExecutionScopedHighLevelValidationMemoTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 adaptive.validate_result(changed)
         receipt = memo.content_free_receipt()
-        self.assertEqual(receipt["layers"]["v24457"]["misses"], 1)
+        self.assertEqual(receipt["layers"]["v24457"]["misses"], 2)
         self.assertEqual(receipt["layers"]["v24457"]["hits"], 1)
         self.assertEqual(receipt["layers"]["v24457"]["mismatches"], 1)
+        validate_receipt(receipt)
+
+    def test_receipt_rejects_mismatch_not_accounted_as_miss(self) -> None:
+        receipt = copy.deepcopy(self.fixture[4])
+        layer = receipt["layers"]["v24457"]
+        layer["mismatches"] = layer["misses"] + 1
+        receipt["total_mismatches"] = sum(
+            item["mismatches"] for item in receipt["layers"].values()
+        )
+        with self.assertRaisesRegex(ValueError, "receipt drifted"):
+            validate_receipt(receipt)
 
     def test_bindings_restore_after_exception_and_drift_fails_before_patch(self) -> None:
         originals = {spec.name: spec.owner.validate_result for spec in LAYERS}

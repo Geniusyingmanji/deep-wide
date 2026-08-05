@@ -82,6 +82,7 @@ class HighLevelValidationMemo(
                 try:
                     seal, raw, shape = _snapshot(value)
                 except (TypeError, ValueError, OverflowError):
+                    stats["misses"] += 1
                     stats["mismatches"] += 1
                     return spec.original(value)
                 cached = self._cache.get(spec.name)
@@ -194,8 +195,8 @@ def validate_receipt(value: Mapping[str, Any]) -> dict[str, Any]:
                 or item[name] < 0
                 for name in ("calls", "misses", "hits", "mismatches")
             )
-            or item["calls"]
-            != item["misses"] + item["hits"] + item["mismatches"]
+            or item["calls"] != item["misses"] + item["hits"]
+            or item["mismatches"] > item["misses"]
             for item in layers.values()
         )
         or copied.get("total_calls")
