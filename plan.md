@@ -2739,3 +2739,10 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 2. 审计确认 strict joint 同题要求 one-observation plan、changed legacy choice、alias/observation/positive-IG/action-credit/safe-change/decision-credit 全链；该 joint 机械复算且不声明 call/query/lead/source/page causality。public success mapping 不可作为 proof。
 3. V2.45.65 不使用 module-global projector patch 或共享 parent context，V2.45.62 function/projector identity 保持；failure exact-zero、私有 effect lower bound 与 `150/220/245/255s` 单 origin 预算不变。四个 runtime source AST/credential scan 均为 0，watcher identity 不变、lease inactive。
 4. GO 仅授权以 `436/3488` 为基线设计 fresh disjoint bounded strict reachability-conversion external protocol；不授权 activation/launch、dev64、exact-220、evaluator、leaderboard 或 SOTA。
+
+### V2.45.67：fresh strict reachability/conversion external gate 实现冻结（2026-08-05 UTC）
+
+1. 新 8-task/64-entity founding-year population 相对历史 `436 questions / 3488 entities` 的 literal/canonical 交集均为 0；64 个 primary alias 全局唯一，并逐个通过同题 8-row visible baseline 唯一反解与 query-blind surface 检查。旧 V2.45.54 population 仍禁止重跑/重评。
+2. strict GO 要求同题同时具备 one-observation reachable plan、changed legacy entropy choice、selected alias surface、new observation、positive IG/action information/epistemic credit、safe change 与 positive decision credit；joint 不声明 call/query/lead/source/page causality，所有 3/2-source、posterior `0.8`、margin `1`、leave-one-out 与 safe-change 门不变。
+3. V2.45.57 capability 由一次性 collector 接到 V2.45.64 aggregate 和 V2.45.65 bounded parent；duplicate/late/missing context、二次 aggregate、capability/public-row mismatch 均 fail closed，退出时恢复 pure projector。worker/supervisor CLI smoke 验证实际 execution-base 绑定 strict runtime。
+4. protocol build/validate 与完整 V2.45.47/48/49/50/52/53/54/55/57/58/61/62/64/65/66/67 回归 `108/108` 通过；runtime AST privileged-field/evaluator import、credential literal 均为 0，watcher identity 不变、lease inactive。当前只冻结实现；必须依次独立提交 protocol→preaudit→activation→execution-start 后才允许唯一一次 launch，不授权 benchmark/evaluator/dev64/exact-220。
