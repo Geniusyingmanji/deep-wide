@@ -2644,3 +2644,12 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 2. 真实 parent/supervisor/worker synthetic chain、exact one-capability validation、one total-row projection、nonzero-child failure-as-zero、partial effect lower-bound 和 `150/220/245/255s` 单 origin 预算均通过。
 3. runtime AST privileged-field access/evaluator import 与 credential literal 均为 0；两个 protected watcher identity 不变，shared lease inactive，未调用 remote network/model/search/fetch/evaluator，未打开历史私有页面。
 4. GO 仅授权以 `428 questions / 3424 entities` 为历史基线设计 fresh disjoint bounded alias-joint external protocol；不授权 activation/launch、paired dev64、exact-220、evaluator、leaderboard 或 SOTA。
+
+### V2.45.54：fresh bounded alias/action joint external gate 实现冻结（2026-08-05 UTC）
+
+1. 新一次性外部门固定 8 个 founding-year 问题、64 个实体；相对累计 `428 questions / 3424 entities` 的历史人口，literal/canonical 交集均为 0，64 个 primary alias 全局唯一且每组都能从 visible baseline row 唯一解析。runtime 输入仍严格为 `{opaque_id, question}`，query 不能建立 alias hit；URL surface 只允许 hostname 与 decoded path，alias hint 本身仍不得获得 vote/source/entropy/decision credit。
+2. 机制 GO 现在要求同一题同时出现 `selected alias surface hit + new observation + positive information gain`，并继续要求 action information/epistemic/decision credit、safe-change improvement 和零 regression。同题共现不声明 lead-level causality；3/2-source、posterior `0.8`、margin `1`、normalized leave-one-out 与 safe-change/decision-credit 规则均未放宽。
+3. V2.45.49 capability 与 V2.45.50 aggregate 通过一次性 collector 接到 V2.45.52 bounded parent；success 必须有被捕获的 opaque capability，failure 使用 content-free zero projection且不声称私有 effect 为 0。worker/supervisor 真实 CLI smoke 均验证 execution-base binding，collector duplicate、late/missing context 与二次 aggregate 均 fail closed。
+4. 首轮控制面回归发现 activation 仍携带底层 V2.44.92 的通用 launch capability，导致 successor validator 正确拒绝。修复后先由底层完整构造，再精确移除旧 capability、验证剩余 authorization 等于 V2.45.54 专属 capability并重新封印；回归明确检查旧 capability 不得残留。source manifest 也已扩展为 177 个唯一文件，完整绑定底层 V2.44.92 runner 与 V2.45.45 predecessor 的全部冻结依赖，而非只绑定新上层文件。
+5. 当前 `py_compile` 通过，V2.45.47/48/49/50/52/53/54 共 `49/49` tests 通过；runtime AST privileged-field access/evaluator import 为 0，credential literal scan 为 0，两个 protected watcher PID/start-ticks 未变，shared API lease inactive。源码/测试提交推送后，必须从 clean、`HEAD==target/main` 状态依次独立生成并提交 protocol、preaudit、activation、execution-start；此前不授权 launch。
+6. execution-start 冻结后只允许启动一次 fresh 8-task external wave，禁止 resume/retry/补题/选择性重跑。external 严格 GO 才允许设计 fresh paired dev64；dev64 严格 GO 后才允许新 fixed-policy exact-220。当前可信全集最佳仍是 V2.42.67 的 `7/220=3.1818%`、Entity `0.690909`、Composite `0.413541`，single rollout、未上榜、非 SOTA。
