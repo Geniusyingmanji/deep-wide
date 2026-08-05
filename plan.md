@@ -2766,3 +2766,10 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 2. V2.45.68 quarantine 封印与 `444 questions / 3552 entities` 下一基线重新验证；旧 V2.45.67 population 禁止 resume/retry/rerun/re-evaluation。RLock 覆盖完整 nested base patch/validation 临界区，但 task execution 在 validation 后仍并行，model/search/fetch/evaluator effect 与所有预算/安全门未改变。
 3. runtime AST privileged-field/evaluator import 与 credential scan 均为 0；watcher identity 不变，lease inactive，无 V2.45.67 进程，审计未调用任何外部服务或打开私有内容。
 4. GO 仅授权全新 disjoint strict reachability-conversion external protocol **设计**；不授权 activation/launch、paired dev64、exact-220、evaluator、leaderboard 或 SOTA。
+
+### V2.45.71：fresh serialized strict reachability successor 实现冻结（2026-08-05 UTC）
+
+1. 全新 8-task/64-entity population 相对包含 invalid V2.45.67 的历史 `444 questions / 3552 entities` 为 zero literal/canonical overlap；64 个 alias 全局唯一且逐个通过同题 baseline 唯一反解/query-blind surface。排除同校改名双计，旧人口不复用。
+2. thin successor 复用 V2.45.67 strict proof/collector/bounded runtime，但 module-owned `RLock` 覆盖完整 `configured predecessor → frozen validate_protocol` 临界区；8-way barrier 中 maximum active validator=1，重入与异常释放均通过，task execution 在验证后仍保持 8 executor 并行。
+3. protocol build/validate、worker/supervisor CLI binding、synthetic protocol→preaudit→activation→start 链及 V2.45.47–71 完整回归 `138/138` 通过；runtime AST/credential scan 为 0，watcher identity 不变、lease inactive、future surface pristine。
+4. 当前仅冻结实现；必须再次依次独立提交 protocol→preaudit→activation→execution-start，且唯一新 wave 禁止 resume/retry/rerun/补题。不授权 benchmark/evaluator/dev64/exact-220/leaderboard/SOTA。
