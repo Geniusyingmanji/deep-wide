@@ -1,0 +1,3886 @@
+{
+  "artifact_version": 1,
+  "role": "v24632_content_free_capacity_schedule_simulation",
+  "created_at_unix": 1785993398,
+  "parents": {
+    "capacity_diagnosis_sha256": "f070d9e8f1ddb36fa51d2d13c92efc8841f073765e9c640a30524bbb8f678065",
+    "capacity_diagnosis_audit_sha256": "6d2a247abab87cec4decbd3f5340c4819068fc098e099ad5743ed7127bdc7058",
+    "capacity_diagnosis_payload_sha256": "ea079c87f163a468bfa9803db082e51774e73625f9a811c6c8b5ca131c3a7080",
+    "capacity_diagnosis_audit_payload_sha256": "b660fdb928fe6f2c9d133dcfcf3dbc7e4fa5c2e905c04df98d94589108928390"
+  },
+  "boundary": {
+    "postfreeze_content_free_timing_simulation": true,
+    "model_generated_result_envelopes_read_only_for_numeric_timing_calibration": true,
+    "fallback_timing_excluded_from_service_calibration": true,
+    "visible_task_runtime_prediction_evaluator_detail_or_score_rows_read": false,
+    "task_position_hash_identifier_question_query_url_page_prediction_or_credential_emitted": false,
+    "network_model_search_fetch_or_evaluator_called": false,
+    "exact_runtime_prediction_or_causal_counterfactual_claimed": false
+  },
+  "workload": {
+    "anonymous_tasks": 220,
+    "model_slots": 8,
+    "plan_effects": 220,
+    "initial_synthesis_effects": 220,
+    "recovery_effects": 20,
+    "repair_effects": 2,
+    "total_model_effects": 462,
+    "additional_model_search_or_fetch_work_vs_v24630_logical_accounting": false,
+    "retrieval_has_unconstrained_parallel_capacity_in_simulation": true
+  },
+  "grid_contract": {
+    "active_child_caps": [
+      8,
+      12,
+      16,
+      20,
+      24,
+      32
+    ],
+    "task_deadlines_seconds": [
+      150,
+      180,
+      210,
+      240
+    ],
+    "model_slot_policies": [
+      "fifo",
+      "synthesis_priority",
+      "reserve2"
+    ],
+    "cleanup_reserve_seconds": 5.0,
+    "p95_forward_wall_ceiling_seconds": 1800.0,
+    "scenario_quantiles": [
+      0.25,
+      0.5,
+      0.75,
+      0.95
+    ]
+  },
+  "calibration": {
+    "model_generated_tasks": 186,
+    "provider_requests": 375,
+    "vector_summaries": {
+      "plan_service_seconds": {
+        "count": 186,
+        "mean": 9.170118,
+        "minimum": 0.761524,
+        "p25": 5.051991,
+        "p50": 8.262696,
+        "p75": 12.249025,
+        "p95": 19.827544,
+        "maximum": 24.093729
+      },
+      "postplan_service_seconds": {
+        "count": 189,
+        "mean": 17.998365,
+        "minimum": 2.416368,
+        "p25": 10.55063,
+        "p50": 16.692581,
+        "p75": 23.863839,
+        "p95": 33.744256,
+        "maximum": 89.75614
+      },
+      "retrieval_seconds": {
+        "count": 186,
+        "mean": 26.856723,
+        "minimum": 3.594157,
+        "p25": 15.67824,
+        "p50": 22.885067,
+        "p75": 36.8109,
+        "p95": 52.638272,
+        "maximum": 67.887529
+      },
+      "local_completion_seconds": {
+        "count": 186,
+        "mean": 0.049444,
+        "minimum": 0.029917,
+        "p25": 0.037388,
+        "p50": 0.040602,
+        "p75": 0.047118,
+        "p95": 0.099538,
+        "maximum": 0.247823
+      }
+    },
+    "scenarios": {
+      "p25": {
+        "plan_service_seconds": 5.051991,
+        "postplan_service_seconds": 10.55063,
+        "retrieval_seconds": 15.67824,
+        "local_completion_seconds": 0.037388
+      },
+      "p50": {
+        "plan_service_seconds": 8.262696,
+        "postplan_service_seconds": 16.692581,
+        "retrieval_seconds": 22.885067,
+        "local_completion_seconds": 0.040602
+      },
+      "p75": {
+        "plan_service_seconds": 12.249025,
+        "postplan_service_seconds": 23.863839,
+        "retrieval_seconds": 36.8109,
+        "local_completion_seconds": 0.047118
+      },
+      "p95": {
+        "plan_service_seconds": 19.827544,
+        "postplan_service_seconds": 33.744256,
+        "retrieval_seconds": 52.638272,
+        "local_completion_seconds": 0.099538
+      }
+    },
+    "limitations": {
+      "fallback_tasks_excluded_as_right_censored": true,
+      "aggregate_slot_wait_not_identified_per_effect": true,
+      "residual_service_allocated_proportionally_by_observed_event_time": true,
+      "recovery_and_repair_use_shared_postplan_service_distribution": true,
+      "independent_identically_distributed_service_times_assumed": true,
+      "live_provider_queueing_or_correlation_modeled": false,
+      "exact_runtime_or_causal_counterfactual_claimed": false
+    }
+  },
+  "current_schedule_sensitivity": {
+    "active_child_cap": 32,
+    "task_deadline_seconds": 150,
+    "model_slot_policy": "fifo",
+    "scenario_results": {
+      "p25": {
+        "projected_forward_wall_seconds": 465.819534,
+        "effect_window_deadline_misses": 0,
+        "task_deadline_misses": 0,
+        "maximum_safe_effect_elapsed_seconds": 99.076977,
+        "maximum_task_elapsed_seconds": 99.114365,
+        "mean_task_elapsed_seconds": 63.919828,
+        "model_effects": 462
+      },
+      "p50": {
+        "projected_forward_wall_seconds": 740.937783,
+        "effect_window_deadline_misses": 10,
+        "task_deadline_misses": 1,
+        "maximum_safe_effect_elapsed_seconds": 158.120945,
+        "maximum_task_elapsed_seconds": 158.161547,
+        "mean_task_elapsed_seconds": 102.105555,
+        "model_effects": 462
+      },
+      "p75": {
+        "projected_forward_wall_seconds": 1080.325808,
+        "effect_window_deadline_misses": 126,
+        "task_deadline_misses": 87,
+        "maximum_safe_effect_elapsed_seconds": 228.990034,
+        "maximum_task_elapsed_seconds": 229.037152,
+        "mean_task_elapsed_seconds": 147.715987,
+        "model_effects": 462
+      },
+      "p95": {
+        "projected_forward_wall_seconds": 1581.515162,
+        "effect_window_deadline_misses": 213,
+        "task_deadline_misses": 205,
+        "maximum_safe_effect_elapsed_seconds": 321.331262,
+        "maximum_task_elapsed_seconds": 321.4308,
+        "mean_task_elapsed_seconds": 218.975948,
+        "model_effects": 462
+      }
+    }
+  },
+  "simulation": {
+    "configuration_count": 72,
+    "passing_configuration_count": 7,
+    "selection_rule": "all p25/p50/p75/p95 scenarios require zero effect-window and task deadline miss and p95 forward wall <=1800s; then minimize p95 wall, deadline, active-child cap, and frozen policy order",
+    "selected_schedule": {
+      "active_child_cap": 20,
+      "task_deadline_seconds": 240,
+      "model_slot_policy": "fifo",
+      "scenario_results": {
+        "p25": {
+          "projected_forward_wall_seconds": 479.415772,
+          "effect_window_deadline_misses": 0,
+          "task_deadline_misses": 0,
+          "maximum_safe_effect_elapsed_seconds": 67.538094,
+          "maximum_task_elapsed_seconds": 67.575482,
+          "mean_task_elapsed_seconds": 42.020966,
+          "model_effects": 462
+        },
+        "p50": {
+          "projected_forward_wall_seconds": 762.421396,
+          "effect_window_deadline_misses": 0,
+          "task_deadline_misses": 0,
+          "maximum_safe_effect_elapsed_seconds": 106.013594,
+          "maximum_task_elapsed_seconds": 106.054196,
+          "mean_task_elapsed_seconds": 66.812172,
+          "model_effects": 462
+        },
+        "p75": {
+          "projected_forward_wall_seconds": 1100.313015,
+          "effect_window_deadline_misses": 0,
+          "task_deadline_misses": 0,
+          "maximum_safe_effect_elapsed_seconds": 156.764306,
+          "maximum_task_elapsed_seconds": 156.811424,
+          "mean_task_elapsed_seconds": 96.488652,
+          "model_effects": 462
+        },
+        "p95": {
+          "projected_forward_wall_seconds": 1621.49778,
+          "effect_window_deadline_misses": 0,
+          "task_deadline_misses": 0,
+          "maximum_safe_effect_elapsed_seconds": 227.270384,
+          "maximum_task_elapsed_seconds": 227.369922,
+          "mean_task_elapsed_seconds": 142.268342,
+          "model_effects": 462
+        }
+      }
+    },
+    "passing_schedules": [
+      {
+        "active_child_cap": 20,
+        "task_deadline_seconds": 240,
+        "model_slot_policy": "fifo",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 479.415772,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 67.538094,
+            "maximum_task_elapsed_seconds": 67.575482,
+            "mean_task_elapsed_seconds": 42.020966,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 762.421396,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 106.013594,
+            "maximum_task_elapsed_seconds": 106.054196,
+            "mean_task_elapsed_seconds": 66.812172,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1100.313015,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 156.764306,
+            "maximum_task_elapsed_seconds": 156.811424,
+            "mean_task_elapsed_seconds": 96.488652,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1621.49778,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 227.270384,
+            "maximum_task_elapsed_seconds": 227.369922,
+            "mean_task_elapsed_seconds": 142.268342,
+            "model_effects": 462
+          }
+        }
+      },
+      {
+        "active_child_cap": 20,
+        "task_deadline_seconds": 240,
+        "model_slot_policy": "reserve2",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 483.806633,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 67.500706,
+            "maximum_task_elapsed_seconds": 67.538094,
+            "mean_task_elapsed_seconds": 42.365112,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 768.510635,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 105.972992,
+            "maximum_task_elapsed_seconds": 106.013594,
+            "mean_task_elapsed_seconds": 67.224651,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1109.438103,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 145.149492,
+            "maximum_task_elapsed_seconds": 145.19661,
+            "mean_task_elapsed_seconds": 97.003044,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1632.845594,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 213.353672,
+            "maximum_task_elapsed_seconds": 213.45321,
+            "mean_task_elapsed_seconds": 142.887544,
+            "model_effects": 462
+          }
+        }
+      },
+      {
+        "active_child_cap": 16,
+        "task_deadline_seconds": 210,
+        "model_slot_policy": "reserve2",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 541.392054,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 62.448715,
+            "maximum_task_elapsed_seconds": 62.486103,
+            "mean_task_elapsed_seconds": 38.039296,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 831.325405,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 97.710296,
+            "maximum_task_elapsed_seconds": 97.750898,
+            "mean_task_elapsed_seconds": 58.838761,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1175.80507,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 132.853349,
+            "maximum_task_elapsed_seconds": 132.900467,
+            "mean_task_elapsed_seconds": 82.705602,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1716.166936,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 193.42659,
+            "maximum_task_elapsed_seconds": 193.526128,
+            "mean_task_elapsed_seconds": 121.419885,
+            "model_effects": 462
+          }
+        }
+      },
+      {
+        "active_child_cap": 16,
+        "task_deadline_seconds": 240,
+        "model_slot_policy": "reserve2",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 541.392054,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 62.448715,
+            "maximum_task_elapsed_seconds": 62.486103,
+            "mean_task_elapsed_seconds": 38.039296,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 831.325405,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 97.710296,
+            "maximum_task_elapsed_seconds": 97.750898,
+            "mean_task_elapsed_seconds": 58.838761,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1175.80507,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 132.853349,
+            "maximum_task_elapsed_seconds": 132.900467,
+            "mean_task_elapsed_seconds": 82.705602,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1716.166936,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 193.42659,
+            "maximum_task_elapsed_seconds": 193.526128,
+            "mean_task_elapsed_seconds": 121.419885,
+            "model_effects": 462
+          }
+        }
+      },
+      {
+        "active_child_cap": 16,
+        "task_deadline_seconds": 210,
+        "model_slot_policy": "fifo",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 531.175065,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 57.843372,
+            "maximum_task_elapsed_seconds": 57.88076,
+            "mean_task_elapsed_seconds": 37.429004,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 823.718102,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 89.614789,
+            "maximum_task_elapsed_seconds": 89.655391,
+            "mean_task_elapsed_seconds": 58.144726,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1176.121192,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 132.853349,
+            "maximum_task_elapsed_seconds": 132.900467,
+            "mean_task_elapsed_seconds": 82.736712,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1720.409788,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 193.42659,
+            "maximum_task_elapsed_seconds": 193.526128,
+            "mean_task_elapsed_seconds": 121.432327,
+            "model_effects": 462
+          }
+        }
+      },
+      {
+        "active_child_cap": 16,
+        "task_deadline_seconds": 240,
+        "model_slot_policy": "fifo",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 531.175065,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 57.843372,
+            "maximum_task_elapsed_seconds": 57.88076,
+            "mean_task_elapsed_seconds": 37.429004,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 823.718102,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 89.614789,
+            "maximum_task_elapsed_seconds": 89.655391,
+            "mean_task_elapsed_seconds": 58.144726,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1176.121192,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 132.853349,
+            "maximum_task_elapsed_seconds": 132.900467,
+            "mean_task_elapsed_seconds": 82.736712,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1720.409788,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 193.42659,
+            "maximum_task_elapsed_seconds": 193.526128,
+            "mean_task_elapsed_seconds": 121.432327,
+            "model_effects": 462
+          }
+        }
+      },
+      {
+        "active_child_cap": 20,
+        "task_deadline_seconds": 240,
+        "model_slot_policy": "synthesis_priority",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 537.750246,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 62.932751,
+            "maximum_task_elapsed_seconds": 62.970139,
+            "mean_task_elapsed_seconds": 47.336275,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 834.511973,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 97.918087,
+            "maximum_task_elapsed_seconds": 97.958689,
+            "mean_task_elapsed_seconds": 73.442439,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1231.757624,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 144.515281,
+            "maximum_task_elapsed_seconds": 144.562399,
+            "mean_task_elapsed_seconds": 107.266856,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1769.767652,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 207.44284,
+            "maximum_task_elapsed_seconds": 207.542378,
+            "mean_task_elapsed_seconds": 152.329926,
+            "model_effects": 462
+          }
+        }
+      }
+    ],
+    "grid": [
+      {
+        "active_child_cap": 8,
+        "task_deadline_seconds": 150,
+        "model_slot_policy": "fifo",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 908.229221,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 41.831491,
+            "maximum_task_elapsed_seconds": 41.868879,
+            "mean_task_elapsed_seconds": 32.373312,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 1388.547434,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 64.532925,
+            "maximum_task_elapsed_seconds": 64.573527,
+            "mean_task_elapsed_seconds": 49.550204,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 2114.776213,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 96.787603,
+            "maximum_task_elapsed_seconds": 96.834721,
+            "mean_task_elapsed_seconds": 75.357266,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 3077.901848,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 139.954328,
+            "maximum_task_elapsed_seconds": 140.053866,
+            "mean_task_elapsed_seconds": 109.684036,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": true,
+        "p95_forward_wall_within_ceiling": false,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 8,
+        "task_deadline_seconds": 150,
+        "model_slot_policy": "synthesis_priority",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 908.229221,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 41.831491,
+            "maximum_task_elapsed_seconds": 41.868879,
+            "mean_task_elapsed_seconds": 32.373312,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 1388.547434,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 64.532925,
+            "maximum_task_elapsed_seconds": 64.573527,
+            "mean_task_elapsed_seconds": 49.550204,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 2114.776213,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 96.787603,
+            "maximum_task_elapsed_seconds": 96.834721,
+            "mean_task_elapsed_seconds": 75.357266,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 3077.901848,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 139.954328,
+            "maximum_task_elapsed_seconds": 140.053866,
+            "mean_task_elapsed_seconds": 109.684036,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": true,
+        "p95_forward_wall_within_ceiling": false,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 8,
+        "task_deadline_seconds": 150,
+        "model_slot_policy": "reserve2",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 908.562862,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 46.771318,
+            "maximum_task_elapsed_seconds": 46.808706,
+            "mean_task_elapsed_seconds": 32.577775,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 1390.744231,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 72.673815,
+            "maximum_task_elapsed_seconds": 72.714417,
+            "mean_task_elapsed_seconds": 49.885824,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 2115.316188,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 108.308181,
+            "maximum_task_elapsed_seconds": 108.355299,
+            "mean_task_elapsed_seconds": 75.852267,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 3083.613604,
+            "effect_window_deadline_misses": 1,
+            "task_deadline_misses": 1,
+            "maximum_safe_effect_elapsed_seconds": 153.671964,
+            "maximum_task_elapsed_seconds": 153.771502,
+            "mean_task_elapsed_seconds": 110.461508,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": false,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 8,
+        "task_deadline_seconds": 180,
+        "model_slot_policy": "fifo",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 908.229221,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 41.831491,
+            "maximum_task_elapsed_seconds": 41.868879,
+            "mean_task_elapsed_seconds": 32.373312,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 1388.547434,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 64.532925,
+            "maximum_task_elapsed_seconds": 64.573527,
+            "mean_task_elapsed_seconds": 49.550204,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 2114.776213,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 96.787603,
+            "maximum_task_elapsed_seconds": 96.834721,
+            "mean_task_elapsed_seconds": 75.357266,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 3077.901848,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 139.954328,
+            "maximum_task_elapsed_seconds": 140.053866,
+            "mean_task_elapsed_seconds": 109.684036,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": true,
+        "p95_forward_wall_within_ceiling": false,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 8,
+        "task_deadline_seconds": 180,
+        "model_slot_policy": "synthesis_priority",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 908.229221,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 41.831491,
+            "maximum_task_elapsed_seconds": 41.868879,
+            "mean_task_elapsed_seconds": 32.373312,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 1388.547434,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 64.532925,
+            "maximum_task_elapsed_seconds": 64.573527,
+            "mean_task_elapsed_seconds": 49.550204,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 2114.776213,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 96.787603,
+            "maximum_task_elapsed_seconds": 96.834721,
+            "mean_task_elapsed_seconds": 75.357266,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 3077.901848,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 139.954328,
+            "maximum_task_elapsed_seconds": 140.053866,
+            "mean_task_elapsed_seconds": 109.684036,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": true,
+        "p95_forward_wall_within_ceiling": false,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 8,
+        "task_deadline_seconds": 180,
+        "model_slot_policy": "reserve2",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 908.562862,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 46.771318,
+            "maximum_task_elapsed_seconds": 46.808706,
+            "mean_task_elapsed_seconds": 32.577775,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 1390.744231,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 72.673815,
+            "maximum_task_elapsed_seconds": 72.714417,
+            "mean_task_elapsed_seconds": 49.885824,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 2115.316188,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 108.308181,
+            "maximum_task_elapsed_seconds": 108.355299,
+            "mean_task_elapsed_seconds": 75.852267,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 3083.613604,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 153.671964,
+            "maximum_task_elapsed_seconds": 153.771502,
+            "mean_task_elapsed_seconds": 110.461508,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": true,
+        "p95_forward_wall_within_ceiling": false,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 8,
+        "task_deadline_seconds": 210,
+        "model_slot_policy": "fifo",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 908.229221,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 41.831491,
+            "maximum_task_elapsed_seconds": 41.868879,
+            "mean_task_elapsed_seconds": 32.373312,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 1388.547434,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 64.532925,
+            "maximum_task_elapsed_seconds": 64.573527,
+            "mean_task_elapsed_seconds": 49.550204,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 2114.776213,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 96.787603,
+            "maximum_task_elapsed_seconds": 96.834721,
+            "mean_task_elapsed_seconds": 75.357266,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 3077.901848,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 139.954328,
+            "maximum_task_elapsed_seconds": 140.053866,
+            "mean_task_elapsed_seconds": 109.684036,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": true,
+        "p95_forward_wall_within_ceiling": false,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 8,
+        "task_deadline_seconds": 210,
+        "model_slot_policy": "synthesis_priority",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 908.229221,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 41.831491,
+            "maximum_task_elapsed_seconds": 41.868879,
+            "mean_task_elapsed_seconds": 32.373312,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 1388.547434,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 64.532925,
+            "maximum_task_elapsed_seconds": 64.573527,
+            "mean_task_elapsed_seconds": 49.550204,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 2114.776213,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 96.787603,
+            "maximum_task_elapsed_seconds": 96.834721,
+            "mean_task_elapsed_seconds": 75.357266,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 3077.901848,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 139.954328,
+            "maximum_task_elapsed_seconds": 140.053866,
+            "mean_task_elapsed_seconds": 109.684036,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": true,
+        "p95_forward_wall_within_ceiling": false,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 8,
+        "task_deadline_seconds": 210,
+        "model_slot_policy": "reserve2",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 908.562862,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 46.771318,
+            "maximum_task_elapsed_seconds": 46.808706,
+            "mean_task_elapsed_seconds": 32.577775,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 1390.744231,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 72.673815,
+            "maximum_task_elapsed_seconds": 72.714417,
+            "mean_task_elapsed_seconds": 49.885824,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 2115.316188,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 108.308181,
+            "maximum_task_elapsed_seconds": 108.355299,
+            "mean_task_elapsed_seconds": 75.852267,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 3083.613604,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 153.671964,
+            "maximum_task_elapsed_seconds": 153.771502,
+            "mean_task_elapsed_seconds": 110.461508,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": true,
+        "p95_forward_wall_within_ceiling": false,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 8,
+        "task_deadline_seconds": 240,
+        "model_slot_policy": "fifo",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 908.229221,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 41.831491,
+            "maximum_task_elapsed_seconds": 41.868879,
+            "mean_task_elapsed_seconds": 32.373312,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 1388.547434,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 64.532925,
+            "maximum_task_elapsed_seconds": 64.573527,
+            "mean_task_elapsed_seconds": 49.550204,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 2114.776213,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 96.787603,
+            "maximum_task_elapsed_seconds": 96.834721,
+            "mean_task_elapsed_seconds": 75.357266,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 3077.901848,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 139.954328,
+            "maximum_task_elapsed_seconds": 140.053866,
+            "mean_task_elapsed_seconds": 109.684036,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": true,
+        "p95_forward_wall_within_ceiling": false,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 8,
+        "task_deadline_seconds": 240,
+        "model_slot_policy": "synthesis_priority",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 908.229221,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 41.831491,
+            "maximum_task_elapsed_seconds": 41.868879,
+            "mean_task_elapsed_seconds": 32.373312,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 1388.547434,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 64.532925,
+            "maximum_task_elapsed_seconds": 64.573527,
+            "mean_task_elapsed_seconds": 49.550204,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 2114.776213,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 96.787603,
+            "maximum_task_elapsed_seconds": 96.834721,
+            "mean_task_elapsed_seconds": 75.357266,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 3077.901848,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 139.954328,
+            "maximum_task_elapsed_seconds": 140.053866,
+            "mean_task_elapsed_seconds": 109.684036,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": true,
+        "p95_forward_wall_within_ceiling": false,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 8,
+        "task_deadline_seconds": 240,
+        "model_slot_policy": "reserve2",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 908.562862,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 46.771318,
+            "maximum_task_elapsed_seconds": 46.808706,
+            "mean_task_elapsed_seconds": 32.577775,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 1390.744231,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 72.673815,
+            "maximum_task_elapsed_seconds": 72.714417,
+            "mean_task_elapsed_seconds": 49.885824,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 2115.316188,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 108.308181,
+            "maximum_task_elapsed_seconds": 108.355299,
+            "mean_task_elapsed_seconds": 75.852267,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 3083.613604,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 153.671964,
+            "maximum_task_elapsed_seconds": 153.771502,
+            "mean_task_elapsed_seconds": 110.461508,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": true,
+        "p95_forward_wall_within_ceiling": false,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 12,
+        "task_deadline_seconds": 150,
+        "model_slot_policy": "fifo",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 651.10066,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 51.935473,
+            "maximum_task_elapsed_seconds": 51.972861,
+            "mean_task_elapsed_seconds": 34.450424,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 1000.515386,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 81.058317,
+            "maximum_task_elapsed_seconds": 81.098919,
+            "mean_task_elapsed_seconds": 52.969697,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1493.821313,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 120.651442,
+            "maximum_task_elapsed_seconds": 120.69856,
+            "mean_task_elapsed_seconds": 79.117014,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 2159.974142,
+            "effect_window_deadline_misses": 9,
+            "task_deadline_misses": 6,
+            "maximum_safe_effect_elapsed_seconds": 173.698584,
+            "maximum_task_elapsed_seconds": 173.798122,
+            "mean_task_elapsed_seconds": 115.274945,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": false,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 12,
+        "task_deadline_seconds": 150,
+        "model_slot_policy": "synthesis_priority",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 656.561911,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 47.292742,
+            "maximum_task_elapsed_seconds": 47.33013,
+            "mean_task_elapsed_seconds": 34.714355,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 1002.748004,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 72.922208,
+            "maximum_task_elapsed_seconds": 72.96281,
+            "mean_task_elapsed_seconds": 53.316629,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1529.745705,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 109.036628,
+            "maximum_task_elapsed_seconds": 109.083746,
+            "mean_task_elapsed_seconds": 81.047761,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 2226.964964,
+            "effect_window_deadline_misses": 11,
+            "task_deadline_misses": 8,
+            "maximum_safe_effect_elapsed_seconds": 159.781872,
+            "maximum_task_elapsed_seconds": 159.88141,
+            "mean_task_elapsed_seconds": 117.680436,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": false,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 12,
+        "task_deadline_seconds": 150,
+        "model_slot_policy": "reserve2",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 662.320258,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 57.396724,
+            "maximum_task_elapsed_seconds": 57.434112,
+            "mean_task_elapsed_seconds": 34.943998,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 1009.0494,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 89.4476,
+            "maximum_task_elapsed_seconds": 89.488202,
+            "mean_task_elapsed_seconds": 53.786774,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1507.056052,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 121.238535,
+            "maximum_task_elapsed_seconds": 121.285653,
+            "mean_task_elapsed_seconds": 80.377537,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 2205.540062,
+            "effect_window_deadline_misses": 12,
+            "task_deadline_misses": 7,
+            "maximum_safe_effect_elapsed_seconds": 179.509878,
+            "maximum_task_elapsed_seconds": 179.609416,
+            "mean_task_elapsed_seconds": 118.297056,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": false,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 12,
+        "task_deadline_seconds": 180,
+        "model_slot_policy": "fifo",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 651.10066,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 51.935473,
+            "maximum_task_elapsed_seconds": 51.972861,
+            "mean_task_elapsed_seconds": 34.450424,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 1000.515386,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 81.058317,
+            "maximum_task_elapsed_seconds": 81.098919,
+            "mean_task_elapsed_seconds": 52.969697,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1493.821313,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 120.651442,
+            "maximum_task_elapsed_seconds": 120.69856,
+            "mean_task_elapsed_seconds": 79.117014,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 2159.974142,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 173.698584,
+            "maximum_task_elapsed_seconds": 173.798122,
+            "mean_task_elapsed_seconds": 115.274945,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": true,
+        "p95_forward_wall_within_ceiling": false,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 12,
+        "task_deadline_seconds": 180,
+        "model_slot_policy": "synthesis_priority",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 656.561911,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 47.292742,
+            "maximum_task_elapsed_seconds": 47.33013,
+            "mean_task_elapsed_seconds": 34.714355,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 1002.748004,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 72.922208,
+            "maximum_task_elapsed_seconds": 72.96281,
+            "mean_task_elapsed_seconds": 53.316629,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1529.745705,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 109.036628,
+            "maximum_task_elapsed_seconds": 109.083746,
+            "mean_task_elapsed_seconds": 81.047761,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 2226.964964,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 159.781872,
+            "maximum_task_elapsed_seconds": 159.88141,
+            "mean_task_elapsed_seconds": 117.680436,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": true,
+        "p95_forward_wall_within_ceiling": false,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 12,
+        "task_deadline_seconds": 180,
+        "model_slot_policy": "reserve2",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 662.320258,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 57.396724,
+            "maximum_task_elapsed_seconds": 57.434112,
+            "mean_task_elapsed_seconds": 34.943998,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 1009.0494,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 89.4476,
+            "maximum_task_elapsed_seconds": 89.488202,
+            "mean_task_elapsed_seconds": 53.786774,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1507.056052,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 121.238535,
+            "maximum_task_elapsed_seconds": 121.285653,
+            "mean_task_elapsed_seconds": 80.377537,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 2205.540062,
+            "effect_window_deadline_misses": 1,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 179.509878,
+            "maximum_task_elapsed_seconds": 179.609416,
+            "mean_task_elapsed_seconds": 118.297056,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": false,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 12,
+        "task_deadline_seconds": 210,
+        "model_slot_policy": "fifo",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 651.10066,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 51.935473,
+            "maximum_task_elapsed_seconds": 51.972861,
+            "mean_task_elapsed_seconds": 34.450424,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 1000.515386,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 81.058317,
+            "maximum_task_elapsed_seconds": 81.098919,
+            "mean_task_elapsed_seconds": 52.969697,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1493.821313,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 120.651442,
+            "maximum_task_elapsed_seconds": 120.69856,
+            "mean_task_elapsed_seconds": 79.117014,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 2159.974142,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 173.698584,
+            "maximum_task_elapsed_seconds": 173.798122,
+            "mean_task_elapsed_seconds": 115.274945,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": true,
+        "p95_forward_wall_within_ceiling": false,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 12,
+        "task_deadline_seconds": 210,
+        "model_slot_policy": "synthesis_priority",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 656.561911,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 47.292742,
+            "maximum_task_elapsed_seconds": 47.33013,
+            "mean_task_elapsed_seconds": 34.714355,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 1002.748004,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 72.922208,
+            "maximum_task_elapsed_seconds": 72.96281,
+            "mean_task_elapsed_seconds": 53.316629,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1529.745705,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 109.036628,
+            "maximum_task_elapsed_seconds": 109.083746,
+            "mean_task_elapsed_seconds": 81.047761,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 2226.964964,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 159.781872,
+            "maximum_task_elapsed_seconds": 159.88141,
+            "mean_task_elapsed_seconds": 117.680436,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": true,
+        "p95_forward_wall_within_ceiling": false,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 12,
+        "task_deadline_seconds": 210,
+        "model_slot_policy": "reserve2",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 662.320258,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 57.396724,
+            "maximum_task_elapsed_seconds": 57.434112,
+            "mean_task_elapsed_seconds": 34.943998,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 1009.0494,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 89.4476,
+            "maximum_task_elapsed_seconds": 89.488202,
+            "mean_task_elapsed_seconds": 53.786774,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1507.056052,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 121.238535,
+            "maximum_task_elapsed_seconds": 121.285653,
+            "mean_task_elapsed_seconds": 80.377537,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 2205.540062,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 179.509878,
+            "maximum_task_elapsed_seconds": 179.609416,
+            "mean_task_elapsed_seconds": 118.297056,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": true,
+        "p95_forward_wall_within_ceiling": false,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 12,
+        "task_deadline_seconds": 240,
+        "model_slot_policy": "fifo",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 651.10066,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 51.935473,
+            "maximum_task_elapsed_seconds": 51.972861,
+            "mean_task_elapsed_seconds": 34.450424,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 1000.515386,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 81.058317,
+            "maximum_task_elapsed_seconds": 81.098919,
+            "mean_task_elapsed_seconds": 52.969697,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1493.821313,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 120.651442,
+            "maximum_task_elapsed_seconds": 120.69856,
+            "mean_task_elapsed_seconds": 79.117014,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 2159.974142,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 173.698584,
+            "maximum_task_elapsed_seconds": 173.798122,
+            "mean_task_elapsed_seconds": 115.274945,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": true,
+        "p95_forward_wall_within_ceiling": false,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 12,
+        "task_deadline_seconds": 240,
+        "model_slot_policy": "synthesis_priority",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 656.561911,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 47.292742,
+            "maximum_task_elapsed_seconds": 47.33013,
+            "mean_task_elapsed_seconds": 34.714355,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 1002.748004,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 72.922208,
+            "maximum_task_elapsed_seconds": 72.96281,
+            "mean_task_elapsed_seconds": 53.316629,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1529.745705,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 109.036628,
+            "maximum_task_elapsed_seconds": 109.083746,
+            "mean_task_elapsed_seconds": 81.047761,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 2226.964964,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 159.781872,
+            "maximum_task_elapsed_seconds": 159.88141,
+            "mean_task_elapsed_seconds": 117.680436,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": true,
+        "p95_forward_wall_within_ceiling": false,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 12,
+        "task_deadline_seconds": 240,
+        "model_slot_policy": "reserve2",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 662.320258,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 57.396724,
+            "maximum_task_elapsed_seconds": 57.434112,
+            "mean_task_elapsed_seconds": 34.943998,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 1009.0494,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 89.4476,
+            "maximum_task_elapsed_seconds": 89.488202,
+            "mean_task_elapsed_seconds": 53.786774,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1507.056052,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 121.238535,
+            "maximum_task_elapsed_seconds": 121.285653,
+            "mean_task_elapsed_seconds": 80.377537,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 2205.540062,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 179.509878,
+            "maximum_task_elapsed_seconds": 179.609416,
+            "mean_task_elapsed_seconds": 118.297056,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": true,
+        "p95_forward_wall_within_ceiling": false,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 16,
+        "task_deadline_seconds": 150,
+        "model_slot_policy": "fifo",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 531.175065,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 57.843372,
+            "maximum_task_elapsed_seconds": 57.88076,
+            "mean_task_elapsed_seconds": 37.429004,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 823.718102,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 89.614789,
+            "maximum_task_elapsed_seconds": 89.655391,
+            "mean_task_elapsed_seconds": 58.144726,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1176.121192,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 132.853349,
+            "maximum_task_elapsed_seconds": 132.900467,
+            "mean_task_elapsed_seconds": 82.736712,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1720.409788,
+            "effect_window_deadline_misses": 18,
+            "task_deadline_misses": 12,
+            "maximum_safe_effect_elapsed_seconds": 193.42659,
+            "maximum_task_elapsed_seconds": 193.526128,
+            "mean_task_elapsed_seconds": 121.432327,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 16,
+        "task_deadline_seconds": 150,
+        "model_slot_policy": "synthesis_priority",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 595.335596,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 52.382121,
+            "maximum_task_elapsed_seconds": 52.419509,
+            "mean_task_elapsed_seconds": 41.612547,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 920.026944,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 81.225506,
+            "maximum_task_elapsed_seconds": 81.266108,
+            "mean_task_elapsed_seconds": 64.542784,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1380.205821,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 121.238535,
+            "maximum_task_elapsed_seconds": 121.285653,
+            "mean_task_elapsed_seconds": 96.883313,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 2013.03193,
+            "effect_window_deadline_misses": 50,
+            "task_deadline_misses": 34,
+            "maximum_safe_effect_elapsed_seconds": 179.509878,
+            "maximum_task_elapsed_seconds": 179.609416,
+            "mean_task_elapsed_seconds": 141.311612,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": false,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 16,
+        "task_deadline_seconds": 150,
+        "model_slot_policy": "reserve2",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 541.392054,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 62.448715,
+            "maximum_task_elapsed_seconds": 62.486103,
+            "mean_task_elapsed_seconds": 38.039296,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 831.325405,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 97.710296,
+            "maximum_task_elapsed_seconds": 97.750898,
+            "mean_task_elapsed_seconds": 58.838761,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1175.80507,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 132.853349,
+            "maximum_task_elapsed_seconds": 132.900467,
+            "mean_task_elapsed_seconds": 82.705602,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1716.166936,
+            "effect_window_deadline_misses": 24,
+            "task_deadline_misses": 16,
+            "maximum_safe_effect_elapsed_seconds": 193.42659,
+            "maximum_task_elapsed_seconds": 193.526128,
+            "mean_task_elapsed_seconds": 121.419885,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 16,
+        "task_deadline_seconds": 180,
+        "model_slot_policy": "fifo",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 531.175065,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 57.843372,
+            "maximum_task_elapsed_seconds": 57.88076,
+            "mean_task_elapsed_seconds": 37.429004,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 823.718102,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 89.614789,
+            "maximum_task_elapsed_seconds": 89.655391,
+            "mean_task_elapsed_seconds": 58.144726,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1176.121192,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 132.853349,
+            "maximum_task_elapsed_seconds": 132.900467,
+            "mean_task_elapsed_seconds": 82.736712,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1720.409788,
+            "effect_window_deadline_misses": 4,
+            "task_deadline_misses": 4,
+            "maximum_safe_effect_elapsed_seconds": 193.42659,
+            "maximum_task_elapsed_seconds": 193.526128,
+            "mean_task_elapsed_seconds": 121.432327,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 16,
+        "task_deadline_seconds": 180,
+        "model_slot_policy": "synthesis_priority",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 595.335596,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 52.382121,
+            "maximum_task_elapsed_seconds": 52.419509,
+            "mean_task_elapsed_seconds": 41.612547,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 920.026944,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 81.225506,
+            "maximum_task_elapsed_seconds": 81.266108,
+            "mean_task_elapsed_seconds": 64.542784,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1380.205821,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 121.238535,
+            "maximum_task_elapsed_seconds": 121.285653,
+            "mean_task_elapsed_seconds": 96.883313,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 2013.03193,
+            "effect_window_deadline_misses": 1,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 179.509878,
+            "maximum_task_elapsed_seconds": 179.609416,
+            "mean_task_elapsed_seconds": 141.311612,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": false,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 16,
+        "task_deadline_seconds": 180,
+        "model_slot_policy": "reserve2",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 541.392054,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 62.448715,
+            "maximum_task_elapsed_seconds": 62.486103,
+            "mean_task_elapsed_seconds": 38.039296,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 831.325405,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 97.710296,
+            "maximum_task_elapsed_seconds": 97.750898,
+            "mean_task_elapsed_seconds": 58.838761,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1175.80507,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 132.853349,
+            "maximum_task_elapsed_seconds": 132.900467,
+            "mean_task_elapsed_seconds": 82.705602,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1716.166936,
+            "effect_window_deadline_misses": 3,
+            "task_deadline_misses": 2,
+            "maximum_safe_effect_elapsed_seconds": 193.42659,
+            "maximum_task_elapsed_seconds": 193.526128,
+            "mean_task_elapsed_seconds": 121.419885,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 16,
+        "task_deadline_seconds": 210,
+        "model_slot_policy": "fifo",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 531.175065,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 57.843372,
+            "maximum_task_elapsed_seconds": 57.88076,
+            "mean_task_elapsed_seconds": 37.429004,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 823.718102,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 89.614789,
+            "maximum_task_elapsed_seconds": 89.655391,
+            "mean_task_elapsed_seconds": 58.144726,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1176.121192,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 132.853349,
+            "maximum_task_elapsed_seconds": 132.900467,
+            "mean_task_elapsed_seconds": 82.736712,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1720.409788,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 193.42659,
+            "maximum_task_elapsed_seconds": 193.526128,
+            "mean_task_elapsed_seconds": 121.432327,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": true,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": true
+      },
+      {
+        "active_child_cap": 16,
+        "task_deadline_seconds": 210,
+        "model_slot_policy": "synthesis_priority",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 595.335596,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 52.382121,
+            "maximum_task_elapsed_seconds": 52.419509,
+            "mean_task_elapsed_seconds": 41.612547,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 920.026944,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 81.225506,
+            "maximum_task_elapsed_seconds": 81.266108,
+            "mean_task_elapsed_seconds": 64.542784,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1380.205821,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 121.238535,
+            "maximum_task_elapsed_seconds": 121.285653,
+            "mean_task_elapsed_seconds": 96.883313,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 2013.03193,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 179.509878,
+            "maximum_task_elapsed_seconds": 179.609416,
+            "mean_task_elapsed_seconds": 141.311612,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": true,
+        "p95_forward_wall_within_ceiling": false,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 16,
+        "task_deadline_seconds": 210,
+        "model_slot_policy": "reserve2",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 541.392054,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 62.448715,
+            "maximum_task_elapsed_seconds": 62.486103,
+            "mean_task_elapsed_seconds": 38.039296,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 831.325405,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 97.710296,
+            "maximum_task_elapsed_seconds": 97.750898,
+            "mean_task_elapsed_seconds": 58.838761,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1175.80507,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 132.853349,
+            "maximum_task_elapsed_seconds": 132.900467,
+            "mean_task_elapsed_seconds": 82.705602,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1716.166936,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 193.42659,
+            "maximum_task_elapsed_seconds": 193.526128,
+            "mean_task_elapsed_seconds": 121.419885,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": true,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": true
+      },
+      {
+        "active_child_cap": 16,
+        "task_deadline_seconds": 240,
+        "model_slot_policy": "fifo",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 531.175065,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 57.843372,
+            "maximum_task_elapsed_seconds": 57.88076,
+            "mean_task_elapsed_seconds": 37.429004,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 823.718102,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 89.614789,
+            "maximum_task_elapsed_seconds": 89.655391,
+            "mean_task_elapsed_seconds": 58.144726,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1176.121192,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 132.853349,
+            "maximum_task_elapsed_seconds": 132.900467,
+            "mean_task_elapsed_seconds": 82.736712,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1720.409788,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 193.42659,
+            "maximum_task_elapsed_seconds": 193.526128,
+            "mean_task_elapsed_seconds": 121.432327,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": true,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": true
+      },
+      {
+        "active_child_cap": 16,
+        "task_deadline_seconds": 240,
+        "model_slot_policy": "synthesis_priority",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 595.335596,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 52.382121,
+            "maximum_task_elapsed_seconds": 52.419509,
+            "mean_task_elapsed_seconds": 41.612547,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 920.026944,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 81.225506,
+            "maximum_task_elapsed_seconds": 81.266108,
+            "mean_task_elapsed_seconds": 64.542784,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1380.205821,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 121.238535,
+            "maximum_task_elapsed_seconds": 121.285653,
+            "mean_task_elapsed_seconds": 96.883313,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 2013.03193,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 179.509878,
+            "maximum_task_elapsed_seconds": 179.609416,
+            "mean_task_elapsed_seconds": 141.311612,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": true,
+        "p95_forward_wall_within_ceiling": false,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 16,
+        "task_deadline_seconds": 240,
+        "model_slot_policy": "reserve2",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 541.392054,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 62.448715,
+            "maximum_task_elapsed_seconds": 62.486103,
+            "mean_task_elapsed_seconds": 38.039296,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 831.325405,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 97.710296,
+            "maximum_task_elapsed_seconds": 97.750898,
+            "mean_task_elapsed_seconds": 58.838761,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1175.80507,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 132.853349,
+            "maximum_task_elapsed_seconds": 132.900467,
+            "mean_task_elapsed_seconds": 82.705602,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1716.166936,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 193.42659,
+            "maximum_task_elapsed_seconds": 193.526128,
+            "mean_task_elapsed_seconds": 121.419885,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": true,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": true
+      },
+      {
+        "active_child_cap": 20,
+        "task_deadline_seconds": 150,
+        "model_slot_policy": "fifo",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 479.415772,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 67.538094,
+            "maximum_task_elapsed_seconds": 67.575482,
+            "mean_task_elapsed_seconds": 42.020966,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 762.421396,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 106.013594,
+            "maximum_task_elapsed_seconds": 106.054196,
+            "mean_task_elapsed_seconds": 66.812172,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1100.313015,
+            "effect_window_deadline_misses": 1,
+            "task_deadline_misses": 1,
+            "maximum_safe_effect_elapsed_seconds": 156.764306,
+            "maximum_task_elapsed_seconds": 156.811424,
+            "mean_task_elapsed_seconds": 96.488652,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1621.49778,
+            "effect_window_deadline_misses": 40,
+            "task_deadline_misses": 31,
+            "maximum_safe_effect_elapsed_seconds": 227.270384,
+            "maximum_task_elapsed_seconds": 227.369922,
+            "mean_task_elapsed_seconds": 142.268342,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 20,
+        "task_deadline_seconds": 150,
+        "model_slot_policy": "synthesis_priority",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 537.750246,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 62.932751,
+            "maximum_task_elapsed_seconds": 62.970139,
+            "mean_task_elapsed_seconds": 47.336275,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 834.511973,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 97.918087,
+            "maximum_task_elapsed_seconds": 97.958689,
+            "mean_task_elapsed_seconds": 73.442439,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1231.757624,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 144.515281,
+            "maximum_task_elapsed_seconds": 144.562399,
+            "mean_task_elapsed_seconds": 107.266856,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1769.767652,
+            "effect_window_deadline_misses": 147,
+            "task_deadline_misses": 142,
+            "maximum_safe_effect_elapsed_seconds": 207.44284,
+            "maximum_task_elapsed_seconds": 207.542378,
+            "mean_task_elapsed_seconds": 152.329926,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 20,
+        "task_deadline_seconds": 150,
+        "model_slot_policy": "reserve2",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 483.806633,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 67.500706,
+            "maximum_task_elapsed_seconds": 67.538094,
+            "mean_task_elapsed_seconds": 42.365112,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 768.510635,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 105.972992,
+            "maximum_task_elapsed_seconds": 106.013594,
+            "mean_task_elapsed_seconds": 67.224651,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1109.438103,
+            "effect_window_deadline_misses": 1,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 145.149492,
+            "maximum_task_elapsed_seconds": 145.19661,
+            "mean_task_elapsed_seconds": 97.003044,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1632.845594,
+            "effect_window_deadline_misses": 55,
+            "task_deadline_misses": 35,
+            "maximum_safe_effect_elapsed_seconds": 213.353672,
+            "maximum_task_elapsed_seconds": 213.45321,
+            "mean_task_elapsed_seconds": 142.887544,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 20,
+        "task_deadline_seconds": 180,
+        "model_slot_policy": "fifo",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 479.415772,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 67.538094,
+            "maximum_task_elapsed_seconds": 67.575482,
+            "mean_task_elapsed_seconds": 42.020966,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 762.421396,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 106.013594,
+            "maximum_task_elapsed_seconds": 106.054196,
+            "mean_task_elapsed_seconds": 66.812172,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1100.313015,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 156.764306,
+            "maximum_task_elapsed_seconds": 156.811424,
+            "mean_task_elapsed_seconds": 96.488652,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1621.49778,
+            "effect_window_deadline_misses": 22,
+            "task_deadline_misses": 20,
+            "maximum_safe_effect_elapsed_seconds": 227.270384,
+            "maximum_task_elapsed_seconds": 227.369922,
+            "mean_task_elapsed_seconds": 142.268342,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 20,
+        "task_deadline_seconds": 180,
+        "model_slot_policy": "synthesis_priority",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 537.750246,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 62.932751,
+            "maximum_task_elapsed_seconds": 62.970139,
+            "mean_task_elapsed_seconds": 47.336275,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 834.511973,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 97.918087,
+            "maximum_task_elapsed_seconds": 97.958689,
+            "mean_task_elapsed_seconds": 73.442439,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1231.757624,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 144.515281,
+            "maximum_task_elapsed_seconds": 144.562399,
+            "mean_task_elapsed_seconds": 107.266856,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1769.767652,
+            "effect_window_deadline_misses": 11,
+            "task_deadline_misses": 11,
+            "maximum_safe_effect_elapsed_seconds": 207.44284,
+            "maximum_task_elapsed_seconds": 207.542378,
+            "mean_task_elapsed_seconds": 152.329926,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 20,
+        "task_deadline_seconds": 180,
+        "model_slot_policy": "reserve2",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 483.806633,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 67.500706,
+            "maximum_task_elapsed_seconds": 67.538094,
+            "mean_task_elapsed_seconds": 42.365112,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 768.510635,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 105.972992,
+            "maximum_task_elapsed_seconds": 106.013594,
+            "mean_task_elapsed_seconds": 67.224651,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1109.438103,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 145.149492,
+            "maximum_task_elapsed_seconds": 145.19661,
+            "mean_task_elapsed_seconds": 97.003044,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1632.845594,
+            "effect_window_deadline_misses": 21,
+            "task_deadline_misses": 16,
+            "maximum_safe_effect_elapsed_seconds": 213.353672,
+            "maximum_task_elapsed_seconds": 213.45321,
+            "mean_task_elapsed_seconds": 142.887544,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 20,
+        "task_deadline_seconds": 210,
+        "model_slot_policy": "fifo",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 479.415772,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 67.538094,
+            "maximum_task_elapsed_seconds": 67.575482,
+            "mean_task_elapsed_seconds": 42.020966,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 762.421396,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 106.013594,
+            "maximum_task_elapsed_seconds": 106.054196,
+            "mean_task_elapsed_seconds": 66.812172,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1100.313015,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 156.764306,
+            "maximum_task_elapsed_seconds": 156.811424,
+            "mean_task_elapsed_seconds": 96.488652,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1621.49778,
+            "effect_window_deadline_misses": 1,
+            "task_deadline_misses": 1,
+            "maximum_safe_effect_elapsed_seconds": 227.270384,
+            "maximum_task_elapsed_seconds": 227.369922,
+            "mean_task_elapsed_seconds": 142.268342,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 20,
+        "task_deadline_seconds": 210,
+        "model_slot_policy": "synthesis_priority",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 537.750246,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 62.932751,
+            "maximum_task_elapsed_seconds": 62.970139,
+            "mean_task_elapsed_seconds": 47.336275,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 834.511973,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 97.918087,
+            "maximum_task_elapsed_seconds": 97.958689,
+            "mean_task_elapsed_seconds": 73.442439,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1231.757624,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 144.515281,
+            "maximum_task_elapsed_seconds": 144.562399,
+            "mean_task_elapsed_seconds": 107.266856,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1769.767652,
+            "effect_window_deadline_misses": 1,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 207.44284,
+            "maximum_task_elapsed_seconds": 207.542378,
+            "mean_task_elapsed_seconds": 152.329926,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 20,
+        "task_deadline_seconds": 210,
+        "model_slot_policy": "reserve2",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 483.806633,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 67.500706,
+            "maximum_task_elapsed_seconds": 67.538094,
+            "mean_task_elapsed_seconds": 42.365112,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 768.510635,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 105.972992,
+            "maximum_task_elapsed_seconds": 106.013594,
+            "mean_task_elapsed_seconds": 67.224651,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1109.438103,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 145.149492,
+            "maximum_task_elapsed_seconds": 145.19661,
+            "mean_task_elapsed_seconds": 97.003044,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1632.845594,
+            "effect_window_deadline_misses": 2,
+            "task_deadline_misses": 1,
+            "maximum_safe_effect_elapsed_seconds": 213.353672,
+            "maximum_task_elapsed_seconds": 213.45321,
+            "mean_task_elapsed_seconds": 142.887544,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 20,
+        "task_deadline_seconds": 240,
+        "model_slot_policy": "fifo",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 479.415772,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 67.538094,
+            "maximum_task_elapsed_seconds": 67.575482,
+            "mean_task_elapsed_seconds": 42.020966,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 762.421396,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 106.013594,
+            "maximum_task_elapsed_seconds": 106.054196,
+            "mean_task_elapsed_seconds": 66.812172,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1100.313015,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 156.764306,
+            "maximum_task_elapsed_seconds": 156.811424,
+            "mean_task_elapsed_seconds": 96.488652,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1621.49778,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 227.270384,
+            "maximum_task_elapsed_seconds": 227.369922,
+            "mean_task_elapsed_seconds": 142.268342,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": true,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": true
+      },
+      {
+        "active_child_cap": 20,
+        "task_deadline_seconds": 240,
+        "model_slot_policy": "synthesis_priority",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 537.750246,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 62.932751,
+            "maximum_task_elapsed_seconds": 62.970139,
+            "mean_task_elapsed_seconds": 47.336275,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 834.511973,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 97.918087,
+            "maximum_task_elapsed_seconds": 97.958689,
+            "mean_task_elapsed_seconds": 73.442439,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1231.757624,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 144.515281,
+            "maximum_task_elapsed_seconds": 144.562399,
+            "mean_task_elapsed_seconds": 107.266856,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1769.767652,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 207.44284,
+            "maximum_task_elapsed_seconds": 207.542378,
+            "mean_task_elapsed_seconds": 152.329926,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": true,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": true
+      },
+      {
+        "active_child_cap": 20,
+        "task_deadline_seconds": 240,
+        "model_slot_policy": "reserve2",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 483.806633,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 67.500706,
+            "maximum_task_elapsed_seconds": 67.538094,
+            "mean_task_elapsed_seconds": 42.365112,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 768.510635,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 105.972992,
+            "maximum_task_elapsed_seconds": 106.013594,
+            "mean_task_elapsed_seconds": 67.224651,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1109.438103,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 145.149492,
+            "maximum_task_elapsed_seconds": 145.19661,
+            "mean_task_elapsed_seconds": 97.003044,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1632.845594,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 213.353672,
+            "maximum_task_elapsed_seconds": 213.45321,
+            "mean_task_elapsed_seconds": 142.887544,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": true,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": true
+      },
+      {
+        "active_child_cap": 24,
+        "task_deadline_seconds": 150,
+        "model_slot_policy": "fifo",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 475.218846,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 78.051336,
+            "maximum_task_elapsed_seconds": 78.088724,
+            "mean_task_elapsed_seconds": 49.783218,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 753.824322,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 131.095458,
+            "maximum_task_elapsed_seconds": 131.13606,
+            "mean_task_elapsed_seconds": 78.952722,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1084.194899,
+            "effect_window_deadline_misses": 16,
+            "task_deadline_misses": 13,
+            "maximum_safe_effect_elapsed_seconds": 191.497805,
+            "maximum_task_elapsed_seconds": 191.544923,
+            "mean_task_elapsed_seconds": 113.877172,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1603.665746,
+            "effect_window_deadline_misses": 201,
+            "task_deadline_misses": 194,
+            "maximum_safe_effect_elapsed_seconds": 267.759462,
+            "maximum_task_elapsed_seconds": 267.859,
+            "mean_task_elapsed_seconds": 167.985297,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 24,
+        "task_deadline_seconds": 150,
+        "model_slot_policy": "synthesis_priority",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 517.913311,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 73.445993,
+            "maximum_task_elapsed_seconds": 73.483381,
+            "mean_task_elapsed_seconds": 53.038564,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 803.698588,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 114.570066,
+            "maximum_task_elapsed_seconds": 114.610668,
+            "mean_task_elapsed_seconds": 82.420838,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1195.580935,
+            "effect_window_deadline_misses": 4,
+            "task_deadline_misses": 3,
+            "maximum_safe_effect_elapsed_seconds": 168.332002,
+            "maximum_task_elapsed_seconds": 168.37912,
+            "mean_task_elapsed_seconds": 121.815964,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1729.079498,
+            "effect_window_deadline_misses": 203,
+            "task_deadline_misses": 203,
+            "maximum_safe_effect_elapsed_seconds": 241.087558,
+            "maximum_task_elapsed_seconds": 241.187096,
+            "mean_task_elapsed_seconds": 176.091749,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 24,
+        "task_deadline_seconds": 150,
+        "model_slot_policy": "reserve2",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 474.136924,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 78.869013,
+            "maximum_task_elapsed_seconds": 78.906401,
+            "mean_task_elapsed_seconds": 49.65995,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 754.55702,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 124.735783,
+            "maximum_task_elapsed_seconds": 124.776385,
+            "mean_task_elapsed_seconds": 78.684508,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1098.282732,
+            "effect_window_deadline_misses": 19,
+            "task_deadline_misses": 11,
+            "maximum_safe_effect_elapsed_seconds": 166.999755,
+            "maximum_task_elapsed_seconds": 167.046873,
+            "mean_task_elapsed_seconds": 114.262732,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1616.046626,
+            "effect_window_deadline_misses": 198,
+            "task_deadline_misses": 189,
+            "maximum_safe_effect_elapsed_seconds": 245.83687,
+            "maximum_task_elapsed_seconds": 245.936408,
+            "mean_task_elapsed_seconds": 169.033714,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 24,
+        "task_deadline_seconds": 180,
+        "model_slot_policy": "fifo",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 475.218846,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 78.051336,
+            "maximum_task_elapsed_seconds": 78.088724,
+            "mean_task_elapsed_seconds": 49.783218,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 753.824322,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 131.095458,
+            "maximum_task_elapsed_seconds": 131.13606,
+            "mean_task_elapsed_seconds": 78.952722,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1084.194899,
+            "effect_window_deadline_misses": 2,
+            "task_deadline_misses": 1,
+            "maximum_safe_effect_elapsed_seconds": 191.497805,
+            "maximum_task_elapsed_seconds": 191.544923,
+            "mean_task_elapsed_seconds": 113.877172,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1603.665746,
+            "effect_window_deadline_misses": 31,
+            "task_deadline_misses": 29,
+            "maximum_safe_effect_elapsed_seconds": 267.759462,
+            "maximum_task_elapsed_seconds": 267.859,
+            "mean_task_elapsed_seconds": 167.985297,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 24,
+        "task_deadline_seconds": 180,
+        "model_slot_policy": "synthesis_priority",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 517.913311,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 73.445993,
+            "maximum_task_elapsed_seconds": 73.483381,
+            "mean_task_elapsed_seconds": 53.038564,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 803.698588,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 114.570066,
+            "maximum_task_elapsed_seconds": 114.610668,
+            "mean_task_elapsed_seconds": 82.420838,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1195.580935,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 168.332002,
+            "maximum_task_elapsed_seconds": 168.37912,
+            "mean_task_elapsed_seconds": 121.815964,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1729.079498,
+            "effect_window_deadline_misses": 77,
+            "task_deadline_misses": 59,
+            "maximum_safe_effect_elapsed_seconds": 241.087558,
+            "maximum_task_elapsed_seconds": 241.187096,
+            "mean_task_elapsed_seconds": 176.091749,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 24,
+        "task_deadline_seconds": 180,
+        "model_slot_policy": "reserve2",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 474.136924,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 78.869013,
+            "maximum_task_elapsed_seconds": 78.906401,
+            "mean_task_elapsed_seconds": 49.65995,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 754.55702,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 124.735783,
+            "maximum_task_elapsed_seconds": 124.776385,
+            "mean_task_elapsed_seconds": 78.684508,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1098.282732,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 166.999755,
+            "maximum_task_elapsed_seconds": 167.046873,
+            "mean_task_elapsed_seconds": 114.262732,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1616.046626,
+            "effect_window_deadline_misses": 39,
+            "task_deadline_misses": 34,
+            "maximum_safe_effect_elapsed_seconds": 245.83687,
+            "maximum_task_elapsed_seconds": 245.936408,
+            "mean_task_elapsed_seconds": 169.033714,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 24,
+        "task_deadline_seconds": 210,
+        "model_slot_policy": "fifo",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 475.218846,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 78.051336,
+            "maximum_task_elapsed_seconds": 78.088724,
+            "mean_task_elapsed_seconds": 49.783218,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 753.824322,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 131.095458,
+            "maximum_task_elapsed_seconds": 131.13606,
+            "mean_task_elapsed_seconds": 78.952722,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1084.194899,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 191.497805,
+            "maximum_task_elapsed_seconds": 191.544923,
+            "mean_task_elapsed_seconds": 113.877172,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1603.665746,
+            "effect_window_deadline_misses": 21,
+            "task_deadline_misses": 17,
+            "maximum_safe_effect_elapsed_seconds": 267.759462,
+            "maximum_task_elapsed_seconds": 267.859,
+            "mean_task_elapsed_seconds": 167.985297,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 24,
+        "task_deadline_seconds": 210,
+        "model_slot_policy": "synthesis_priority",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 517.913311,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 73.445993,
+            "maximum_task_elapsed_seconds": 73.483381,
+            "mean_task_elapsed_seconds": 53.038564,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 803.698588,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 114.570066,
+            "maximum_task_elapsed_seconds": 114.610668,
+            "mean_task_elapsed_seconds": 82.420838,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1195.580935,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 168.332002,
+            "maximum_task_elapsed_seconds": 168.37912,
+            "mean_task_elapsed_seconds": 121.815964,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1729.079498,
+            "effect_window_deadline_misses": 21,
+            "task_deadline_misses": 5,
+            "maximum_safe_effect_elapsed_seconds": 241.087558,
+            "maximum_task_elapsed_seconds": 241.187096,
+            "mean_task_elapsed_seconds": 176.091749,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 24,
+        "task_deadline_seconds": 210,
+        "model_slot_policy": "reserve2",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 474.136924,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 78.869013,
+            "maximum_task_elapsed_seconds": 78.906401,
+            "mean_task_elapsed_seconds": 49.65995,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 754.55702,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 124.735783,
+            "maximum_task_elapsed_seconds": 124.776385,
+            "mean_task_elapsed_seconds": 78.684508,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1098.282732,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 166.999755,
+            "maximum_task_elapsed_seconds": 167.046873,
+            "mean_task_elapsed_seconds": 114.262732,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1616.046626,
+            "effect_window_deadline_misses": 25,
+            "task_deadline_misses": 21,
+            "maximum_safe_effect_elapsed_seconds": 245.83687,
+            "maximum_task_elapsed_seconds": 245.936408,
+            "mean_task_elapsed_seconds": 169.033714,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 24,
+        "task_deadline_seconds": 240,
+        "model_slot_policy": "fifo",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 475.218846,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 78.051336,
+            "maximum_task_elapsed_seconds": 78.088724,
+            "mean_task_elapsed_seconds": 49.783218,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 753.824322,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 131.095458,
+            "maximum_task_elapsed_seconds": 131.13606,
+            "mean_task_elapsed_seconds": 78.952722,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1084.194899,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 191.497805,
+            "maximum_task_elapsed_seconds": 191.544923,
+            "mean_task_elapsed_seconds": 113.877172,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1603.665746,
+            "effect_window_deadline_misses": 6,
+            "task_deadline_misses": 5,
+            "maximum_safe_effect_elapsed_seconds": 267.759462,
+            "maximum_task_elapsed_seconds": 267.859,
+            "mean_task_elapsed_seconds": 167.985297,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 24,
+        "task_deadline_seconds": 240,
+        "model_slot_policy": "synthesis_priority",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 517.913311,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 73.445993,
+            "maximum_task_elapsed_seconds": 73.483381,
+            "mean_task_elapsed_seconds": 53.038564,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 803.698588,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 114.570066,
+            "maximum_task_elapsed_seconds": 114.610668,
+            "mean_task_elapsed_seconds": 82.420838,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1195.580935,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 168.332002,
+            "maximum_task_elapsed_seconds": 168.37912,
+            "mean_task_elapsed_seconds": 121.815964,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1729.079498,
+            "effect_window_deadline_misses": 1,
+            "task_deadline_misses": 1,
+            "maximum_safe_effect_elapsed_seconds": 241.087558,
+            "maximum_task_elapsed_seconds": 241.187096,
+            "mean_task_elapsed_seconds": 176.091749,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 24,
+        "task_deadline_seconds": 240,
+        "model_slot_policy": "reserve2",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 474.136924,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 78.869013,
+            "maximum_task_elapsed_seconds": 78.906401,
+            "mean_task_elapsed_seconds": 49.65995,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 754.55702,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 124.735783,
+            "maximum_task_elapsed_seconds": 124.776385,
+            "mean_task_elapsed_seconds": 78.684508,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1098.282732,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 166.999755,
+            "maximum_task_elapsed_seconds": 167.046873,
+            "mean_task_elapsed_seconds": 114.262732,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1616.046626,
+            "effect_window_deadline_misses": 7,
+            "task_deadline_misses": 3,
+            "maximum_safe_effect_elapsed_seconds": 245.83687,
+            "maximum_task_elapsed_seconds": 245.936408,
+            "mean_task_elapsed_seconds": 169.033714,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 32,
+        "task_deadline_seconds": 150,
+        "model_slot_policy": "fifo",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 465.819534,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 99.076977,
+            "maximum_task_elapsed_seconds": 99.114365,
+            "mean_task_elapsed_seconds": 63.919828,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 740.937783,
+            "effect_window_deadline_misses": 10,
+            "task_deadline_misses": 1,
+            "maximum_safe_effect_elapsed_seconds": 158.120945,
+            "maximum_task_elapsed_seconds": 158.161547,
+            "mean_task_elapsed_seconds": 102.105555,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1080.325808,
+            "effect_window_deadline_misses": 126,
+            "task_deadline_misses": 87,
+            "maximum_safe_effect_elapsed_seconds": 228.990034,
+            "maximum_task_elapsed_seconds": 229.037152,
+            "mean_task_elapsed_seconds": 147.715987,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1581.515162,
+            "effect_window_deadline_misses": 213,
+            "task_deadline_misses": 205,
+            "maximum_safe_effect_elapsed_seconds": 321.331262,
+            "maximum_task_elapsed_seconds": 321.4308,
+            "mean_task_elapsed_seconds": 218.975948,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 32,
+        "task_deadline_seconds": 150,
+        "model_slot_policy": "synthesis_priority",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 469.758438,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 78.497984,
+            "maximum_task_elapsed_seconds": 78.535372,
+            "mean_task_elapsed_seconds": 64.155765,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 763.488472,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 141.261175,
+            "maximum_task_elapsed_seconds": 141.301777,
+            "mean_task_elapsed_seconds": 102.357073,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1083.054127,
+            "effect_window_deadline_misses": 173,
+            "task_deadline_misses": 123,
+            "maximum_safe_effect_elapsed_seconds": 180.581027,
+            "maximum_task_elapsed_seconds": 180.628145,
+            "mean_task_elapsed_seconds": 147.939063,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1634.153434,
+            "effect_window_deadline_misses": 213,
+            "task_deadline_misses": 205,
+            "maximum_safe_effect_elapsed_seconds": 321.331262,
+            "maximum_task_elapsed_seconds": 321.4308,
+            "mean_task_elapsed_seconds": 219.280915,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 32,
+        "task_deadline_seconds": 150,
+        "model_slot_policy": "reserve2",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 467.222722,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 98.221069,
+            "maximum_task_elapsed_seconds": 98.258457,
+            "mean_task_elapsed_seconds": 64.647676,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 748.969348,
+            "effect_window_deadline_misses": 9,
+            "task_deadline_misses": 6,
+            "maximum_safe_effect_elapsed_seconds": 157.65998,
+            "maximum_task_elapsed_seconds": 157.700582,
+            "mean_task_elapsed_seconds": 103.167824,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1085.335671,
+            "effect_window_deadline_misses": 137,
+            "task_deadline_misses": 84,
+            "maximum_safe_effect_elapsed_seconds": 229.56042,
+            "maximum_task_elapsed_seconds": 229.607538,
+            "mean_task_elapsed_seconds": 149.437703,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1603.063442,
+            "effect_window_deadline_misses": 213,
+            "task_deadline_misses": 213,
+            "maximum_safe_effect_elapsed_seconds": 341.258344,
+            "maximum_task_elapsed_seconds": 341.357882,
+            "mean_task_elapsed_seconds": 221.385766,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 32,
+        "task_deadline_seconds": 180,
+        "model_slot_policy": "fifo",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 465.819534,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 99.076977,
+            "maximum_task_elapsed_seconds": 99.114365,
+            "mean_task_elapsed_seconds": 63.919828,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 740.937783,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 158.120945,
+            "maximum_task_elapsed_seconds": 158.161547,
+            "mean_task_elapsed_seconds": 102.105555,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1080.325808,
+            "effect_window_deadline_misses": 21,
+            "task_deadline_misses": 20,
+            "maximum_safe_effect_elapsed_seconds": 228.990034,
+            "maximum_task_elapsed_seconds": 229.037152,
+            "mean_task_elapsed_seconds": 147.715987,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1581.515162,
+            "effect_window_deadline_misses": 205,
+            "task_deadline_misses": 202,
+            "maximum_safe_effect_elapsed_seconds": 321.331262,
+            "maximum_task_elapsed_seconds": 321.4308,
+            "mean_task_elapsed_seconds": 218.975948,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 32,
+        "task_deadline_seconds": 180,
+        "model_slot_policy": "synthesis_priority",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 469.758438,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 78.497984,
+            "maximum_task_elapsed_seconds": 78.535372,
+            "mean_task_elapsed_seconds": 64.155765,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 763.488472,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 141.261175,
+            "maximum_task_elapsed_seconds": 141.301777,
+            "mean_task_elapsed_seconds": 102.357073,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1083.054127,
+            "effect_window_deadline_misses": 10,
+            "task_deadline_misses": 1,
+            "maximum_safe_effect_elapsed_seconds": 180.581027,
+            "maximum_task_elapsed_seconds": 180.628145,
+            "mean_task_elapsed_seconds": 147.939063,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1634.153434,
+            "effect_window_deadline_misses": 205,
+            "task_deadline_misses": 205,
+            "maximum_safe_effect_elapsed_seconds": 321.331262,
+            "maximum_task_elapsed_seconds": 321.4308,
+            "mean_task_elapsed_seconds": 219.280915,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 32,
+        "task_deadline_seconds": 180,
+        "model_slot_policy": "reserve2",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 467.222722,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 98.221069,
+            "maximum_task_elapsed_seconds": 98.258457,
+            "mean_task_elapsed_seconds": 64.647676,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 748.969348,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 157.65998,
+            "maximum_task_elapsed_seconds": 157.700582,
+            "mean_task_elapsed_seconds": 103.167824,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1085.335671,
+            "effect_window_deadline_misses": 23,
+            "task_deadline_misses": 22,
+            "maximum_safe_effect_elapsed_seconds": 229.56042,
+            "maximum_task_elapsed_seconds": 229.607538,
+            "mean_task_elapsed_seconds": 149.437703,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1603.063442,
+            "effect_window_deadline_misses": 206,
+            "task_deadline_misses": 205,
+            "maximum_safe_effect_elapsed_seconds": 341.258344,
+            "maximum_task_elapsed_seconds": 341.357882,
+            "mean_task_elapsed_seconds": 221.385766,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 32,
+        "task_deadline_seconds": 210,
+        "model_slot_policy": "fifo",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 465.819534,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 99.076977,
+            "maximum_task_elapsed_seconds": 99.114365,
+            "mean_task_elapsed_seconds": 63.919828,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 740.937783,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 158.120945,
+            "maximum_task_elapsed_seconds": 158.161547,
+            "mean_task_elapsed_seconds": 102.105555,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1080.325808,
+            "effect_window_deadline_misses": 7,
+            "task_deadline_misses": 6,
+            "maximum_safe_effect_elapsed_seconds": 228.990034,
+            "maximum_task_elapsed_seconds": 229.037152,
+            "mean_task_elapsed_seconds": 147.715987,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1581.515162,
+            "effect_window_deadline_misses": 186,
+            "task_deadline_misses": 179,
+            "maximum_safe_effect_elapsed_seconds": 321.331262,
+            "maximum_task_elapsed_seconds": 321.4308,
+            "mean_task_elapsed_seconds": 218.975948,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 32,
+        "task_deadline_seconds": 210,
+        "model_slot_policy": "synthesis_priority",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 469.758438,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 78.497984,
+            "maximum_task_elapsed_seconds": 78.535372,
+            "mean_task_elapsed_seconds": 64.155765,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 763.488472,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 141.261175,
+            "maximum_task_elapsed_seconds": 141.301777,
+            "mean_task_elapsed_seconds": 102.357073,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1083.054127,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 180.581027,
+            "maximum_task_elapsed_seconds": 180.628145,
+            "mean_task_elapsed_seconds": 147.939063,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1634.153434,
+            "effect_window_deadline_misses": 196,
+            "task_deadline_misses": 175,
+            "maximum_safe_effect_elapsed_seconds": 321.331262,
+            "maximum_task_elapsed_seconds": 321.4308,
+            "mean_task_elapsed_seconds": 219.280915,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 32,
+        "task_deadline_seconds": 210,
+        "model_slot_policy": "reserve2",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 467.222722,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 98.221069,
+            "maximum_task_elapsed_seconds": 98.258457,
+            "mean_task_elapsed_seconds": 64.647676,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 748.969348,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 157.65998,
+            "maximum_task_elapsed_seconds": 157.700582,
+            "mean_task_elapsed_seconds": 103.167824,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1085.335671,
+            "effect_window_deadline_misses": 11,
+            "task_deadline_misses": 5,
+            "maximum_safe_effect_elapsed_seconds": 229.56042,
+            "maximum_task_elapsed_seconds": 229.607538,
+            "mean_task_elapsed_seconds": 149.437703,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1603.063442,
+            "effect_window_deadline_misses": 181,
+            "task_deadline_misses": 163,
+            "maximum_safe_effect_elapsed_seconds": 341.258344,
+            "maximum_task_elapsed_seconds": 341.357882,
+            "mean_task_elapsed_seconds": 221.385766,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 32,
+        "task_deadline_seconds": 240,
+        "model_slot_policy": "fifo",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 465.819534,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 99.076977,
+            "maximum_task_elapsed_seconds": 99.114365,
+            "mean_task_elapsed_seconds": 63.919828,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 740.937783,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 158.120945,
+            "maximum_task_elapsed_seconds": 158.161547,
+            "mean_task_elapsed_seconds": 102.105555,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1080.325808,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 228.990034,
+            "maximum_task_elapsed_seconds": 229.037152,
+            "mean_task_elapsed_seconds": 147.715987,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1581.515162,
+            "effect_window_deadline_misses": 24,
+            "task_deadline_misses": 23,
+            "maximum_safe_effect_elapsed_seconds": 321.331262,
+            "maximum_task_elapsed_seconds": 321.4308,
+            "mean_task_elapsed_seconds": 218.975948,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 32,
+        "task_deadline_seconds": 240,
+        "model_slot_policy": "synthesis_priority",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 469.758438,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 78.497984,
+            "maximum_task_elapsed_seconds": 78.535372,
+            "mean_task_elapsed_seconds": 64.155765,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 763.488472,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 141.261175,
+            "maximum_task_elapsed_seconds": 141.301777,
+            "mean_task_elapsed_seconds": 102.357073,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1083.054127,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 180.581027,
+            "maximum_task_elapsed_seconds": 180.628145,
+            "mean_task_elapsed_seconds": 147.939063,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1634.153434,
+            "effect_window_deadline_misses": 34,
+            "task_deadline_misses": 33,
+            "maximum_safe_effect_elapsed_seconds": 321.331262,
+            "maximum_task_elapsed_seconds": 321.4308,
+            "mean_task_elapsed_seconds": 219.280915,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      },
+      {
+        "active_child_cap": 32,
+        "task_deadline_seconds": 240,
+        "model_slot_policy": "reserve2",
+        "scenario_results": {
+          "p25": {
+            "projected_forward_wall_seconds": 467.222722,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 98.221069,
+            "maximum_task_elapsed_seconds": 98.258457,
+            "mean_task_elapsed_seconds": 64.647676,
+            "model_effects": 462
+          },
+          "p50": {
+            "projected_forward_wall_seconds": 748.969348,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 157.65998,
+            "maximum_task_elapsed_seconds": 157.700582,
+            "mean_task_elapsed_seconds": 103.167824,
+            "model_effects": 462
+          },
+          "p75": {
+            "projected_forward_wall_seconds": 1085.335671,
+            "effect_window_deadline_misses": 0,
+            "task_deadline_misses": 0,
+            "maximum_safe_effect_elapsed_seconds": 229.56042,
+            "maximum_task_elapsed_seconds": 229.607538,
+            "mean_task_elapsed_seconds": 149.437703,
+            "model_effects": 462
+          },
+          "p95": {
+            "projected_forward_wall_seconds": 1603.063442,
+            "effect_window_deadline_misses": 30,
+            "task_deadline_misses": 26,
+            "maximum_safe_effect_elapsed_seconds": 341.258344,
+            "maximum_task_elapsed_seconds": 341.357882,
+            "mean_task_elapsed_seconds": 221.385766,
+            "model_effects": 462
+          }
+        },
+        "all_scenarios_zero_deadline_miss": false,
+        "p95_forward_wall_within_ceiling": true,
+        "mechanism_gate_passed": false
+      }
+    ]
+  },
+  "conclusions": {
+    "current_32_8_150_schedule_is_tail_robust_in_simulation": false,
+    "bounded_active_child_admission_required_by_selected_schedule": true,
+    "longer_task_deadline_required_by_selected_schedule": true,
+    "stage_aware_slot_policy_required_by_selected_schedule": false,
+    "strict_synthesis_priority_selected": false,
+    "simulation_proves_real_provider_zero_fallback": false,
+    "neutral_provider_stress_test_required": true,
+    "quality_improvement_or_sota_demonstrated": false
+  },
+  "next_work": {
+    "preregister_neutral_non_benchmark_provider_stress": true,
+    "stress_arms": [
+      "current_32_active_8_slots_150s_fifo_control",
+      "selected_20_active_8_slots_240s_fifo",
+      "conservative_16_active_8_slots_210s_fifo",
+      "conservative_16_active_6_general_2_postplan_reserved_210s"
+    ],
+    "required_gate": {
+      "zero_pre_provider_synthesis_rejection": true,
+      "zero_fallback": true,
+      "exact_effect_accounting": true,
+      "no_benchmark_manifest_mapping_gold_evaluator_or_score": true,
+      "no_additional_work_across_arms": true,
+      "selected_or_conservative_arm_wall_competitive": true
+    }
+  },
+  "authorization": {
+    "neutral_provider_stress_protocol_design": true,
+    "neutral_provider_stress_launch": false,
+    "additional_dev64": false,
+    "new_exact220": false,
+    "same_run_evaluator_or_revaluation": false,
+    "leaderboard_submission": false,
+    "sota_claim": false
+  },
+  "simulation_payload_sha256": "f82137023f311343b941a42bb339f26b866f8f7f58ba99a0e606b6a2ef239d69"
+}
