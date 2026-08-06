@@ -1,0 +1,74 @@
+{
+  "artifact_version": 1,
+  "authorization": {
+    "avg_at_4_leaderboard_or_sota": false,
+    "evaluator": false,
+    "exact220": false,
+    "preactivation_audit_generation": true,
+    "single_fresh_paired_dev64_forward_after_activation_and_start": false
+  },
+  "causal_treatment": {
+    "baseline": "frozen_visible_schema_parser_and_frozen_v24630_pipeline",
+    "candidate": "expanded_visible_schema_parser_only_when_frozen_parser_abstains",
+    "model_query_fetch_token_deadline_search_title_backfill_or_synthesis_policy_changed": false,
+    "module_global_parser_mutated": false,
+    "treated_tasks": 8,
+    "untreated_candidate_exactly_reuses_same_run_baseline": true
+  },
+  "control_manifest": {
+    "results/v24680_schema_dev64_runtime_build_audit_v1_20260806.json": "bd99be3ac99398560430298b2f00ba00f5f882e1e9233f363ce4887560990335",
+    "scripts/v24679_schema_dev64_control.py": "6cb5af6e39c835a9de5960df7e8079a20fa18dd914d5ddc9b5d6170402a5b646",
+    "tests/test_v24679_schema_dev64.py": "04d636705fb7897e9142d6eb7f18c11c02ced5c7899898d44398ff75311d7afb",
+    "tests/test_v24679_schema_dev64_control.py": "c794f01c6715a3313e866eb5d392cdf1804bb4327b0e24e9b4effad87b874a91"
+  },
+  "control_manifest_sha256": "4eb922035e305c249a752c1309489e7f613a6f3bd71682b8cdd9878119c431d7",
+  "created_at_unix": 1786031409,
+  "decision_contract": {
+    "maximum_baseline_runtime_failures_for_evaluator_gate": 4,
+    "maximum_candidate_minus_baseline_evaluator_failures_for_go": 0,
+    "maximum_candidate_minus_baseline_runtime_failures_for_go": 0,
+    "maximum_candidate_runtime_failures_for_evaluator_gate": 4,
+    "maximum_model_slot_timeouts_for_evaluator_gate": 0,
+    "maximum_real_child_runtime_failures_for_evaluator_gate": 4,
+    "minimum_changed_candidate_tasks_for_evaluator_gate": 1,
+    "minimum_column_f1_delta_for_go": 0.0,
+    "minimum_entity_acc_delta_for_go": 0.0,
+    "minimum_f1_by_item_delta_for_go": 0.0,
+    "minimum_f1_by_row_delta_for_go": 0.0,
+    "minimum_quality_composite_delta_for_go": 0.0,
+    "minimum_whole_table_success_delta_for_go": 1,
+    "required_terminal_prediction_rows_per_arm": 64
+  },
+  "dependency_manifest_sha256": "f40d75dc942e90c3b3af87178e68d13b6c9c86e9fa25c92256f0ec11e668321f",
+  "forward_contract_sha256": "73aa383c77244a367b9632391978d47a8bb50af5b45359ff49359691f30d1c37",
+  "postfreeze_evaluator_policy": {
+    "all_64_frozen_predictions_per_arm_evaluated_on_fixed_denominator": true,
+    "changed_candidate_tasks_zero_is_direct_no_go_without_evaluator": true,
+    "evaluator_code_imported_by_forward_or_pre_freeze_control": false,
+    "evaluator_mapping_gold_query_answer_category_split_score_or_reward_opened_or_hashed_pre_freeze": false,
+    "same_run_evaluator_feedback_used_for_forward_or_prediction_selection": false,
+    "separate_evaluator_gate_required_after_both_arm_prediction_freezes": true
+  },
+  "protocol_id": "v24679_expanded_visible_schema_paired_dev64_v1",
+  "protocol_payload_sha256": "376b8ecdba18df09ecf1957c78998ea851a95bdd06b156d74e5e28753fe21691",
+  "role": "v24679_schema_dev64_preregistration",
+  "source_policy": {
+    "both_arm_prediction_freezes_before_evaluator_resource_open": true,
+    "mapping_gold_category_question_type_split_evaluator_score_or_reward_read_by_forward": false,
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ]
+  },
+  "task_contract": {
+    "exact_same_run_control_reuse_candidate_tasks": 56,
+    "failure_as_zero": true,
+    "fixed_denominator_per_arm": 64,
+    "fresh_baseline_children": 64,
+    "fresh_candidate_children": 8,
+    "historical_dev_population_not_unseen": true,
+    "no_resume_retry_skip_selective_rerun_or_revaluation": true,
+    "real_child_runs": 72,
+    "selected_per_arm": 64
+  }
+}
