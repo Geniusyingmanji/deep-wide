@@ -24,7 +24,7 @@ class V24663PopulationTests(unittest.TestCase):
     def test_fixed_immutable_tree_and_slice(self):
         self.assertEqual(design.COMMIT, "aab1443afefefa8460e69ab01bccceff0a8544d4")
         self.assertEqual(design.VERSION, "v2.11")
-        self.assertEqual((design.SLICE_START, design.SLICE_STOP), (3_000, 3_482))
+        self.assertEqual((design.SLICE_START, design.SLICE_STOP), (0, 3_482))
         self.assertEqual(design.SELECTED_COUNT, 48)
 
     def test_parent_grants_design_not_launch(self):

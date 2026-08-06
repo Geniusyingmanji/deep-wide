@@ -29,8 +29,8 @@ DATE = "20260806"
 COMMIT = prior.COMMIT
 VERSION = prior.VERSION
 DIRECTORY_TREE_SHA1 = prior.DIRECTORY_TREE_SHA1
-SLICE_START = prior.SLICE_START
-SLICE_STOP = prior.SLICE_STOP
+SLICE_START = 0
+SLICE_STOP = 3_482
 SELECTED_COUNT = 48
 PARENT = Path(f"results/v24662_strict_support_closure_build_audit_v1_{DATE}.json")
 PRIVATE = Path(f"evaluation/v24663_ror_population_private_v1_{DATE}.json")
@@ -130,7 +130,7 @@ def main() -> None:
         and str(item.get("path", "")).endswith(".json")
     ]
     selected_entries = entries[SLICE_START:SLICE_STOP]
-    if tree.get("truncated") is not False or len(entries) != 3_482 or len(selected_entries) != 482:
+    if tree.get("truncated") is not False or len(entries) != 3_482 or len(selected_entries) != 3_482:
         raise RuntimeError("V2.46.63 immutable tree slice drifted")
 
     def fetch_record(entry: Mapping[str, Any]):
@@ -157,7 +157,7 @@ def main() -> None:
     if previous.intersection(item["label"] for item in selected):
         raise RuntimeError("V2.46.63 selected vector overlaps V2.46.51")
     selection_rule = (
-        "ror_v2_11_final_slice_3000_3481_active_unique_display_"
+        "ror_v2_11_full_tree_0_3481_active_unique_display_"
         "prior_4528_entity_disjoint_sha256_rank_country_cap4_quartile_interleaved"
     )
     private = {
