@@ -334,6 +334,9 @@ class RuntimeTests(unittest.TestCase):
         paths = (
             ROOT / "src/deepwide_agent/v24640_evidence_constrained_runtime.py",
             ROOT / "src/deepwide_agent/v24640_ror_external_contract.py",
+            ROOT / "scripts/run_v24640_ror_task.py",
+            ROOT / "scripts/run_v24640_evidence_constrained.py",
+            ROOT / "scripts/audit_v24640_evidence_constrained_forward.py",
         )
         for path in paths:
             text = path.read_text(encoding="utf-8")
@@ -348,8 +351,10 @@ class RuntimeTests(unittest.TestCase):
                 any("evaluator" in name or "gold" in name for name in imports)
             )
             self.assertNotIn("evaluation/", text)
-            self.assertNotIn("subprocess", text)
             self.assertNotIn("_arm_order =", text)
+        runtime_text = paths[0].read_text(encoding="utf-8")
+        self.assertNotIn("subprocess", runtime_text)
+        self.assertNotIn("Path(", runtime_text)
 
 
 class EvaluatorTests(unittest.TestCase):
