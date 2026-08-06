@@ -1,10 +1,16 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
-> 检索截止：2026-08-06 04:48 UTC；项目证据更新：2026-08-06 UTC（V2.46.51–54）
+> 检索截止：2026-08-06 04:48 UTC；项目证据更新：2026-08-06 UTC（V2.46.79–85）
 >
 > 结论强度：这是基于公开文献的 novelty audit，不是“没有任何相关工作”的证明。2026 年文献多为尚未同行评审的 arXiv 预印本，文中将预印本结果视为作者报告，而非独立复现事实。
 
 当前最新的可信全集结果是 V2.46.35。该版本在严格 label-blind、220 个预测全部冻结后才开放 evaluator 的单次运行中得到 `4/220` whole-table、Composite `0.437892`、Entity `0.672727`、Row F1 `0.224156`、Item F1 `0.385078` 和 Column F1 `0.469605`。208 题得到有效 evaluator 输出，12 个 evaluator error 按预注册规则计零；forward 与 evaluator 墙钟分别为 `915.58s` 和 `222.24s`。相对 V2.46.30，Composite 增加 `0.034260`，whole-table 却从 `5/220` 降到 `4/220`；相对项目最佳 V2.42.67，Composite 高 `0.024350`，whole-table 仍少 3。V2.46.35 因而是当前可信单轮 full-220 Composite 最高结果，但不是严格 whole-table 主指标最佳。该结果没有 leaderboard 提交或同协议 SOTA 证据，因此不是 SOTA。
+
+V2.46.79–85 已完成一个固定64分母的DeepWideBench historical dev/validation schema gate，但结果为严格NO-GO。64个control全部fresh运行，仅8个expanded-schema自然触发任务fresh运行candidate，其余56个candidate精确复用同轮control。唯一有效forward在`305.128444s`完成72/72 child，0 runtime failure、0 fallback和0 model-slot timeout；8/8 schema treatment触发，7/8改变prediction。post-freeze evaluator评价64个baseline和7个changed candidate prediction，再为57个hash-identical candidate复用同一judgment，最终仍按两臂各64计分。baseline→candidate为whole-table `3→3/64`、Entity `0.718750→0.718750`、Row F1 `0.253472→0.256077`、Item F1 `0.448457→0.449156`、Column F1 `0.547557→0.547717`和Composite `0.492059→0.492925`。唯一失败门是预注册的whole-table至少`+1`，因此不授权exact-220。
+
+这次结果进一步限制了“结构不确定性”或“熵降”作为credit的表述。离线配对诊断显示，8/8 treatment都成功应用schema，7个changed pair的whole-table与Entity却全部不变；Composite只有1正、4零、2负，固定64均值`+0.000865815`，95% paired bootstrap区间`[-0.001402, 0.004272]`跨0。显式schema可改变输出表面，但没有稳定改变事实正确性或整表完成。因此，schema entropy reduction、parser reachability或prediction change本身不能获得正task credit。下一实验必须在schema之后加入可地址化target–value evidence、确定性cell admission和独立completion check，并把expanded parser only保留为强对照。
+
+上述差异也不能解释成expanded parser的纯因果效应。parser是在公开220题面coverage审计后形成，当前64题不是unseen人口；8个treated pair又是两次独立fresh generation，没有共享模型随机数。该结果只支持“在这次冻结工程门中观察到微小、混合的局部F1变化且无whole-table收益”。它不支持泛化、220提分或SOTA主张。权威工件为 [`results/v24679_schema_dev64_result_v1_20260806.json`](results/v24679_schema_dev64_result_v1_20260806.json)、[`results/v24679_schema_dev64_postresult_audit_v1_20260806.json`](results/v24679_schema_dev64_postresult_audit_v1_20260806.json) 与 [`results/v24685_v24679_schema_dev64_diagnosis_v1_20260806.json`](results/v24685_v24679_schema_dev64_diagnosis_v1_20260806.json)。
 
 V2.46.51–54 提供了新的 benchmark-external 质量证据，但没有改变上述 DeepWideBench 全集分数。12个fresh ROR任务先在相同总fetch cap内形成baseline，再把最多4个fetch定向到baseline Unknown ROR cell的official ROR v2 exact-name active lookup。唯一forward在`73.045937s`内冻结24个预测；37个targeted lookup中36个得到唯一可采纳记录，1个歧义而abstain。预测冻结后的一次评价得到baseline→candidate exact-table `0→7/12`、Item F1 `0.552083→0.927083`、Composite `0.888021→0.981771`、Unknown cells `40→4`。该结果支持“identity-bound、target-bound、唯一official record驱动的Unknown recovery”在这类fresh registry任务上有正向outer utility；它不支持把任意网页的熵下降当credit，也不支持DeepWideBench或SOTA结论。
 
@@ -735,7 +741,7 @@ Gate 2B 还必须把 prediction source 与 evaluation target 分开。Inner camp
 
 截至 2026-08-06，当前已完成的最新框架是 V2.46.35 exact-220，而不是继续等待 V2.42 watcher。每题的前向边界严格为 `{opaque_id, question}`，执行链为 `plan → 最多两波 2+2 logical queries → 最多 6+4 fetch → evidence projection → synthesis → 必要时 repair/recovery → prediction freeze`。220 个预测全部冻结后，独立 evaluator 才能读取 mapping 和答案语料。跨题 active child 为 20，全局模型槽为 8，每题总 deadline 为 240 秒。该配置的 forward 为 `915.58s`，evaluator 为 `222.24s`，顺序相加约 `18.96min`。
 
-项目结果必须按证据等级解释。V2.46.30 与 V2.46.35 都是 220 题、固定分母、failure-as-zero 的 benchmark 结果；V2.46.36 是两者冻结后的 aggregate-only 诊断，不是第三次 benchmark。paired dev64 只是每臂 64 题的方向性 gate；8/12/16 题 external gate 使用 benchmark-external 人口，只能判断机制是否可达；build、unit 和 fault-injection 使用 0 道 benchmark 题，只能证明工程合同。版本号增加不等于多次取得 benchmark 分数。V2.43.30 虽完成 220 题 forward，但未通过 pair-summary 工程门且没有 evaluator，因而没有可报告的质量结论。
+项目结果必须按证据等级解释。V2.46.30 与 V2.46.35 都是 220 题、固定分母、failure-as-zero 的 benchmark 结果；V2.46.36 是两者冻结后的 aggregate-only 诊断，不是第三次 benchmark。V2.46.79 是历史 dev/validation 人口上每臂固定 64 分母的方向性 gate，不是新的 full-220 或 unseen 结果；8/12/16 题 external gate 使用 benchmark-external 人口，只能判断机制是否可达；build、unit 和 fault-injection 使用 0 道 benchmark 题，只能证明工程合同。版本号增加不等于多次取得 benchmark 分数。V2.43.30 虽完成 220 题 forward，但未通过 pair-summary 工程门且没有 evaluator，因而没有可报告的质量结论。
 
 V2.46.30 的检索扩展没有形成下游作用。40 个唯一 backfilled URL 全被已有 leads 遮蔽，最终 surviving candidate 为 0。该版本的 34 个 fallback 与 slot/deadline 饱和共现，促成 V2.46.32–35 的 benchmark-external 容量模拟、GPT-5.6 中性压力测试和 20/8/240 successor。V2.46.35 将 fallback 降到 1、model slot timeout 降到 0，却只得到 `4/220` 整表成功。V2.46.36 又显示 34 个被恢复为模型输出的旧 fallback 任务仍为 `0/34` 整表成功。容量编排问题已经缓解，下一优先问题因而变为 exact-table objective alignment，而不是增加 query、fetch、backfill 或继续压 fallback。两次公开集运行不是随机化调度实验，不能建立质量因果效应。
 
@@ -1070,4 +1076,4 @@ V2.46.51–54 完成了上述外部门。新人口来自同一immutable ROR tree
 
 对论文主张，当前最强可辩护表述是 **identity-gated, target-bound, utility-validated information acquisition**，而不是“按entropy gain分配credit”。若要把entropy升级为核心经验贡献，后续实验至少需要在同一可接受observation集合上预注册三臂：无熵的deterministic Unknown-target baseline、entropy/VOC排序candidate，以及matched-cost随机或固定排序control；冻结每步belief state、source-dependency group与action budget，并用同状态删除/替换或sibling counterfactual估计step contribution。只有entropy/VOC排序在fresh任务上同时提高outer exact-table utility、通过来源独立性门并优于无熵强基线，才可声称entropy提供了增量credit signal。
 
-DeepWideBench迁移还需要一道独立门。ROR API是领域特定权威adapter；把它未经验证地应用到任意DeepWideBench题会混淆mechanism transfer与domain shortcut。下一fresh paired dev64应只根据visible question/schema和预注册namespace选择adapter，禁止category、question_type、mapping、gold或score路由；无适配器时candidate与control必须一致。whole-table严格增益、Composite/Item F1 non-regression、evaluator health、自然触发率与同总budget必须共同过门。该dev64尚未设计或启动，当前仍无新的DeepWideBench分数或SOTA证据。
+DeepWideBench迁移仍需要一道新的独立门。ROR API是领域特定权威adapter；把它未经验证地应用到任意DeepWideBench题会混淆mechanism transfer与domain shortcut。V2.46.79 已经完成 expanded-schema historical dev64，但 whole-table `3→3/64`，因此不能充当这道迁移门的 GO。下一实验应先在 fresh benchmark-external 表格人口比较 frozen parser、expanded parser only、expanded parser + target–value evidence/admission 三臂；路由只能依据 visible question/schema 与预注册 namespace，禁止 category、question_type、mapping、gold 或 score。只有 whole-table 严格增益、Composite/Entity/Row/Item/Column F1 全部 non-regression、evaluator health、自然触发率与同总 budget 共同过门，才可重新设计 DeepWideBench gate。当前没有新的 full-220 授权或 SOTA 证据。
