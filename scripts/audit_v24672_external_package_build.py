@@ -1,0 +1,447 @@
+#!/usr/bin/env python3
+"""Clean-build audit for the inert V2.46.71 information-gain package."""
+
+from __future__ import annotations
+
+import ast
+import json
+import os
+import re
+import subprocess
+import sys
+import time
+from pathlib import Path
+from typing import Any, Mapping
+
+
+ROOT = Path(__file__).resolve().parents[1]
+for path in (ROOT, ROOT / "src"):
+    if str(path) not in sys.path:
+        sys.path.insert(0, str(path))
+
+from deepwide_agent.v24320_forward_contract import payload_sha256  # noqa: E402
+from deepwide_agent.v24671_ror_external_contract import (  # noqa: E402
+    ARM_COUNT,
+    EXECUTOR_CONCURRENCY,
+    MODEL_SLOT_CAP,
+    PROTOCOL_ID,
+    SELECTED_COUNT,
+    TREATMENT,
+    protected_watcher_snapshot,
+    task_vector,
+)
+from scripts.audit_v24195_lease_owner_compatibility import lease_observation  # noqa: E402
+
+
+DATE = "20260806"
+PARENT = Path(f"results/v24670_ror_population_design_v1_{DATE}.json")
+AUDIT = Path(f"results/v24672_external_package_build_audit_v1_{DATE}.json")
+FORWARD_FILES = (
+    Path("src/deepwide_agent/v24655_unknown_cell_targeted_runtime.py"),
+    Path("src/deepwide_agent/v24659_support_closure_runtime.py"),
+    Path("src/deepwide_agent/v24661_support_closure_task_runtime.py"),
+    Path("src/deepwide_agent/v24668_visible_surface_information_gain_runtime.py"),
+    Path("src/deepwide_agent/v24671_ror_external_contract.py"),
+    Path("src/deepwide_agent/v24671_runner_integration.py"),
+    Path("scripts/run_v24671_ror_task.py"),
+    Path("scripts/run_v24671_information_gain.py"),
+    Path("scripts/audit_v24671_forward.py"),
+)
+SOURCES = FORWARD_FILES + (
+    PARENT,
+    Path("tests/test_v24655_unknown_cell_targeted_runtime.py"),
+    Path("tests/test_v24659_support_closure_runtime.py"),
+    Path("tests/test_v24661_support_closure_task_runtime.py"),
+    Path("tests/test_v24668_visible_surface_information_gain_runtime.py"),
+    Path("tests/test_build_v24671_ror_surfaces.py"),
+    Path("tests/test_v24671_forward_package.py"),
+    Path("scripts/audit_v24672_external_package_build.py"),
+    Path("tests/test_audit_v24672_external_package_build.py"),
+)
+TEST_SUITES = (
+    (Path("tests/test_v24655_unknown_cell_targeted_runtime.py"), 8),
+    (Path("tests/test_v24659_support_closure_runtime.py"), 7),
+    (Path("tests/test_v24661_support_closure_task_runtime.py"), 7),
+    (Path("tests/test_v24668_visible_surface_information_gain_runtime.py"), 8),
+    (Path("tests/test_build_v24671_ror_surfaces.py"), 5),
+    (Path("tests/test_v24671_forward_package.py"), 6),
+    (Path("tests/test_audit_v24672_external_package_build.py"), 7),
+)
+EXPECTED_TEST_COUNT = 48
+FORBIDDEN_MARKERS = (
+    "evaluation/",
+    "v24671_ror_external_evaluator",
+    "v24671_ror_gold_v1",
+    "v24671_ror_gold_provenance",
+    "v24670_ror_population_private",
+)
+SECRET_PREFIXES = ("gh" + "p_", "github_" + "pat_", "tvly-" + "dev-", "s" + "k-")
+SECRET = re.compile(
+    r"(?<![A-Za-z0-9])(?:"
+    + "|".join(re.escape(value) for value in SECRET_PREFIXES)
+    + r")[A-Za-z0-9_-]{16,}"
+)
+
+
+def _ordinary(relative: str | Path) -> Path:
+    raw = Path(relative)
+    path = ROOT / raw
+    if (
+        raw.is_absolute()
+        or ".." in raw.parts
+        or path.is_symlink()
+        or not path.is_file()
+        or not path.resolve().is_relative_to(ROOT.resolve())
+    ):
+        raise RuntimeError(f"V2.46.72 expected ordinary file: {relative}")
+    return path
+
+
+def _sha256(path: Path) -> str:
+    import hashlib
+
+    digest = hashlib.sha256()
+    with _ordinary(path).open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _sealed(value: Mapping[str, Any], field: str) -> bool:
+    unsigned = dict(value)
+    seal = unsigned.pop(field, None)
+    return seal == payload_sha256(unsigned)
+
+
+def _parent_valid() -> bool:
+    value = json.loads(_ordinary(PARENT).read_text(encoding="utf-8"))
+    return (
+        value.get("role") == "v24670_ror_population_design"
+        and value.get("selected_count") == 48
+        and value.get("historical_entity_count") == 4_576
+        and value.get("historical_canonical_count") == 4_576
+        and value.get("excluded_v24664_entity_count") == 48
+        and value.get("authorization", {}).get("external_protocol_design") is True
+        and value.get("authorization", {}).get("activation_or_launch") is False
+        and value.get("authorization", {}).get("dev64_or_exact220") is False
+        and value.get("authorization", {}).get("evaluator_access") is False
+        and _sealed(value, "design_sha256")
+    )
+
+
+def _git(*args: str) -> str:
+    return subprocess.run(
+        ["git", *args],
+        cwd=ROOT,
+        check=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.DEVNULL,
+        text=True,
+        timeout=20,
+    ).stdout.strip()
+
+
+def _tracked(path: Path) -> bool:
+    return (
+        subprocess.run(
+            ["git", "ls-files", "--error-unmatch", str(path)],
+            cwd=ROOT,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            timeout=20,
+            check=False,
+        ).returncode
+        == 0
+    )
+
+
+def _forward_findings() -> tuple[list[str], list[str], list[str], list[str]]:
+    markers: list[str] = []
+    imports: list[str] = []
+    literals: list[str] = []
+    fields: list[str] = []
+    privileged = {
+        "question_type",
+        "category",
+        "split",
+        "ground_truth",
+        "gold",
+        "answer_key",
+        "mapping",
+        "score",
+        "reward",
+        "results.csv",
+    }
+    for relative in FORWARD_FILES:
+        source = _ordinary(relative).read_text(encoding="utf-8")
+        markers.extend(
+            f"{relative}:{marker}" for marker in FORBIDDEN_MARKERS if marker in source
+        )
+        if SECRET.search(source):
+            literals.append(str(relative))
+        tree = ast.parse(source)
+        for node in ast.walk(tree):
+            key = None
+            if (
+                isinstance(node, ast.Call)
+                and isinstance(node.func, ast.Attribute)
+                and node.func.attr in {"get", "pop", "setdefault"}
+                and node.args
+                and isinstance(node.args[0], ast.Constant)
+            ):
+                key = node.args[0].value
+            elif isinstance(node, ast.Subscript) and isinstance(node.slice, ast.Constant):
+                key = node.slice.value
+            if isinstance(key, str) and key.casefold() in privileged:
+                fields.append(f"{relative}:{node.lineno}:{key}")
+            if isinstance(node, ast.Import):
+                names = [alias.name for alias in node.names]
+            elif isinstance(node, ast.ImportFrom):
+                names = [node.module or ""]
+            else:
+                names = []
+            imports.extend(
+                f"{relative}:{name}"
+                for name in names
+                if any(token in name.casefold() for token in ("external_evaluator", "gold"))
+            )
+    return sorted(markers), sorted(imports), sorted(literals), sorted(fields)
+
+
+def _run_test(path: Path) -> tuple[bool, int]:
+    completed = subprocess.run(
+        [
+            str(ROOT / ".venv-eval/bin/python"),
+            "-I",
+            "-B",
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            "tests",
+            "-p",
+            path.name,
+        ],
+        cwd=ROOT,
+        env={
+            "HOME": os.environ.get("HOME", str(Path.home())),
+            "USER": os.environ.get("USER", "azureuser"),
+            "LOGNAME": os.environ.get("LOGNAME", "azureuser"),
+            "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+            "PYTHONDONTWRITEBYTECODE": "1",
+            "PYTHONNOUSERSITE": "1",
+            "PYTHONSAFEPATH": "1",
+        },
+        stdin=subprocess.DEVNULL,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True,
+        timeout=180,
+        check=False,
+    )
+    match = re.search(r"Ran (\d+) tests?", completed.stdout)
+    return completed.returncode == 0, int(match.group(1)) if match else 0
+
+
+def _implementation_valid() -> bool:
+    tasks = task_vector()
+    return (
+        PROTOCOL_ID == "v24671_visible_surface_information_gain_ror_external_v1"
+        and SELECTED_COUNT == 12
+        and ARM_COUNT == 2
+        and EXECUTOR_CONCURRENCY == 12
+        and MODEL_SLOT_CAP == 8
+        and len(tasks) == 12
+        and all(set(task) == {"opaque_id", "question"} for task in tasks)
+        and TREATMENT["unknown_target_cell_cap"] == 1
+        and TREATMENT["targeted_fetch_cap"] == 4
+        and TREATMENT["targeted_fetch_capacity_concentrated_on_one_target"] is True
+        and TREATMENT["visible_title_and_normalized_url_path_information_gain_priority"]
+        is True
+        and TREATMENT["query_text_cannot_self_prove_surface_alignment"] is True
+        and TREATMENT["fetched_page_text_is_only_active_support"] is True
+        and TREATMENT["minimum_independent_local_exact_support_sources"] == 2
+        and TREATMENT["strict_support_closure_preserves_all_declared_evidence_ids"]
+        is True
+        and TREATMENT["proposal_value_changed"] is False
+        and TREATMENT["support_threshold_relaxed"] is False
+        and TREATMENT[
+            "decision_credit_before_safe_change_and_postfreeze_outer_utility"
+        ]
+        is False
+    )
+
+
+def build_audit(*, now: int | None = None) -> dict[str, Any]:
+    manifest = {str(path): _sha256(path) for path in SOURCES}
+    markers, imports, secret_hits, fields = _forward_findings()
+    suites = []
+    for path, expected in TEST_SUITES:
+        passed, observed = _run_test(path)
+        suites.append(
+            {
+                "path": str(path),
+                "expected_test_count": expected,
+                "observed_test_count": observed,
+                "passed": passed and observed == expected,
+            }
+        )
+    head = _git("rev-parse", "HEAD")
+    remote = _git("rev-parse", "target/main")
+    clean = _git("status", "--porcelain") == ""
+    tracked = all(_tracked(path) for path in SOURCES)
+    parent_valid = _parent_valid()
+    implementation_valid = _implementation_valid()
+    lease = lease_observation(ROOT, Path("/proc"))
+    watchers = protected_watcher_snapshot()
+    findings: list[str] = []
+    if head != remote:
+        findings.append("v24672_source_commit_not_pushed")
+    if not clean:
+        findings.append("v24672_source_worktree_not_clean")
+    if not tracked:
+        findings.append("v24672_source_not_tracked")
+    if not parent_valid:
+        findings.append("v24670_population_parent_drifted")
+    if not implementation_valid:
+        findings.append("v24671_package_contract_drifted")
+    if markers:
+        findings.append("private_or_evaluator_marker_in_forward")
+    if imports:
+        findings.append("evaluator_or_gold_import_in_forward")
+    if fields:
+        findings.append("privileged_forward_field_access")
+    if secret_hits:
+        findings.append("credential_literal_in_forward")
+    if any(not suite["passed"] for suite in suites):
+        findings.append("regression_failed_or_count_drifted")
+    if sum(suite["observed_test_count"] for suite in suites) != EXPECTED_TEST_COUNT:
+        findings.append("total_test_count_drifted")
+    if lease.get("active") is not False:
+        findings.append("shared_api_lease_active")
+    value = {
+        "artifact_version": 1,
+        "role": "v24672_external_package_build_audit",
+        "protocol_id": PROTOCOL_ID,
+        "created_at_unix": int(time.time()) if now is None else int(now),
+        "parent": {
+            "population_design_sha256": _sha256(PARENT),
+            "valid": parent_valid,
+        },
+        "mechanism": {
+            "selected_tasks": SELECTED_COUNT,
+            "selected_arm_predictions": SELECTED_COUNT * ARM_COUNT,
+            "executor_concurrency": EXECUTOR_CONCURRENCY,
+            "model_slot_cap": MODEL_SLOT_CAP,
+            "fixed_total_model_query_fetch_caps": [3, 4, 10],
+            "one_unknown_target_and_four_concentrated_fetches": True,
+            "visible_surface_information_gain_routes_prefetch_priority": True,
+            "query_text_cannot_self_prove_alignment": True,
+            "fetched_page_text_only_active_support": True,
+            "minimum_independent_support_sources": 2,
+            "unresolved_declared_evidence_ids_preserved": True,
+            "support_threshold_relaxed": False,
+            "positive_epistemic_action_credit_can_be_assigned": True,
+            "positive_decision_credit_before_safe_change_and_outer_utility": False,
+            "mechanism_gate_precedes_outer_utility_protocol": True,
+            "implementation_valid": implementation_valid,
+        },
+        "source_manifest": manifest,
+        "source_manifest_sha256": payload_sha256(manifest),
+        "git": {
+            "head": head,
+            "target_main": remote,
+            "head_equals_target_main": head == remote,
+            "worktree_clean": clean,
+            "all_sources_tracked": tracked,
+        },
+        "tests": {
+            "suites": suites,
+            "test_count": sum(suite["observed_test_count"] for suite in suites),
+            "passed": all(suite["passed"] for suite in suites),
+            "network_model_search_fetch_benchmark_or_evaluator_called": False,
+        },
+        "label_blind_audit": {
+            "runtime_input_keys": ["opaque_id", "question"],
+            "forbidden_forward_markers": markers,
+            "privileged_forward_field_accesses": fields,
+            "evaluator_or_gold_imports": imports,
+            "credential_literal_hits": secret_hits,
+            "passed": not markers and not fields and not imports and not secret_hits,
+        },
+        "runtime_state": {
+            "shared_api_lease_active": lease.get("active"),
+            "protected_watchers": watchers,
+            "external_forward_launched_by_audit": False,
+            "evaluator_called_by_audit": False,
+        },
+        "findings": findings,
+        "audit_valid": not findings,
+        "authorization": {
+            "external_protocol_publication": not findings,
+            "preactivation_audit": False,
+            "activation_or_launch": False,
+            "evaluator": False,
+            "dev64_or_exact220": False,
+            "leaderboard_or_sota": False,
+        },
+    }
+    value["audit_payload_sha256"] = payload_sha256(value)
+    return value
+
+
+def validate_audit(value: Mapping[str, Any]) -> dict[str, Any]:
+    copied = dict(value)
+    if (
+        copied.get("role") != "v24672_external_package_build_audit"
+        or copied.get("protocol_id") != PROTOCOL_ID
+        or copied.get("audit_valid") is not True
+        or copied.get("findings") != []
+        or copied.get("tests", {}).get("passed") is not True
+        or copied.get("tests", {}).get("test_count") != EXPECTED_TEST_COUNT
+        or copied.get("label_blind_audit", {}).get("passed") is not True
+        or copied.get("mechanism", {}).get("implementation_valid") is not True
+        or copied.get("runtime_state", {}).get("shared_api_lease_active") is not False
+        or copied.get("authorization")
+        != {
+            "external_protocol_publication": True,
+            "preactivation_audit": False,
+            "activation_or_launch": False,
+            "evaluator": False,
+            "dev64_or_exact220": False,
+            "leaderboard_or_sota": False,
+        }
+        or not _sealed(copied, "audit_payload_sha256")
+    ):
+        raise RuntimeError("V2.46.72 package audit drifted")
+    return copied
+
+
+def publish_new(path: Path, value: Mapping[str, Any]) -> None:
+    if path.exists() or path.is_symlink():
+        raise FileExistsError(path)
+    descriptor = os.open(
+        path, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600
+    )
+    with os.fdopen(descriptor, "w", encoding="utf-8") as handle:
+        json.dump(dict(value), handle, ensure_ascii=False, indent=2, sort_keys=True)
+        handle.write("\n")
+        handle.flush()
+        os.fsync(handle.fileno())
+
+
+if __name__ == "__main__":
+    value = build_audit()
+    validate_audit(value)
+    publish_new(ROOT / AUDIT, value)
+    print(
+        json.dumps(
+            {
+                "path": str(AUDIT),
+                "audit_valid": value["audit_valid"],
+                "findings": value["findings"],
+                "test_count": value["tests"]["test_count"],
+            },
+            sort_keys=True,
+        )
+    )
