@@ -1,0 +1,65 @@
+{
+  "artifact_version": 1,
+  "role": "v24747_cross_domain_preactivation_failure",
+  "protocol_id": "v24747_cross_domain_generic_binding_gate_v1",
+  "failed_stage": "preactivation_directed_test_execution",
+  "failure_type": "isolated_unittest_module_import_path_missing",
+  "diagnosis": {
+    "command_shape": "python -I -B -m unittest tests.<module> -v",
+    "root_cause": "isolated_python_removed_repository_root_from_sys_path_before_tests_package_import",
+    "suite_count": 5,
+    "observed_failedtest_count": 5,
+    "expected_test_count": 32,
+    "functional_assertions_executed": 0,
+    "ast_label_blind_findings": [],
+    "evaluator_or_private_import_findings": [],
+    "shared_api_lease_inactive": true,
+    "runner_active": false
+  },
+  "effect_accounting": {
+    "network_requests": 0,
+    "model_calls": 0,
+    "hosted_search_calls": 0,
+    "benchmark_forward_calls": 0,
+    "evaluator_calls": 0,
+    "prediction_rows": 0,
+    "private_population_or_provenance_opened_or_hashed": false,
+    "mapping_gold_category_question_type_split_evaluator_score_or_reward_read": false
+  },
+  "surface_state": {
+    "preactivation_audit_published": false,
+    "activation_exists": false,
+    "execution_start_exists": false,
+    "result_exists": false,
+    "decision_exists": false,
+    "postresult_audit_exists": false,
+    "output_root_exists": false
+  },
+  "protected_watchers": [
+    {
+      "marker": "scripts/watch_v2415_r1_checkpoint_liveness.py",
+      "pid": 795336,
+      "start_ticks": 713986317
+    },
+    {
+      "marker": "scripts/watch_v24218_exact220_executor.py",
+      "pid": 3061652,
+      "start_ticks": 747569004
+    }
+  ],
+  "bindings": {
+    "git_head": "fc0f9afd86fbbdeaf43c9d1571d461ed3569b1ad",
+    "protocol_file_sha256": "941e29bea831b21e913077be91f0af3797232af52091e5a35dec7ef37c511e6b",
+    "gate_source_sha256": "0fd0897a8b2a9cc14c73f2cb77b1c12c49ad0f04fe99e0710df8bef5d967ccd3"
+  },
+  "disposition": {
+    "v24747_protocol_activation_authorized": false,
+    "v24747_retry_or_resume_authorized": false,
+    "append_only_successor_build_authorized": true,
+    "successor_may_only_change_isolated_test_discovery": true,
+    "successor_must_preserve_task_url_gate_and_budget_vectors": true,
+    "paired_dev64_or_exact220_authorized": false,
+    "leaderboard_or_sota_authorized": false
+  },
+  "failure_payload_sha256": "1fcf302526ddc4eecc92b978042c643a446f7b38e100d03eafe5390b20721c10"
+}
