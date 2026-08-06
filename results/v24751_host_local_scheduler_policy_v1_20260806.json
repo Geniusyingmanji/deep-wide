@@ -1,0 +1,59 @@
+{
+  "artifact_version": 1,
+  "role": "v24751_host_local_scheduler_policy",
+  "created_at_unix": 1786058066,
+  "parent_diagnosis_path": "results/v24749_v24748_host_rate_limit_diagnosis_v1_20260806.json",
+  "population_path": "results/v24750_host_local_population_design_v1_20260806.json",
+  "request_contract": {
+    "total_unique_urls": 32,
+    "attempts_per_url": 1,
+    "global_executor_capacity": 17,
+    "single_wave_submission": true,
+    "resume_retry_or_selective_rerun": false
+  },
+  "host_policy": {
+    "api.crossref.org": {
+      "request_count": 16,
+      "max_inflight": 1,
+      "minimum_start_interval_seconds": 1.1
+    },
+    "api.openalex.org": {
+      "request_count": 8,
+      "max_inflight": 8,
+      "minimum_start_interval_seconds": 0.0
+    },
+    "api.ror.org": {
+      "request_count": 8,
+      "max_inflight": 8,
+      "minimum_start_interval_seconds": 0.0
+    }
+  },
+  "wall_contract": {
+    "per_host_hard_wall_seconds": {
+      "api.crossref.org": 1.0,
+      "api.openalex.org": 20.0,
+      "api.ror.org": 20.0
+    },
+    "helper_termination_allowance_seconds": 1.0,
+    "socket_timeout_seconds": 15.0,
+    "scheduler_and_process_launch_slack_seconds": 1.0,
+    "derived_network_wave_ceiling_seconds": 33.0,
+    "experiment_wall_ceiling_seconds": 40.0
+  },
+  "selection_timing": {
+    "policy_fixed_before_fresh_population_endpoint_outcome": true,
+    "prior_response_body_url_doi_entity_value_or_prediction_read": false,
+    "only_prior_content_free_host_status_counts_used": true
+  },
+  "authorization": {
+    "scheduler_and_gate_build": true,
+    "external_launch": false,
+    "same_or_prior_population_retry": false,
+    "evaluator": false,
+    "paired_dev64": false,
+    "exact220": false,
+    "entropy_or_credit_experiment": false,
+    "leaderboard_or_sota": false
+  },
+  "policy_payload_sha256": "5a8b7e301808790c38246d9046b3f656bd4fd58a3f379f84f1d03d0c09383b51"
+}
