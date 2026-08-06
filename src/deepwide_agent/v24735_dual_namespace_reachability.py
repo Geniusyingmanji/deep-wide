@@ -306,22 +306,25 @@ def _worldbank_candidate(
     identity_bound = 0
     value_bound = 0
     for country in contract["countries"]:
-        values = []
-        country_complete = complete
+        observed: list[Decimal | None] = []
         for records in vectors:
             value = (
                 records.get(country["iso3"])
                 if complete and records is not None
                 else None
             )
-            if value is None:
-                country_complete = False
-                values.append(UNKNOWN)
-            else:
+            observed.append(value)
+        country_complete = complete and all(value is not None for value in observed)
+        if country_complete:
+            values = []
+            for value in observed:
+                assert value is not None
                 normalized = value.normalize()
                 values.append("0" if normalized == 0 else format(normalized, "f"))
-                value_bound += 1
-        identity_bound += int(country_complete)
+            identity_bound += 1
+            value_bound += len(values)
+        else:
+            values = [UNKNOWN] * len(vectors)
         rows.append([country["name"], *values])
     return _render(contract["columns"], rows), {
         "expected_request_count": len(expected),

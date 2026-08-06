@@ -33,7 +33,12 @@ def ror_response(entity: str, suffix: str, country: str, *, duplicate: bool = Fa
     ).encode()
 
 
-def bulk(target_spec: wb.FreshTarget, values: dict[str, str]) -> bytes:
+def bulk(
+    target_spec: wb.FreshTarget,
+    values: dict[str, str],
+    *,
+    null_codes: set[str] | None = None,
+) -> bytes:
     output = io.StringIO(newline="")
     writer = csv.writer(output, lineterminator="\n")
     writer.writerow(["Data Source", "World Development Indicators", ""])
@@ -55,7 +60,16 @@ def bulk(target_spec: wb.FreshTarget, values: dict[str, str]) -> bytes:
                 codes.append(code)
             index += 1
     for index, code in enumerate(codes):
-        writer.writerow([f"Country {index}", code, "Synthetic", target_spec.indicator, values.get(code, str(index + 1)), ""])
+        writer.writerow(
+            [
+                f"Country {index}",
+                code,
+                "Synthetic",
+                target_spec.indicator,
+                "" if code in (null_codes or set()) else values.get(code, str(index + 1)),
+                "",
+            ]
+        )
     raw = io.BytesIO()
     with zipfile.ZipFile(raw, "w", zipfile.ZIP_DEFLATED) as archive:
         archive.writestr(f"API_{target_spec.indicator}_DS2_en_csv_v2_1.csv", output.getvalue().encode())
@@ -124,6 +138,27 @@ class V24735DualNamespaceReachabilityTests(unittest.TestCase):
         self.assertEqual(result["receipt"]["schema_valid_response_count"], 1)
         self.assertEqual(result["receipt"]["primary_identity_bound_target_count"], 0)
         self.assertEqual(result["receipt"]["changed_cell_count"], 0)
+
+    def test_worldbank_partial_country_target_abstains_for_both_cells(self) -> None:
+        task = task_vector()[12]
+        countries = __import__(
+            "deepwide_agent.v24733_dual_namespace_contract",
+            fromlist=["WORLD_BANK_COUNTRY_GROUPS"],
+        ).WORLD_BANK_COUNTRY_GROUPS[0]
+        missing = countries[0][1]
+        codes = [item[1] for item in countries]
+        responses = {
+            wb.endpoint_url(spec, wb.PRIMARY_REPRESENTATION): bulk(
+                spec,
+                {code: f"{index + 1}.25" for index, code in enumerate(codes)},
+                null_codes={missing} if spec == wb.TARGETS[1] else set(),
+            )
+            for spec in wb.TARGETS
+        }
+        result = target.run_task(task, responses)
+        self.assertTrue(result["receipt"]["bulk_bundle_complete"])
+        self.assertEqual(result["receipt"]["primary_identity_bound_target_count"], 3)
+        self.assertEqual(result["receipt"]["changed_cell_count"], 6)
 
     def test_result_tamper_and_extra_response_fail_closed(self) -> None:
         task = task_vector()[0]
