@@ -1,0 +1,153 @@
+{
+  "artifact_version": 1,
+  "role": "v24633_neutral_capacity_stress_preregistration",
+  "protocol_id": "v24633_neutral_exact_shape_gpt56_capacity_stress_v1",
+  "created_at_unix": 1785994445,
+  "parents": {
+    "simulation": {
+      "path": "results/v24632_content_free_capacity_simulation_v1_20260806.json",
+      "sha256": "51a706de458c20b06709b5cd8da30974c8a41509f57f1f4796a638ac363948a4",
+      "payload_sha256": "f82137023f311343b941a42bb339f26b866f8f7f58ba99a0e606b6a2ef239d69"
+    },
+    "simulation_audit": {
+      "path": "results/v24632_content_free_capacity_simulation_audit_v1_20260806.json",
+      "sha256": "0de27a31428b2f2ca577de0a57b38c66fe627c823547aab47dfa0d552b9d407e",
+      "payload_sha256": "6655fac424f7811056e91984d216421fed2788b93f3b44f03f69786c22d947ac"
+    }
+  },
+  "scope": {
+    "benchmark_external_synthetic_neutral_only": true,
+    "anonymous_jobs_per_arm": 220,
+    "arms": 4,
+    "single_frozen_execution_per_arm": true,
+    "arm_order": [
+      "control_32_active_8_slots_150s_fifo",
+      "selected_20_active_8_slots_240s_fifo",
+      "conservative_16_active_8_slots_210s_fifo",
+      "conservative_16_active_6_general_2_postplan_reserved_210s"
+    ],
+    "same_protocol_retry_resume_or_selective_rerun": false
+  },
+  "workload": {
+    "plan_effects_per_arm": 220,
+    "initial_synthesis_effects_per_arm": 220,
+    "recovery_effects_per_arm": 20,
+    "repair_effects_per_arm": 2,
+    "total_logical_model_effects_per_arm": 462,
+    "total_logical_model_effects_all_arms": 1848,
+    "retrieval_delay_seconds_per_job": 52.638272,
+    "retrieval_delay_source": "v24632_frozen_p95_content_free_calibration",
+    "network_search_or_fetch_effects": 0,
+    "official_evaluator_effects": 0
+  },
+  "neutral_payload": {
+    "plan_input_target_chars": 1900,
+    "postplan_input_target_chars": 25000,
+    "plan_max_output_tokens": 4000,
+    "postplan_max_output_tokens": 30000,
+    "synthetic_generic_material_only": true,
+    "prompt_or_response_persisted_or_hashed": false,
+    "response_content_used_for_routing_or_credit": false,
+    "minimum_plan_input_tokens_per_success": 350,
+    "minimum_plan_output_tokens_per_success": 100,
+    "minimum_postplan_input_tokens_per_success": 3000,
+    "minimum_postplan_output_tokens_per_success": 500,
+    "minimums_are_below_v24630_frozen_successful_request_medians": true
+  },
+  "arms": [
+    {
+      "name": "control_32_active_8_slots_150s_fifo",
+      "active_child_cap": 32,
+      "task_deadline_seconds": 150,
+      "model_slot_policy": "fifo"
+    },
+    {
+      "name": "selected_20_active_8_slots_240s_fifo",
+      "active_child_cap": 20,
+      "task_deadline_seconds": 240,
+      "model_slot_policy": "fifo"
+    },
+    {
+      "name": "conservative_16_active_8_slots_210s_fifo",
+      "active_child_cap": 16,
+      "task_deadline_seconds": 210,
+      "model_slot_policy": "fifo"
+    },
+    {
+      "name": "conservative_16_active_6_general_2_postplan_reserved_210s",
+      "active_child_cap": 16,
+      "task_deadline_seconds": 210,
+      "model_slot_policy": "reserve2"
+    }
+  ],
+  "provider": {
+    "proxy_url": "http://127.0.0.1:9878/responses",
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "low",
+    "service_tier": "priority",
+    "timeout_seconds": 65,
+    "max_retries": 2,
+    "hard_total_wall_per_attempt": true
+  },
+  "capacity": {
+    "shared_model_slot_cap": 8,
+    "slot_pool_id": "v24263_score_first_global_model_slots_v1",
+    "cleanup_reserve_seconds": 5.0,
+    "minimum_attempt_seconds": 0.05,
+    "inter_arm_cooldown_seconds": 5.0,
+    "tail_wall_ceiling_seconds": 1800.0
+  },
+  "gate": {
+    "candidate_arms": [
+      "selected_20_active_8_slots_240s_fifo",
+      "conservative_16_active_8_slots_210s_fifo",
+      "conservative_16_active_6_general_2_postplan_reserved_210s"
+    ],
+    "logical_effects_exact_per_arm": 462,
+    "zero_slot_timeout": true,
+    "zero_provider_or_deadline_failure": true,
+    "zero_failed_job": true,
+    "exact_effect_conservation": true,
+    "identical_logical_work_across_arms": true,
+    "candidate_wall_at_most_seconds": 1800.0,
+    "pass_rule": "selected arm or at least one conservative arm passes every frozen mechanism check",
+    "control_arm_required_to_pass": false
+  },
+  "claim_boundary": {
+    "mechanism_capacity_only": true,
+    "benchmark_quality_measured": false,
+    "causal_quality_improvement_proven": false,
+    "entropy_credit_assignment_tested": false,
+    "sota_supported": false
+  },
+  "source_policy": {
+    "runtime_benchmark_manifest_task_question_prediction_mapping_gold_category_question_type_split_evaluator_score_or_reward_read": false,
+    "task_identifier_prompt_response_prediction_answer_url_page_or_credential_persisted_or_hashed": false,
+    "network_search_fetch_or_evaluator_called": false
+  },
+  "lease": {
+    "path": "outputs/deepwide_benchmark_api.lease.lock",
+    "owner": "v24633_neutral_capacity_stress_v1",
+    "purpose": "neutral_exact_shape_gpt56_capacity_validation",
+    "nonblocking_single_owner": true
+  },
+  "surface_manifest": {
+    "scripts/v24633_neutral_capacity_stress.py": "611f39e8cdd3fcbb2dfe4ae5700b2b2af73fac31f5f26e9ec4798640e4508836",
+    "tests/test_v24633_neutral_capacity_stress.py": "d13ff29fec7e050c6772f9daf5fc33266818d3bd72040ea566850b6231041c5c",
+    "scripts/deepwide_api_lease.py": "8d9cffa78617b458172307d3558c76e9370f045f531c2f5aaaceb866f5a78c7d",
+    "scripts/simulate_v24632_capacity_schedules.py": "5defeb38d5e2ace8833ebddf5283d727a8d96eb9cd8e02a3e1e74c50126e8b75",
+    "src/deepwide_agent/v24312_deadline_reliability.py": "2adaab53f558f101b65d842417097e3782038a3d24fbcc6de6259ac609f762b4",
+    "src/deepwide_agent/v24468_total_wall_transport.py": "8b8da4f9a8f450dfdc8b55e5ad8e15876590ff2cfdd251a1fb1684a029727417",
+    "src/deepwide_agent/v24630_exact220_contract.py": "3a3c65fd3ad23efc447be71445c90c791f3fdce0f28c01768937e6b0d310a861",
+    "scripts/v24468_total_wall_http_helper.py": "1419970b078f4ad81da1d38d17d926b7b05b6c4adc482e4a87057ceaeac646e8"
+  },
+  "surface_manifest_sha256": "7da2818d8181dad2ed3b8f3023c026a168bbe402952b9b6522a896da1e4c61a5",
+  "authorization": {
+    "preactivation_audit_design": true,
+    "neutral_capacity_stress_launch": false,
+    "benchmark_dev_or_exact220_launch": false,
+    "official_evaluator_call": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "protocol_payload_sha256": "e83b075ff2f3c89724d03ea1ca91329b1b29dd4cba16dcd7ad3334e95ac5e58c"
+}
