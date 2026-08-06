@@ -1,10 +1,14 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
-> 检索截止：2026-08-06 04:48 UTC；项目证据更新：2026-08-06 UTC（V2.46.45/V2.46.47）
+> 检索截止：2026-08-06 04:48 UTC；项目证据更新：2026-08-06 UTC（V2.46.51–54）
 >
 > 结论强度：这是基于公开文献的 novelty audit，不是“没有任何相关工作”的证明。2026 年文献多为尚未同行评审的 arXiv 预印本，文中将预印本结果视为作者报告，而非独立复现事实。
 
 当前最新的可信全集结果是 V2.46.35。该版本在严格 label-blind、220 个预测全部冻结后才开放 evaluator 的单次运行中得到 `4/220` whole-table、Composite `0.437892`、Entity `0.672727`、Row F1 `0.224156`、Item F1 `0.385078` 和 Column F1 `0.469605`。208 题得到有效 evaluator 输出，12 个 evaluator error 按预注册规则计零；forward 与 evaluator 墙钟分别为 `915.58s` 和 `222.24s`。相对 V2.46.30，Composite 增加 `0.034260`，whole-table 却从 `5/220` 降到 `4/220`；相对项目最佳 V2.42.67，Composite 高 `0.024350`，whole-table 仍少 3。V2.46.35 因而是当前可信单轮 full-220 Composite 最高结果，但不是严格 whole-table 主指标最佳。该结果没有 leaderboard 提交或同协议 SOTA 证据，因此不是 SOTA。
+
+V2.46.51–54 提供了新的 benchmark-external 质量证据，但没有改变上述 DeepWideBench 全集分数。12个fresh ROR任务先在相同总fetch cap内形成baseline，再把最多4个fetch定向到baseline Unknown ROR cell的official ROR v2 exact-name active lookup。唯一forward在`73.045937s`内冻结24个预测；37个targeted lookup中36个得到唯一可采纳记录，1个歧义而abstain。预测冻结后的一次评价得到baseline→candidate exact-table `0→7/12`、Item F1 `0.552083→0.927083`、Composite `0.888021→0.981771`、Unknown cells `40→4`。该结果支持“identity-bound、target-bound、唯一official record驱动的Unknown recovery”在这类fresh registry任务上有正向outer utility；它不支持把任意网页的熵下降当credit，也不支持DeepWideBench或SOTA结论。
+
+这次GO同时澄清了信息熵创新点的证据边界。36个replacement与outer quality同时改善，但实验没有计算每个evidence step的条件信息增益，也没有对单步做同状态删除、替换或Shapley干预；因此不能把质量增益归因于“高熵增步骤得到更多credit”。目前可支持的是较弱而可复验的链条：先用primary identity、target–value与唯一record约束定义可接受observation，再让post-freeze outer utility决定candidate policy是否值得保留。信息熵仍是该链条中的shadow epistemic量，而非已经验证的credit estimator。
 
 V2.46.36 的冻结后配对诊断把这次分叉定位到“局部质量恢复不等于整表完成”。V2.46.30 的 34 个 fallback 在新调度下全部转为模型输出，该组 Composite 从 `0` 升到 `0.341235`，但整表成功仍为 `0/34`。两轮都由模型生成的 185 题反而从 `5` 降到 `4` 个整表成功，Composite 从 `0.477635` 降到 `0.458023`。这组聚合结果与 Search as Computation Allocation、Bridge Evidence、HiMPO、WikiLoop 和 step-level credit 文献的共同约束一致：局部信息、局部 F1 或执行完成度只有在终局任务价值上产生正向差值时才接近 credit。这里的比较来自同一公开任务集的两次随机执行，不是随机化调度实验，不能证明 20/8/240 对质量的因果效应。
 
@@ -1055,3 +1059,15 @@ V2.46.45 现已完成这次外部检验。唯一 forward 在 `69.705274s` 内冻
 post-freeze evaluator确认两臂均为exact-table `0/12`、Item F1 `0.625`、Composite `0.90625`、Unknown value cells `35`。V2.46.47 的aggregate-only diagnosis又把baseline事实状态分为ROR `12 correct / 1 incorrect / 35 Unknown`和country `48 correct`。11/12题若能安全补全ROR Unknown，结构上可以达到exact；另1题还需要纠正一个非空ROR。这个分解说明当前失败不是任务没有可改善空间，而是结构化acquisition没有对准需要干预的cell。权威证据为 [`results/v24645_primary_identity_pair_result_v1_20260806.json`](results/v24645_primary_identity_pair_result_v1_20260806.json)、[`results/v24645_primary_identity_pair_postresult_audit_v1_20260806.json`](results/v24645_primary_identity_pair_postresult_audit_v1_20260806.json) 与 [`results/v24647_v24645_zero_intervention_diagnosis_v1_20260806.json`](results/v24647_v24645_zero_intervention_diagnosis_v1_20260806.json)。这些是benchmark-external ROR结果，不是DeepWideBench提升。
 
 这次零干预使论文公式的识别条件更严格。`credit(e)=1[primary_identity_bound]·1[target_value_bound]·IG(Y;e|state)·verified_utility(e)`仍可作为待检验假设，但V2.46.45没有估计其中IG或verified utility对有效干预的作用。identity-bound evidence若只重复baseline已有事实，增量task credit仍为0；candidate没有改变状态时，双臂持平也不能证明identity gate本身无效。下一外部门应在相同总预算内把acquisition直接指向baseline Unknown，并与deterministic official-registry exact-name lookup比较。必须先自然产生至少一个identity-bound Unknown intervention，再用strict exact-table gain与Item/Composite non-regression评价；nonempty correction另做独立实验。entropy/credit assignment在此之前仍未验证。
+
+## 2026-08-06 补充：Unknown-target official lookup 首次获得正 outer utility，但尚未识别 entropy credit
+
+V2.46.51–54 完成了上述外部门。新人口来自同一immutable ROR tree的未消费slice `[3000,3482)`，48个实体与4,480个历史实体literal/canonical交集均为0。forward只接收`{opaque_id, question}`；private population、48行gold、provenance和evaluator不在37-file forward manifest中。每题先用6个generic fetch形成baseline，再只对Unknown ROR cell执行最多4个official ROR v2 `query.advanced=names.value:"..."&filter=status:active` lookup。完整响应、唯一active record和唯一normalized `ror_display`缺一不可；歧义、截断、分页不完整或URL/record/name不一致均abstain。
+
+唯一forward在`73.045937s`内完成12/12任务和24/24预测，24次model-slot acquisition无timeout。72个generic fetch之后请求37个target，36个得到唯一exact response，1个歧义；最终36个replacement。prediction freeze后的一次evaluator-only评价得到baseline exact-table `0/12`、Item F1 `0.552083`、Composite `0.888021`、Unknown cells `40`，candidate分别为`7/12`、`0.927083`、`0.981771`和`4`。strict exact gain与两个non-regression guardrail均通过，postresult audit无finding。权威结果为 [`results/v24654_v24651_unknown_target_structured_result_v1_20260806.json`](results/v24654_v24651_unknown_target_structured_result_v1_20260806.json)。
+
+该结果支持的是一个受限机制：当任务公开schema指向可验证的权威namespace时，先定位Unknown target，再以唯一structured primary record做deterministic recovery，可以把额外acquisition转成正确表格值。它没有比较相同effect的随机化动作，也没有估计页面或step的`IG(Y;e|state)`，因此不是“信息熵credit有效”的证据。36个admission与36个Unknown reduction相等，但这只是policy-level before/after；缺少逐step counterfactual，不能排除credit属于target selection、registry exact matching、abstention rule或它们的组合。
+
+对论文主张，当前最强可辩护表述是 **identity-gated, target-bound, utility-validated information acquisition**，而不是“按entropy gain分配credit”。若要把entropy升级为核心经验贡献，后续实验至少需要在同一可接受observation集合上预注册三臂：无熵的deterministic Unknown-target baseline、entropy/VOC排序candidate，以及matched-cost随机或固定排序control；冻结每步belief state、source-dependency group与action budget，并用同状态删除/替换或sibling counterfactual估计step contribution。只有entropy/VOC排序在fresh任务上同时提高outer exact-table utility、通过来源独立性门并优于无熵强基线，才可声称entropy提供了增量credit signal。
+
+DeepWideBench迁移还需要一道独立门。ROR API是领域特定权威adapter；把它未经验证地应用到任意DeepWideBench题会混淆mechanism transfer与domain shortcut。下一fresh paired dev64应只根据visible question/schema和预注册namespace选择adapter，禁止category、question_type、mapping、gold或score路由；无适配器时candidate与control必须一致。whole-table严格增益、Composite/Item F1 non-regression、evaluator health、自然触发率与同总budget必须共同过门。该dev64尚未设计或启动，当前仍无新的DeepWideBench分数或SOTA证据。
