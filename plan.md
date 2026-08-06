@@ -1,6 +1,12 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.37
+> 版本：6.38
+>
+> **6.38 V2.47.19–22 World Bank 双表示 transport 门严格 NO-GO（2026-08-06）：项目先把 transport 从 benchmark quality 中独立出来。V2.47.19/20 实现了无文件/benchmark/evaluator 能力的 ZIP/aggregate-JSON parser、受 OS hard total-wall 监管的 credential-free GET helper 和 content-free receipt；V2.47.21 在真实请求前冻结 6 个既有 World Bank 指标、两种官方表示、2 waves、每 endpoint 每 wave 单次尝试、12 workers、20s hard wall/15s socket wall。aggregate JSON 被预注册为 primary，bulk ZIP 只是 diagnostic comparator；选择发生在 transport outcome 前，禁止 cache、resume、retry、补请求或选择性重跑。新门 15/15 定向测试、旧 sparse adapter/order-join 18/18 回归和 AST privileged access/evaluator import 0 命中后才激活。**
+>
+> **唯一外部运行在 `30.415992s` 完成固定 `24/24` 请求。bulk ZIP comparator 为 `12/12` 成功，每次约 `0.18–0.26s`；aggregate JSON primary 只有 `9/12`，3 次均在约 `15.2s` 以 coarse `transport_error` 终止。`EN.POP.DNST@2022` 两波 primary 都失败，`TG.VAL.TOTL.GD.ZS@2023` 第一波失败、第二波成功。两波墙钟 `15.234045/15.175022s` 都在 25s 内，但 primary completeness 与跨波稳定门失败，所以 decision=`transport_no_go`；postaudit `audit_valid=true, findings=[]` 只证明这个 NO-GO 闭环可信。它不授权重跑、dev64、exact-220、evaluator、leaderboard 或 SOTA。**
+>
+> **V2.47.22 只读冻结的 content-free receipts 做终态诊断，没有网络或响应内容读取。9 个双表示共同成功的比较中，共同 260 个三字符代码的 value mismatch 总数为 0；但 ZIP 每次有 265 个代码、aggregate JSON 为 260 个，9 次 symmetric difference 均为 5。故证据支持“共同域值一致”，不支持“完整表示域等价”。bulk 在该已消费人口上 12/12 只能把它列为 fresh-population candidate，不能事后替换 primary 把 V2.47.21 改写成 GO。下一步仅授权从 V2.47.21 outcome 前冻结的公开 WDI catalog/literals 确定性选择全新 indicator population，预注册 bulk-primary 门，并显式分开 primary 全域、两表示共同域和表示特有域；仍不授权任何 benchmark forward。**
 >
 > **6.37 V2.47.00–18 World Bank 外部门、完整 220 稀疏迁移与结果闭环（2026-08-06）：V2.47.00 在全新 benchmark-external World Bank 表格人口上完成三臂质量门。frozen parser 与 expanded parser 均为 exact-table `0/12`、Composite `0.752604`；target–value arm 为 `3/12`、Composite `0.921875`、Item F1 `0.687500`，相对 expanded parser 分别增加 `+3`、`+0.169271` 与 `+0.677083`。该 GO 只支持“显式权威 namespace 下的 target–value structured recovery”，不测 DeepWideBench，也没有测 entropy、step credit 或 equal-effect causal ablation。**
 >
@@ -1283,6 +1289,7 @@
 ### 1.1 已完成
 
 - V2.47.14 已完成一次完整 220 题的稀疏迁移 forward。220 个 candidate predictions 全部冻结，但唯一 eligible 题因 World Bank bulk bundle 不完整而 fail closed，故 `applied=0`、`changed=0`；forward mechanism audit 为 NO-GO。V2.47.18 随后证明 candidate 与 V2.42.67 control 的 220 个 prediction bytes 全同，合法复用旧 evaluator rows 并得到相同完整结果。该链没有新 evaluator call，也不是 fresh search execution。权威工件为 [`results/v24714_sparse_full220_forward_result_v1_20260806.json`](results/v24714_sparse_full220_forward_result_v1_20260806.json)、[`results/v24714_sparse_full220_forward_audit_v1_20260806.json`](results/v24714_sparse_full220_forward_audit_v1_20260806.json)、[`results/v24718_v24714_identity_full220_result_v1_20260806.json`](results/v24718_v24714_identity_full220_result_v1_20260806.json) 与 [`results/v24718_v24714_identity_full220_postresult_audit_v1_20260806.json`](results/v24718_v24714_identity_full220_postresult_audit_v1_20260806.json)。
+- V2.47.21 已完成 benchmark-external、固定 24 请求的 World Bank transport gate。aggregate JSON primary 为 `9/12`，bulk ZIP comparator 为 `12/12`；预注册 primary completeness 和跨波稳定性失败，结论为严格 NO-GO。V2.47.22 的冻结后诊断确认 9 个共同成功向量在 260 个共同代码上零值冲突，但每次存在固定 5-code domain difference。该链不读取 benchmark 或响应内容，不产生质量分数，也不授权同人口重跑。权威工件为 [`results/v24721_worldbank_transport_result_v1_20260806.json`](results/v24721_worldbank_transport_result_v1_20260806.json)、[`results/v24721_worldbank_transport_postresult_audit_v1_20260806.json`](results/v24721_worldbank_transport_postresult_audit_v1_20260806.json) 与 [`results/v24722_v24721_transport_diagnosis_v1_20260806.json`](results/v24722_v24721_transport_diagnosis_v1_20260806.json)。
 - V2.47.00 已在 benchmark-external World Bank 任务上得到 target–value arm `3/12` exact-table 的外部门 GO；V2.47.06 又确认该权威 namespace 在 DeepWideBench 可见题面只覆盖 `1/220`。两项合起来支持 adapter 的受限机制，却否定其作为通用刷榜路线。
 - V2.47.07 planning-time metadata exposure、V2.47.13 文件顺序误约束和 V2.47.16 observer 非 total return 均已 append-only 披露。三次事件都没有产生 benchmark prediction 或 evaluator effect；V2.47.14/18 仍须标为 exploratory，并保留更严格的 source allowlist、opaque-ID join 与 total-observer gate。
 - V2.46.35 已完成一次完整 exact-220 forward 与 evaluator。运行时输入严格为 `{opaque_id, question}`；20 个 active child 共享 8 个 model slots，每题 240 秒，总 forward `915.576467s`，得到 219 个模型表和 1 个 fallback。220 个预测冻结后，32 个固定连续分片 evaluator 在 `222.244302s` 内各评一次，12 个 evaluator error 按 failure-as-zero 计入 220 分母。最终 whole-table `4/220`、Composite `0.437892`，post-result audit 32/32 checks 通过。
@@ -2452,8 +2459,8 @@ outputs/runs/<run_id>/
 
 ### V2.47.18 后的新执行序列（2026-08-06 UTC）
 
-1. 冻结 V2.47.14/18。不得补齐超时 bulk ZIP、重跑同一人口、追加 evaluator 或重新评价。保留两个健康 watcher；下一授权前 shared lease 继续为空。V2.47 链统一标为 exploratory，不作 unseen/held-out 主张。
-2. 单 namespace adapter 从刷榜主线降级为 mechanism/transport testbed。先在全新 benchmark-external 人口对所有预注册 bulk sources 做 completeness、checksum/schema、冷/热缓存和一次性 timeout stress；任一 source 不完整即整臂 failure-as-zero。transport reliability 未过门，不进入 benchmark forward。
+1. 冻结 V2.47.14/18 与 V2.47.21/22。不得补齐超时 source、重跑同一人口、追加 evaluator 或重新评价。保留两个健康 watcher；下一授权前 shared lease 继续为空。V2.47 benchmark 链统一标为 exploratory，不作 unseen/held-out 主张。
+2. 单 namespace adapter 从刷榜主线降级为 mechanism/transport testbed。V2.47.21 已证明 aggregate JSON primary 不可靠；bulk ZIP 在已消费人口 12/12 只授权 fresh-population design。下一门必须从 outcome 前冻结的公开 indicator literals 确定性选择全新指标，pre-register bulk primary、common-domain projection、表示特有域、checksum/schema 与单次 timeout；transport reliability 未过门，不进入 benchmark forward。
 3. 下一通用 candidate 只从 visible question/schema 和本轮工具轨迹构造 primary-identity、target–value 与 source-dependency receipts。设计阶段同样实行 source allowlist；禁止读取 raw benchmark 文件、mapping、gold、category、question_type、split、evaluator、score、reward或逐题历史错误。启动前必须证明多题的非零安全 intervention reachability，不能再以 `1/220` adapter coverage 申请全集。
 4. 在 task-cluster-disjoint 的 benchmark-external 表格人口运行三个同预算臂：无熵 deterministic Unknown-target 强基线、entropy/dynamic-VOC 排序 candidate、matched-cost 固定或随机排序 control。三臂共享 admissible observations、identity/value gate、总 query/fetch/model/token/wall cap 与 failure-as-zero 分母。
 5. entropy 只预测“先处理哪个已绑定 target”，不能生成候选、绕过 verifier 或决定 credit 正负。逐步冻结 pre-state、可选 action set、source-dependency group、belief delta 和成本；以同状态 deletion/replacement/sibling continuation 或 artifact-disjoint outer continuation 估计 signed task contribution。报告 rank correlation、signed accuracy、decision regret、exact-table delta，以及 high-IG/zero-utility、low-IG/high-utility、误导来源和 bridge-step 反例。

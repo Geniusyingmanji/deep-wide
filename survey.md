@@ -1,6 +1,6 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
-> 检索截止：2026-08-06 04:48 UTC；项目证据更新：2026-08-06 UTC（V2.47.00–18）
+> 检索截止：2026-08-06 04:48 UTC；项目证据更新：2026-08-06 UTC（V2.47.00–22）
 >
 > 结论强度：这是基于公开文献的 novelty audit，不是“没有任何相关工作”的证明。2026 年文献多为尚未同行评审的 arXiv 预印本，文中将预印本结果视为作者报告，而非独立复现事实。
 
@@ -1107,3 +1107,13 @@ V2.47.14 仍执行了一次预冻结、single-pass 的 sparse migration，用来
 step credit 的符号不能来自 entropy drop。每步应先冻结 pre-state、可选 action set、source-dependency group 与成本，再用同状态 deletion/replacement、sibling continuation 或 artifact-disjoint outer continuation 估计 signed task contribution。entropy、semantic entropy 或 expected information gain 可以预测 rank 或调节 credit 幅度，但不能把 verifier-negative、identity-unbound 或 outer-zero 的步骤翻成正 credit。必须单独报告 high-IG/zero-utility、low-IG/high-utility、错误来源使 posterior 变尖和低短视 IG 的 bridge step；这些反例决定该信号是否仅是 diagnostic。
 
 工程门也需前移。bulk transport 应先在 benchmark-external population 上通过 completeness、checksum/schema、冷/热缓存与一次性 timeout stress，再进入任何 benchmark forward。generic candidate 则需在启动前证明多题的非零安全 intervention reachability。若外部与 fresh dev64 均 GO，只冻结一个 candidate 做一次 full-220；目标至少同时达到 V2.42.67 的 `7/220` whole-table 与 V2.46.35 的 `0.437892` Composite，并要求至少一项严格增加。没有独立 leaderboard 或同协议系统比较时，达到内部前沿仍不能称为 SOTA。
+
+## 2026-08-06 补充：transport 可靠性门否定 aggregate-JSON primary
+
+V2.47.21 将 transport 从 adapter quality 和 DeepWideBench 分数中单独识别。指标向量不是根据网络成败挑选，而是 V2.47.09 和 V2.46.90 在本轮 outcome 前已经冻结的 6 个 World Bank 指标。每个指标比较 bulk ZIP 与 aggregate JSON 两种官方表示，固定 2 waves、每 endpoint 每 wave 单次尝试、12 workers、20 秒 hard total wall 和 15 秒 socket timeout。aggregate JSON 在请求前被指定为 primary；bulk ZIP 只作 diagnostic comparator。运行不读取 benchmark，不调用模型、搜索或 evaluator，也不保存 response body、国家或值。
+
+唯一运行在 `30.415992s` 内完成固定 `24/24` 请求，但预注册门严格 NO-GO。bulk ZIP 为 `12/12` 成功，每次约 `0.18–0.26s`。aggregate JSON 只有 `9/12` 成功，3 次失败都在约 `15.2s` 达到 socket wall；其中一个指标两波都失败，另一个指标第一波失败、第二波成功。两波总体墙钟仍在 25 秒上限内，说明失败不是父进程失控，而是 primary endpoint 的 per-request transport 不稳定。post-result audit 为 `audit_valid=true, findings=[]`，其含义是 NO-GO 结果可信，不是 transport 通过。权威工件为 [`results/v24721_worldbank_transport_result_v1_20260806.json`](results/v24721_worldbank_transport_result_v1_20260806.json) 和 [`results/v24721_worldbank_transport_postresult_audit_v1_20260806.json`](results/v24721_worldbank_transport_postresult_audit_v1_20260806.json)。
+
+V2.47.22 的冻结后诊断进一步分开 transport failure 和 semantic-domain mismatch。9 个双表示共同成功的 indicator-wave pair 中，共同 260 个三字符代码的 value mismatch 总数为 0；然而 ZIP 每次含 265 个代码，aggregate JSON 每次含 260 个，9 次 symmetric difference 都是 5。这个结果支持“共同域值一致”，不支持“完整表示等价”。它也禁止事后把 12/12 的 ZIP 改成 primary 来翻转 V2.47.21 结论。权威诊断为 [`results/v24722_v24721_transport_diagnosis_v1_20260806.json`](results/v24722_v24721_transport_diagnosis_v1_20260806.json)。
+
+该结果对 entropy credit 的约束是前置性的。transport 没有返回 observation 时，step 的 realized information gain 和 task credit 都必须为 0；同一 endpoint 在另一波成功也不能回填失败波。表示域不同又意味着 posterior state 必须显式指定 universe。若把 ZIP 的 265 项与 JSON 的 260 项直接视为同一随机变量，五项 domain difference 会被错误记为冲突、遗漏或 entropy change。下一外部门因此只能在 fresh indicator population 上预注册 bulk-primary，并分别报告 primary 全域、跨表示共同域和表示特有域；这仍是 transport/mechanism 证据，不是 DeepWideBench 提分或 entropy-credit 验证。
