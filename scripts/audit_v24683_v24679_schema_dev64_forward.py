@@ -20,6 +20,7 @@ for path in (ROOT, ROOT / "src"):
 
 from deepwide_agent import v24679_schema_dev64_contract as contract  # noqa: E402
 from deepwide_agent.v24308_child_exit_observability import (  # noqa: E402
+    validate_child_receipt,
     validate_parent_receipt,
 )
 from scripts import run_v24679_schema_dev64 as runner  # noqa: E402
@@ -178,9 +179,10 @@ def _task_receipts() -> dict[str, Any]:
         )
         if parent["failure_taxonomy"] == "success":
             parent_successes += 1
-        child = contract.read_object(directory / contract.CHILD_TERMINAL_NAME)
-        if child.get("role") == "v24308_child_terminal_receipt":
-            child_terminals += 1
+        validate_child_receipt(
+            contract.read_object(directory / contract.CHILD_TERMINAL_NAME)
+        )
+        child_terminals += 1
         for name, validator, counter in (
             (runner.RECEIPT_NAME, lambda value: runner.validate_model(value, expected_cap=contract.MODEL_SLOT_CAP), "model"),
             (runner.TRANSPORT_NAME, runner.validate_transport_health, "transport"),
