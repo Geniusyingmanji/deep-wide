@@ -71,7 +71,7 @@ HARD_WALL_SECONDS = 20.0
 SOCKET_TIMEOUT_SECONDS = 15.0
 WAVE_WALL_CEILING_SECONDS = 25.0
 EXPERIMENT_WALL_CEILING_SECONDS = 55.0
-EXPECTED_TESTS = 14
+EXPECTED_TESTS = 15
 PRIMARY_REPRESENTATION = "aggregate_json"
 COMPARATOR_REPRESENTATION = "bulk_zip"
 REQUIRED_CHECKS = (
@@ -85,7 +85,7 @@ REQUIRED_CHECKS = (
 TEST_SUITES = (
     (RUNTIME_TEST, 6),
     (HELPER_TEST, 3),
-    (SCRIPT_TEST, 5),
+    (SCRIPT_TEST, 6),
 )
 EXPECTED_WATCHERS = (
     (795336, 713986317, "scripts/watch_v2415_r1_checkpoint_liveness.py"),
@@ -549,7 +549,51 @@ def build_preaudit(root: Path = ROOT, *, now: int | None = None) -> dict[str, An
     value["audit_payload_sha256"] = payload_sha256(value)
     if protocol.get("authorization", {}).get("preactivation_audit_generation") is not True:
         raise RuntimeError("V2.47.21 preaudit is not authorized")
+    validate_preaudit(value)
     return value
+
+
+def validate_preaudit(value: Mapping[str, Any]) -> dict[str, Any]:
+    copied = dict(value)
+    tests = copied.get("tests")
+    label_blind = copied.get("label_blind_audit")
+    state = copied.get("runtime_state")
+    findings = copied.get("findings")
+    valid = copied.get("audit_valid")
+    if (
+        copied.get("role")
+        != "v24721_worldbank_transport_preactivation_audit"
+        or copied.get("protocol_id") != PROTOCOL_ID
+        or copied.get("protocol_sha256") != sha256(ROOT / PROTOCOL)
+        or not isinstance(tests, Mapping)
+        or set(tests)
+        != {"passed", "observed", "expected", "output_sha256"}
+        or tests.get("passed") is not True
+        or tests.get("observed") != EXPECTED_TESTS
+        or tests.get("expected") != EXPECTED_TESTS
+        or not isinstance(tests.get("output_sha256"), str)
+        or len(tests["output_sha256"]) != 64
+        or label_blind
+        != {"accesses": [], "evaluator_imports": [], "passed": True}
+        or not isinstance(state, Mapping)
+        or state.get("protected_watchers") != _watcher_snapshot()
+        or state.get("shared_api_lease_inactive") is not True
+        or state.get("runner_active") is not False
+        or not isinstance(findings, list)
+        or any(not isinstance(item, str) or not item for item in findings)
+        or valid is not (findings == [])
+        or copied.get("authorization")
+        != {
+            "activation_publication": bool(valid),
+            "transport_launch": False,
+            "benchmark_dev64_or_exact220": False,
+            "evaluator": False,
+            "leaderboard_or_sota": False,
+        }
+        or not _sealed(copied, "audit_payload_sha256")
+    ):
+        raise RuntimeError("V2.47.21 preactivation audit drifted")
+    return copied
 
 
 def _validate_stage(value: Mapping[str, Any], *, role: str, seal: str) -> dict[str, Any]:
@@ -610,9 +654,7 @@ def validate_execution_start(value: Mapping[str, Any]) -> dict[str, Any]:
 
 def build_activation(root: Path = ROOT, *, now: int | None = None) -> dict[str, Any]:
     protocol = validate_protocol(root)
-    preaudit = _read(root, PREAUDIT)
-    if preaudit.get("audit_valid") is not True or preaudit.get("findings") != [] or not _sealed(preaudit, "audit_payload_sha256"):
-        raise RuntimeError("V2.47.21 preaudit is not GO")
+    preaudit = validate_preaudit(_read(root, PREAUDIT))
     if not _lease_inactive(root) or _runner_active():
         raise RuntimeError("V2.47.21 activation runtime state is unsafe")
     value = {

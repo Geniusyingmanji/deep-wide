@@ -66,6 +66,52 @@ class V24721WorldBankTransportGateTests(unittest.TestCase):
             with self.assertRaises(RuntimeError):
                 target.validate_protocol(ROOT, value=value)
 
+    def test_preaudit_resealed_protocol_or_test_tamper_fails_closed(self) -> None:
+        value = {
+            "artifact_version": 1,
+            "role": "v24721_worldbank_transport_preactivation_audit",
+            "protocol_id": target.PROTOCOL_ID,
+            "created_at_unix": 0,
+            "protocol_sha256": "b" * 64,
+            "tests": {
+                "passed": True,
+                "observed": target.EXPECTED_TESTS,
+                "expected": target.EXPECTED_TESTS,
+                "output_sha256": "c" * 64,
+            },
+            "label_blind_audit": {
+                "accesses": [],
+                "evaluator_imports": [],
+                "passed": True,
+            },
+            "runtime_state": {
+                "protected_watchers": [],
+                "shared_api_lease_inactive": True,
+                "runner_active": False,
+            },
+            "findings": [],
+            "audit_valid": True,
+            "authorization": {
+                "activation_publication": True,
+                "transport_launch": False,
+                "benchmark_dev64_or_exact220": False,
+                "evaluator": False,
+                "leaderboard_or_sota": False,
+            },
+        }
+        value["audit_payload_sha256"] = target.payload_sha256(value)
+        with (
+            patch.object(target, "sha256", return_value="b" * 64),
+            patch.object(target, "_watcher_snapshot", return_value=[]),
+        ):
+            target.validate_preaudit(value)
+            tampered = copy.deepcopy(value)
+            tampered["tests"]["observed"] -= 1
+            tampered.pop("audit_payload_sha256")
+            tampered["audit_payload_sha256"] = target.payload_sha256(tampered)
+            with self.assertRaises(RuntimeError):
+                target.validate_preaudit(tampered)
+
     def test_hard_get_timeout_is_content_free(self) -> None:
         process = Process()
         with patch.object(target, "_terminate_group", side_effect=lambda item: item.wait()):
