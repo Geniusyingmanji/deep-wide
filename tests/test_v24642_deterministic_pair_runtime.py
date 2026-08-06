@@ -18,7 +18,6 @@ from deepwide_agent.clients import ModelResult
 from deepwide_agent.v24257_score_first_runtime import ScoreFirstLimits
 from deepwide_agent.v24637_objective_alignment_runtime import payload_sha256
 from deepwide_agent.v24639_ror_objective_runtime import extract_visible_entities
-from deepwide_agent.v24640_ror_external_contract import LIMITS, visible_task
 from deepwide_agent.v24642_deterministic_pair_runtime import (
     ARMS,
     discover_pairs,
@@ -26,6 +25,12 @@ from deepwide_agent.v24642_deterministic_pair_runtime import (
     explicit_ror_suffixes,
     run_v24642_task,
     validate_result,
+)
+from deepwide_agent.v24642_ror_external_contract import (
+    ENTITY_GROUPS,
+    LIMITS,
+    task_vector,
+    visible_task,
 )
 
 
@@ -287,6 +292,15 @@ class Search:
 
 
 class RuntimeTests(unittest.TestCase):
+    def test_visible_boundary_and_fresh_vector(self) -> None:
+        tasks = task_vector()
+        self.assertEqual(len(tasks), 12)
+        self.assertTrue(all(set(task) == {"opaque_id", "question"} for task in tasks))
+        for index, task in enumerate(tasks):
+            self.assertEqual(
+                extract_visible_entities(task["question"]), list(ENTITY_GROUPS[index])
+            )
+
     def test_two_provider_calls_and_effect_conservation(self) -> None:
         task = visible_task(1)
         entities = extract_visible_entities(task["question"])
@@ -361,6 +375,68 @@ class RuntimeTests(unittest.TestCase):
         self.assertNotIn("Path(", text)
         self.assertNotIn("subprocess", text)
         self.assertNotIn("open(", text)
+
+
+class EvaluatorTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        from deepwide_agent.v24642_ror_external_evaluator import (
+            evaluate_frozen_rows,
+            evaluate_prediction,
+            gold_rows,
+        )
+
+        cls.evaluate_frozen_rows = staticmethod(evaluate_frozen_rows)
+        cls.evaluate_prediction = staticmethod(evaluate_prediction)
+        cls.gold = gold_rows(
+            (ROOT / "evaluation/v24642_ror_gold_v1.csv").read_text(encoding="utf-8")
+        )
+
+    def test_gold_fixed_denominator(self) -> None:
+        self.assertEqual(len(self.gold), 48)
+        self.assertEqual(len({row["opaque_id"] for row in self.gold}), 12)
+
+    def test_full_ror_url_is_semantically_equivalent(self) -> None:
+        rows = [
+            row for row in self.gold if row["opaque_id"] == visible_task(1)["opaque_id"]
+        ]
+        exact = table(
+            [
+                [
+                    row["Organization"],
+                    "https://ror.org/" + row["ROR ID"],
+                    row["Country code"],
+                ]
+                for row in rows
+            ]
+        )
+        self.assertEqual(self.evaluate_prediction(exact, rows)["exact_table_success"], 1)
+
+    def test_gate_requires_exact_gain_composite_and_item_guardrails(self) -> None:
+        predictions = []
+        for task in task_vector():
+            rows = [row for row in self.gold if row["opaque_id"] == task["opaque_id"]]
+            exact = table(
+                [
+                    [row["Organization"], row["ROR ID"], row["Country code"]]
+                    for row in rows
+                ]
+            )
+            predictions.append(
+                {
+                    "opaque_id": task["opaque_id"],
+                    "predictions": {
+                        "baseline": "broken",
+                        "deterministic_pair": exact,
+                    },
+                }
+            )
+        value = self.evaluate_frozen_rows(predictions, self.gold)
+        self.assertTrue(value["gate_passed"])
+        self.assertEqual(
+            value["candidate_minus_baseline"]["exact_table_successes"], 12
+        )
+        self.assertGreaterEqual(value["candidate_minus_baseline"]["item_f1"], 0)
 
 
 if __name__ == "__main__":
