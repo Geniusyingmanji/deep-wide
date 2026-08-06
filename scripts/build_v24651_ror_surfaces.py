@@ -192,6 +192,7 @@ SEARCH = {{
     "fetch_workers": 8,
     "fetch_timeout_seconds": 20,
     "hard_fetch_deadline_seconds": 25,
+    "targeted_lookup_max_page_chars": 60_000,
 }}
 LIMITS = {{
     "wall_seconds": 240,
@@ -208,6 +209,7 @@ LIMITS = {{
 TREATMENT = {{
     "generic_fetch_cap": 6,
     "unknown_target_lookup_cap": 4,
+    "targeted_lookup_max_page_chars": 60_000,
     "candidate_uses_only_new_lookup_projection": True,
     "official_query_mode": "ror_v2_advanced_exact_name_active",
 }}

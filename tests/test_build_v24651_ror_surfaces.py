@@ -49,6 +49,9 @@ class SurfaceBuilderTests(unittest.TestCase):
         self.assertEqual(len(assignments["QUESTIONS"]), 12)
         self.assertEqual(assignments["TREATMENT"]["generic_fetch_cap"], 6)
         self.assertEqual(assignments["TREATMENT"]["unknown_target_lookup_cap"], 4)
+        self.assertEqual(
+            assignments["TREATMENT"]["targeted_lookup_max_page_chars"], 60_000
+        )
         for record in self.private["records"]:
             self.assertNotIn(record["record_id"], source)
             self.assertNotIn(record["git_blob_sha1"], source)
