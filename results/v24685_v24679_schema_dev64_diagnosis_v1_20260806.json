@@ -1,0 +1,122 @@
+{
+  "artifact_version": 1,
+  "changed_task_outcomes": {
+    "changed_tasks": 7,
+    "completion_kind_pair_counts": {
+      "normalized_primary->primary": 2,
+      "primary->primary": 5
+    },
+    "evaluator_valid_pair_counts": {
+      "True_True": 7
+    },
+    "metric_sign_and_magnitude": {
+      "column_f1": {
+        "mean_over_fixed64": 0.0001602564102564097,
+        "negative_changed_tasks": 1,
+        "positive_changed_tasks": 1,
+        "sum_over_changed_tasks": 0.01025641025641022,
+        "zero_changed_tasks": 5
+      },
+      "entity_acc": {
+        "mean_over_fixed64": 0.0,
+        "negative_changed_tasks": 0,
+        "positive_changed_tasks": 0,
+        "sum_over_changed_tasks": 0.0,
+        "zero_changed_tasks": 7
+      },
+      "f1_by_item": {
+        "mean_over_fixed64": 0.0006988368543601074,
+        "negative_changed_tasks": 2,
+        "positive_changed_tasks": 1,
+        "sum_over_changed_tasks": 0.04472555867904687,
+        "zero_changed_tasks": 4
+      },
+      "f1_by_row": {
+        "mean_over_fixed64": 0.0026041666666666665,
+        "negative_changed_tasks": 0,
+        "positive_changed_tasks": 1,
+        "sum_over_changed_tasks": 0.16666666666666666,
+        "zero_changed_tasks": 6
+      },
+      "quality_composite": {
+        "mean_over_fixed64": 0.0008658149828207958,
+        "negative_changed_tasks": 2,
+        "positive_changed_tasks": 1,
+        "sum_over_changed_tasks": 0.05541215890053093,
+        "zero_changed_tasks": 4
+      },
+      "score": {
+        "mean_over_fixed64": 0.0,
+        "negative_changed_tasks": 0,
+        "positive_changed_tasks": 0,
+        "sum_over_changed_tasks": 0.0,
+        "zero_changed_tasks": 7
+      }
+    },
+    "whole_table_score_pair_counts": {
+      "0.0_0.0": 5,
+      "1.0_1.0": 2
+    }
+  },
+  "claims": {
+    "causal_generalization": false,
+    "exact220_authorized": false,
+    "historical_development_population": true,
+    "sota": false
+  },
+  "created_at_unix": 1786033633,
+  "diagnosis": {
+    "entity_accuracy_gain_failure": true,
+    "local_quality_effect_mixed": true,
+    "parser_reachability_failure": false,
+    "positive_zero_negative_composite_changed_tasks": [
+      1,
+      4,
+      2
+    ],
+    "prediction_change_failure": false,
+    "primary_bottleneck": "explicit schema changes the rendered prediction on most treated tasks but does not reliably improve fact correctness or whole-table completion",
+    "whole_table_utility_gain_failure": true
+  },
+  "diagnosis_payload_sha256": "026982a477a7a45646b37869be8ef425930a8a2aa19fa2934851078fd40bee00",
+  "next_experiment": {
+    "entropy_credit_role": "shadow ranking signal after target-value binding; positive credit requires post-freeze outer utility or same-state intervention support",
+    "repeat_same_schema_dev64_or_run_exact220": false,
+    "required_controls": [
+      "frozen parser baseline",
+      "expanded parser only",
+      "expanded parser plus target-value evidence and admission"
+    ],
+    "required_new_treatment": "pair visible schema with addressable target-value evidence, deterministic cell admission, and an independent whole-table completion check",
+    "schema_parser_as_prerequisite_in_target_value_experiment": true,
+    "schema_parser_as_standalone_candidate": false
+  },
+  "parents": {
+    "postaudit_path": "results/v24679_schema_dev64_postresult_audit_v1_20260806.json",
+    "postaudit_sha256": "74b65c1389e7c8c47c9e92d3ae499c182a6869816bfa8ecce55e00ef58ab9fbc",
+    "postaudit_valid": true,
+    "result_path": "results/v24679_schema_dev64_result_v1_20260806.json",
+    "result_sha256": "87e69592d41f6f873f032471af71aca8e06547ff5ee4c8ae0b257d015b92cf9f",
+    "result_status": "development_gate_no_go"
+  },
+  "role": "v24685_v24679_schema_dev64_aggregate_diagnosis",
+  "source_policy": {
+    "benchmark_category_or_question_type_used": false,
+    "contains_opaque_id_question_prediction_instance_id_or_evaluator_row": false,
+    "diagnosis_fed_back_into_same_forward": false,
+    "post_prediction_freeze_offline_evaluator_analysis": true
+  },
+  "treatment_reachability": {
+    "candidate_child_receipts": 8,
+    "changed_candidate_tasks": 7,
+    "expected_treatment_tasks": 8,
+    "incremental_schema_applied_tasks": 8,
+    "result_visible_schema_status_counts": {
+      "applied": 8
+    },
+    "transition_status_counts": {
+      "incremental_explicit_schema": 8
+    },
+    "unchanged_treatment_tasks": 1
+  }
+}
