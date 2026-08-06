@@ -1,6 +1,14 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.40
+> 版本：6.41
+>
+> **6.41 V2.47.50–52 fresh host-local 跨域机制门 GO（2026-08-06）：在 V2.47.48 因 Crossref `13/16` HTTP 429 而严格 NO-GO 后，项目没有重试、补请求或复用已消费人口。V2.47.50 从父提交零出现的16个 DOI 与排除4,680个历史实体后的8个 fresh ROR 实体冻结全新人口；V2.47.51/52 在 endpoint outcome 前冻结 host-local policy：ROR/OpenAlex 各最多8并发，Crossref 单通道、相邻启动至少1.1s，32个唯一URL各一次，跨host并行。forward 输入仍严格只有 `{opaque_id, question}`；mapping、gold、category、question_type、split、evaluator、score、reward、private population与凭据均不在 forward 控制面。41/41 定向测试、AST privileged access/private-evaluator import `([], [])`、policy/population seal、secret scan、compile与diff audit全部通过后，protocol、preaudit、activation与execution-start逐项独立提交推送。**
+>
+> **冻结前发现旧“40s ceiling”只作结果验收而没有限制串行lane的理论总墙钟，已将其改为真实执行合同：Crossref每请求1.0s hard wall，ROR/OpenAlex各20s，子进程终止余量1s、调度/启动余量1s；由冻结参数自动推导network-wave上界33s，为40s总门留7s聚合余量。schedule receipt使用9位单调时间与锁内全序lifecycle序号双证据，避免微秒舍入把真实并发误判为串行；实际Crossref observed max inflight=`1`、最小启动间隔=`1.100107172s`，ROR/OpenAlex observed max inflight均为`8`。**
+>
+> **唯一一次 V2.47.52 fresh 外部运行在 `17.372877s` 内完成固定 `32/32` 请求与6/6 valid task，无retry/resume/selective rerun。HTTP 200为ROR `8/8`、Crossref `11/16`、OpenAlex `5/8`；所有6题prediction均改变，共19个完整行、38个admitted cells，其中28个official exact、10个Crossref+OpenAlex双registrable-source corroborated、0冲突。预注册10项机制门全部为true，decision=`cross_domain_mechanism_go`；postresult audit `findings=[]`，同时明确禁止追加外部重跑、evaluator、dev64、exact220、entropy-credit或leaderboard声明。权威工件为 [`results/v24752_host_local_result_v1_20260806.json`](results/v24752_host_local_result_v1_20260806.json)、[`results/v24752_host_local_decision_v1_20260806.json`](results/v24752_host_local_decision_v1_20260806.json) 与 [`results/v24752_host_local_postresult_audit_v1_20260806.json`](results/v24752_host_local_postresult_audit_v1_20260806.json)。**
+>
+> **证据层级不变：这是 benchmark-external mechanism GO，不是 DeepWideBench dev/full 质量结果，更不是SOTA；当前可信全集前沿仍为V2.42.67 whole-table `7/220`、Composite `0.413541`，以及V2.46.35 Composite `0.437892`、whole-table `4/220`。下一步必须先对完整220个可见 `{opaque_id, question}` 做只读、label-blind、无mapping/gold/category/evaluator的decision-reachability审计，证明generic binder在真实任务面上有多题安全触发机会并给出固定成本上界；若覆盖仍近零则退役该迁移路线，不能再以外部小样本GO推断榜上提升。只有覆盖门通过，才可冻结一个task-cluster-disjoint paired dev64；dev64再严格GO后才授权一次single-pass exact220。**
 >
 > **6.40 V2.47.43–49 通用 record binding、跨域自然触发与 host-local 调度边界（2026-08-06）：V2.47.43 将 structured recovery 收敛为一个无文件、环境、进程、网络、模型或 evaluator 能力的纯 binder。它只允许 NFKC+空白规范化后仍精确相同的可见首列身份与列名；只改 Unknown cell；official exact-address + primary-identity record 可单源 admission，普通 structured page 必须由两个 registrably-independent source 对同一值一致支持，任一值冲突按 cell abstain。递归 replay、canonical seal、精确键集、非 Unknown 不可变、大小写/标点漂移、同 registrable source 与重封印篡改均已覆盖；V2.47.43/45/人口/控制面联合 build 测试最终为 `34/34`。该层只证明合同，不产生 DeepWideBench 分数或 entropy-credit 证据。**
 >
