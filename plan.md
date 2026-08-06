@@ -1,6 +1,22 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.36
+> 版本：6.37
+>
+> **6.37 V2.47.00–18 World Bank 外部门、完整 220 稀疏迁移与结果闭环（2026-08-06）：V2.47.00 在全新 benchmark-external World Bank 表格人口上完成三臂质量门。frozen parser 与 expanded parser 均为 exact-table `0/12`、Composite `0.752604`；target–value arm 为 `3/12`、Composite `0.921875`、Item F1 `0.687500`，相对 expanded parser 分别增加 `+3`、`+0.169271` 与 `+0.677083`。该 GO 只支持“显式权威 namespace 下的 target–value structured recovery”，不测 DeepWideBench，也没有测 entropy、step credit 或 equal-effect causal ablation。**
+>
+> **V2.47.06 随后只读可见的 220 题 manifest，并将显式答案权威 namespace 的自然覆盖定为 `1/220`，唯一 namespace 为 World Bank。`219/220` 没有可由该 adapter 安全处理的显式权威来源，因此 hard-coded multi-namespace bridge 在 forward 前即为迁移 NO-GO。单 namespace adapter 最多触达一题，不能作为全榜主线；下一 candidate 必须是由可见 question/schema 驱动的 generic primary-identity 与 target–value binding，并在启动前证明多题的安全、非零干预可达性。**
+>
+> **V2.47.07 披露了一次 planning-time 污染事件：仓库范围的 indicator 文本探测打开了 raw question 与 evaluator-side category/topic/language metadata。该事件发生在 candidate scope 和 indicator vector 冻结之后，没有生成 prediction，没有调用 model/search/forward/evaluator，也没有把暴露字段传给 runtime；但其后 V2.47 链只能标为 exploratory，不能声称 unseen、held-out 或 confirmatory。此后连设计探测也必须执行 source allowlist，forward 依赖图不得读取、导入、哈希或接收 raw benchmark、mapping、gold、category、question_type、split、evaluator、score 或 reward。runtime 输入继续严格为 `{opaque_id, question}`。**
+>
+> **两个零 effect 失败被 append-only 保留。V2.47.11 错把 visible manifest 与 frozen control 的文件行序当作合同；两者 220 个 opaque ID 集合相同，但只有 3 个位置相同。V2.47.13 因而冻结失败，并规定以唯一 `opaque_id` join、以 control prediction 顺序作为 canonical output order。V2.47.15 的 build observer 又因 return 缩进错误返回 `None`；严格 validator 正确拒绝非 boolean 值，V2.47.16 冻结该失败，V2.47.17 只做 append-only total-return 修复。后续 package audit 必须测试输入排列不变性、duplicate/missing ID fail-closed、observer 的全分支 boolean totality，以及 validator 拒绝 `None`。**
+>
+> **V2.47.14 已完成一次固定 220 分母、single-pass、no-resume/no-retry 的稀疏 candidate forward。它只接收 `{opaque_id, question}`，从 frozen V2.42.67 predictions 按 opaque ID join；4 个 World Bank bulk ZIP 并发请求中 3 个在约 0.1 秒成功，`AG.SRF.TOTL.K2` 在 30 秒超时。全程得到 `220/220` terminal predictions，route eligible `1`、applied `0`、changed prediction `0`，model/search/per-country requests 均为 `0`，墙钟 `30.199208s`。由于 bulk completeness 与 mechanism gate 失败，V2.47.14 forward audit 是 `audit_valid=false`，findings 包括 transport、mechanism 和由零干预派生的 changed-task contract failures；这是严格 fail-closed 的机制 NO-GO，不能写成 audit pass。失败来自一次 bulk transport timeout，不来自 220 题计算规模，但协议禁止为碰运气补齐该下载而重跑同一人口。**
+>
+> **V2.47.18 只在 prediction freeze 后证明 candidate 与 V2.42.67 control 在 220 个 opaque ID、prediction SHA-256 和 prediction bytes 三层完全一致，因而按预注册 identity key 合法复用 220 条历史 evaluator judgment，新 evaluator call 为 `0`。完整结果仍为 whole-table `7/220 = 3.1818%`、Entity `0.690909`、Row F1 `0.201856`、Item F1 `0.346810`、Column F1 `0.414591`、Composite `0.413541`，所有 delta 为 `0`。V2.47.18 post-result closure audit 才是 `audit_valid=true, findings=[]`；它确认结果等于 control、runner 不存在、shared lease inactive、两个 protected watcher 身份不变，并禁止 additional forward/evaluator/revaluation。该结果是完整 220 prediction/result，但不是 fresh full-220 search、不是新 evaluator execution、不是 Avg@4，也没有 benchmark 提升或 SOTA。**
+>
+> **耗时口径必须分开：V2.47.14 的 `30.2s` 是在 frozen control 上运行的零模型稀疏 adapter pass，不是完整 GPT-5.6 生成流程。当前最近一次完整模型生成 V2.46.35 的 forward 为 `915.58s`，evaluator 为 `222.24s`，合计约 `18.96` 分钟。220 题不应需要数天；未来获批的 fixed-policy exact-220 以 `60` 分钟端到端为 hard operational envelope，超时任务按 failure-as-zero 冻结并终止整轮，禁止补题、resume、选择性 retry 或多版本择优。**
+>
+> **刷榜策略更新：World Bank/ROR 等单 namespace adapter 降级为机制与 transport testbed，不再作为全榜主线。先在 benchmark-external 人口通过 bulk transport completeness/reliability 门，再构建能够覆盖多题的 generic identity/target–value binding 和 decision-reachability gate。entropy credit 只在相同 admissible observation 集上与无熵 deterministic Unknown-target 强基线、matched-cost 固定/随机排序对照比较；正负方向必须来自同状态 step counterfactual 或 artifact-disjoint outer task utility，entropy/VOC 只能预测排序或调节幅度。只有外部门与 task-cluster-disjoint dev64 同时 GO，才授权一个 frozen candidate 做一次完整 220；成功线要求 whole-table 至少 `7/220`、Composite 至少 `0.437892`，且至少一项严格提高。独立 leaderboard 同协议证据缺失前一律不称 SOTA。**
 >
 > **6.36 V2.46.79–85 DeepWideBench historical dev64 schema gate严格NO-GO（2026-08-06）：本轮把V2.46.75在公开220题面上构造的expanded visible-schema parser接入V2.46.77 task-local runtime，并完成固定64分母的paired工程门。forward输入始终只有`{opaque_id, question}`；prediction freeze前未读取、哈希或导入mapping、gold、category、split、question_type、score、reward或evaluator。64个control全部fresh执行，只对旧parser为空而新parser明确提取schema的8题fresh执行candidate，其余56题candidate逐对象复用同轮control。总计72个真实child，20个task executor、8个model slots、每题240s/parent255s，failure投影为非空terminal fallback，禁止resume、retry、skip、补题和选择性重评。**
 >
@@ -1266,7 +1282,10 @@
 
 ### 1.1 已完成
 
-- V2.46.35 已完成唯一一次完整 exact-220 forward 与 evaluator。运行时输入严格为 `{opaque_id, question}`；20 个 active child 共享 8 个 model slots，每题 240 秒，总 forward `915.576467s`，得到 219 个模型表和 1 个 fallback。220 个预测冻结后，32 个固定连续分片 evaluator 在 `222.244302s` 内各评一次，12 个 evaluator error 按 failure-as-zero 计入 220 分母。最终 whole-table `4/220`、Composite `0.437892`，post-result audit 32/32 checks 通过。
+- V2.47.14 已完成一次完整 220 题的稀疏迁移 forward。220 个 candidate predictions 全部冻结，但唯一 eligible 题因 World Bank bulk bundle 不完整而 fail closed，故 `applied=0`、`changed=0`；forward mechanism audit 为 NO-GO。V2.47.18 随后证明 candidate 与 V2.42.67 control 的 220 个 prediction bytes 全同，合法复用旧 evaluator rows 并得到相同完整结果。该链没有新 evaluator call，也不是 fresh search execution。权威工件为 [`results/v24714_sparse_full220_forward_result_v1_20260806.json`](results/v24714_sparse_full220_forward_result_v1_20260806.json)、[`results/v24714_sparse_full220_forward_audit_v1_20260806.json`](results/v24714_sparse_full220_forward_audit_v1_20260806.json)、[`results/v24718_v24714_identity_full220_result_v1_20260806.json`](results/v24718_v24714_identity_full220_result_v1_20260806.json) 与 [`results/v24718_v24714_identity_full220_postresult_audit_v1_20260806.json`](results/v24718_v24714_identity_full220_postresult_audit_v1_20260806.json)。
+- V2.47.00 已在 benchmark-external World Bank 任务上得到 target–value arm `3/12` exact-table 的外部门 GO；V2.47.06 又确认该权威 namespace 在 DeepWideBench 可见题面只覆盖 `1/220`。两项合起来支持 adapter 的受限机制，却否定其作为通用刷榜路线。
+- V2.47.07 planning-time metadata exposure、V2.47.13 文件顺序误约束和 V2.47.16 observer 非 total return 均已 append-only 披露。三次事件都没有产生 benchmark prediction 或 evaluator effect；V2.47.14/18 仍须标为 exploratory，并保留更严格的 source allowlist、opaque-ID join 与 total-observer gate。
+- V2.46.35 已完成一次完整 exact-220 forward 与 evaluator。运行时输入严格为 `{opaque_id, question}`；20 个 active child 共享 8 个 model slots，每题 240 秒，总 forward `915.576467s`，得到 219 个模型表和 1 个 fallback。220 个预测冻结后，32 个固定连续分片 evaluator 在 `222.244302s` 内各评一次，12 个 evaluator error 按 failure-as-zero 计入 220 分母。最终 whole-table `4/220`、Composite `0.437892`，post-result audit 32/32 checks 通过。
 - V2.46.36 已完成 V2.46.30→35 的 aggregate-only 配对诊断与独立审计。34 个旧 fallback 全部转为模型输出，但该组仍为 `0/34` 整表成功；全局 Composite `+0.034260`，whole-table `-1`。诊断不输出题目、ID、预测、gold 或逐题分数，不授权 dev64/exact-220，只授权 benchmark-external 的 exact-table mechanism design。
 - V2.46.34 的 preactivation audit 因旧 substring capability test 将冲突进程 marker 误判为 evaluator capability，已不可变冻结为 NO-GO。V2.46.35 仅在 append-only successor 中改用 AST import/dynamic-import/process-launch/call/resource-access 检测；真实 evaluator capability 仍 fail closed，V2.46.34 从未 activation 或执行。
 - V2.42.11 的 pure decision kernel 与 runtime bridge 已覆盖 3 个 context、9 个 context–action pair，真实接入 V2.41.21/22 observation/state adapter、双层 receipt、restart/idempotence 和 full/no-entropy 分支；未发布 package 无法实例化。
@@ -1353,13 +1372,27 @@
 
 ### 1.2 已验证的基线结果
 
-当前完整 220 题的两条权威前沿必须分开报告：严格 whole-table 主指标最佳仍是 V2.42.67 的 `7/220`；可信单轮 Composite 最高是 V2.46.35 的 `0.437892`，但其 whole-table 只有 `4/220`。V2.46.35 不能称为全面 benchmark 提升或 SOTA。
+当前完整 220 题的两条权威前沿必须分开报告：严格 whole-table 主指标最佳仍是 V2.42.67 的 `7/220`；可信单轮 Composite 最高是 V2.46.35 的 `0.437892`，但其 whole-table 只有 `4/220`。V2.47.18 是 V2.42.67 的 byte-identical identity result，而不是第三条质量前沿。V2.46.35 不能称为全面 benchmark 提升或 SOTA。
+
+以下四层证据不可互换。过去多数小版本是在前置门失败后冻结一个局部结论，而不是在未跑完全集时推断全集成绩。
+
+| 证据层 | 典型规模 | 能回答的问题 | 不能回答的问题 | 当前代表 |
+|---|---:|---|---|---|
+| synthetic/build-only | 单元、回放或故障注入，非 benchmark 分母 | schema、隔离、预算、fail-closed 和算法合同是否实现 | 真实搜索质量、泛化、DeepWideBench 分数 | V2.42.x kernels/audits |
+| benchmark-external gate | 通常 8–12 个全新 registry/table tasks | 机制是否自然触发、transport 是否可靠、outer task utility 是否为正 | DeepWideBench 提分或 SOTA | V2.47.00 World Bank `3/12` GO |
+| dev64 gate | 固定 64 个历史或 fresh development tasks | 候选是否值得承担一次全集成本、质量/可靠性是否初步 non-regression | 完整 220 分数、leaderboard 排名 | V2.46.79 `3→3/64` NO-GO |
+| exact/full-220 | 固定 220，failure-as-zero | 当前 frozen policy 的完整 benchmark 指标 | 未提交 leaderboard 时的 SOTA | V2.42.67、V2.46.30/35、V2.47.14/18 identity |
+
+“机制触发”“外部门 GO”或“dev64 NO-GO”都是对各自预注册问题的终局结论，但不构成完整 benchmark 提升。只有最后一层能回答全集分数；V2.47.18 虽有完整 220 result，却因 220/220 prediction identity 只说明新 adapter 没有改变结果。
 
 | 版本 | N | Whole-table | Entity | Row F1 | Item F1 | Column F1 | Composite | Forward | Fallback |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | V2.42.67 | 220 | **7/220** | 0.690909 | 0.201856 | 0.346810 | 0.414591 | 0.413541 | 结果对象未报告 | 3 |
 | V2.46.30 | 220 | 5/220 | 0.595455 | 0.210554 | 0.367485 | 0.441035 | 0.403632 | 737.78s | 34 |
 | V2.46.35 | 220 | 4/220 | 0.672727 | 0.224156 | 0.385078 | 0.469605 | **0.437892** | 915.58s | 1 |
+| V2.47.14/18 sparse identity | 220 | **7/220** | 0.690909 | 0.201856 | 0.346810 | 0.414591 | 0.413541 | 30.20s sparse pass | 3 inherited |
+
+V2.47.14/18 这一行的指标来自冻结后确认的 220/220 byte identity 与旧 evaluator row 复用，新 evaluator calls 为 0。`30.20s` 只覆盖 4 个并发 bulk 下载与确定性 sparse projection；它不包含 V2.42.67 原始模型生成成本，因此不能与 V2.46.30/35 的 full model forward 直接比较。
 
 V2.46.35 相对 V2.46.30 只改变 executor `32→20` 与 task deadline `150→240s`，搜索、模型、two-wave、预算和 8 slots 不变。该单次公开集比较支持“本轮容量可靠性和 partial quality 改善”，不支持随机化调度因果结论。权威结果与配对诊断见 V2.46.35/36 的 sealed JSON 工件。
 
@@ -1435,7 +1468,7 @@ V2.26 随后从剩余 10 个无历史 forward artifact 的 dev opaque ID 中按�
 - 真实 300-step credit audit set、有效 same-state intervention outcomes、artifact-disjoint inner/outer continuation pairs、provenance-aware credit 的正式 Gate-2B 结果与 RL 训练。V2.42.26 已封闭同 target 自证路径，但真实 outer target 数据仍为 0。
 - 与 WebSwarm、SearchOS、A-MapReduce、TaS 的可比实验。
 
-因此，当前项目可以描述为“已完成可靠性调度 successor 的完整 220 验证，并实现和冻结 entropy/VOC runtime candidate 与发布供应链”。它仍不可描述为“已部署或已验证 Risk-DeepWide/OWIC-DeepWide”。V2.46.35 只刷新 Composite，没有刷新 whole-table 主指标，更不可声称整体 benchmark 提升或 SOTA。
+因此，当前项目可以描述为“已完成可靠性调度 successor 的完整 220 验证，并完成一次 30.2 秒的零模型 sparse adapter 全 220 fail-closed/identity 迁移”。它仍不可描述为“已部署或已验证 Risk-DeepWide/OWIC-DeepWide”。V2.47.14 没有产生任何 intervention，V2.47.18 没有新增 evaluator 信息；V2.46.35 只刷新 Composite，没有刷新 whole-table 主指标。三者都不能支持整体 benchmark 提升或 SOTA。
 
 ## 2. 明确不主张什么
 
@@ -2403,8 +2436,8 @@ outputs/runs/<run_id>/
 | semantic-region + risk portfolio | 相对 random/LLM/Bayes-UCB region policy | 文献约束与动作设计已有；未实现、无结果 |
 | 校准的 unseen-mass/coverage posterior | Gate 1 coverage 指标 | V2.40.9 已实现 missingness-aware proxy calibrator 与 recent-yield baseline gate；真实 prospective Gate 1 尚未评估，不能称 posterior 已验证 |
 | 四层 terminal-loss dynamic-VOC/cost controller | Gate 2A + Gate 3A，且优于 pure IG/myopic VOC | context-specific 七动作 myopic response model/评估器、V2.42.55 finite-DAG Bellman kernel与 V2.42.56 cross-fit calibration primitive 已实现；旧 aggregate 缺 post-action successor target，真实四层 transition/stop-loss dataset、calibration 与 online runtime integration 仍未完成，须 development release 与真实 Gate 1+2A 后另行预注册 |
-| 同预算质量–成本改进 | 全量 paired test | V2.46.30→35 同预算搜索/模型工作量下，Composite `+0.034260`、fallback `34→1`，但 whole-table `5→4`；不通过主指标门 |
-| 机制解释 | 对应消融与轨迹案例 | V2.46.36 只支持“fallback reduction 恢复 partial quality、不足以产生 exact-table success”；非随机化因果证据 |
+| 同预算质量–成本改进 | 全量 paired test | V2.46.30→35 同预算搜索/模型工作量下，Composite `+0.034260`、fallback `34→1`，但 whole-table `5→4`；V2.47.14/18 又是 220/220 identity、所有 delta 为 0，仍不通过主指标门 |
+| 机制解释 | 对应消融与轨迹案例 | V2.46.36 只支持“fallback reduction 恢复 partial quality、不足以产生 exact-table success”；V2.47.00 支持特定 World Bank target–value adapter，V2.47.06/14 则显示全榜覆盖仅 `1/220` 且本轮干预为 0，均非通用机制或随机化因果证据 |
 | 开放世界、结果对齐的 step credit | Gate 2B 对 independent outer intervention target 的定位指标 | fixed-continuation/intervention schema、sealed source adapter 与 outer-target firewall 已实现；真实 300-step artifact-disjoint outer pairs 为 0，正式 Gate 2B 未评估 |
 | credit 改善训练而非只拟合 proxy | Gate 3B 同预算 3-seed pilot | 无结果 |
 | 多智能体协作质量 | 相同总预算下 agent-count/round/topology 曲线优于 single/two-call | 未实验；文献显示可能非单调，不能由高 executor 并发推断 |
@@ -2417,17 +2450,20 @@ outputs/runs/<run_id>/
 
 ## 14. 接下来 72 小时的具体任务
 
-### V2.46.36 后的新执行序列（2026-08-06 UTC）
+### V2.47.18 后的新执行序列（2026-08-06 UTC）
 
-1. 冻结 `20 active / 8 model slots / 240s` 为可靠性基线，不再用公开 220 比较 executor 或 deadline。V2.46.35/36 明确 `new_dev64=false`、`new_exact220=false`，不得把当前诊断解释为下一次全集授权。
-2. 构建 benchmark-external 的表格任务集，并在 effect 前冻结 task-cluster、表 schema、exact-table evaluator、failure-as-zero 分母和来源环境指纹。任务不得来自 DeepWideBench 的题面、mapping、gold、类别或逐题错误模式。
-3. 在相同 GPT-5.6、search/fetch/model/token/wall cap 和 20/8/240 调度下比较固定 pipeline、无熵简单基线与一个 candidate。candidate 只允许组合 schema-conditioned coverage ledger、missing-cell targeted retrieval、row/cell consistency verification 和 deterministic completion checks；不得增加总 query/fetch/model work。
-4. 外部门主指标是 exact-table success；Composite、Entity 与 Row/Item/Column F1 是诊断/guardrail。GO 要求 candidate 的 exact-table success 提高且 Composite 不下降，机制实际触发，成本/可靠性不过门则 failure-as-zero NO-GO。fallback 降低、局部 F1 或 entropy 增益单独不能解锁下一阶段。
-5. entropy/credit 只作为 shadow signal。每个正 credit 必须满足来源独立、同状态/equal-cost intervention 或 artifact-disjoint outer outcome，并与 exact-table downstream utility 同方向；同时报告 high-IG/zero-utility、low-IG/high-utility、误导证据和 premature-stop 反例。
-6. 外部门通过后只冻结一个候选。先做 task-cluster-disjoint 的 fresh dev64 paired gate；只有预注册 whole-table、Composite、成本、机制和 evaluator-health 门全部通过，才设计一次新的 public exact-220。禁止逐题调参、多版本择优、补跑或选择性重评。
-7. 新 exact-220 若获得授权，仍采用 runtime `{opaque_id, question}`、prediction freeze before mapping、固定 220 分母、单遍 no-resume 和 32-way evaluator。项目最低成功线是同时达到或超过 V2.42.67 的 `7/220` 与 V2.46.35 的 Composite `0.437892`；SOTA 仍需独立 leaderboard/同协议外部证据。
+1. 冻结 V2.47.14/18。不得补齐超时 bulk ZIP、重跑同一人口、追加 evaluator 或重新评价。保留两个健康 watcher；下一授权前 shared lease 继续为空。V2.47 链统一标为 exploratory，不作 unseen/held-out 主张。
+2. 单 namespace adapter 从刷榜主线降级为 mechanism/transport testbed。先在全新 benchmark-external 人口对所有预注册 bulk sources 做 completeness、checksum/schema、冷/热缓存和一次性 timeout stress；任一 source 不完整即整臂 failure-as-zero。transport reliability 未过门，不进入 benchmark forward。
+3. 下一通用 candidate 只从 visible question/schema 和本轮工具轨迹构造 primary-identity、target–value 与 source-dependency receipts。设计阶段同样实行 source allowlist；禁止读取 raw benchmark 文件、mapping、gold、category、question_type、split、evaluator、score、reward或逐题历史错误。启动前必须证明多题的非零安全 intervention reachability，不能再以 `1/220` adapter coverage 申请全集。
+4. 在 task-cluster-disjoint 的 benchmark-external 表格人口运行三个同预算臂：无熵 deterministic Unknown-target 强基线、entropy/dynamic-VOC 排序 candidate、matched-cost 固定或随机排序 control。三臂共享 admissible observations、identity/value gate、总 query/fetch/model/token/wall cap 与 failure-as-zero 分母。
+5. entropy 只预测“先处理哪个已绑定 target”，不能生成候选、绕过 verifier 或决定 credit 正负。逐步冻结 pre-state、可选 action set、source-dependency group、belief delta 和成本；以同状态 deletion/replacement/sibling continuation 或 artifact-disjoint outer continuation 估计 signed task contribution。报告 rank correlation、signed accuracy、decision regret、exact-table delta，以及 high-IG/zero-utility、low-IG/high-utility、误导来源和 bridge-step 反例。
+6. benchmark-external GO 同时要求 exact-table 严格提高、Composite/Entity/Row/Item/Column 全部 non-regression、transport/evaluator health、自然触发率与 matched-cost 成立，而且 entropy/VOC arm 优于无熵强基线和排序 control。若只有 deterministic Unknown-target arm 有效，主线改为 structured recovery；若 risk/VOC 不优于 no-entropy，entropy 降级为 diagnostic，不进入 credit training。
+7. 外部门 GO 后只冻结一个 candidate，先做 task-cluster-disjoint fresh dev64 paired gate。只有 whole-table 至少 `+1/64`、五个质量指标不降、机制/成本/evaluator-health 全过，才另行预注册一次 exact-220。dev64 不逐题调参，不把 identity judgments 或失败题反馈到同一 forward。
+8. 获批的 exact-220 采用 runtime `{opaque_id, question}`、prediction freeze before mapping、固定 220 分母、single-pass/no-resume/no-retry 与固定 evaluator 并发。以 `60` 分钟作为 full model forward+evaluation 的 operational envelope；超时仍计入分母并冻结整轮，不补题。GO 要求 whole-table 至少 `7/220`、Composite 至少 `0.437892`，且至少一项严格提高；否则不是 benchmark 提升。SOTA 仍需独立 leaderboard 或同协议外部比较。
 
-### V2.42.16 到 fresh exact-220 的当前执行序列（2026-08-01 02:43 UTC）
+### 历史冻结记录：V2.42.16 到当时 fresh exact-220 的执行序列（2026-08-01 02:43 UTC）
+
+> 本节保留当时的不可逆协议与 PID 记录，用于审计 provenance；它已被上方 V2.47.18 后的新执行序列覆盖，不描述当前活跃 runner，也不得据此重启、接管或补跑任何历史进程。
 
 1. 保留 R1 forward PID `1350579` 与所有健康 watcher，不 signal、restart、resume、复制或选择性补跑。只读监控 exact terminal count、checkpoint liveness 和 `mapping_or_gold_read=false`。
 2. R1 达到 `220/220` 后，由既有 finalizer 首次打开 evaluator mapping，生成 failure-as-zero 的 released all-220 artifact。此前任何 `completed/failed` 计数都不是 benchmark score。
