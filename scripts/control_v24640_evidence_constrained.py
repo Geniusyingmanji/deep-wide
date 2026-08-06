@@ -321,6 +321,8 @@ def audit() -> dict:
             "-I",
             "-B",
             str(ROOT / "tests/test_v24640_evidence_constrained_runtime.py"),
+            "GateTests",
+            "RuntimeTests",
             "-v",
         ],
         cwd=ROOT,
@@ -360,6 +362,8 @@ def audit() -> dict:
         "created_at_unix": int(time.time()),
         "checks": {
             "focused_tests_passed": test,
+            "preactivation_evaluator_tests_skipped": True,
+            "evaluator_gold_not_opened_or_hashed_by_preactivation": True,
             "forward_evaluator_and_gold_capability_absent": not any(
                 item.startswith("forward_evaluator") for item in findings
             ),
