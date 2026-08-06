@@ -19,6 +19,7 @@ import hashlib
 import json
 import re
 import time
+import unicodedata
 from collections import Counter, defaultdict
 from collections.abc import Callable, Mapping, Sequence
 from typing import Any
@@ -87,6 +88,48 @@ def explicit_ror_suffixes(page: Mapping[str, object]) -> tuple[str, ...]:
     return tuple(sorted(values))
 
 
+def _exact_surface_matches(surface: object, entity: str) -> list[re.Match[str]]:
+    text = unicodedata.normalize("NFKC", str(surface))
+    tokens = [re.escape(token) for token in unicodedata.normalize("NFKC", entity).split()]
+    if not tokens:
+        return []
+    pattern = re.compile(r"(?<!\w)" + r"\s+".join(tokens) + r"(?!\w)", re.IGNORECASE)
+    return list(pattern.finditer(text))
+
+
+def entity_bound_ror_suffixes(
+    page: Mapping[str, object], entity: str, *, radius: int = 500
+) -> tuple[str, ...]:
+    """Extract ROR IDs locally bound to one exact visible entity surface.
+
+    A ROR URL is bound when the page title contains the exact entity.  An ID
+    in page text is bound only when it appears in a bounded window around an
+    exact entity occurrence.  This prevents a directory page from pairing one
+    organization's name with another distant organization's identifier.
+    """
+
+    if isinstance(radius, bool) or not isinstance(radius, int) or radius < 100:
+        raise ValueError("V2.46.42 pair-binding radius drifted")
+    title = unicodedata.normalize("NFKC", str(page.get("title", "")))
+    content = unicodedata.normalize("NFKC", str(page.get("content", "")))
+    values: set[str] = set()
+    if _exact_surface_matches(title, entity):
+        values.update(explicit_ror_suffixes({"url": page.get("url", "")}))
+        values.update(
+            explicit_ror_suffixes(
+                {
+                    "title": title,
+                    "content": content[: radius * 2],
+                }
+            )
+        )
+    for match in _exact_surface_matches(content, entity):
+        start = max(0, match.start() - radius)
+        end = min(len(content), match.end() + radius)
+        values.update(explicit_ror_suffixes({"content": content[start:end]}))
+    return tuple(sorted(values))
+
+
 def discover_pairs(
     baseline: str,
     *,
@@ -106,8 +149,8 @@ def discover_pairs(
     pages_with_any_explicit_ror = 0
 
     for page in pages:
-        suffixes = explicit_ror_suffixes(page)
-        pages_with_any_explicit_ror += int(bool(suffixes))
+        page_suffixes = explicit_ror_suffixes(page)
+        pages_with_any_explicit_ror += int(bool(page_suffixes))
         entity_surface = " ".join(
             (str(page.get("title", "")), str(page.get("content", "")))
         )
@@ -115,6 +158,7 @@ def discover_pairs(
             if not _contains_exact_phrase(entity_surface, entity):
                 continue
             entity_page_hits[entity] += 1
+            suffixes = entity_bound_ror_suffixes(page, entity)
             if len(suffixes) == 1:
                 target_values[entity].add(suffixes[0])
                 unique_page_pair_hits[entity] += 1
@@ -457,6 +501,7 @@ __all__ = [
     "POLICY_ID",
     "ROLE",
     "discover_pairs",
+    "entity_bound_ror_suffixes",
     "explicit_ror_suffixes",
     "run_v24642_task",
     "validate_receipt",

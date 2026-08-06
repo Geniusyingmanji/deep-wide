@@ -22,6 +22,7 @@ from deepwide_agent.v24640_ror_external_contract import LIMITS, visible_task
 from deepwide_agent.v24642_deterministic_pair_runtime import (
     ARMS,
     discover_pairs,
+    entity_bound_ror_suffixes,
     explicit_ror_suffixes,
     run_v24642_task,
     validate_result,
@@ -105,6 +106,24 @@ class PairDiscoveryTests(unittest.TestCase):
         self.assertIn("| Alpha Research Institute | Unknown | FR |", candidate)
         self.assertEqual(receipt["admitted_replacement_count"], 0)
         self.assertEqual(receipt["unknown_target_no_pair_count"], 3)
+
+    def test_distant_directory_id_is_not_cross_bound(self) -> None:
+        page = {
+            "evidence_id": "E0001",
+            "url": "https://example.test/directory",
+            "title": "Organization directory",
+            "content": (
+                "Alpha Research Institute profile. "
+                + ("unrelated directory text " * 80)
+                + "Beta Foundation ROR ID: 01abc2d34"
+            ),
+        }
+        self.assertEqual(entity_bound_ror_suffixes(page, self.entities[0]), ())
+        candidate, receipt = discover_pairs(
+            self.baseline, entities=self.entities, pages=[page]
+        )
+        self.assertIn("| Alpha Research Institute | Unknown | FR |", candidate)
+        self.assertEqual(receipt["admitted_replacement_count"], 0)
 
     def test_multi_id_page_or_cross_page_conflict_fails_closed(self) -> None:
         ambiguous = {
