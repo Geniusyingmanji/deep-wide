@@ -348,11 +348,7 @@ def validate_receipt(value: Mapping[str, Any]) -> dict[str, Any]:
         or not isinstance(stages, list)
         or len(stages) > 3
         or stages
-        not in (
-            ["shared_plan"],
-            ["shared_plan", "baseline_synthesis"],
-            ["shared_plan", "baseline_synthesis", "evidence_constrained_revision"],
-        )
+        != ["shared_plan", "baseline_synthesis", "evidence_constrained_revision"]
         or copied.get("admitted_search_queries", -1) not in range(5)
         or copied.get("admitted_fetch_targets", -1) not in range(11)
         or not isinstance(revision, Mapping)

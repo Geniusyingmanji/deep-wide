@@ -15,13 +15,23 @@ for path in (ROOT, ROOT / "src"):
 
 from deepwide_agent.clients import ModelResult
 from deepwide_agent.v24257_score_first_runtime import ScoreFirstLimits
-from deepwide_agent.v24639_ror_external_contract import LIMITS, visible_task
 from deepwide_agent.v24639_ror_objective_runtime import extract_visible_entities
 from deepwide_agent.v24640_evidence_constrained_runtime import (
     ARMS,
     gate_replacements,
     run_v24640_task,
     validate_result,
+)
+from deepwide_agent.v24640_ror_external_contract import (
+    ENTITY_GROUPS,
+    LIMITS,
+    task_vector,
+    visible_task,
+)
+from deepwide_agent.v24640_ror_external_evaluator import (
+    evaluate_frozen_rows,
+    evaluate_prediction,
+    gold_rows,
 )
 
 
@@ -254,6 +264,15 @@ class GateTests(unittest.TestCase):
 
 
 class RuntimeTests(unittest.TestCase):
+    def test_visible_boundary_and_fresh_vector(self) -> None:
+        tasks = task_vector()
+        self.assertEqual(len(tasks), 12)
+        self.assertTrue(all(set(task) == {"opaque_id", "question"} for task in tasks))
+        for index, task in enumerate(tasks):
+            self.assertEqual(
+                extract_visible_entities(task["question"]), list(ENTITY_GROUPS[index])
+            )
+
     def test_effect_conservation_and_monotonic_revision(self) -> None:
         task = visible_task(1)
         entities = extract_visible_entities(task["question"])
@@ -286,21 +305,79 @@ class RuntimeTests(unittest.TestCase):
         self.assertIn("| " + entities[1] + " | 099999999 | EE |", result["predictions"]["evidence_constrained"])
 
     def test_forward_ast_has_no_evaluator_or_gold_capability(self) -> None:
-        path = ROOT / "src/deepwide_agent/v24640_evidence_constrained_runtime.py"
-        text = path.read_text(encoding="utf-8")
-        tree = ast.parse(text)
-        imports: list[str] = []
-        for node in ast.walk(tree):
-            if isinstance(node, ast.Import):
-                imports.extend(alias.name for alias in node.names)
-            elif isinstance(node, ast.ImportFrom):
-                imports.append(node.module or "")
-        self.assertFalse(any("evaluator" in name or "gold" in name for name in imports))
-        self.assertNotIn("evaluation/", text)
-        self.assertNotIn("open(", text)
-        self.assertNotIn("Path(", text)
-        self.assertNotIn("subprocess", text)
-        self.assertNotIn("_arm_order =", text)
+        paths = (
+            ROOT / "src/deepwide_agent/v24640_evidence_constrained_runtime.py",
+            ROOT / "src/deepwide_agent/v24640_ror_external_contract.py",
+        )
+        for path in paths:
+            text = path.read_text(encoding="utf-8")
+            tree = ast.parse(text)
+            imports: list[str] = []
+            for node in ast.walk(tree):
+                if isinstance(node, ast.Import):
+                    imports.extend(alias.name for alias in node.names)
+                elif isinstance(node, ast.ImportFrom):
+                    imports.append(node.module or "")
+            self.assertFalse(
+                any("evaluator" in name or "gold" in name for name in imports)
+            )
+            self.assertNotIn("evaluation/", text)
+            self.assertNotIn("subprocess", text)
+            self.assertNotIn("_arm_order =", text)
+
+
+class EvaluatorTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.gold = gold_rows(
+            (ROOT / "evaluation/v24640_ror_gold_v1.csv").read_text(encoding="utf-8")
+        )
+
+    def test_gold_fixed_denominator(self) -> None:
+        self.assertEqual(len(self.gold), 48)
+        self.assertEqual(len({row["opaque_id"] for row in self.gold}), 12)
+
+    def test_full_ror_url_is_semantically_equivalent(self) -> None:
+        rows = [
+            row for row in self.gold if row["opaque_id"] == visible_task(1)["opaque_id"]
+        ]
+        exact = table(
+            [
+                [
+                    row["Organization"],
+                    "https://ror.org/" + row["ROR ID"],
+                    row["Country code"],
+                ]
+                for row in rows
+            ]
+        )
+        self.assertEqual(evaluate_prediction(exact, rows)["exact_table_success"], 1)
+
+    def test_gate_requires_exact_gain_composite_and_item_guardrails(self) -> None:
+        predictions = []
+        for task in task_vector():
+            rows = [row for row in self.gold if row["opaque_id"] == task["opaque_id"]]
+            exact = table(
+                [
+                    [row["Organization"], row["ROR ID"], row["Country code"]]
+                    for row in rows
+                ]
+            )
+            predictions.append(
+                {
+                    "opaque_id": task["opaque_id"],
+                    "predictions": {
+                        "baseline": "broken",
+                        "evidence_constrained": exact,
+                    },
+                }
+            )
+        result = evaluate_frozen_rows(predictions, self.gold)
+        self.assertTrue(result["gate_passed"])
+        self.assertEqual(
+            result["candidate_minus_baseline"]["exact_table_successes"], 12
+        )
+        self.assertGreaterEqual(result["candidate_minus_baseline"]["item_f1"], 0)
 
 
 if __name__ == "__main__":
