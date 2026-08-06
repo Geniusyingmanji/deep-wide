@@ -274,6 +274,8 @@ class RuntimeTests(unittest.TestCase):
         self.assertEqual(receipt["admitted_total_fetch_targets"], 9)
         self.assertEqual(receipt["generic_fetch_targets"], 6)
         self.assertEqual(receipt["unknown_target_lookup_fetch_targets"], 3)
+        self.assertEqual(receipt["discovery"]["candidate_evidence_page_count"], 3)
+        self.assertEqual(receipt["discovery"]["generic_model_visible_page_count"], 6)
         self.assertEqual(receipt["discovery"]["admitted_replacement_count"], 3)
         candidate = result["predictions"]["unknown_target_structured"]
         self.assertIn(f"| {ENTITIES[0]} | {SUFFIXES[0]} | FR |", candidate)

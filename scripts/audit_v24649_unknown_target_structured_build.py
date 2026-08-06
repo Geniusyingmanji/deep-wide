@@ -29,7 +29,10 @@ from scripts import audit_v24495_targeted_conversion_projection_build as common 
 
 DATE = "20260806"
 PARENT = Path(f"results/v24647_v24645_zero_intervention_diagnosis_v1_{DATE}.json")
-AUDIT = Path(f"results/v24649_unknown_target_structured_build_audit_v1_{DATE}.json")
+AUDIT = Path(f"results/v24649_unknown_target_structured_build_audit_v2_{DATE}.json")
+SUPERSEDED = Path(
+    f"results/v24649_unknown_target_structured_build_audit_v1_{DATE}.json"
+)
 SOURCES = (
     PARENT,
     Path("src/deepwide_agent/v24644_primary_identity_pair_runtime.py"),
@@ -184,6 +187,12 @@ def build_audit(*, now: int | None = None) -> dict[str, Any]:
         "artifact_version": 1,
         "role": "v24649_unknown_target_structured_build_audit",
         "created_at_unix": int(time.time()) if now is None else int(now),
+        "supersedes": {
+            "path": str(SUPERSEDED),
+            "sha256": common._sha256(SUPERSEDED),
+            "reason": "candidate_consumes_only_new_unknown_target_lookup_projection",
+            "v1_authorizes_successor_use": False,
+        },
         "parent": {
             "v24647_diagnosis_sha256": common._sha256(PARENT),
             "valid": parent_valid,

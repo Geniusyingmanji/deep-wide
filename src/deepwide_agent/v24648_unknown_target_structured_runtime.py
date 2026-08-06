@@ -535,7 +535,7 @@ def run_v24648_task(
     candidate, raw_discovery = identity.discover_pairs(
         baseline,
         entities=entities,
-        pages=[*generic_visible, *lookup_pages],
+        pages=lookup_pages,
     )
     discovery = dict(raw_discovery)
     discovery["candidate_evidence_page_count"] = discovery.pop(

@@ -44,6 +44,7 @@ class BuildAuditTests(unittest.TestCase):
         self.assertTrue(value["audit_valid"])
         self.assertEqual(value["findings"], [])
         self.assertEqual(value["tests"]["test_count"], 50)
+        self.assertFalse(value["supersedes"]["v1_authorizes_successor_use"])
         self.assertTrue(
             value["authorization"]["fresh_external_population_and_protocol_design"]
         )
