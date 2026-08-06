@@ -1,0 +1,106 @@
+{
+  "artifact_version": 1,
+  "role": "v24630_exact220_evaluator_preregistration",
+  "protocol_id": "v24630_bounded_same_response_title_backfill_exact220_v1",
+  "created_at_unix": 1785989851,
+  "selected": 220,
+  "evaluator_workers": 32,
+  "forward_barrier": {
+    "forward_contract_sha256": "18a835b9cd5b4c45a65d10f103b4e20af14d9e17d694ed92145080531bccecf8",
+    "forward_result_sha256": "7f61008b7623952e3b966183eab07fe3aee98a6e35459f063124fe3f0007a1a9",
+    "forward_audit_sha256": "ddf0266666725a1370804942773d854e7ef3fa6e943ce04423c86ee76eb24b90",
+    "prediction_freeze_sha256": "e891088e395600c8387d49c28d230a18639ed46222affb1625d1d31cfe923157",
+    "runtime_predictions_sha256": "db7855a6c70d127aed8e2d28eaeb39d5f9ac2d1ed64fcae76c783ff377ae6c62",
+    "run_summary_sha256": "8c2421a6ccbbdad80c66a9aed8e725b82119648ce5d81571020f887b1686dc55",
+    "terminal_predictions": 220,
+    "mapping_or_evaluator_opened_during_forward": false
+  },
+  "evaluator_contract": {
+    "release_seal": {
+      "path": "results/full220_v2403_r1_20260725_finalize_seal.json",
+      "sha256": "6353c3d1caa05fc67f750570d3b3e5909d23945cc69b63f479a47c23d6b3c63f"
+    },
+    "released_evaluator_contract": {
+      "path": "outputs/full220_v2403_r1_eval_20260725/run_config.json",
+      "sha256": "b1040a303a71955b8b8d669c497e24100ec2d8de06d73aa30c3496d69a8559e1"
+    },
+    "mapping": {
+      "path": "outputs/runtime_manifest_v1_repro/evaluator_mapping.jsonl",
+      "sha256": "3d6f8f71e8136f5a3fe9385e2511e50a367e220dd84e790ba3c7dec975ab5d86"
+    },
+    "query_data": {
+      "path": "external/Marco-Search-Agent/Marco-DeepResearch-Family/DeepWideSearch/data/overall_20250916.jsonl",
+      "sha256": "4dd18df4ab8d166f14a1458f884fd8e0652f970764e245e868d75947daa5e5cf"
+    },
+    "answer_corpus": {
+      "root": "external/Marco-Search-Agent/Marco-DeepResearch-Family/DeepWideSearch/data/overall_20250916_tables",
+      "manifest_sha256": "5ddc76dd9e9fa4a7080f84e824de6230c62101d2375dee72a0f508b7cfa4ec7e"
+    },
+    "evaluator_source": {
+      "manifest_sha256": "2829e4808226bd35e4e312f024ceded3a9bc2b1e923493e06503278e382ba061"
+    },
+    "judge": {
+      "proxy_url": "http://127.0.0.1:9878/responses",
+      "model": "gpt-5.6-sol",
+      "reasoning_effort": "low",
+      "max_output_tokens": 8192,
+      "timeout_seconds": 600,
+      "max_retries": 12
+    },
+    "recovery_policy": {
+      "explicit_resume_required": true,
+      "committed_success_or_error_is_terminal": true,
+      "committed_rows_must_be_exact_prediction_prefix": true,
+      "canonical_result_file_atomic_replace_per_task": true,
+      "selective_error_retry_allowed": false
+    },
+    "mapping_query_answer_or_gold_bytes_opened_or_hashed": true,
+    "opened_only_after_v24630_exact220_prediction_freeze": true
+  },
+  "evaluation_contract": {
+    "all_220_predictions_frozen_before_mapping_query_answer_or_evaluator_open": true,
+    "fixed_contiguous_32_way_partition_in_prediction_order": true,
+    "official_evaluator_on_every_frozen_prediction_exactly_once": true,
+    "worker_error_rows_are_terminal_failure_as_zero": true,
+    "selective_retry_revaluation_or_prediction_selection": false,
+    "conservative_denominators": {
+      "test_156": 156,
+      "all_220": 220
+    }
+  },
+  "outputs": {
+    "evaluator_root": "outputs/v24630_exact220_v1_20260806/evaluator",
+    "final_result": "results/v24630_exact220_result_v1_20260806.json",
+    "postresult_audit": "results/v24630_exact220_postresult_audit_v1_20260806.json"
+  },
+  "lease": {
+    "path": "outputs/deepwide_benchmark_api.lease.lock",
+    "owner": "v24630_exact220_evaluator_v1",
+    "purpose": "postfreeze_fixed_partition_parallel_exact220_official_evaluator",
+    "nonblocking_single_owner": true
+  },
+  "control_manifest": {
+    "scripts/preregister_v24630_exact220_evaluator.py": "2b40979d9c0b83850633376645b3d025cd3c1ef337a0dd0497837647ef18bd11",
+    "scripts/finalize_v24630_exact220.py": "5a08d59a6ee0888c7ea5e13c79308b48271f5df7814f99a6dd2d5bf38c6a3d04",
+    "scripts/run_official_eval_local.py": "ab3d3ba3f15143d9f0f46816d7b9eb61f3f8915172dc14fe50d02b96b645c1ca",
+    "scripts/finalize_fullset_rollout.py": "3e886b73cca2b011853a605091eab0d13004de5edee95b14627d1706d69808e5",
+    "scripts/finalize_v24287_exact220.py": "31e55e6d8825f810125897395abb746ad9ba1cffa595e8dc463b1d173e55eed2",
+    "scripts/deepwide_api_lease.py": "8d9cffa78617b458172307d3558c76e9370f045f531c2f5aaaceb866f5a78c7d"
+  },
+  "control_manifest_sha256": "059d5d79d5e7b1a6279d651ce718fc1990108595185eb7f12db105afd6b486fe",
+  "source_policy": {
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "mapping_gold_category_question_type_split_evaluator_score_read_by_forward": false,
+    "mapping_opened_only_after_exact220_prediction_freeze": true,
+    "same_run_evaluator_feedback_used_for_forward_or_prediction_selection": false
+  },
+  "authorization": {
+    "postfreeze_exact220_evaluation": true,
+    "selective_retry_or_revaluation": false,
+    "additional_rollout_avg4_leaderboard_or_sota": false
+  },
+  "protocol_payload_sha256": "a172b5978eb22be87704ad639c8add0a693809d56d65d4e2c9ed8cfe57e7e772"
+}
