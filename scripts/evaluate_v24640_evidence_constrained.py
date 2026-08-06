@@ -18,14 +18,12 @@ for path in (ROOT, ROOT / "src"):
         sys.path.insert(0, str(path))
 
 from deepwide_agent.v24640_ror_external_contract import (  # noqa: E402
-    EVALUATOR_PROTOCOL,
+    DATE,
     FORWARD_AUDIT,
     FORWARD_RESULT,
-    POSTAUDIT,
     PREDICTION_FREEZE,
     PREDICTIONS,
     PROTOCOL_ID,
-    RESULT,
     SELECTED_COUNT,
     payload_sha256,
     protected_watcher_snapshot,
@@ -36,6 +34,15 @@ from deepwide_agent.v24640_ror_external_evaluator import (  # noqa: E402
     PROVENANCE,
     evaluate_frozen_rows,
     gold_rows,
+)
+
+
+EVALUATOR_PROTOCOL = Path(
+    f"results/v24640_evidence_constrained_evaluator_preregistration_v1_{DATE}.json"
+)
+RESULT = Path(f"results/v24640_evidence_constrained_result_v1_{DATE}.json")
+POSTAUDIT = Path(
+    f"results/v24640_evidence_constrained_postresult_audit_v1_{DATE}.json"
 )
 
 

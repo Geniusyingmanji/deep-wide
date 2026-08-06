@@ -29,7 +29,6 @@ from deepwide_agent.v24639_ror_external_contract import (  # noqa: E402
 from deepwide_agent.v24640_ror_external_contract import (  # noqa: E402
     ACTIVATION,
     ARM_COUNT,
-    EVALUATOR_PROTOCOL,
     EXECUTION_START,
     ENTITY_GROUPS,
     EXECUTOR_CONCURRENCY,
@@ -43,11 +42,9 @@ from deepwide_agent.v24640_ror_external_contract import (  # noqa: E402
     MODEL_SLOT_CAP,
     OUTPUT_ROOT,
     PARENT_TIMEOUT_SECONDS,
-    POSTAUDIT,
     PREAUDIT,
     PROTOCOL,
     PROTOCOL_ID,
-    RESULT,
     SEARCH,
     SELECTED_COUNT,
     payload_sha256,
@@ -100,6 +97,13 @@ SECRET_PATTERNS = (
     re.compile(r"(?<![A-Za-z0-9])(?:gh" + "p_|github_" + "pat_)[A-Za-z0-9_-]{16,}"),
     re.compile(r"(?<![A-Za-z0-9])tvly-" + "dev-[A-Za-z0-9_-]{16,}"),
     re.compile(r"(?<![A-Za-z0-9])s" + "k-[A-Za-z0-9_-]{16,}"),
+)
+EVALUATOR_PROTOCOL = Path(
+    f"results/v24640_evidence_constrained_evaluator_preregistration_v1_{DATE}.json"
+)
+RESULT = Path(f"results/v24640_evidence_constrained_result_v1_{DATE}.json")
+POSTAUDIT = Path(
+    f"results/v24640_evidence_constrained_postresult_audit_v1_{DATE}.json"
 )
 
 
@@ -508,3 +512,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+    DATE,

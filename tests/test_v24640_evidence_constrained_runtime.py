@@ -351,6 +351,7 @@ class RuntimeTests(unittest.TestCase):
                 any("evaluator" in name or "gold" in name for name in imports)
             )
             self.assertNotIn("evaluation/", text)
+            self.assertNotIn("EVALUATOR_PROTOCOL", text)
             self.assertNotIn("_arm_order =", text)
         runtime_text = paths[0].read_text(encoding="utf-8")
         self.assertNotIn("subprocess", runtime_text)
