@@ -1,0 +1,145 @@
+{
+  "artifact_version": 1,
+  "role": "v24635_exact220_result",
+  "protocol_id": "v24635_capacity_validated_bounded_title_backfill_exact220_v1",
+  "created_at_unix": 1786002075,
+  "status": "exact220_single_rollout_complete",
+  "selected": 220,
+  "failure_as_zero": true,
+  "exact220_prediction_freeze_before_evaluator": true,
+  "metrics": {
+    "test_156": {
+      "selected": 156,
+      "evaluator_valid": 146,
+      "evaluator_invalid_or_not_run": 10,
+      "whole_table_successes": 2,
+      "entity_acc": 0.6538461538461539,
+      "f1_by_row": 0.20752790241361752,
+      "f1_by_item": 0.3602316586772103,
+      "column_f1": 0.4421025050621225,
+      "quality_composite": 0.41592705499977606,
+      "score": 0.01282051282051282
+    },
+    "all_220": {
+      "selected": 220,
+      "evaluator_valid": 208,
+      "evaluator_invalid_or_not_run": 12,
+      "whole_table_successes": 4,
+      "entity_acc": 0.6727272727272727,
+      "f1_by_row": 0.2241561851148714,
+      "f1_by_item": 0.3850781458441256,
+      "column_f1": 0.46960510227128316,
+      "quality_composite": 0.4378916764893882,
+      "score": 0.01818181818181818,
+      "model_generated_tables": 219,
+      "fallback_tables": 1,
+      "system_total_tokens": 8100674
+    }
+  },
+  "efficiency": {
+    "forward_wall_seconds": 915.576467,
+    "evaluator_parallel_wall_seconds": 222.244302,
+    "evaluator_workers": 32
+  },
+  "mechanism": {
+    "backfilled_action_source_count": 71,
+    "backfilled_unique_url_count": 47,
+    "query_local_shadowed_backfilled_url_count": 47,
+    "earlier_action_shadowed_backfilled_url_count": 0,
+    "surviving_backfilled_union_lead_count": 0,
+    "downstream_candidate_set_changed_by_backfill": false
+  },
+  "comparisons": {
+    "vs_v24267_best_exact220": {
+      "reference": "V2.42.67",
+      "reference_result_sha256": "0e08df141b1c34726bc04673fcb5c56f98b4aab08df906c2d7f35b568b6932eb",
+      "whole_table_success_delta": -3,
+      "score_delta": -0.013636363636363634,
+      "quality_composite_delta": 0.024350258421179327,
+      "entity_acc_delta": -0.018181818181818188,
+      "f1_by_row_delta": 0.022300552392455986,
+      "f1_by_item_delta": 0.03826828042032593,
+      "column_f1_delta": 0.05501401905375375
+    },
+    "vs_v24287_low_cost_exact220": {
+      "reference": "V2.42.87",
+      "reference_result_sha256": "ef54c4e9b96723ad991c01113b8abb9f323230a77d5512409ee9779fee98d833",
+      "whole_table_success_delta": -1,
+      "score_delta": -0.004545454545454547,
+      "quality_composite_delta": 0.04190069089441684,
+      "entity_acc_delta": 0.036363636363636376,
+      "f1_by_row_delta": 0.03609418121752231,
+      "f1_by_item_delta": 0.04355849590802735,
+      "column_f1_delta": 0.051586450088481284
+    },
+    "vs_v24630_capacity_parent_exact220": {
+      "reference": "V2.46.30",
+      "reference_result_sha256": "09c67b91526a8787b45edbd6f51b29421e50ad3116884fbc6498c7919bc45c9a",
+      "whole_table_success_delta": -1,
+      "score_delta": -0.004545454545454547,
+      "quality_composite_delta": 0.03425955261622249,
+      "entity_acc_delta": 0.07727272727272727,
+      "f1_by_row_delta": 0.013602283372335877,
+      "f1_by_item_delta": 0.017592983742424406,
+      "column_f1_delta": 0.028570216077402344
+    }
+  },
+  "provenance": {
+    "protocol_sha256": "af1b5970bd67b1ee06151df3a4813acf8692b5d65e6e52ef89cd5276a538299d",
+    "forward_contract_sha256": "8d54b01ddb1018745fb073e9d4dd33dff2e1aff7f662c41aa79a0058d89f4fc0",
+    "forward_result_sha256": "22a9e78657e371f9ed4150408006de19e85d2bb1b50baf3acd000ca00f3f907c",
+    "forward_audit_sha256": "b1f5c34a8b2f0bb9c64a8d55766f94de61554401cdc606a7a7d580105792fb92",
+    "prediction_freeze_sha256": "091f46e6d348caf67774f6df57187486a05ef1167f18a70298066eb570ea5ae9",
+    "mapping_sha256": "3d6f8f71e8136f5a3fe9385e2511e50a367e220dd84e790ba3c7dec975ab5d86",
+    "query_data_sha256": "4dd18df4ab8d166f14a1458f884fd8e0652f970764e245e868d75947daa5e5cf",
+    "answer_corpus_manifest_sha256": "5ddc76dd9e9fa4a7080f84e824de6230c62101d2375dee72a0f508b7cfa4ec7e",
+    "evaluator_source_manifest_sha256": "2829e4808226bd35e4e312f024ceded3a9bc2b1e923493e06503278e382ba061",
+    "judge": {
+      "proxy_url": "http://127.0.0.1:9878/responses",
+      "model": "gpt-5.6-sol",
+      "reasoning_effort": "low",
+      "max_output_tokens": 8192,
+      "timeout_seconds": 600,
+      "max_retries": 12
+    },
+    "recovery_policy": {
+      "explicit_resume_required": true,
+      "committed_success_or_error_is_terminal": true,
+      "committed_rows_must_be_exact_prediction_prefix": true,
+      "canonical_result_file_atomic_replace_per_task": true,
+      "selective_error_retry_allowed": false
+    },
+    "merged_official_eval_results_sha256": "c057f4ff3cc04a3128811c4ef6b33024a02f44421af701ab80234a7735d0ad09",
+    "parallel_merge_attestation_sha256": "9acdc4180d5ee2e8b94f7b5d7ec12df3a178e5ab953cae8f367264e97cfa4358",
+    "conservative_summary_sha256": "756ff278e6d5c708d2dc6ba8d9ed999252285a3f76bb697c0f0b879331500511"
+  },
+  "source_policy": {
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "mapping_gold_category_question_type_split_evaluator_score_read_by_forward": false,
+    "mapping_opened_only_after_exact220_prediction_freeze": true,
+    "same_run_evaluator_feedback_used_for_forward_or_prediction_selection": false,
+    "fixed_public_exact220_task_set_reexecuted": true,
+    "new_or_disjoint_task_population_claimed": false,
+    "cross_version_public_benchmark_feedback_overfitting_remains_a_limitation": true
+  },
+  "authorization": {
+    "additional_rollout_or_avg4": false,
+    "selective_retry_or_revaluation": false,
+    "leaderboard_submission": false,
+    "sota_claim": false
+  },
+  "claims": {
+    "public_exact220_single_rollout": true,
+    "cold_execution": true,
+    "unseen_or_held_out": false,
+    "new_or_disjoint_task_population": false,
+    "cross_version_public_benchmark_feedback_overfitting_remains_a_limitation": true,
+    "avg_at_4": false,
+    "leaderboard_submitted": false,
+    "sota": false
+  },
+  "result_payload_sha256": "7f341453a3a2d795133c813fad2af3cbe2f4de4859045d75ff2632f31f4b62db"
+}
