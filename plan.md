@@ -1,6 +1,14 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.28
+> 版本：6.29
+>
+> **6.29 V2.46.37/38 benchmark-external exact-table objective gate（2026-08-06）：已完成真正的 prediction-freeze→post-freeze gold evaluator，而不是旧 external 链的 mechanism aggregate。V2.46.37 protocol 因 secret scanner 把 `task-local` 内部子串误判为 token 前缀而在 preactivation 前 fail closed；未发布 preaudit、未 activation、未建 output、网络 effect=0，永久 NO-GO。append-only V2.46.38 只增加左 token boundary，runtime、12 题/96 实体、预算、gold 与 gate 全部不变。协议、preaudit、activation、execution-start 均从 clean `HEAD==target/main` 独立提交推送后才启动。**
+>
+> **V2.46.38 forward 输入严格只有 `{opaque_id, question}`；forward dependency graph 物理排除 evaluator/gold parser/gold path。12 个机场任务共享同一 plan/search/fetch evidence prefix，基线与 coverage-ledger candidate 各得一次合成调用；奇偶 opaque ID 平衡两臂调用顺序为 `6/6`。每题仍为 3 model / 4 query / 10 fetch / 240s 上限，12 active / 8 slots；一次性 forward 在 `45.699447s` 完成 `24/24` arm predictions，12/12 child result/model/transport/terminal bundle 有效，36 model-slot acquisitions、0 timeout、0 failure projection。预测全冻结并审计后才首次打开 evaluator-only OurAirports commit `fbe34ca...` gold；没有调用 DeepWideBench evaluator。**
+>
+> **质量门严格 NO-GO，但原因是 ceiling，不是失败：baseline 与 candidate 均为 exact-table `12/12`、Entity/Row/Item/Column/Composite 全为 `1.0`，candidate delta 全0，因此不满足预注册的“exact-table 严格提高且 Composite 不下降”。候选在结构 receipt 上把 exact visible entity identity/order 从 baseline `10/12` 提到 `12/12`，但 evaluator 预注册为 set-based row matching，不能事后改主指标追认胜利。该门只说明机制能稳定保证结构，任务对 GPT-5.6 过易，不能授权 dev64/exact220，也不能支持 entropy credit 或 SOTA。权威工件为 `results/v24638_objective_alignment_result_v1_20260806.json` 与对应 postresult audit。**
+>
+> **下一刷榜步骤仍不得回到公开 220 搜版本。只允许一个新的、与机场和此前 4,192 实体互斥的 harder external replication：应使用长尾、跨页、非模型记忆可直接回答的 immutable registry facts，并在 effect 前冻结 exact-table evaluator、source snapshot 与 difficulty checks；继续共享 evidence、同预算、平衡 arm order、failure-as-zero。主门仍是 strict exact gain + Composite guardrail；visible-order compliance 可升级为预注册 secondary metric，但不能取代 exact-table。若 harder replication 仍 ceiling/identity，则 coverage-ledger prompt 降级为结构安全组件，转向 missing-cell targeted retrieval 或 deterministic consistency verification；entropy 继续 shadow-only。**
 >
 > **6.28 V2.46.35 完整 exact-220 与 V2.46.36 配对诊断（2026-08-06）：V2.46.35 已完成一次严格 label-blind、no-resume、failure-as-zero 的完整 220 题。forward 运行输入仍只有 `{opaque_id, question}`，220 个预测全部冻结后才开放 mapping/evaluator。forward 用 `20 active / 8 model slots / 240s`，在 `915.576467s` 内冻结 `219` 个模型表和 `1` 个 fallback；32 路固定连续分片 evaluator 用 `222.244302s` 评完 220 行，208 行有效，12 行错误固定计零。最终 whole-table 为 `4/220=0.018182`，Entity `0.672727`，Row/Item/Column F1 为 `0.224156/0.385078/0.469605`，Composite `0.437892`。最终 post-result audit 的 32 项检查全部通过、`findings=[]`。权威工件为 `results/v24635_exact220_result_v1_20260806.json`、`results/v24635_exact220_postresult_audit_v1_20260806.json` 与 `outputs/v24635_exact220_v1_20260806/evaluator/conservative_summary.json`。**
 >

@@ -1015,3 +1015,11 @@ V2.43.70 的真实外部门提供了一个对 Deep/Wide 搜索设计很重要的
 这比“哪个网页看起来信息量大就给哪个 step credit”更可行。原始 surprisal、页面新颖度、字符数或 source count 都可能奖励噪声、误导证据与重复信息；V2.43.70 恰好显示 proposal entropy 可以为正而最终 utility 为零。对于 credit assignment，合适的量不是无条件信息增益，而是受来源独立性、目标绑定与反事实 utility 约束的增益：`credit(e) = I(Y; e | state, prior evidence) × verified_utility(e)`。其中 `verified_utility` 不能由同一 proposal 自证，需要预留的独立 evidence stratum 或未来 outer intervention；否则会把“系统相信得更坚定”误写成“系统更正确”。这与 CIGPO 的 contextual information gain、Bridge Evidence 的 causal utility、CGDP/POMDP acquisition view、MICA/TRIAGE/step-level graph credit 的长程归因问题相接，但当前方案的可区分点是把 entropy、verifier outcome 和 downstream utility 以可重放 receipt 显式分离。
 
 V2.43.71 的 batch-stratified prefilter 是这一观点的工程化实例：完整容量先从两个 discovery batch 各取 5 个 registrable hosts，再让每批各贡献 4 proposal 和 1 hidden verifier；它只读 visible query、URL/title 与 source provenance，发生在 fetch/candidate/entropy/evaluator 之前。合成测试显示它修复了 first-10 对第二批的完全遮蔽，并保持 2 search/10 fetch/3 model effects；但它目前仍只是 coverage mechanism evidence。只有全新外部门出现独立支持、正 utility credit 与最终 net gain，随后 paired dev64 和 exact-220 质量提升，才能把它升级为 benchmark 或论文主结论。
+
+## 2026-08-06 补充：exact-table objective gate 的第一次真实质量检验是 ceiling NO-GO
+
+V2.46.38 首次把此前 external mechanism gate 补成了完整的质量识别链：12 个全新机场表任务、96 个实体、共享 plan/search/fetch evidence、相同模型与 token 上限、平衡两臂调用顺序；24 个预测全部冻结后，独立 evaluator 才读取绑定到不可变 OurAirports commit 的 ICAO/IATA gold。forward 仅用 45.70 秒，12/12 bundle 有效、36 次模型 effect、0 slot timeout。这说明 fixed 20/8/240 可靠性基线可以把中等规模 paired gate 压缩到分钟级，而不是天级。
+
+结果同时暴露了实验设计风险：标准 synthesis 和 schema-conditioned coverage-ledger prompt 都得到 `12/12` exact table，Composite 均为 `1.0`。候选确实把可见实体拼写/顺序严格保持从 `10/12` 提到 `12/12`，但预注册 evaluator 对行顺序不敏感，exact 与 Composite delta 均为0，所以 gate 必须判 NO-GO，不能事后把结构 receipt 改写成质量胜利。机场代码对 GPT-5.6 和 web search 太容易，因而该轮验证了运行时隔离与结构机制，却没有估计困难开放世界下的 completion utility。
+
+这对 entropy/credit 也给出一个直接反例：两臂 outer utility 完全相同，任何由页面新颖度、coverage completion 或内部 ledger 产生的正信息增益都不应获得正任务 credit。若定义 `credit(e)=IG(e)×verified_utility(e)`，本轮可识别的 candidate-vs-baseline outer utility 是0，因此增量 credit 必须为0。下一外部门需预先证明非天花板难度，使用长尾、跨页、不可由模型记忆直接填满的 immutable registry facts；同时把顺序/identity compliance 作为预注册 secondary metric，而非事后替换 exact-table 主指标。
