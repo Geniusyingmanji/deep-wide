@@ -1023,3 +1023,7 @@ V2.46.38 首次把此前 external mechanism gate 补成了完整的质量识别�
 结果同时暴露了实验设计风险：标准 synthesis 和 schema-conditioned coverage-ledger prompt 都得到 `12/12` exact table，Composite 均为 `1.0`。候选确实把可见实体拼写/顺序严格保持从 `10/12` 提到 `12/12`，但预注册 evaluator 对行顺序不敏感，exact 与 Composite delta 均为0，所以 gate 必须判 NO-GO，不能事后把结构 receipt 改写成质量胜利。机场代码对 GPT-5.6 和 web search 太容易，因而该轮验证了运行时隔离与结构机制，却没有估计困难开放世界下的 completion utility。
 
 这对 entropy/credit 也给出一个直接反例：两臂 outer utility 完全相同，任何由页面新颖度、coverage completion 或内部 ledger 产生的正信息增益都不应获得正任务 credit。若定义 `credit(e)=IG(e)×verified_utility(e)`，本轮可识别的 candidate-vs-baseline outer utility 是0，因此增量 credit 必须为0。下一外部门需预先证明非天花板难度，使用长尾、跨页、不可由模型记忆直接填满的 immutable registry facts；同时把顺序/identity compliance 作为预注册 secondary metric，而非事后替换 exact-table 主指标。
+
+V2.46.39 随后用不可变 ROR registry 做了这项非天花板复验。12个任务各含4个长尾机构，答案是9字符 ROR suffix 与 ISO alpha-2 country code；任务、gold和provenance在预测前分别物理隔离，forward只见名称和schema。baseline 与 coverage-ledger 共享搜索/页面、共享行 projector、各一次合成调用。baseline 与 candidate 都是 `2/12` exact，但 candidate Item F1 从 `0.645833` 降到 `0.635417`、Composite 从 `0.911458` 降到 `0.908854`，同时 Unknown cell 从15降到14。
+
+这个组合比单纯 NO-GO 更有信息量：candidate 的内部 completion signal 看起来改善，却以额外错误值为代价。也就是说，减少未知项不是 task utility，页面覆盖或熵下降也不是事实正确性的充分条件。对 credit assignment，candidate-vs-baseline 的 verified outer utility 为负，因此即使某个 cell 的主观熵下降为正，其 task credit 也必须非正。工程策略应从“coverage ledger 强制填满”切换为 evidence-constrained verification：只给 exact target/value/source binding 且由独立页面支持的 cell 正 credit，无支持时保留 Unknown。该结论来自 benchmark-external ROR 门，不是 DeepWideBench 提分，也不授权 dev64或220。

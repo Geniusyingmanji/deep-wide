@@ -1,6 +1,14 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.29
+> 版本：6.30
+>
+> **6.30 V2.46.39 harder ROR replication（2026-08-06）：机场门 ceiling 后，项目没有回到公开 220 搜版本，而是冻结了全新 ROR v2.11 commit `aab1443...` 的 12题×4实体任务。实体由 commit 前1000条记录按 active、唯一 display、无括号国家提示、与此前4,288实体 canonical-disjoint、commit+ROR-ID hash rank、单国最多3条及跨国平衡的规则选出；48条 gold 逐条绑定 Git blob SHA1 与 bytes SHA256。forward 依赖图不含 ROR ID、country gold、provenance 或 evaluator，输入仍严格只有 `{opaque_id, question}`。**
+>
+> **V2.46.39 仍共享 plan/search/fetch evidence，4 个 visible entity 对应 4 条确定性 query；两臂共享同一 visible-row projector，projector 只重排/补 Unknown，不制造事实。baseline 与 coverage-ledger 各一次 synthesis，调用顺序6/6平衡；每题3 model/4 query/10 fetch/240s，12 active/8 slots。唯一 forward 在 `71.827576s` 完成24/24 predictions；12/12 bundle有效、36 model acquisitions、0 slot timeout、0 recoverable failure，usable pages 6–10。预测冻结并审计后才打开48行 evaluator-only gold。**
+>
+> **结果为严格 NO-GO 且非天花板：baseline exact-table `2/12`、Composite `0.911458`、Item F1 `0.645833`、Unknown value cells `15`；coverage-ledger exact-table同为 `2/12`、Composite `0.908854`、Item F1 `0.635417`、Unknown `14`。candidate exact delta=`0`、Composite `-0.002604`。候选少一个 Unknown 却降低事实正确率，证明“强制填满 ledger”会把 epistemic uncertainty 转成错误值；不能把 completion ratio 或 entropy reduction当正 credit。V2.46.39 不授权 dev64/exact220，coverage-ledger prompt 退出候选池。权威工件为 `results/v24639_ror_objective_alignment_result_v1_20260806.json` 与 postresult audit。**
+>
+> **下一唯一方向改为 evidence-constrained missing-cell verification，而非继续强化完整性提示：在相同 effect budget 内，先由 baseline 产生表，再用第三次 model effect 只验证/保留具有 fetched-page exact support 的 ROR/country cell；无独立支持则保持 Unknown，不允许 general-knowledge completion。需要与 baseline、coverage-ledger历史结果区分：新候选以 precision/whole-table 为目标，预注册 exact-table primary、Composite/Item F1 guardrail、Unknown count仅诊断。只有全新外部门 strict exact gain 且 Composite不降才可设计 fresh dev64；公开220仍不启动。**
 >
 > **6.29 V2.46.37/38 benchmark-external exact-table objective gate（2026-08-06）：已完成真正的 prediction-freeze→post-freeze gold evaluator，而不是旧 external 链的 mechanism aggregate。V2.46.37 protocol 因 secret scanner 把 `task-local` 内部子串误判为 token 前缀而在 preactivation 前 fail closed；未发布 preaudit、未 activation、未建 output、网络 effect=0，永久 NO-GO。append-only V2.46.38 只增加左 token boundary，runtime、12 题/96 实体、预算、gold 与 gate 全部不变。协议、preaudit、activation、execution-start 均从 clean `HEAD==target/main` 独立提交推送后才启动。**
 >
