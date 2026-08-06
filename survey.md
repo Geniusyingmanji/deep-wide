@@ -1,6 +1,6 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
-> 检索截止：2026-08-06 04:48 UTC；项目证据更新：2026-08-06 UTC（V2.46.35/V2.46.36）
+> 检索截止：2026-08-06 04:48 UTC；项目证据更新：2026-08-06 UTC（V2.46.45/V2.46.47）
 >
 > 结论强度：这是基于公开文献的 novelty audit，不是“没有任何相关工作”的证明。2026 年文献多为尚未同行评审的 arXiv 预印本，文中将预印本结果视为作者报告，而非独立复现事实。
 
@@ -1048,6 +1048,10 @@ V2.46.42 把 V2.46.40 的零声明瓶颈移出了模型：它直接在模型实�
 
 V2.46.44–45 把这个结论实现成了可审计的身份层。HTML路线不再把“页面里提到目标名”当主体，而要求抓取终点的canonical ROR profile URL与normalized whole fetched-page title同时绑定；structured路线要求official ROR API URL、record ID与唯一`ror_display` name三重一致。实现特别区分了三种常被混淆的metadata：search lead title在fetch前清空，requested URL不能替代redirect后的final URL，普通正文中的“Organization/ROR”样式也不能冒充顶层registry record。这样一来，关系页、目录页、合作方、重定向旧ID和搜索摘要都不能凭共现制造低熵但错误的belief。
 
-为了让严格gate仍可自然触发，系统只把已经发现的official `ror.org/<id>` lead确定性改写为同ID的official API endpoint；没有新增query或fetch。API response又在共享evidence形成前投影为`id + ror_display names`，所以baseline与candidate看到相同信息，candidate没有隐藏的privileged channel。新48实体population与4,432个历史实体literal/canonical双重不重叠；build/package audits分别44/44和31/31通过，forward manifest不含private population、gold、provenance或evaluator。但protocol目前仅冻结、未preaudit/activate/launch，因此这些结果只证明实现与实验设计边界，不证明质量提升或entropy credit有效。
+为了让严格gate仍可自然触发，系统只把已经发现的official `ror.org/<id>` lead确定性改写为同ID的official API endpoint；没有新增query或fetch。API response又在共享evidence形成前投影为`id + ror_display names`，所以baseline与candidate看到相同信息，candidate没有隐藏的privileged channel。新48实体population与4,432个历史实体literal/canonical双重不重叠；build/package audits分别44/44和31/31通过，forward manifest不含private population、gold、provenance或evaluator。这些前置结果当时只证明实现与实验设计边界；随后完成的唯一forward与post-freeze评价见下文。
 
-这也给论文创新一个更精确的可检验表述：信息熵不是第一层reward，而是通过typed identity observation之后的中间量。可以写成`credit(e)=1[primary_identity_bound]·1[target_value_bound]·IG(Y;e|state)·verified_utility(e)`，其中前两个indicator fail closed，`verified_utility`只能来自独立验证或冻结后的outer intervention。V2.46.42的反例说明，省略第一个indicator会给“对错误主体变得更确定”错误正credit；V2.46.45将用新的external population检验严格identity gate是否能同时提高precision与whole-table utility，但在forward实际冻结并post-freeze评估之前，仍不能把该公式写成已验证结论。
+V2.46.45 现已完成这次外部检验。唯一 forward 在 `69.705274s` 内冻结12题的24个arm predictions，24次model-slot acquisition均完成且没有slot timeout。108个模型可见页面中，strict gate识别出3个structured-primary-identity pair，同时拒绝12个body-only pair。三个结构化pair都指向baseline已非空的ROR cell，35个baseline Unknown没有一个得到unique identity-bound pair。因此candidate没有改变任何预测。这一结果支持“正文共现不能越过primary identity gate”的实现边界，但没有实际处理过Unknown，不能估计该门对候选值的precision或recall。
+
+post-freeze evaluator确认两臂均为exact-table `0/12`、Item F1 `0.625`、Composite `0.90625`、Unknown value cells `35`。V2.46.47 的aggregate-only diagnosis又把baseline事实状态分为ROR `12 correct / 1 incorrect / 35 Unknown`和country `48 correct`。11/12题若能安全补全ROR Unknown，结构上可以达到exact；另1题还需要纠正一个非空ROR。这个分解说明当前失败不是任务没有可改善空间，而是结构化acquisition没有对准需要干预的cell。权威证据为 [`results/v24645_primary_identity_pair_result_v1_20260806.json`](results/v24645_primary_identity_pair_result_v1_20260806.json)、[`results/v24645_primary_identity_pair_postresult_audit_v1_20260806.json`](results/v24645_primary_identity_pair_postresult_audit_v1_20260806.json) 与 [`results/v24647_v24645_zero_intervention_diagnosis_v1_20260806.json`](results/v24647_v24645_zero_intervention_diagnosis_v1_20260806.json)。这些是benchmark-external ROR结果，不是DeepWideBench提升。
+
+这次零干预使论文公式的识别条件更严格。`credit(e)=1[primary_identity_bound]·1[target_value_bound]·IG(Y;e|state)·verified_utility(e)`仍可作为待检验假设，但V2.46.45没有估计其中IG或verified utility对有效干预的作用。identity-bound evidence若只重复baseline已有事实，增量task credit仍为0；candidate没有改变状态时，双臂持平也不能证明identity gate本身无效。下一外部门应在相同总预算内把acquisition直接指向baseline Unknown，并与deterministic official-registry exact-name lookup比较。必须先自然产生至少一个identity-bound Unknown intervention，再用strict exact-table gain与Item/Composite non-regression评价；nonempty correction另做独立实验。entropy/credit assignment在此之前仍未验证。
