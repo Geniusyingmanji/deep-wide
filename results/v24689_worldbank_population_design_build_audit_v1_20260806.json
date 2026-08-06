@@ -1,0 +1,102 @@
+{
+  "artifact_version": 1,
+  "audit_payload_sha256": "8a21fd8a0c592a2addbf2c4ac603b2575b2f60e4c66db7f1de723575d992723d",
+  "audit_valid": true,
+  "authorization": {
+    "dev64_or_exact220": false,
+    "evaluator_access": false,
+    "forward_or_evaluator_surface_publication": false,
+    "leaderboard_or_sota": false,
+    "one_population_design_publication": true,
+    "preactivation_or_launch": false
+  },
+  "created_at_unix": 1786037903,
+  "findings": [],
+  "git": {
+    "all_sources_tracked": true,
+    "head": "bda177a24a8525250b1a6076e4e2fc0a5adca1d2",
+    "head_equals_target_main": true,
+    "target_main": "bda177a24a8525250b1a6076e4e2fc0a5adca1d2",
+    "worktree_clean": true
+  },
+  "mechanism": {
+    "country_catalogue_endpoint": "https://api.worldbank.org/v2/country?format=json&per_page=400",
+    "fixture_and_prior_worldbank_iso3_exclusion_count": 23,
+    "implementation_valid": true,
+    "publication_authority_checked_before_network": true,
+    "region_cap": 8,
+    "region_round_robin_grouping": true,
+    "selected_count": 48,
+    "sha256_iso3_rank_is_independent_of_observed_values": true,
+    "targets": [
+      {
+        "indicator": "NY.GDP.PCAP.CD",
+        "label": "GDP per capita (current US$)",
+        "year": "2023"
+      },
+      {
+        "indicator": "SP.URB.TOTL.IN.ZS",
+        "label": "Urban population (%)",
+        "year": "2023"
+      }
+    ],
+    "task_count": 12,
+    "task_size": 4,
+    "two_nonnull_official_values_required_before_selection": true
+  },
+  "role": "v24689_worldbank_population_design_build_audit",
+  "runtime_state": {
+    "network_or_external_effect_performed_by_audit": false,
+    "population_surfaces_pristine": true,
+    "protected_watchers": [
+      {
+        "identity_valid": true,
+        "marker": "scripts/watch_v2415_r1_checkpoint_liveness.py",
+        "pid": 795336,
+        "start_ticks": 713986317
+      },
+      {
+        "identity_valid": true,
+        "marker": "scripts/watch_v24218_exact220_executor.py",
+        "pid": 3061652,
+        "start_ticks": 747569004
+      }
+    ],
+    "protected_watchers_unchanged": true,
+    "shared_api_lease_inactive": true
+  },
+  "separation": {
+    "credential_literal_hits": [],
+    "forward_runtime_imports_population_or_gold": false,
+    "population_gold_provenance_or_evaluator_read_by_build_audit": false,
+    "private_population_under_evaluation_directory": true,
+    "public_design_contains_hashes_not_selected_country_or_values": true
+  },
+  "source_manifest": {
+    "results/v24687_worldbank_target_value_build_audit_v1_20260806.json": "e50ab5be5d2733e4f7dbc89936ebafce550baca068cfd153695b3757af01283d",
+    "scripts/audit_v24689_worldbank_population_design_build.py": "eeb1135a2fbf6ad9cdb358ef9c7e4032f2aa7b04cc6cd13ec211058166e65f8e",
+    "scripts/design_v24688_worldbank_population.py": "9eb20f0f6e64e8e96d81fc7c2c092ad855ff98492c2687f9c6f1ba25b5357f60",
+    "tests/test_audit_v24689_worldbank_population_design_build.py": "6c07d9816cd35250e65ff1d37920343291632e3adb12dd23d19485678e9decfd",
+    "tests/test_design_v24688_worldbank_population.py": "5d8f6ebf42e9d7d4c014d4321b91b7b5c89aaa96018e85b3c63cb64c9cdc9978"
+  },
+  "source_manifest_sha256": "f88e821f1943d33db3a4618408b1afc0791c744526053121ba8865c134cb44e5",
+  "tests": {
+    "network_model_search_worldbank_benchmark_or_evaluator_called": false,
+    "passed": true,
+    "suites": [
+      {
+        "expected_test_count": 6,
+        "observed_test_count": 6,
+        "passed": true,
+        "path": "tests/test_design_v24688_worldbank_population.py"
+      },
+      {
+        "expected_test_count": 6,
+        "observed_test_count": 6,
+        "passed": true,
+        "path": "tests/test_audit_v24689_worldbank_population_design_build.py"
+      }
+    ],
+    "test_count": 12
+  }
+}
