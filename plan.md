@@ -1,6 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.39
+> 版本：6.40
+>
+> **6.40 V2.47.43–49 通用 record binding、跨域自然触发与 host-local 调度边界（2026-08-06）：V2.47.43 将 structured recovery 收敛为一个无文件、环境、进程、网络、模型或 evaluator 能力的纯 binder。它只允许 NFKC+空白规范化后仍精确相同的可见首列身份与列名；只改 Unknown cell；official exact-address + primary-identity record 可单源 admission，普通 structured page 必须由两个 registrably-independent source 对同一值一致支持，任一值冲突按 cell abstain。递归 replay、canonical seal、精确键集、非 Unknown 不可变、大小写/标点漂移、同 registrable source 与重封印篡改均已覆盖；V2.47.43/45/人口/控制面联合 build 测试最终为 `34/34`。该层只证明合同，不产生 DeepWideBench 分数或 entropy-credit 证据。**
+>
+> **V2.47.44 在看到 endpoint outcome 前冻结 6 题/24 行的 benchmark-external 人口：2题×4个fresh ROR identity、2题×4个父提交中零出现 DOI 的 Crossref official exact-record、2题×4个另一组零出现 DOI 的 Crossref+OpenAlex ordinary dual-source。ROR 来自 immutable commit `aab1443...`，按固定 `v24744` hash rank 在排除4,672个历史实体后选8条；16个 DOI 均在 preselection commit `1b46d2c` 的 tracked tree 中零出现。forward 输入严格为 `{opaque_id, question}`；ROR ID/country/blob provenance只在物理隔离 private population，forward manifest不含该文件。**
+>
+> **首个 V2.47.47 preactivation 因 `python -I -m unittest tests.<module>` 移除仓库根路径而出现5个 `_FailedTest` import error；strict validator拒绝发布audit。该失败发生在lease、endpoint、prediction与evaluator之前，所有未来面不存在，已由 [`results/v24747_cross_domain_preactivation_failure_v1_20260806.json`](results/v24747_cross_domain_preactivation_failure_v1_20260806.json) append-only封存，旧protocol永久不得激活。V2.47.48只把隔离测试改为按exact filename的`unittest discover -s tests -p ...`，旧protocol/source hash、任务、32 URL、10个门、32 workers、20s per-URL hard wall与40s total ceiling逐项相同；新preaudit实际`34/34`、AST privileged access/private-evaluator import均0、`findings=[]`后才分离提交activation与execution-start。**
+>
+> **V2.47.48唯一一次one-wave运行在`2.067710s`内完成固定`32/32`尝试与6/6 valid task。19个请求成功：ROR `8/8`、OpenAlex `8/8`、Crossref `3/16`。ROR official exact路径得到`8`个完整行、`16`个official admitted cells；Crossref+OpenAlex普通双源路径首次在真实跨schema/跨host响应中自然得到`3`个完整行与`6`个corroborated cells，说明generic binder并非只对单一namespace的synthetic fixture触发。但Crossref official exact簇为`0`完整行，全门因此严格`cross_domain_mechanism_no_go`；post-audit `findings=[]`，同一人口禁止retry/resume/补请求，paired dev64、exact-220、evaluator与entropy-credit实验均未获授权。权威工件为 [`results/v24748_cross_domain_result_v1_20260806.json`](results/v24748_cross_domain_result_v1_20260806.json)、[`results/v24748_cross_domain_decision_v1_20260806.json`](results/v24748_cross_domain_decision_v1_20260806.json) 与 [`results/v24748_cross_domain_postresult_audit_v1_20260806.json`](results/v24748_cross_domain_postresult_audit_v1_20260806.json)。**
+>
+> **V2.47.49 只读content-free receipts定位了NO-GO的直接运行时边界：Crossref 16个请求中3个HTTP 200、13个HTTP 429，失败率`13/16=0.8125`，全部在`0.897922–0.932721s`终止；ROR与OpenAlex所有请求均HTTP 200。该证据支持“全局高并发不能等同于单host无限并发”，不证明Crossref元数据不可用，也不把V2.47.48改写为GO。下一唯一可设计项是fresh DOI/ROR人口上的host-local固定调度：跨host保持高并发，Crossref在outcome前固定低并发或pacing，每URL仍只尝试一次、总请求/证据门不放松。只有fresh successor让三条路径均自然触发，才可设计一个task-cluster-disjoint paired dev64；当前全集前沿仍是whole-table `7/220`与Composite `0.437892`两条分离前沿，没有SOTA。诊断见 [`results/v24749_v24748_host_rate_limit_diagnosis_v1_20260806.json`](results/v24749_v24748_host_rate_limit_diagnosis_v1_20260806.json)。**
 >
 > **6.39 实验总账复核与刷榜策略重置（2026-08-06）：版本号不再等同于 benchmark 实验。当前证据按四层记账：build/synthetic 只证明合同；benchmark-external 只证明机制与 transport；fixed-denominator dev64 只作候选门；只有 prediction freeze 后完成 evaluator 的 fixed-denominator exact-220 才产生 DeepWideBench 分数。由此，当前正式全集前沿仍只有 V2.42.67 的 whole-table `7/220`、Composite `0.413541`，以及 V2.46.35 的 Composite `0.437892`、whole-table `4/220`；没有 Avg@4、leaderboard submission 或 SOTA。**
 >

@@ -1,0 +1,80 @@
+{
+  "artifact_version": 1,
+  "role": "v24749_v24748_host_rate_limit_postterminal_diagnosis",
+  "created_at_unix": 1786058066,
+  "parent_bindings": {
+    "result_file_sha256": "9a06bad79dd922ecf61ef046f3f5a26aab960db67c19722ae48f2cb41963177a",
+    "decision_file_sha256": "6ca62e6702d464597f9f1a3ecd57ce31bdbb549f846faba7b6afefa07332e256",
+    "postresult_audit_file_sha256": "4b871669b49e797f3df2296807760115e64bd356bf20e58d5f09f34494b71bad",
+    "decision_status": "cross_domain_mechanism_no_go",
+    "postresult_audit_valid": true
+  },
+  "transport_diagnosis": {
+    "fixed_request_count": 32,
+    "successful_request_count": 19,
+    "failed_request_count": 13,
+    "hosts": {
+      "api.crossref.org": {
+        "request_count": 16,
+        "http_200_count": 3,
+        "http_429_count": 13,
+        "other_status_count": 0,
+        "transport_success_count": 3,
+        "minimum_elapsed_seconds": 0.8979,
+        "maximum_elapsed_seconds": 0.9327
+      },
+      "api.openalex.org": {
+        "request_count": 8,
+        "http_200_count": 8,
+        "http_429_count": 0,
+        "other_status_count": 0,
+        "transport_success_count": 8,
+        "minimum_elapsed_seconds": 1.0543,
+        "maximum_elapsed_seconds": 2.0122
+      },
+      "api.ror.org": {
+        "request_count": 8,
+        "http_200_count": 8,
+        "http_429_count": 0,
+        "other_status_count": 0,
+        "transport_success_count": 8,
+        "minimum_elapsed_seconds": 0.7668,
+        "maximum_elapsed_seconds": 0.8233
+      }
+    },
+    "crossref_failure_fraction": 0.8125,
+    "all_observed_failures_are_crossref_http_429": true,
+    "response_body_url_identity_value_or_prediction_read": false
+  },
+  "mechanism_diagnosis": {
+    "ror_official_exact_fully_admitted_rows": 8,
+    "crossref_official_exact_fully_admitted_rows": 0,
+    "ordinary_crossref_openalex_fully_admitted_rows": 3,
+    "ordinary_two_source_corroborated_cells": 6,
+    "ordinary_dual_source_path_naturally_triggered": true,
+    "overall_gate_passed": false,
+    "deepwidebench_evaluator_or_quality_measured": false,
+    "entropy_or_credit_assignment_measured": false
+  },
+  "interpretation": {
+    "supported": "The frozen request receipts localize every transport failure to concurrent Crossref requests returning HTTP 429, while ROR and OpenAlex requests all returned HTTP 200. The ordinary Crossref-OpenAlex path nevertheless produced three complete rows and six corroborated cells.",
+    "not_supported": "The run does not estimate generic DeepWideBench quality, does not show that Crossref metadata are unavailable, and does not authorize retrying the consumed DOI or ROR population.",
+    "next_requirement": "Use a fresh DOI and ROR population with the same request and evidence contracts, global concurrency across hosts, and a fixed host-local Crossref concurrency or pacing limit selected before network outcomes."
+  },
+  "source_policy": {
+    "benchmark_manifest_question_prediction_mapping_gold_category_question_type_split_evaluator_score_reward_read": false,
+    "response_body_url_doi_entity_value_or_prediction_read": false,
+    "network_model_search_fetch_evaluator_or_benchmark_called": false,
+    "credential_read_hashed_persisted_or_emitted": false
+  },
+  "authorization": {
+    "same_population_retry_resume_or_selective_rerun": false,
+    "fresh_host_local_scheduler_successor_design": true,
+    "fresh_external_successor_launch": false,
+    "paired_dev64": false,
+    "exact220": false,
+    "entropy_or_credit_experiment": false,
+    "leaderboard_or_sota": false
+  },
+  "diagnosis_payload_sha256": "4ed28f93f692c8e1efe9e3bf222162a40c80d63f8d6422f49c95c882b68a3e5a"
+}

@@ -17,6 +17,8 @@ Last evidence refresh: **2026-08-06 UTC**. This document separates measured qual
 11. **The staged-reserve signal did not reproduce.** V2.43.14 scored two 64-task arms and passed its development gate (`4→5/64`, Composite `0.458367→0.509762`), but its paired 95% interval crossed zero. After deadline and accounting repairs, V2.43.20 scored another two 64-task arms and failed (`5→5/64`, Composite `0.468169→0.451261`) with more candidate evaluator-invalid rows and fallbacks. This mechanism is retired as a leaderboard candidate.
 12. **Completing 220 forward rows is not sufficient for a benchmark score.** V2.43.15 froze 220/220 predictions but failed its forward-health gate at 218/220 complete child/model/transport receipts, so it never opened the evaluator. V2.43.30 froze 220/220 rows in both arms but had zero non-identity candidate tasks and failed mechanism/accounting gates, so it also has no benchmark score. Neither may be added to the full-220 frontier table.
 13. **V2.47.37–42 are external transport/reachability NO-GOs.** V2.47.37 ran 24 external tasks and 50 fixed requests; one shared World Bank failure suppressed all 12 tasks in that cluster. V2.47.42 tried two representations per fresh target, but only one of four requests succeeded and only one of two targets was admitted. These runs do not evaluate DeepWideBench or entropy credit.
+14. **V2.47.48 reached ordinary cross-domain corroboration but failed its three-path mechanism gate.** The one-shot external run completed 32 fixed attempts and six valid tasks in 2.067710 seconds. ROR exact records produced eight complete rows and 16 admitted cells. Crossref and OpenAlex jointly produced three complete rows and six cells supported by two registrably independent hosts. The Crossref exact-record cluster produced no complete row, so the preregistered conjunction remained false and the result is a strict NO-GO. This is mechanism evidence, not a DeepWideBench score.
+15. **The V2.47.48 failure is localized to host-level rate limiting under the frozen one-wave scheduler.** Crossref returned three HTTP 200 responses and thirteen HTTP 429 responses among 16 attempts; ROR and OpenAlex each returned HTTP 200 for all eight attempts. The consumed population cannot be retried. A successor may only use a fresh population and a host-local Crossref concurrency or pacing limit fixed before outcomes while preserving one attempt per URL and the evidence gates.
 
 ## Experiment denominator ledger
 
@@ -29,6 +31,7 @@ Last evidence refresh: **2026-08-06 UTC**. This document separates measured qual
 | V2.46.79/84 | Historical DeepWideBench dev gate | 64 per arm; 72 real children because 56 candidate rows were same-run identities | Both fixed 64 denominators evaluated | Expanded schema alone NO-GO |
 | V2.47.37 | Benchmark-external reachability | 24 tasks, 48 arm predictions, 50 requests | Not applicable/not called | Shared transport failure-domain diagnosis only |
 | V2.47.42 | Benchmark-external transport resilience | 2 fresh targets × 2 representations = 4 requests | Not applicable/not called | Same-host dual representation resilience NO-GO |
+| V2.47.48 | Benchmark-external cross-domain mechanism gate | 6 tasks, 24 rows, 32 fixed requests | Not applicable/not called | Ordinary Crossref+OpenAlex corroboration reached; three-path conjunction NO-GO |
 | V2.42.67 | DeepWideBench full result | 220 | Post-freeze fixed denominator | Current whole-table frontier, `7/220` |
 | V2.46.30 | DeepWideBench full result | 220 | Post-freeze fixed denominator | `5/220`, Composite `0.403632`; not a frontier |
 | V2.46.35 | DeepWideBench full result | 220 | Post-freeze fixed denominator | Current Composite frontier, `0.437892`, with `4/220` |
@@ -172,10 +175,11 @@ At this evidence refresh, protected V2.42.18 watcher PID `3061652` remains at `w
 1. Freeze the V2.46.35 parser and reliability pipeline as the control. Do not tune further on the consumed public 220 or rerun the V2.46.79 historical dev64.
 2. On a fresh benchmark-external table population, compare three arms: frozen parser, expanded parser only, and expanded parser plus addressable target–value evidence, deterministic cell admission, and an independent completion check.
 3. Require a strict whole-table gain and non-regression in Composite, Entity, Row F1, Item F1, and Column F1 under fixed denominators and failure-as-zero accounting. Treat entropy or information gain only as a shadow ranking signal after identity and target–value binding.
-4. Promote a candidate to a separately preregistered DeepWideBench gate only if the external mechanism and quality gates both pass. Preserve the runtime boundary `{opaque_id, question}` and freeze both arms before any mapping or evaluator access.
-5. Authorize a new exact-220 design only after that gate passes. The full run must include all 220 tasks, prohibit resume and selective retry, and report every preregistered metric.
-6. If a single rollout clears both current frontiers, run three additional independent rollouts before reporting Avg@4, Max@4, or Pass@4. SOTA still requires a valid same-protocol external comparison or leaderboard evidence.
-7. Evaluate entropy-credit claims with same-state intervention or post-freeze outer utility. Parser reachability, prediction change, and entropy reduction cannot determine a positive credit sign by themselves.
+4. Before any DeepWideBench gate, repeat the cross-domain mechanism test on a fresh external population with high concurrency across hosts and a fixed host-local Crossref limit. Preserve one attempt per URL, exact identity binding, two-source ordinary corroboration, and conflict abstention. Do not retry the V2.47.48 population.
+5. Promote a candidate to a separately preregistered DeepWideBench gate only if the external mechanism and quality gates both pass. Preserve the runtime boundary `{opaque_id, question}` and freeze both arms before any mapping or evaluator access.
+6. Authorize a new exact-220 design only after that gate passes. The full run must include all 220 tasks, prohibit resume and selective retry, and report every preregistered metric.
+7. If a single rollout clears both current frontiers, run three additional independent rollouts before reporting Avg@4, Max@4, or Pass@4. SOTA still requires a valid same-protocol external comparison or leaderboard evidence.
+8. Evaluate entropy-credit claims with same-state intervention or post-freeze outer utility. Parser reachability, prediction change, and entropy reduction cannot determine a positive credit sign by themselves.
 
 ## Storage and update policy
 
@@ -197,3 +201,5 @@ At this evidence refresh, protected V2.42.18 watcher PID `3061652` remains at `w
 - Mechanism replays: `results/v2393_visible_format_person_alias_replay_20260723.json`, `results/v2394_mixed_row_domain_replay_20260723.json`, `results/v2398_fixed_slot_entity_replay_20260723.json`, `results/v2401_membership_ledger_replay_v2400_20260724.json`, `results/v2402_attribute_isolation_replay_v2401_20260725.json`, and `results/v2403_column_fair_caption_replay_v2402_20260725.json`
 - Detailed chronological control history: `plan.md`
 - Literature and novelty boundaries: `survey.md`
+- Cross-domain external mechanism result: `results/v24748_cross_domain_result_v1_20260806.json`, `results/v24748_cross_domain_decision_v1_20260806.json`, and `results/v24748_cross_domain_postresult_audit_v1_20260806.json`
+- Host-local rate-limit diagnosis: `results/v24749_v24748_host_rate_limit_diagnosis_v1_20260806.json`

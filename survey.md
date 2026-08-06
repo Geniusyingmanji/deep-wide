@@ -1,6 +1,6 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
-> 检索截止：2026-08-06 04:48 UTC；项目证据更新：2026-08-06 UTC（V2.47.00–42）
+> 检索截止：2026-08-06 04:48 UTC；项目证据更新：2026-08-06 UTC（V2.47.00–49）
 >
 > 结论强度：这是基于公开文献的 novelty audit，不是“没有任何相关工作”的证明。2026 年文献多为尚未同行评审的 arXiv 预印本，文中将预印本结果视为作者报告，而非独立复现事实。
 
@@ -11,6 +11,10 @@
 V2.43.30是第二个边界案例：baseline/candidate都冻结了 `220/220` prediction rows，但candidate non-identity task、admitted cell change和正entropy credit都是0，另有shared-prefix与effect-accounting门失败，evaluator依法未开。它只能证明完整forward的failure-as-zero与fail-closed边界，不能进入全集成绩表。相反，V2.42.67、V2.42.87、V2.46.30、V2.46.35和V2.47.14/18 identity case才有固定220分母的结果；其中只有V2.42.67和V2.46.35位于当前两条前沿。
 
 最新V2.47.37–42进一步把generic transfer的瓶颈定位到transport failure domain，而非熵策略。V2.47.37在 `16.384839s` 完成24个benchmark-external任务、48个arm prediction与50个固定请求，49个请求成功。ROR簇12/12任务发生改变，48个identity target和96个target–value cell完成绑定；World Bank一个共享bulk请求失败却让该簇12/12任务全部abstain。V2.47.38据此确认了“一次shared transport failure放大到整簇task non-change”。V2.47.42改为target-isolated、bulk/aggregate OR-admission，在两个全新target上固定发4个请求，但只有1个成功、`1/2` target admitted，墙钟 `15.272258s`，仍为严格NO-GO。同一主机的两种表示不是可靠的独立冗余；这些实验没有运行DeepWideBench、evaluator或entropy-credit比较。
+
+V2.47.43–49 首次把这一边界推进到跨schema、跨host的通用record binding，但整体外部门仍为NO-GO。纯binder只接受精确可见身份、精确列名和结构化field/value；official exact-address record可单源填Unknown，普通页面必须由两个registrably-independent source同值支持，冲突则abstain。V2.47.48在预先冻结的6题/24行外部人口上固定发32个请求，`2.067710s`内完成6/6 valid task；ROR official路径得到8个完整行，Crossref+OpenAlex普通双源路径自然得到3个完整行和6个corroborated cells。后者是目前最直接的“同一通用binder跨两个不同公开schema自然触发”证据，不再只是ROR或World Bank单namespace adapter。
+
+该结果不能写成generic transfer GO。Crossref official exact簇没有完整行，因此预注册三簇合取门失败。冻结后content-free诊断显示，Crossref 16个并发请求只有3个HTTP 200，另13个全部为HTTP 429；ROR与OpenAlex分别8/8 HTTP 200。证据把失败定位到host-local request scheduling与公开API rate limit，而不是普通双源值绑定本身，但同一人口禁止补请求或重跑。下一实验若继续，必须在全新DOI/ROR人口上预先固定host-local Crossref低并发或pacing，同时保持全局跨host并发、单URL一次尝试、相同identity/value/conflict门。只有三条路径均通过后才有资格进入fresh paired dev64。V2.47.48没有调用DeepWideBench evaluator，也没有衡量entropy或credit assignment；所以全集分数、SOTA结论与信息熵创新证据均不变。对应证据为 [`results/v24748_cross_domain_result_v1_20260806.json`](results/v24748_cross_domain_result_v1_20260806.json)、[`results/v24748_cross_domain_postresult_audit_v1_20260806.json`](results/v24748_cross_domain_postresult_audit_v1_20260806.json) 与 [`results/v24749_v24748_host_rate_limit_diagnosis_v1_20260806.json`](results/v24749_v24748_host_rate_limit_diagnosis_v1_20260806.json)。
 
 title-backfill也应从方法候选中删除。V2.46.30的40个、V2.46.35的47个唯一backfilled URL全部被query-local同URL先占，最终 `surviving_backfilled_union_lead_count=0`。它们没有进入下游candidate，因而V2.46.35的Composite变化不能归因于backfill。provider citation title即使暂时进入discovery lead，也会在fetch成功后被页面title/text替换；fetch失败时又没有active-evidence资格。继续优化这个表面计数不会产生可归因的task utility。
 
