@@ -1,6 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.32
+> 版本：6.33
+>
+> **6.33 V2.46.44 primary-identity gate 与 V2.46.45 fresh external protocol（2026-08-06）：V2.46.43 将 V2.46.42 的唯一错误 admission 定位为页面主体身份未绑定后，V2.46.44 以 append-only runtime 删除 body-only co-occurrence 路线。允许的 pair 只有两类：(A) fetched final URL 为 canonical `ror.org/<id>` 且 normalized whole fetched-page title 等于目标实体；(B) official `api.ror.org` 顶层 record 的 URL ID、record `id` 与唯一 `ror_display` name 三重一致。正文出现目标名、搜索 lead title、requested URL、affiliation/relationship 页面、title containment、URL/record/name不一致、跨页多值冲突和截断 JSON 都 fail closed。**
+>
+> **数据流审计又封闭了两个容易伪装成identity evidence的边界：search provider title 在fetch effect前强制清空，因此底层“空HTML title回退到lead title”不能产生身份；page projector只使用fetch返回的final URL，final URL缺失时不得回退requested URL。已发现的官方 `ror.org/<id>` lead在不增加query/fetch的前提下确定性改写为对应official API URL，完整JSON在共享 evidence 形成前只投影`id + ror_display names`，baseline与candidate看到同一投影。V2.46.40/42/44回归39/39通过；clean build audit又以44/44、`findings=[]` GO，只授权fresh external设计，不授权launch。**
+>
+> **V2.46.45 population来自同一immutable ROR commit/tree的未消费lexicographic slice `[2000,3000)`。历史账本精确重建为4,432个literal/canonical唯一实体（此前4,384 + V2.46.42的48）；新48实体与历史交集0，slice内literal/canonical均48/48唯一，32国、单国最多3。public population audit与evaluator-only private vector分别sealed；visible contract只有12题×4实体和opaque IDs，对48个ROR ID、Git blob、record hash、private/evaluator path均0命中；gold/provenance物理隔离在evaluation侧。固定API记录长度诊断为48/48完整JSON可取，47/48在5,000字符cap内完整可解析，1条超过cap将保守abstain，而非放大预算。**
+>
+> **V2.46.45 forward package继承每题2个provider model effect、4 query、10 fetch、240s，12 task executors、8 global model slots、255s parent timeout；failure-as-zero、one-wave、no resume/retry/skip/selective rerun。V2.46.44/45 package回归31/31、AST privileged access/evaluator import/private literal/credential均0，protected watcher不变、lease inactive。build audit GO只授权protocol publication；design-only protocol已冻结并推送，36项forward manifest逐文件绑定，strict gate仍为exact-table严格增加且Composite/Item F1均不降。**
+>
+> **当前明确停在protocol-only：`preactivation_audit=false`、`activation=false`、`execution_start=false`、`one_external_forward_launch=false`、`evaluator=false`、`dev64=false`、`exact220=false`；对应preaudit/activation/start/forward/output surface均不存在，没有新质量分数。entropy/credit顺序冻结为`primary identity → target–value → belief/IG shadow → independent verification → post-freeze outer utility`；错误identity永远不能因surprisal、Unknown reduction或熵降获得正task credit。当前DeepWideBench可信全集仍为Composite最佳V2.46.35 `0.437892`、whole-table `4/220`；whole-table最佳V2.42.67 `7/220`、Composite `0.413541`，无SOTA。**
 >
 > **6.32 V2.46.42 deterministic model-visible pair discovery 与 V2.46.43 identity-binding 诊断（2026-08-06）：V2.46.42 删除了 V2.46.40 中统一返回空声明的第三次模型调用，每题严格只有共享 evidence 后的 baseline/candidate 两次 provider model call；candidate 只从模型实际可见的抓取页中确定性抽取 entity–ROR pair，非空 ROR 与所有 country cell 仍不可修改。新人口来自固定 ROR commit 的 lexicographic JSON positions `[1000,2000)`，最终为12题、48实体、32国，与累计4,384个历史实体 literal/canonical 双重不重叠；selection audit、protocol、preaudit、activation、execution-start 均在预测前冻结。**
 >
