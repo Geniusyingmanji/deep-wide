@@ -1,0 +1,161 @@
+{
+  "artifact_version": 1,
+  "role": "v24637_external_objective_alignment_forward_contract",
+  "protocol_id": "v24637_external_exact_table_objective_alignment_v1",
+  "created_at_unix": 1786004801,
+  "scope": "benchmark_external_ourairports_exact_table_objective_alignment",
+  "task_contract": {
+    "runtime_input_keys": [
+      "opaque_id",
+      "question"
+    ],
+    "selected_tasks": 12,
+    "selected_arm_predictions": 24,
+    "selected_opaque_ids": [
+      "task_000000000000000000246371",
+      "task_000000000000000000246372",
+      "task_000000000000000000246373",
+      "task_000000000000000000246374",
+      "task_000000000000000000246375",
+      "task_000000000000000000246376",
+      "task_000000000000000000246377",
+      "task_000000000000000000246378",
+      "task_000000000000000000246379",
+      "task_00000000000000000024637a",
+      "task_00000000000000000024637b",
+      "task_00000000000000000024637c"
+    ],
+    "selected_opaque_ids_sha256": "6c86baf47ed82187d464d79f68abc47be6cc534365f1f06c08d4c1773dc37b4d",
+    "visible_question_vector_sha256": "c2d9fe479382bccbf685aaf8a375b86632b023f1d53175e99f2c7fe137c9e520",
+    "fresh_entity_count": 96,
+    "fresh_entities_disjoint_from_prior_4192_external_entities": true,
+    "gold_code_values_absent_from_forward_contract": true
+  },
+  "execution": {
+    "executor_concurrency": 12,
+    "model_slot_cap": 8,
+    "parent_timeout_seconds": 255.0,
+    "runner_marker": "scripts/run_v24637_objective_alignment.py",
+    "child_marker": "scripts/run_v24637_objective_alignment_task.py",
+    "output_root": "outputs/v24637_objective_alignment_v1_20260806",
+    "protected_watchers": [
+      {
+        "pid": 795336,
+        "marker": "scripts/watch_v2415_r1_checkpoint_liveness.py",
+        "start_ticks": 713986317
+      },
+      {
+        "pid": 3061652,
+        "marker": "scripts/watch_v24218_exact220_executor.py",
+        "start_ticks": 747569004
+      }
+    ],
+    "balanced_arm_order_by_opaque_id_parity": true
+  },
+  "paired_design": {
+    "shared_plan_search_fetch_evidence_prefix": true,
+    "baseline": "frozen_score_first_synthesis_prompt",
+    "candidate": "visible_schema_entity_coverage_ledger_and_completion_check_prompt",
+    "candidate_additional_query_fetch_model_or_token_cap": false,
+    "entropy_is_shadow_only": true,
+    "entropy_routes_forward_or_assigns_positive_credit": false,
+    "postfreeze_outer_utility_required_for_credit": true
+  },
+  "limits": {
+    "wall_seconds": 240,
+    "model_calls": 3,
+    "search_queries": 4,
+    "fetch_targets": 10,
+    "search_results_per_query": 3,
+    "evidence_chars": 60000,
+    "page_chars": 5000,
+    "plan_output_tokens": 4000,
+    "synthesis_output_tokens": 30000,
+    "repair_output_tokens": 12000
+  },
+  "model": {
+    "proxy_url": "http://127.0.0.1:9878/responses",
+    "name": "gpt-5.6-sol",
+    "reasoning_effort": "low",
+    "service_tier": "priority",
+    "timeout_seconds": 65,
+    "max_retries": 2
+  },
+  "search": {
+    "proxy_url": "http://127.0.0.1:9878/responses",
+    "model": "gpt-5.6-sol",
+    "workers": 1,
+    "batch_size": 8,
+    "context_size": "medium",
+    "max_output_tokens": 7000,
+    "timeout_seconds": 65,
+    "max_retries": 2,
+    "fetch_workers": 8,
+    "fetch_timeout_seconds": 20,
+    "hard_fetch_deadline_seconds": 25
+  },
+  "deadline": {
+    "cleanup_reserve_seconds": 5.0,
+    "minimum_attempt_seconds": 0.05,
+    "model_and_search_share_absolute_deadline": true
+  },
+  "lease": {
+    "path": "outputs/deepwide_benchmark_api.lease.lock",
+    "owner": "v24637_external_exact_table_objective_alignment_v1",
+    "purpose": "benchmark_external_exact_table_objective_alignment",
+    "nonblocking": true
+  },
+  "evaluator_separation": {
+    "all_predictions_frozen_before_evaluator_protocol_or_gold_open": true,
+    "forward_dependency_manifest_excludes_external_evaluator_and_gold": true,
+    "fixed_denominator_failure_as_zero": true,
+    "primary_metric": "exact_table_successes",
+    "guardrail": "candidate_composite_not_lower",
+    "go_requires_strict_exact_table_gain_and_nonnegative_composite_delta": true
+  },
+  "source_policy": {
+    "mapping_gold_category_question_type_split_evaluator_score_or_reward_read_by_forward": false,
+    "question_prediction_query_url_page_entity_or_credential_emitted_in_content_free_receipts": false,
+    "credential_value_read_persisted_hashed_or_emitted": false,
+    "deepwidebench_task_prediction_gold_or_error_pattern_used_for_task_design": false
+  },
+  "authorization": {
+    "preactivation_audit_design": true,
+    "one_external_forward_launch": false,
+    "postfreeze_evaluator_design": false,
+    "dev64": false,
+    "exact220": false,
+    "leaderboard_or_sota": false
+  },
+  "dependency_manifest": {
+    "src/deepwide_agent/clients.py": "339d923973f07ebcd33cb12cee2c26103df70ed3aea1fc0a737ffd675ac06fbc",
+    "src/deepwide_agent/native_search.py": "cd0d6bfccf4b345b11274558bdcffb39d279697d183242baf811dfd56ac71e50",
+    "src/deepwide_agent/v24257_score_first_runtime.py": "c4e3f818d0306f53d40f641a7a580aa7238e0698d2863301fe8399d8e3c1fa3e",
+    "src/deepwide_agent/v24259_deterministic_table_normalizer.py": "bc2ed6ae62cd68cf908ff2c50f59caa37cf6f57d9d12ab3db5294cf39b2c5f91",
+    "src/deepwide_agent/v24263_global_model_limiter.py": "050751273bf28520bb82799e5194b9b404c58fecf6c5a725cfea93da0d041497",
+    "src/deepwide_agent/v24269_task_union_discovery.py": "f8c439e9d4000788e2e9c3afef37e29ee21e655faf57921572628ac350beb9be",
+    "src/deepwide_agent/v24272_two_wave_entropy_voc.py": "2e618c1ac0888650d12b42ab93feb043379fa7b5be0262ab1ae857cce05e8532",
+    "src/deepwide_agent/v24286_visible_schema_runtime.py": "0ef6c31beca9a776bc8ecb1ff8e0c2dd50b42821dd77e6e3b1ecdd7e78cb6dce",
+    "src/deepwide_agent/v24287_hard_deadline_fetch.py": "da4ee0fb7ffaf99389c6c6c0a5d8f075b72e15bd99a1e72f534ccc3f29cde468",
+    "src/deepwide_agent/v24308_child_exit_observability.py": "27b2ffbfc748f960cfdc25919eb73d0ab0bc45f358bb3718518bdfd83b797d33",
+    "src/deepwide_agent/v24309_runner_exit_integration.py": "18c1b4e0ed06769f3925c4bd3448ef907bf66a45ef33c342ef0d0192a1ac26d8",
+    "src/deepwide_agent/v24312_deadline_reliability.py": "2adaab53f558f101b65d842417097e3782038a3d24fbcc6de6259ac609f762b4",
+    "src/deepwide_agent/v24316_deadline_search.py": "dd5ded612bfecb624f38d5d86d379be1e973dbbd6df55084157cb33a758b3260",
+    "src/deepwide_agent/v24325_shared_prefix_revision_runtime.py": "e1a3dda0c5e4cdeb2de5c3c4e54944f6542863779b96022c07ace32400612fed",
+    "src/deepwide_agent/v24468_total_wall_transport.py": "8b8da4f9a8f450dfdc8b55e5ad8e15876590ff2cfdd251a1fb1684a029727417",
+    "src/deepwide_agent/v24630_thin_backfill_search.py": "5e9294649917059c551719d73b38308e81c655c5611bea34b6e95fe9faa82fef",
+    "src/deepwide_agent/v24637_objective_alignment_runtime.py": "982bd57d230dbf54e5c56e0e3cf2ef05d77544c483b7e12dfc1d4c7c8b679c7d",
+    "src/deepwide_agent/v24637_external_contract.py": "95d5a9b8e68fd6ed45ca310e17c79c2b5a654ba8bfbb02f7e83d5bb248314904",
+    "scripts/deepwide_api_lease.py": "8d9cffa78617b458172307d3558c76e9370f045f531c2f5aaaceb866f5a78c7d",
+    "scripts/run_v24287_fetch_helper.py": "2e3fc41859eb9eacd5f87abbe947e7e2b3fd25a1bd2d0365bd4a26e8e25ab7e7",
+    "scripts/v24468_total_wall_http_helper.py": "1419970b078f4ad81da1d38d17d926b7b05b6c4adc482e4a87057ceaeac646e8",
+    "scripts/run_v24637_objective_alignment_task.py": "9ccd4ecf14713e2ab86c2981534e386ac4b742dfbffce05a186c9cca83ab63d0",
+    "scripts/run_v24637_objective_alignment.py": "815b440ed782940c9ceb864ec7f1ce46969e2b930d2466255d6533818008c935",
+    "scripts/preregister_v24637_objective_alignment.py": "4ba295bf3ae8dac978f7f50c4f206b393cd810dcc58d6084d5123be3f87f2c61",
+    "scripts/audit_v24637_objective_alignment.py": "82b469d288b29fd6467fe92489922267f9e9b337c0307f5e2401d1e661900aa3",
+    "scripts/activate_v24637_objective_alignment.py": "3d3c33b6f1edc44e72e0b0226a1bda8e4a8cbf469284e55cf8e2a724a3b79d9f",
+    "scripts/authorize_v24637_objective_alignment_start.py": "a7d921423ce0350f9a3bb93d282e3777925f7e1b3cb1b317d3c44ef71b57a4dd"
+  },
+  "dependency_manifest_sha256": "639c0cb6ed6e818d05338bfc1ae47d056320a4213350d97048037ffcf57831a7",
+  "protocol_sha256": "b979ed5163b33c9717664d37ba508b5fe601c62d529e1edcd25a0165a1f82c12"
+}
