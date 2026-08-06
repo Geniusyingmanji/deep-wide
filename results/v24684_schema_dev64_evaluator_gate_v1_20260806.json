@@ -1,0 +1,188 @@
+{
+  "artifact_version": 1,
+  "authorization": {
+    "additional_forward_resume_retry_or_rerun": false,
+    "evaluator_execution": false,
+    "evaluator_start_design": true,
+    "exact220": false,
+    "leaderboard_or_sota": false
+  },
+  "claims": {
+    "benchmark_score_available_before_evaluator": false,
+    "development_population_not_unseen": true,
+    "public_full220_result": false,
+    "sota": false
+  },
+  "created_at_unix": 1786033055,
+  "decision_contract": {
+    "maximum_baseline_runtime_failures_for_evaluator_gate": 4,
+    "maximum_candidate_minus_baseline_evaluator_failures_for_go": 0,
+    "maximum_candidate_minus_baseline_runtime_failures_for_go": 0,
+    "maximum_candidate_runtime_failures_for_evaluator_gate": 4,
+    "maximum_model_slot_timeouts_for_evaluator_gate": 0,
+    "maximum_real_child_runtime_failures_for_evaluator_gate": 4,
+    "minimum_changed_candidate_tasks_for_evaluator_gate": 1,
+    "minimum_column_f1_delta_for_go": 0.0,
+    "minimum_entity_acc_delta_for_go": 0.0,
+    "minimum_f1_by_item_delta_for_go": 0.0,
+    "minimum_f1_by_row_delta_for_go": 0.0,
+    "minimum_quality_composite_delta_for_go": 0.0,
+    "minimum_whole_table_success_delta_for_go": 1,
+    "required_terminal_prediction_rows_per_arm": 64
+  },
+  "evaluation_contract": {
+    "baseline_provider_evaluations": 64,
+    "candidate_changed_provider_evaluations": 7,
+    "candidate_identity_judgments_reused_from_baseline": 57,
+    "evaluator_workers_per_arm_maximum": 8,
+    "fixed_denominator_per_arm": 64,
+    "mapping_gold_category_question_type_split_score_or_reward_used_for_routing": false,
+    "no_resume_selective_retry_revaluation_or_prediction_selection": true,
+    "routing_keys": [
+      "opaque_id",
+      "prediction_sha256",
+      "instance_id"
+    ],
+    "total_evaluator_workers_maximum": 16,
+    "unique_provider_evaluations": 71,
+    "worker_error_rows_terminal_failure_as_zero": true
+  },
+  "evaluator_contract": {
+    "answer_corpus": {
+      "manifest_sha256": "5ddc76dd9e9fa4a7080f84e824de6230c62101d2375dee72a0f508b7cfa4ec7e",
+      "root": "external/Marco-Search-Agent/Marco-DeepResearch-Family/DeepWideSearch/data/overall_20250916_tables"
+    },
+    "evaluator_source": {
+      "manifest_sha256": "2829e4808226bd35e4e312f024ceded3a9bc2b1e923493e06503278e382ba061"
+    },
+    "judge": {
+      "max_output_tokens": 8192,
+      "max_retries": 12,
+      "model": "gpt-5.6-sol",
+      "proxy_url": "http://127.0.0.1:9878/responses",
+      "reasoning_effort": "low",
+      "timeout_seconds": 600
+    },
+    "mapping": {
+      "path": "outputs/runtime_manifest_v1_repro/evaluator_mapping.jsonl",
+      "sha256": "3d6f8f71e8136f5a3fe9385e2511e50a367e220dd84e790ba3c7dec975ab5d86"
+    },
+    "mapping_query_answer_or_gold_bytes_opened_or_hashed": false,
+    "query_data": {
+      "path": "external/Marco-Search-Agent/Marco-DeepResearch-Family/DeepWideSearch/data/overall_20250916.jsonl",
+      "sha256": "4dd18df4ab8d166f14a1458f884fd8e0652f970764e245e868d75947daa5e5cf"
+    },
+    "recovery_policy": {
+      "canonical_result_file_atomic_replace_per_task": true,
+      "committed_rows_must_be_exact_prediction_prefix": true,
+      "committed_success_or_error_is_terminal": true,
+      "explicit_resume_required": true,
+      "selective_error_retry_allowed": false
+    },
+    "release_seal": {
+      "path": "results/full220_v2403_r1_20260725_finalize_seal.json",
+      "sha256": "6353c3d1caa05fc67f750570d3b3e5909d23945cc69b63f479a47c23d6b3c63f"
+    },
+    "released_evaluator_contract": {
+      "path": "outputs/full220_v2403_r1_eval_20260725/run_config.json",
+      "sha256": "b1040a303a71955b8b8d669c497e24100ec2d8de06d73aa30c3496d69a8559e1"
+    }
+  },
+  "evaluator_identity_parent": {
+    "path": "results/v24287_exact220_preregistration_v1_20260803.json",
+    "sha256": "bb53c17e4ca74ee11971663fdbc8b4751a5b74ec654a1c00759d301271e7da82"
+  },
+  "findings": [],
+  "forward_barrier": {
+    "both_arm_predictions_frozen_before_evaluator_resource_open": true,
+    "changed_candidate_predictions": 7,
+    "forward_audit_sha256": "91d28ca7e7530298db2360f53302eaa2ac75b0679ddf7f6a2d2a1e60a049145e",
+    "forward_result_sha256": "35f918ff4a8215daf26d5252852f48eca6fcfc125cbfe507b67a299608a80d36",
+    "identity_candidate_predictions": 57,
+    "prediction_freeze_sha256": {
+      "baseline": "d22bc98f0e2356be54b09268e38fd4f746ae2c2cb95ff4497aaebe66fcb4aa52",
+      "candidate": "cc187179be061b6e574b453cf89bcf50a312d019f34df6f72a25ed6f5b0d215f"
+    },
+    "selected_per_arm": 64
+  },
+  "gate_payload_sha256": "4dca539a46257ad47db59988f3d148eff240da841e5fbeea6878b4e768b46e48",
+  "passed": true,
+  "protocol_id": "v24679_expanded_visible_schema_paired_dev64_v1",
+  "role": "v24684_schema_dev64_evaluator_gate",
+  "runtime_state": {
+    "evaluator_surface_pristine": true,
+    "forward_or_evaluator_process_active": false,
+    "forward_result_and_audit_tracked": true,
+    "head": "14091b60b7cc48ad35ad19a842cf32a90fde8dad",
+    "head_equals_target_main": true,
+    "keyless_proxy_listening_without_request": true,
+    "protected_watchers": [
+      {
+        "marker": "scripts/watch_v2415_r1_checkpoint_liveness.py",
+        "pid": 795336,
+        "start_ticks": 713986317
+      },
+      {
+        "marker": "scripts/watch_v24218_exact220_executor.py",
+        "pid": 3061652,
+        "start_ticks": 747569004
+      }
+    ],
+    "shared_api_lease_active": false,
+    "target_main": "14091b60b7cc48ad35ad19a842cf32a90fde8dad",
+    "worktree_clean": true
+  },
+  "source_manifest": {
+    "results/v24287_exact220_preregistration_v1_20260803.json": "bb53c17e4ca74ee11971663fdbc8b4751a5b74ec654a1c00759d301271e7da82",
+    "results/v24679_schema_dev64_forward_audit_v1_20260806.json": "91d28ca7e7530298db2360f53302eaa2ac75b0679ddf7f6a2d2a1e60a049145e",
+    "scripts/audit_v24195_lease_owner_compatibility.py": "e0eae4427df3b58db4778d940c417ac1211b03032c9284af7560e015d4a8c4e6",
+    "scripts/audit_v24495_targeted_conversion_projection_build.py": "a888ea2aa3d0c8a82256a18a16bfc63128c0b68653738322276b8ffbcbba52e4",
+    "scripts/audit_v24683_v24679_schema_dev64_forward.py": "826b47a224259eb2dd5532cdc0e62a39d318a9d256af96307c9db1a2de899147",
+    "scripts/deepwide_api_lease.py": "8d9cffa78617b458172307d3558c76e9370f045f531c2f5aaaceb866f5a78c7d",
+    "scripts/finalize_fullset_rollout.py": "3e886b73cca2b011853a605091eab0d13004de5edee95b14627d1706d69808e5",
+    "scripts/finalize_v24657_unknown_cell_targeted_dev64.py": "b570a1611692adcdc9f1ac839f6822df3365d8e3c195a0ad4eb52d0b8920cf86",
+    "scripts/finalize_v24684_v24679_schema_dev64.py": "65a1ff6b8c5c4d0106ae45679a29e29ed5cb3f80ee23141ddb99014f07ebc42f",
+    "scripts/run_official_eval_local.py": "ab3d3ba3f15143d9f0f46816d7b9eb61f3f8915172dc14fe50d02b96b645c1ca",
+    "scripts/v24679_schema_dev64_control.py": "6cb5af6e39c835a9de5960df7e8079a20fa18dd914d5ddc9b5d6170402a5b646",
+    "src/deepwide_agent/v24679_schema_dev64_contract.py": "e556ca49d710c010478c23c17f3f07b8b06fa269dfcc38e09ecdcaf3fa643dab",
+    "tests/test_finalize_v24684_v24679_schema_dev64.py": "aad283db9daa254dacc528179cffdf6fcc8fdd72451db95438af9de5afb147a6"
+  },
+  "source_manifest_sha256": "1f05a7638b176d9f7ab2d1bb575f3bf49ff4815458c92972fd690342260723cd",
+  "source_policy": {
+    "mapping_query_answer_gold_evaluator_bytes_opened_or_hashed_by_gate": false,
+    "official_evaluator_called_by_gate": false,
+    "same_run_evaluator_feedback_used_for_forward_or_prediction_selection": false
+  },
+  "status": "evaluator_gate_go",
+  "tests": {
+    "network_model_search_fetch_or_evaluator_called": false,
+    "passed": true,
+    "suites": [
+      {
+        "expected_test_count": 9,
+        "file": "test_v24679_schema_dev64.py",
+        "observed_test_count": 9,
+        "passed": true
+      },
+      {
+        "expected_test_count": 5,
+        "file": "test_audit_v24683_v24679_schema_dev64_forward.py",
+        "observed_test_count": 5,
+        "passed": true
+      },
+      {
+        "expected_test_count": 12,
+        "file": "test_v24657_unknown_cell_targeted_dev64.py",
+        "observed_test_count": 12,
+        "passed": true
+      },
+      {
+        "expected_test_count": 11,
+        "file": "test_finalize_v24684_v24679_schema_dev64.py",
+        "observed_test_count": 11,
+        "passed": true
+      }
+    ],
+    "test_count": 37
+  }
+}
