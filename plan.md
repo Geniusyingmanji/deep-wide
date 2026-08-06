@@ -1,6 +1,12 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.41
+> 版本：6.42
+>
+> **6.42 V2.47.53 完整220可见面 generic-binding transfer 审计（2026-08-06）：审计代码先以4/4测试、AST、compile与diff门通过并独立推送，再从clean pushed HEAD只打开冻结的220行 `{opaque_id, question}` manifest与sealed aggregate parents；未读取mapping、gold、category、question_type、split、prediction、page、score、reward或evaluator，未调用network/model/search/fetch。结果 `findings=[]`、seal有效，但当前 V2.47.45 adapter 对原始 DeepWideBench visible contract 的实际可执行覆盖严格为 `0/220`：它仍只接受为外部门特制的ROR/DOI prompt，不能把 V2.47.52 的6题机制GO直接接到榜上。故decision=`generic_binding_transfer_no_go_before_integration`，paired dev64、exact220与evaluator继续全部禁止。权威工件为 [`results/v24753_full220_generic_binding_reachability_audit_v1_20260806.json`](results/v24753_full220_generic_binding_reachability_audit_v1_20260806.json)。**
+>
+> **条件上界与真实覆盖必须分栏：完整220中`215/220`可从visible prompt解析显式schema；若未来在同轮baseline冻结后复用其首列identity与已抓取页面，现有deterministic value-kind grammar最多在`52/220`题、64个非首列上有候选类型，其中更严格的exact structured-year grammar只覆盖`30/220`题、36列（founding-year 5题、launch-year 2题、generic year 23题）。这些数字不证明页面上存在record、不证明双源一致、不证明会改变prediction，更不是质量或分数证据；早期V2.45.06 record-bound外部门曾得到0 projection，进一步禁止把schema/kind coverage冒充机制触发。**
+>
+> **下一唯一实现项是zero-additional-effect integration：在同一次forward内先冻结baseline canonical table，再复用已经成功抓取、已进入synthesis evidence的页面；纯adapter只接受exact visible first-column identity与exact visible field label处于同一bounded structured record，构造成V2.47.43 ordinary records。普通页面继续要求两个registrably-independent host对同一cell同值，冲突或单源一律abstain，只改Unknown，任何非空cell不可变。不得增加model/query/search/fetch/token预算，不得按benchmark label路由，也不得把entropy drop、Unknown reduction或prediction change记为正credit。先用synthetic/fault tests证明合同，再在fresh benchmark-external人口证明非零exact-record binding；只有该外部门GO后才重新做visible reachability与task-cluster-disjoint dev64设计。**
 >
 > **6.41 V2.47.50–52 fresh host-local 跨域机制门 GO（2026-08-06）：在 V2.47.48 因 Crossref `13/16` HTTP 429 而严格 NO-GO 后，项目没有重试、补请求或复用已消费人口。V2.47.50 从父提交零出现的16个 DOI 与排除4,680个历史实体后的8个 fresh ROR 实体冻结全新人口；V2.47.51/52 在 endpoint outcome 前冻结 host-local policy：ROR/OpenAlex 各最多8并发，Crossref 单通道、相邻启动至少1.1s，32个唯一URL各一次，跨host并行。forward 输入仍严格只有 `{opaque_id, question}`；mapping、gold、category、question_type、split、evaluator、score、reward、private population与凭据均不在 forward 控制面。41/41 定向测试、AST privileged access/private-evaluator import `([], [])`、policy/population seal、secret scan、compile与diff audit全部通过后，protocol、preaudit、activation与execution-start逐项独立提交推送。**
 >
