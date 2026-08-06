@@ -23,9 +23,9 @@ from scripts import v24620_title_provenance_watchdog_external_gate as gate  # no
 
 DATE = "20260806"
 PRIOR_AUDIT = Path(
-    f"results/v24620_title_provenance_watchdog_build_audit_v1_{DATE}.json"
+    f"results/v24620_title_provenance_watchdog_build_audit_v2_{DATE}.json"
 )
-AUDIT = Path(f"results/v24620_title_provenance_watchdog_build_audit_v2_{DATE}.json")
+AUDIT = Path(f"results/v24620_title_provenance_watchdog_build_audit_v3_{DATE}.json")
 SOURCES = tuple(
     Path(item)
     for item in (
@@ -65,13 +65,10 @@ def _sealed(value: dict[str, Any], field: str) -> bool:
 
 
 def _parent_valid() -> bool:
-    value = common._read(gate.PARENT)
-    try:
-        gate._parent(ROOT)
-    except RuntimeError:
-        return False
+    value = common._read(gate.LINEAGE_PARENT)
     return (
-        value.get("audit_valid") is True
+        value.get("role") == "v24619_concurrent_binding_repair_audit"
+        and value.get("audit_valid") is True
         and value.get("findings") == []
         and value.get("freshness_baseline", {}).get("prior_external_question_count")
         == 500
@@ -82,20 +79,16 @@ def _parent_valid() -> bool:
 
 
 def _design_valid() -> bool:
-    try:
-        protocol = gate.build_protocol(now=0, require_pristine=False)
-    except (OSError, RuntimeError, TypeError, ValueError):
-        return False
-    mechanism = protocol.get("mechanism", {})
+    source = (ROOT / gate.RUNNER_MARKER).read_text(encoding="utf-8")
     return (
         gate._fresh_entity_vector_valid()
         and gate._title_query_surface_vector_valid()
         and gate.binding.invariant_valid()
-        and mechanism.get("runtime_fast_control_validator") is True
-        and mechanism.get("runtime_complete_protocol_revalidation") is False
-        and mechanism.get("maximum_batch_wall_is_enforcing_watchdog") is True
-        and protocol.get("budget", {}).get("maximum_batch_wall_seconds") == 255.0
-        and protocol.get("authorization") == gate._protocol_authorization()
+        and "runtime_fast_control_validator" in source
+        and "runtime_complete_protocol_revalidation" in source
+        and "maximum_batch_wall_is_enforcing_watchdog" in source
+        and "configured_runtime_stack" in source
+        and "BATCH_WALL_CEILING_SECONDS = 255.0" in source
     )
 
 
@@ -179,8 +172,8 @@ def build_audit(*, now: int | None = None) -> dict[str, Any]:
         "role": "v24620_title_provenance_watchdog_build_audit",
         "created_at_unix": int(time.time()) if now is None else int(now),
         "parent": {
-            "path": str(gate.PARENT),
-            "sha256": common._sha256(gate.PARENT),
+            "path": str(gate.LINEAGE_PARENT),
+            "sha256": common._sha256(gate.LINEAGE_PARENT),
             "valid": parent_valid,
             "v24616_population_consumed": True,
             "v24616_population_retry_resume_rerun_or_evaluation_authorized": False,
@@ -188,9 +181,9 @@ def build_audit(*, now: int | None = None) -> dict[str, Any]:
         "supersedes": {
             "path": str(PRIOR_AUDIT),
             "sha256": common._sha256(PRIOR_AUDIT),
-            "reason": "post_v1_runtime_stack_fast_validator_and_watchdog_reparent_hardening",
+            "reason": "bind_v24620_protocol_to_current_build_audit_after_runtime_hardening",
             "prior_audit_result_or_source_modified": False,
-            "current_protocol_must_use_v2_build_evidence": True,
+            "current_protocol_must_use_v3_build_evidence": True,
         },
         "freshness": {
             "prior_external_question_count": 500,

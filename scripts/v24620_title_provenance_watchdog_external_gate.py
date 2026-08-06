@@ -67,7 +67,13 @@ DECISION = Path(
 POSTAUDIT = Path(
     f"results/v24620_title_provenance_watchdog_external_postresult_audit_v1_{DATE}.json"
 )
-PARENT = Path("results/v24619_concurrent_binding_repair_audit_v1_20260805.json")
+BUILD_PARENT = Path(
+    "results/v24620_title_provenance_watchdog_build_audit_v3_20260806.json"
+)
+LINEAGE_PARENT = Path(
+    "results/v24619_concurrent_binding_repair_audit_v1_20260805.json"
+)
+PARENT = BUILD_PARENT
 RUNNER_MARKER = "scripts/v24620_title_provenance_watchdog_external_gate.py"
 LEASE_OWNER = PROTOCOL_ID
 LEASE_PURPOSE = "fresh_title_provenance_watchdog_external_gate"
@@ -215,6 +221,7 @@ SOURCE_FILES = tuple(
             "tests/test_v24618_concurrent_controller_binding.py",
             "scripts/audit_v24619_concurrent_binding_repair.py",
             "tests/test_audit_v24619_concurrent_binding_repair.py",
+            str(LINEAGE_PARENT),
             str(PARENT),
             "src/deepwide_agent/v24620_enforcing_batch_watchdog.py",
             "tests/test_v24620_enforcing_batch_watchdog.py",
@@ -249,30 +256,60 @@ def _sealed(value: Mapping[str, Any], field: str) -> bool:
 def _parent(root: Path) -> dict[str, Any]:
     value = json.loads((root / PARENT).read_text(encoding="utf-8"))
     authorization = value.get("authorization", {})
-    baseline = value.get("freshness_baseline", {})
-    repair = value.get("binding_repair", {})
-    deadline = value.get("batch_deadline_diagnosis", {})
+    freshness = value.get("freshness", {})
+    design = value.get("runtime_design", {})
+    parent = value.get("parent", {})
+    supersedes = value.get("supersedes", {})
+    manifest = value.get("source_manifest", {})
+    required_manifest = (
+        RUNNER_MARKER,
+        "src/deepwide_agent/v24620_enforcing_batch_watchdog.py",
+        "tests/test_v24620_title_provenance_watchdog_external_gate.py",
+        "tests/test_v24620_enforcing_batch_watchdog.py",
+    )
     if (
-        value.get("role") != "v24619_concurrent_binding_repair_audit"
+        value.get("role") != "v24620_title_provenance_watchdog_build_audit"
         or value.get("audit_valid") is not True
         or value.get("findings") != []
-        or value.get("tests", {}).get("test_count") != 44
+        or value.get("tests", {}).get("test_count") != 54
         or value.get("tests", {}).get("passed") is not True
         or value.get("label_blind_audit", {}).get("passed") is not True
         or value.get("runtime_state", {}).get("shared_api_lease_inactive") is not True
-        or baseline.get("prior_external_question_count") != PRIOR_QUESTION_COUNT
-        or baseline.get("prior_external_entity_count") != PRIOR_ENTITY_COUNT
-        or baseline.get("v24616_population_resume_retry_rerun_or_evaluation_authorized")
+        or value.get("runtime_state", {}).get("future_surface_pristine") is not True
+        or freshness.get("prior_external_question_count") != PRIOR_QUESTION_COUNT
+        or freshness.get("prior_external_entity_count") != PRIOR_ENTITY_COUNT
+        or freshness.get("literal_and_canonical_disjoint") is not True
+        or freshness.get("all_validator_query_surfaces_reachable") is not True
+        or parent.get("path") != str(LINEAGE_PARENT)
+        or parent.get("valid") is not True
+        or parent.get("v24616_population_consumed") is not True
+        or parent.get("v24616_population_retry_resume_rerun_or_evaluation_authorized")
         is not False
-        or repair.get("policy_id") != binding.POLICY_ID
-        or repair.get("binding_idle_after_tests") is not True
-        or repair.get("eight_runtime_holders_overlap") is not True
-        or repair.get("real_proof_total_bounded_modules_mutated") is not False
-        or deadline.get("declared_batch_wall_is_enforcing_watchdog") is not False
-        or authorization.get(
-            "fresh_disjoint_content_free_title_provenance_successor_protocol_design"
+        or design.get("concurrent_binding_policy") != binding.POLICY_ID
+        or design.get("watchdog_policy") != watchdog.POLICY_ID
+        or design.get("complete_protocol_validation_before_wave") is not True
+        or design.get("runtime_task_switches_to_protocol_binding_mode") is not False
+        or design.get("maximum_batch_wall_is_enforcing_watchdog") is not True
+        or design.get("logical_query_search_fetch_model_or_credit_budget_changed")
+        is not False
+        or supersedes.get("path")
+        != "results/v24620_title_provenance_watchdog_build_audit_v2_20260806.json"
+        or supersedes.get("sha256")
+        != sha256(
+            root
+            / "results/v24620_title_provenance_watchdog_build_audit_v2_20260806.json"
         )
-        is not True
+        or supersedes.get("current_protocol_must_use_v3_build_evidence") is not True
+        or supersedes.get("prior_audit_result_or_source_modified") is not False
+        or not isinstance(manifest, Mapping)
+        or value.get("source_manifest_sha256") != payload_sha256(manifest)
+        or any(
+            manifest.get(path) != sha256(root / path) for path in required_manifest
+        )
+        or value.get("git", {}).get("head_equals_target_main") is not True
+        or value.get("git", {}).get("worktree_clean") is not True
+        or value.get("git", {}).get("all_sources_tracked") is not True
+        or authorization.get("v24620_protocol_publication") is not True
         or authorization.get("fresh_external_activation_or_launch") is not False
         or authorization.get("paired_dev64_or_exact220") is not False
         or authorization.get("evaluator_access_authorized") is not False
@@ -284,11 +321,11 @@ def _parent(root: Path) -> dict[str, Any]:
 
 def _previous_closed() -> bool:
     value = _parent(ROOT)
-    closed = value.get("closed_parent", {})
+    closed = value.get("parent", {})
     return (
         closed.get("valid") is True
         and closed.get("v24616_population_consumed") is True
-        and closed.get("v24616_population_resume_retry_rerun_or_evaluation_authorized")
+        and closed.get("v24616_population_retry_resume_rerun_or_evaluation_authorized")
         is False
     )
 
@@ -401,6 +438,8 @@ def _successor_binding() -> dict[str, Any]:
     return {
         "parent_build_audit_path": str(PARENT),
         "parent_build_audit_sha256": sha256(ROOT / PARENT),
+        "lineage_parent_audit_path": str(LINEAGE_PARENT),
+        "lineage_parent_audit_sha256": sha256(ROOT / LINEAGE_PARENT),
         "prior_external_question_count": PRIOR_QUESTION_COUNT,
         "prior_external_entity_count": PRIOR_ENTITY_COUNT,
         "same_or_prior_population_resume_retry_rerun_or_evaluation": False,

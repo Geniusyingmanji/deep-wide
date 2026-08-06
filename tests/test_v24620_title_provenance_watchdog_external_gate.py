@@ -122,6 +122,41 @@ def cli_validator_smoke(command: str) -> int:
 
 
 class V24620TitleProvenanceWatchdogExternalGateTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls._temporary_parent = False
+        parent = ROOT / target.PARENT
+        if not parent.exists():
+            prior = ROOT / Path(
+                "results/v24620_title_provenance_watchdog_build_audit_v2_20260806.json"
+            )
+            value = json.loads(prior.read_text(encoding="utf-8"))
+            value["supersedes"] = {
+                "path": str(prior.relative_to(ROOT)),
+                "sha256": target.sha256(prior),
+                "reason": "synthetic_test_fixture_only",
+                "prior_audit_result_or_source_modified": False,
+                "current_protocol_must_use_v3_build_evidence": True,
+            }
+            for path in (
+                target.RUNNER_MARKER,
+                "src/deepwide_agent/v24620_enforcing_batch_watchdog.py",
+                "tests/test_v24620_title_provenance_watchdog_external_gate.py",
+                "tests/test_v24620_enforcing_batch_watchdog.py",
+            ):
+                value["source_manifest"][path] = target.sha256(ROOT / path)
+            value["source_manifest_sha256"] = payload_sha256(
+                value["source_manifest"]
+            )
+            reseal(value, "audit_payload_sha256")
+            write_json(parent, value)
+            cls._temporary_parent = True
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        if cls._temporary_parent:
+            (ROOT / target.PARENT).unlink()
+
     def test_population_is_fresh_and_surfaces_are_reachable(self) -> None:
         self.assertTrue(target._fresh_entity_vector_valid())
         self.assertTrue(target._title_query_surface_vector_valid())
@@ -132,9 +167,9 @@ class V24620TitleProvenanceWatchdogExternalGateTests(unittest.TestCase):
     def test_v24616_is_consumed_and_v24619_authorizes_design_only(self) -> None:
         self.assertTrue(target._previous_closed())
         parent = target._parent(target.ROOT)
-        self.assertEqual(parent["tests"]["test_count"], 44)
-        self.assertEqual(parent["freshness_baseline"]["prior_external_question_count"], 500)
-        self.assertTrue(parent["binding_repair"]["eight_runtime_holders_overlap"])
+        self.assertEqual(parent["tests"]["test_count"], 54)
+        self.assertEqual(parent["freshness"]["prior_external_question_count"], 500)
+        self.assertTrue(parent["runtime_design"]["maximum_batch_wall_is_enforcing_watchdog"])
         self.assertFalse(parent["authorization"]["fresh_external_activation_or_launch"])
 
     def test_protocol_freezes_fast_validator_and_enforcing_watchdog(self) -> None:
@@ -509,7 +544,21 @@ class V24620TitleProvenanceWatchdogExternalGateTests(unittest.TestCase):
             encoding="utf-8"
         )
         self.assertNotIn("restart", source.casefold())
-        self.assertNotIn("resume", source.casefold().replace("resume_retry", ""))
+        tree = ast.parse(source)
+        forbidden_calls = []
+        for node in ast.walk(tree):
+            if not isinstance(node, ast.Call):
+                continue
+            name = (
+                node.func.id
+                if isinstance(node.func, ast.Name)
+                else node.func.attr
+                if isinstance(node.func, ast.Attribute)
+                else ""
+            )
+            if name.casefold() in {"restart", "resume", "retry"}:
+                forbidden_calls.append((node.lineno, name))
+        self.assertEqual(forbidden_calls, [])
 
     def test_binding_restores_after_exception(self) -> None:
         before = target.binding.content_free_snapshot()
