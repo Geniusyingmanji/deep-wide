@@ -91,6 +91,22 @@ class PairDiscoveryTests(unittest.TestCase):
         self.assertEqual(receipt["unknown_target_unique_pair_count"], 1)
         self.assertEqual(receipt["admitted_replacement_count"], 1)
 
+    def test_official_ror_page_url_binds_to_exact_body_entity(self) -> None:
+        page = {
+            "evidence_id": "E0001",
+            "url": "https://ror.org/01abc2d34",
+            "title": "Research organization profile",
+            "content": "Official profile for Alpha Research Institute.",
+        }
+        self.assertEqual(
+            entity_bound_ror_suffixes(page, self.entities[0]), ("01abc2d34",)
+        )
+        candidate, receipt = discover_pairs(
+            self.baseline, entities=self.entities, pages=[page]
+        )
+        self.assertIn("| Alpha Research Institute | 01abc2d34 | FR |", candidate)
+        self.assertEqual(receipt["admitted_replacement_count"], 1)
+
     def test_partial_entity_bare_id_and_no_pair_preserve_unknown(self) -> None:
         pages = [
             {

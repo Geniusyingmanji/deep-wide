@@ -126,6 +126,7 @@ def entity_bound_ror_suffixes(
     for match in _exact_surface_matches(content, entity):
         start = max(0, match.start() - radius)
         end = min(len(content), match.end() + radius)
+        values.update(explicit_ror_suffixes({"url": page.get("url", "")}))
         values.update(explicit_ror_suffixes({"content": content[start:end]}))
     return tuple(sorted(values))
 
