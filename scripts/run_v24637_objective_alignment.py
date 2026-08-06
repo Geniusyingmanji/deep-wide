@@ -124,7 +124,7 @@ def _run_task(position: int, task: dict[str, str]) -> dict[str, Any]:
         result = None
     parent = {
         "artifact_version": 1,
-        "role": "v24637_content_free_parent_exit_receipt",
+        "role": "v24638_content_free_parent_exit_receipt",
         "return_code": return_code,
         "timed_out": timed_out,
         "elapsed_seconds": round(max(0.0, time.monotonic() - started), 6),
@@ -190,7 +190,7 @@ def main() -> None:
         )
     _jsonl_new(ROOT / PREDICTIONS, rows)
     summary = {
-        "artifact_version": 1, "role": "v24637_forward_run_summary",
+        "artifact_version": 1, "role": "v24638_forward_run_summary",
         "selected_tasks": SELECTED_COUNT, "selected_arm_predictions": SELECTED_COUNT * ARM_COUNT,
         "valid_task_results": sum(item["valid"] for item in outcomes),
         "projected_failure_tasks": sum(not item["valid"] for item in outcomes),
@@ -201,7 +201,7 @@ def main() -> None:
     summary["summary_sha256"] = payload_sha256(summary)
     _new(ROOT / RUN_SUMMARY, summary)
     freeze = {
-        "artifact_version": 1, "role": "v24637_external_prediction_freeze",
+        "artifact_version": 1, "role": "v24638_external_prediction_freeze",
         "protocol_id": PROTOCOL_ID, "selected_tasks": SELECTED_COUNT,
         "selected_arm_predictions": SELECTED_COUNT * ARM_COUNT,
         "predictions_sha256": sha256(ROOT / PREDICTIONS),
@@ -213,7 +213,7 @@ def main() -> None:
     freeze["freeze_sha256"] = payload_sha256(freeze)
     _new(ROOT / PREDICTION_FREEZE, freeze)
     forward = {
-        "artifact_version": 1, "role": "v24637_external_objective_alignment_forward_result",
+        "artifact_version": 1, "role": "v24638_external_objective_alignment_forward_result",
         "protocol_id": PROTOCOL_ID, "created_at_unix": int(time.time()),
         "selected_tasks": SELECTED_COUNT, "terminal_arm_predictions": SELECTED_COUNT * ARM_COUNT,
         "prediction_freeze_sha256": sha256(ROOT / PREDICTION_FREEZE),

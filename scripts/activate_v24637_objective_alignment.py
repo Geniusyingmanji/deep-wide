@@ -57,7 +57,7 @@ def build() -> dict:
     if watchers != audit.get("protected_watchers"):
         findings.append("protected_watcher_identity_drifted")
     value = {
-        "artifact_version": 1, "role": "v24637_objective_alignment_activation",
+        "artifact_version": 1, "role": "v24638_objective_alignment_activation",
         "protocol_id": PROTOCOL_ID, "created_at_unix": int(time.time()),
         "status": "active" if not findings else "rejected", "findings": findings,
         "launch_authorized": not findings, "protocol_sha256": sha256(ROOT / PROTOCOL),

@@ -26,6 +26,9 @@ from deepwide_agent.v24637_external_contract import (  # noqa: E402
     protected_watcher_snapshot, sha256, task_vector,
 )
 
+PREDECESSOR_PROTOCOL = Path("results/v24637_objective_alignment_preregistration_v1_20260806.json")
+PREDECESSOR_NO_GO = Path("results/v24637_objective_alignment_preregistration_v1_20260806_NO_GO.json")
+
 
 DEPENDENCIES = (
     "src/deepwide_agent/clients.py",
@@ -95,6 +98,15 @@ def build_protocol(*, now: int | None = None, require_pristine: bool = True) -> 
         "protocol_id": PROTOCOL_ID,
         "created_at_unix": int(time.time()) if now is None else int(now),
         "scope": "benchmark_external_ourairports_exact_table_objective_alignment",
+        "append_only_successor": {
+            "predecessor_protocol_path": str(PREDECESSOR_PROTOCOL),
+            "predecessor_protocol_sha256": sha256(ROOT / PREDECESSOR_PROTOCOL),
+            "predecessor_no_go_path": str(PREDECESSOR_NO_GO),
+            "predecessor_no_go_sha256": sha256(ROOT / PREDECESSOR_NO_GO),
+            "predecessor_activation_execution_or_effect_reused": False,
+            "only_change": "credential_prefix_scanner_requires_left_token_boundary",
+            "runtime_tasks_budgets_gold_and_gate_unchanged": True,
+        },
         "task_contract": {
             "runtime_input_keys": ["opaque_id", "question"],
             "selected_tasks": SELECTED_COUNT,

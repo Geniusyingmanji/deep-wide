@@ -112,7 +112,7 @@ def build(*, now: int | None = None) -> dict[str, Any]:
         findings.append("protected_watcher_identity_drifted")
     value = {
         "artifact_version": 1,
-        "role": "v24637_objective_alignment_preactivation_audit",
+        "role": "v24638_objective_alignment_preactivation_audit",
         "protocol_id": PROTOCOL_ID,
         "created_at_unix": int(time.time()) if now is None else int(now),
         "checks": {

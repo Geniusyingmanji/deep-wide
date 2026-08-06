@@ -13,18 +13,18 @@ from .v24637_objective_alignment_runtime import extract_visible_entities
 
 
 DATE = "20260806"
-PROTOCOL_ID = "v24637_external_exact_table_objective_alignment_v1"
-FORWARD_ROLE = "v24637_external_objective_alignment_forward_contract"
-PROTOCOL = Path(f"results/v24637_objective_alignment_preregistration_v1_{DATE}.json")
-PREAUDIT = Path(f"results/v24637_objective_alignment_preactivation_audit_v1_{DATE}.json")
-ACTIVATION = Path(f"results/v24637_objective_alignment_activation_v1_{DATE}.json")
-EXECUTION_START = Path(f"results/v24637_objective_alignment_execution_start_v1_{DATE}.json")
-FORWARD_RESULT = Path(f"results/v24637_objective_alignment_forward_result_v1_{DATE}.json")
-FORWARD_AUDIT = Path(f"results/v24637_objective_alignment_forward_audit_v1_{DATE}.json")
-EVALUATOR_PROTOCOL = Path(f"results/v24637_objective_alignment_evaluator_preregistration_v1_{DATE}.json")
-RESULT = Path(f"results/v24637_objective_alignment_result_v1_{DATE}.json")
-POSTAUDIT = Path(f"results/v24637_objective_alignment_postresult_audit_v1_{DATE}.json")
-OUTPUT_ROOT = Path(f"outputs/v24637_objective_alignment_v1_{DATE}")
+PROTOCOL_ID = "v24638_external_exact_table_objective_alignment_scanner_fix_v1"
+FORWARD_ROLE = "v24638_external_objective_alignment_forward_contract"
+PROTOCOL = Path(f"results/v24638_objective_alignment_preregistration_v1_{DATE}.json")
+PREAUDIT = Path(f"results/v24638_objective_alignment_preactivation_audit_v1_{DATE}.json")
+ACTIVATION = Path(f"results/v24638_objective_alignment_activation_v1_{DATE}.json")
+EXECUTION_START = Path(f"results/v24638_objective_alignment_execution_start_v1_{DATE}.json")
+FORWARD_RESULT = Path(f"results/v24638_objective_alignment_forward_result_v1_{DATE}.json")
+FORWARD_AUDIT = Path(f"results/v24638_objective_alignment_forward_audit_v1_{DATE}.json")
+EVALUATOR_PROTOCOL = Path(f"results/v24638_objective_alignment_evaluator_preregistration_v1_{DATE}.json")
+RESULT = Path(f"results/v24638_objective_alignment_result_v1_{DATE}.json")
+POSTAUDIT = Path(f"results/v24638_objective_alignment_postresult_audit_v1_{DATE}.json")
+OUTPUT_ROOT = Path(f"outputs/v24638_objective_alignment_v1_{DATE}")
 MODEL_SLOT_DIRECTORY = OUTPUT_ROOT / "model_slots"
 TASK_ROOT = OUTPUT_ROOT / "tasks"
 PREDICTIONS = OUTPUT_ROOT / "frozen_predictions.jsonl"

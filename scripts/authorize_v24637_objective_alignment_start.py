@@ -45,7 +45,7 @@ def build() -> dict:
     watchers = protected_watcher_snapshot()
     if watchers != activation.get("protected_watchers"): findings.append("protected_watcher_identity_drifted")
     value = {
-        "artifact_version": 1, "role": "v24637_objective_alignment_execution_start",
+        "artifact_version": 1, "role": "v24638_objective_alignment_execution_start",
         "protocol_id": PROTOCOL_ID, "created_at_unix": int(time.time()),
         "status": "authorized" if not findings else "rejected", "findings": findings,
         "launch_authorized": not findings, "protocol_sha256": sha256(ROOT / PROTOCOL),
