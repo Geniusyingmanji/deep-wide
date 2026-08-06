@@ -3,7 +3,7 @@
 
 This design-time program selects one ROR population and one World Bank
 population without reading DeepWideBench, an evaluator, or prior task
-outcomes.  ROR records come from an immutable repository archive after all
+outcomes.  ROR records come from an immutable repository snapshot after all
 previously consumed entity surfaces are excluded.  World Bank countries are
 selected by a frozen hash rank from the two indicators fixed before the
 V2.47.26 transport outcome.  Private records are evaluator-only; the public
@@ -15,14 +15,14 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import re
 import subprocess
 import sys
 import time
 import urllib.request
-import zipfile
+import concurrent.futures
 from collections import Counter, defaultdict
 from collections.abc import Callable, Mapping, Sequence
-from io import BytesIO
 from pathlib import Path
 from typing import Any
 
@@ -64,14 +64,16 @@ ROR_TREE_URL = (
     "https://api.github.com/repos/ror-community/ror-records/git/trees/"
     + ROR_TREE_SHA1
 )
-ROR_ARCHIVE_URL = (
-    "https://codeload.github.com/ror-community/ror-records/zip/" + ROR_COMMIT
+ROR_RAW_PREFIX = (
+    "https://raw.githubusercontent.com/ror-community/ror-records/"
+    f"{ROR_COMMIT}/{ROR_VERSION}/"
 )
 ROR_SELECTED_COUNT = 48
 ROR_TASK_SIZE = 4
 ROR_COUNTRY_CAP = 4
 MAX_ROR_TREE_BYTES = 4_000_000
-MAX_ROR_ARCHIVE_BYTES = 80_000_000
+MAX_ROR_RECORD_BYTES = 2_000_000
+ROR_FETCH_WORKERS = 24
 
 WB_CATALOG_URL = wb_base.COUNTRY_CATALOG_URL
 WB_TARGETS = (
@@ -345,9 +347,7 @@ def select_ror_records(
     }
 
 
-def parse_ror_archive(
-    tree_raw: bytes, archive_raw: bytes
-) -> list[tuple[str, str, bytes, Mapping[str, Any]]]:
+def parse_ror_tree(tree_raw: bytes) -> list[tuple[str, str]]:
     if hashlib.sha256(tree_raw).hexdigest() != ROR_TREE_SHA256:
         raise RuntimeError("V2.47.27 ROR tree bytes drifted")
     tree = json.loads(tree_raw)
@@ -365,41 +365,54 @@ def parse_ror_archive(
     ):
         raise RuntimeError("V2.47.27 ROR tree envelope drifted")
     output = []
-    try:
-        archive = zipfile.ZipFile(BytesIO(archive_raw))
-    except zipfile.BadZipFile as exc:
-        raise RuntimeError("V2.47.27 ROR archive invalid") from exc
-    with archive:
-        names = archive.namelist()
-        prefixes = {
-            name.split("/", 1)[0]
-            for name in names
-            if "/" in name and not name.startswith("/")
-        }
-        if len(prefixes) != 1:
-            raise RuntimeError("V2.47.27 ROR archive prefix drifted")
-        prefix = next(iter(prefixes))
-        for entry in entries:
-            path = str(entry["path"])
-            member = f"{prefix}/{ROR_VERSION}/{path}"
-            try:
-                info = archive.getinfo(member)
-            except KeyError as exc:
-                raise RuntimeError("V2.47.27 ROR archive member absent") from exc
-            if info.is_dir() or info.file_size <= 0 or info.file_size > 2_000_000:
-                raise RuntimeError("V2.47.27 ROR member size drifted")
-            raw = archive.read(info)
-            computed_blob = hashlib.sha1(
-                f"blob {len(raw)}\0".encode("ascii") + raw,
-                usedforsecurity=False,
-            ).hexdigest()
-            if computed_blob != entry.get("sha"):
-                raise RuntimeError("V2.47.27 archived ROR blob drifted")
-            value = json.loads(raw)
-            if not isinstance(value, Mapping):
-                raise RuntimeError("V2.47.27 ROR record drifted")
-            output.append((path, str(entry["sha"]), raw, value))
+    for entry in entries:
+        path = str(entry["path"])
+        blob = str(entry.get("sha", ""))
+        if re.fullmatch(r"[0-9a-z]{9}\.json", path) is None or re.fullmatch(
+            r"[0-9a-f]{40}", blob
+        ) is None:
+            raise RuntimeError("V2.47.27 ROR tree member drifted")
+        output.append((path, blob))
     return output
+
+
+def validate_ror_blob(
+    path: str, blob_sha1: str, raw: bytes
+) -> tuple[str, str, bytes, Mapping[str, Any]]:
+    if (
+        re.fullmatch(r"[0-9a-z]{9}\.json", path) is None
+        or re.fullmatch(r"[0-9a-f]{40}", blob_sha1) is None
+        or not isinstance(raw, bytes)
+        or not 0 < len(raw) <= MAX_ROR_RECORD_BYTES
+    ):
+        raise RuntimeError("V2.47.27 ROR blob envelope drifted")
+    computed_blob = hashlib.sha1(
+        f"blob {len(raw)}\0".encode("ascii") + raw,
+        usedforsecurity=False,
+    ).hexdigest()
+    if computed_blob != blob_sha1:
+        raise RuntimeError("V2.47.27 ROR blob content drifted")
+    value = json.loads(raw)
+    if not isinstance(value, Mapping):
+        raise RuntimeError("V2.47.27 ROR record drifted")
+    return path, blob_sha1, raw, value
+
+
+def fetch_ror_records(
+    entries: Sequence[tuple[str, str]],
+) -> list[tuple[str, str, bytes, Mapping[str, Any]]]:
+    if len(entries) != 3_482 or len({path for path, _blob in entries}) != len(entries):
+        raise RuntimeError("V2.47.27 ROR fetch vector drifted")
+
+    def fetch_one(entry: tuple[str, str]):
+        path, blob = entry
+        raw = _fetch(ROR_RAW_PREFIX + path, limit=MAX_ROR_RECORD_BYTES)
+        return validate_ror_blob(path, blob, raw)
+
+    with concurrent.futures.ThreadPoolExecutor(
+        max_workers=ROR_FETCH_WORKERS
+    ) as executor:
+        return list(executor.map(fetch_one, entries))
 
 
 def prior_worldbank_iso3() -> set[str]:
@@ -507,7 +520,7 @@ def build_artifacts(
     wb_records: Sequence[Mapping[str, Any]],
     wb_metrics: Mapping[str, int],
     ror_tree_response_sha256: str,
-    ror_archive_response_sha256: str,
+    ror_record_vector_sha256: str,
     wb_catalog_response_sha256: str,
     wb_snapshot_metadata: Sequence[Mapping[str, Any]],
     now: int,
@@ -588,7 +601,7 @@ def build_artifacts(
                 "source_commit": ROR_COMMIT,
                 "source_tree_sha1": ROR_TREE_SHA1,
                 "tree_response_sha256": ror_tree_response_sha256,
-                "archive_response_sha256": ror_archive_response_sha256,
+                "record_vector_sha256": ror_record_vector_sha256,
                 "historical_entity_count": EXPECTED_PRIOR_ROR_COUNT,
                 "selected_entity_count": ROR_SELECTED_COUNT,
                 "task_count": ROR_SELECTED_COUNT // ROR_TASK_SIZE,
@@ -705,8 +718,8 @@ def main() -> None:
         raise FileExistsError("V2.47.27 population surface exists")
 
     tree_raw = _fetch(ROR_TREE_URL, limit=MAX_ROR_TREE_BYTES)
-    archive_raw = _fetch(ROR_ARCHIVE_URL, limit=MAX_ROR_ARCHIVE_BYTES)
-    ror_source = parse_ror_archive(tree_raw, archive_raw)
+    ror_entries = parse_ror_tree(tree_raw)
+    ror_source = fetch_ror_records(ror_entries)
     _history, historical_canonical = prior_ror_entities()
     ror_selected, ror_metrics = select_ror_records(
         ror_source,
@@ -762,7 +775,16 @@ def main() -> None:
         wb_records=wb_selected,
         wb_metrics=wb_metrics,
         ror_tree_response_sha256=hashlib.sha256(tree_raw).hexdigest(),
-        ror_archive_response_sha256=hashlib.sha256(archive_raw).hexdigest(),
+        ror_record_vector_sha256=payload_sha256(
+            [
+                {
+                    "path": path,
+                    "blob_sha1": blob,
+                    "record_bytes_sha256": hashlib.sha256(raw).hexdigest(),
+                }
+                for path, blob, raw, _value in ror_source
+            ]
+        ),
         wb_catalog_response_sha256=hashlib.sha256(catalog_raw).hexdigest(),
         wb_snapshot_metadata=snapshot_metadata,
         now=now,
