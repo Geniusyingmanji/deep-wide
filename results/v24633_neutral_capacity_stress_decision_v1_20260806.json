@@ -1,0 +1,59 @@
+{
+  "artifact_version": 1,
+  "role": "v24633_neutral_capacity_stress_decision",
+  "protocol_id": "v24633_neutral_exact_shape_gpt56_capacity_stress_v1",
+  "created_at_unix": 1785998764,
+  "protocol_sha256": "e3109b72e90271ae9e9bcb1da1a81d9b51d903c1de5fb1fb72e1fbfc7bc8acf9",
+  "result_sha256": "f3c5d2b4042055ce9ad2be30792ac90b901bd24a84da8446a607105a41bb5aa8",
+  "status": "mechanism_go",
+  "passed": true,
+  "passing_candidate_arms": [
+    "selected_20_active_8_slots_240s_fifo",
+    "conservative_16_active_8_slots_210s_fifo",
+    "conservative_16_active_6_general_2_postplan_reserved_210s"
+  ],
+  "selected_arm": "selected_20_active_8_slots_240s_fifo",
+  "selection_rule": "prefer frozen V2.46.32 selected 20/8/240 FIFO when it passes; otherwise choose minimum-wall passing conservative arm",
+  "observed": {
+    "control_32_active_8_slots_150s_fifo": {
+      "wall_seconds": 749.96594,
+      "failed_jobs": 20,
+      "slot_timeouts": 11,
+      "provider_failures": 10,
+      "mechanism_gate_passed": false
+    },
+    "selected_20_active_8_slots_240s_fifo": {
+      "wall_seconds": 941.932444,
+      "failed_jobs": 0,
+      "slot_timeouts": 0,
+      "provider_failures": 0,
+      "mechanism_gate_passed": true
+    },
+    "conservative_16_active_8_slots_210s_fifo": {
+      "wall_seconds": 1174.279909,
+      "failed_jobs": 0,
+      "slot_timeouts": 0,
+      "provider_failures": 0,
+      "mechanism_gate_passed": true
+    },
+    "conservative_16_active_6_general_2_postplan_reserved_210s": {
+      "wall_seconds": 1165.88764,
+      "failed_jobs": 0,
+      "slot_timeouts": 0,
+      "provider_failures": 0,
+      "mechanism_gate_passed": true
+    }
+  },
+  "claim_boundary": {
+    "neutral_provider_capacity_mechanism_supported": true,
+    "benchmark_quality_or_improvement_measured": false,
+    "sota_supported": false
+  },
+  "authorization": {
+    "next_label_blind_exact220_protocol_design": true,
+    "exact220_launch": false,
+    "official_evaluator_call": false,
+    "leaderboard_submission_or_sota_claim": false
+  },
+  "decision_payload_sha256": "6ef4a0925e8c1c75f3f307632af7876566258c8ad5e3d0c2fbb73140895a52b1"
+}
