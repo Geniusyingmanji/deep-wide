@@ -1,10 +1,18 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
-> 检索截止：2026-08-06 04:48 UTC；项目证据更新：2026-08-06 UTC（V2.47.00–22）
+> 检索截止：2026-08-06 04:48 UTC；项目证据更新：2026-08-06 UTC（V2.47.00–42）
 >
 > 结论强度：这是基于公开文献的 novelty audit，不是“没有任何相关工作”的证明。2026 年文献多为尚未同行评审的 arXiv 预印本，文中将预印本结果视为作者报告，而非独立复现事实。
 
 当前完整 220 题有两条不同前沿。V2.42.67 保持 whole-table 最佳 `7/220`，其 Composite 为 `0.413541`；V2.46.35 保持 Composite 最佳 `0.437892`，其 whole-table 为 `4/220`。V2.46.35 在严格 label-blind、220 个预测全部冻结后才开放 evaluator 的单次运行中得到 Entity `0.672727`、Row F1 `0.224156`、Item F1 `0.385078` 和 Column F1 `0.469605`。208 题得到有效 evaluator 输出，12 个 evaluator error 按预注册规则计零；forward 与 evaluator 墙钟分别为 `915.58s` 和 `222.24s`。它相对 V2.46.30 的 Composite 增加 `0.034260`，whole-table 却从 `5/220` 降到 `4/220`。两个前沿均没有 leaderboard 提交或同协议 SOTA 证据，因此都不是 SOTA。
+
+对“许多版本究竟测了什么”的复核表明，版本号不能当作 benchmark 次数。V2.43.14 是两臂各64题的 development gate，得到 whole-table `4→5/64`、Composite `0.458367→0.509762`，但95% paired bootstrap区间 `[-0.016349, 0.123977]` 跨0。V2.43.15 随后确实冻结了 `220/220` predictions，forward为 `3041.558286s`，却有2个parent hard timeout，使完整child/model/transport receipt只有 `218/220`；预注册health gate失败后没有调用evaluator，所以没有benchmark分数。修复runner/accounting后的V2.43.20再次做两臂各64，whole-table `5→5/64`、Composite反而 `0.468169→0.451261`，严格NO-GO。这个复核否定了“V2.43.14已经证明staged reserve稳定提分”的说法，也解释了为何跑到220仍不能报告分数。
+
+V2.43.30是第二个边界案例：baseline/candidate都冻结了 `220/220` prediction rows，但candidate non-identity task、admitted cell change和正entropy credit都是0，另有shared-prefix与effect-accounting门失败，evaluator依法未开。它只能证明完整forward的failure-as-zero与fail-closed边界，不能进入全集成绩表。相反，V2.42.67、V2.42.87、V2.46.30、V2.46.35和V2.47.14/18 identity case才有固定220分母的结果；其中只有V2.42.67和V2.46.35位于当前两条前沿。
+
+最新V2.47.37–42进一步把generic transfer的瓶颈定位到transport failure domain，而非熵策略。V2.47.37在 `16.384839s` 完成24个benchmark-external任务、48个arm prediction与50个固定请求，49个请求成功。ROR簇12/12任务发生改变，48个identity target和96个target–value cell完成绑定；World Bank一个共享bulk请求失败却让该簇12/12任务全部abstain。V2.47.38据此确认了“一次shared transport failure放大到整簇task non-change”。V2.47.42改为target-isolated、bulk/aggregate OR-admission，在两个全新target上固定发4个请求，但只有1个成功、`1/2` target admitted，墙钟 `15.272258s`，仍为严格NO-GO。同一主机的两种表示不是可靠的独立冗余；这些实验没有运行DeepWideBench、evaluator或entropy-credit比较。
+
+title-backfill也应从方法候选中删除。V2.46.30的40个、V2.46.35的47个唯一backfilled URL全部被query-local同URL先占，最终 `surviving_backfilled_union_lead_count=0`。它们没有进入下游candidate，因而V2.46.35的Composite变化不能归因于backfill。provider citation title即使暂时进入discovery lead，也会在fetch成功后被页面title/text替换；fetch失败时又没有active-evidence资格。继续优化这个表面计数不会产生可归因的task utility。
 
 V2.47.14/18 又产生了一份完整 `220/220` candidate prediction/result，但没有形成新的质量前沿。V2.47.14 在 frozen V2.42.67 predictions 上执行稀疏 World Bank adapter，runtime 只接收 `{opaque_id, question}`。4 个 bulk ZIP 中 3 个成功，`AG.SRF.TOTL.K2` 在 30 秒超时；唯一 route-eligible 题因此 fail closed。完整 pass 用时 `30.199208s`，model/search/per-country requests 均为 0，applied tasks 为 0，220 个 prediction 均未改变。其 mechanism audit 是 `audit_valid=false`，因为 bulk completeness 与实际干预门失败。权威工件为 [`results/v24714_sparse_full220_forward_result_v1_20260806.json`](results/v24714_sparse_full220_forward_result_v1_20260806.json) 和 [`results/v24714_sparse_full220_forward_audit_v1_20260806.json`](results/v24714_sparse_full220_forward_audit_v1_20260806.json)。
 

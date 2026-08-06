@@ -1,6 +1,22 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.38
+> 版本：6.39
+>
+> **6.39 实验总账复核与刷榜策略重置（2026-08-06）：版本号不再等同于 benchmark 实验。当前证据按四层记账：build/synthetic 只证明合同；benchmark-external 只证明机制与 transport；fixed-denominator dev64 只作候选门；只有 prediction freeze 后完成 evaluator 的 fixed-denominator exact-220 才产生 DeepWideBench 分数。由此，当前正式全集前沿仍只有 V2.42.67 的 whole-table `7/220`、Composite `0.413541`，以及 V2.46.35 的 Composite `0.437892`、whole-table `4/220`；没有 Avg@4、leaderboard submission 或 SOTA。**
+>
+> **V2.43 staged-reserve 链已完成而且结论为不稳定、应退役。V2.43.14 是合法的 paired dev64：两臂各64、固定分母、prediction freeze 后完整 evaluator，baseline→candidate 为 whole-table `4→5/64`、Composite `0.458367→0.509762`，但 paired 95% CI `[-0.016349, 0.123977]` 跨0。其获批的 V2.43.15 唯一 exact-220 forward 在 `3041.558286s` 内冻结 `220/220` predictions，却有 `218 success + 2 hard-deadline timeout`，child/model/transport receipt 与 effect completeness 仅 `218/220`；严格 forward-health 门失败，因而 evaluator 永久未开、benchmark score 不存在。V2.43.17 又将18个 outer-totality fallback 定位为17个 pre-provider admission rejection与1个 deadline-deferred cache page，说明是 deadline accounting/runner totality 缺口，不是质量结论。修复后的 V2.43.20 再做两臂各64的确认门，whole-table `5→5/64`、Composite `0.468169→0.451261`（`-0.016908`），paired 95% CI `[-0.083491, 0.050713]`，并增加 evaluator-invalid/fallback；严格 NO-GO。故不得再以 V2.43.14 的一次正样本宣称 staged reserve 提升，也不得补评 V2.43.15。**
+>
+> **V2.43.30 说明“跑满220”仍不自动等于有分：它在 `3720.646929s` 内完成 baseline/candidate 各 `220/220` prediction rows，220个pair全部terminal，但只有135个shared prefix正常冻结、63个runtime fallback、22个unavailable；candidate non-identity task、admitted cell change与正 entropy credit均为0，另有slot/provider/fetch deadline与effect-accounting门失败。协议因此在 evaluator 前停止，不能作为新的全集分数。**
+>
+> **V2.47.37–42 的最新结果也不是 DeepWideBench 实验。V2.47.37 在 `16.384839s` 完成24个外部任务、48个arm prediction和50个固定请求，49个请求成功；ROR簇 `12/12` 任务改变、48个identity target和96个target–value cell成功绑定，但World Bank的一个共享bulk请求失败放大为整簇 `12/12` 零改变，故 dual-namespace reachability NO-GO。V2.47.38 将根因冻结为共享 transport failure domain。V2.47.42 随后对两个全新World Bank target各固定请求bulk ZIP与aggregate JSON；总共4个请求仅1个成功，只有 `1/2` target admitted，墙钟 `15.272258s`，严格 NO-GO。两种同源URL不是独立冗余；同一人口禁止retry/resume/补请求，且该链不授权dev64、exact-220或evaluator。**
+>
+> **title-backfill 立即退役。V2.46.30 的40个、V2.46.35 的47个唯一backfilled URL全部被query-local同URL先占，`surviving_backfilled_union_lead_count=0`，没有进入下游candidate。即使provider citation title先进入lead，后续fetch成功会用page title/text覆盖；fetch失败又禁止title-only成为active evidence。因此 V2.46.35 的Composite上升不能归因于title-backfill，主要混有调度/可靠性与随机运行方差；后续不得再为该机制做dev64或220。**
+>
+> **新的唯一执行序列固定为 `substantive mechanism gate → one task-cluster-disjoint paired dev64 → one exact-220`，不再以连续小版本积累替代质量证据。第一步冻结 V2.46.35 的 parser、20 task executors、8 model slots、240s task deadline和总model/query/fetch/token预算作为control；candidate必须是由visible question/schema驱动的generic primary-identity/target–value admission与whole-table completion机制，先在artifact-disjoint external population证明自然触发、strict exact-table gain及全部局部指标不降。namespace-specific ROR/World Bank adapter只能作testbed，不能成为全榜路由。第二步只允许一次 fresh paired dev64，forward输入精确为 `{opaque_id, question}`，两臂预测全部冻结后才打开mapping/evaluator；要求whole-table至少 `+1/64`，Composite、Entity、Row/Item/Column均不降，evaluator-invalid、fallback与runtime failure均不增，机制真实触发，成本不超过预注册上限。任一门失败即退役candidate，不在同一64题上调参复跑。**
+>
+> **只有上述dev64严格GO才冻结并启动一次完整220；必须single-pass覆盖全部220题、failure-as-zero、no resume/no selective retry/no补题，20/8并发基线下full generation+evaluation的operational envelope为60分钟。成功线不是“任意指标变好”，而是同一个结果同时达到 whole-table `>=7/220`、Composite `>=0.437892`，且至少一项严格超过当前前沿；否则不称benchmark提升。信息熵只在identity与target–value admission之后作为shadow/VOC排序量；正credit必须由same-state删除/替换干预或artifact-disjoint post-freeze outer utility确定，entropy drop、prediction change、页面新颖度或Unknown减少本身均不得直接获正credit。**
+>
+> **本次只做post-terminal只读核验与文档更新，没有启动、重启、signal或补跑任何benchmark/watcher。受保护 PID `795336/3061652` 的start ticks仍为 `713986317/747569004`；前者仍是历史R1终态监控，后者仍等待旧package gate，均不是新的220执行。**
 >
 > **6.38 V2.47.19–22 World Bank 双表示 transport 门严格 NO-GO（2026-08-06）：项目先把 transport 从 benchmark quality 中独立出来。V2.47.19/20 实现了无文件/benchmark/evaluator 能力的 ZIP/aggregate-JSON parser、受 OS hard total-wall 监管的 credential-free GET helper 和 content-free receipt；V2.47.21 在真实请求前冻结 6 个既有 World Bank 指标、两种官方表示、2 waves、每 endpoint 每 wave 单次尝试、12 workers、20s hard wall/15s socket wall。aggregate JSON 被预注册为 primary，bulk ZIP 只是 diagnostic comparator；选择发生在 transport outcome 前，禁止 cache、resume、retry、补请求或选择性重跑。新门 15/15 定向测试、旧 sparse adapter/order-join 18/18 回归和 AST privileged access/evaluator import 0 命中后才激活。**
 >
