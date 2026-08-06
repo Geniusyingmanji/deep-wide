@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import sys
+import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -25,7 +27,15 @@ class V24630Exact220EvaluatorTests(unittest.TestCase):
         self.assertEqual(sorted({end - start for start, end in partitions}), [6, 7])
 
     def test_protocol_opens_evaluator_only_after_exact220_barrier(self) -> None:
-        value = prereg.build_protocol(ROOT, now=1)
+        with tempfile.TemporaryDirectory(dir=ROOT) as directory:
+            future = Path(directory)
+            with (
+                mock.patch.object(prereg, "PROTOCOL", future / "protocol.json"),
+                mock.patch.object(prereg, "FINAL_RESULT", future / "result.json"),
+                mock.patch.object(prereg, "POSTAUDIT", future / "audit.json"),
+                mock.patch.object(prereg, "EVALUATOR_ROOT", future / "evaluator"),
+            ):
+                value = prereg.build_protocol(ROOT, now=1)
         self.assertEqual(value["selected"], 220)
         self.assertEqual(value["evaluator_workers"], 32)
         self.assertEqual(value["forward_barrier"]["terminal_predictions"], 220)
