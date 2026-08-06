@@ -361,20 +361,31 @@ class RuntimeTests(unittest.TestCase):
             validate_result(result)
 
     def test_forward_ast_has_no_privileged_capability(self) -> None:
-        path = ROOT / "src/deepwide_agent/v24642_deterministic_pair_runtime.py"
-        text = path.read_text(encoding="utf-8")
-        tree = ast.parse(text)
-        imports: list[str] = []
-        for node in ast.walk(tree):
-            if isinstance(node, ast.Import):
-                imports.extend(alias.name for alias in node.names)
-            elif isinstance(node, ast.ImportFrom):
-                imports.append(node.module or "")
-        self.assertFalse(any("evaluator" in name or "gold" in name for name in imports))
-        self.assertNotIn("evaluation/", text)
-        self.assertNotIn("Path(", text)
-        self.assertNotIn("subprocess", text)
-        self.assertNotIn("open(", text)
+        paths = (
+            ROOT / "src/deepwide_agent/v24642_deterministic_pair_runtime.py",
+            ROOT / "src/deepwide_agent/v24642_ror_external_contract.py",
+            ROOT / "scripts/run_v24642_ror_task.py",
+            ROOT / "scripts/run_v24642_deterministic_pair.py",
+            ROOT / "scripts/audit_v24642_deterministic_pair_forward.py",
+        )
+        for path in paths:
+            text = path.read_text(encoding="utf-8")
+            tree = ast.parse(text)
+            imports: list[str] = []
+            for node in ast.walk(tree):
+                if isinstance(node, ast.Import):
+                    imports.extend(alias.name for alias in node.names)
+                elif isinstance(node, ast.ImportFrom):
+                    imports.append(node.module or "")
+            self.assertFalse(
+                any("evaluator" in name or "gold" in name for name in imports)
+            )
+            self.assertNotIn("evaluation/", text)
+            self.assertNotIn("EVALUATOR_PROTOCOL", text)
+        runtime = paths[0].read_text(encoding="utf-8")
+        self.assertNotIn("Path(", runtime)
+        self.assertNotIn("subprocess", runtime)
+        self.assertNotIn("open(", runtime)
 
 
 class EvaluatorTests(unittest.TestCase):
