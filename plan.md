@@ -1,6 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.30
+> 版本：6.31
+>
+> **6.31 V2.46.40 evidence-constrained missing-cell gate 与 V2.46.41 诊断（2026-08-06）：V2.46.39 的强制 completion NO-GO 后，项目冻结了另一批全新 ROR v2.11 长尾机构。历史排除集精确重建为 V2.46.25 链的4,192实体 + V2.46.37机场96实体 + V2.46.39 ROR 48实体，共4,336个 literal/canonical 唯一实体；新48实体按同一 commit 前1,000条、active、唯一 display、无括号国家提示、`sha256(commit:v24640:ror_id)` rank、单国最多3条和四分位交错分组确定，28个国家、与历史 exact/canonical overlap均为0。48条 evaluator-only gold 均绑定 Git blob SHA1 与原始 bytes SHA256；forward 可达图不含 evaluator模块、gold parser或其路径常量，输入仍只有 `{opaque_id, question}`。**
+>
+> **候选不再独立生成完整表：第三个冻结 model effect 只能针对 baseline 中 `Unknown` 的 ROR cell 声明候选；deterministic gate 仅在模型实际看到的同一截断 evidence block 同时含 exact visible organization phrase 和 exact 9字符 suffix 时录入。非 Unknown ROR 与所有 country cells逐字不可变，result validator再次独立复核 monotonicity和admission count。总预算仍为每题3 model/4 query/10 fetch/240s，12 active/8 slots。protocol→preaudit→activation→execution-start 均逐次 clean commit/push 后，唯一 forward 在 `139.930712s` 完成24/24 predictions；12/12 bundle有效、36 acquisitions、0 slot timeout、48 queries、120 fetch、113 usable pages，禁止retry/resume/补题。**
+>
+> **prediction freeze 后才开放固定 gold。baseline 与 evidence-constrained 均为 exact-table `1/12`、Item F1 `0.572917`、Composite `0.893229`、Unknown cells `21`，delta全0，严格 NO-GO；candidate 共0 raw/formed/supported/admitted declarations，也没有 conflict，说明本轮不是 deterministic gate 拒掉候选，而是dependent revision统一空声明。可用页面数不能证明存在 exact entity–ROR pair，content-free artifact也无法区分“页面无pair support”和“模型看见support却保守 abstain”。权威质量工件为 `results/v24640_evidence_constrained_result_v1_20260806.json` 与 postresult audit。**
+>
+> **V2.46.41 冻结后 aggregate diagnosis 又把baseline 48个ROR格分为 `11 correct / 16 incorrect / 21 Unknown`，country格为 `44 correct / 4 incorrect`；在“不改任何非空值、不改country”的安全约束下，最多只有3/12任务具备通过补Unknown达到exact的结构可能。因此下一步必须拆成两个不同可证伪机制：(A) deterministic model-visible exact-pair discovery，用于安全补Unknown；(B) 独立来源/冲突门控的nonempty correction，另行证明不会把正确事实改错。不能仅改prompt、放松同一gate或增加搜索量；下一fresh外部门需持久化content-free的pair-available/ambiguous/admitted counts，并保持同预算。当前仅授权fresh external successor设计，不授权launch/dev64/220。诊断工件为 `results/v24641_v24640_zero_trigger_diagnosis_v1_20260806.json`。**
+>
+> **对 entropy/credit 的更新：V2.46.40 的113 usable pages并未产生可地址化 proposal，故“页面量/新颖度/熵变化”不能先于 target–value binding 获得正credit；外层utility delta为0，所以本轮增量task credit必须为0。可辩护的顺序是 `deterministic pair discovery → source-dependency-aware verification → post-freeze task utility`，entropy只在pair-level belief上作shadow signal。当前可信 DeepWideBench 全集仍未变化：Composite最佳V2.46.35为`0.437892`、whole-table `4/220`；whole-table最佳V2.42.67为`7/220`、Composite `0.413541`。没有SOTA。**
 >
 > **6.30 V2.46.39 harder ROR replication（2026-08-06）：机场门 ceiling 后，项目没有回到公开 220 搜版本，而是冻结了全新 ROR v2.11 commit `aab1443...` 的 12题×4实体任务。实体由 commit 前1000条记录按 active、唯一 display、无括号国家提示、与此前4,288实体 canonical-disjoint、commit+ROR-ID hash rank、单国最多3条及跨国平衡的规则选出；48条 gold 逐条绑定 Git blob SHA1 与 bytes SHA256。forward 依赖图不含 ROR ID、country gold、provenance 或 evaluator，输入仍严格只有 `{opaque_id, question}`。**
 >
