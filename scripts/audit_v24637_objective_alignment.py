@@ -27,7 +27,11 @@ from deepwide_agent.v24637_external_contract import (  # noqa: E402
 from scripts.audit_v24195_lease_owner_compatibility import lease_observation  # noqa: E402
 
 
-SECRET = re.compile(r"(?:gh" + "p_|github_" + "pat_|tvly-" + "dev-|s" + "k-)[A-Za-z0-9_-]{16,}")
+SECRET_PATTERNS = (
+    re.compile(r"(?<![A-Za-z0-9])(?:gh" + "p_|github_" + "pat_)[A-Za-z0-9_-]{16,}"),
+    re.compile(r"(?<![A-Za-z0-9])tvly-" + "dev-[A-Za-z0-9_-]{16,}"),
+    re.compile(r"(?<![A-Za-z0-9])s" + "k-[A-Za-z0-9_-]{16,}"),
+)
 FORBIDDEN_FORWARD_IMPORTS = ("v24637_external_evaluator", "run_official_eval_local")
 FORWARD_FILES = (
     "src/deepwide_agent/v24637_objective_alignment_runtime.py",
@@ -83,7 +87,7 @@ def build(*, now: int | None = None) -> dict[str, Any]:
     if not future_pristine:
         findings.append("future_surface_not_pristine")
     source_text = "\n".join((ROOT / path).read_text(encoding="utf-8") for path in manifest)
-    secret_free = SECRET.search(source_text) is None
+    secret_free = not any(pattern.search(source_text) for pattern in SECRET_PATTERNS)
     if not secret_free:
         findings.append("credential_literal_present")
     imports = {path: _imports(ROOT / path) for path in FORWARD_FILES}
