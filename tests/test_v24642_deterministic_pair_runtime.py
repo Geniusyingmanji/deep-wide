@@ -272,6 +272,7 @@ class RuntimeTests(unittest.TestCase):
             result["receipt"]["provider_model_stage_vector"],
             ["shared_plan", "baseline_synthesis"],
         )
+        self.assertEqual(result["receipt"]["model_cost"]["requests"], 2)
         self.assertFalse(
             result["receipt"]["candidate_uses_provider_model_for_pair_declaration"]
         )

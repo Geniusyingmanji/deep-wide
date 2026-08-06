@@ -252,7 +252,7 @@ def validate_receipt(value: Mapping[str, Any]) -> dict[str, Any]:
         or discovery.get("country_code_cells_changed") is not False
         or discovery.get("fact_value_created_without_model_visible_unique_pair") is not False
         or not isinstance(model_cost, Mapping)
-        or model_cost.get("requests", -1) not in range(3)
+        or model_cost.get("requests") != 2
         or shadow.get("routes_or_changes_forward_effects") is not False
         or shadow.get("positive_credit_assigned") is not False
         or shadow.get("requires_postfreeze_outer_utility_validation") is not True
