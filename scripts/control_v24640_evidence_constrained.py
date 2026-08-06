@@ -29,6 +29,7 @@ from deepwide_agent.v24639_ror_external_contract import (  # noqa: E402
 from deepwide_agent.v24640_ror_external_contract import (  # noqa: E402
     ACTIVATION,
     ARM_COUNT,
+    DATE,
     EXECUTION_START,
     ENTITY_GROUPS,
     EXECUTOR_CONCURRENCY,
@@ -76,16 +77,21 @@ DEPENDENCIES = (
     "src/deepwide_agent/v24468_total_wall_transport.py",
     "src/deepwide_agent/v24630_thin_backfill_search.py",
     "src/deepwide_agent/v24637_objective_alignment_runtime.py",
+    "src/deepwide_agent/v24637_external_contract.py",
+    "src/deepwide_agent/v24639_ror_external_contract.py",
     "src/deepwide_agent/v24639_ror_objective_runtime.py",
     "src/deepwide_agent/v24640_evidence_constrained_runtime.py",
     "src/deepwide_agent/v24640_ror_external_contract.py",
     "scripts/deepwide_api_lease.py",
+    "scripts/audit_v24195_lease_owner_compatibility.py",
+    "scripts/v24625_predicate_binding_external_gate.py",
     "scripts/run_v24287_fetch_helper.py",
     "scripts/v24468_total_wall_http_helper.py",
     "scripts/run_v24640_ror_task.py",
     "scripts/run_v24640_evidence_constrained.py",
     "scripts/control_v24640_evidence_constrained.py",
     "scripts/audit_v24640_evidence_constrained_forward.py",
+    "tests/test_v24640_evidence_constrained_runtime.py",
 )
 FORWARD_FILES = (
     "src/deepwide_agent/v24640_evidence_constrained_runtime.py",
@@ -164,6 +170,8 @@ def freshness() -> dict[str, int | bool]:
         "current_canonical_count": len(current_canonical),
         "literal_overlap_count": len(historical & current),
         "canonical_overlap_count": len(historical_canonical & current_canonical),
+        "historical_canonical_sha256": payload_sha256(sorted(historical_canonical)),
+        "current_canonical_sha256": payload_sha256(sorted(current_canonical)),
         "valid": len(historical) == 4_336
         and len(historical_canonical) == 4_336
         and len(current) == 48
@@ -353,7 +361,8 @@ def audit() -> dict:
         findings.append("shared_api_lease_active")
     if watchers != value.get("execution", {}).get("protected_watchers"):
         findings.append("watcher_drifted")
-    if freshness().get("valid") is not True:
+    selection = freshness()
+    if selection != value.get("freshness_audit") or selection.get("valid") is not True:
         findings.append("freshness_drifted")
     result = {
         "artifact_version": 1,
@@ -370,7 +379,7 @@ def audit() -> dict:
             "credential_literal_absent": "credential_literal_present" not in findings,
             "gpt56_endpoint_reachable_without_provider_request": endpoint,
             "shared_api_lease_inactive": lease.get("active") is False,
-            "fresh_population_valid": freshness().get("valid") is True,
+            "fresh_population_valid": selection.get("valid") is True,
             "network_model_search_fetch_or_evaluator_called_by_audit": False,
         },
         "protected_watchers": watchers,

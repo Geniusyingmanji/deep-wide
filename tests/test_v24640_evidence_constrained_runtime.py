@@ -28,11 +28,6 @@ from deepwide_agent.v24640_ror_external_contract import (
     task_vector,
     visible_task,
 )
-from deepwide_agent.v24640_ror_external_evaluator import (
-    evaluate_frozen_rows,
-    evaluate_prediction,
-    gold_rows,
-)
 
 
 def table(rows: list[list[str]]) -> str:
@@ -361,6 +356,14 @@ class RuntimeTests(unittest.TestCase):
 class EvaluatorTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
+        from deepwide_agent.v24640_ror_external_evaluator import (
+            evaluate_frozen_rows,
+            evaluate_prediction,
+            gold_rows,
+        )
+
+        cls.evaluate_frozen_rows = staticmethod(evaluate_frozen_rows)
+        cls.evaluate_prediction = staticmethod(evaluate_prediction)
         cls.gold = gold_rows(
             (ROOT / "evaluation/v24640_ror_gold_v1.csv").read_text(encoding="utf-8")
         )
@@ -383,7 +386,7 @@ class EvaluatorTests(unittest.TestCase):
                 for row in rows
             ]
         )
-        self.assertEqual(evaluate_prediction(exact, rows)["exact_table_success"], 1)
+        self.assertEqual(self.evaluate_prediction(exact, rows)["exact_table_success"], 1)
 
     def test_gate_requires_exact_gain_composite_and_item_guardrails(self) -> None:
         predictions = []
@@ -404,7 +407,7 @@ class EvaluatorTests(unittest.TestCase):
                     },
                 }
             )
-        result = evaluate_frozen_rows(predictions, self.gold)
+        result = self.evaluate_frozen_rows(predictions, self.gold)
         self.assertTrue(result["gate_passed"])
         self.assertEqual(
             result["candidate_minus_baseline"]["exact_table_successes"], 12
