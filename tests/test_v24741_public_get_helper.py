@@ -18,6 +18,10 @@ from scripts import v24741_public_get_helper as target  # noqa: E402
 
 
 class V24741PublicGetHelperTests(unittest.TestCase):
+    def test_session_ignores_environment_and_netrc(self) -> None:
+        with target._session() as session:
+            self.assertFalse(session.trust_env)
+
     def test_allowlist_contains_exact_four_fresh_urls(self) -> None:
         expected = {
             runtime.endpoint_url(spec, representation)

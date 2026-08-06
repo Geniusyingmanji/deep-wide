@@ -10,17 +10,17 @@ common ISO3 domain must agree.  Failure is isolated per target.
 from __future__ import annotations
 
 import copy
+import csv
 import hashlib
+import io
 import json
 import re
+import zipfile
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation
 from typing import Any
 from urllib.parse import urlencode
-
-from .v24709_sparse_worldbank_adapter import TargetSpec, parse_bulk_archive
-
 
 POLICY_ID = "v24740_fresh_dual_representation_resilience_v1"
 WORLD_BANK_HOST = "api.worldbank.org"
@@ -30,8 +30,14 @@ FALLBACK_REPRESENTATION = "aggregate_json"
 MAX_RESPONSE_BYTES = 4_000_000
 MINIMUM_BULK_RECORD_COUNT = 260
 MINIMUM_AGGREGATE_RECORD_COUNT = 200
+MAX_ARCHIVE_MEMBER_COUNT = 8
+MAX_MEMBER_BYTES = 4_000_000
 _ISO3 = re.compile(r"[A-Z]{3}")
 _DATE = re.compile(r"20\d{2}-\d{2}-\d{2}")
+_YEAR = re.compile(r"(?:19|20)\d{2}")
+_MAIN_MEMBER = re.compile(
+    r"API_(?P<indicator>[A-Z0-9.]+)_DS2_en_csv_v\d+_\d+\.csv"
+)
 
 
 @dataclass(frozen=True)
@@ -173,6 +179,98 @@ def _aggregate_records(
     return records, updated
 
 
+def _strip_trailing_empty(row: list[str]) -> list[str]:
+    return row[:-1] if row and row[-1] == "" else row
+
+
+def _bulk_records(raw: bytes, target: FreshTarget) -> dict[str, Decimal | None]:
+    if not isinstance(raw, bytes) or not 0 < len(raw) <= MAX_RESPONSE_BYTES:
+        raise ValueError("V2.47.40 bulk archive size drifted")
+    try:
+        archive = zipfile.ZipFile(io.BytesIO(raw))
+    except (OSError, zipfile.BadZipFile) as exc:
+        raise ValueError("V2.47.40 invalid ZIP") from exc
+    with archive:
+        infos = archive.infolist()
+        if (
+            not 1 <= len(infos) <= MAX_ARCHIVE_MEMBER_COUNT
+            or any(
+                info.is_dir()
+                or info.flag_bits & 0x1
+                or info.file_size > MAX_MEMBER_BYTES
+                or "/" in info.filename
+                or "\\" in info.filename
+                for info in infos
+            )
+        ):
+            raise ValueError("V2.47.40 unsafe ZIP member surface")
+        candidates = []
+        for info in infos:
+            match = _MAIN_MEMBER.fullmatch(info.filename)
+            if match is not None and match.group("indicator") == target.indicator:
+                candidates.append(info)
+        if len(candidates) != 1:
+            raise ValueError("V2.47.40 main CSV member drifted")
+        try:
+            text = archive.read(candidates[0]).decode("utf-8-sig")
+        except (KeyError, RuntimeError, UnicodeDecodeError, zipfile.BadZipFile) as exc:
+            raise ValueError("V2.47.40 unreadable main CSV") from exc
+    try:
+        raw_rows = list(csv.reader(io.StringIO(text, newline="")))
+    except csv.Error as exc:
+        raise ValueError("V2.47.40 malformed main CSV") from exc
+    if (
+        len(raw_rows) < 6
+        or _strip_trailing_empty(raw_rows[0])
+        != ["Data Source", "World Development Indicators"]
+        or raw_rows[1] != []
+        or len(_strip_trailing_empty(raw_rows[2])) != 2
+        or _strip_trailing_empty(raw_rows[2])[0] != "Last Updated Date"
+        or _DATE.fullmatch(_strip_trailing_empty(raw_rows[2])[1]) is None
+        or raw_rows[3] != []
+    ):
+        raise ValueError("V2.47.40 bulk dataset preamble drifted")
+    header = _strip_trailing_empty(raw_rows[4])
+    if (
+        header[:4]
+        != ["Country Name", "Country Code", "Indicator Name", "Indicator Code"]
+        or len(header) < 5
+        or any(_YEAR.fullmatch(value) is None for value in header[4:])
+        or len(set(header)) != len(header)
+        or header[4:] != sorted(header[4:])
+        or target.year not in header
+    ):
+        raise ValueError("V2.47.40 bulk dataset header drifted")
+    year_index = header.index(target.year)
+    records: dict[str, Decimal | None] = {}
+    for raw_row in raw_rows[5:]:
+        if raw_row == []:
+            continue
+        row = _strip_trailing_empty(raw_row)
+        if len(row) != len(header):
+            raise ValueError("V2.47.40 bulk dataset row width drifted")
+        country_name, code, indicator_name, indicator = row[:4]
+        if not country_name or not indicator_name or indicator != target.indicator:
+            raise ValueError("V2.47.40 bulk dataset identity drifted")
+        if _ISO3.fullmatch(code) is None:
+            continue
+        if code in records:
+            raise ValueError("V2.47.40 duplicate bulk ISO3")
+        lexeme = row[year_index].strip()
+        value: Decimal | None = None
+        if lexeme:
+            try:
+                value = Decimal(lexeme)
+            except InvalidOperation as exc:
+                raise ValueError("V2.47.40 invalid bulk decimal") from exc
+            if not value.is_finite():
+                raise ValueError("V2.47.40 non-finite bulk decimal")
+        records[code] = value
+    if not records:
+        raise ValueError("V2.47.40 empty bulk dataset")
+    return records
+
+
 def parse_records(
     raw: bytes, *, target: FreshTarget, representation: str
 ) -> tuple[dict[str, Decimal | None], str | None]:
@@ -181,10 +279,7 @@ def parse_records(
         raise ValueError("V2.47.40 response size drifted")
     updated: str | None = None
     if representation == PREFERRED_REPRESENTATION:
-        parsed = parse_bulk_archive(
-            raw, TargetSpec(target.indicator, target.year, "identity", 0)
-        )
-        records = {code: row.value for code, row in parsed.items()}
+        records = _bulk_records(raw, target)
         minimum = MINIMUM_BULK_RECORD_COUNT
     elif representation == FALLBACK_REPRESENTATION:
         records, updated = _aggregate_records(raw, target)

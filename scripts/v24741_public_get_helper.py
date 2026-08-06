@@ -37,6 +37,12 @@ ALLOWED_URLS = frozenset(
 )
 
 
+def _session() -> requests.Session:
+    session = requests.Session()
+    session.trust_env = False
+    return session
+
+
 def _bind_parent() -> None:
     expected = os.environ.get("DEEPWIDE_EXPECTED_PARENT_PID", "")
     if not expected.isdigit() or int(expected) <= 1:
@@ -115,39 +121,40 @@ def main() -> None:
         ):
             raise ValueError("V2.47.41 URL or timeout drifted")
         _validate_url(url)
-        with requests.get(
-            url,
-            headers={"User-Agent": "deepwide-v24741-resilience/1"},
-            timeout=float(timeout),
-            stream=True,
-            allow_redirects=False,
-        ) as response:
-            chunks = []
-            size = 0
-            for chunk in response.iter_content(chunk_size=65_536):
-                if not chunk:
-                    continue
-                size += len(chunk)
-                if size > runtime.MAX_RESPONSE_BYTES:
-                    print(
-                        json.dumps(
-                            _output("response_too_large"), separators=(",", ":")
+        with _session() as session:
+            with session.get(
+                url,
+                headers={"User-Agent": "deepwide-v24741-resilience/1"},
+                timeout=float(timeout),
+                stream=True,
+                allow_redirects=False,
+            ) as response:
+                chunks = []
+                size = 0
+                for chunk in response.iter_content(chunk_size=65_536):
+                    if not chunk:
+                        continue
+                    size += len(chunk)
+                    if size > runtime.MAX_RESPONSE_BYTES:
+                        print(
+                            json.dumps(
+                                _output("response_too_large"), separators=(",", ":")
+                            )
                         )
+                        return
+                    chunks.append(chunk)
+                print(
+                    json.dumps(
+                        _output(
+                            "response",
+                            status_code=int(response.status_code),
+                            content_type=str(response.headers.get("Content-Type", "")),
+                            final_url=str(response.url),
+                            body=b"".join(chunks),
+                        ),
+                        separators=(",", ":"),
                     )
-                    return
-                chunks.append(chunk)
-            print(
-                json.dumps(
-                    _output(
-                        "response",
-                        status_code=int(response.status_code),
-                        content_type=str(response.headers.get("Content-Type", "")),
-                        final_url=str(response.url),
-                        body=b"".join(chunks),
-                    ),
-                    separators=(",", ":"),
                 )
-            )
     except (requests.ConnectionError, requests.Timeout, OSError):
         print(json.dumps(_output("transport_error"), separators=(",", ":")))
     except (RuntimeError, TypeError, ValueError, json.JSONDecodeError):
