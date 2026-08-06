@@ -1035,3 +1035,13 @@ post-freeze evaluator显示两臂完全相同：`1/12` exact、Item F1 `0.572917
 V2.46.41 的冻结后诊断把这个边界量化了：48个baseline ROR格中11个正确、16个非空错误、21个Unknown；country格44个正确、4个错误。仅补Unknown且不改非空事实时，只有3/12任务结构上可能变成exact。因此 evidence-constrained completion只能解决一部分precision–coverage问题，不能独自承担whole-table optimization；安全补缺与安全纠错必须分开识别。下一可证伪机制应先用确定性文本解析在模型可见证据中发现 exact entity–ROR pair，再把唯一/歧义/无pair counts作为content-free observation交给dependent revision。nonempty correction则需要另一套独立来源或反事实冲突门，不能通过放松Unknown gate获得。
 
 这也进一步收紧信息熵credit的适用域。网页数量、字符量、来源新颖度乃至检索后主观熵下降，都发生在可地址化 `target–value` proposal之前，不能直接获得正task credit。合理链条是：先构造pair-level候选及来源依赖图，再估计该候选相对当前belief的信息增益，最后用独立验证和冻结后的outer task utility决定credit的符号与幅度。V2.46.40的outer delta为0，所以任何内部proposal-free entropy signal的增量task credit都必须为0。这支持“entropy是受约束的epistemic中间量”，不支持“entropy gain本身就是credit assignment”。
+
+## 2026-08-06 补充：可地址化 pair 仍不等于正确 identity binding
+
+V2.46.42 把 V2.46.40 的零声明瓶颈移出了模型：它直接在模型实际可见的页面中确定性寻找 organization phrase 与 ROR suffix 的共同出现，并把每题模型调用从3次降为2次。12题/48实体的全新外部人口在80.13秒内完成，92个可见页面中33个包含显式ROR、26个包含目标实体文本，形成2个唯一pair并自然 admission 1个 Unknown。因而该轮排除了“机制完全不触发”以及“必须增加搜索量”这两种解释。
+
+但唯一 admission 是错的：candidate ROR 是 registry 中另一机构的真实 ID。baseline 与 candidate 都是`0/12` exact、Item F1 `0.552083`、Composite `0.888021`；Unknown虽从27减到26，任务质量没有改善。V2.46.43 的 post-freeze aggregate diagnosis 再确认 changed cell=1、correct admission=0、incorrect admission=1，且错误ID确实对应历史中的不同组织。最合理的局部解释是，官方ROR页面正文提及目标机构只表达 affiliation、合作或其他关系，而页面自身的 primary organization 是另一实体。
+
+这个反例在 entropy credit 前增加了不可省略的身份层。`entity text ∈ page body` 与 `ROR URL ∈ page` 只证明两者在一个文本窗口内相关，不能证明随机变量所指向的是同一主体；若把这种共现当成 target–value observation，posterior entropy 可能下降得很大，却是在错误状态空间上变得更自信。故 credit 的可辩护顺序应是：先用 exact normalized title，或结构化 primary-identity 字段，建立页面主体与目标实体的绑定；再绑定该主体与值；之后才计算条件信息增益、来源依赖、独立验证和 outer utility。任何 identity binding 失败的 step，即使新颖、surprising 或减少 Unknown，也不能得到正 task credit。
+
+这使当前创新主张更具体：不是一般性的“按信息熵增益给搜索步骤 credit”，而是 **identity-gated, utility-aligned information credit**。其最小 receipt 至少要分离 primary-identity binding type、target–value binding、source dependency、belief delta、independent verifier outcome 与 post-freeze utility；其中任一前置层失败，后续正 credit 均应 fail closed。下一外部门因此应删除 body-only binding，只比较 title-bound 或 structured-primary-identity-bound pair，并在全新 population 上以 exact-table strict gain 和 Item/Composite non-regression 证伪；在此之前不能声称 entropy credit 已被验证，也没有 DeepWideBench 或 SOTA 提升。

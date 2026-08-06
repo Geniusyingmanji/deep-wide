@@ -1,6 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.31
+> 版本：6.32
+>
+> **6.32 V2.46.42 deterministic model-visible pair discovery 与 V2.46.43 identity-binding 诊断（2026-08-06）：V2.46.42 删除了 V2.46.40 中统一返回空声明的第三次模型调用，每题严格只有共享 evidence 后的 baseline/candidate 两次 provider model call；candidate 只从模型实际可见的抓取页中确定性抽取 entity–ROR pair，非空 ROR 与所有 country cell 仍不可修改。新人口来自固定 ROR commit 的 lexicographic JSON positions `[1000,2000)`，最终为12题、48实体、32国，与累计4,384个历史实体 literal/canonical 双重不重叠；selection audit、protocol、preaudit、activation、execution-start 均在预测前冻结。**
+>
+> **唯一 forward 在 `80.128119s` 内冻结24/24 predictions，12/12 task有效、24次model acquisition、0 timeout；92个模型可见页面中33个出现显式 ROR、26个命中可见实体、形成2个唯一 pair，最终只对一个 Unknown cell admission，另一个原非空 pair保持不变，0 ambiguity。机制因此自然触发，但质量严格 NO-GO：baseline/candidate exact-table均为`0/12`、Item F1均为`0.552083`、Composite均为`0.888021`，Unknown仅从`27→26`。唯一 admission 是错误值；其 ROR ID 是历史 registry 中另一机构的合法 ID，而非当前目标机构的 gold。权威工件为 `results/v24642_deterministic_pair_result_v1_20260806.json` 及对应 postresult audit。**
+>
+> **V2.46.43 只在 prediction freeze 后读取已封存结果与gold，发布 aggregate-only 诊断；seal复核通过。诊断精确得到 changed tasks/cells=`1/1`、correct admissions=`0`、incorrect admissions=`1`、Unknown reduction=`1`、错误 candidate 属于历史另一实体=`1`。这把失败定位为 identity binding，而不是搜索覆盖、触发率或 pair radius：`official ror.org URL + 正文出现目标名称` 可能表达 affiliation/relationship，不能证明页面 primary identity。诊断工件为 `results/v24643_v24642_identity_binding_diagnosis_v1_20260806.json`。**
+>
+> **entropy/credit 的顺序进一步收紧为 `primary target identity binding → target–value binding → source-dependency-aware belief update → independent verification → post-freeze outer utility`。V2.46.42 的 pair information 虽可地址化，但 identity 错误且 outer utility 没有正增量，因此该 admission 不得获得正 task credit；页面新颖度、显式 ROR URL、正文共现或主观熵下降均不能覆盖身份错误。下一 fresh external successor 只允许 exact normalized title identity，或页面结构化 primary-identity 字段与 ROR ID 的共同绑定；body-only binding 必须删除，并只持久化 content-free 的 title/structured/ambiguous/rejected/admitted counts。**
+>
+> **下一阶段当前只授权 successor 设计，不授权 launch、dev64 或exact-220：须使用新的 literal/canonical-disjoint population，保持非空 ROR 与所有 country cell immutable、相同 effect budget、failure-as-zero、no retry/resume/selective rerun；主门仍为 strict exact-table gain，Composite与Item F1均不得下降。V2.46.42 population永久不复跑。当前可信 DeepWideBench 全集仍为：Composite最佳 V2.46.35 `0.437892`、whole-table `4/220`；whole-table最佳 V2.42.67 `7/220`、Composite `0.413541`。没有SOTA。**
 >
 > **6.31 V2.46.40 evidence-constrained missing-cell gate 与 V2.46.41 诊断（2026-08-06）：V2.46.39 的强制 completion NO-GO 后，项目冻结了另一批全新 ROR v2.11 长尾机构。历史排除集精确重建为 V2.46.25 链的4,192实体 + V2.46.37机场96实体 + V2.46.39 ROR 48实体，共4,336个 literal/canonical 唯一实体；新48实体按同一 commit 前1,000条、active、唯一 display、无括号国家提示、`sha256(commit:v24640:ror_id)` rank、单国最多3条和四分位交错分组确定，28个国家、与历史 exact/canonical overlap均为0。48条 evaluator-only gold 均绑定 Git blob SHA1 与原始 bytes SHA256；forward 可达图不含 evaluator模块、gold parser或其路径常量，输入仍只有 `{opaque_id, question}`。**
 >
