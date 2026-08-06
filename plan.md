@@ -1,6 +1,18 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.26
+> 版本：6.27
+>
+> **6.27 V2.46.30 exact-220 终局、证据分级与刷榜策略重置（2026-08-06）：当前最新可信全集是一次严格 label-blind、failure-as-zero 的 exact-220。220 个预测全部冻结后才开放 mapping/evaluator；结果为 whole-table `5/220`、Composite `0.403632`、Entity `0.595455`、Row/Item/Column F1 `0.210554/0.367485/0.441035`。209 个 evaluator 输出有效，11 个 evaluator error 固定计零且禁止选择性重评。forward `737.78s`，32-worker evaluator `275.70s`。相对 V2.42.87，Composite `+0.007641`、whole-table 不变；相对项目最佳 V2.42.67，Composite `-0.009909`、whole-table `-2`。没有 leaderboard 或同协议外部 SOTA 证据，结论是“完成全集但未刷新项目最佳、不是 SOTA”。权威工件为 `results/v24630_exact220_result_v1_20260806.json`、`results/v24630_exact220_postresult_audit_v1_20260806.json` 与 `outputs/v24630_exact220_v1_20260806/evaluator/conservative_summary.json`。**
+>
+> **当前 pipeline 与耗时：每题 runtime 只接收 `{opaque_id, question}`，依次执行 plan、最多两波 `2+2` logical queries、最多 `6+4` fetch、证据投影、synthesis 以及必要时的 repair/recovery；每题最多 3 个模型 effect、150 秒总 deadline。跨题 executor 为 32，全局模型槽为 8。220 个 terminal prediction 在约 12.3 分钟内冻结，随后才允许 32 路 evaluator 在约 4.6 分钟完成固定分母评测；若顺序相加，本轮约 16.9 分钟。旧的数小时或数天估计来自更低容量、paired/shared-prefix 实验、长 deadline 与 watcher 等待，不是当前单题必须搜索 40–50 分钟。**
+>
+> **为何很多版本没有全集分数：版本号记录的是可审计状态迁移，不等于一次 benchmark。build/unit/fault-injection 版本使用 0 道 benchmark 题，只能证明 schema、隔离、守恒或故障边界；fresh external gates 通常为 8/12/16 个 benchmark-external 任务，只能判断机制能否自然触发；paired dev64 每臂 64 题，只能给方向和 gate，不能替代全集；只有 prediction-freeze→完整 evaluator→fixed denominator 的 exact-220 才能形成 benchmark 分数。V2.43.30 等未过工程门的 220 forward 没有 evaluator 分数，不能从“跑完 forward”推断质量。今后每个结论必须显式标注证据级别，机制门结论不得写成 benchmark 提升。**
+>
+> **V2.46.30 的下一瓶颈不是搜索深度。40 个唯一 backfilled URL 全被既有 leads 遮蔽，surviving downstream candidate 为 0。32 个 best-effort fallback 全部伴随 model-slot timeout/deadline exhaustion，而 186 个 model-generated success 全部没有 slot timeout；另有 2 个 deadline-related worker failure。冻结配置让 32 个 active child 争用 8 个模型槽和每题 150 秒 deadline，总 slot wait 达 `10,224.9s`。这是强共现诊断，不是随机化因果证明，但足以把下一干预从“增加 query/fetch/backfill”改为“synthesis-capacity scheduling”。**
+>
+> **更新后的刷榜顺序：第一步发布 content-free V2.46.31 诊断，机械绑定 220 个终态、218 个完整 child bundle、2 个 deadline worker failure、slot wait 与 synthesis/recovery 守恒，不保存题面、opaque ID、query、URL、page、prediction、gold、mapping、score 或 credential。第二步只在 benchmark 外比较 eager `32/8/150s`、bounded active-child admission、延长单题 deadline但不增加工作量，以及 synthesis/repair 优先的 stage-aware slots；先做确定性离散事件模拟，再做中性 keyless GPT-5.6 压力测试。工程 GO 至少要求 pre-provider synthesis rejection=`0`、fallback=`0` 或预注册的近零上界、effect accounting 精确、无额外 query/fetch/model workload，并把 projected exact-220 forward 控制在竞争性的墙钟内。第三步只有该门通过才冻结一个新的 label-blind 候选；不再用小 benchmark 子集宣称提分，最终质量确认必须一次性跑完整 220、no-resume、failure-as-zero。最低刷新目标是同时不劣于 V2.42.67 的 Composite `0.413541` 与 whole-table `7/220`；SOTA 仍需同协议 leaderboard 证据。**
+>
+> **最新文献把同一方向变成强制对照。Long-Horizon Search Diagnosis 区分 retrieval gap 与 utilization gap，并报告搜索量与正确率仅弱相关、有效证据常较早出现；SIEVE 和 RARG 分别用 inspect-then-section-fetch 与 relevance execution prior 提高上下文效率；RubricRanker 把 document set 的覆盖、简洁与权威性置于单篇 relevance 之上；Router-Mem 和 EASy 分别提供 evidence-sufficiency stopping 与 cost/capability-aware milestone scheduling；ScrambleToolBench 警告更多 test-time compute 可能放大穷举；Deep Research Pretraining 则把 predictive navigation 放到离线训练。[79,179–185] 这些工作不支持继续堆搜索量，也不允许把 entropy、dynamic routing 或 swarm 本身写成首创。四层开放世界风险仍可作为待验证的联合建模假设，但论文贡献必须落在校准的 task risk、source/evidence dependency 与 independent downstream utility credit 的组合，并以完整 220 证明。**
 >
 > **6.26 V2.45.83–93 collector 修复、外部门控与 title-query successor（2026-08-05）：V2.45.83 的全新8题/64实体人口在公共聚合前因 nested collector 把共享 `_ORIGINAL_TASK_PROJECTION` 误绑为自身 bound method 而触发 `RecursionError`；该人口永久计为已消费，禁止 resume/retry/rerun/evaluator，并已在 `results/DO_NOT_USE_invalid_v24583_recursive_collector_20260805/` 隔离。V2.45.85 将 V2.45.80 unbound projector 固定为 instance-local immutable collector，V2.45.86 clean-build audit `27/27`、8-way stress `8/8`、`findings=[]`。随后 V2.45.87 使用相对全部历史 `460 questions / 3680 entities` literal/canonical 互斥且64个 alias surface 唯一的全新人口，按 protocol→preaudit(`220/220`)→activation→execution-start 独立提交推送后只运行一次；8/8 worker、8/8 capability、零 timeout/nonzero/递归，batch wall `149.965s`，post-audit `findings=[]`。**
 >
@@ -2156,7 +2168,7 @@ credit 分支另报：signed contribution accuracy、pivotal-step recall、credi
 
 | M | 目标 | Owner | 时间 | 预算上限 | 产物 | 状态 |
 |---|---|---|---|---:|---|---|
-| M0 | 基线、官方评测、文献/novelty audit | 当前会话 + 待确认 PI | 已增量核验至 2026-08-01 03:17 UTC（178 篇） | 已发生，待补账 | `survey.md`、`.research/literature_matrix.md`、基线 scripts/results | 完成（持续增量） |
+| M0 | 基线、官方评测、文献/novelty audit | 当前会话 + 待确认 PI | 已增量核验至 2026-08-06 04:48 UTC（185 篇） | 已发生，待补账 | `survey.md`、`.research/literature_matrix.md`、基线 scripts/results | 完成（持续增量） |
 | M1 | 严格 runtime/eval 隔离与正文 evidence pipeline | 当前会话 + TBD owner | 已实现 manifest 隔离、HTML/PDF 正文、query-local citation provenance 与历史 forward preflight；V2.42.19 scanner 已冻结；V2.42.52–53 已提供 source-bound package 与 isolated runtime wrapper，V2.42.54 已冻结 create-exclusive paired-dev64 roots/lease/evaluator-barrier preparation但未实现 activation/execution；终态报告、人工 EAL 与整页精确 span 待做 | TBD | `src/deepwide_agent`、evaluator、no-leak tests | 部分完成 |
 | M2 | 表格/evidence state 与 replay | 当前会话 + TBD owner | V2.29.0 schema 37、单题 checkpoint、hosted trace 去重、failure trace 持久化、anchor-only replay 和 pinned V2.25 closed-domain replay 已可运行；20-task replay pack 待做 | TBD | state schema、20-task replay pack | 部分完成 |
 | M3 | 四层信号数据与校准 | TBD | 2 周 | TBD | shadow signal dataset、calibration report、replay receipt | PAV/terminal calibrator、task-cluster split/bootstrap、provenance budget 与 replay verifier 已实现；真实匿名 development labels/bundle 尚无，Gate 1 未评估 |
