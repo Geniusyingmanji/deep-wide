@@ -30,6 +30,7 @@ def extract_visible_entities(question: str) -> list[str]:
         r"Use public web sources to return one Markdown table about these organizations:\n"
         r"<ENTITIES>\n(.*)\n</ENTITIES>\n"
         r"The column names are: Organization, ROR ID, Country code\. "
+        r"Use the 9-character ROR ID suffix, not the full URL, and the ISO 3166-1 alpha-2 country code\. "
         r"Return one table only\.",
         str(question).strip(),
         flags=re.DOTALL,
@@ -162,7 +163,9 @@ def validate_result(value: Mapping[str, Any]) -> dict[str, Any]:
     entities = extract_visible_entities(
         "Use public web sources to return one Markdown table about these organizations:\n"
         "<ENTITIES>\n1. a\n2. b\n3. c\n4. d\n</ENTITIES>\n"
-        "The column names are: Organization, ROR ID, Country code. Return one table only."
+        "The column names are: Organization, ROR ID, Country code. "
+        "Use the 9-character ROR ID suffix, not the full URL, and the ISO 3166-1 alpha-2 country code. "
+        "Return one table only."
     )
     if len(entities) != 4:
         raise ValueError("V2.46.39 parser self-check drifted")

@@ -83,7 +83,9 @@ def _question(group: tuple[str, ...]) -> str:
     return (
         "Use public web sources to return one Markdown table about these organizations:\n"
         f"<ENTITIES>\n{rows}\n</ENTITIES>\n"
-        "The column names are: Organization, ROR ID, Country code. Return one table only."
+        "The column names are: Organization, ROR ID, Country code. "
+        "Use the 9-character ROR ID suffix, not the full URL, and the ISO 3166-1 alpha-2 country code. "
+        "Return one table only."
     )
 
 

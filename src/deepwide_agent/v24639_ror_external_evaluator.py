@@ -39,6 +39,11 @@ def evaluate_prediction(prediction: str, expected: Sequence[Mapping[str, str]]) 
         return {"exact_table_success": 0, "entity_recall": 0.0, "row_f1": 0.0, "item_f1": 0.0, "column_f1": 0.0, "composite": 0.0, "unknown_value_cells": 0}
     data = [row for row in rows[2:] if len(row) == 3 and all(row)]
     norm = lambda value: re.sub(r"[^a-z0-9]+", "", str(value).casefold())
+    def norm_ror(value: object) -> str:
+        raw = str(value).strip().casefold().rstrip("/")
+        if raw.startswith("https://ror.org/"):
+            raw = raw.rsplit("/", 1)[-1]
+        return re.sub(r"[^a-z0-9]+", "", raw)
     gold = {norm(row["Organization"]): row for row in expected}
     pred = {norm(row[0]): row for row in data if norm(row[0])}
     tp = len(set(gold) & set(pred)); precision = tp / len(pred) if pred else 0.0; recall = tp / len(gold)
@@ -47,7 +52,7 @@ def evaluate_prediction(prediction: str, expected: Sequence[Mapping[str, str]]) 
     for key, row in pred.items():
         unknown += sum(cell.casefold() in {"unknown", "未知", "n/a", "na", "-", "—"} for cell in row[1:])
         if key in gold:
-            item_tp += int(norm(row[1]) == norm(gold[key]["ROR ID"]))
+            item_tp += int(norm_ror(row[1]) == norm_ror(gold[key]["ROR ID"]))
             item_tp += int(norm(row[2]) == norm(gold[key]["Country code"]))
     pred_n, gold_n = len(pred) * 2, len(gold) * 2
     ip = item_tp / pred_n if pred_n else 0.0; ir = item_tp / gold_n

@@ -15,7 +15,7 @@ for path in (ROOT, ROOT / "src"):
 from deepwide_agent.clients import ModelResult
 from deepwide_agent.v24257_score_first_runtime import ScoreFirstLimits
 from deepwide_agent.v24639_ror_external_contract import ENTITY_GROUPS, LIMITS, task_vector, visible_task
-from deepwide_agent.v24639_ror_external_evaluator import evaluate_frozen_rows, gold_rows
+from deepwide_agent.v24639_ror_external_evaluator import evaluate_frozen_rows, evaluate_prediction, gold_rows
 from deepwide_agent.v24639_ror_objective_runtime import extract_visible_entities, project_visible_rows, run_v24639_task, visible_query_vector
 
 
@@ -70,6 +70,10 @@ class EvaluatorTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls): cls.gold = gold_rows((ROOT / "evaluation/v24639_ror_gold_v1.csv").read_text(encoding="utf-8"))
     def test_gold(self): self.assertEqual(len(self.gold), 48)
+    def test_full_ror_url_is_semantically_equivalent(self):
+        rows = [row for row in self.gold if row["opaque_id"] == visible_task(1)["opaque_id"]]
+        table = "```markdown\n| Organization | ROR ID | Country code |\n| --- | --- | --- |\n" + "\n".join(f"| {r['Organization']} | https://ror.org/{r['ROR ID']} | {r['Country code']} |" for r in rows) + "\n```"
+        self.assertEqual(evaluate_prediction(table, rows)["exact_table_success"], 1)
     def test_exact_gate(self):
         predictions = []
         for task in task_vector():
