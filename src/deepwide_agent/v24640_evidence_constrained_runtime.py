@@ -556,6 +556,23 @@ def validate_result(value: Mapping[str, Any]) -> dict[str, Any]:
         columns, rows = ror._matrix(predictions[arm])
         if tuple(columns) != ror.EXPECTED_COLUMNS or len(rows) != 4:
             raise ValueError("V2.46.40 projected table drifted")
+    _baseline_columns, baseline_rows = ror._matrix(predictions["baseline"])
+    _candidate_columns, candidate_rows = ror._matrix(
+        predictions["evidence_constrained"]
+    )
+    changed = 0
+    for baseline, candidate in zip(baseline_rows, candidate_rows, strict=True):
+        if baseline[0] != candidate[0] or baseline[2] != candidate[2]:
+            raise ValueError("V2.46.40 identity or country monotonicity drifted")
+        if baseline[1].casefold() not in UNKNOWN and baseline[1] != candidate[1]:
+            raise ValueError("V2.46.40 non-Unknown ROR fact changed")
+        if baseline[1] != candidate[1]:
+            changed += 1
+            if _ror_suffix(candidate[1]) is None:
+                raise ValueError("V2.46.40 changed ROR cell is malformed")
+    revision = copied["receipt"]["revision"]
+    if changed != revision.get("admitted_replacement_count"):
+        raise ValueError("V2.46.40 admitted replacement count drifted")
     return copied
 
 

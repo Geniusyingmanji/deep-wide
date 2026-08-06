@@ -304,6 +304,32 @@ class RuntimeTests(unittest.TestCase):
         self.assertIn("| " + entities[0] + " | 00146e793 | IN |", result["predictions"]["evidence_constrained"])
         self.assertIn("| " + entities[1] + " | 099999999 | EE |", result["predictions"]["evidence_constrained"])
 
+    def test_result_validator_independently_rejects_nonmonotonic_candidate(self) -> None:
+        task = visible_task(1)
+        entities = extract_visible_entities(task["question"])
+        result = run_v24640_task(
+            task,
+            model=Model(task),
+            search=Search(entities),
+            limits=ScoreFirstLimits(**LIMITS),
+            monotonic=time.monotonic,
+        )
+        candidate = result["predictions"]["evidence_constrained"].replace(
+            "| EE |", "| ZZ |", 1
+        )
+        result["predictions"]["evidence_constrained"] = candidate
+        import hashlib
+
+        from deepwide_agent.v24637_objective_alignment_runtime import payload_sha256
+
+        result["prediction_sha256"]["evidence_constrained"] = hashlib.sha256(
+            candidate.encode()
+        ).hexdigest()
+        result.pop("result_sha256")
+        result["result_sha256"] = payload_sha256(result)
+        with self.assertRaisesRegex(ValueError, "country monotonicity"):
+            validate_result(result)
+
     def test_forward_ast_has_no_evaluator_or_gold_capability(self) -> None:
         paths = (
             ROOT / "src/deepwide_agent/v24640_evidence_constrained_runtime.py",
