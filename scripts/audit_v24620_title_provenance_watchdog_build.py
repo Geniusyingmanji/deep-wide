@@ -22,7 +22,10 @@ from scripts import v24620_title_provenance_watchdog_external_gate as gate  # no
 
 
 DATE = "20260806"
-AUDIT = Path(f"results/v24620_title_provenance_watchdog_build_audit_v1_{DATE}.json")
+PRIOR_AUDIT = Path(
+    f"results/v24620_title_provenance_watchdog_build_audit_v1_{DATE}.json"
+)
+AUDIT = Path(f"results/v24620_title_provenance_watchdog_build_audit_v2_{DATE}.json")
 SOURCES = tuple(
     Path(item)
     for item in (
@@ -31,6 +34,7 @@ SOURCES = tuple(
         "scripts/audit_v24619_concurrent_binding_repair.py",
         "tests/test_audit_v24619_concurrent_binding_repair.py",
         "results/v24619_concurrent_binding_repair_audit_v1_20260805.json",
+        str(PRIOR_AUDIT),
         "src/deepwide_agent/v24620_enforcing_batch_watchdog.py",
         "tests/test_v24620_enforcing_batch_watchdog.py",
         "scripts/v24620_title_provenance_watchdog_external_gate.py",
@@ -180,6 +184,13 @@ def build_audit(*, now: int | None = None) -> dict[str, Any]:
             "valid": parent_valid,
             "v24616_population_consumed": True,
             "v24616_population_retry_resume_rerun_or_evaluation_authorized": False,
+        },
+        "supersedes": {
+            "path": str(PRIOR_AUDIT),
+            "sha256": common._sha256(PRIOR_AUDIT),
+            "reason": "post_v1_runtime_stack_fast_validator_and_watchdog_reparent_hardening",
+            "prior_audit_result_or_source_modified": False,
+            "current_protocol_must_use_v2_build_evidence": True,
         },
         "freshness": {
             "prior_external_question_count": 500,
