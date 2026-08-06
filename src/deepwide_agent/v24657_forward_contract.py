@@ -1,0 +1,349 @@
+"""Frozen label-blind contract helpers for V2.46.57 paired dev64.
+
+Each visible task is executed once by V2.46.55 and yields its frozen baseline
+plus the no-entropy Unknown-cell-targeted candidate. Runtime inputs remain
+exactly ``{opaque_id, question}``; evaluator resources are unavailable to
+forward code.
+"""
+
+from __future__ import annotations
+
+import hashlib
+import json
+import re
+from collections.abc import Mapping
+from pathlib import Path
+from typing import Any
+
+from .v24257_score_first_runtime import validate_visible_task
+
+
+DATE = "20260806"
+ROLE = "v24657_unknown_cell_targeted_paired_dev64_forward_contract"
+PROTOCOL_ID = "v24657_unknown_cell_targeted_no_entropy_paired_dev64_v1"
+FORWARD_CONTRACT = Path(f"results/v24657_paired_dev64_forward_contract_v1_{DATE}.json")
+PROTOCOL = Path(f"results/v24657_paired_dev64_preregistration_v1_{DATE}.json")
+PREAUDIT = Path(f"results/v24657_paired_dev64_preactivation_audit_v1_{DATE}.json")
+ACTIVATION = Path(f"results/v24657_paired_dev64_activation_v1_{DATE}.json")
+EXECUTION_START = Path(f"results/v24657_paired_dev64_execution_start_v1_{DATE}.json")
+FORWARD_RESULT = Path(f"results/v24657_paired_dev64_forward_result_v1_{DATE}.json")
+EVALUATOR_GATE = Path(f"results/v24657_paired_dev64_evaluator_gate_v1_{DATE}.json")
+EVALUATOR_START = Path(f"results/v24657_paired_dev64_evaluator_start_v1_{DATE}.json")
+FINAL_RESULT = Path(f"results/v24657_paired_dev64_result_v1_{DATE}.json")
+POSTAUDIT = Path(f"results/v24657_paired_dev64_postresult_audit_v1_{DATE}.json")
+
+OUTPUT_ROOT = Path(f"outputs/v24657_paired_dev64_v1_{DATE}")
+MODEL_SLOT_DIRECTORY = OUTPUT_ROOT / "model_slots"
+TASK_ROOT = OUTPUT_ROOT / "tasks"
+SAFE_PROGRESS = OUTPUT_ROOT / "safe_forward_progress.json"
+PAIR_SUMMARY = OUTPUT_ROOT / "pair_run_summary.json"
+RUNTIME_PREDICTIONS = {
+    arm: OUTPUT_ROOT / f"{arm}_runtime_predictions.jsonl"
+    for arm in ("baseline", "candidate")
+}
+RUN_SUMMARY = {
+    arm: OUTPUT_ROOT / f"{arm}_run_summary.json"
+    for arm in ("baseline", "candidate")
+}
+PREDICTION_FREEZE = {
+    arm: OUTPUT_ROOT / f"{arm}_prediction_freeze.json"
+    for arm in ("baseline", "candidate")
+}
+EVALUATOR_ROOT = OUTPUT_ROOT / "postfreeze_evaluator"
+
+PARENT_AUDIT = Path(f"results/v24656_unknown_cell_targeted_build_audit_v1_{DATE}.json")
+EVALUATOR_IDENTITY_PARENT = Path(
+    "results/v24320_paired_dev64_preregistration_v1_20260803.json"
+)
+SOURCE_MANIFEST = Path("outputs/runtime_manifest_v1_repro/manifest.jsonl")
+ID_SOURCE = Path("configs/full220_v2403_r1_devval_s04.ids")
+
+LEASE_PATH = Path("outputs/deepwide_benchmark_api.lease.lock")
+LEASE_OWNER = "v24657_unknown_cell_targeted_paired_dev64_forward_v1"
+LEASE_PURPOSE = "label_blind_unknown_cell_targeted_paired_dev64_forward"
+EVALUATOR_LEASE_OWNER = "v24657_unknown_cell_targeted_paired_dev64_evaluator_v1"
+EVALUATOR_LEASE_PURPOSE = "postfreeze_both_arm_dev64_official_evaluator"
+RUNNER_MARKER = "scripts/run_v24657_unknown_cell_targeted_dev64.py"
+CHILD_MARKER = "scripts/run_v24657_unknown_cell_targeted_dev64_task.py"
+CHILD_TERMINAL_NAME = "child_terminal_receipt.json"
+PARENT_EXIT_NAME = "parent_exit_receipt.json"
+
+ARMS = ("baseline", "candidate")
+SELECTED_COUNT = 64
+EXECUTOR_CONCURRENCY = 16
+MODEL_SLOT_CAP = 8
+MODEL_SLOT_POOL_ID = "v24263_score_first_global_model_slots_v1"
+TASK_WALL_SECONDS = 180
+PARENT_TIMEOUT_SECONDS = 200
+CLEANUP_RESERVE_SECONDS = 5.0
+MINIMUM_ATTEMPT_SECONDS = 0.05
+LIMITS = {
+    "wall_seconds": TASK_WALL_SECONDS,
+    "model_calls": 3,
+    "search_queries": 4,
+    "fetch_targets": 10,
+    "search_results_per_query": 3,
+    "evidence_chars": 60_000,
+    "page_chars": 5_000,
+    "plan_output_tokens": 4_000,
+    "synthesis_output_tokens": 30_000,
+    "repair_output_tokens": 12_000,
+}
+MODEL = {
+    "proxy_url": "http://127.0.0.1:9878/responses",
+    "name": "gpt-5.6-sol",
+    "reasoning_effort": "low",
+    "service_tier": "priority",
+    "timeout_seconds": TASK_WALL_SECONDS,
+    "max_retries": 2,
+}
+SEARCH = {
+    "provider": "azure-native-keyless-deadline-unknown-cell-targeted",
+    "proxy_url": "http://127.0.0.1:9878/responses",
+    "model": "gpt-5.6-sol",
+    "workers": 1,
+    "batch_size": 8,
+    "context_size": "medium",
+    "max_output_tokens": 7_000,
+    "timeout_seconds": TASK_WALL_SECONDS,
+    "max_retries": 2,
+    "fetch_workers": 8,
+    "fetch_timeout_seconds": 20,
+    "hard_fetch_deadline_seconds": 25,
+    "server_auto_fetch_enabled": False,
+}
+OPAQUE = re.compile(r"task_[0-9a-f]{24}")
+PROTECTED_WATCHERS = (
+    (795336, "scripts/watch_v2415_r1_checkpoint_liveness.py"),
+    (3061652, "scripts/watch_v24218_exact220_executor.py"),
+)
+
+
+def protected_watcher_snapshot(
+    proc_root: Path = Path("/proc"),
+) -> list[dict[str, Any]]:
+    output: list[dict[str, Any]] = []
+    for pid, marker in PROTECTED_WATCHERS:
+        stat_path = proc_root / str(pid) / "stat"
+        cmdline_path = proc_root / str(pid) / "cmdline"
+        if not stat_path.is_file() or not cmdline_path.is_file():
+            raise RuntimeError("V2.46.57 protected watcher is absent")
+        raw = stat_path.read_text(encoding="utf-8")
+        suffix = raw[raw.rfind(")") + 2 :].split()
+        command = cmdline_path.read_bytes().replace(b"\x00", b" ").decode(
+            "utf-8", errors="replace"
+        )
+        if len(suffix) <= 19 or marker not in command:
+            raise RuntimeError("V2.46.57 protected watcher identity drifted")
+        output.append(
+            {"pid": pid, "marker": marker, "start_ticks": int(suffix[19])}
+        )
+    return output
+
+
+def sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def payload_sha256(value: Any) -> str:
+    return hashlib.sha256(
+        json.dumps(
+            value, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+        ).encode("utf-8")
+    ).hexdigest()
+
+
+def _ordinary(root: Path, relative: str | Path) -> Path:
+    raw = Path(relative)
+    if raw.is_absolute() or ".." in raw.parts:
+        raise RuntimeError("V2.46.57 path is noncanonical")
+    path = root / raw
+    if (
+        path.is_symlink()
+        or not path.is_file()
+        or not path.resolve().is_relative_to(root.resolve())
+    ):
+        raise RuntimeError(f"V2.46.57 expected ordinary file: {relative}")
+    return path
+
+
+def read_object(path: Path) -> dict[str, Any]:
+    if path.is_symlink() or not path.is_file():
+        raise RuntimeError(f"V2.46.57 expected ordinary JSON object: {path}")
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise RuntimeError(f"V2.46.57 expected JSON object: {path}")
+    return value
+
+
+def _sealed(value: Mapping[str, Any], field: str) -> bool:
+    unsigned = dict(value)
+    seal = unsigned.pop(field, None)
+    return isinstance(seal, str) and seal == payload_sha256(unsigned)
+
+
+def source_selected_ids(root: Path) -> list[str]:
+    values = [
+        line.strip()
+        for line in _ordinary(root, ID_SOURCE).read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+    if (
+        len(values) != SELECTED_COUNT
+        or len(set(values)) != SELECTED_COUNT
+        or any(OPAQUE.fullmatch(value) is None for value in values)
+    ):
+        raise RuntimeError("V2.46.57 dev64 ID source drifted")
+    return values
+
+
+def selected_ids(contract: Mapping[str, Any]) -> list[str]:
+    task = contract.get("task_contract")
+    values = task.get("selected_opaque_ids") if isinstance(task, Mapping) else None
+    if (
+        not isinstance(values, list)
+        or len(values) != SELECTED_COUNT
+        or len(set(values)) != SELECTED_COUNT
+        or any(not isinstance(value, str) or OPAQUE.fullmatch(value) is None for value in values)
+        or payload_sha256(values) != task.get("selected_opaque_ids_sha256")
+    ):
+        raise RuntimeError("V2.46.57 frozen opaque-ID vector drifted")
+    return list(values)
+
+
+def _visible_manifest(root: Path) -> list[dict[str, str]]:
+    rows: list[dict[str, str]] = []
+    for line in _ordinary(root, SOURCE_MANIFEST).read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        raw = json.loads(line)
+        if not isinstance(raw, dict):
+            raise RuntimeError("V2.46.57 visible manifest row drifted")
+        rows.append(validate_visible_task(raw))
+    if len({row["opaque_id"] for row in rows}) != len(rows):
+        raise RuntimeError("V2.46.57 visible manifest has duplicate IDs")
+    return rows
+
+
+def selected_tasks(root: Path, contract: Mapping[str, Any]) -> list[dict[str, str]]:
+    ids = selected_ids(contract)
+    task_contract = contract.get("task_contract") or {}
+    if (
+        sha256(_ordinary(root, SOURCE_MANIFEST)) != task_contract.get("manifest_sha256")
+        or sha256(_ordinary(root, ID_SOURCE)) != task_contract.get("id_source_sha256")
+        or source_selected_ids(root) != ids
+    ):
+        raise RuntimeError("V2.46.57 visible selection identity drifted")
+    by_id = {row["opaque_id"]: row for row in _visible_manifest(root)}
+    if any(value not in by_id for value in ids):
+        raise RuntimeError("V2.46.57 selected visible task is absent")
+    tasks = [by_id[value] for value in ids]
+    if any(set(task) != {"opaque_id", "question"} for task in tasks):
+        raise RuntimeError("V2.46.57 runtime boundary drifted")
+    return tasks
+
+
+def validate_forward_contract(
+    root: Path, path: Path = FORWARD_CONTRACT
+) -> dict[str, Any]:
+    root = root.resolve()
+    value = read_object(_ordinary(root, path))
+    execution = value.get("execution")
+    task = value.get("task_contract")
+    source = value.get("source_policy")
+    manifest = value.get("dependency_manifest")
+    if (
+        value.get("role") != ROLE
+        or value.get("protocol_id") != PROTOCOL_ID
+        or value.get("label_blind") is not True
+        or not isinstance(task, Mapping)
+        or task
+        != {
+            "runtime_boundary": ["opaque_id", "question"],
+            "selected_count": SELECTED_COUNT,
+            "selected_opaque_ids": source_selected_ids(root),
+            "selected_opaque_ids_sha256": payload_sha256(source_selected_ids(root)),
+            "manifest_path": str(SOURCE_MANIFEST),
+            "manifest_sha256": sha256(_ordinary(root, SOURCE_MANIFEST)),
+            "id_source_path": str(ID_SOURCE),
+            "id_source_sha256": sha256(_ordinary(root, ID_SOURCE)),
+            "current_builder_or_forward_reads_mapping_split_category_gold_or_score": False,
+            "preexisting_frozen_opaque_id_vector_reused_without_current_label_access": True,
+        }
+        or value.get("parent_evidence")
+        != {
+            "build_audit": {
+                "path": str(PARENT_AUDIT),
+                "sha256": sha256(_ordinary(root, PARENT_AUDIT)),
+            }
+        }
+        or not isinstance(execution, Mapping)
+        or execution
+        != {
+            "executor_concurrency": EXECUTOR_CONCURRENCY,
+            "model_slot_cap": MODEL_SLOT_CAP,
+            "one_shared_forward_per_visible_task": True,
+            "two_predictions_from_each_single_task_forward": True,
+            "shared_generic_prefix_before_baseline": True,
+            "candidate_has_additional_targeted_effects_within_total_cap": True,
+            "candidate_only_unknown_cell_targeted_search_and_deterministic_support_gate": True,
+            "resume_skip_rerun_or_selective_retry": False,
+            "runner_marker": RUNNER_MARKER,
+            "child_marker": CHILD_MARKER,
+            "output_root": str(OUTPUT_ROOT),
+            "child_terminal_receipt_name": CHILD_TERMINAL_NAME,
+            "parent_exit_receipt_name": PARENT_EXIT_NAME,
+            "protected_watchers": protected_watcher_snapshot(),
+        }
+        or value.get("limits") != LIMITS
+        or value.get("model") != MODEL
+        or value.get("search") != SEARCH
+        or value.get("lease")
+        != {
+            "path": str(LEASE_PATH),
+            "owner": LEASE_OWNER,
+            "purpose": LEASE_PURPOSE,
+            "nonblocking_single_owner": True,
+        }
+        or source
+        != {
+            "mapping_gold_category_question_type_split_evaluator_score_read_by_forward": False,
+            "evaluator_surface_absent_from_forward_dependency_manifest": True,
+            "both_arm_64_prediction_freezes_before_evaluator_resources_open": True,
+            "credential_value_persisted_hashed_or_emitted": False,
+        }
+        or value.get("authorization")
+        != {
+            "single_fresh_shared_forward_paired_dev64": True,
+            "additional_rollout_resume_or_rerun": False,
+            "exact220_launch": False,
+        }
+        or not isinstance(manifest, Mapping)
+        or value.get("dependency_manifest_sha256") != payload_sha256(manifest)
+        or not _sealed(value, "forward_contract_payload_sha256")
+    ):
+        raise RuntimeError("V2.46.57 forward contract identity drifted")
+    for relative, digest in manifest.items():
+        if sha256(_ordinary(root, relative)) != digest:
+            raise RuntimeError(f"V2.46.57 frozen dependency drifted: {relative}")
+    if selected_ids(value) != source_selected_ids(root):
+        raise RuntimeError("V2.46.57 selected ID order drifted")
+    if len(selected_tasks(root, value)) != SELECTED_COUNT:
+        raise RuntimeError("V2.46.57 visible task count drifted")
+    return value
+
+
+__all__ = [name for name in globals() if name.isupper()] + [
+    "payload_sha256",
+    "protected_watcher_snapshot",
+    "read_object",
+    "selected_ids",
+    "selected_tasks",
+    "sha256",
+    "source_selected_ids",
+    "validate_forward_contract",
+]
