@@ -22,7 +22,7 @@ from deepwide_agent import v24809_worldbank_budget_ladder_smoke_contract as cont
 from deepwide_agent.v24312_deadline_reliability import validate_receipt as validate_model  # noqa: E402
 from deepwide_agent.v24316_deadline_search import validate_transport_health  # noqa: E402
 from deepwide_agent.v24804_shared_prefix_budget_ladder import ARMS  # noqa: E402
-from deepwide_agent.v24809_worldbank_budget_ladder_runner_integration import validate_envelope  # noqa: E402
+from deepwide_agent.v24308_child_exit_observability import validate_child_receipt  # noqa: E402
 
 
 def read(path: Path) -> dict[str, Any]:
@@ -81,32 +81,26 @@ def build(*, now: int | None = None) -> dict[str, Any]:
             ).hexdigest():
                 findings.append("prediction_hash_drifted")
     totals: Counter[str] = Counter()
-    decisions: Counter[str] = Counter()
-    prefix_hashes: list[str] = []
     valid_positions = 0
+    terminal_failures: Counter[str] = Counter()
     for position in range(1, contract.SELECTED_COUNT + 1):
         directory = ROOT / contract.TASK_ROOT / f"task_{position:04d}"
         try:
-            envelope = validate_envelope(read(directory / "result.json"))
-            validate_model(
+            child = validate_child_receipt(read(directory / "child_terminal_receipt.json"))
+            model = validate_model(
                 read(directory / "model_slot_receipt.json"),
                 expected_cap=contract.MODEL_SLOT_CAP,
             )
             health = validate_transport_health(read(directory / "transport_health.json"))
-            result = envelope["result"]
-            receipt = result["receipt"]
-            valid_positions += 1
-            prefix_hashes.append(result["shared_prefix"]["prefix_sha256"])
-            decisions[result["adaptive_decision"]["decision"]] += 1
-            totals["prefix_effect_executions"] += receipt["prefix_effect_executions"]
-            totals["repeated_upstream_effects"] += receipt["repeated_upstream_effects"]
-            totals["physical_model_calls"] += receipt["physical_model_calls"]
-            totals["physical_search_queries"] += receipt["physical_search_queries"]
-            totals["physical_fetch_targets"] += receipt["physical_fetch_targets"]
+            terminal_failures[str(child["exception_type"] or "none")] += 1
+            totals["model_slot_acquisitions"] += model["acquisitions"]
+            totals["model_slot_timeouts"] += model["slot_timeouts"]
+            totals["hosted_search_attempts"] += health["hosted_search_attempts"]
             totals["hard_fetch_helper_calls"] += health["hard_fetch_helper_calls"]
             totals["fetch_deadline_rejections"] += health["fetch_deadline_rejections"]
-            totals["full_valid_exact_records"] += receipt["full_lookup"]["valid_exact_record_count"]
-            totals["full_missing_responses"] += receipt["full_lookup"]["missing_response_count"]
+            totals["terminal_receipts"] += 1
+            totals["result_envelopes_written"] += int(child["result_envelope_written"])
+            valid_positions += int(child["result_envelope_written"])
         except (KeyError, OSError, RuntimeError, TypeError, ValueError, json.JSONDecodeError):
             totals["invalid_task_artifacts"] += 1
     mechanism_triggered = any(
@@ -118,20 +112,18 @@ def build(*, now: int | None = None) -> dict[str, Any]:
         "prediction_denominator_exact": len(rows) == contract.SELECTED_COUNT,
         "terminal_arm_predictions_exact": len(rows) * len(ARMS)
         == contract.SELECTED_COUNT * contract.ARM_COUNT,
-        "all_task_artifacts_valid": valid_positions == contract.SELECTED_COUNT
-        and totals["invalid_task_artifacts"] == 0,
-        "one_prefix_per_task": totals["prefix_effect_executions"]
-        == contract.SELECTED_COUNT,
-        "no_repeated_upstream_effect": totals["repeated_upstream_effects"] == 0,
-        "unique_prefix_per_task": len(prefix_hashes) == len(set(prefix_hashes))
-        == contract.SELECTED_COUNT,
-        "physical_effect_conservation": totals["physical_model_calls"]
-        == 2 * contract.SELECTED_COUNT
-        and totals["physical_search_queries"] == 4 * contract.SELECTED_COUNT
-        and totals["physical_fetch_targets"] == 10 * contract.SELECTED_COUNT
-        and totals["physical_fetch_targets"]
-        == totals["hard_fetch_helper_calls"] + totals["fetch_deadline_rejections"],
-        "mechanism_triggered": mechanism_triggered,
+        "all_terminal_receipts_valid": totals["terminal_receipts"]
+        == contract.SELECTED_COUNT and totals["invalid_task_artifacts"] == 0,
+        "zero_valid_task_results_reconciles_summary": valid_positions == 0
+        and summary.get("valid_task_results") == 0
+        and summary.get("projected_failure_tasks") == contract.SELECTED_COUNT,
+        "uniform_validation_failure": terminal_failures
+        == Counter({"ValidationError": contract.SELECTED_COUNT}),
+        "model_effects_completed_without_slot_failure": totals["model_slot_acquisitions"]
+        == 2 * contract.SELECTED_COUNT and totals["model_slot_timeouts"] == 0,
+        "fetch_effects_completed_without_deadline_rejection": totals["hard_fetch_helper_calls"]
+        == 10 * contract.SELECTED_COUNT and totals["fetch_deadline_rejections"] == 0,
+        "all_arm_predictions_projected_to_identical_failure": not mechanism_triggered,
     }
     value = {
         "artifact_version": 1,
@@ -143,14 +135,17 @@ def build(*, now: int | None = None) -> dict[str, Any]:
         "predictions_sha256": contract.sha256(ROOT / contract.PREDICTIONS),
         "run_summary_sha256": contract.sha256(ROOT / contract.RUN_SUMMARY),
         "counts": {key: int(value) for key, value in sorted(totals.items())},
-        "adaptive_decision_counts": dict(sorted(decisions.items())),
+        "adaptive_decision_counts": {},
+        "terminal_exception_counts": dict(sorted(terminal_failures.items())),
         "checks": checks,
         "findings": sorted(name for name, passed in checks.items() if not passed),
         "private_population_gold_provenance_or_evaluator_opened_or_hashed": False,
         "network_model_search_fetch_or_evaluator_called_by_audit": False,
         "protected_watchers": contract.protected_watcher_snapshot(),
         "authorization": {
-            "postfreeze_external_evaluator_protocol": all(checks.values()),
+            "postfreeze_external_evaluator_protocol": False,
+            "append_only_integration_repair_design": all(checks.values()),
+            "same_population_retry_resume_or_rerun": False,
             "evaluator_execution": False,
             "main_calibration_lock_validation_or_confirmatory": False,
             "public_dev64_or_exact220": False,
