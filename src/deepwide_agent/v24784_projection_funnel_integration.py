@@ -79,6 +79,7 @@ def _projection(
     base_validations: int,
     funnel_builds: int,
     funnel_validations: int,
+    private_catalog_present: bool,
 ) -> dict[str, Any]:
     if status not in STATUSES:
         raise ValueError("V2.47.84 terminal status drifted")
@@ -89,13 +90,11 @@ def _projection(
         hashes = copy.deepcopy(dict(validated["prediction_sha256"]))
         scheduler = copy.deepcopy(dict(validated["scheduler_receipt"]))
         semantic = copy.deepcopy(dict(validated["semantic_receipt"]))
-        catalog_present = validated.get("private_semantic_catalog") is not None
     else:
         predictions = {}
         hashes = {}
         scheduler = None
         semantic = None
-        catalog_present = False
     value = {
         "artifact_version": 1,
         "role": ROLE,
@@ -111,7 +110,7 @@ def _projection(
         "projection_funnel_receipt": (
             copy.deepcopy(dict(funnel_receipt)) if funnel_valid else None
         ),
-        "private_catalog_present": catalog_present,
+        "private_catalog_present": private_catalog_present,
         "base_runtime_executed_once": base_executed,
         "base_result_validated_once_before_funnel": base_valid
         and base_validations == 1,
@@ -168,6 +167,7 @@ def run_v24784_task(
             base_validations=base_validations,
             funnel_builds=funnel_builds,
             funnel_validations=funnel_validations,
+            private_catalog_present=False,
         )
     catalog = validated.get("private_semantic_catalog")
     if catalog is None:
@@ -180,6 +180,7 @@ def run_v24784_task(
             base_validations=base_validations,
             funnel_builds=funnel_builds,
             funnel_validations=funnel_validations,
+            private_catalog_present=False,
         )
     try:
         funnel_builds += 1
@@ -197,6 +198,7 @@ def run_v24784_task(
             base_validations=base_validations,
             funnel_builds=funnel_builds,
             funnel_validations=funnel_validations,
+            private_catalog_present=True,
         )
     return _projection(
         visible=visible,
@@ -207,6 +209,7 @@ def run_v24784_task(
         base_validations=base_validations,
         funnel_builds=funnel_builds,
         funnel_validations=funnel_validations,
+        private_catalog_present=True,
     )
 
 
