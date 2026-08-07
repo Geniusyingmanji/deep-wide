@@ -105,9 +105,10 @@ class V24766ZeroEffectPackageBuildAuditTests(unittest.TestCase):
         self.assertIn("future_surface_not_pristine", value["findings"])
 
     def test_expected_test_count_and_source_set_are_frozen(self) -> None:
-        self.assertEqual(sum(count for _path, count, _timeout in audit.TEST_SUITES), 68)
-        self.assertEqual(audit.EXPECTED_TEST_COUNT, 68)
+        self.assertEqual(sum(count for _path, count, _timeout in audit.TEST_SUITES), 74)
+        self.assertEqual(audit.EXPECTED_TEST_COUNT, 74)
         self.assertNotIn(audit.AUDIT, audit.SOURCES)
+        self.assertNotIn(audit.AUTHORITY, audit.SOURCES)
         self.assertFalse(any("private" in path.name and "execution_contract" not in path.name for path in audit.SOURCES))
 
     def test_resealed_launch_or_private_surface_tamper_is_rejected(self) -> None:

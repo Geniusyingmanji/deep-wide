@@ -34,6 +34,9 @@ from deepwide_agent import v24765_zero_effect_execution_contract as contract  # 
 
 READINESS = contract.READINESS
 AUDIT = contract.PACKAGE_BUILD
+AUTHORITY = Path(
+    "results/v24767_zero_effect_package_audit_authority_v1_20260807.json"
+)
 FORWARD_FILES = (
     Path("src/deepwide_agent/v24263_global_model_limiter.py"),
     Path("src/deepwide_agent/v24269_task_union_discovery.py"),
@@ -53,9 +56,11 @@ FORWARD_FILES = (
 )
 PACKAGE_FILES = FORWARD_FILES + (
     Path("scripts/audit_v24766_zero_effect_package_build.py"),
+    Path("scripts/audit_v24767_zero_effect_package_authority.py"),
     Path("tests/test_v24765_zero_effect_package.py"),
     Path("tests/test_v24765_zero_effect_control.py"),
     Path("tests/test_audit_v24766_zero_effect_package_build.py"),
+    Path("tests/test_audit_v24767_zero_effect_package_authority.py"),
 )
 SOURCES = PACKAGE_FILES
 TEST_SUITES = (
@@ -69,8 +74,9 @@ TEST_SUITES = (
     (Path("tests/test_v24765_zero_effect_package.py"), 10, 180),
     (Path("tests/test_v24765_zero_effect_control.py"), 8, 120),
     (Path("tests/test_audit_v24766_zero_effect_package_build.py"), 6, 120),
+    (Path("tests/test_audit_v24767_zero_effect_package_authority.py"), 6, 120),
 )
-EXPECTED_TEST_COUNT = 68
+EXPECTED_TEST_COUNT = 74
 RUNNER_MARKERS = (
     "scripts/run_v24765_zero_effect_external.py",
     "scripts/run_v24765_zero_effect_task.py",
@@ -169,6 +175,8 @@ def _read(relative: Path) -> dict[str, Any]:
 def _parents_valid() -> bool:
     protocol = _read(contract.PROTOCOL)
     readiness = _read(READINESS)
+    authority = _read(AUTHORITY)
+    authority_manifest = authority.get("source_manifest")
     return bool(
         protocol.get("role")
         == "v24763_corrected_zero_effect_external_preregistration"
@@ -193,6 +201,29 @@ def _parents_valid() -> bool:
         is False
         and readiness.get("authorization", {}).get("external_launch") is False
         and _sealed(readiness, "audit_payload_sha256")
+        and authority.get("role")
+        == "v24767_zero_effect_package_audit_authority"
+        and authority.get("audit_valid") is True
+        and authority.get("findings") == []
+        and authority.get("authorization")
+        == {
+            "v24766_package_audit_artifact_generation": True,
+            "preactivation_audit_generation": False,
+            "activation": False,
+            "execution_start": False,
+            "external_launch": False,
+            "private_truth_or_quality_surface_open": False,
+            "paired_dev64": False,
+            "exact220": False,
+            "entropy_or_credit_experiment": False,
+            "leaderboard_or_sota": False,
+        }
+        and isinstance(authority_manifest, Mapping)
+        and dict(authority_manifest)
+        == {str(path): _sha256(path) for path in SOURCES}
+        and authority.get("source_manifest_sha256")
+        == contract.payload_sha256(authority_manifest)
+        and _sealed(authority, "authority_payload_sha256")
     )
 
 
@@ -411,7 +442,10 @@ def build_audit(*, now: int | None = None) -> dict[str, Any]:
     head = _git("rev-parse", "HEAD")
     remote = _git("rev-parse", "target/main")
     clean = _git("status", "--porcelain") == ""
-    tracked = all(_tracked(path) for path in (*SOURCES, contract.PROTOCOL, READINESS))
+    tracked = all(
+        _tracked(path)
+        for path in (*SOURCES, contract.PROTOCOL, READINESS, AUTHORITY)
+    )
     parents = _parents_valid()
     watchers = contract.protected_watcher_snapshot()
     lease = _lease_inactive()
@@ -462,6 +496,7 @@ def build_audit(*, now: int | None = None) -> dict[str, Any]:
         "parents": {
             "protocol_sha256": _sha256(contract.PROTOCOL),
             "readiness_sha256": _sha256(READINESS),
+            "package_audit_authority_sha256": _sha256(AUTHORITY),
             "valid": parents,
         },
         "implementation_contract": implementation,
