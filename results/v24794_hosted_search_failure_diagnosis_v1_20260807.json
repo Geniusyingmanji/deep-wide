@@ -1,0 +1,69 @@
+{
+  "artifact_version": 1,
+  "role": "v24794_hosted_search_failure_diagnosis",
+  "created_at_unix": 1786103450,
+  "parents": {
+    "v24791_exact220_result": {
+      "path": "results/v24791_exact220_result_v1_20260807.json",
+      "sha256": "9e1def11cf3f50c3bc36125a34df1fb352d9510aad689081beb34e1e77fd91c3"
+    },
+    "v24793_neutral_serialized_search_smoke": {
+      "path": "results/v24793_serialized_search_smoke_result_v1_20260807.json",
+      "sha256": "e2625dbade0beead6ed6ede7efd3092dcaa3526707edc7a6bc7ae7f6a37e8599"
+    }
+  },
+  "exact220_observation": {
+    "selected": 220,
+    "zero_usable_page_tasks": 76,
+    "all_search_failed_tasks": 84,
+    "usable_pages": 605,
+    "reference_v24635_zero_usable_page_tasks": 2,
+    "reference_v24635_all_search_failed_tasks": 7,
+    "reference_v24635_usable_pages": 971
+  },
+  "neutral_multi_query_observation": {
+    "outer_concurrency": 4,
+    "shared_hosted_search_slot_cap": 1,
+    "logical_queries": 8,
+    "usable_query_rows": 0,
+    "raw_query_failures": 8,
+    "provider_calls": 7,
+    "provider_tool_calls": 1,
+    "maximum_active_hosted_search_effects": 1
+  },
+  "neutral_single_query_diagnostic": {
+    "schedule": "eight_strictly_serial_single_query_requests",
+    "logical_queries": 8,
+    "http_200": 8,
+    "usable_query_rows": 8,
+    "result_urls": 24,
+    "row_errors": 0,
+    "provider_tool_calls": 14,
+    "transport_failures": 0,
+    "benchmark_content_or_evaluator_read": false,
+    "query_url_page_or_answer_persisted": false,
+    "preregistered_capacity_gate_claimed": false
+  },
+  "diagnosis": {
+    "serialized_transport_alone_sufficient": false,
+    "current_two_logical_queries_per_provider_request_is_unreliable": true,
+    "strict_single_query_provider_requests_were_healthy_in_diagnostic": true,
+    "next_single_change": "split_each_already_admitted_logical_query_into_one_serialized_provider_request",
+    "logical_query_budget_fetch_cap_model_prompt_synthesis_and_evaluator_change": false,
+    "benchmark_specific_routing_or_label_used": false
+  },
+  "source_policy": {
+    "postfreeze_exact220_logs_used_for_offline_diagnosis": true,
+    "mapping_gold_category_question_type_split_evaluator_score_reward_used_for_runtime_routing": false,
+    "neutral_public_software_documentation_queries_only_in_live_diagnostics": true,
+    "same_run_evaluator_feedback_to_forward": false,
+    "cross_version_public_benchmark_feedback_overfitting_remains_a_limitation": true
+  },
+  "authorization": {
+    "singleton_neutral_smoke_protocol_design": true,
+    "singleton_neutral_smoke_live_execution": false,
+    "benchmark_dev64_or_exact220_protocol_or_launch": false,
+    "evaluator": false,
+    "leaderboard_or_sota": false
+  }
+}
