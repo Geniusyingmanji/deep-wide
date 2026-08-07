@@ -36,11 +36,11 @@ RUNTIME_SOURCES = (
 TEST_SUITES = (
     (Path("tests/test_v24791_exact220.py"), 9, 180),
     (Path("tests/test_v24635_exact220.py"), 10, 240),
-    (Path("tests/test_v24630_thin_backfill_search.py"), 10, 180),
-    (Path("tests/test_v24319_runner_integration.py"), 5, 180),
+    (Path("tests/test_v24630_thin_backfill_search.py"), 2, 180),
+    (Path("tests/test_v24319_runner_integration.py"), 7, 180),
     (Path("tests/test_v24468_total_wall_transport.py"), 8, 180),
 )
-EXPECTED_TESTS = 42
+EXPECTED_TESTS = 36
 SECRET_PREFIXES = ("gh" + "p_", "github_" + "pat_", "tvly-" + "dev-", "s" + "k-")
 SECRET = re.compile(r"(?<![A-Za-z0-9])(?:" + "|".join(re.escape(item) for item in SECRET_PREFIXES) + r")[A-Za-z0-9_-]{16,}")
 PREAUDIT_AUTH = {

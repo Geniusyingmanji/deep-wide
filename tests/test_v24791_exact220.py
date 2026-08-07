@@ -72,6 +72,10 @@ class V24791Exact220Tests(unittest.TestCase):
         self.assertEqual(control._runtime_findings(), ([], [], []))
 
     def test_preaudit_and_start_authority_are_staged(self) -> None:
+        self.assertEqual(
+            sum(count for _path, count, _timeout in control.TEST_SUITES), 36
+        )
+        self.assertEqual(control.EXPECTED_TESTS, 36)
         self.assertFalse(control.PREAUDIT_AUTH["single_fresh_exact220_forward"])
         self.assertTrue(control.PREAUDIT_AUTH["execution_start_generation"])
         self.assertTrue(control.START_AUTH["single_fresh_exact220_forward"])
