@@ -1,8 +1,10 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.46
+> 版本：6.47
 >
-> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.46 覆盖。**
+> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.47 覆盖。**
+>
+> **6.47 V2.48.03 完整 220 冻结后 failure-surface 诊断（2026-08-07）：在 V2.48.00 prediction freeze、官方 evaluator 与 post-result audit 全部完成后，只读已冻结工件做内存 join，220 题互斥分为 whole-table success `8`、partial quality `136`、entity-anchor failure `53`、visible-schema mismatch `10`、official evaluator internal error `11`、out-of-range metric `2`。该工件不发布题目、ID、预测、字段名或逐题分数，也没有调用 network/model/search/fetch/evaluator。910 次 Tavily provider attempt 中 0 个 429、0 个 5xx、0 个 slot timeout，故当前主要可控失分面不是 provider transport；13 个 evaluator-invalid 继续 failure-as-zero，禁止选择性重评。53/10 的类别来自 post-freeze evaluator，只能定位外部实验应覆盖的 identity/schema 能力，绝不能反馈成公开 benchmark runtime route。权威工件为 [`results/v24803_v24800_aggregate_failure_surface_v1_20260807.json`](results/v24803_v24800_aggregate_failure_surface_v1_20260807.json)。下一实验仍是 benchmark-external shared-prefix 三臂；先以 visible-only identity/target/source-dependency 与 output-contract 信号建模，再把 entropy/IG 作为 calibrated state/action feature，不能直接赋正 credit。**
 >
 > **6.46 V2.48.00 完整 220 结果与内部前沿（2026-08-07）：唯一 fresh、single-rollout、fixed-denominator forward 已冻结 `220/220` predictions，随后独立 official evaluator 完成 `220/220` join。forward runtime 只接收 `{opaque_id, question}`，mapping/gold/category/question_type/split/evaluator/score/reward 在 prediction freeze 前未读；13 个 evaluator error 固定计零，没有 resume、补题、selective retry 或 revaluation。结果为 whole-table `8/220 = 3.6364%`、Entity `0.700000`、Row F1 `0.228723`、Item F1 `0.406003`、Column F1 `0.492610`、Composite `0.456834`。207 行 evaluator 有效、13 行按零。forward `779.651699s`，32-worker evaluator `208.504695s`，合计约 `16.47min`；system tokens `3,786,108`。这是当前仓库内同一版本同时达到的 whole-table 与 Composite 单轮前沿，但不是 Avg@4、leaderboard 或 SOTA。结果与审计分别为 [`results/v24800_exact220_result_v1_20260807.json`](results/v24800_exact220_result_v1_20260807.json) 和 [`results/v24800_exact220_postresult_audit_v1_20260807.json`](results/v24800_exact220_postresult_audit_v1_20260807.json)。**
 >
