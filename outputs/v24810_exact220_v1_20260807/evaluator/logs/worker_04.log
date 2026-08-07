@@ -1,0 +1,113 @@
+INFO: Pandarallel will run on 8 workers.
+INFO: Pandarallel will use Memory file system to transfer data between the main process and workers.
+{"event": "eval_start", "selected": 7, "resume_committed": 0, "committed_errors": 0, "crash_only_resume": false}
+2026-08-07 16:46:03.905 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 职务 | 姓名 | 出生日期 | 出生地 |
+| --- | --- | --- | --- |
+| 澳门特别行政区行政长 ...
+2026-08-07 16:46:05.614 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "岑浩辉": "岑浩辉",
+  "张永春": "张永春",
+  "戴建业": "戴建业",
+  "黄少泽": "黄少泽",
+  "柯岚": "柯岚",
+  "谭伟文": "谭伟文",
+  "欧阳湘": "欧阳湘",
+  "陈子劲": "陈子劲",
+  "梁文昌": "梁文昌",
+  "何浩瀚": "何浩瀚"
+}
+```
+2026-08-07 16:46:05.614 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 姓名, primary_key_map {'岑浩辉': '岑浩辉', '张永春': '张永春', '戴建业': '戴建业', '黄少泽': '黄少泽', '柯岚': '柯岚', '谭伟文': '谭伟文', '欧阳湘': '欧阳湘', '陈子劲': '陈子劲', '梁文昌': '梁文昌', '何浩瀚': '何浩瀚'}
+2026-08-07 16:46:05.758 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_27_澳门, df_inner shape: (10, 8), answer_df shape: (13, 4), response_df shape: (10, 5)
+2026-08-07 16:46:12.755 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_27_澳门, col 职务, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 1, 1, 1, 0]
+2026-08-07 16:46:12.758 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 1962-08-01 00:00:00, target: 1962-05-01 00:00:00
+2026-08-07 16:46:12.761 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 1.0 msg date near, response: 1966-08-01 00:00:00, target: 1966-09-01 00:00:00
+2026-08-07 16:46:12.763 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 1968-08-01 00:00:00, target: 2058-08-07 00:00:00
+2026-08-07 16:46:12.765 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 1.0 msg date near, response: 1968-09-09 00:00:00, target: 1968-09-01 00:00:00
+2026-08-07 16:46:12.767 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 1971-08-01 00:00:00, target: 2052-08-07 00:00:00
+2026-08-07 16:46:12.769 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 1964-08-01 00:00:00, target: 2066-08-07 00:00:00
+2026-08-07 16:46:12.771 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 1967-08-01 00:00:00, target: 2042-08-07 00:00:00
+2026-08-07 16:46:12.773 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 1964-08-01 00:00:00, target: 2062-08-07 00:00:00
+2026-08-07 16:46:12.775 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 1972-08-01 00:00:00, target: 2059-08-07 00:00:00
+2026-08-07 16:46:12.777 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 1964-08-01 00:00:00, target: 2056-08-07 00:00:00
+2026-08-07 16:46:12.778 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_27_澳门, col 出生日期, metric_func_name date_near, score [0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+2026-08-07 16:46:16.225 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_27_澳门, col 出生地, metric_func_name llm_judge, score [1, 1, 1, 1, 0, 1, 0, 1, 0, 0]
+2026-08-07 16:46:16.232 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_27_澳门, P/R/F1 by unique_columns: 1.0000/0.7692/0.8696
+2026-08-07 16:46:16.232 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_27_澳门, P/R/F1 by row: 0.2000/0.1538/0.1739
+2026-08-07 16:46:16.232 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_27_澳门, P/R/F1 by item: 0.6750/0.5192/0.5870
+2026-08-07 16:46:16.234 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_27_澳门, final table score: 0.0
+{"event": "eval_done", "idx": 1, "instance_id": "deep2wide_result_27_澳门", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.17391304347826086, "f1_by_item": 0.5869565217391304, "column_f1": 0.8695652173913044, "error": null, "elapsed_seconds": 18.23, "running_n": 1}
+2026-08-07 16:46:21.822 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 辖区名称 | 面积平方千米 | 邮政编码 | 行政区划代码 | 政府驻地 | 火车站 | 行政区类别 |
+| --- |  ...
+2026-08-07 16:46:23.212 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "辖区名称": "辖区名称",
+  "面积平方千米": "面积（平方千米）",
+  "邮政编码": "邮政编码",
+  "行政区划代码": "行政区划代码",
+  "政府驻地": "政府驻地",
+  "火车站": "火车站",
+  "行政区类别": "行政区类别"
+}
+```
+2026-08-07 16:46:23.212 | INFO     | eval.evaluation.evaluation:evaluate_single_query:172 - column map: {'辖区名称': '辖区名称', '面积平方千米': '面积（平方千米）', '邮政编码': '邮政编码', '行政区划代码': '行政区划代码', '政府驻地': '政府驻地', '火车站': '火车站', '行政区类别': '行政区类别'}
+2026-08-07 16:46:23.213 | INFO     | eval.evaluation.evaluation:evaluate_single_query:173 - befor mapping: Index(['辖区名称', '面积平方千米', '邮政编码', '行政区划代码', '政府驻地', '火车站', '行政区类别'], dtype='object')
+2026-08-07 16:46:23.213 | INFO     | eval.evaluation.evaluation:evaluate_single_query:175 - after mapping: Index(['辖区名称', '面积（平方千米）', '邮政编码', '行政区划代码', '政府驻地', '火车站', '行政区类别'], dtype='object')
+2026-08-07 16:46:27.556 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "222401": "222401",
+  "222402": "222402",
+  "222403": "222403",
+  "222404": "222404",
+  "222405": "222405",
+  "222406": "222406",
+  "222424": "222424",
+  "222426": "222426"
+}
+```
+2026-08-07 16:46:27.557 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 行政区划代码, primary_key_map {'222401': '222401', '222402': '222402', '222403': '222403', '222404': '222404', '222405': '222405', '222406': '222406', '222424': '222424', '222426': '222426'}
+2026-08-07 16:46:27.563 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_28_延边朝鲜族自治州, df_inner shape: (8, 14), answer_df shape: (8, 7), response_df shape: (8, 8)
+2026-08-07 16:46:30.688 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_28_延边朝鲜族自治州, col 辖区名称, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 1, 1]
+2026-08-07 16:46:30.688 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1748.0, target: 1731.0
+2026-08-07 16:46:30.688 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1142.0, target: 1142.0
+2026-08-07 16:46:30.688 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 11957.0, target: 11963.0
+2026-08-07 16:46:30.688 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 5145.0, target: 5145.0
+2026-08-07 16:46:30.688 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 2208.0, target: 2193.0
+2026-08-07 16:46:30.688 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 5069.0, target: 5069.0
+2026-08-07 16:46:30.688 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 9016.0, target: 9016.0
+2026-08-07 16:46:30.688 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 7438.0, target: 7444.0
+2026-08-07 16:46:30.689 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_28_延边朝鲜族自治州, col 面积（平方千米）, metric_func_name number_near, score [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-07 16:46:30.689 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 133000, target: 133000
+2026-08-07 16:46:30.689 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 133100, target: 133100
+2026-08-07 16:46:30.689 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 133700, target: 133700
+2026-08-07 16:46:30.689 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 133300, target: 133300
+2026-08-07 16:46:30.689 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 133400, target: 133400
+2026-08-07 16:46:30.689 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 133500, target: 133500
+2026-08-07 16:46:30.689 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 133200, target: 133200
+2026-08-07 16:46:30.689 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 133600, target: 133600
+2026-08-07 16:46:30.690 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_28_延边朝鲜族自治州, col 邮政编码, metric_func_name exact_match, score [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-07 16:46:33.226 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_28_延边朝鲜族自治州, col 政府驻地, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 1, 1]
+2026-08-07 16:46:36.650 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_28_延边朝鲜族自治州, col 火车站, metric_func_name llm_judge, score [0, 1, 0, 1, 1, 1, 1, 0]
+2026-08-07 16:46:36.650 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 县级市, target: 县级市
+2026-08-07 16:46:36.650 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 县级市, target: 县级市
+2026-08-07 16:46:36.650 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 县级市, target: 县级市
+2026-08-07 16:46:36.650 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 县级市, target: 县级市
+2026-08-07 16:46:36.650 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 县级市, target: 县级市
+2026-08-07 16:46:36.651 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 县级市, target: 县级市
+2026-08-07 16:46:36.651 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 县, target: 县
+2026-08-07 16:46:36.651 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 县, target: 县
+2026-08-07 16:46:36.651 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_28_延边朝鲜族自治州, col 行政区类别, metric_func_name exact_match, score [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-07 16:46:36.656 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_28_延边朝鲜族自治州, P/R/F1 by unique_columns: 1.0000/1.0000/1.0000
+2026-08-07 16:46:36.656 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_28_延边朝鲜族自治州, P/R/F1 by row: 0.6250/0.6250/0.6250
+2026-08-07 16:46:36.656 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_28_延边朝鲜族自治州, P/R/F1 by item: 0.9464/0.9464/0.9464
+2026-08-07 16:46:36.658 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_28_延边朝鲜族自治州, final table score: 0.0
+{"event": "eval_done", "idx": 2, "instance_id": "deep2wide_result_28_延边朝鲜族自治州", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.625, "f1_by_item": 0.9464285714285714, "column_f1": 1.0, "error": null, "elapsed_seconds": 20.399, "running_n": 2}
+{"event": "eval_done", "idx": 3, "instance_id": "deep2wide_result_29_浙江省东阳市", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 1.061, "running_n": 3}
+{"event": "eval_done", "idx": 4, "instance_id": "deep2wide_result_30_犹格索托斯的庭院", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 0.987, "running_n": 4}
+{"event": "eval_done", "idx": 5, "instance_id": "deep2wide_result_31_四川省九大高原湖泊", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.845, "running_n": 5}
+{"event": "eval_done", "idx": 6, "instance_id": "deep2wide_result_32_海南省", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.873, "running_n": 6}
+{"event": "eval_done", "idx": 7, "instance_id": "deep2wide_result_33_宁德市", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.424, "running_n": 7}
+SUMMARY {"n": 7, "valid_n": 7, "errors": 0, "complete": true, "judge_calls_current_process": 15, "score": 0.0, "entity_acc": 0.2857142857142857, "precision_by_row": 0.11785714285714285, "recall_by_row": 0.11126373626373627, "f1_by_row": 0.11413043478260869, "precision_by_item": 0.2316326530612245, "recall_by_item": 0.20937990580847726, "f1_by_item": 0.21905501330967167, "column_precision": 0.2857142857142857, "column_recall": 0.25274725274725274, "column_f1": 0.2670807453416149}

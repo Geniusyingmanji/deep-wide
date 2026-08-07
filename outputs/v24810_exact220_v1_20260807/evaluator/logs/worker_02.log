@@ -1,0 +1,172 @@
+INFO: Pandarallel will run on 8 workers.
+INFO: Pandarallel will use Memory file system to transfer data between the main process and workers.
+{"event": "eval_start", "selected": 7, "resume_committed": 0, "committed_errors": 0, "crash_only_resume": false}
+2026-08-07 16:45:59.650 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 时间 | 风格 | 时期 | 艺术类型 | 绘画媒材 | 收藏类型和艺术品名称 |
+| --- | --- | --- | ...
+2026-08-07 16:46:01.800 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "时间": "时间",
+  "风格": "风格",
+  "时期": "时期",
+  "艺术类型": "艺术类型",
+  "绘画媒材": "绘画媒材"
+}
+```
+2026-08-07 16:46:01.801 | INFO     | eval.evaluation.evaluation:evaluate_single_query:172 - column map: {'时间': '时间', '风格': '风格', '时期': '时期', '艺术类型': '艺术类型', '绘画媒材': '绘画媒材'}
+2026-08-07 16:46:01.801 | INFO     | eval.evaluation.evaluation:evaluate_single_query:173 - befor mapping: Index(['时间', '风格', '时期', '艺术类型', '绘画媒材', '收藏类型和艺术品名称'], dtype='object')
+2026-08-07 16:46:01.802 | INFO     | eval.evaluation.evaluation:evaluate_single_query:175 - after mapping: Index(['时间', '风格', '时期', '艺术类型', '绘画媒材', '收藏类型和艺术品名称'], dtype='object')
+2026-08-07 16:46:01.802 | INFO     | eval.evaluation.evaluation:evaluate_single_query:179 - instance_id: deep2wide_result_8_保罗高更, msg: required_columns ['时间', '风格', '时期', '艺术类型', '绘画媒材', '收藏类型', '艺术品名称'] != response_df Index(['时间', '风格', '时期', '艺术类型', '绘画媒材', '收藏类型和艺术品名称'], dtype='object')
+{"event": "eval_done", "idx": 1, "instance_id": "deep2wide_result_8_保罗高更", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 3.871, "running_n": 1}
+{"event": "eval_done", "idx": 2, "instance_id": "deep2wide_result_9_凌洁", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 3.36, "running_n": 2}
+2026-08-07 16:46:07.932 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 俱乐部名称 | 执教时间 | 俱乐部主场馆 |
+| --- | --- | --- |
+| 格雷米奥（Grêmio） |  ...
+2026-08-07 16:46:10.281 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "格雷米奥（Grêmio）": "格雷米奥足球俱乐部",
+  "科林蒂安（Corinthians）": "科林蒂安足球俱乐部",
+  "米内罗竞技（Atlético Mineiro）": "米内罗竞技足球俱乐部",
+  "帕尔梅拉斯（Palmeiras）": "帕尔梅拉斯足球俱乐部",
+  "艾因（Al Ain）": "阿联酋阿尔艾因足球俱乐部",
+  "巴西国际（Internacional）": "巴西国际足球俱乐部",
+  "阿布扎比统一（Al Wahda）": "阿联酋瓦赫达足球俱乐部"
+}
+```
+2026-08-07 16:46:10.281 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 俱乐部名称, primary_key_map {'格雷米奥（Grêmio）': '格雷米奥足球俱乐部', '科林蒂安（Corinthians）': '科林蒂安足球俱乐部', '米内罗竞技（Atlético Mineiro）': '米内罗竞技足球俱乐部', '帕尔梅拉斯（Palmeiras）': '帕尔梅拉斯足球俱乐部', '艾因（Al Ain）': '阿联酋阿尔艾因足球俱乐部', '巴西国际（Internacional）': '巴西国际足球俱乐部', '阿布扎比统一（Al Wahda）': '阿联酋瓦赫达足球俱乐部'}
+2026-08-07 16:46:12.722 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_10_蒂特, df_inner shape: (7, 6), answer_df shape: (7, 3), response_df shape: (8, 4)
+2026-08-07 16:46:12.810 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: -, 2001–2003, target: 23-08-07
+2026-08-07 16:46:12.911 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 1.0 msg date near, response: -, 2004–2005, target: 2004年5月—2005年2月
+2026-08-07 16:46:12.927 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 2005-08-01, target: 2005年3月—7月
+2026-08-07 16:46:12.943 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 2006-08-01, target: 2006年5月—11月
+2026-08-07 16:46:12.952 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 2007-08-01, target: 2008年上半年
+2026-08-07 16:46:13.051 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 1.0 msg date near, response: -, 2008–2009, target: 2008年6月—2009年10月
+2026-08-07 16:46:13.053 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 2010-08-01 00:00:00, target: 2010-10-09 00:00:00
+2026-08-07 16:46:13.055 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_10_蒂特, col 执教时间, metric_func_name date_near, score [0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0]
+2026-08-07 16:46:16.817 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_10_蒂特, col 俱乐部主场馆, metric_func_name llm_judge, score [1, 0, 1, 0, 0, 1, 1]
+2026-08-07 16:46:16.822 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_10_蒂特, P/R/F1 by unique_columns: 0.8750/1.0000/0.9333
+2026-08-07 16:46:16.822 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_10_蒂特, P/R/F1 by row: 0.1250/0.1429/0.1333
+2026-08-07 16:46:16.823 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_10_蒂特, P/R/F1 by item: 0.5417/0.6190/0.5778
+2026-08-07 16:46:16.824 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_10_蒂特, final table score: 0.0
+{"event": "eval_done", "idx": 3, "instance_id": "deep2wide_result_10_蒂特", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.13333333333333333, "f1_by_item": 0.5777777777777778, "column_f1": 0.9333333333333333, "error": null, "elapsed_seconds": 11.628, "running_n": 3}
+{"event": "eval_done", "idx": 4, "instance_id": "deep2wide_result_11_印毅俊", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 3.303, "running_n": 4}
+2026-08-07 16:46:21.136 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 时间 | 作品 | 领衔主演 | 集数 |
+| --- | --- | --- | --- |
+| -, 1988 | 死 ...
+2026-08-07 16:46:28.132 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "康熙微服私访记2": "《康熙微服私访记第二部》",
+  "康熙微服私访记3": "《康熙微服私访记第三部》",
+  "康熙微服私访记4": "《康熙微服私访记第四部》",
+  "我这一辈子": "《我这一辈子》",
+  "铁齿铜牙纪晓岚3": "《铁齿铜牙纪晓岚第三部》",
+  "少年嘉庆": "《少年嘉庆》",
+  "济公新传": "《济公新传》",
+  "龙非龙凤非凤": "《龙非龙凤非凤》",
+  "赶走你的忧郁": "《赶走你的忧郁》",
+  "不如跳舞": "《不如跳舞》",
+  "草根王": "《草根王》",
+  "养父": "《养父》",
+  "中国1945之重庆风云": "《中国1945之重庆风云》",
+  "原乡": "《原乡》",
+  "半路父子": "《半路父子》",
+  "爱的追踪": "《爱的追踪》"
+}
+```
+2026-08-07 16:46:28.133 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 作品, primary_key_map {'康熙微服私访记2': '《康熙微服私访记第二部》', '康熙微服私访记3': '《康熙微服私访记第三部》', '康熙微服私访记4': '《康熙微服私访记第四部》', '我这一辈子': '《我这一辈子》', '铁齿铜牙纪晓岚3': '《铁齿铜牙纪晓岚第三部》', '少年嘉庆': '《少年嘉庆》', '济公新传': '《济公新传》', '龙非龙凤非凤': '《龙非龙凤非凤》', '赶走你的忧郁': '《赶走你的忧郁》', '不如跳舞': '《不如跳舞》', '草根王': '《草根王》', '养父': '《养父》', '中国1945之重庆风云': '《中国1945之重庆风云》', '原乡': '《原乡》', '半路父子': '《半路父子》', '爱的追踪': '《爱的追踪》'}
+2026-08-07 16:46:28.194 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_13_张国立, df_inner shape: (16, 8), answer_df shape: (25, 4), response_df shape: (23, 5)
+2026-08-07 16:46:28.197 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 2016-08-01 00:00:00, target: 2007-10-08 00:00:00
+2026-08-07 16:46:28.199 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 2014-08-01 00:00:00, target: 2007-12-08 00:00:00
+2026-08-07 16:46:28.202 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 2014-08-01 00:00:00, target: 2007-12-08 00:00:00
+2026-08-07 16:46:28.204 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 2011-08-01 00:00:00, target: 2007-08-15 00:00:00
+2026-08-07 16:46:28.206 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 2011-08-01 00:00:00, target: 2007-08-15 00:00:00
+2026-08-07 16:46:28.209 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 2010-08-01 00:00:00, target: 2007-08-16 00:00:00
+2026-08-07 16:46:28.211 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 2010-08-01 00:00:00, target: 2007-08-16 00:00:00
+2026-08-07 16:46:28.213 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 2008-08-01 00:00:00, target: 2007-08-18 00:00:00
+2026-08-07 16:46:28.215 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 2006-08-01 00:00:00, target: 2007-08-20 00:00:00
+2026-08-07 16:46:28.217 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 2006-08-01 00:00:00, target: 2007-08-20 00:00:00
+2026-08-07 16:46:28.220 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 2005-08-01 00:00:00, target: 2007-08-21 00:00:00
+2026-08-07 16:46:28.222 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 2004-08-01 00:00:00, target: 2007-08-22 00:00:00
+2026-08-07 16:46:28.224 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 2002-08-01 00:00:00, target: 2007-08-24 00:00:00
+2026-08-07 16:46:28.227 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 2002-08-01 00:00:00, target: 2007-08-24 00:00:00
+2026-08-07 16:46:28.229 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 2000-08-01 00:00:00, target: 2007-08-26 00:00:00
+2026-08-07 16:46:28.231 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 1999-08-01 00:00:00, target: 2007-08-27 00:00:00
+2026-08-07 16:46:28.232 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_13_张国立, col 时间, metric_func_name date_near, score [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+2026-08-07 16:46:32.506 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_13_张国立, col 领衔主演, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+2026-08-07 16:46:32.506 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 36.0, target: 36.0
+2026-08-07 16:46:32.506 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 36.0, target: 36.0
+2026-08-07 16:46:32.506 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 31.0, target: 31.0
+2026-08-07 16:46:32.506 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 40.0, target: 40.0
+2026-08-07 16:46:32.506 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 30.0, target: 30.0
+2026-08-07 16:46:32.506 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 30.0, target: 30.0
+2026-08-07 16:46:32.507 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 30.0, target: 30.0
+2026-08-07 16:46:32.507 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 25.0, target: 25.0
+2026-08-07 16:46:32.507 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 30.0, target: 30.0
+2026-08-07 16:46:32.507 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 30.0, target: 30.0
+2026-08-07 16:46:32.507 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 32.0, target: 32.0
+2026-08-07 16:46:32.507 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 40.0, target: 40.0
+2026-08-07 16:46:32.507 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 28.0, target: 28.0
+2026-08-07 16:46:32.507 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 22.0, target: 22.0
+2026-08-07 16:46:32.507 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 26.0, target: 26.0
+2026-08-07 16:46:32.507 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 30.0, target: 30.0
+2026-08-07 16:46:32.508 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_13_张国立, col 集数, metric_func_name number_near, score [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-07 16:46:32.512 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_13_张国立, P/R/F1 by unique_columns: 0.6957/0.6400/0.6667
+2026-08-07 16:46:32.512 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_13_张国立, P/R/F1 by row: 0.0000/0.0000/0.0000
+2026-08-07 16:46:32.513 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_13_张国立, P/R/F1 by item: 0.5109/0.4700/0.4896
+2026-08-07 16:46:32.514 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_13_张国立, final table score: 0.0
+{"event": "eval_done", "idx": 5, "instance_id": "deep2wide_result_13_张国立", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0, "f1_by_item": 0.4895833333333333, "column_f1": 0.6666666666666666, "error": null, "elapsed_seconds": 12.356, "running_n": 5}
+2026-08-07 16:46:36.494 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 电视剧名称 | 开播时间 | 角色名 |
+| --- | --- | --- |
+| 匆匆那年：好久不见 | Dec 28 ...
+2026-08-07 16:46:42.076 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "一起同过窗第一季": "2016",
+  "我女朋友的男朋友": "2017",
+  "我女朋友的男朋友第二季": "2017",
+  "囧先生": "2017",
+  "那片星空那片海第二季": "2017",
+  "开封奇谈": "2017",
+  "一起同过窗第二季": "2017",
+  "皓镧传": "2019",
+  "玛丽学园": "2019",
+  "我的单板女孩第一季": "2019",
+  "我的单板女孩第二季": "2019",
+  "且听凤鸣": "2020",
+  "我的小确幸": "2021",
+  "陪你到世界终结": "2021",
+  "重紫": "2023",
+  "仙剑四": "2024",
+  "春花焰": "2024"
+}
+```
+2026-08-07 16:46:42.076 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 电视剧名称, primary_key_map {'一起同过窗第一季': '2016', '我女朋友的男朋友': '2017', '我女朋友的男朋友第二季': '2017', '囧先生': '2017', '那片星空那片海第二季': '2017', '开封奇谈': '2017', '一起同过窗第二季': '2017', '皓镧传': '2019', '玛丽学园': '2019', '我的单板女孩第一季': '2019', '我的单板女孩第二季': '2019', '且听凤鸣': '2020', '我的小确幸': '2021', '陪你到世界终结': '2021', '重紫': '2023', '仙剑四': '2024', '春花焰': '2024'}
+2026-08-07 16:46:42.161 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_14_李川, df_inner shape: (17, 6), answer_df shape: (8, 3), response_df shape: (20, 4)
+2026-08-07 16:46:42.169 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 2016-07-15, target: 《一起同过窗》
+2026-08-07 16:46:42.177 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 2017-05-25, target: 《那片星空那片海第二季》
+2026-08-07 16:46:42.186 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 2017-08-07, target: 《那片星空那片海第二季》
+2026-08-07 16:46:42.194 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 2017-09-29, target: 《那片星空那片海第二季》
+2026-08-07 16:46:42.201 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 2017-10-02, target: 《那片星空那片海第二季》
+2026-08-07 16:46:42.208 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 2017-10-30, target: 《那片星空那片海第二季》
+2026-08-07 16:46:42.215 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 2017-11-30, target: 《那片星空那片海第二季》
+2026-08-07 16:46:42.222 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 2019-01-19, target: 《皓镧传》
+2026-08-07 16:46:42.229 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 2019-03-21, target: 《皓镧传》
+2026-08-07 16:46:42.235 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 2019-07-31, target: 《皓镧传》
+2026-08-07 16:46:42.242 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 2019-08-15, target: 《皓镧传》
+2026-08-07 16:46:42.248 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 2020-08-10, target: 《蓬莱间》
+2026-08-07 16:46:42.255 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 2021-01-13, target: 《我的小确幸》
+2026-08-07 16:46:42.262 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 2021-06-21, target: 《我的小确幸》
+2026-08-07 16:46:42.269 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 2023-02-15, target: 《你给我的喜欢》
+2026-08-07 16:46:42.276 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 2024-01-17, target: 《少爷和我》
+2026-08-07 16:46:42.283 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 2024-10-14, target: 《少爷和我》
+2026-08-07 16:46:42.284 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_14_李川, col 开播时间, metric_func_name date_near, score [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+2026-08-07 16:46:44.716 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_14_李川, col 角色名, metric_func_name llm_judge, score [1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0]
+2026-08-07 16:46:44.720 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_14_李川, P/R/F1 by unique_columns: 0.8500/2.1250/1.2143
+2026-08-07 16:46:44.720 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_14_李川, P/R/F1 by row: 0.0000/0.0000/0.0000
+2026-08-07 16:46:44.720 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_14_李川, P/R/F1 by item: 0.3500/0.8750/0.5000
+2026-08-07 16:46:44.721 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_14_李川, final table score: 0.0
+{"event": "eval_done", "idx": 6, "instance_id": "deep2wide_result_14_李川", "score": null, "entity_acc": null, "f1_by_row": null, "f1_by_item": null, "column_f1": null, "error": "RuntimeError: official evaluator returned out-of-range metrics: {'column_recall': np.float64(2.125), 'column_f1': np.float64(1.2142857142857142)}", "elapsed_seconds": 12.191, "running_n": 6}
+{"event": "eval_done", "idx": 7, "instance_id": "deep2wide_result_15_肖央", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.942, "running_n": 7}
+SUMMARY {"n": 7, "valid_n": 6, "errors": 1, "complete": false, "judge_calls_current_process": 14, "score": 0.0, "entity_acc": 0.5, "precision_by_row": 0.020833333333333332, "recall_by_row": 0.023809523809523808, "f1_by_row": 0.022222222222222223, "precision_by_item": 0.1754227053140097, "recall_by_item": 0.1815079365079365, "f1_by_item": 0.17789351851851853, "column_precision": 0.2617753623188406, "column_recall": 0.2733333333333334, "column_f1": 0.26666666666666666}

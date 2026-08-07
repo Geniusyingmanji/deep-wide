@@ -1,0 +1,236 @@
+INFO: Pandarallel will run on 8 workers.
+INFO: Pandarallel will use Memory file system to transfer data between the main process and workers.
+{"event": "eval_start", "selected": 7, "resume_committed": 0, "committed_errors": 0, "crash_only_resume": false}
+{"event": "eval_done", "idx": 1, "instance_id": "deep2wide_result_60_东汉", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 3.19, "running_n": 1}
+{"event": "eval_done", "idx": 2, "instance_id": "deep2wide_result_62_诺贝尔奖", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 15.781, "running_n": 2}
+2026-08-07 16:46:21.460 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 姓名 | 公司 | 职务 |
+| --- | --- | --- |
+| 董明珠 | 珠海格力电器股份有限公司 | 董事长 ...
+2026-08-07 16:46:24.023 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "董明珠": "董明珠",
+  "雷军": "雷军",
+  "张玉良": "张玉良"
+}
+```
+2026-08-07 16:46:24.024 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 姓名, primary_key_map {'董明珠': '董明珠', '雷军': '雷军', '张玉良': '张玉良'}
+2026-08-07 16:46:24.030 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_65_中国经济年度人物奖, df_inner shape: (3, 6), answer_df shape: (10, 3), response_df shape: (10, 4)
+2026-08-07 16:46:27.918 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_65_中国经济年度人物奖, col 公司, metric_func_name llm_judge, score [1, 1, 1]
+2026-08-07 16:46:30.320 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_65_中国经济年度人物奖, col 职务, metric_func_name llm_judge, score [1, 1, 1]
+2026-08-07 16:46:30.324 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_65_中国经济年度人物奖, P/R/F1 by unique_columns: 0.3000/0.3000/0.3000
+2026-08-07 16:46:30.324 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_65_中国经济年度人物奖, P/R/F1 by row: 0.3000/0.3000/0.3000
+2026-08-07 16:46:30.324 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_65_中国经济年度人物奖, P/R/F1 by item: 0.3000/0.3000/0.3000
+2026-08-07 16:46:30.326 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_65_中国经济年度人物奖, final table score: 0.0
+{"event": "eval_done", "idx": 3, "instance_id": "deep2wide_result_65_中国经济年度人物奖", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.3, "f1_by_item": 0.3, "column_f1": 0.3, "error": null, "elapsed_seconds": 13.107, "running_n": 3}
+{"event": "eval_done", "idx": 4, "instance_id": "deep2wide_result_71_香港中文大学", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 1.029, "running_n": 4}
+2026-08-07 16:46:34.172 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 年度 | 排名 | 姓名（中文） | 姓名（英文） | 财富值（亿美元） | 财富来源 |
+| --- | --- | - ...
+2026-08-07 16:46:37.816 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "2019": "2019",
+  "2020": "2020",
+  "2021": "2021",
+  "2022": "2022",
+  "2023": "2023",
+  "2024": "2024"
+}
+```
+2026-08-07 16:46:37.816 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 年度, primary_key_map {'2019': '2019', '2020': '2020', '2021': '2021', '2022': '2022', '2023': '2023', '2024': '2024'}
+2026-08-07 16:46:41.015 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "1": "1",
+  "2": "2",
+  "3": "3",
+  "4": "4",
+  "5": "5",
+  "6": "6",
+  "7": "7",
+  "8": "8",
+  "9": "9",
+  "10": "10"
+}
+```
+2026-08-07 16:46:41.016 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 排名, primary_key_map {'1': '1', '2': '2', '3': '3', '4': '4', '5': '5', '6': '6', '7': '7', '8': '8', '9': '9', '10': '10'}
+2026-08-07 16:46:41.022 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - wide2deep_ws_zh_004, df_inner shape: (60, 12), answer_df shape: (60, 6), response_df shape: (60, 8)
+2026-08-07 16:46:45.948 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_004, col 姓名（中文）, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+2026-08-07 16:46:51.322 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_004, col 姓名（英文）, metric_func_name llm_judge, score [1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+2026-08-07 16:46:51.323 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1310.0, target: 1310.0
+2026-08-07 16:46:51.323 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 960.0, target: 965.0
+2026-08-07 16:46:51.323 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 825.0, target: 825.0
+2026-08-07 16:46:51.323 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 760.0, target: 760.0
+2026-08-07 16:46:51.323 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 640.0, target: 640.0
+2026-08-07 16:46:51.323 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 627.0, target: 627.0
+2026-08-07 16:46:51.323 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 625.0, target: 625.0
+2026-08-07 16:46:51.323 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 623.0, target: 623.0
+2026-08-07 16:46:51.323 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 555.0, target: 555.0
+2026-08-07 16:46:51.323 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 508.0, target: 508.0
+2026-08-07 16:46:51.323 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1130.0, target: 1130.0
+2026-08-07 16:46:51.323 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 980.0, target: 980.0
+2026-08-07 16:46:51.323 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 760.0, target: 760.0
+2026-08-07 16:46:51.323 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 675.0, target: 675.0
+2026-08-07 16:46:51.323 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 590.0, target: 590.0
+2026-08-07 16:46:51.323 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 551.0, target: 551.0
+2026-08-07 16:46:51.323 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 547.0, target: 547.0
+2026-08-07 16:46:51.323 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 546.0, target: 546.0
+2026-08-07 16:46:51.324 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 544.0, target: 544.0
+2026-08-07 16:46:51.324 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 541.0, target: 541.0
+2026-08-07 16:46:51.324 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1770.0, target: 1770.0
+2026-08-07 16:46:51.324 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1510.0, target: 1510.0
+2026-08-07 16:46:51.324 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1500.0, target: 1500.0
+2026-08-07 16:46:51.324 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1240.0, target: 1240.0
+2026-08-07 16:46:51.324 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 970.0, target: 970.0
+2026-08-07 16:46:51.324 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 960.0, target: 960.0
+2026-08-07 16:46:51.324 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 930.0, target: 930.0
+2026-08-07 16:46:51.324 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 915.0, target: 915.0
+2026-08-07 16:46:51.324 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 890.0, target: 890.0
+2026-08-07 16:46:51.324 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 845.0, target: 845.0
+2026-08-07 16:46:51.324 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 2190.0, target: 2190.0
+2026-08-07 16:46:51.324 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1710.0, target: 1710.0
+2026-08-07 16:46:51.324 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1580.0, target: 1580.0
+2026-08-07 16:46:51.324 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1290.0, target: 1290.0
+2026-08-07 16:46:51.324 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1180.0, target: 1180.0
+2026-08-07 16:46:51.324 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1110.0, target: 1110.0
+2026-08-07 16:46:51.324 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1070.0, target: 1070.0
+2026-08-07 16:46:51.324 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1060.0, target: 1060.0
+2026-08-07 16:46:51.324 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 914.0, target: 914.0
+2026-08-07 16:46:51.324 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 907.0, target: 907.0
+2026-08-07 16:46:51.324 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 2110.0, target: 2110.0
+2026-08-07 16:46:51.324 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1800.0, target: 1800.0
+2026-08-07 16:46:51.324 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1140.0, target: 1140.0
+2026-08-07 16:46:51.324 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1070.0, target: 1070.0
+2026-08-07 16:46:51.324 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1060.0, target: 1060.0
+2026-08-07 16:46:51.325 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1040.0, target: 1040.0
+2026-08-07 16:46:51.325 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 945.0, target: 945.0
+2026-08-07 16:46:51.325 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 930.0, target: 930.0
+2026-08-07 16:46:51.325 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 834.0, target: 834.0
+2026-08-07 16:46:51.325 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 807.0, target: 807.0
+2026-08-07 16:46:51.325 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 2330.0, target: 2330.0
+2026-08-07 16:46:51.325 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1950.0, target: 1950.0
+2026-08-07 16:46:51.325 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1940.0, target: 1940.0
+2026-08-07 16:46:51.325 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1770.0, target: 1770.0
+2026-08-07 16:46:51.325 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1410.0, target: 1410.0
+2026-08-07 16:46:51.325 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1330.0, target: 1330.0
+2026-08-07 16:46:51.325 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1280.0, target: 1280.0
+2026-08-07 16:46:51.325 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1210.0, target: 1210.0
+2026-08-07 16:46:51.325 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1160.0, target: 1160.0
+2026-08-07 16:46:51.325 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1140.0, target: 1140.0
+2026-08-07 16:46:51.326 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_004, col 财富值（亿美元）, metric_func_name number_near, score [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-07 16:46:57.769 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_004, col 财富来源, metric_func_name llm_judge, score [1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+2026-08-07 16:46:57.776 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - wide2deep_ws_zh_004, P/R/F1 by unique_columns: 1.0000/1.0000/1.0000
+2026-08-07 16:46:57.776 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - wide2deep_ws_zh_004, P/R/F1 by row: 0.9500/0.9500/0.9500
+2026-08-07 16:46:57.776 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - wide2deep_ws_zh_004, P/R/F1 by item: 0.9889/0.9889/0.9889
+2026-08-07 16:46:57.781 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - wide2deep_ws_zh_004, final table score: 0.0
+{"event": "eval_done", "idx": 5, "instance_id": "wide2deep_ws_zh_004", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.9500000000000001, "f1_by_item": 0.9888888888888889, "column_f1": 1.0, "error": null, "elapsed_seconds": 26.393, "running_n": 5}
+2026-08-07 16:47:03.253 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 学校名称 | 院士姓名 | 出生年份 | 获得奖项 |
+| --- | --- | --- | --- |
+| 北京大学  ...
+2026-08-07 16:47:07.105 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "姜伯驹": "姜伯驹",
+  "张恭庆": "张恭庆",
+  "文兰": "文兰",
+  "王诗宬": "王诗宬",
+  "田刚": "田刚",
+  "鄂维南": "鄂维南",
+  "张平文": "张平文",
+  "李大潜": "李大潜",
+  "陈恕行": "陈恕行",
+  "洪家兴": "洪家兴",
+  "彭实戈": "彭实戈",
+  "王小云": "王小云"
+}
+```
+2026-08-07 16:47:07.105 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 院士姓名, primary_key_map {'姜伯驹': '姜伯驹', '张恭庆': '张恭庆', '文兰': '文兰', '王诗宬': '王诗宬', '田刚': '田刚', '鄂维南': '鄂维南', '张平文': '张平文', '李大潜': '李大潜', '陈恕行': '陈恕行', '洪家兴': '洪家兴', '彭实戈': '彭实戈', '王小云': '王小云'}
+2026-08-07 16:47:07.110 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - wide2deep_ws_zh_056, df_inner shape: (12, 8), answer_df shape: (16, 4), response_df shape: (13, 5)
+2026-08-07 16:47:10.371 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_056, col 学校名称, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+2026-08-07 16:47:10.371 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 0.0%, response: 1937.0, target: 1937.0
+2026-08-07 16:47:10.371 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 0.0%, response: 1936.0, target: 1936.0
+2026-08-07 16:47:10.371 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 0.0%, response: 1946.0, target: 1946.0
+2026-08-07 16:47:10.371 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 0.0%, response: 1958.0, target: 1958.0
+2026-08-07 16:47:10.371 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 1947.0, target: 1953.0
+2026-08-07 16:47:10.371 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 0.0%, response: 1963.0, target: 1963.0
+2026-08-07 16:47:10.371 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 0.0%, response: 1966.0, target: 1966.0
+2026-08-07 16:47:10.372 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 0.0%, response: 1937.0, target: 1937.0
+2026-08-07 16:47:10.372 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 0.0%, response: 1942.0, target: 1942.0
+2026-08-07 16:47:10.372 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 0.0%, response: 1941.0, target: 1941.0
+2026-08-07 16:47:10.372 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 0.0%, response: 1947.0, target: 1947.0
+2026-08-07 16:47:10.372 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 0.0%, response: 1966.0, target: 1966.0
+2026-08-07 16:47:10.372 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_056, col 出生年份, metric_func_name number_near, score [1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-07 16:47:14.614 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_056, col 获得奖项, metric_func_name llm_judge, score [1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0]
+2026-08-07 16:47:14.618 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - wide2deep_ws_zh_056, P/R/F1 by unique_columns: 0.9231/0.7500/0.8276
+2026-08-07 16:47:14.618 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - wide2deep_ws_zh_056, P/R/F1 by row: 0.3077/0.2500/0.2759
+2026-08-07 16:47:14.618 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - wide2deep_ws_zh_056, P/R/F1 by item: 0.7500/0.6094/0.6724
+2026-08-07 16:47:14.619 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - wide2deep_ws_zh_056, final table score: 0.0
+{"event": "eval_done", "idx": 6, "instance_id": "wide2deep_ws_zh_056", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.27586206896551724, "f1_by_item": 0.6724137931034483, "column_f1": 0.8275862068965517, "error": null, "elapsed_seconds": 16.822, "running_n": 6}
+2026-08-07 16:47:17.406 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 年份 | 电视端收视率 | 导演 | 冠名商 |
+| --- | --- | --- | --- |
+| 2001年 |  ...
+2026-08-07 16:47:21.721 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "2001年": "2001年",
+  "2002年": "2002年",
+  "2003年": "2003年",
+  "2004年": "2004年",
+  "2005年": "2005年",
+  "2006年": "2006年",
+  "2007年": "2007年",
+  "2008年": "2008年",
+  "2009年": "2009年",
+  "2010年": "2010年",
+  "2011年": "2011年",
+  "2012年": "2012年",
+  "2013年": "2013年",
+  "2014年": "2014年",
+  "2015年": "2015年",
+  "2016年": "2016年",
+  "2017年": "2017年",
+  "2018年": "2018年",
+  "2019年": "2019年",
+  "2020年": "2020年",
+  "2021年": "2021年",
+  "2022年": "2022年",
+  "2023年": "2023年",
+  "2024年": "2024年",
+  "2025年": "2025年"
+}
+```
+2026-08-07 16:47:21.722 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 年份, primary_key_map {'2001年': '2001年', '2002年': '2002年', '2003年': '2003年', '2004年': '2004年', '2005年': '2005年', '2006年': '2006年', '2007年': '2007年', '2008年': '2008年', '2009年': '2009年', '2010年': '2010年', '2011年': '2011年', '2012年': '2012年', '2013年': '2013年', '2014年': '2014年', '2015年': '2015年', '2016年': '2016年', '2017年': '2017年', '2018年': '2018年', '2019年': '2019年', '2020年': '2020年', '2021年': '2021年', '2022年': '2022年', '2023年': '2023年', '2024年': '2024年', '2025年': '2025年'}
+2026-08-07 16:47:21.727 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - wide2deep_ws_zh_070, df_inner shape: (25, 8), answer_df shape: (25, 4), response_df shape: (25, 5)
+2026-08-07 16:47:21.728 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 0.332, target: 0.332
+2026-08-07 16:47:21.728 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 0.386, target: 0.35100000000000003
+2026-08-07 16:47:21.728 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 0.332, target: 0.386
+2026-08-07 16:47:21.728 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 0.41600000000000004, target: 0.41600000000000004
+2026-08-07 16:47:21.728 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 0.376, target: 0.36700000000000005
+2026-08-07 16:47:21.728 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 0.34700000000000003, target: 0.34700000000000003
+2026-08-07 16:47:21.728 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 0.36200000000000004, target: 0.314
+2026-08-07 16:47:21.728 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 0.3239, target: 0.32289999999999996
+2026-08-07 16:47:21.728 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 0.3482, target: 0.3482
+2026-08-07 16:47:21.728 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 0.3826, target: 0.3826
+2026-08-07 16:47:21.728 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 0.3104, target: 0.3104
+2026-08-07 16:47:21.728 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 0.3275, target: 0.3275
+2026-08-07 16:47:21.728 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 0.31170000000000003, target: 0.31170000000000003
+2026-08-07 16:47:21.728 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 0.3098, target: 0.3098
+2026-08-07 16:47:21.728 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 0.2837, target: 0.29600000000000004
+2026-08-07 16:47:21.728 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 0.3098, target: 0.3098
+2026-08-07 16:47:21.728 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 0.30879999999999996, target: 0.3146
+2026-08-07 16:47:21.729 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 0.3073, target: 0.325
+2026-08-07 16:47:21.729 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 0.3007, target: 0.3007
+2026-08-07 16:47:21.729 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 0.20629999999999998, target: 0.20629999999999998
+2026-08-07 16:47:21.729 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 0.23260000000000003, target: 0.23260000000000003
+2026-08-07 16:47:21.729 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 0.2193, target: 0.2193
+2026-08-07 16:47:21.729 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 0.2023, target: 0.27
+2026-08-07 16:47:21.729 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 0.2321, target: 0.34600000000000003
+2026-08-07 16:47:21.729 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not convertable, response: None, target: 0.3436
+2026-08-07 16:47:21.729 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_070, col 电视端收视率, metric_func_name number_near, score [1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0]
+2026-08-07 16:47:25.499 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_070, col 导演, metric_func_name llm_judge, score [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+2026-08-07 16:47:31.401 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_070, col 冠名商, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+2026-08-07 16:47:31.406 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - wide2deep_ws_zh_070, P/R/F1 by unique_columns: 1.0000/1.0000/1.0000
+2026-08-07 16:47:31.406 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - wide2deep_ws_zh_070, P/R/F1 by row: 0.6800/0.6800/0.6800
+2026-08-07 16:47:31.406 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - wide2deep_ws_zh_070, P/R/F1 by item: 0.9200/0.9200/0.9200
+2026-08-07 16:47:31.408 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - wide2deep_ws_zh_070, final table score: 0.0
+{"event": "eval_done", "idx": 7, "instance_id": "wide2deep_ws_zh_070", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.68, "f1_by_item": 0.92, "column_f1": 1.0, "error": null, "elapsed_seconds": 16.774, "running_n": 7}
+SUMMARY {"n": 7, "valid_n": 7, "errors": 0, "complete": true, "judge_calls_current_process": 21, "score": 0.0, "entity_acc": 0.5714285714285714, "precision_by_row": 0.31967032967032966, "recall_by_row": 0.31142857142857144, "f1_by_row": 0.31512315270935964, "precision_by_item": 0.42269841269841274, "recall_by_item": 0.40260912698412704, "f1_by_item": 0.41161466885604814, "column_precision": 0.46043956043956047, "column_recall": 0.43571428571428567, "column_f1": 0.44679802955665027}
