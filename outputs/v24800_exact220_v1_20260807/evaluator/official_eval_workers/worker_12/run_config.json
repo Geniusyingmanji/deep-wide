@@ -1,0 +1,40 @@
+{
+  "artifact_version": 2,
+  "role": "deepwide_official_evaluator_crash_recovery_contract",
+  "predictions": {
+    "path": "/home/azureuser/workspace-gzy/zyf/deep/outputs/v24800_exact220_v1_20260807/evaluator/official_eval_workers/worker_12_predictions.jsonl",
+    "sha256": "89af5421d267aeae9c1ef58e917db0a71c3682f165ab33a37a83f2be848d5716"
+  },
+  "query_data": {
+    "path": "/home/azureuser/workspace-gzy/zyf/deep/external/Marco-Search-Agent/Marco-DeepResearch-Family/DeepWideSearch/data/overall_20250916.jsonl",
+    "sha256": "4dd18df4ab8d166f14a1458f884fd8e0652f970764e245e868d75947daa5e5cf"
+  },
+  "answers": {
+    "root": "/home/azureuser/workspace-gzy/zyf/deep/external/Marco-Search-Agent/Marco-DeepResearch-Family/DeepWideSearch/data/overall_20250916_tables",
+    "file_count": 220,
+    "manifest_sha256": "5ddc76dd9e9fa4a7080f84e824de6230c62101d2375dee72a0f508b7cfa4ec7e"
+  },
+  "selected_prediction_count": 7,
+  "selected_instance_order_sha256": "96e41fd9edd85c1ff12fae7cd010f92649c9c5543cd3b736e26601605bff8bf4",
+  "selection_protocol_sha256": "da14d0bbacb209fe5bc5b95f3871cd12d95409e920567fe496952d81bee3f775",
+  "evaluator_source": {
+    "file_count": 10,
+    "manifest_sha256": "2829e4808226bd35e4e312f024ceded3a9bc2b1e923493e06503278e382ba061"
+  },
+  "judge": {
+    "proxy_url": "http://127.0.0.1:9878/responses",
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "low",
+    "max_output_tokens": 8192,
+    "timeout_seconds": 600,
+    "max_retries": 12
+  },
+  "recovery_policy": {
+    "explicit_resume_required": true,
+    "committed_success_or_error_is_terminal": true,
+    "committed_rows_must_be_exact_prediction_prefix": true,
+    "canonical_result_file_atomic_replace_per_task": true,
+    "selective_error_retry_allowed": false
+  },
+  "credentials": "environment-only; not persisted"
+}
