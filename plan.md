@@ -3054,3 +3054,13 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 6. 该GO只支持fresh harder ROR任务上的deterministic official-registry Unknown fill。它不支持DeepWideBench提升、SOTA、一般网页证据correctness、四层开放世界风险或entropy-credit有效性。ROR adapter使用任务visible schema和公开权威registry；任何未来迁移不得用benchmark category、question type、mapping、gold或evaluator选择adapter。
 7. 下一门只授权fresh paired dev64 **设计**，不授权launch。control使用当前fixed reliability pipeline；candidate只允许在visible question/schema可识别且预注册权威namespace adapter存在时，把generic budget的一部分改为exact structured Unknown recovery，否则prediction必须与control一致。两臂固定相同model/query/fetch/token/wall cap、交错执行、failure-as-zero、no resume/retry/skip/selective rerun；prediction全冻结后才打开mapping/evaluator。
 8. dev64预注册主门必须同时满足：candidate whole-table严格增加，Composite和Item F1不降，evaluator-invalid不增，fallback/model-generated不劣化，adapter自然触发达到预注册下限，所有admission都保留identity/target–value/uniqueness receipt，总cap不扩张。只有fresh dev64 GO才可设计一次fixed-policy exact-220；未通过则回到adapter coverage与nonempty correction的benchmark-external实验，不能在同一64题上补跑或调参。
+
+### V2.48.17：三次冻结 rollout 的 label-blind consensus exact-220 NO-GO（2026-08-07 UTC）
+
+1. V2.48.17 只消费 visible `{opaque_id, question}` 与 V2.48.00/07/10 三份已冻结 prediction；consensus 过程不读 mapping、gold、category、question_type、split、evaluator、score 或 reward。全部 220 个 prediction 在 evaluator 前冻结：216 个 strict consensus、4 个 symmetric medoid fallback；124 个为新组合 prediction，96 个与某个 source 完全相同，新增 model/search/fetch effect 为 0。
+2. 官方 evaluator 使用冻结的 32 路连续分片，220 个 prediction 全部且仅评测一次；207 个 evaluator-valid、13 个 internal-error。按预注册 fixed-denominator/failure-as-zero 口径，不对 13 个错误做选择性重评。consensus 后处理墙钟 `0.807174s`，evaluator 32 路墙钟 `209.184018s`。
+3. 完整 220 题保守结果为 whole-table `7/220 = 3.1818%`，Composite `0.3808323814`，Entity `0.6409090909`，Row/Item/Column F1 `0.1773138760/0.3173815317/0.3877250269`。test-156 为 `2/156`、Composite `0.3581160767`。
+4. 与三个 source 全集相比：V2.48.00 为 `8/220`、Composite `0.4568337609`；V2.48.07 为 `8/220`、`0.4382483897`；V2.48.10 为 `6/220`、`0.4392949702`。V2.48.17 虽比 V2.48.10 多 1 个 exact table，但比当前最佳 V2.48.00 少 1 个，Composite 降 `0.0760013795`，Entity/Row/Item/Column F1 也全部下降；严格结论为 **NO-GO**，不是 benchmark 提升，不是 SOTA。
+5. 该实验是对已经评测过的公开 220 题 rollout 做 post-hoc ensemble，不是 held-out/cold execution，不是 Avg@4，也没有新的 entropy/credit intervention；因此不能支持信息熵 credit assignment 有效或 leaderboard/SOTA 主张。
+6. post-result audit 为 `8/8`、`findings=[]`；它复核 result seal、exact-220 行数、failure-as-zero、post-hoc/non-SOTA claims、无选择性重评、shared lease 释放与 4 个 protected watcher 稳定。结果冻结于 commit `fb3faa9`，审计冻结于 `daee3e1`。
+7. 这一公开 220 结果从此只用于汇总，不得依据逐题错误调 consensus、选择 source、补跑、补评或重评。下一优化门回到 benchmark-external fresh tasks，优先分离验证 entity anchoring、schema fidelity 与 long-tail row completeness；只有预注册的 fresh/disjoint paired gate 同时提升 exact-table 与 Composite，才能再设计新的 public exact-220。
