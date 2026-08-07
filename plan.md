@@ -1,8 +1,10 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.47
+> 版本：6.48
 >
-> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.47 覆盖。**
+> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.48 覆盖。**
+>
+> **6.48 V2.48.04 真 shared-prefix budget ladder build（2026-08-07）：旧 V2.43.30 的根因已冻结为 barrier/totality 缺陷，而非 shared-prefix 概念失败：220 个终态 pair 中只有 135 个正常冻结 prefix，63 个 runtime fallback 只有 effect lower bound，22 个 prefix unavailable，故不能作 paired quality 估计。V2.48.04 改为一个先验硬 barrier：每个 benchmark-external World Bank 表格任务只执行一次 visible-only planner、generic search/fetch、expanded-schema synthesis 和第一波4个 exact target lookup，prefix 以内容哈希冻结后才分出 `first_wave_only / fixed_full_budget / coverage_risk_adaptive` 三臂；固定臂物理执行剩余4个 lookup，adaptive 决策在其响应前只读第一波成功/缺失、country coverage、冻结 calibration ref 与成本模型，stop 时预测逐字等于 first-wave，不能读 suffix。任一 prefix 异常未来须将三臂统一 failure-as-zero，禁止各臂独立 fallback。四层风险用 conjunctive terminal-loss proxy 组合 identity/open-set coverage/row eligibility/cell Unknown；IG 仅计算 shadow feature且冻结权重为0，非零 entropy weight直接拒绝，signed credit仍为false。6个 runtime/attack tests与4个 audit tests全部通过；runtime AST privileged access=0、evaluator import=0、credential literal=0，四个 protected watcher未变，共享lease inactive。权威 build audit为 [`results/v24804_shared_prefix_budget_ladder_build_audit_v1_20260807.json`](results/v24804_shared_prefix_budget_ladder_build_audit_v1_20260807.json)。该GO只授权 fresh benchmark-external population与protocol设计，不授权external launch、public dev64/220、leaderboard或SOTA。**
 >
 > **6.47 V2.48.03 完整 220 冻结后 failure-surface 诊断（2026-08-07）：在 V2.48.00 prediction freeze、官方 evaluator 与 post-result audit 全部完成后，只读已冻结工件做内存 join，220 题互斥分为 whole-table success `8`、partial quality `136`、entity-anchor failure `53`、visible-schema mismatch `10`、official evaluator internal error `11`、out-of-range metric `2`。该工件不发布题目、ID、预测、字段名或逐题分数，也没有调用 network/model/search/fetch/evaluator。910 次 Tavily provider attempt 中 0 个 429、0 个 5xx、0 个 slot timeout，故当前主要可控失分面不是 provider transport；13 个 evaluator-invalid 继续 failure-as-zero，禁止选择性重评。53/10 的类别来自 post-freeze evaluator，只能定位外部实验应覆盖的 identity/schema 能力，绝不能反馈成公开 benchmark runtime route。权威工件为 [`results/v24803_v24800_aggregate_failure_surface_v1_20260807.json`](results/v24803_v24800_aggregate_failure_surface_v1_20260807.json)。下一实验仍是 benchmark-external shared-prefix 三臂；先以 visible-only identity/target/source-dependency 与 output-contract 信号建模，再把 entropy/IG 作为 calibrated state/action feature，不能直接赋正 credit。**
 >

@@ -1,0 +1,105 @@
+{
+  "artifact_version": 1,
+  "audit_payload_sha256": "9eda6db10e49fe4a9697595a142b972f270c5ef172296e2efd12d38602a7d962",
+  "audit_valid": true,
+  "authorization": {
+    "external_launch": false,
+    "fresh_benchmark_external_population_and_protocol_design": true,
+    "leaderboard_submission": false,
+    "public_dev64": false,
+    "public_exact220": false,
+    "sota_claim": false
+  },
+  "base_commit": "9aa3063e54b5d1cd9430aaf58aab9a43327a1572",
+  "checks": {
+    "adaptive_decision_is_suffix_blind": true,
+    "credential_literal_absent": true,
+    "entropy_is_zero_weight_and_not_credit": true,
+    "expand_and_stop_paths_both_reachable": true,
+    "focused_tests_passed": true,
+    "missing_calibration_fails_closed": true,
+    "parent_authority_valid": true,
+    "protected_watchers_unchanged": true,
+    "runtime_evaluator_import_absent": true,
+    "runtime_privileged_access_absent": true,
+    "shared_api_lease_inactive": true,
+    "three_arms_exact": true
+  },
+  "created_at_unix": 1786114680,
+  "effect_boundary": {
+    "benchmark_task_or_private_evaluator_resource_opened": false,
+    "external_population_consumed": false,
+    "network_model_search_fetch_or_evaluator_called_by_audit": false,
+    "public_benchmark_forward_authorized": false
+  },
+  "findings": [],
+  "focused_test_count": 6,
+  "parent_sha256": "898961451b8e8cf26db1262fd24a602d51c730f94d22885111b0854ee8d553d2",
+  "protected_watchers_after": [
+    {
+      "marker": "scripts/watch_v2415_r1_checkpoint_liveness.py",
+      "pid": 795336,
+      "start_ticks": 713986317
+    },
+    {
+      "marker": "scripts/watch_v24218_exact220_executor.py",
+      "pid": 3061652,
+      "start_ticks": 747569004
+    },
+    {
+      "marker": "scripts/watch_v24215_joint_package_recovery.py",
+      "pid": 2808901,
+      "start_ticks": 746680268
+    },
+    {
+      "marker": "scripts/watch_v24216_package_gate.py",
+      "pid": 2889939,
+      "start_ticks": 746969965
+    }
+  ],
+  "protected_watchers_before": [
+    {
+      "marker": "scripts/watch_v2415_r1_checkpoint_liveness.py",
+      "pid": 795336,
+      "start_ticks": 713986317
+    },
+    {
+      "marker": "scripts/watch_v24218_exact220_executor.py",
+      "pid": 3061652,
+      "start_ticks": 747569004
+    },
+    {
+      "marker": "scripts/watch_v24215_joint_package_recovery.py",
+      "pid": 2808901,
+      "start_ticks": 746680268
+    },
+    {
+      "marker": "scripts/watch_v24216_package_gate.py",
+      "pid": 2889939,
+      "start_ticks": 746969965
+    }
+  ],
+  "role": "v24804_shared_prefix_budget_ladder_build_audit",
+  "runtime_evaluator_imports": [],
+  "runtime_privileged_accesses": [],
+  "source_manifest": {
+    "scripts/audit_v24804_shared_prefix_budget_ladder.py": "4a2f79ae17241a66d05f99dcac2c5410d8ea69c0c6028a5268c8b0bd26c42246",
+    "src/deepwide_agent/v24804_shared_prefix_budget_ladder.py": "966412b16a0fce500ce294838700a7788b7b86475f03b67368e5fdf5f114e6b8",
+    "tests/test_v24804_shared_prefix_budget_ladder.py": "9714b183a20d6d4f95056ed772bf8ea0e40a40e4cd16ee82d4fda8358e98012b"
+  },
+  "synthetic_decision_gate": {
+    "arms": [
+      "first_wave_only",
+      "fixed_full_budget",
+      "coverage_risk_adaptive"
+    ],
+    "calibration_incomplete_decision": "stop",
+    "calibration_incomplete_reason": "calibration_incomplete_fail_closed",
+    "entropy_assigns_signed_credit_false": true,
+    "entropy_feature_value_zero": true,
+    "expand_decision": "expand",
+    "policy_id": "v24804_shared_prefix_coverage_risk_budget_ladder_v1",
+    "stop_decision": "stop",
+    "wave_two_response_read_false": true
+  }
+}
