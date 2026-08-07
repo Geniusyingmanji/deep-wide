@@ -1,10 +1,37 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
-> 检索截止：2026-08-06 04:48 UTC；项目证据更新：2026-08-07 UTC（至 V2.47.80）
+> 检索截止：2026-08-07 14:10 UTC；项目证据更新：2026-08-07 UTC（至 V2.48.02）
 >
 > 结论强度：这是基于公开文献的 novelty audit，不是“没有任何相关工作”的证明。2026 年文献多为尚未同行评审的 arXiv 预印本，文中将预印本结果视为作者报告，而非独立复现事实。
 
-当前完整 220 题有两条不同前沿。V2.42.67 保持 whole-table 最佳 `7/220`，其 Composite 为 `0.413541`；V2.46.35 保持 Composite 最佳 `0.437892`，其 whole-table 为 `4/220`。V2.46.35 在严格 label-blind、220 个预测全部冻结后才开放 evaluator 的单次运行中得到 Entity `0.672727`、Row F1 `0.224156`、Item F1 `0.385078` 和 Column F1 `0.469605`。208 题得到有效 evaluator 输出，12 个 evaluator error 按预注册规则计零；forward 与 evaluator 墙钟分别为 `915.58s` 和 `222.24s`。它相对 V2.46.30 的 Composite 增加 `0.034260`，whole-table 却从 `5/220` 降到 `4/220`。两个前沿均没有 leaderboard 提交或同协议 SOTA 证据，因此都不是 SOTA。
+## 2026-08-07 当前结论：V2.48.00 建立单轮内部前沿，但没有识别固定预算或熵策略的因果效应
+
+V2.48.00 已完成严格 label-blind、固定 220 分母、failure-as-zero 的单次完整运行。forward 在全部预测冻结前只接收 `{opaque_id, question}`，之后才开放 mapping 与 official evaluator。结果为 whole-table `8/220 = 3.6364%`、Entity `0.700000`、Row F1 `0.228723`、Item F1 `0.406003`、Column F1 `0.492610` 和 Composite `0.456834`。207 题得到有效 evaluator 输出，13 个 evaluator error 按零计入固定分母。forward 与 32-worker evaluator 分别耗时 `779.65s` 和 `208.50s`，系统 token 总量为 `3,786,108`。这一个版本同时超过此前仓库内的 whole-table 与 Composite 前沿，因此是当前内部单轮参考；它没有 leaderboard 提交、Avg@4 或同协议外部 SOTA 证据。[`results/v24800_exact220_result_v1_20260807.json`](results/v24800_exact220_result_v1_20260807.json) 与 [`results/v24800_exact220_postresult_audit_v1_20260807.json`](results/v24800_exact220_postresult_audit_v1_20260807.json) 给出结果和审计链。
+
+V2.48.01 的冻结后配对诊断限制了可写成论文结论的范围。相对 V2.47.98，V2.48.00 的 whole-table 从 `6` 增到 `8`，Composite 增加 `0.014684`，Row、Item 与 Column F1 分别增加 `0.014146`、`0.016983` 与 `0.018518`；代价是 token 从 `2,687,861` 增至 `3,786,108`，比例为 `1.4086×`，有效 evaluator 行从 `209` 降至 `207`。任务级 Composite 为 83 题提高、82 题持平、55 题下降，20,000 次 task-bootstrap 的 95% 区间为 `[-0.013787, 0.043379]`，跨越 0。whole-table 有 3 题 failure→success、1 题 success→failure。增益主要出现在旧 controller 判为 `first_wave_sufficient` 的 192 题，但两次运行没有共享随机前缀，也不是随机化或 matched-cost 对照。因此，当前证据支持“固定 full budget 在这一次公开 220 运行中刷新内部前沿”，不支持“固定预算普遍优于 adaptive early stop”，更不支持“entropy/VOC controller 有负因果效应”。权威聚合为 [`results/v24801_v24798_v24800_paired_postresult_diagnosis_v1_20260807.json`](results/v24801_v24798_v24800_paired_postresult_diagnosis_v1_20260807.json)。
+
+## 与 WebSwarm 的精确 76-task manifest 对照
+
+WebSwarm v1 使用递归 `atom/deep/wide/entity_collect` 节点、Web-Probing 和同质 sibling 的 process-experience reuse。[5] 论文只报告 DeepWideSearch 的 76 题子集，而非 220 题全集；其 GLM-4.5 结果为 SR `6.58%`、Row F1 `29.64%`、Item F1 `58.40%`，未报告 Entity、Column 或本文使用的四项 Composite。论文消融中，移除 Web-Probing 后 Item F1 从 `58.40%` 略升为 `58.93%`，平均 web-tool calls 却从 `203.73` 增至 `331.39`，因此该消融主要支持效率解释；移除 sibling experience 后 Item F1 降到 `55.48%`，平均调用为 `220.07`。这些结果没有 entropy、information-gain 或 step-credit 机制。
+
+V2.48.02 在 V2.48.00 的 220 个预测与评价全部终态后，使用 WebSwarm repo commit `40c9aac…5717` 的精确 76-task manifest 做 aggregate-only join。V2.48.00 在同一任务集合上为 whole-table `5/76 = 6.5789%`、Row F1 `33.0718%`、Item F1 `54.8945%`、Entity `80.2632%`、Column F1 `64.3464%`，其中 72 行 evaluator 有效、4 行按零计。相对论文的四舍五入值，SR 在两位百分比精度上相同，Row F1 高 `3.4318` 点，Item F1 低 `3.5055` 点。公开文件名为 `en_subset`，但其 `language` 字段实际为 `75 en + 1 zh`，所以“76 个 English tasks”与当前仓库 manifest 不完全一致。
+
+上述 76 题数字只能作描述性同集合对照。两边 backbone、agent、prompt、search/page 工具、action cap、evaluator 实现与 web-tool call 定义均不相同，也没有随机化或 matched-cost 设计；任何一边都不能据此宣称在公平设置下胜过另一边。V2.48.00 在该子集累计 `327` 次 search、`690` 次 fetch 与 `820,655` system tokens，这些计数也不能与 WebSwarm 的递归 web-tool calls 直接相除比较。可复验的聚合与全部限制见 [`results/v24802_v24800_webswarm76_postfreeze_aggregate_v1_20260807.json`](results/v24802_v24800_webswarm76_postfreeze_aggregate_v1_20260807.json)。该 subset membership 不得反馈未来公开 DeepWideBench 的 runtime routing。
+
+## 2026-08 新增 credit-assignment 工作对信息熵主张的约束
+
+| 工作 | credit 信号 | 与本项目最接近之处 | 尚未覆盖的边界 |
+|---|---|---|---|
+| ABSeeker / ABC [186] | 用 verified answer 回溯 clue，再按 clue 对每一步打分 | 搜索步骤的 dense signed supervision | 训练时依赖 ground-truth answer，不能作为 label-blind runtime credit；不估计开放集合风险 |
+| TreeCredit [187] | 从同一中间 state 展开 operators，以 terminal correctness 和 suffix cost 排序 | shared-prefix、state-matched downstream utility | 面向多智能体推理 operator，不建模 anchor、开放集合、行资格或格值风险 |
+| TCPO [188] | best-prior score delta、delayed hindsight 与 high-surprisal fixed-history counterfactual | verifier score-to-credit 与选择性同历史干预 | surprisal 只决定精细评估对象，不等于 task credit；依赖 verifier-guided refinement |
+| BiCAA [189] | forward solvability gain 与 hindsight success criticality | 同时衡量局部进展和终局必要性 | 未处理来源依赖、错误证据使 posterior 变尖或开放集合遗漏 |
+| AgentOPSD [190] | teacher–student log-probability gap 的递归 Bayesian log-odds 更新与边际 belief revision | belief delta 形成 turn credit | belief 是 teacher-relative proxy，不是经过校准的四层任务损失，也没有 source/identity gate |
+| TurnSight [191] | execution-conditioned multi-horizon hindsight，经 sibling normalization 后只调节原 advantage 幅度 | state-aligned hindsight 与 sign-preserving credit | 不估计网页证据的开放集合覆盖或 target–value provenance |
+
+这六项工作使三个宽泛主张不再成立。shared-prefix credit、belief revision credit，以及用 surprisal 选择 counterfactual 都已有直接近邻；单独把“熵降大的步骤给更多 credit”也会把错误来源导致的过度确信、重复证据与无终局作用的局部变化记成正贡献。当前仍可检验的组合是四层开放世界风险，即 hidden anchor、未见实体质量、row eligibility 与 cell value uncertainty，经校准后投影到 terminal task loss；每个 observation 还必须先通过 primary-identity、target–value 与 source-dependency gate。entropy 或 expected information gain 可以预测动作排序和 credit 幅度，但 credit 的正负应来自同状态 suffix/deletion/replacement，或 artifact-disjoint outer utility。限定到本综述当前核验的 191 篇公开工作，没有发现同时实现这四层风险、上述证据门和 terminal-utility signed credit 的系统；这仍是检索范围内的 gap，而不是不存在相关工作的证明。
+
+以下各节按日期保留历史证据。凡与本节当前分数、版本或下一实验授权冲突的旧陈述，均由 V2.48.00–02 覆盖。
 
 V2.47.80 又提供了一个 acquisition 与 evidence admission 分离的负结果。唯一一次 fresh 8-task 外部门在 `48.561393s` 内完成 `8/8` valid task 和 `16/16` terminal arm predictions。64 次 initial fetch 得到 47 页，13 次 reserve fetch 得到 10 页；reserve 使 4 个 entity slot 从不足双源变为至少双源，最终 19 个 slot 有至少两个可用 identity source。尽管 acquisition treatment 自然触发，projection-backed support set、changed task 和 changed cell 都是 0。content-free audit 因而判定 forward health GO、mechanism NO-GO，并在 private truth/quality surface 前停止。权威证据为 [`results/v24780_staged_fallback_forward_result_v1_20260807.json`](results/v24780_staged_fallback_forward_result_v1_20260807.json) 与 [`results/v24780_staged_fallback_forward_audit_v1_20260807.json`](results/v24780_staged_fallback_forward_audit_v1_20260807.json)。
 
@@ -847,11 +874,11 @@ V2.19 针对这两个 label-blind 机制做了 evidence-continuity 修复。它�
 
 ## 11. 结论
 
-信息熵适合作为这项工作的理论主线，但不能作为孤立 novelty。已有文献已经覆盖语义熵、信息增益奖励、EIG 动作选择、熵驱动证据选择、校准停止、显式证据充分性停止、复合 utility 驱动的 outline 调整、表格状态、动态深宽搜索、可训练委派与 delegation-as-context-management、冻结 agent 外的可学习 context manager、经验证与回滚的异步 speculative retrieval、层级 worker 并行、全局排名后 agent refinement、两级结构检索、prefix-reuse-aware workflow optimization、未知 denominator 审计、belief–coverage 分离、semantic-region bandit、evidence-equivalence control、attention-entropy chunk 去重、entropy-gated belief communication、POMDP/predicate belief、检索边界反思、gold-conditioned contextual-IG credit、answer-graph step credit、structured-potential/return credit、同状态 memory recoverability、guarded downstream edit utility、Shapley-style memory valuation、evidence omission suffix replay、正 multiplier 保留 verifier advantage 方向、role-typed process correction、simulator-based causal Shapley attribution，以及 intervention-relative harness authorization。限定到本次 185 篇公开文献检索范围，可辩护的候选问题是：DeepWide 的隐藏 anchor、开放集合遗漏、行资格和格值能否形成一个经校准且不简单相加的任务风险模型；该模型能否在相同动作菜单、区域、预算、证据等价与来源依赖约束下改善完整 all-220；若进一步训练策略，分层风险变化能否从 inner continuation 形成冻结预测，并在 artifact-disjoint、launch-challenge-bound 的 outer continuation target 上定位改善最终任务的步骤。[140,149–151,157–185]
+信息熵适合作为这项工作的理论主线，但不能作为孤立 novelty。已有文献已经覆盖语义熵、信息增益奖励、EIG 动作选择、熵驱动证据选择、校准停止、未知 denominator 审计、belief–coverage 分离、POMDP acquisition、gold-conditioned contextual-IG credit、answer-graph credit、shared-prefix suffix credit、verifier score-to-credit、Bayesian belief revision、execution hindsight、Shapley attribution 与 sign-preserving advantage modulation。[140,149–151,157–191] 限定到本次 191 篇公开文献核验范围，可辩护的候选问题是：DeepWide 的隐藏 anchor、开放集合遗漏、行资格和格值能否形成一个经校准且不简单相加的任务风险模型；该模型能否在相同动作菜单、共享前缀、预算、证据等价与来源依赖约束下改善 terminal task loss；若进一步训练策略，四层风险变化能否预测由同状态 suffix 或 artifact-disjoint outer continuation 确认的 signed step contribution。
 
-完整 220 证据目前仍是两条内部前沿。V2.42.67 的 whole-table 最高，为 `7/220`、Composite `0.413541`；V2.46.35 的 Composite 最高，为 `0.437892`、whole-table `4/220`。V2.47.14/18 完成了新的 220/220 sparse candidate/result，但 candidate 与 V2.42.67 在 prediction bytes 上全部相同，复用 evaluator 后所有 delta 为 0。该轮因此既没有提升内部前沿，也没有 SOTA 证据。权威结果与闭环审计见 [`results/v24718_v24714_identity_full220_result_v1_20260806.json`](results/v24718_v24714_identity_full220_result_v1_20260806.json) 和 [`results/v24718_v24714_identity_full220_postresult_audit_v1_20260806.json`](results/v24718_v24714_identity_full220_postresult_audit_v1_20260806.json)。
+V2.48.00 当前是仓库内单轮完整 220 的联合前沿，whole-table 为 `8/220`、Composite 为 `0.456834`。V2.48.01 的 95% task-bootstrap 区间跨 0，且成本增加约 `40.86%`，所以这份内部提升不能被解释为固定 full budget 的普遍因果收益。V2.48.02 又表明，在 WebSwarm 的精确 76-task manifest 上，两者 SR 在论文报告精度下相同，而 Row F1 与 Item F1 各有胜负；由于模型、工具、预算与 evaluator 不匹配，这也不是 SOTA 对照。
 
-V2.47.00 的外部门 GO 与 V2.47.06 的 `1/220` authority coverage 共同改变了下一步优先级。单 namespace adapter 应保留为 structured recovery 与 transport testbed，不再承担全榜主线。新的 `plan.md` 先要求 benchmark-external bulk reliability，再要求 generic identity/target–value binding 在启动前证明多题的安全 intervention reachability。只有 entropy/dynamic-VOC 排序在相同 observation、identity gate、动作和总成本下超过 deterministic Unknown-target 强基线与 matched-cost 排序 control，并在同状态或独立 outer continuation 上预测 signed task contribution，信息熵才有资格作为经验核心。否则，它应降级为 uncertainty diagnostic；工程主线则保留经验证的 structured recovery。真实四层 calibration、正式 outer-valid step-credit 数据与 credit-training 收益目前仍为空。
+下一步应在 benchmark-external、task-cluster-disjoint 人口上冻结共享前缀三臂：first-wave only、fixed full budget，以及 coverage-risk/terminal-loss VOC adaptive。三臂必须共享模型、renderer、候选证据顺序与 hard caps，并报告固定分母质量、成本、evaluator health 与 task-cluster bootstrap。四层 entropy/VOC 只有在该候选优于两个强控制，且 step sign 又由 same-state suffix/deletion/replacement 或独立 outer utility 支持时，才可升级为经验核心；否则保留为 uncertainty diagnostic。真实四层 calibration、正式 outer-valid step-credit 数据与 credit-training 收益目前仍为空。
 
 ## 参考文献
 
@@ -1040,6 +1067,12 @@ V2.47.00 的外部门 GO 与 V2.47.06 的 `1/220` authority coverage 共同改�
 183. Toh, V., Majumder, N., Liu, Z., Chen, N. F. & Poria, S. **ScrambleToolBench: Agents Search Exhaustively Even When Their Own Map Points to the Next Step.** arXiv:2608.02358v1 (2026). https://arxiv.org/abs/2608.02358
 184. Zhou, J., Fan, Z., Wu, X., Yu, T., Zhang, F. & Wang, L. **Deep Research Pretraining via Predictive Navigation.** arXiv:2608.00432v1 (2026). https://arxiv.org/abs/2608.00432
 185. Liu, W. et al. **Training Documents Reranker with Search Rubrics for Deep Research Agent.** arXiv:2608.03527v1 (2026). https://arxiv.org/abs/2608.03527
+186. Lu, Y., Ye, R., Wang, J., Du, Y., Jin, T., Liu, S. & Chen, S. **ABSeeker: Training Long-Horizon Search Agents via Answer-Backtracked Credit Assignment.** arXiv:2608.05102v1 (2026). https://arxiv.org/abs/2608.05102
+187. Liu, Y., Wang, Z., Yao, H., Liu, W. & Zhang, Y. **Shared Prefixes, Better Credit: Adaptive Routing for Multi-Agent Reasoning.** arXiv:2608.02291v1 (2026). https://arxiv.org/abs/2608.02291
+188. Liao, S., Chen, Z. & Tang, Y. **TCPO: Turn-Level Credit Policy Optimization.** arXiv:2608.01667v1 (2026). https://arxiv.org/abs/2608.01667
+189. Huang, Y., Xu, B., Cao, H. & Zhu, C. **BiCAA: Bidirectional Credit Assignment for Search-Augmented Agent.** arXiv:2608.01321v1 (2026). https://arxiv.org/abs/2608.01321
+190. Wang, Z.-H. et al. **AgentOPSD: Recursive Self-Distillation for Agentic Reinforcement Learning.** arXiv:2608.05987v1 (2026). https://arxiv.org/abs/2608.05987
+191. Qu, C., Dai, S., Cai, H., Zhou, Y., Chen, X., Simon & Xu, J. **TurnSight: Turn-Level Hindsight Self-Distillation for Tool-Integrated Reasoning.** arXiv:2608.04007v1 (2026). https://arxiv.org/abs/2608.04007
 ## 2026-08-04 补充：source-volume 不是 verifier coverage，entropy 必须对齐 utility
 
 V2.43.70 的真实外部门提供了一个对 Deep/Wide 搜索设计很重要的反例：发现 559 个 registrable hosts 并不保证最终验证覆盖。若系统先按返回顺序截取前 10 个来源，再随机保留两个 verifier，则后发现的 query/batch strata 可能完全没有进入 proposal 或 verifier 集。这个失败和近期工作中的几个观点相互印证：Diverse Query Initialization 强调初始化分散性，但分散 query 若在 source selection 处被 first-k 截断，其收益不会传到下游；conjunctive cross-page retrieval 关注“所需证据是否共同覆盖”，而非单纯 source 数；Bridge Evidence 区分静态检索相关性与对最终决策的因果 utility；Context Gathering Decision Process 则提示 acquisition policy 应按下游 belief/decision value 设计，而不能把更多网页当作目标本身。
