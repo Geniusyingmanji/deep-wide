@@ -1,0 +1,107 @@
+INFO: Pandarallel will run on 8 workers.
+INFO: Pandarallel will use Memory file system to transfer data between the main process and workers.
+{"event": "eval_start", "selected": 7, "resume_committed": 0, "committed_errors": 0, "crash_only_resume": false}
+2026-08-07 18:18:02.502 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 论文题目 | 作者 | 发表时间 | 发表刊物 | 关键词 | DOI号 | 基金资助 |
+| --- | --- | - ...
+2026-08-07 18:18:05.994 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "生成式人工智能的法律定位与分层治理": "生成式人工智能的法律定位与分层治理"
+}
+```
+2026-08-07 18:18:05.994 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 论文题目, primary_key_map {'生成式人工智能的法律定位与分层治理': '生成式人工智能的法律定位与分层治理'}
+2026-08-07 18:18:06.003 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - wide2deep_ws_zh_077, df_inner shape: (1, 14), answer_df shape: (26, 7), response_df shape: (1, 8)
+2026-08-07 18:18:08.525 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_077, col 作者, metric_func_name llm_judge, score [1]
+2026-08-07 18:18:08.526 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 2023/07/15, target: 2023/7/15
+2026-08-07 18:18:08.526 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_077, col 发表时间, metric_func_name exact_match, score [0.0]
+2026-08-07 18:18:10.082 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_077, col 发表刊物, metric_func_name llm_judge, score [1]
+2026-08-07 18:18:13.358 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_077, col 关键词, metric_func_name llm_judge, score [0]
+2026-08-07 18:18:13.358 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 10.3969/j.issn.1001-2397.2023.04.09, target: nan
+2026-08-07 18:18:13.359 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_077, col doi号, metric_func_name exact_match, score [0.0]
+2026-08-07 18:18:16.748 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_077, col 基金资助, metric_func_name llm_judge, score [0]
+2026-08-07 18:18:16.756 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - wide2deep_ws_zh_077, P/R/F1 by unique_columns: 1.0000/0.0385/0.0741
+2026-08-07 18:18:16.756 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - wide2deep_ws_zh_077, P/R/F1 by row: 0.0000/0.0000/0.0000
+2026-08-07 18:18:16.756 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - wide2deep_ws_zh_077, P/R/F1 by item: 0.4286/0.0165/0.0317
+2026-08-07 18:18:16.759 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - wide2deep_ws_zh_077, final table score: 0.0
+{"event": "eval_done", "idx": 1, "instance_id": "wide2deep_ws_zh_077", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0, "f1_by_item": 0.031746031746031744, "column_f1": 0.07407407407407407, "error": null, "elapsed_seconds": 15.154, "running_n": 1}
+{"event": "eval_done", "idx": 2, "instance_id": "wide2deep_ws_zh_093", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 0.977, "running_n": 2}
+{"event": "eval_done", "idx": 3, "instance_id": "wide2deep_ws_zh_097", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.628, "running_n": 3}
+{"event": "eval_done", "idx": 4, "instance_id": "wide2deep_ws_en_001", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.59, "running_n": 4}
+2026-08-07 18:18:24.606 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| Date | Event Name | Level | Discipline | Result | Top 3 Playe ...
+2026-08-07 18:18:27.482 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "2018-02": "2018-02",
+  "2019-01": "2019-01",
+  "2019-09": "2019-09",
+  "2020-01": "2020-01",
+  "2020-02": "2020-02",
+  "2020-11": "2020-11",
+  "2021-01": "2021-01",
+  "2021-03": "2021-03",
+  "2021-12": "2021-12",
+  "2022-01": "2022-01",
+  "2022-02": "2022-02",
+  "2023-01": "2023-01",
+  "2023-12": "2023-12",
+  "2024-01": "2024-01",
+  "2024-02": "2024-02",
+  "2024-09": "2024-09",
+  "2024-12": "2024-12",
+  "2025-01": "2025-01"
+}
+```
+2026-08-07 18:18:27.483 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: date, primary_key_map {'2018-02': '2018-02', '2019-01': '2019-01', '2019-09': '2019-09', '2020-01': '2020-01', '2020-02': '2020-02', '2020-11': '2020-11', '2021-01': '2021-01', '2021-03': '2021-03', '2021-12': '2021-12', '2022-01': '2022-01', '2022-02': '2022-02', '2023-01': '2023-01', '2023-12': '2023-12', '2024-01': '2024-01', '2024-02': '2024-02', '2024-09': '2024-09', '2024-12': '2024-12', '2025-01': '2025-01'}
+2026-08-07 18:18:29.869 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "Women’s halfpipe": "Women’s Halfpipe",
+  "Women’s slopestyle": "Women’s Slopestyle",
+  "Women’s big air": "Women’s Big Air",
+  "Women’s ski big air": "Women’s Big Air",
+  "Women’s freeski big air": "Women’s Big Air"
+}
+```
+2026-08-07 18:18:29.869 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: discipline, primary_key_map {'Women’s halfpipe': 'Women’s Halfpipe', 'Women’s slopestyle': 'Women’s Slopestyle', 'Women’s big air': 'Women’s Big Air', 'Women’s ski big air': 'Women’s Big Air', 'Women’s freeski big air': 'Women’s Big Air'}
+2026-08-07 18:18:38.131 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "Aspen Snowmass Open": " FIS Freestyle Skiing Nor Am Cup",
+  "FIS Freeski World Cup, Font-Romeu": "FIS Freestyle Ski World Cup - France Stop",
+  "FIS Freeski World Cup, Cardrona": " FIS Freestyle Skiing World Cup Cardrona stop",
+  "FIS Freeski World Cup, Secret Garden": " FIS Freestyle Skiing World Cup Zhangjiakou stop",
+  "Winter Youth Olympic Games — Lausanne 2020": "Freestyle Skiing  Lausanne 2020 Winter Youth Olympics ",
+  "FIS Freeski World Cup, Calgary—Event 1": " FIS Freestyle Skiing World Cup Calgary stop",
+  "FIS Freeski World Cup, Stubai": " FIS Freestyle Skiing World Cup Stubai stop",
+  "FIS Freeski World Cup, Kreischberg": " FIS Freestyle Skiing World Cup Austria stop",
+  "FIS Freestyle Ski and Snowboard World Championships, Aspen": "FIS Freestyle Skiing World Championships",
+  "FIS Freeski World Cup, Calgary—Event 2": " FIS Freestyle Skiing World Cup Calgary stop",
+  "Beijing 2022 Winter Olympic Games": "Freestyle Skiing Winter Olympic Games",
+  "FIS Freeski World Cup, Copper Mountain": " FIS Freestyle Skiing World Cup Copper Mountain stop",
+  "FIS Freeski World Cup, Laax Open": " FIS Freestyle Skiing World Cup Laax stop"
+}
+```
+2026-08-07 18:18:38.131 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: eventname, primary_key_map {'Aspen Snowmass Open': ' FIS Freestyle Skiing Nor Am Cup', 'FIS Freeski World Cup, Font-Romeu': 'FIS Freestyle Ski World Cup - France Stop', 'FIS Freeski World Cup, Cardrona': ' FIS Freestyle Skiing World Cup Cardrona stop', 'FIS Freeski World Cup, Secret Garden': ' FIS Freestyle Skiing World Cup Zhangjiakou stop', 'Winter Youth Olympic Games — Lausanne 2020': 'Freestyle Skiing  Lausanne 2020 Winter Youth Olympics ', 'FIS Freeski World Cup, Calgary—Event 1': ' FIS Freestyle Skiing World Cup Calgary stop', 'FIS Freeski World Cup, Stubai': ' FIS Freestyle Skiing World Cup Stubai stop', 'FIS Freeski World Cup, Kreischberg': ' FIS Freestyle Skiing World Cup Austria stop', 'FIS Freestyle Ski and Snowboard World Championships, Aspen': 'FIS Freestyle Skiing World Championships', 'FIS Freeski World Cup, Calgary—Event 2': ' FIS Freestyle Skiing World Cup Calgary stop', 'Beijing 2022 Winter Olympic Games': 'Freestyle Skiing Winter Olympic Games', 'FIS Freeski World Cup, Copper Mountain': ' FIS Freestyle Skiing World Cup Copper Mountain stop', 'FIS Freeski World Cup, Laax Open': ' FIS Freestyle Skiing World Cup Laax stop'}
+2026-08-07 18:18:38.139 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - wide2deep_ws_en_003, df_inner shape: (15, 12), answer_df shape: (56, 6), response_df shape: (20, 9)
+2026-08-07 18:18:42.379 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_003, col level, metric_func_name llm_judge, score [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+2026-08-07 18:18:45.392 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_003, col result, metric_func_name llm_judge, score [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0]
+2026-08-07 18:18:50.995 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_003, col top3players, metric_func_name llm_judge, score [0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0]
+2026-08-07 18:18:51.002 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - wide2deep_ws_en_003, P/R/F1 by unique_columns: 0.7500/0.2679/0.3947
+2026-08-07 18:18:51.002 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - wide2deep_ws_en_003, P/R/F1 by row: 0.1000/0.0357/0.0526
+2026-08-07 18:18:51.002 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - wide2deep_ws_en_003, P/R/F1 by item: 0.6167/0.2202/0.3246
+2026-08-07 18:18:51.004 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - wide2deep_ws_en_003, final table score: 0.0
+{"event": "eval_done", "idx": 5, "instance_id": "wide2deep_ws_en_003", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.05263157894736841, "f1_by_item": 0.32456140350877194, "column_f1": 0.3947368421052632, "error": null, "elapsed_seconds": 27.989, "running_n": 5}
+2026-08-07 18:18:53.306 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| Series | Base model | U.S. release date |
+| --- | --- | --- | ...
+2026-08-07 18:19:00.762 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "basemodel": "modelname",
+  "u.s.releasedate": "releasedate"
+}
+```
+2026-08-07 18:19:00.762 | INFO     | eval.evaluation.evaluation:evaluate_single_query:172 - column map: {'basemodel': 'modelname', 'u.s.releasedate': 'releasedate'}
+2026-08-07 18:19:00.762 | INFO     | eval.evaluation.evaluation:evaluate_single_query:173 - befor mapping: Index(['series', 'basemodel', 'u.s.releasedate'], dtype='object')
+2026-08-07 18:19:00.763 | INFO     | eval.evaluation.evaluation:evaluate_single_query:175 - after mapping: Index(['series', 'modelname', 'releasedate'], dtype='object')
+2026-08-07 18:19:00.763 | INFO     | eval.evaluation.evaluation:evaluate_single_query:179 - instance_id: wide2deep_ws_en_004, msg: required_columns ['modelname', 'releasedate', 'pre-installedos', 'processorbrand', 'cpumodel', 'cpumanufacturingprocess', 'cpucorecount', 'screensize', 'resolution', 'batterycapacity', 'ramsize', 'storagesize', 'highestcameraresolution', 'launchprice(usd)'] != response_df Index(['series', 'modelname', 'releasedate'], dtype='object')
+{"event": "eval_done", "idx": 6, "instance_id": "wide2deep_ws_en_004", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 9.74, "running_n": 6}
+{"event": "eval_done", "idx": 7, "instance_id": "wide2deep_ws_en_021", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 4.243, "running_n": 7}
+SUMMARY {"n": 7, "valid_n": 7, "errors": 0, "complete": true, "judge_calls_current_process": 19, "score": 0.0, "entity_acc": 0.42857142857142855, "precision_by_row": 0.014285714285714287, "recall_by_row": 0.00510204081632653, "f1_by_row": 0.007518796992481202, "precision_by_item": 0.14931972789115647, "recall_by_item": 0.03381737310308739, "f1_by_item": 0.05090106217925767, "column_precision": 0.25, "column_recall": 0.043759811616954476, "column_f1": 0.06697298802561961}

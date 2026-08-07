@@ -1,0 +1,358 @@
+INFO: Pandarallel will run on 8 workers.
+INFO: Pandarallel will use Memory file system to transfer data between the main process and workers.
+{"event": "eval_start", "selected": 7, "resume_committed": 0, "committed_errors": 0, "crash_only_resume": false}
+{"event": "eval_done", "idx": 1, "instance_id": "wide2deep_ws_en_082", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 4.655, "running_n": 1}
+2026-08-07 18:18:07.387 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 车型名称 | 排量[L] | 供油方式 | 发动机最大功率[kW] | 发动机最大扭矩[N·m] | 发动机最大马力[Ps ...
+2026-08-07 18:18:11.336 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "秦PLUS DM-i智驾版 55KM领先型": "第二代秦PLUS DM-i智驾版55KM 领先型",
+  "秦PLUS EV智驾版 420KM进取型": "第二代秦PLUS EV智驾版420KM领先型",
+  "秦L DM-i智驾版 80KM领先型": "秦L DM-i智驾版80KM领先型",
+  "宋Pro DM-i智驾版 75KM领先型": "宋Pro DM-i智驾版 75KM 领先型",
+  "宋L DM-i智驾版 75KM领先型": "宋L DM-i智驾版 75KM领先型",
+  "宋L EV智驾版 550KM后驱卓越型": "宋L EV智驾版 550KM 卓越型",
+  "元PLUS智驾版 430KM领先型": "第二代元PLUS智驾版 430KM 领先型",
+  "汉EV智驾版 506KM尊贵型": "汉EV智驾版 506KM尊贵型",
+  "唐DM-i智驾版 115KM尊贵型": "唐DM-i智驾版 115KM 尊贵型"
+}
+```
+2026-08-07 18:18:11.336 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 车型名称, primary_key_map {'秦PLUS DM-i智驾版 55KM领先型': '第二代秦PLUS DM-i智驾版55KM 领先型', '秦PLUS EV智驾版 420KM进取型': '第二代秦PLUS EV智驾版420KM领先型', '秦L DM-i智驾版 80KM领先型': '秦L DM-i智驾版80KM领先型', '宋Pro DM-i智驾版 75KM领先型': '宋Pro DM-i智驾版 75KM 领先型', '宋L DM-i智驾版 75KM领先型': '宋L DM-i智驾版 75KM领先型', '宋L EV智驾版 550KM后驱卓越型': '宋L EV智驾版 550KM 卓越型', '元PLUS智驾版 430KM领先型': '第二代元PLUS智驾版 430KM 领先型', '汉EV智驾版 506KM尊贵型': '汉EV智驾版 506KM尊贵型', '唐DM-i智驾版 115KM尊贵型': '唐DM-i智驾版 115KM 尊贵型'}
+2026-08-07 18:18:11.348 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - wide2deep_ws_zh_065, df_inner shape: (9, 28), answer_df shape: (13, 14), response_df shape: (13, 15)
+2026-08-07 18:18:11.349 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 1.5, target: 1.5
+2026-08-07 18:18:11.349 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: -, target: -
+2026-08-07 18:18:11.349 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 1.5, target: 1.5
+2026-08-07 18:18:11.349 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: -, target: -
+2026-08-07 18:18:11.349 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: -, target: -
+2026-08-07 18:18:11.349 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 1.5, target: 1.5
+2026-08-07 18:18:11.349 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 1.5, target: 1.5
+2026-08-07 18:18:11.349 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: -, target: -
+2026-08-07 18:18:11.349 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 1.5, target: 1.5
+2026-08-07 18:18:11.350 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_065, col 排量[l], metric_func_name exact_match, score [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-07 18:18:13.866 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_065, col 供油方式, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 1, 1, 1]
+2026-08-07 18:18:13.866 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 74, target: 74
+2026-08-07 18:18:13.866 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: -, target: -
+2026-08-07 18:18:13.866 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 74, target: 74
+2026-08-07 18:18:13.866 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: -, target: -
+2026-08-07 18:18:13.866 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: -, target: -
+2026-08-07 18:18:13.866 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 74, target: 74
+2026-08-07 18:18:13.866 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 74, target: 74
+2026-08-07 18:18:13.867 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: -, target: -
+2026-08-07 18:18:13.867 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 115, target: 115
+2026-08-07 18:18:13.867 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_065, col 发动机最大功率[kw], metric_func_name exact_match, score [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-07 18:18:13.867 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 126, target: 126
+2026-08-07 18:18:13.867 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: -, target: -
+2026-08-07 18:18:13.868 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 126, target: 126
+2026-08-07 18:18:13.868 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: -, target: -
+2026-08-07 18:18:13.868 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: -, target: -
+2026-08-07 18:18:13.868 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 126, target: 126
+2026-08-07 18:18:13.868 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 126, target: 126
+2026-08-07 18:18:13.868 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: -, target: -
+2026-08-07 18:18:13.868 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 225, target: 225
+2026-08-07 18:18:13.868 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_065, col 发动机最大扭矩[n·m], metric_func_name exact_match, score [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-07 18:18:13.869 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 101, target: 101
+2026-08-07 18:18:13.869 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: -, target: -
+2026-08-07 18:18:13.869 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 101, target: 101
+2026-08-07 18:18:13.869 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: -, target: -
+2026-08-07 18:18:13.869 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: -, target: -
+2026-08-07 18:18:13.869 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 101, target: 101
+2026-08-07 18:18:13.869 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 101, target: 101
+2026-08-07 18:18:13.869 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: -, target: -
+2026-08-07 18:18:13.869 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 156, target: 156
+2026-08-07 18:18:13.870 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_065, col 发动机最大马力[ps], metric_func_name exact_match, score [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-07 18:18:13.870 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 自然吸气, target: 自然吸气
+2026-08-07 18:18:13.870 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: -, target: -
+2026-08-07 18:18:13.870 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 自然吸气, target: 自然吸气
+2026-08-07 18:18:13.870 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: -, target: -
+2026-08-07 18:18:13.870 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: -, target: -
+2026-08-07 18:18:13.870 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 自然吸气, target: 自然吸气
+2026-08-07 18:18:13.870 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 自然吸气, target: 自然吸气
+2026-08-07 18:18:13.870 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: -, target: -
+2026-08-07 18:18:13.870 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 涡轮增压, target: 涡轮增压
+2026-08-07 18:18:13.871 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_065, col 发动机进气方式, metric_func_name exact_match, score [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-07 18:18:13.871 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 4, target: 4
+2026-08-07 18:18:13.871 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: -, target: -
+2026-08-07 18:18:13.871 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 4, target: 4
+2026-08-07 18:18:13.871 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: -, target: -
+2026-08-07 18:18:13.871 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: -, target: -
+2026-08-07 18:18:13.871 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 4, target: 4
+2026-08-07 18:18:13.871 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 4, target: 4
+2026-08-07 18:18:13.871 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: -, target: -
+2026-08-07 18:18:13.871 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 4, target: 4
+2026-08-07 18:18:13.872 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_065, col 发动机气缸数, metric_func_name exact_match, score [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-07 18:18:15.595 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_065, col 电池类型, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 1, 1, 1]
+2026-08-07 18:18:15.595 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 弗迪, target: 弗迪
+2026-08-07 18:18:15.595 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 弗迪, target: 弗迪
+2026-08-07 18:18:15.595 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 弗迪, target: 弗迪
+2026-08-07 18:18:15.595 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 弗迪, target: 弗迪
+2026-08-07 18:18:15.595 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 弗迪, target: 弗迪
+2026-08-07 18:18:15.595 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 弗迪, target: 弗迪
+2026-08-07 18:18:15.595 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 弗迪, target: 弗迪
+2026-08-07 18:18:15.595 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 弗迪, target: 弗迪
+2026-08-07 18:18:15.595 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 弗迪, target: 弗迪
+2026-08-07 18:18:15.596 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_065, col 电芯品牌, metric_func_name exact_match, score [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-07 18:18:15.596 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 120, target: 120
+2026-08-07 18:18:15.596 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 100, target: 100
+2026-08-07 18:18:15.597 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 120, target: 120
+2026-08-07 18:18:15.597 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 150, target: 150
+2026-08-07 18:18:15.597 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 150, target: 150
+2026-08-07 18:18:15.597 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 120, target: 120
+2026-08-07 18:18:15.597 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 160, target: 160
+2026-08-07 18:18:15.597 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 150, target: 150
+2026-08-07 18:18:15.597 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 200, target: 200
+2026-08-07 18:18:15.597 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_065, col 电动机总功率[kw], metric_func_name exact_match, score [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-07 18:18:15.598 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 163, target: 163
+2026-08-07 18:18:15.598 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 136, target: 136
+2026-08-07 18:18:15.598 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 163, target: 163
+2026-08-07 18:18:15.598 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 204, target: 204
+2026-08-07 18:18:15.598 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 204, target: 204
+2026-08-07 18:18:15.598 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 163, target: 163
+2026-08-07 18:18:15.598 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 218, target: 218
+2026-08-07 18:18:15.598 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 204, target: 204
+2026-08-07 18:18:15.598 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 272, target: 272
+2026-08-07 18:18:15.599 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_065, col 电动机总马力[ps], metric_func_name exact_match, score [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-07 18:18:15.599 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 210, target: 210
+2026-08-07 18:18:15.599 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 180, target: 180
+2026-08-07 18:18:15.599 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 210, target: 210
+2026-08-07 18:18:15.599 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 310, target: 310
+2026-08-07 18:18:15.599 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 310, target: 310
+2026-08-07 18:18:15.599 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 210, target: 210
+2026-08-07 18:18:15.599 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 260, target: 260
+2026-08-07 18:18:15.599 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 310, target: 310
+2026-08-07 18:18:15.599 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 315, target: 315
+2026-08-07 18:18:15.600 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_065, col 电动机总扭矩[n·m], metric_func_name exact_match, score [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-07 18:18:15.600 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 1.0%, response: 7.68, target: 7.68
+2026-08-07 18:18:15.600 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 1.0%, response: 48.0, target: 48.0
+2026-08-07 18:18:15.602 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 1.0%, response: 10.08, target: 10.08
+2026-08-07 18:18:15.602 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 1.0%, response: 60.48, target: 60.48
+2026-08-07 18:18:15.602 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 1.0%, response: 49.92, target: 49.92
+2026-08-07 18:18:15.602 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 1.0%, response: 12.96, target: 12.9
+2026-08-07 18:18:15.602 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 1.0%, response: 12.96, target: 12.9
+2026-08-07 18:18:15.602 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 1.0%, response: 71.8, target: 71.8
+2026-08-07 18:18:15.602 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 1.0%, response: 21.5, target: 21.5
+2026-08-07 18:18:15.603 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_065, col 电池容量, metric_func_name number_near, score [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-07 18:18:15.612 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - wide2deep_ws_zh_065, P/R/F1 by unique_columns: 0.6923/0.6923/0.6923
+2026-08-07 18:18:15.612 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - wide2deep_ws_zh_065, P/R/F1 by row: 0.6923/0.6923/0.6923
+2026-08-07 18:18:15.612 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - wide2deep_ws_zh_065, P/R/F1 by item: 0.6923/0.6923/0.6923
+2026-08-07 18:18:15.617 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - wide2deep_ws_zh_065, final table score: 0.0
+{"event": "eval_done", "idx": 2, "instance_id": "wide2deep_ws_zh_065", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.6923076923076923, "f1_by_item": 0.6923076923076923, "column_f1": 0.6923076923076923, "error": null, "elapsed_seconds": 9.941, "running_n": 2}
+2026-08-07 18:18:20.338 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 排名 | 企业名称 | 营业收入（百万美元） | 利润（百万美元） | 总部所在城市 |
+| --- | --- | -- ...
+2026-08-07 18:18:29.040 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "国家电网有限公司（STATE GRID）": "国家电网有限公司（STATE GRID)",
+  "中国石油化工集团有限公司（SINOPEC GROUP）": "中国石油化工集团有限公司（SINOPEC GROUP)",
+  "中国石油天然气集团有限公司（CHINA NATIONAL PETROLEUM）": "中国石油天然气集团有限公司（CHINA NATIONAL PETROLEUM)",
+  "中国建筑集团有限公司（CHINA STATE CONSTRUCTION ENGINEERING）": "中国建筑集团有限公司（CHINA STATE CONSTRUCTION ENGINEERING)",
+  "中国工商银行股份有限公司（INDUSTRIAL & COMMERCIAL BANK OF CHINA）": "中国工商银行股份有限公司（INDUSTRIAL & COMMERCIAL BANK OF CHINA)",
+  "中国建设银行股份有限公司（CHINA CONSTRUCTION BANK）": "中国建设银行股份有限公司（CHINA CONSTRUCTION BANK)",
+  "鸿海精密工业股份有限公司（HON HAI PRECISION INDUSTRY）": "鸿海精密工业股份有限公司（HON HAI PRECISION INDUSTRY)",
+  "中国农业银行股份有限公司（AGRICULTURAL BANK OF CHINA）": "中国农业银行股份有限公司（AGRICULTURAL BANK OF CHINA)",
+  "中国铁路工程集团有限公司（CHINA RAILWAY ENGINEERING GROUP）": "中国铁路工程集团有限公司（CHINA RAILWAY ENGINEERING GROUP)",
+  "中国银行股份有限公司（BANK OF CHINA）": "中国银行股份有限公司（BANK OF CHINA)",
+  "中国电力建设集团有限公司（POWERCHINA）": "中国电力建设集团有限公司（POWERCHINA)",
+  "中国医药集团有限公司（SINOPHARM）": "中国医药集团有限公司（SINOPHARM)",
+  "中国航空工业集团有限公司（AVIATION INDUSTRY CORP. OF CHINA）": "中国航空工业集团有限公司（AVIATION INDUSTRY CORP. OF CHINA)",
+  "交通银行股份有限公司（BANK OF COMMUNICATIONS）": "交通银行股份有限公司（BANK OF COMMUNICATIONS)",
+  "江西铜业集团有限公司（JIANGXI COPPER）": "江西铜业集团有限公司（JIANGXI COPPER)",
+  "中国人民保险集团股份有限公司（PEOPLE'S INSURANCE CO. OF CHINA）": "中国人民保险集团股份有限公司（PEOPLE'S INSURANCE CO. OF CHINA)",
+  "厦门象屿集团有限公司（XMXYG）": "厦门象屿集团有限公司（XMXYG)",
+  "中国铁道建筑集团有限公司（CHINA RAILWAY CONSTRUCTION）": "中国铁道建筑集团有限公司（CHINA RAILWAY CONSTRUCTION)",
+  "中国中化控股有限责任公司（SINOCHEM HOLDINGS）": "中国中化控股有限责任公司（SINOCHEM HOLDINGS)",
+  "山东能源集团有限公司（SHANDONG ENERGY GROUP）": "山东能源集团有限公司（SHANDONG ENERGY GROUP)",
+  "中国南方电网有限责任公司（CHINA SOUTHERN POWER GRID）": "中国南方电网有限责任公司（CHINA SOUTHERN POWER GRID)"
+}
+```
+2026-08-07 18:18:29.040 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 企业名称, primary_key_map {'国家电网有限公司（STATE GRID）': '国家电网有限公司（STATE GRID)', '中国石油化工集团有限公司（SINOPEC GROUP）': '中国石油化工集团有限公司（SINOPEC GROUP)', '中国石油天然气集团有限公司（CHINA NATIONAL PETROLEUM）': '中国石油天然气集团有限公司（CHINA NATIONAL PETROLEUM)', '中国建筑集团有限公司（CHINA STATE CONSTRUCTION ENGINEERING）': '中国建筑集团有限公司（CHINA STATE CONSTRUCTION ENGINEERING)', '中国工商银行股份有限公司（INDUSTRIAL & COMMERCIAL BANK OF CHINA）': '中国工商银行股份有限公司（INDUSTRIAL & COMMERCIAL BANK OF CHINA)', '中国建设银行股份有限公司（CHINA CONSTRUCTION BANK）': '中国建设银行股份有限公司（CHINA CONSTRUCTION BANK)', '鸿海精密工业股份有限公司（HON HAI PRECISION INDUSTRY）': '鸿海精密工业股份有限公司（HON HAI PRECISION INDUSTRY)', '中国农业银行股份有限公司（AGRICULTURAL BANK OF CHINA）': '中国农业银行股份有限公司（AGRICULTURAL BANK OF CHINA)', '中国铁路工程集团有限公司（CHINA RAILWAY ENGINEERING GROUP）': '中国铁路工程集团有限公司（CHINA RAILWAY ENGINEERING GROUP)', '中国银行股份有限公司（BANK OF CHINA）': '中国银行股份有限公司（BANK OF CHINA)', '中国电力建设集团有限公司（POWERCHINA）': '中国电力建设集团有限公司（POWERCHINA)', '中国医药集团有限公司（SINOPHARM）': '中国医药集团有限公司（SINOPHARM)', '中国航空工业集团有限公司（AVIATION INDUSTRY CORP. OF CHINA）': '中国航空工业集团有限公司（AVIATION INDUSTRY CORP. OF CHINA)', '交通银行股份有限公司（BANK OF COMMUNICATIONS）': '交通银行股份有限公司（BANK OF COMMUNICATIONS)', '江西铜业集团有限公司（JIANGXI COPPER）': '江西铜业集团有限公司（JIANGXI COPPER)', "中国人民保险集团股份有限公司（PEOPLE'S INSURANCE CO. OF CHINA）": "中国人民保险集团股份有限公司（PEOPLE'S INSURANCE CO. OF CHINA)", '厦门象屿集团有限公司（XMXYG）': '厦门象屿集团有限公司（XMXYG)', '中国铁道建筑集团有限公司（CHINA RAILWAY CONSTRUCTION）': '中国铁道建筑集团有限公司（CHINA RAILWAY CONSTRUCTION)', '中国中化控股有限责任公司（SINOCHEM HOLDINGS）': '中国中化控股有限责任公司（SINOCHEM HOLDINGS)', '山东能源集团有限公司（SHANDONG ENERGY GROUP）': '山东能源集团有限公司（SHANDONG ENERGY GROUP)', '中国南方电网有限责任公司（CHINA SOUTHERN POWER GRID）': '中国南方电网有限责任公司（CHINA SOUTHERN POWER GRID)'}
+2026-08-07 18:18:29.047 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - wide2deep_ws_zh_012, df_inner shape: (21, 10), answer_df shape: (133, 5), response_df shape: (21, 6)
+2026-08-07 18:18:29.048 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 3, target: 3
+2026-08-07 18:18:29.048 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 5, target: 5
+2026-08-07 18:18:29.048 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 6, target: 6
+2026-08-07 18:18:29.048 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 14, target: 14
+2026-08-07 18:18:29.048 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 22, target: 22
+2026-08-07 18:18:29.048 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 29, target: 30
+2026-08-07 18:18:29.048 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 32, target: 32
+2026-08-07 18:18:29.048 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 35, target: 34
+2026-08-07 18:18:29.048 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 39, target: 35
+2026-08-07 18:18:29.048 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 46, target: 37
+2026-08-07 18:18:29.048 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 43, target: 43
+2026-08-07 18:18:29.048 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 54, target: 54
+2026-08-07 18:18:29.048 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 75, target: 75
+2026-08-07 18:18:29.048 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 78, target: 78
+2026-08-07 18:18:29.048 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 108, target: 108
+2026-08-07 18:18:29.048 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 112, target: 112
+2026-08-07 18:18:29.048 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 147, target: 147
+2026-08-07 18:18:29.048 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 154, target: 154
+2026-08-07 18:18:29.048 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 157, target: 157
+2026-08-07 18:18:29.048 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 158, target: 158
+2026-08-07 18:18:29.048 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 187, target: 187
+2026-08-07 18:18:29.049 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_012, col 排名, metric_func_name exact_match, score [1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-07 18:18:29.050 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 545948.0, target: 545947.5
+2026-08-07 18:18:29.050 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 429700.0, target: 429699.7
+2026-08-07 18:18:29.050 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 421714.0, target: 421713.6
+2026-08-07 18:18:29.050 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 320431.0, target: 320430.5
+2026-08-07 18:18:29.050 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 222484.0, target: 222484.2
+2026-08-07 18:18:29.050 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 199826.0, target: 199826.1
+2026-08-07 18:18:29.050 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 197876.0, target: 197876.0
+2026-08-07 18:18:29.050 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 192398.0, target: 192398.3
+2026-08-07 18:18:29.050 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 178563.0, target: 178562.9
+2026-08-07 18:18:29.050 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 172328.0, target: 172327.6
+2026-08-07 18:18:29.050 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 160847.4, target: 160847.4
+2026-08-07 18:18:29.050 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 143240.0, target: 143240.0
+2026-08-07 18:18:29.050 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 122383.2, target: 122383.2
+2026-08-07 18:18:29.050 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 118813.5, target: 118813.5
+2026-08-07 18:18:29.050 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 97034.9, target: 97034.9
+2026-08-07 18:18:29.050 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 96072.2, target: 96072.2
+2026-08-07 18:18:29.050 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 82654.1, target: 82654.1
+2026-08-07 18:18:29.050 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 78757.1, target: 78757.1
+2026-08-07 18:18:29.050 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 78243.2, target: 78243.2
+2026-08-07 18:18:29.050 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 78181.7, target: 78181.7
+2026-08-07 18:18:29.050 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 69286.9, target: 69286.9
+2026-08-07 18:18:29.051 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_012, col 营业收入（百万美元）, metric_func_name number_near, score [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-07 18:18:29.051 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 9204.3, target: 9204.3
+2026-08-07 18:18:29.051 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 9393.4, target: 9393.4
+2026-08-07 18:18:29.051 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 21294.7, target: 21294.7
+2026-08-07 18:18:29.051 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 4272.5, target: 4371.5
+2026-08-07 18:18:29.051 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 51417.0, target: 51417.0
+2026-08-07 18:18:29.052 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not convertable, response: None, target: 46990.0
+2026-08-07 18:18:29.052 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 4542.0, target: 4562.9
+2026-08-07 18:18:29.052 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 2152.5, target: 38048.7
+2026-08-07 18:18:29.052 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not convertable, response: None, target: 2152.5
+2026-08-07 18:18:29.052 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not convertable, response: None, target: 32758.3
+2026-08-07 18:18:29.052 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 1833.5, target: 1701.0
+2026-08-07 18:18:29.052 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: -307.7, target: -3666.0
+2026-08-07 18:18:29.052 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 1679.8, target: 829.6
+2026-08-07 18:18:29.052 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 1642.7, target: 2342.2
+2026-08-07 18:18:29.052 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 679.6, target: 775.9
+2026-08-07 18:18:29.052 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1124.1, target: 1149.5
+2026-08-07 18:18:29.052 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 1083.7, target: 1644.1
+2026-08-07 18:18:29.052 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 13009.7, target: 13098.6
+2026-08-07 18:18:29.052 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 470.0, target: 371.2
+2026-08-07 18:18:29.052 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 3156.5, target: 3153.2
+2026-08-07 18:18:29.052 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 216.9, target: 14.5
+2026-08-07 18:18:29.053 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_012, col 利润（百万美元）, metric_func_name number_near, score [1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0]
+2026-08-07 18:18:33.992 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_012, col 总部所在城市, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+2026-08-07 18:18:33.998 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - wide2deep_ws_zh_012, P/R/F1 by unique_columns: 1.0000/0.1579/0.2727
+2026-08-07 18:18:33.998 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - wide2deep_ws_zh_012, P/R/F1 by row: 0.4286/0.0677/0.1169
+2026-08-07 18:18:33.998 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - wide2deep_ws_zh_012, P/R/F1 by item: 0.8381/0.1323/0.2286
+2026-08-07 18:18:34.000 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - wide2deep_ws_zh_012, final table score: 0.0
+{"event": "eval_done", "idx": 3, "instance_id": "wide2deep_ws_zh_012", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.11688311688311688, "f1_by_item": 0.22857142857142854, "column_f1": 0.2727272727272727, "error": null, "elapsed_seconds": 18.365, "running_n": 3}
+2026-08-07 18:18:35.226 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| Year | Rank | Name | Net Worth (in USD billions) | Age | Sour ...
+2026-08-07 18:18:39.524 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "Jeff Bezos": "Jeff Bezos",
+  "Elon Musk": "Elon Musk",
+  "Bernard Arnault & family": "Bernard Arnault & family"
+}
+```
+2026-08-07 18:18:39.524 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: name, primary_key_map {'Jeff Bezos': 'Jeff Bezos', 'Elon Musk': 'Elon Musk', 'Bernard Arnault & family': 'Bernard Arnault & family'}
+2026-08-07 18:18:40.745 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "2019": "2019",
+  "2020": "2020",
+  "2021": "2021",
+  "2022": "2022",
+  "2023": "2023",
+  "2024": "2024"
+}
+```
+2026-08-07 18:18:40.745 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: year, primary_key_map {'2019': '2019', '2020': '2020', '2021': '2021', '2022': '2022', '2023': '2023', '2024': '2024'}
+2026-08-07 18:18:40.751 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - wide2deep_ws_en_071, df_inner shape: (6, 12), answer_df shape: (60, 6), response_df shape: (6, 8)
+2026-08-07 18:18:40.752 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 1, target: 1
+2026-08-07 18:18:40.752 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 1, target: 1
+2026-08-07 18:18:40.752 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 1, target: 1
+2026-08-07 18:18:40.752 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 1, target: 1
+2026-08-07 18:18:40.752 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 1, target: 1
+2026-08-07 18:18:40.752 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 1, target: 1
+2026-08-07 18:18:40.753 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_071, col rank, metric_func_name exact_match, score [1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-07 18:18:40.753 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 131.0, target: 131.0
+2026-08-07 18:18:40.753 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 113.0, target: 113.0
+2026-08-07 18:18:40.753 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 177.0, target: 177.0
+2026-08-07 18:18:40.753 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 219.0, target: 219.0
+2026-08-07 18:18:40.753 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 211.0, target: 211.0
+2026-08-07 18:18:40.754 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 233.0, target: 233.0
+2026-08-07 18:18:40.754 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_071, col networth(inusdbillions), metric_func_name number_near, score [1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-07 18:18:40.754 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 55, target: 55
+2026-08-07 18:18:40.754 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 56, target: 56
+2026-08-07 18:18:40.754 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 57, target: 57
+2026-08-07 18:18:40.754 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 50, target: 50
+2026-08-07 18:18:40.754 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 74, target: 74
+2026-08-07 18:18:40.755 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 75, target: 75
+2026-08-07 18:18:40.755 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_071, col age, metric_func_name exact_match, score [1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-07 18:18:42.822 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_071, col sourceofwealth, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1]
+2026-08-07 18:18:42.827 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - wide2deep_ws_en_071, P/R/F1 by unique_columns: 1.0000/0.1000/0.1818
+2026-08-07 18:18:42.827 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - wide2deep_ws_en_071, P/R/F1 by row: 1.0000/0.1000/0.1818
+2026-08-07 18:18:42.827 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - wide2deep_ws_en_071, P/R/F1 by item: 1.0000/0.1000/0.1818
+2026-08-07 18:18:42.829 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - wide2deep_ws_en_071, final table score: 0.0
+{"event": "eval_done", "idx": 4, "instance_id": "wide2deep_ws_en_071", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.18181818181818182, "f1_by_item": 0.18181818181818182, "column_f1": 0.18181818181818182, "error": null, "elapsed_seconds": 8.751, "running_n": 4}
+2026-08-07 18:18:45.999 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| League | Season | Champion Club | MVP Player | Club | Rating  ...
+2026-08-07 18:18:49.150 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "Premier League": "Premier League",
+  "La Liga": "La Liga",
+  "Bundesliga": "Bundesliga",
+  "Serie A": "Serie A",
+  "Ligue 1": "Ligue 1"
+}
+```
+2026-08-07 18:18:49.150 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: league, primary_key_map {'Premier League': 'Premier League', 'La Liga': 'La Liga', 'Bundesliga': 'Bundesliga', 'Serie A': 'Serie A', 'Ligue 1': 'Ligue 1'}
+2026-08-07 18:18:52.327 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "2020–21": "2020-21"
+}
+```
+2026-08-07 18:18:52.327 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: season, primary_key_map {'2020–21': '2020-21'}
+2026-08-07 18:18:52.333 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - wide2deep_ws_en_083, df_inner shape: (5, 12), answer_df shape: (25, 6), response_df shape: (5, 8)
+2026-08-07 18:18:54.664 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_083, col championclub, metric_func_name llm_judge, score [1, 1, 1, 1, 1]
+2026-08-07 18:18:56.887 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_083, col mvpplayer, metric_func_name llm_judge, score [1, 0, 1, 1, 0]
+2026-08-07 18:18:59.985 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_083, col club, metric_func_name llm_judge, score [1, 0, 1, 1, 0]
+2026-08-07 18:18:59.986 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 8.07, target: 7.83
+2026-08-07 18:18:59.986 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 7.68, target: 7.59
+2026-08-07 18:18:59.986 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 8.52, target: 8.33
+2026-08-07 18:18:59.986 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 7.79, target: 7.63
+2026-08-07 18:18:59.986 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 7.61, target: 7.55
+2026-08-07 18:18:59.987 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_083, col rating, metric_func_name exact_match, score [0.0, 0.0, 0.0, 0.0, 0.0]
+2026-08-07 18:18:59.991 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - wide2deep_ws_en_083, P/R/F1 by unique_columns: 1.0000/0.2000/0.3333
+2026-08-07 18:18:59.991 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - wide2deep_ws_en_083, P/R/F1 by row: 0.0000/0.0000/0.0000
+2026-08-07 18:18:59.991 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - wide2deep_ws_en_083, P/R/F1 by item: 0.7000/0.1400/0.2333
+2026-08-07 18:18:59.993 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - wide2deep_ws_en_083, final table score: 0.0
+{"event": "eval_done", "idx": 5, "instance_id": "wide2deep_ws_en_083", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0, "f1_by_item": 0.23333333333333336, "column_f1": 0.33333333333333337, "error": null, "elapsed_seconds": 17.148, "running_n": 5}
+2026-08-07 18:19:03.596 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 年份 | 赛事 | 地点 | 进攻 | 拦网 | 发球 | 总计 | 名次 |
+| --- | --- | --- | - ...
+2026-08-07 18:19:08.525 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "世界女子排球锦标赛": "女排世锦赛",
+  "女排世界杯": "女排世界杯",
+  "里约奥运会女子排球赛": "奥运会",
+  "世界女排联赛": "世界女排联赛（替补）"
+}
+```
+2026-08-07 18:19:08.526 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 赛事, primary_key_map {'世界女子排球锦标赛': '女排世锦赛', '女排世界杯': '女排世界杯', '里约奥运会女子排球赛': '奥运会', '世界女排联赛': '世界女排联赛（替补）'}
+2026-08-07 18:19:08.569 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_12_张常宁, df_inner shape: (2, 15), answer_df shape: (5, 8), response_df shape: (7, 9)
+2026-08-07 18:19:10.844 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_12_张常宁, col 地点, metric_func_name llm_judge, score [1, 1]
+2026-08-07 18:19:10.845 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not convertable, response: None, target: 47.0
+2026-08-07 18:19:10.845 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not convertable, response: None, target: 67.0
+2026-08-07 18:19:10.845 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_12_张常宁, col 进攻, metric_func_name number_near, score [0.0, 0.0]
+2026-08-07 18:19:10.846 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not convertable, response: None, target: 4.0
+2026-08-07 18:19:10.846 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not convertable, response: None, target: 15.0
+2026-08-07 18:19:10.846 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_12_张常宁, col 拦网, metric_func_name number_near, score [0.0, 0.0]
+2026-08-07 18:19:10.846 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not convertable, response: None, target: 5.0
+2026-08-07 18:19:10.847 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not convertable, response: None, target: 1.0
+2026-08-07 18:19:10.847 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_12_张常宁, col 发球, metric_func_name number_near, score [0.0, 0.0]
+2026-08-07 18:19:10.847 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not convertable, response: None, target: 56.0
+2026-08-07 18:19:10.847 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not convertable, response: None, target: 83.0
+2026-08-07 18:19:10.848 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_12_张常宁, col 总计, metric_func_name number_near, score [0.0, 0.0]
+2026-08-07 18:19:10.848 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 冠军, target: 第一名
+2026-08-07 18:19:10.848 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 季军, target: 第三名
+2026-08-07 18:19:10.849 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_12_张常宁, col 名次, metric_func_name exact_match, score [0.0, 0.0]
+2026-08-07 18:19:10.853 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_12_张常宁, P/R/F1 by unique_columns: 0.2857/0.4000/0.3333
+2026-08-07 18:19:10.853 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_12_张常宁, P/R/F1 by row: 0.0000/0.0000/0.0000
+2026-08-07 18:19:10.854 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_12_张常宁, P/R/F1 by item: 0.1071/0.1500/0.1250
+2026-08-07 18:19:10.855 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_12_张常宁, final table score: 0.0
+{"event": "eval_done", "idx": 6, "instance_id": "deep2wide_result_12_张常宁", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0, "f1_by_item": 0.125, "column_f1": 0.3333333333333333, "error": null, "elapsed_seconds": 10.847, "running_n": 6}
+{"event": "eval_done", "idx": 7, "instance_id": "deep2wide_result_18_路易斯·布努埃尔", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 5.952, "running_n": 7}
+SUMMARY {"n": 7, "valid_n": 7, "errors": 0, "complete": true, "judge_calls_current_process": 22, "score": 0.0, "entity_acc": 0.7142857142857143, "precision_by_row": 0.3029827315541601, "recall_by_row": 0.12285383789143188, "f1_by_row": 0.14157271300128443, "precision_by_item": 0.47679225536368397, "recall_by_item": 0.1735197884821945, "f1_by_item": 0.20871866229009087, "column_precision": 0.5682888540031398, "column_recall": 0.2214574898785425, "column_f1": 0.2590742590742591}
