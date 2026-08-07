@@ -83,6 +83,8 @@ PACKAGE_SOURCES = (
     Path("scripts/audit_v24784_projection_funnel_integration_build.py"),
     Path("scripts/audit_v24784_projection_funnel_control_plane_readiness.py"),
     Path("scripts/audit_v24784_projection_funnel_package.py"),
+    Path("scripts/control_v24784_projection_funnel_external.py"),
+    Path("scripts/audit_v24784_projection_funnel_forward.py"),
     Path("tests/test_v24784_projection_funnel_execution_contract.py"),
     Path("tests/test_v24784_projection_funnel_package.py"),
     Path("tests/test_v24784_projection_funnel_integration.py"),
@@ -91,6 +93,8 @@ PACKAGE_SOURCES = (
     Path("tests/test_v24770_visible_entity_fair_semantic_runtime.py"),
     Path("tests/test_audit_v24784_projection_funnel_control_plane_readiness.py"),
     Path("tests/test_audit_v24784_projection_funnel_package.py"),
+    Path("tests/test_v24784_projection_funnel_control.py"),
+    Path("tests/test_audit_v24784_projection_funnel_forward.py"),
 )
 SOURCES = PACKAGE_SOURCES
 TEST_SUITES = (
@@ -109,8 +113,10 @@ TEST_SUITES = (
     (Path("tests/test_v24784_projection_funnel_package.py"), 7, 180),
     (Path("tests/test_audit_v24784_projection_funnel_control_plane_readiness.py"), 7, 180),
     (Path("tests/test_audit_v24784_projection_funnel_package.py"), 7, 180),
+    (Path("tests/test_v24784_projection_funnel_control.py"), 9, 180),
+    (Path("tests/test_audit_v24784_projection_funnel_forward.py"), 8, 180),
 )
-EXPECTED_TESTS = 114
+EXPECTED_TESTS = 131
 RUNNER_MARKERS = (
     "scripts/run_v24784_projection_funnel_external.py",
     "scripts/run_v24784_projection_funnel_task.py",
@@ -143,6 +149,28 @@ SECRET = re.compile(
     r"(?<![A-Za-z0-9])(?:"
     + "|".join(re.escape(value) for value in SECRET_PREFIXES)
     + r")[A-Za-z0-9_-]{16,}"
+)
+PACKAGE_KEYS = frozenset(
+    {
+        "artifact_version",
+        "role",
+        "protocol_id",
+        "created_at_unix",
+        "parents",
+        "implementation_contract",
+        "source_manifest",
+        "source_manifest_sha256",
+        "manifest_policy",
+        "git",
+        "tests",
+        "label_blind_audit",
+        "runtime_state",
+        "source_policy",
+        "findings",
+        "audit_valid",
+        "authorization",
+        "audit_payload_sha256",
+    }
 )
 
 
@@ -617,28 +645,88 @@ def validate_audit(value: Mapping[str, Any]) -> dict[str, Any]:
     copied = copy.deepcopy(dict(value))
     unsigned = dict(copied)
     seal = unsigned.pop("audit_payload_sha256", None)
+    parents = copied.get("parents")
+    tests = copied.get("tests")
+    suites = tests.get("suites") if isinstance(tests, Mapping) else None
+    expected_suites = [
+        {
+            "path": str(path),
+            "expected": expected,
+        }
+        for path, expected, _timeout in TEST_SUITES
+    ]
+    watchers = [
+        {"pid": pid, "start_ticks": ticks, "marker": marker}
+        for pid, ticks, marker in contract.PROTECTED_WATCHERS
+    ]
     if (
-        copied.get("role") != "v24784_projection_funnel_package_audit"
+        set(copied) != PACKAGE_KEYS
+        or copied.get("artifact_version") != 1
+        or copied.get("role") != "v24784_projection_funnel_package_audit"
         or copied.get("protocol_id") != contract.PROTOCOL_ID
+        or isinstance(copied.get("created_at_unix"), bool)
+        or not isinstance(copied.get("created_at_unix"), int)
         or copied.get("audit_valid") is not True
         or copied.get("findings") != []
-        or copied.get("parents", {}).get("valid") is not True
-        or copied.get("implementation_contract", {}).get("valid") is not True
+        or parents
+        != {
+            "protocol_sha256": _sha256(PARENT_PROTOCOL),
+            "readiness_sha256": _sha256(PARENT_READINESS),
+            "valid": True,
+        }
+        or copied.get("implementation_contract") != implementation_contract()
         or copied.get("source_manifest") != _manifest()
         or copied.get("source_manifest_sha256")
         != contract.payload_sha256(copied["source_manifest"])
-        or copied.get("tests", {}).get("passed") is not True
-        or copied.get("tests", {}).get("observed") != EXPECTED_TESTS
-        or copied.get("label_blind_audit", {}).get("passed") is not True
+        or not isinstance(suites, list)
+        or len(suites) != len(TEST_SUITES)
+        or any(
+            not isinstance(row, Mapping)
+            or set(row) != {"path", "expected", "observed", "output_sha256", "passed"}
+            or row.get("path") != expected["path"]
+            or row.get("expected") != expected["expected"]
+            or row.get("observed") != expected["expected"]
+            or re.fullmatch(r"[0-9a-f]{64}", str(row.get("output_sha256", "")))
+            is None
+            or row.get("passed") is not True
+            for row, expected in zip(suites, expected_suites, strict=True)
+        )
+        or tests.get("expected") != EXPECTED_TESTS
+        or tests.get("observed") != EXPECTED_TESTS
+        or tests.get("passed") is not True
+        or tests.get("network_model_search_fetch_benchmark_or_evaluator_called")
+        is not False
+        or copied.get("label_blind_audit")
+        != {
+            "runtime_input_keys": ["opaque_id", "question"],
+            "privileged_forward_field_accesses": [],
+            "evaluator_or_gold_imports": [],
+            "private_or_old_output_marker_hits": [],
+            "credential_literal_hits": [],
+            "passed": True,
+        }
         or copied.get("manifest_policy")
         != {
             "private_population_truth_provenance_or_evaluator_file_in_manifest": False,
             "evaluation_or_output_directory_file_in_manifest": False,
             "benchmark_mapping_gold_score_reward_file_in_manifest": False,
         }
-        or copied.get("runtime_state", {}).get("shared_api_lease_inactive") is not True
-        or copied.get("runtime_state", {}).get("active_v24784_runner_pids") != []
-        or copied.get("runtime_state", {}).get("future_surface_pristine") is not True
+        or not isinstance(copied.get("git"), Mapping)
+        or copied["git"].get("head") != copied["git"].get("target_main")
+        or re.fullmatch(r"[0-9a-f]{40}", str(copied["git"].get("head", "")))
+        is None
+        or copied["git"].get("head_equals_target_main") is not True
+        or copied["git"].get("worktree_clean") is not True
+        or copied["git"].get("all_sources_tracked") is not True
+        or copied.get("runtime_state")
+        != {
+            "protected_watchers": watchers,
+            "shared_api_lease_inactive": True,
+            "active_v24784_runner_pids": [],
+            "future_surface_pristine": True,
+            "external_forward_launched_by_audit": False,
+            "evaluator_called_by_audit": False,
+        }
         or copied.get("source_policy")
         != {
             "v24780_output_prediction_task_result_page_or_visible_task_opened_or_hashed": False,

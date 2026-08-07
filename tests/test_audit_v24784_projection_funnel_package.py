@@ -35,6 +35,12 @@ class V24784ProjectionFunnelPackageAuditTests(unittest.TestCase):
             (tests, expected, "d" * 64)
             for _path, expected, _timeout in audit.TEST_SUITES
         )
+        implementation_value = audit.implementation_contract()
+        implementation_value["valid"] = implementation
+        watchers = [
+            {"pid": pid, "start_ticks": ticks, "marker": marker}
+            for pid, ticks, marker in audit.contract.PROTECTED_WATCHERS
+        ]
         with (
             patch.object(audit, "_manifest", return_value={"x": "a" * 64}),
             patch.object(audit, "_sha256", return_value="b" * 64),
@@ -44,7 +50,7 @@ class V24784ProjectionFunnelPackageAuditTests(unittest.TestCase):
             patch.object(
                 audit,
                 "implementation_contract",
-                return_value={"valid": implementation},
+                return_value=implementation_value,
             ),
             patch.object(audit, "_run_test", side_effect=lambda *_args: next(suites)),
             patch.object(
@@ -52,7 +58,9 @@ class V24784ProjectionFunnelPackageAuditTests(unittest.TestCase):
                 "_git",
                 side_effect=[head, remote, "" if clean else " M plan.md"],
             ),
-            patch.object(audit.contract, "protected_watcher_snapshot", return_value=[]),
+            patch.object(
+                audit.contract, "protected_watcher_snapshot", return_value=watchers
+            ),
             patch.object(audit, "_lease_inactive", return_value=lease),
             patch.object(audit, "_active_runners", return_value=runners or []),
             patch.object(Path, "exists", return_value=not pristine),
@@ -71,7 +79,15 @@ class V24784ProjectionFunnelPackageAuditTests(unittest.TestCase):
 
     def test_go_authorizes_only_preactivation_audit_generation(self) -> None:
         value = self.synthetic()
-        with patch.object(audit, "_manifest", return_value=value["source_manifest"]):
+        with (
+            patch.object(audit, "_manifest", return_value=value["source_manifest"]),
+            patch.object(audit, "_sha256", return_value="b" * 64),
+            patch.object(
+                audit,
+                "implementation_contract",
+                return_value=value["implementation_contract"],
+            ),
+        ):
             audit.validate_audit(value)
         self.assertTrue(value["authorization"]["preactivation_audit_generation"])
         for name in (
@@ -126,8 +142,8 @@ class V24784ProjectionFunnelPackageAuditTests(unittest.TestCase):
             self.assertIn(finding, value["findings"])
 
     def test_expected_tests_and_manifest_exclude_private_surfaces(self) -> None:
-        self.assertEqual(sum(count for _path, count, _timeout in audit.TEST_SUITES), 114)
-        self.assertEqual(audit.EXPECTED_TESTS, 114)
+        self.assertEqual(sum(count for _path, count, _timeout in audit.TEST_SUITES), 131)
+        self.assertEqual(audit.EXPECTED_TESTS, 131)
         self.assertNotIn(audit.OUTPUT, audit.SOURCES)
         self.assertFalse(any(path.parts[:1] == ("evaluation",) for path in audit.SOURCES))
         self.assertFalse(any(path.parts[:1] == ("outputs",) for path in audit.SOURCES))
@@ -140,7 +156,15 @@ class V24784ProjectionFunnelPackageAuditTests(unittest.TestCase):
             altered["authorization"][field] = True
             altered.pop("audit_payload_sha256")
             altered["audit_payload_sha256"] = audit.contract.payload_sha256(altered)
-            with patch.object(audit, "_manifest", return_value=altered["source_manifest"]):
+            with (
+                patch.object(audit, "_manifest", return_value=altered["source_manifest"]),
+                patch.object(audit, "_sha256", return_value="b" * 64),
+                patch.object(
+                    audit,
+                    "implementation_contract",
+                    return_value=altered["implementation_contract"],
+                ),
+            ):
                 with self.assertRaises(RuntimeError):
                     audit.validate_audit(altered)
 
@@ -153,7 +177,15 @@ class V24784ProjectionFunnelPackageAuditTests(unittest.TestCase):
         )
         altered.pop("audit_payload_sha256")
         altered["audit_payload_sha256"] = audit.contract.payload_sha256(altered)
-        with patch.object(audit, "_manifest", return_value=value["source_manifest"]):
+        with (
+            patch.object(audit, "_manifest", return_value=value["source_manifest"]),
+            patch.object(audit, "_sha256", return_value="b" * 64),
+            patch.object(
+                audit,
+                "implementation_contract",
+                return_value=value["implementation_contract"],
+            ),
+        ):
             with self.assertRaises(RuntimeError):
                 audit.validate_audit(altered)
 
