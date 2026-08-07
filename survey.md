@@ -1,10 +1,14 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
-> 检索截止：2026-08-06 04:48 UTC；项目证据更新：2026-08-06 UTC（V2.47.00–49）
+> 检索截止：2026-08-06 04:48 UTC；项目证据更新：2026-08-07 UTC（至 V2.47.80）
 >
 > 结论强度：这是基于公开文献的 novelty audit，不是“没有任何相关工作”的证明。2026 年文献多为尚未同行评审的 arXiv 预印本，文中将预印本结果视为作者报告，而非独立复现事实。
 
 当前完整 220 题有两条不同前沿。V2.42.67 保持 whole-table 最佳 `7/220`，其 Composite 为 `0.413541`；V2.46.35 保持 Composite 最佳 `0.437892`，其 whole-table 为 `4/220`。V2.46.35 在严格 label-blind、220 个预测全部冻结后才开放 evaluator 的单次运行中得到 Entity `0.672727`、Row F1 `0.224156`、Item F1 `0.385078` 和 Column F1 `0.469605`。208 题得到有效 evaluator 输出，12 个 evaluator error 按预注册规则计零；forward 与 evaluator 墙钟分别为 `915.58s` 和 `222.24s`。它相对 V2.46.30 的 Composite 增加 `0.034260`，whole-table 却从 `5/220` 降到 `4/220`。两个前沿均没有 leaderboard 提交或同协议 SOTA 证据，因此都不是 SOTA。
+
+V2.47.80 又提供了一个 acquisition 与 evidence admission 分离的负结果。唯一一次 fresh 8-task 外部门在 `48.561393s` 内完成 `8/8` valid task 和 `16/16` terminal arm predictions。64 次 initial fetch 得到 47 页，13 次 reserve fetch 得到 10 页；reserve 使 4 个 entity slot 从不足双源变为至少双源，最终 19 个 slot 有至少两个可用 identity source。尽管 acquisition treatment 自然触发，projection-backed support set、changed task 和 changed cell 都是 0。content-free audit 因而判定 forward health GO、mechanism NO-GO，并在 private truth/quality surface 前停止。权威证据为 [`results/v24780_staged_fallback_forward_result_v1_20260807.json`](results/v24780_staged_fallback_forward_result_v1_20260807.json) 与 [`results/v24780_staged_fallback_forward_audit_v1_20260807.json`](results/v24780_staged_fallback_forward_audit_v1_20260807.json)。
+
+这个结果不支持“增加可用页面即可提高表格质量”，也不能据此判断现有 projector 的哪一条内容规则过严。审计没有打开 prediction JSONL、task result、页面内容或 evaluator，只能把剩余瓶颈定位到从 usable identity page 到 target–field–value support 的转换区间。后续实验应在全新人口上预注册更细的 content-free funnel，并只改变一个 projector 或 normalization treatment；同一 V2.47.80 人口不得重跑、补请求或事后查看页面来选择规则。V2.47.80 没有产生 DeepWideBench 分数，也没有验证 entropy-based credit。
 
 对“许多版本究竟测了什么”的复核表明，版本号不能当作 benchmark 次数。V2.43.14 是两臂各64题的 development gate，得到 whole-table `4→5/64`、Composite `0.458367→0.509762`，但95% paired bootstrap区间 `[-0.016349, 0.123977]` 跨0。V2.43.15 随后确实冻结了 `220/220` predictions，forward为 `3041.558286s`，却有2个parent hard timeout，使完整child/model/transport receipt只有 `218/220`；预注册health gate失败后没有调用evaluator，所以没有benchmark分数。修复runner/accounting后的V2.43.20再次做两臂各64，whole-table `5→5/64`、Composite反而 `0.468169→0.451261`，严格NO-GO。这个复核否定了“V2.43.14已经证明staged reserve稳定提分”的说法，也解释了为何跑到220仍不能报告分数。
 
