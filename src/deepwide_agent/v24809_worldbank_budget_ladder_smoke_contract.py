@@ -17,7 +17,7 @@ from .v24804_shared_prefix_budget_ladder import AdaptivePolicy
 DATE = "20260807"
 PROTOCOL_ID = "v24809_worldbank_shared_prefix_budget_ladder_smoke_v1"
 PROTOCOL = Path(f"results/v24809_worldbank_budget_ladder_smoke_preregistration_v1_{DATE}.json")
-BUILD_AUDIT = Path(f"results/v24809_worldbank_budget_ladder_smoke_build_audit_v1_{DATE}.json")
+BUILD_AUDIT = Path(f"results/v24809_worldbank_budget_ladder_smoke_build_audit_v2_{DATE}.json")
 PREAUDIT = Path(f"results/v24809_worldbank_budget_ladder_smoke_preactivation_audit_v1_{DATE}.json")
 ACTIVATION = Path(f"results/v24809_worldbank_budget_ladder_smoke_activation_v1_{DATE}.json")
 EXECUTION_START = Path(f"results/v24809_worldbank_budget_ladder_smoke_execution_start_v1_{DATE}.json")

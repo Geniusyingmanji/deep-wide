@@ -31,6 +31,9 @@ TESTS = (
     (Path("tests/test_evaluate_v24809_worldbank_budget_ladder_smoke.py"), 3),
 )
 EXPECTED_TESTS = 14
+PREDECESSOR_BUILD_AUDIT = Path(
+    f"results/v24809_worldbank_budget_ladder_smoke_build_audit_v1_{contract.DATE}.json"
+)
 PRIVILEGED = frozenset(
     {
         "benchmark_question_type",
@@ -227,6 +230,15 @@ def _future_pristine(paths: tuple[Path, ...]) -> bool:
 
 
 def build_audit(*, now: int | None = None) -> dict[str, Any]:
+    predecessor = _read(ROOT / PREDECESSOR_BUILD_AUDIT)
+    if (
+        predecessor.get("role")
+        != "v24809_worldbank_budget_ladder_smoke_build_audit"
+        or predecessor.get("audit_valid") is not True
+        or predecessor.get("findings") != []
+        or not _sealed(predecessor, "audit_payload_sha256")
+    ):
+        raise RuntimeError("V2.48.09 predecessor build audit drifted")
     fields, imports, secrets = _ast_findings()
     observed, tests_passed, suites = _run_tests()
     value = {
@@ -235,6 +247,13 @@ def build_audit(*, now: int | None = None) -> dict[str, Any]:
         "protocol_id": contract.PROTOCOL_ID,
         "created_at_unix": int(time.time()) if now is None else int(now),
         "git_head": _git("rev-parse", "HEAD"),
+        "append_only_control_repair": {
+            "predecessor_path": str(PREDECESSOR_BUILD_AUDIT),
+            "predecessor_sha256": contract.sha256(ROOT / PREDECESSOR_BUILD_AUDIT),
+            "only_change": "remove_impossible_build_commit_equals_protocol_commit_cycle_and_bind_audited_source_manifest",
+            "forward_algorithm_task_population_model_search_budget_or_evaluator_changed": False,
+            "predecessor_launch_or_effect_started": False,
+        },
         "source_manifest": {
             str(path): contract.sha256(ROOT / path)
             for path in (
@@ -322,8 +341,19 @@ def build_preaudit(*, now: int | None = None) -> dict[str, Any]:
         findings.append("focused_tests_failed")
     if fields or imports or secrets:
         findings.append("runtime_label_blind_audit_failed")
-    if build.get("git_head") != protocol.get("git_head"):
-        findings.append("build_protocol_commit_drifted")
+    if protocol.get("build_audit_sha256") != contract.sha256(
+        ROOT / contract.BUILD_AUDIT
+    ):
+        findings.append("protocol_build_audit_binding_drifted")
+    source_manifest = build.get("source_manifest")
+    if (
+        not isinstance(source_manifest, Mapping)
+        or any(
+            contract.sha256(ROOT / relative) != digest
+            for relative, digest in source_manifest.items()
+        )
+    ):
+        findings.append("audited_source_manifest_drifted")
     if watchers != protocol["execution"]["protected_watchers"]:
         findings.append("protected_watcher_drifted")
     if not _endpoint():
