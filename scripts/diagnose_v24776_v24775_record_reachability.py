@@ -54,9 +54,6 @@ from deepwide_agent.v24770_visible_entity_fair_semantic_runtime import (  # noqa
 from deepwide_agent import (  # noqa: E402
     v24775_visible_entity_fair_execution_contract as contract,
 )
-from scripts.audit_v24775_visible_entity_fair_forward import (  # noqa: E402
-    validate_audit as validate_forward_audit,
-)
 
 
 OUTPUT = Path(
@@ -80,6 +77,21 @@ SOURCE_FILES = (
     Path("src/deepwide_agent/v24770_visible_entity_fair_semantic_runtime.py"),
     Path("src/deepwide_agent/v24365_entity_segment_projection.py"),
     Path("src/deepwide_agent/v24743_generic_record_binding.py"),
+)
+FORWARD_HEALTH_CHECKS = frozenset(
+    {
+        "eight_of_eight_terminal_ordinals",
+        "fixed_denominator_failure_as_zero",
+        "parent_taxonomy_matches_run_summary",
+        "all_task_ordinals_submitted_once",
+        "within_experiment_wall_ceiling",
+        "scheduler_and_semantic_effect_exactly_zero",
+        "candidate_changes_only_unknown",
+        "semantic_safety_contract",
+        "nonunknown_cell_change_count_zero",
+        "prediction_freeze_before_private_truth",
+        "no_resume_retry_skip_or_selective_rerun",
+    }
 )
 
 
@@ -159,6 +171,58 @@ def _read(relative: Path) -> dict[str, Any]:
     if not isinstance(value, dict):
         raise RuntimeError("V2.47.76 expected JSON object")
     return value
+
+
+def _validate_frozen_forward_audit(value: Mapping[str, Any]) -> dict[str, Any]:
+    """Validate the sealed audit independent of JSON object key ordering.
+
+    V2.47.75 persisted nested mappings with ``sort_keys=True`` while its old
+    validator compared the findings vector to the iteration order of the
+    reloaded gate mapping.  The seal and contents are intact; only that
+    round-trip ordering assertion is invalid.  This validator preserves every
+    semantic and cryptographic check while treating findings as a unique set.
+    """
+
+    copied = copy.deepcopy(dict(value))
+    unsigned = dict(copied)
+    seal = unsigned.pop("audit_payload_sha256", None)
+    checks = copied.get("gate_checks")
+    findings = copied.get("findings")
+    health = copied.get("forward_health_go")
+    mechanism = copied.get("mechanism_go")
+    expected_source_policy = {
+        "prediction_jsonl_opened_or_parsed": False,
+        "prediction_jsonl_bytes_hashed_for_freeze_integrity": True,
+        "private_population_truth_provenance_or_quality_opened_or_hashed": False,
+        "mapping_gold_category_question_type_split_evaluator_score_reward_read": False,
+        "network_model_search_fetch_or_evaluator_called_by_audit": False,
+    }
+    if (
+        copied.get("role") != "v24775_visible_entity_fair_forward_audit"
+        or copied.get("protocol_id") != contract.PROTOCOL_ID
+        or not isinstance(checks, Mapping)
+        or not all(isinstance(passed, bool) for passed in checks.values())
+        or not FORWARD_HEALTH_CHECKS.issubset(checks)
+        or not isinstance(findings, list)
+        or len(findings) != len(set(findings))
+        or set(findings) != {name for name, passed in checks.items() if not passed}
+        or health is not all(bool(checks[name]) for name in FORWARD_HEALTH_CHECKS)
+        or mechanism is not (bool(health) and all(checks.values()))
+        or copied.get("source_policy") != expected_source_policy
+        or copied.get("authorization")
+        != {
+            "quality_preregistration_design": bool(mechanism),
+            "private_truth_or_quality_surface_open": False,
+            "additional_forward_retry_resume_or_rerun": False,
+            "paired_dev64": False,
+            "exact220": False,
+            "entropy_or_credit_experiment": False,
+            "leaderboard_or_sota": False,
+        }
+        or seal != contract.payload_sha256(unsigned)
+    ):
+        raise RuntimeError("V2.47.76 frozen forward audit drifted")
+    return copied
 
 
 def _unknown(value: object) -> bool:
@@ -521,7 +585,7 @@ def build_diagnosis(*, now: int | None = None) -> dict[str, Any]:
     forward = contract.validate_forward_result(_read(contract.FORWARD_RESULT))
     summary = contract.validate_run_summary(_read(contract.RUN_SUMMARY))
     freeze = contract.validate_prediction_freeze(_read(contract.PREDICTION_FREEZE))
-    audit = validate_forward_audit(_read(contract.FORWARD_AUDIT))
+    audit = _validate_frozen_forward_audit(_read(contract.FORWARD_AUDIT))
     if (
         forward["terminal_arm_predictions"] != 16
         or summary["valid_task_results"] != contract.SELECTED_COUNT
@@ -558,6 +622,18 @@ def build_diagnosis(*, now: int | None = None) -> dict[str, Any]:
         )
         entities = [str(value) for value in result["private_visible_entities"]]
         private_literals.update(entities)
+        private_literals.add(str(result["opaque_id"]))
+        private_literals.add(str(result["private_visible_task"]["question"]))
+        private_literals.update(
+            str(query) for query in result["private_scheduler_state"]["entity_queries"]
+        )
+        for surface in ("input_leads", "selected_leads", "fetch_requests"):
+            for lead in result["private_scheduler_state"][surface]:
+                private_literals.update(
+                    str(lead.get(name, ""))
+                    for name in ("title", "url", "fetch_url")
+                    if str(lead.get(name, "")).strip()
+                )
         baseline = str(result["predictions"]["baseline"])
         columns, rows = _baseline_matrix(baseline)
         if tuple(columns) != contract.EXPECTED_COLUMNS or [row[0] for row in rows] != entities:

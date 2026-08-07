@@ -121,6 +121,29 @@ class V24776RecordReachabilityDiagnosisTests(unittest.TestCase):
             target.STATUS_PROJECTION,
         )
 
+    def test_frozen_forward_audit_round_trip_is_order_independent(self) -> None:
+        audit = json.loads((ROOT / target.contract.FORWARD_AUDIT).read_text())
+        validated = target._validate_frozen_forward_audit(audit)
+        self.assertTrue(validated["forward_health_go"])
+        self.assertFalse(validated["mechanism_go"])
+        self.assertEqual(
+            set(validated["findings"]),
+            {name for name, passed in validated["gate_checks"].items() if not passed},
+        )
+        reordered = copy.deepcopy(audit)
+        reordered["gate_checks"] = dict(reversed(list(reordered["gate_checks"].items())))
+        unsigned = dict(reordered)
+        unsigned.pop("audit_payload_sha256")
+        reordered["audit_payload_sha256"] = target.contract.payload_sha256(unsigned)
+        target._validate_frozen_forward_audit(reordered)
+        changed = copy.deepcopy(audit)
+        changed["findings"] = []
+        unsigned = dict(changed)
+        unsigned.pop("audit_payload_sha256")
+        changed["audit_payload_sha256"] = target.contract.payload_sha256(unsigned)
+        with self.assertRaises(RuntimeError):
+            target._validate_frozen_forward_audit(changed)
+
     def test_resealed_authorization_or_claim_tamper_is_rejected(self) -> None:
         value = {
             "artifact_version": 1,
