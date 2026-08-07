@@ -1,0 +1,884 @@
+{
+  "artifact_version": 1,
+  "authorization": {
+    "fresh_benchmark_external_gate_design": true,
+    "leaderboard_submission": false,
+    "public_dev64": false,
+    "public_exact220": false,
+    "same_run_retry_resume_or_selective_revaluation": false,
+    "sota_claim": false,
+    "transport_aware_controller_build": true
+  },
+  "boundary": {
+    "both_exact220_forwards_and_evaluators_terminal_before_analysis": true,
+    "historical_score_or_stratum_authorized_as_future_runtime_input": false,
+    "mapping_answer_category_question_type_split_resource_opened": false,
+    "network_model_search_fetch_or_evaluator_called": false,
+    "offline_alignment_uses_opaque_id_in_memory_only": true,
+    "per_task_metric_or_transition_emitted": false,
+    "same_run_forward_feedback_or_prediction_selection": false,
+    "task_identifier_question_prediction_answer_query_url_page_or_credential_emitted": false,
+    "task_result_prediction_field_used": false
+  },
+  "checks": {
+    "bootstrap_denominator_exact220": true,
+    "decision_counts_cover_exact220": true,
+    "final_result_delta_reconciles": true,
+    "mapping_partition_exact220": true,
+    "paired_denominator_exact220": true,
+    "reason_counts_cover_exact220": true,
+    "stop_expand_partition_exact220": true
+  },
+  "conclusions": {
+    "entropy_or_information_gain_validated_as_credit": false,
+    "historical_benchmark_metric_may_route_future_forward": false,
+    "leaderboard_or_sota_established": false,
+    "mapping_failure_presence_is_not_a_monotone_quality_harm_signal": true,
+    "new_expand_stratum_quality_composite_improved": true,
+    "new_stop_stratum_has_lower_usable_page_count_than_reference": true,
+    "new_stop_stratum_item_and_column_f1_regressed": true,
+    "new_stop_stratum_quality_composite_regressed": true,
+    "overall_item_and_column_f1_regressed": true,
+    "overall_quality_composite_regressed": true,
+    "randomized_or_shared_prefix_causal_effect_established": false,
+    "transport_and_generation_differences_confound_stop_gate_effect": true
+  },
+  "created_at_unix": 1786136081,
+  "diagnosis_payload_sha256": "da0c334cffe868539a61d935bdb7f4039bd7fa9c1a7f657c7f974c539db2c9b5",
+  "diagnosis_valid": true,
+  "findings": [],
+  "new_controller": {
+    "decision_counts": {
+      "expand": 24,
+      "stop": 196
+    },
+    "reason_counts": {
+      "first_wave_sufficient": 171,
+      "latency_ceiling": 25,
+      "positive_entropy_voc": 24
+    }
+  },
+  "next_work": {
+    "candidate": "transport_aware_sufficiency_abstention",
+    "candidate_rule_scope": [
+      "same_pass_content_free_transport_receipt",
+      "same_pass_coverage_margin",
+      "global_frozen_policy_only"
+    ],
+    "fail_closed_expand_when_transport_receipt_is_incomplete_or_invalid": true,
+    "mapping_failure_alone_must_not_receive_credit_or_force_a_tuned_route": true,
+    "required_external_gate_arms": [
+      "first_wave_only",
+      "fixed_full_budget",
+      "transport_aware_adaptive"
+    ],
+    "required_external_gate_controls": [
+      "fresh_population",
+      "same_frozen_prefix_and_candidate_order",
+      "fixed_failure_as_zero_denominator",
+      "no_resume_retry_skip_or_selective_rerun",
+      "task_cluster_bootstrap",
+      "cost_and_evaluator_health_non_regression"
+    ]
+  },
+  "overall": {
+    "delta": {
+      "evaluator_valid_delta": 2,
+      "metrics": {
+        "column_f1": -0.016656722617529818,
+        "entity_acc": 0.00909090909090915,
+        "f1_by_item": -0.015264517034831171,
+        "f1_by_row": -0.010025828203733544,
+        "quality_composite": -0.00821403969129636,
+        "score": -0.00909090909090909
+      },
+      "n": 220,
+      "retrieval": {
+        "content_chars": -13725.69090909091,
+        "fetches_attempted": -2.8999999999999995,
+        "queries_executed": -1.7636363636363637,
+        "synthesized_rows": -1.3909090909090907,
+        "unique_hosts": -2.0636363636363635,
+        "usable_pages": -2.868181818181818
+      },
+      "whole_table_success_delta": -2
+    },
+    "new": {
+      "evaluator_valid": 209,
+      "metrics": {
+        "column_f1": 0.47595284266273014,
+        "entity_acc": 0.7090909090909091,
+        "f1_by_item": 0.3907382625666603,
+        "f1_by_row": 0.21869687056712647,
+        "quality_composite": 0.4486197212218565,
+        "score": 0.02727272727272727
+      },
+      "n": 220,
+      "retrieval": {
+        "content_chars": 15103.75,
+        "fetches_attempted": 6.3545454545454545,
+        "queries_executed": 2.2181818181818183,
+        "synthesized_rows": 20.804545454545455,
+        "unique_hosts": 3.55,
+        "usable_pages": 4.422727272727273
+      },
+      "transport": {
+        "mapping_failure_count": 452,
+        "mapping_failure_tasks": 207,
+        "union_recovery_count": 226,
+        "union_recovery_tasks": 207
+      },
+      "whole_table_successes": 6
+    },
+    "old": {
+      "evaluator_valid": 207,
+      "metrics": {
+        "column_f1": 0.49260956528025995,
+        "entity_acc": 0.7,
+        "f1_by_item": 0.40600277960149145,
+        "f1_by_row": 0.22872269877086002,
+        "quality_composite": 0.45683376091315286,
+        "score": 0.03636363636363636
+      },
+      "n": 220,
+      "retrieval": {
+        "content_chars": 28829.44090909091,
+        "fetches_attempted": 9.254545454545454,
+        "queries_executed": 3.981818181818182,
+        "synthesized_rows": 22.195454545454545,
+        "unique_hosts": 5.613636363636363,
+        "usable_pages": 7.290909090909091
+      },
+      "transport": {
+        "mapping_failure_count": 0,
+        "mapping_failure_tasks": 0,
+        "union_recovery_count": 0,
+        "union_recovery_tasks": 0
+      },
+      "whole_table_successes": 8
+    }
+  },
+  "paired_composite_bootstrap": {
+    "direction_counts": {
+      "improved": 60,
+      "tied": 80,
+      "worsened": 80
+    },
+    "interval_excludes_zero": false,
+    "mean_delta": -0.008214039691296342,
+    "percentile_95_interval": [
+      -0.0419671046365965,
+      0.02598870499236159
+    ],
+    "resamples": 20000,
+    "seed": 24832,
+    "unit": "task_cluster"
+  },
+  "paired_strata": {
+    "new_expand": {
+      "delta": {
+        "evaluator_valid_delta": -2,
+        "metrics": {
+          "column_f1": 0.07001954145040595,
+          "entity_acc": 0.0,
+          "f1_by_item": 0.05844442597755234,
+          "f1_by_row": 0.012506907830521302,
+          "quality_composite": 0.03524271881461993,
+          "score": 0.0
+        },
+        "n": 24,
+        "retrieval": {
+          "content_chars": -13340.666666666664,
+          "fetches_attempted": 0.16666666666666607,
+          "queries_executed": 0.0,
+          "synthesized_rows": -2.875,
+          "unique_hosts": -1.4999999999999996,
+          "usable_pages": -2.041666666666666
+        },
+        "whole_table_success_delta": 0
+      },
+      "new": {
+        "evaluator_valid": 22,
+        "metrics": {
+          "column_f1": 0.4763063746453706,
+          "entity_acc": 0.7083333333333334,
+          "f1_by_item": 0.4001989187786979,
+          "f1_by_row": 0.22913707601360156,
+          "quality_composite": 0.4534939256927509,
+          "score": 0.0
+        },
+        "n": 24,
+        "retrieval": {
+          "content_chars": 16431.416666666668,
+          "fetches_attempted": 9.5,
+          "queries_executed": 4.0,
+          "synthesized_rows": 21.083333333333332,
+          "unique_hosts": 3.8333333333333335,
+          "usable_pages": 5.291666666666667
+        },
+        "transport": {
+          "mapping_failure_count": 86,
+          "mapping_failure_tasks": 24,
+          "union_recovery_count": 43,
+          "union_recovery_tasks": 24
+        },
+        "whole_table_successes": 0
+      },
+      "old": {
+        "evaluator_valid": 24,
+        "metrics": {
+          "column_f1": 0.40628683319496467,
+          "entity_acc": 0.7083333333333334,
+          "f1_by_item": 0.34175449280114556,
+          "f1_by_row": 0.21663016818308026,
+          "quality_composite": 0.41825120687813094,
+          "score": 0.0
+        },
+        "n": 24,
+        "retrieval": {
+          "content_chars": 29772.083333333332,
+          "fetches_attempted": 9.333333333333334,
+          "queries_executed": 4.0,
+          "synthesized_rows": 23.958333333333332,
+          "unique_hosts": 5.333333333333333,
+          "usable_pages": 7.333333333333333
+        },
+        "transport": {
+          "mapping_failure_count": 0,
+          "mapping_failure_tasks": 0,
+          "union_recovery_count": 0,
+          "union_recovery_tasks": 0
+        },
+        "whole_table_successes": 0
+      }
+    },
+    "new_mapping_failure_positive": {
+      "delta": {
+        "evaluator_valid_delta": 1,
+        "metrics": {
+          "column_f1": -0.012587189130592646,
+          "entity_acc": 0.01449275362318847,
+          "f1_by_item": -0.010423319728404101,
+          "f1_by_row": -0.0014036151982476375,
+          "quality_composite": -0.0024803426085139857,
+          "score": -0.004830917874396132
+        },
+        "n": 207,
+        "retrieval": {
+          "content_chars": -13811.410628019325,
+          "fetches_attempted": -2.879227053140097,
+          "queries_executed": -1.7487922705314007,
+          "synthesized_rows": -1.5990338164251199,
+          "unique_hosts": -2.106280193236715,
+          "usable_pages": -2.8985507246376807
+        },
+        "whole_table_success_delta": -1
+      },
+      "new": {
+        "evaluator_valid": 196,
+        "metrics": {
+          "column_f1": 0.4714177454689272,
+          "entity_acc": 0.7101449275362319,
+          "f1_by_item": 0.3887971725847949,
+          "f1_by_row": 0.22105124498768652,
+          "quality_composite": 0.44785277264441015,
+          "score": 0.028985507246376812
+        },
+        "n": 207,
+        "retrieval": {
+          "content_chars": 14967.898550724638,
+          "fetches_attempted": 6.3768115942028984,
+          "queries_executed": 2.2318840579710146,
+          "synthesized_rows": 20.647342995169083,
+          "unique_hosts": 3.5410628019323673,
+          "usable_pages": 4.415458937198068
+        },
+        "transport": {
+          "mapping_failure_count": 452,
+          "mapping_failure_tasks": 207,
+          "union_recovery_count": 226,
+          "union_recovery_tasks": 207
+        },
+        "whole_table_successes": 6
+      },
+      "old": {
+        "evaluator_valid": 195,
+        "metrics": {
+          "column_f1": 0.4840049345995198,
+          "entity_acc": 0.6956521739130435,
+          "f1_by_item": 0.399220492313199,
+          "f1_by_row": 0.22245486018593416,
+          "quality_composite": 0.45033311525292413,
+          "score": 0.033816425120772944
+        },
+        "n": 207,
+        "retrieval": {
+          "content_chars": 28779.309178743963,
+          "fetches_attempted": 9.256038647342995,
+          "queries_executed": 3.9806763285024154,
+          "synthesized_rows": 22.246376811594203,
+          "unique_hosts": 5.647342995169082,
+          "usable_pages": 7.314009661835748
+        },
+        "transport": {
+          "mapping_failure_count": 0,
+          "mapping_failure_tasks": 0,
+          "union_recovery_count": 0,
+          "union_recovery_tasks": 0
+        },
+        "whole_table_successes": 7
+      }
+    },
+    "new_mapping_failure_zero": {
+      "delta": {
+        "evaluator_valid_delta": 1,
+        "metrics": {
+          "column_f1": -0.08145621737106645,
+          "entity_acc": -0.07692307692307698,
+          "f1_by_item": -0.0923512741448616,
+          "f1_by_row": -0.14731798913723942,
+          "quality_composite": -0.09951213939406112,
+          "score": -0.07692307692307693
+        },
+        "n": 13,
+        "retrieval": {
+          "content_chars": -12360.76923076923,
+          "fetches_attempted": -3.23076923076923,
+          "queries_executed": -2.0,
+          "synthesized_rows": 1.9230769230769234,
+          "unique_hosts": -1.3846153846153841,
+          "usable_pages": -2.384615384615385
+        },
+        "whole_table_success_delta": -1
+      },
+      "new": {
+        "evaluator_valid": 13,
+        "metrics": {
+          "column_f1": 0.5481655441332861,
+          "entity_acc": 0.6923076923076923,
+          "f1_by_item": 0.4216463876625168,
+          "f1_by_row": 0.1812079855628243,
+          "quality_composite": 0.4608319024165799,
+          "score": 0.0
+        },
+        "n": 13,
+        "retrieval": {
+          "content_chars": 17266.923076923078,
+          "fetches_attempted": 6.0,
+          "queries_executed": 2.0,
+          "synthesized_rows": 23.307692307692307,
+          "unique_hosts": 3.6923076923076925,
+          "usable_pages": 4.538461538461538
+        },
+        "transport": {
+          "mapping_failure_count": 0,
+          "mapping_failure_tasks": 0,
+          "union_recovery_count": 0,
+          "union_recovery_tasks": 0
+        },
+        "whole_table_successes": 0
+      },
+      "old": {
+        "evaluator_valid": 12,
+        "metrics": {
+          "column_f1": 0.6296217615043526,
+          "entity_acc": 0.7692307692307693,
+          "f1_by_item": 0.5139976618073784,
+          "f1_by_row": 0.3285259747000637,
+          "quality_composite": 0.560344041810641,
+          "score": 0.07692307692307693
+        },
+        "n": 13,
+        "retrieval": {
+          "content_chars": 29627.69230769231,
+          "fetches_attempted": 9.23076923076923,
+          "queries_executed": 4.0,
+          "synthesized_rows": 21.384615384615383,
+          "unique_hosts": 5.076923076923077,
+          "usable_pages": 6.923076923076923
+        },
+        "transport": {
+          "mapping_failure_count": 0,
+          "mapping_failure_tasks": 0,
+          "union_recovery_count": 0,
+          "union_recovery_tasks": 0
+        },
+        "whole_table_successes": 1
+      }
+    },
+    "new_reason_first_wave_sufficient": {
+      "delta": {
+        "evaluator_valid_delta": 4,
+        "metrics": {
+          "column_f1": -0.026120723954111913,
+          "entity_acc": 0.005847953216374324,
+          "f1_by_item": -0.024154279628522624,
+          "f1_by_row": -0.015002422715553798,
+          "quality_composite": -0.01485736827045353,
+          "score": -0.005847953216374269
+        },
+        "n": 171,
+        "retrieval": {
+          "content_chars": -12554.456140350878,
+          "fetches_attempted": -3.245614035087719,
+          "queries_executed": -1.9883040935672516,
+          "synthesized_rows": -2.1988304093567272,
+          "unique_hosts": -1.9181286549707601,
+          "usable_pages": -2.7076023391812862
+        },
+        "whole_table_success_delta": -1
+      },
+      "new": {
+        "evaluator_valid": 163,
+        "metrics": {
+          "column_f1": 0.508441298365664,
+          "entity_acc": 0.7309941520467836,
+          "f1_by_item": 0.4181814927920638,
+          "f1_by_row": 0.23524198710727662,
+          "quality_composite": 0.473214732577947,
+          "score": 0.03508771929824561
+        },
+        "n": 171,
+        "retrieval": {
+          "content_chars": 16409.72514619883,
+          "fetches_attempted": 6.0,
+          "queries_executed": 2.0,
+          "synthesized_rows": 20.57894736842105,
+          "unique_hosts": 3.760233918128655,
+          "usable_pages": 4.625730994152047
+        },
+        "transport": {
+          "mapping_failure_count": 316,
+          "mapping_failure_tasks": 158,
+          "union_recovery_count": 158,
+          "union_recovery_tasks": 158
+        },
+        "whole_table_successes": 6
+      },
+      "old": {
+        "evaluator_valid": 159,
+        "metrics": {
+          "column_f1": 0.5345620223197759,
+          "entity_acc": 0.7251461988304093,
+          "f1_by_item": 0.4423357724205864,
+          "f1_by_row": 0.2502444098228304,
+          "quality_composite": 0.4880721008484005,
+          "score": 0.04093567251461988
+        },
+        "n": 171,
+        "retrieval": {
+          "content_chars": 28964.18128654971,
+          "fetches_attempted": 9.24561403508772,
+          "queries_executed": 3.9883040935672516,
+          "synthesized_rows": 22.77777777777778,
+          "unique_hosts": 5.678362573099415,
+          "usable_pages": 7.333333333333333
+        },
+        "transport": {
+          "mapping_failure_count": 0,
+          "mapping_failure_tasks": 0,
+          "union_recovery_count": 0,
+          "union_recovery_tasks": 0
+        },
+        "whole_table_successes": 7
+      }
+    },
+    "new_reason_latency_ceiling": {
+      "delta": {
+        "evaluator_valid_delta": 0,
+        "metrics": {
+          "column_f1": -0.03513216698052635,
+          "entity_acc": 0.040000000000000036,
+          "f1_by_item": -0.02521912618586941,
+          "f1_by_row": 0.0023826516642322243,
+          "quality_composite": -0.004492160375540899,
+          "score": -0.04
+        },
+        "n": 25,
+        "retrieval": {
+          "content_chars": -22106.56,
+          "fetches_attempted": -3.4800000000000004,
+          "queries_executed": -1.92,
+          "synthesized_rows": 5.559999999999999,
+          "unique_hosts": -3.6000000000000005,
+          "usable_pages": -4.76
+        },
+        "whole_table_success_delta": -1
+      },
+      "new": {
+        "evaluator_valid": 24,
+        "metrics": {
+          "column_f1": 0.2533924149513277,
+          "entity_acc": 0.56,
+          "f1_by_item": 0.19394433786134424,
+          "f1_by_row": 0.09550567620388352,
+          "quality_composite": 0.2757106072541389,
+          "score": 0.0
+        },
+        "n": 25,
+        "retrieval": {
+          "content_chars": 4896.32,
+          "fetches_attempted": 5.76,
+          "queries_executed": 2.0,
+          "synthesized_rows": 22.08,
+          "unique_hosts": 1.84,
+          "usable_pages": 2.2
+        },
+        "transport": {
+          "mapping_failure_count": 50,
+          "mapping_failure_tasks": 25,
+          "union_recovery_count": 25,
+          "union_recovery_tasks": 25
+        },
+        "whole_table_successes": 0
+      },
+      "old": {
+        "evaluator_valid": 24,
+        "metrics": {
+          "column_f1": 0.28852458193185404,
+          "entity_acc": 0.52,
+          "f1_by_item": 0.21916346404721365,
+          "f1_by_row": 0.0931230245396513,
+          "quality_composite": 0.28020276762967977,
+          "score": 0.04
+        },
+        "n": 25,
+        "retrieval": {
+          "content_chars": 27002.88,
+          "fetches_attempted": 9.24,
+          "queries_executed": 3.92,
+          "synthesized_rows": 16.52,
+          "unique_hosts": 5.44,
+          "usable_pages": 6.96
+        },
+        "transport": {
+          "mapping_failure_count": 0,
+          "mapping_failure_tasks": 0,
+          "union_recovery_count": 0,
+          "union_recovery_tasks": 0
+        },
+        "whole_table_successes": 1
+      }
+    },
+    "new_reason_positive_entropy_voc": {
+      "delta": {
+        "evaluator_valid_delta": -2,
+        "metrics": {
+          "column_f1": 0.07001954145040595,
+          "entity_acc": 0.0,
+          "f1_by_item": 0.05844442597755234,
+          "f1_by_row": 0.012506907830521302,
+          "quality_composite": 0.03524271881461993,
+          "score": 0.0
+        },
+        "n": 24,
+        "retrieval": {
+          "content_chars": -13340.666666666664,
+          "fetches_attempted": 0.16666666666666607,
+          "queries_executed": 0.0,
+          "synthesized_rows": -2.875,
+          "unique_hosts": -1.4999999999999996,
+          "usable_pages": -2.041666666666666
+        },
+        "whole_table_success_delta": 0
+      },
+      "new": {
+        "evaluator_valid": 22,
+        "metrics": {
+          "column_f1": 0.4763063746453706,
+          "entity_acc": 0.7083333333333334,
+          "f1_by_item": 0.4001989187786979,
+          "f1_by_row": 0.22913707601360156,
+          "quality_composite": 0.4534939256927509,
+          "score": 0.0
+        },
+        "n": 24,
+        "retrieval": {
+          "content_chars": 16431.416666666668,
+          "fetches_attempted": 9.5,
+          "queries_executed": 4.0,
+          "synthesized_rows": 21.083333333333332,
+          "unique_hosts": 3.8333333333333335,
+          "usable_pages": 5.291666666666667
+        },
+        "transport": {
+          "mapping_failure_count": 86,
+          "mapping_failure_tasks": 24,
+          "union_recovery_count": 43,
+          "union_recovery_tasks": 24
+        },
+        "whole_table_successes": 0
+      },
+      "old": {
+        "evaluator_valid": 24,
+        "metrics": {
+          "column_f1": 0.40628683319496467,
+          "entity_acc": 0.7083333333333334,
+          "f1_by_item": 0.34175449280114556,
+          "f1_by_row": 0.21663016818308026,
+          "quality_composite": 0.41825120687813094,
+          "score": 0.0
+        },
+        "n": 24,
+        "retrieval": {
+          "content_chars": 29772.083333333332,
+          "fetches_attempted": 9.333333333333334,
+          "queries_executed": 4.0,
+          "synthesized_rows": 23.958333333333332,
+          "unique_hosts": 5.333333333333333,
+          "usable_pages": 7.333333333333333
+        },
+        "transport": {
+          "mapping_failure_count": 0,
+          "mapping_failure_tasks": 0,
+          "union_recovery_count": 0,
+          "union_recovery_tasks": 0
+        },
+        "whole_table_successes": 0
+      }
+    },
+    "new_stop": {
+      "delta": {
+        "evaluator_valid_delta": 4,
+        "metrics": {
+          "column_f1": -0.027270142707481015,
+          "entity_acc": 0.010204081632652962,
+          "f1_by_item": -0.024290101893490346,
+          "f1_by_row": -0.01278493873854028,
+          "quality_composite": -0.013535275426714677,
+          "score": -0.010204081632653059
+        },
+        "n": 196,
+        "retrieval": {
+          "content_chars": -13772.836734693878,
+          "fetches_attempted": -3.275510204081632,
+          "queries_executed": -1.979591836734694,
+          "synthesized_rows": -1.20918367346939,
+          "unique_hosts": -2.13265306122449,
+          "usable_pages": -2.9693877551020407
+        },
+        "whole_table_success_delta": -2
+      },
+      "new": {
+        "evaluator_valid": 187,
+        "metrics": {
+          "column_f1": 0.4759095530322028,
+          "entity_acc": 0.7091836734693877,
+          "f1_by_item": 0.3895798148672271,
+          "f1_by_row": 0.21741847806347644,
+          "quality_composite": 0.4480228798580735,
+          "score": 0.030612244897959183
+        },
+        "n": 196,
+        "retrieval": {
+          "content_chars": 14941.17857142857,
+          "fetches_attempted": 5.969387755102041,
+          "queries_executed": 2.0,
+          "synthesized_rows": 20.770408163265305,
+          "unique_hosts": 3.5153061224489797,
+          "usable_pages": 4.316326530612245
+        },
+        "transport": {
+          "mapping_failure_count": 366,
+          "mapping_failure_tasks": 183,
+          "union_recovery_count": 183,
+          "union_recovery_tasks": 183
+        },
+        "whole_table_successes": 6
+      },
+      "old": {
+        "evaluator_valid": 183,
+        "metrics": {
+          "column_f1": 0.5031796957396838,
+          "entity_acc": 0.6989795918367347,
+          "f1_by_item": 0.41386991676071744,
+          "f1_by_row": 0.23020341680201672,
+          "quality_composite": 0.46155815528478816,
+          "score": 0.04081632653061224
+        },
+        "n": 196,
+        "retrieval": {
+          "content_chars": 28714.01530612245,
+          "fetches_attempted": 9.244897959183673,
+          "queries_executed": 3.979591836734694,
+          "synthesized_rows": 21.979591836734695,
+          "unique_hosts": 5.6479591836734695,
+          "usable_pages": 7.285714285714286
+        },
+        "transport": {
+          "mapping_failure_count": 0,
+          "mapping_failure_tasks": 0,
+          "union_recovery_count": 0,
+          "union_recovery_tasks": 0
+        },
+        "whole_table_successes": 8
+      }
+    },
+    "new_stop_mapping_failure_positive": {
+      "delta": {
+        "evaluator_valid_delta": 3,
+        "metrics": {
+          "column_f1": -0.023420858714986004,
+          "entity_acc": 0.016393442622950838,
+          "f1_by_item": -0.01945515523082464,
+          "f1_by_row": -0.0032279460872665366,
+          "quality_composite": -0.007427629352531551,
+          "score": -0.005464480874316939
+        },
+        "n": 183,
+        "retrieval": {
+          "content_chars": -13873.147540983606,
+          "fetches_attempted": -3.278688524590164,
+          "queries_executed": -1.9781420765027322,
+          "synthesized_rows": -1.4316939890710394,
+          "unique_hosts": -2.185792349726776,
+          "usable_pages": -3.0109289617486334
+        },
+        "whole_table_success_delta": -1
+      },
+      "new": {
+        "evaluator_valid": 174,
+        "metrics": {
+          "column_f1": 0.4707766137736558,
+          "entity_acc": 0.7103825136612022,
+          "f1_by_item": 0.38730186160854535,
+          "f1_by_row": 0.2199908081318288,
+          "quality_composite": 0.44711294929380807,
+          "score": 0.03278688524590164
+        },
+        "n": 183,
+        "retrieval": {
+          "content_chars": 14775.96174863388,
+          "fetches_attempted": 5.967213114754099,
+          "queries_executed": 2.0,
+          "synthesized_rows": 20.59016393442623,
+          "unique_hosts": 3.5027322404371586,
+          "usable_pages": 4.300546448087432
+        },
+        "transport": {
+          "mapping_failure_count": 366,
+          "mapping_failure_tasks": 183,
+          "union_recovery_count": 183,
+          "union_recovery_tasks": 183
+        },
+        "whole_table_successes": 6
+      },
+      "old": {
+        "evaluator_valid": 171,
+        "metrics": {
+          "column_f1": 0.4941974724886418,
+          "entity_acc": 0.6939890710382514,
+          "f1_by_item": 0.40675701683937,
+          "f1_by_row": 0.22321875421909534,
+          "quality_composite": 0.4545405786463396,
+          "score": 0.03825136612021858
+        },
+        "n": 183,
+        "retrieval": {
+          "content_chars": 28649.109289617485,
+          "fetches_attempted": 9.245901639344263,
+          "queries_executed": 3.978142076502732,
+          "synthesized_rows": 22.02185792349727,
+          "unique_hosts": 5.688524590163935,
+          "usable_pages": 7.311475409836065
+        },
+        "transport": {
+          "mapping_failure_count": 0,
+          "mapping_failure_tasks": 0,
+          "union_recovery_count": 0,
+          "union_recovery_tasks": 0
+        },
+        "whole_table_successes": 7
+      }
+    },
+    "new_stop_mapping_failure_zero": {
+      "delta": {
+        "evaluator_valid_delta": 1,
+        "metrics": {
+          "column_f1": -0.08145621737106645,
+          "entity_acc": -0.07692307692307698,
+          "f1_by_item": -0.0923512741448616,
+          "f1_by_row": -0.14731798913723942,
+          "quality_composite": -0.09951213939406112,
+          "score": -0.07692307692307693
+        },
+        "n": 13,
+        "retrieval": {
+          "content_chars": -12360.76923076923,
+          "fetches_attempted": -3.23076923076923,
+          "queries_executed": -2.0,
+          "synthesized_rows": 1.9230769230769234,
+          "unique_hosts": -1.3846153846153841,
+          "usable_pages": -2.384615384615385
+        },
+        "whole_table_success_delta": -1
+      },
+      "new": {
+        "evaluator_valid": 13,
+        "metrics": {
+          "column_f1": 0.5481655441332861,
+          "entity_acc": 0.6923076923076923,
+          "f1_by_item": 0.4216463876625168,
+          "f1_by_row": 0.1812079855628243,
+          "quality_composite": 0.4608319024165799,
+          "score": 0.0
+        },
+        "n": 13,
+        "retrieval": {
+          "content_chars": 17266.923076923078,
+          "fetches_attempted": 6.0,
+          "queries_executed": 2.0,
+          "synthesized_rows": 23.307692307692307,
+          "unique_hosts": 3.6923076923076925,
+          "usable_pages": 4.538461538461538
+        },
+        "transport": {
+          "mapping_failure_count": 0,
+          "mapping_failure_tasks": 0,
+          "union_recovery_count": 0,
+          "union_recovery_tasks": 0
+        },
+        "whole_table_successes": 0
+      },
+      "old": {
+        "evaluator_valid": 12,
+        "metrics": {
+          "column_f1": 0.6296217615043526,
+          "entity_acc": 0.7692307692307693,
+          "f1_by_item": 0.5139976618073784,
+          "f1_by_row": 0.3285259747000637,
+          "quality_composite": 0.560344041810641,
+          "score": 0.07692307692307693
+        },
+        "n": 13,
+        "retrieval": {
+          "content_chars": 29627.69230769231,
+          "fetches_attempted": 9.23076923076923,
+          "queries_executed": 4.0,
+          "synthesized_rows": 21.384615384615383,
+          "unique_hosts": 5.076923076923077,
+          "usable_pages": 6.923076923076923
+        },
+        "transport": {
+          "mapping_failure_count": 0,
+          "mapping_failure_tasks": 0,
+          "union_recovery_count": 0,
+          "union_recovery_tasks": 0
+        },
+        "whole_table_successes": 1
+      }
+    }
+  },
+  "parents": {
+    "v24800_conservative_summary_sha256": "792edf88b46e3bf5ff6fbabbaf3908d7f0b304d9b7f86224538c96d8f43aa9f1",
+    "v24800_forward_audit_sha256": "26f89999c20752e00a9383044e9b05ca7b362f430f9493ee1def56d6b3b900b5",
+    "v24800_postresult_audit_sha256": "0644296271d69d966e162b22e780cb6801be053b9d34096d3c6d59b628ebbcf2",
+    "v24800_result_sha256": "1de3bcda31f3f2d858d9fd7b4ccba423d9361081fdcb9623acd3f3c7c16fd521",
+    "v24831_conservative_summary_sha256": "444203d3bd6c0452fcbe63d9e3d017c761f189469d07d0f7cc68fa6a436f6a4b",
+    "v24831_forward_audit_sha256": "b4181c5cc788d8b41b92f7e97b225f3e622c383f18f48ccbeddd30111374db36",
+    "v24831_postresult_audit_sha256": "318a6a4a6848ab2ca888974e0a336d32c35fcdb1b08a2637e4e7c2c650556088",
+    "v24831_result_sha256": "bd939d53eabffeb7660cb7acdce6dc79c7a5781d716471ba7d808c79773f5c07"
+  },
+  "role": "v24832_v24800_v24831_aggregate_only_stop_gate_diagnosis",
+  "status": "stop_gate_quality_regression_observed_causality_unresolved"
+}
