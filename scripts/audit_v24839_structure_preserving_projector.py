@@ -24,7 +24,7 @@ from deepwide_agent import v24836_information_bottleneck_projector as baseline  
 from deepwide_agent import v24839_structure_preserving_projector as candidate  # noqa: E402
 
 
-OUTPUT = Path("results/v24839_structure_preserving_projector_build_audit_v1_20260807.json")
+OUTPUT = Path("results/v24839_structure_preserving_projector_build_audit_v2_20260807.json")
 SOURCE = Path("src/deepwide_agent/v24839_structure_preserving_projector.py")
 TEST = Path("tests/test_v24839_structure_preserving_projector.py")
 AUDIT = Path("scripts/audit_v24839_structure_preserving_projector.py")
@@ -165,9 +165,9 @@ def _tests() -> dict[str, Any]:
     observed = int(match.group(1)) if match else 0
     return {
         "path": str(TEST),
-        "expected": 12,
+        "expected": 13,
         "observed": observed,
-        "passed": completed.returncode == 0 and observed == 12,
+        "passed": completed.returncode == 0 and observed == 13,
         "output_sha256": hashlib.sha256(completed.stdout.encode()).hexdigest(),
     }
 
@@ -206,7 +206,7 @@ def build(*, now: int | None = None) -> dict[str, Any]:
     projected = candidate.build_projection(question, pages)
     checks = {
         "tracked_sources_clean_pushed_head": not status and head == remote,
-        "focused_tests_exact12": tests["passed"],
+        "focused_tests_exact13": tests["passed"],
         "runtime_ast_no_io_network_process_or_dynamic_execution": not ast_report[
             "dangerous_imports"
         ]
@@ -235,6 +235,7 @@ def build(*, now: int | None = None) -> dict[str, Any]:
             "allocated_content_characters"
         ]
         <= 16_000
+        and projected["projected_rendered_characters"] <= 16_000
         and all(value <= 5_000 for value in projected["per_page_allocated_characters"]),
         "entropy_credit_zero": projected[
             "entropy_or_information_gain_assigns_credit"

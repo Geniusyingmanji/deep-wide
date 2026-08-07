@@ -365,6 +365,15 @@ def _structure_rank(kind: str) -> int:
     return {"table": 4, "record": 3, "section": 2, "text": 1}.get(kind, 0)
 
 
+def _page_header(page: Mapping[str, Any]) -> str:
+    return (
+        f"[E-PAGE {int(page['ordinal']):04d}] kind=fetched_page_blocks\n"
+        f"title={page['title']}\n"
+        f"url={page['url']}\n"
+        "content="
+    )
+
+
 def _select(
     pages: Sequence[Mapping[str, Any]],
     blocks: Sequence[Mapping[str, Any]],
@@ -373,27 +382,36 @@ def _select(
 ) -> tuple[list[dict[str, Any]], set[int]]:
     selected: dict[tuple[int, int], dict[str, Any]] = {}
     page_used: Counter[int] = Counter()
-    total_used = 0
+    page_map = {int(page["ordinal"]): page for page in pages}
+    rendered_used = 0
+
+    def incremental_render_cost(block: Mapping[str, Any]) -> int:
+        page = int(block["page_ordinal"])
+        size = len(str(block["content"]))
+        if page_used[page]:
+            return 1 + size
+        return len(_page_header(page_map[page])) + size + (2 if selected else 0)
 
     def can_add(block: Mapping[str, Any]) -> bool:
         size = len(str(block["content"]))
         page = int(block["page_ordinal"])
         return (
             (page, int(block["block_ordinal"])) not in selected
-            and total_used + size <= policy.total_character_cap
+            and rendered_used + incremental_render_cost(block)
+            <= policy.total_character_cap
             and page_used[page] + size <= policy.maximum_page_chars
         )
 
     def add(block: Mapping[str, Any]) -> None:
-        nonlocal total_used
+        nonlocal rendered_used
         copied = copy.deepcopy(dict(block))
         key = (int(copied["page_ordinal"]), int(copied["block_ordinal"]))
         if key in selected:
             return
         size = len(str(copied["content"]))
+        rendered_used += incremental_render_cost(copied)
         selected[key] = copied
         page_used[key[0]] += size
-        total_used += size
 
     supported = {
         index
@@ -499,15 +517,15 @@ def _render(
     pages: Sequence[Mapping[str, Any]], blocks: Sequence[Mapping[str, Any]]
 ) -> str:
     by_page = {int(page["ordinal"]): page for page in pages}
-    output: list[str] = []
-    for ordinal, block in enumerate(blocks, 1):
-        page = by_page[int(block["page_ordinal"])]
-        output.append(
-            f"[E{ordinal:04d}] kind=fetched_page_{block['kind']}\n"
-            f"title={page['title']}\n"
-            f"url={page['url']}\n"
-            f"content={block['content']}"
+    grouped: dict[int, list[str]] = {}
+    for block in blocks:
+        grouped.setdefault(int(block["page_ordinal"]), []).append(
+            str(block["content"])
         )
+    output = [
+        _page_header(by_page[ordinal]) + "\n".join(grouped[ordinal])
+        for ordinal in sorted(grouped)
+    ]
     return "\n\n".join(output) or "No usable web material was retrieved within budget."
 
 
@@ -665,6 +683,8 @@ def validate_projection(
         or copied.get("projection_sha256")
         != hashlib.sha256(projection.encode("utf-8")).hexdigest()
         or copied.get("projected_rendered_characters") != len(projection)
+        or copied.get("projected_rendered_characters")
+        > int(raw_policy.get("total_character_cap", -1))
         or copied.get("allocated_content_characters") != sum(allocations)
         or copied.get("missed_supported_visible_requirement_group_count")
         != copied.get("supported_visible_requirement_group_count")

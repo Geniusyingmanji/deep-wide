@@ -89,8 +89,27 @@ class V24839StructurePreservingProjectorTests(unittest.TestCase):
         pages = [page(index, (f"section {index}\nvalue: {index}\n" * 1000)) for index in range(1, 9)]
         result = build_projection(QUESTION, pages)
         self.assertLessEqual(result["allocated_content_characters"], 16_000)
+        self.assertLessEqual(result["projected_rendered_characters"], 16_000)
         self.assertTrue(
             all(value <= 5_000 for value in result["per_page_allocated_characters"])
+        )
+
+    def test_dense_short_records_cannot_amplify_rendered_context(self) -> None:
+        pages = [
+            page(
+                index,
+                "\n".join(f"field_{row}: value_{index}_{row}" for row in range(2000)),
+            )
+            for index in range(1, 8)
+        ]
+        result = build_projection(QUESTION, pages)
+        self.assertLessEqual(result["projected_rendered_characters"], 16_000)
+        self.assertEqual(
+            result["projected_rendered_characters"], len(result["projection"])
+        )
+        self.assertLessEqual(
+            result["allocated_content_characters"],
+            result["projected_rendered_characters"],
         )
 
     def test_table_rows_below_block_cap_are_not_cut(self) -> None:
