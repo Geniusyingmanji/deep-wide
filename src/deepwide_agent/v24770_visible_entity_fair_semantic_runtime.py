@@ -331,6 +331,39 @@ def _normalized_leads(leads: object) -> list[dict[str, str]]:
     return output
 
 
+def _maximum_entity_source_round(
+    buckets: Sequence[Sequence[dict[str, str]]],
+    *,
+    excluded_sources: set[str],
+) -> dict[int, dict[str, str]]:
+    """Return a deterministic maximum-cardinality entity/source matching."""
+
+    source_owner: dict[str, int] = {}
+    source_lead: dict[str, dict[str, str]] = {}
+
+    def augment(entity_index: int, visited: set[str]) -> bool:
+        for lead in buckets[entity_index]:
+            source = _lead_source(lead)
+            if source in excluded_sources or source in visited:
+                continue
+            visited.add(source)
+            prior = source_owner.get(source)
+            if prior is None or augment(prior, visited):
+                source_owner[source] = entity_index
+                source_lead[source] = lead
+                return True
+        return False
+
+    for entity_index in range(len(buckets)):
+        augment(entity_index, set())
+    output: dict[int, dict[str, str]] = {}
+    for source, entity_index in source_owner.items():
+        if entity_index in output:
+            raise RuntimeError("V2.47.70 entity/source matching drifted")
+        output[entity_index] = copy.deepcopy(source_lead[source])
+    return output
+
+
 def select_visible_entity_fair_leads(
     leads: object,
     *,
@@ -375,27 +408,26 @@ def select_visible_entity_fair_leads(
     selected: list[dict[str, str]] = []
     selected_urls: set[str] = set()
     selected_sources: set[str] = set()
-    positions = [0] * len(buckets)
     assignments = [0] * len(buckets)
     while len(selected) < limit:
-        progressed = False
-        for index, bucket in enumerate(buckets):
-            while positions[index] < len(bucket):
-                lead = bucket[positions[index]]
-                positions[index] += 1
-                source = _lead_source(lead)
-                if lead["url"] in selected_urls or source in selected_sources:
-                    continue
-                selected.append(copy.deepcopy(lead))
-                selected_urls.add(lead["url"])
-                selected_sources.add(source)
-                assignments[index] += 1
-                progressed = True
-                break
+        matched = _maximum_entity_source_round(
+            buckets, excluded_sources=selected_sources
+        )
+        if not matched:
+            break
+        for index in range(len(buckets)):
+            lead = matched.get(index)
+            if lead is None:
+                continue
+            source = _lead_source(lead)
+            if lead["url"] in selected_urls or source in selected_sources:
+                raise RuntimeError("V2.47.70 matched source was already selected")
+            selected.append(copy.deepcopy(lead))
+            selected_urls.add(lead["url"])
+            selected_sources.add(source)
+            assignments[index] += 1
             if len(selected) >= limit:
                 break
-        if not progressed:
-            break
 
     round_robin_count = len(selected)
     remaining = [lead for lead in values if lead["url"] not in selected_urls]

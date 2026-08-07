@@ -223,6 +223,27 @@ class V24770VisibleEntityFairSemanticRuntimeTests(unittest.TestCase):
         self.assertEqual(diagnostic["selected_unique_source_count"], 5)
         self.assertEqual(diagnostic["round_robin_assignment_count_vector"], [2, 1, 1, 1])
 
+    def test_round_matching_reassigns_shared_source_to_maximize_entity_coverage(self) -> None:
+        values = [
+            lead(
+                ENTITIES[0],
+                "aaa-shared.example",
+                title=f"{ENTITIES[0]} and {ENTITIES[1]} institutional profile",
+            ),
+            lead(ENTITIES[0], "zzz-alpha.example"),
+            lead(ENTITIES[2], "gamma.example"),
+            lead(ENTITIES[3], "delta.example"),
+        ]
+        selected, diagnostic = target.select_visible_entity_fair_leads(
+            values, entities=ENTITIES
+        )
+        self.assertEqual(diagnostic["round_robin_assignment_count_vector"], [1, 1, 1, 1])
+        self.assertEqual(diagnostic["visible_entities_with_zero_selected_aligned_sources"], 0)
+        self.assertEqual(diagnostic["selected_unique_source_count"], 4)
+        selected_by_source = {target._lead_source(item): item for item in selected}
+        self.assertIn("aaa-shared.example", selected_by_source)
+        self.assertIn("zzz-alpha.example", selected_by_source)
+
     def test_semantic_two_source_projection_changes_unknown_without_new_effect(self) -> None:
         values = [
             lead(ENTITIES[0], "alpha-one.example"),
