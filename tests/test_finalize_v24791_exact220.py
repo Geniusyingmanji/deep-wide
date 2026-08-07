@@ -24,7 +24,7 @@ class V24791FinalizeTests(unittest.TestCase):
         self.assertFalse(value["freeze"]["mapping_gold_or_evaluator_opened_or_hashed"])
 
     def test_forward_audit_authorizes_only_postfreeze_protocol(self) -> None:
-        value = target.build_forward_audit(now=0)
+        value = target.validate_forward_audit(target._read(ROOT / target.FORWARD_AUDIT))
         self.assertTrue(value["audit_valid"])
         self.assertEqual(value["findings"], [])
         self.assertTrue(value["authorization"]["postfreeze_exact220_evaluator_protocol"])
