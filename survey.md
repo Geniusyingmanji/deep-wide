@@ -1,8 +1,16 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
-> 检索截止：2026-08-07 14:10 UTC；项目证据更新：2026-08-07 UTC（至 V2.48.02）
+> 检索截止：2026-08-07 14:10 UTC；项目证据更新：2026-08-07 UTC（至 V2.48.08）
 >
 > 结论强度：这是基于公开文献的 novelty audit，不是“没有任何相关工作”的证明。2026 年文献多为尚未同行评审的 arXiv 预印本，文中将预印本结果视为作者报告，而非独立复现事实。
+
+## 2026-08-07 V2.48.07/08：完整重复运行否定了单轮前沿的稳定性假设
+
+V2.48.07 在与 V2.48.00 相同的 forward 算法、任务向量、模型、搜索、hard caps 与并发下，从全新输出面完成第二次完整 220。forward 为 `220/220`、0 fallback、`778.15s`；预测冻结后 32-worker evaluator 得到 whole-table `8/220`、Entity `0.681818`、Row/Item/Column F1 `0.216028/0.384515/0.470633`、Composite `0.438248`，209 valid、11 error-as-zero。它没有复现 V2.48.00 的 Composite `0.456834`，但 Whole-table 同为8。因此新结果不是提升，更不是 SOTA。
+
+V2.48.08 对两次冻结结果做 aggregate-only 配对复核。220 题中仅10题的 prediction hash 完全一致，210题发生字节变化；Whole-table 有6题两轮均成功、2题失→得、2题得→失，净差0。任务级 Composite 差为 `-0.018585`，20,000次 task-bootstrap 95%区间约 `[-0.049316, 0.011677]`，覆盖0。即使只看两轮 evaluator 都有效的203题，Entity、Row、Item、Column仍全部为负差。因而 V2.48.00 只能称为 observed single-rollout internal reference；它不能证明 fixed-full-budget 优于 adaptive admission，也不能证明 entropy/VOC 无效。今后候选必须同时相对两轮报告，并优先采用 shared-prefix 或多次独立重复，而不是追逐一次随机前沿。
+
+评分器本身也有结构性噪声。两轮 evaluator-invalid 分别为13和11，交集7、并集17。日志把主要 internal error 追到 released evaluator：当规范化主键没有交集时，`df_inner` 为空，Pandas `DataFrame.apply(axis=1)` 返回 DataFrame，随后被赋给一个 score column 而抛异常。另一个失败面是多对多主键规范化让 unique-column true positives 超过 ground-truth 行数，产生 recall/F1 大于1。当前 official 结果继续严格 error-as-zero，不能选择性重评；未来兼容修复只能预注册后用于新协议，并同时公开 official 与 repaired sensitivity，不能回写这两次分数。
 
 ## 2026-08-07 当前结论：V2.48.00 建立单轮内部前沿，但没有识别固定预算或熵策略的因果效应
 
