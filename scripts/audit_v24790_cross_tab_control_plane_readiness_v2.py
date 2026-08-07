@@ -1,0 +1,419 @@
+#!/usr/bin/env python3
+"""Clean-pushed readiness audit for the inert V2.47.90 execution package.
+
+The audit consumes tracked public sources and frozen public parents only.  It
+does not open V2.47.84 outputs, the V2.47.89 private population, benchmark
+mapping/truth, or evaluator surfaces, and it sends no provider request.  A GO
+authorizes only package-audit generation; launch remains closed.
+"""
+
+from __future__ import annotations
+
+import ast
+import copy
+import fcntl
+import hashlib
+import json
+import os
+import re
+import socket
+import subprocess
+import sys
+import time
+from collections.abc import Mapping
+from pathlib import Path
+from typing import Any
+
+
+ROOT = Path(__file__).resolve().parents[1]
+for path in (ROOT, ROOT / "src"):
+    if str(path) not in sys.path:
+        sys.path.insert(0, str(path))
+
+from deepwide_agent import v24790_cross_tab_execution_contract as contract  # noqa: E402
+from scripts import audit_v24790_cross_tab_integration_build_v2 as build  # noqa: E402
+from scripts import preregister_v24790_cross_tab_external_v2 as protocol  # noqa: E402
+
+
+OUTPUT = contract.READINESS
+PARENT_PROTOCOL = contract.PROTOCOL
+PARENT_BUILD = contract.INTEGRATION_BUILD
+RUNTIME_SOURCES = (
+    Path("src/deepwide_agent/v24790_cross_tab_integration.py"),
+    Path("src/deepwide_agent/v24790_full_catalog_selected_target.py"),
+    Path("src/deepwide_agent/v24790_cross_tab_execution_contract.py"),
+    Path("scripts/run_v24790_cross_tab_task.py"),
+    Path("scripts/run_v24790_cross_tab_external.py"),
+)
+SOURCES = (
+    PARENT_PROTOCOL,
+    PARENT_BUILD,
+    *RUNTIME_SOURCES,
+    Path("tests/test_v24790_cross_tab_integration.py"),
+    Path("tests/test_v24790_full_catalog_selected_target.py"),
+    Path("tests/test_v24790_cross_tab_execution_contract.py"),
+    Path("tests/test_v24790_cross_tab_package.py"),
+    Path("tests/test_v24778_staged_fetch_fallback_runtime.py"),
+    Path("scripts/audit_v24790_cross_tab_control_plane_readiness_v2.py"),
+    Path("tests/test_audit_v24790_cross_tab_control_plane_readiness_v2.py"),
+)
+TEST_SUITES = (
+    (Path("tests/test_v24790_cross_tab_integration.py"), 6, 180),
+    (Path("tests/test_v24790_full_catalog_selected_target.py"), 7, 180),
+    (Path("tests/test_v24790_cross_tab_execution_contract.py"), 8, 180),
+    (Path("tests/test_v24790_cross_tab_package.py"), 7, 180),
+    (Path("tests/test_v24778_staged_fetch_fallback_runtime.py"), 13, 180),
+    (Path("tests/test_audit_v24790_cross_tab_control_plane_readiness_v2.py"), 7, 180),
+)
+EXPECTED_TESTS = 48
+RUNNER_MARKERS = (
+    "scripts/run_v24790_cross_tab_external.py",
+    "scripts/run_v24790_cross_tab_task.py",
+)
+PRIVILEGED = frozenset(
+    {"answer", "answer_key", "category", "evaluator", "gold", "ground_truth", "mapping", "question_type", "reward", "score", "split", "task_category"}
+)
+FORBIDDEN_MARKERS = (
+    "evaluation" + "/",
+    "population_" + "private",
+    "private_" + "truth.json",
+    "evaluator_" + "mapping",
+    "outputs/v24784_" + "projection_funnel",
+)
+SECRET_PREFIXES = ("gh" + "p_", "github_" + "pat_", "tvly-" + "dev-", "s" + "k-")
+SECRET = re.compile(r"(?<![A-Za-z0-9])(?:" + "|".join(re.escape(value) for value in SECRET_PREFIXES) + r")[A-Za-z0-9_-]{16,}")
+
+
+def _git(*args: str) -> str:
+    return subprocess.run(["git", *args], cwd=ROOT, stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True, timeout=20, check=True).stdout.strip()
+
+
+def _tracked(path: Path) -> bool:
+    return subprocess.run(["git", "ls-files", "--error-unmatch", str(path)], cwd=ROOT, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=20, check=False).returncode == 0
+
+
+def _ordinary(relative: Path) -> Path:
+    path = ROOT / relative
+    folded = relative.as_posix().casefold()
+    if (
+        relative.is_absolute() or ".." in relative.parts
+        or relative.parts[:1] in {("evaluation",), ("outputs",)}
+        or any(token in folded for token in ("private_population", "private_truth", "evaluator_mapping"))
+        or path.is_symlink() or not path.is_file()
+        or not path.resolve().is_relative_to(ROOT.resolve()) or not _tracked(relative)
+    ):
+        raise RuntimeError(f"V2.47.90 readiness expected tracked public source: {relative}")
+    return path
+
+
+def _sha256(relative: Path) -> str:
+    digest = hashlib.sha256()
+    with _ordinary(relative).open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _read(relative: Path) -> dict[str, Any]:
+    value = json.loads(_ordinary(relative).read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise RuntimeError("V2.47.90 readiness expected JSON object")
+    return value
+
+
+def _sealed(value: Mapping[str, Any], field: str) -> bool:
+    unsigned = dict(value)
+    seal = unsigned.pop(field, None)
+    return seal == contract.payload_sha256(unsigned)
+
+
+def _parents_valid() -> bool:
+    protocol_value = _read(PARENT_PROTOCOL)
+    build_value = _read(PARENT_BUILD)
+    return bool(
+        protocol.validate_protocol(protocol_value) == protocol_value
+        and build.validate_audit(build_value) == build_value
+        and protocol_value.get("protocol_id") == contract.PROTOCOL_ID
+        and protocol_value.get("authorization", {}).get("runner_or_control_plane_build") is False
+        and protocol_value.get("authorization", {}).get("one_external_forward_launch") is False
+        and build_value.get("role") == "v24790_cross_tab_integration_build_audit_v2"
+        and build_value.get("audit_valid") is True
+        and build_value.get("authorization", {}).get("append_only_execution_contract_and_runner_build") is True
+        and build_value.get("authorization", {}).get("activation_or_external_launch") is False
+        and _sealed(protocol_value, "protocol_payload_sha256")
+        and _sealed(build_value, "audit_payload_sha256")
+    )
+
+
+def _manifest() -> dict[str, str]:
+    output = {}
+    for relative in SOURCES:
+        raw = _ordinary(relative).read_bytes()
+        if SECRET.search(raw.decode("utf-8", errors="ignore")):
+            raise RuntimeError("V2.47.90 credential literal found")
+        output[str(relative)] = hashlib.sha256(raw).hexdigest()
+    return output
+
+
+def ast_findings() -> tuple[list[str], list[str], list[str], list[str]]:
+    fields: list[str] = []
+    imports: list[str] = []
+    markers: list[str] = []
+    secrets: list[str] = []
+    for relative in RUNTIME_SOURCES:
+        source = _ordinary(relative).read_text(encoding="utf-8")
+        markers.extend(f"{relative}:{marker}" for marker in FORBIDDEN_MARKERS if marker in source)
+        if SECRET.search(source):
+            secrets.append(str(relative))
+        tree = ast.parse(source)
+        for node in ast.walk(tree):
+            key: str | None = None
+            if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute) and node.func.attr in {"get", "pop", "setdefault"} and node.args and isinstance(node.args[0], ast.Constant) and isinstance(node.args[0].value, str):
+                key = node.args[0].value
+            elif isinstance(node, ast.Subscript) and isinstance(node.slice, ast.Constant) and isinstance(node.slice.value, str):
+                key = node.slice.value
+            if key is not None and key.casefold() in PRIVILEGED:
+                fields.append(f"{relative}:{node.lineno}:{key}")
+            if isinstance(node, ast.Import):
+                names = [alias.name for alias in node.names]
+            elif isinstance(node, ast.ImportFrom):
+                names = [node.module or "", *(alias.name for alias in node.names)]
+            else:
+                names = []
+            imports.extend(f"{relative}:{node.lineno}:{name}" for name in names if any(marker in name.casefold() for marker in ("evaluator", "gold")))
+    return tuple(sorted(set(values)) for values in (fields, imports, markers, secrets))  # type: ignore[return-value]
+
+
+def implementation_contract() -> dict[str, Any]:
+    child = _ordinary(RUNTIME_SOURCES[3]).read_text(encoding="utf-8")
+    parent = _ordinary(RUNTIME_SOURCES[4]).read_text(encoding="utf-8")
+    tasks = contract.task_vector()
+    value = {
+        "task_count": len(tasks),
+        "runtime_input_keys_exact": all(set(task) == {"opaque_id", "question"} for task in tasks),
+        "entity_count_per_task": [len(contract.visible_entities(task["question"])) for task in tasks],
+        "forward_status_vocabulary": list(contract.FORWARD_STATUSES),
+        "executor_concurrency": contract.EXECUTOR_CONCURRENCY,
+        "model_slot_cap": contract.MODEL_SLOT_CAP,
+        "parent_timeout_seconds": contract.PARENT_TIMEOUT_SECONDS,
+        "experiment_wall_ceiling_seconds": contract.EXPERIMENT_WALL_CEILING_SECONDS,
+        "limits": dict(contract.LIMITS),
+        "hard_total_wall_model_inner": "HardTotalWallResponsesClient(" in child,
+        "deadline_aware_global_slot_wrapper": "DeadlineAwareGlobalModelSlotLimiter(" in child,
+        "hard_total_wall_search_inner": "HardTotalWallNativeSearchClient(" in child,
+        "trusted_integration_call_count": child.count("run_v24790_task("),
+        "one_shot_total_wrapper_present": "def run_task_total(" in parent,
+        "fixed_denominator_failure_projection_present": "failure_predictions(" in parent,
+        "selected_receipts_only_aggregated_when_present": 'item["selected_counts"] is not None' in parent,
+        "same_group_joint_aggregated_directly": 'item["selected_task_local"][name]' in parent,
+        "cross_margin_joint_disabled": '"cross_task_or_cross_group_margins_used_as_joint": False' in parent,
+        "resume_retry_skip_or_selective_rerun_false": '"resume_retry_skip_or_selective_rerun": False' in parent,
+        "valid": False,
+    }
+    value["valid"] = bool(
+        value["task_count"] == 8 and value["runtime_input_keys_exact"]
+        and value["entity_count_per_task"] == [4] * 8
+        and value["forward_status_vocabulary"] == [
+            "validated", "no_baseline_unknown_target", "private_catalog_absent",
+            "base_runtime_failure", "selected_catalog_or_observer_failure", "parent_failure",
+        ]
+        and value["executor_concurrency"] == 8 and value["model_slot_cap"] == 8
+        and value["parent_timeout_seconds"] == 195.0
+        and value["experiment_wall_ceiling_seconds"] == 210.0
+        and value["limits"]["model_calls"] == 2
+        and value["limits"]["search_queries"] == 4
+        and value["limits"]["fetch_targets"] == 10
+        and all(value[name] for name in (
+            "hard_total_wall_model_inner", "deadline_aware_global_slot_wrapper",
+            "hard_total_wall_search_inner", "one_shot_total_wrapper_present",
+            "fixed_denominator_failure_projection_present",
+            "selected_receipts_only_aggregated_when_present",
+            "same_group_joint_aggregated_directly", "cross_margin_joint_disabled",
+            "resume_retry_skip_or_selective_rerun_false",
+        ))
+        and value["trusted_integration_call_count"] == 1
+    )
+    return value
+
+
+def _run_tests() -> tuple[bool, int, list[dict[str, Any]]]:
+    environment = {
+        "HOME": os.environ.get("HOME", str(Path.home())),
+        "USER": os.environ.get("USER", "azureuser"),
+        "LOGNAME": os.environ.get("LOGNAME", "azureuser"),
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "PYTHONDONTWRITEBYTECODE": "1", "PYTHONNOUSERSITE": "1", "PYTHONSAFEPATH": "1",
+    }
+    rows = []
+    for path, expected, timeout in TEST_SUITES:
+        completed = subprocess.run(
+            [str(ROOT / ".venv-eval/bin/python"), "-I", "-B", "-m", "unittest", "discover", "-s", "tests", "-p", path.name, "-v"],
+            cwd=ROOT, env=environment, stdin=subprocess.DEVNULL,
+            stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,
+            timeout=timeout, check=False,
+        )
+        match = re.search(r"Ran (\d+) tests?", completed.stdout)
+        observed = int(match.group(1)) if match else 0
+        rows.append({
+            "path": str(path), "expected": expected, "observed": observed,
+            "output_sha256": hashlib.sha256(completed.stdout.encode()).hexdigest(),
+            "passed": completed.returncode == 0 and observed == expected,
+        })
+    total = sum(row["observed"] for row in rows)
+    return all(row["passed"] for row in rows) and total == EXPECTED_TESTS, total, rows
+
+
+def _endpoint() -> bool:
+    try:
+        with socket.create_connection(("127.0.0.1", 9878), timeout=0.5):
+            return True
+    except OSError:
+        return False
+
+
+def _lease_inactive() -> bool:
+    path = ROOT / contract.LEASE_PATH
+    if path.is_symlink():
+        return False
+    path.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        with path.open("a+", encoding="utf-8") as handle:
+            fcntl.flock(handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+            fcntl.flock(handle.fileno(), fcntl.LOCK_UN)
+        return True
+    except (BlockingIOError, OSError):
+        return False
+
+
+def _active_runners() -> list[int]:
+    completed = subprocess.run(["ps", "-eo", "pid=,comm=,args="], cwd=ROOT, stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True, timeout=20, check=False)
+    output = []
+    for line in completed.stdout.splitlines():
+        parts = line.split(None, 2)
+        if len(parts) >= 3 and "python" in parts[1].casefold() and any(marker in parts[2] for marker in RUNNER_MARKERS):
+            output.append(int(parts[0]))
+    return sorted(output)
+
+
+def build_audit(*, now: int | None = None) -> dict[str, Any]:
+    manifest = _manifest()
+    fields, imports, markers, secrets = ast_findings()
+    implementation = implementation_contract()
+    tests_passed, observed, suites = _run_tests()
+    head = _git("rev-parse", "HEAD")
+    remote = _git("rev-parse", "target/main")
+    clean = _git("status", "--porcelain") == ""
+    tracked = all(_tracked(path) for path in SOURCES)
+    watchers = contract.protected_watcher_snapshot()
+    endpoint = _endpoint()
+    lease = _lease_inactive()
+    runners = _active_runners()
+    future_paths = (
+        OUTPUT, contract.PACKAGE_BUILD, contract.PREAUDIT, contract.ACTIVATION,
+        contract.EXECUTION_START, contract.FORWARD_RESULT, contract.FORWARD_AUDIT,
+        contract.OUTPUT_ROOT,
+    )
+    future_pristine = all(not (ROOT / path).exists() and not (ROOT / path).is_symlink() for path in future_paths)
+    findings: list[str] = []
+    if not _parents_valid(): findings.append("v24790_protocol_or_integration_parent_invalid")
+    if not implementation["valid"]: findings.append("v24790_execution_package_contract_drifted")
+    if fields: findings.append("privileged_forward_field_access")
+    if imports: findings.append("evaluator_or_gold_import_in_forward")
+    if markers: findings.append("private_or_consumed_output_marker_in_forward")
+    if secrets: findings.append("credential_literal_in_forward")
+    if not tests_passed: findings.append("regression_failed_or_count_drifted")
+    if head != remote: findings.append("source_commit_not_pushed")
+    if not clean: findings.append("source_worktree_not_clean")
+    if not tracked: findings.append("source_not_tracked")
+    if not endpoint: findings.append("gpt56_endpoint_unreachable")
+    if not lease: findings.append("shared_api_lease_active")
+    if runners: findings.append("v24790_runner_active")
+    if not future_pristine: findings.append("future_surface_not_pristine")
+    value = {
+        "artifact_version": 2,
+        "role": "v24790_cross_tab_control_plane_readiness_v2",
+        "protocol_id": contract.PROTOCOL_ID,
+        "created_at_unix": int(time.time()) if now is None else int(now),
+        "protocol_sha256": _sha256(PARENT_PROTOCOL),
+        "integration_build_sha256": _sha256(PARENT_BUILD),
+        "source_manifest": manifest,
+        "source_manifest_sha256": contract.payload_sha256(manifest),
+        "implementation_contract": implementation,
+        "tests": {"expected": EXPECTED_TESTS, "observed": observed, "suites": suites, "passed": tests_passed, "network_model_search_fetch_benchmark_or_evaluator_called": False},
+        "label_blind_audit": {"runtime_input_keys": ["opaque_id", "question"], "privileged_forward_field_accesses": fields, "evaluator_or_gold_imports": imports, "private_or_consumed_output_marker_hits": markers, "credential_literal_hits": secrets, "passed": not fields and not imports and not markers and not secrets},
+        "runtime_state": {"protected_watchers": watchers, "gpt56_endpoint_reachable_without_provider_request": endpoint, "shared_api_lease_inactive": lease, "active_v24790_runner_pids": runners, "future_surface_pristine": future_pristine, "external_forward_launched_by_audit": False, "evaluator_called_by_audit": False},
+        "git": {"head": head, "target_main": remote, "head_equals_target_main": head == remote, "worktree_clean": clean, "all_sources_tracked": tracked},
+        "source_policy": {
+            "v24784_output_prediction_task_result_page_or_visible_task_opened_or_hashed": False,
+            "v24789_private_population_truth_provenance_or_quality_opened_or_hashed": False,
+            "benchmark_manifest_mapping_gold_category_question_type_split_evaluator_score_reward_read": False,
+            "credential_read_hashed_persisted_or_emitted": False,
+            "network_model_search_fetch_benchmark_forward_or_evaluator_called": False,
+        },
+        "findings": findings,
+        "audit_valid": not findings,
+        "authorization": {
+            "package_audit_artifact_generation": not findings,
+            "preactivation_audit_generation": False, "activation": False,
+            "execution_start": False, "external_launch": False,
+            "private_truth_or_quality_surface_open": False,
+            "paired_dev64": False, "exact220": False,
+            "entropy_or_credit_experiment": False, "leaderboard_or_sota": False,
+        },
+    }
+    value["audit_payload_sha256"] = contract.payload_sha256(value)
+    return value
+
+
+def validate_audit(value: Mapping[str, Any]) -> dict[str, Any]:
+    copied = copy.deepcopy(dict(value))
+    unsigned = dict(copied)
+    seal = unsigned.pop("audit_payload_sha256", None)
+    if (
+        copied.get("role") != "v24790_cross_tab_control_plane_readiness_v2"
+        or copied.get("protocol_id") != contract.PROTOCOL_ID
+        or copied.get("audit_valid") is not True or copied.get("findings") != []
+        or copied.get("protocol_sha256") != _sha256(PARENT_PROTOCOL)
+        or copied.get("integration_build_sha256") != _sha256(PARENT_BUILD)
+        or copied.get("source_manifest") != _manifest()
+        or copied.get("implementation_contract", {}).get("valid") is not True
+        or copied.get("tests", {}).get("passed") is not True
+        or copied.get("tests", {}).get("observed") != EXPECTED_TESTS
+        or copied.get("label_blind_audit", {}).get("passed") is not True
+        or copied.get("runtime_state", {}).get("gpt56_endpoint_reachable_without_provider_request") is not True
+        or copied.get("runtime_state", {}).get("shared_api_lease_inactive") is not True
+        or copied.get("runtime_state", {}).get("active_v24790_runner_pids") != []
+        or copied.get("runtime_state", {}).get("future_surface_pristine") is not True
+        or copied.get("authorization") != {
+            "package_audit_artifact_generation": True,
+            "preactivation_audit_generation": False, "activation": False,
+            "execution_start": False, "external_launch": False,
+            "private_truth_or_quality_surface_open": False,
+            "paired_dev64": False, "exact220": False,
+            "entropy_or_credit_experiment": False, "leaderboard_or_sota": False,
+        }
+        or seal != contract.payload_sha256(unsigned)
+    ):
+        raise RuntimeError("V2.47.90 readiness audit drifted")
+    return copied
+
+
+def publish_new(path: Path, value: Mapping[str, Any]) -> None:
+    if path.exists() or path.is_symlink():
+        raise FileExistsError(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    descriptor = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
+    with os.fdopen(descriptor, "w", encoding="utf-8") as handle:
+        json.dump(dict(value), handle, ensure_ascii=False, indent=2, sort_keys=True)
+        handle.write("\n"); handle.flush(); os.fsync(handle.fileno())
+
+
+if __name__ == "__main__":
+    value = validate_audit(build_audit())
+    publish_new(ROOT / OUTPUT, value)
+    print(json.dumps({
+        "path": str(OUTPUT), "audit_valid": value["audit_valid"],
+        "findings": value["findings"], "test_count": value["tests"]["observed"],
+        "package_audit_artifact_generation": value["authorization"]["package_audit_artifact_generation"],
+        "external_launch": value["authorization"]["external_launch"],
+    }, sort_keys=True))
