@@ -79,6 +79,47 @@ RECEIPT_KEYS = frozenset(
 )
 
 
+def empty_receipt(key_slot_cap: int) -> dict[str, Any]:
+    """Return a sealed content-free receipt for pre-client failure paths."""
+
+    if (
+        isinstance(key_slot_cap, bool)
+        or not isinstance(key_slot_cap, int)
+        or not 1 <= key_slot_cap <= 64
+    ):
+        raise ValueError("V2.47.96 empty receipt slot cap is invalid")
+    value = {
+        "artifact_version": 1,
+        "role": ROLE,
+        "policy_id": POLICY_ID,
+        "pool_id": POOL_ID,
+        "key_slot_cap": key_slot_cap,
+        "provider_attempts": 0,
+        "successful_queries": 0,
+        "failed_queries": 0,
+        "slot_acquisitions": 0,
+        "slot_timeouts": 0,
+        "total_slot_wait_seconds": 0.0,
+        "max_slot_wait_seconds": 0.0,
+        "key_local_disables": 0,
+        "retryable_responses": 0,
+        "transport_failures": 0,
+        "invalid_payloads": 0,
+        "credential_echo_rejections": 0,
+        "projected_url_leads": 0,
+        "invalid_or_duplicate_results": 0,
+        **{name: 0 for name in STATUS_BUCKETS},
+        "provider_answer_snippet_raw_content_or_score_forwarded": False,
+        "deterministic_public_page_fetch_is_only_active_evidence": True,
+        "credential_value_persisted_hashed_emitted_or_in_error": False,
+        "query_url_page_prediction_answer_or_opaque_id_persisted": False,
+        "mapping_gold_category_question_type_split_evaluator_score_reward_read": False,
+        "benchmark_launch_or_evaluator_authorized": False,
+    }
+    value["receipt_payload_sha256"] = payload_sha256(value)
+    return validate_receipt(value)
+
+
 def _credentials(values: Iterable[str]) -> tuple[str, ...]:
     keys = tuple(str(value).strip() for value in values if str(value).strip())
     if (
@@ -647,6 +688,7 @@ __all__ = [
     "ENDPOINT",
     "POLICY_ID",
     "POOL_ID",
+    "empty_receipt",
     "prepare_key_slots",
     "validate_receipt",
     "validate_search_class",

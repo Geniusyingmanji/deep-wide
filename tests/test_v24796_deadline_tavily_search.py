@@ -17,6 +17,7 @@ for path in (ROOT, ROOT / "src"):
 from deepwide_agent.v24796_deadline_tavily_search import (  # noqa: E402
     DeadlineTavilyThinCompatibilityClient,
     ENDPOINT,
+    empty_receipt,
     prepare_key_slots,
     validate_receipt,
     validate_search_class,
@@ -31,6 +32,14 @@ def response(status: int, payload: dict | None = None) -> Mock:
 
 
 class V24796DeadlineTavilyTests(unittest.TestCase):
+    def test_empty_receipt_is_valid_content_free_baseline(self) -> None:
+        value = validate_receipt(empty_receipt(12))
+        self.assertEqual(value["key_slot_cap"], 12)
+        self.assertEqual(value["provider_attempts"], 0)
+        self.assertFalse(
+            value["credential_value_persisted_hashed_emitted_or_in_error"]
+        )
+
     def client(self, directory: Path, post, keys=("secret-one", "secret-two")):
         return DeadlineTavilyThinCompatibilityClient(
             "http://127.0.0.1:9878/responses",
