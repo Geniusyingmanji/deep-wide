@@ -1,0 +1,132 @@
+{
+  "artifact_version": 1,
+  "role": "v24791_exact220_result",
+  "protocol_id": "v24831_keyless_gpt56_hosted_search_exact220_replication_v1",
+  "created_at_unix": 1786135702,
+  "status": "exact220_single_rollout_complete",
+  "selected": 220,
+  "failure_as_zero": true,
+  "exact220_prediction_freeze_before_evaluator": true,
+  "metrics": {
+    "test_156": {
+      "selected": 156,
+      "evaluator_valid": 146,
+      "evaluator_invalid_or_not_run": 10,
+      "whole_table_successes": 3,
+      "entity_acc": 0.6602564102564102,
+      "f1_by_row": 0.18396990929734416,
+      "f1_by_item": 0.34301744724263755,
+      "column_f1": 0.4211739153285359,
+      "quality_composite": 0.40210442053123197,
+      "score": 0.019230769230769232
+    },
+    "all_220": {
+      "selected": 220,
+      "evaluator_valid": 209,
+      "evaluator_invalid_or_not_run": 11,
+      "whole_table_successes": 6,
+      "entity_acc": 0.7090909090909091,
+      "f1_by_row": 0.21869687056712647,
+      "f1_by_item": 0.3907382625666603,
+      "column_f1": 0.47595284266273014,
+      "quality_composite": 0.4486197212218565,
+      "score": 0.02727272727272727,
+      "model_generated_tables": 220,
+      "fallback_tables": 0,
+      "system_total_tokens": 8030117
+    }
+  },
+  "efficiency": {
+    "forward_wall_seconds": 772.482778,
+    "evaluator_parallel_wall_seconds": 244.648962,
+    "evaluator_workers": 32
+  },
+  "comparisons": {
+    "v24267": {
+      "reference_result_sha256": "0e08df141b1c34726bc04673fcb5c56f98b4aab08df906c2d7f35b568b6932eb",
+      "whole_table_success_delta": -1,
+      "score_delta": -0.0045454545454545435,
+      "quality_composite_delta": 0.03507830315364763
+    },
+    "v24287": {
+      "reference_result_sha256": "ef54c4e9b96723ad991c01113b8abb9f323230a77d5512409ee9779fee98d833",
+      "whole_table_success_delta": 1,
+      "score_delta": 0.0045454545454545435,
+      "quality_composite_delta": 0.05262873562688514
+    },
+    "v24630": {
+      "reference_result_sha256": "09c67b91526a8787b45edbd6f51b29421e50ad3116884fbc6498c7919bc45c9a",
+      "whole_table_success_delta": 1,
+      "score_delta": 0.0045454545454545435,
+      "quality_composite_delta": 0.04498759734869079
+    },
+    "v24635": {
+      "reference_result_sha256": "6edbdb9ee17e428a054b42cdd0c7eff0237c3d7504049dc18a7fa4a6de25f3e5",
+      "whole_table_success_delta": 2,
+      "score_delta": 0.00909090909090909,
+      "quality_composite_delta": 0.0107280447324683
+    },
+    "v24800": {
+      "reference_result_sha256": "1de3bcda31f3f2d858d9fd7b4ccba423d9361081fdcb9623acd3f3c7c16fd521",
+      "whole_table_success_delta": -2,
+      "score_delta": -0.00909090909090909,
+      "quality_composite_delta": -0.00821403969129636
+    }
+  },
+  "provenance": {
+    "evaluator_protocol_sha256": "ce40bb02b80ca6dcd4c11f39aac8d671ab8f0837dbc050c51c569873b3f80260",
+    "forward_result_sha256": "eb909b9e0982a5af5e62595473da5da8026059613cc7b81c8ef771b83736d864",
+    "forward_audit_sha256": "b4181c5cc788d8b41b92f7e97b225f3e622c383f18f48ccbeddd30111374db36",
+    "prediction_freeze_sha256": "3d134f812d50c9c9ecd2c34a4b2b6ee7ec31cdf5d96ec37c6a1d425cade479aa",
+    "mapping_sha256": "3d6f8f71e8136f5a3fe9385e2511e50a367e220dd84e790ba3c7dec975ab5d86",
+    "query_data_sha256": "4dd18df4ab8d166f14a1458f884fd8e0652f970764e245e868d75947daa5e5cf",
+    "answer_corpus_manifest_sha256": "5ddc76dd9e9fa4a7080f84e824de6230c62101d2375dee72a0f508b7cfa4ec7e",
+    "evaluator_source_manifest_sha256": "2829e4808226bd35e4e312f024ceded3a9bc2b1e923493e06503278e382ba061",
+    "judge": {
+      "max_output_tokens": 8192,
+      "max_retries": 12,
+      "model": "gpt-5.6-sol",
+      "proxy_url": "http://127.0.0.1:9878/responses",
+      "reasoning_effort": "low",
+      "timeout_seconds": 600
+    },
+    "recovery_policy": {
+      "canonical_result_file_atomic_replace_per_task": true,
+      "committed_rows_must_be_exact_prediction_prefix": true,
+      "committed_success_or_error_is_terminal": true,
+      "explicit_resume_required": true,
+      "selective_error_retry_allowed": false
+    },
+    "merged_official_eval_results_sha256": "e043627fc172a5b0bbfc26cdba7647ab2364ac3174719ad2412e2aae7a6e32a8",
+    "parallel_merge_attestation_sha256": "56da17994230fc8e0b6f6e8837a5a45c9db4cb5df84d9c90c7c597340221af29",
+    "conservative_summary_sha256": "444203d3bd6c0452fcbe63d9e3d017c761f189469d07d0f7cc68fa6a436f6a4b"
+  },
+  "source_policy": {
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "mapping_opened_only_after_exact220_prediction_freeze_and_pushed_audit": true,
+    "same_run_evaluator_feedback_used_for_forward_or_prediction_selection": false,
+    "fixed_public_exact220_task_set_reexecuted": true,
+    "new_or_disjoint_task_population_claimed": false,
+    "cross_version_public_benchmark_feedback_overfitting_remains_a_limitation": true
+  },
+  "authorization": {
+    "additional_rollout_or_avg4": false,
+    "selective_retry_or_revaluation": false,
+    "leaderboard_submission": false,
+    "sota_claim": false
+  },
+  "claims": {
+    "public_exact220_single_rollout": true,
+    "cold_execution": true,
+    "unseen_or_held_out": false,
+    "new_or_disjoint_task_population": false,
+    "cross_version_public_benchmark_feedback_overfitting_remains_a_limitation": true,
+    "avg_at_4": false,
+    "leaderboard_submitted": false,
+    "sota": false
+  },
+  "result_payload_sha256": "19db51cb792b8d509d47af798178cb3fa096e252ac5371e3433b7e5ca061a7d6"
+}
