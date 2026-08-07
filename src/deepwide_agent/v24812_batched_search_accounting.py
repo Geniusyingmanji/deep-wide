@@ -32,7 +32,6 @@ from .v24804_shared_prefix_budget_ladder import (
     run_v24804_task,
     validate_result,
 )
-from .v24809_worldbank_budget_ladder_runner_integration import _aligned_deadlines
 from .v24809_worldbank_budget_ladder_smoke_contract import payload_sha256
 
 
@@ -47,6 +46,28 @@ class IntegratedOutcome:
     model_slot_receipt: dict[str, Any]
     transport_health: dict[str, Any]
     effect_accounting: dict[str, Any]
+
+
+def _aligned_deadlines(model: Any, search: Any) -> bool:
+    """Require the two effect clients to share one task deadline."""
+
+    try:
+        return (
+            abs(float(model.absolute_deadline) - float(search.absolute_deadline))
+            <= 1e-6
+            and abs(
+                float(model.cleanup_reserve_seconds)
+                - float(search.cleanup_reserve_seconds)
+            )
+            <= 1e-6
+            and abs(
+                float(model.minimum_attempt_seconds)
+                - float(search.minimum_attempt_seconds)
+            )
+            <= 1e-9
+        )
+    except (AttributeError, TypeError, ValueError):
+        return False
 
 
 def _nonnegative_integer(value: object) -> int:
