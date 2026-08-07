@@ -217,6 +217,9 @@ def _validate_launch_chain() -> dict[str, Any]:
         or preaudit.get("role") != "v24790_cross_tab_preactivation_audit_v2"
         or preaudit.get("launch_authorized") is not True
         or not sealed(preaudit, "audit_payload_sha256")
+        or preaudit.get("protocol_sha256") != sha256(ROOT / PROTOCOL)
+        or preaudit.get("package_build_sha256") != sha256(ROOT / PACKAGE_BUILD)
+        or preaudit.get("package_manifest_sha256") != payload_sha256(manifest)
         or preaudit.get("authorization") != {
             "activation_generation": True,
             "execution_start_generation": False,
@@ -229,6 +232,9 @@ def _validate_launch_chain() -> dict[str, Any]:
         or activation.get("role") != "v24790_cross_tab_activation_v2"
         or activation.get("launch_authorized") is not True
         or not sealed(activation, "activation_payload_sha256")
+        or activation.get("protocol_sha256") != sha256(ROOT / PROTOCOL)
+        or activation.get("package_build_sha256") != sha256(ROOT / PACKAGE_BUILD)
+        or activation.get("preaudit_sha256") != sha256(ROOT / PREAUDIT)
         or activation.get("authorization") != {
             "execution_start_generation": True,
             "one_external_forward_launch": False,
@@ -240,6 +246,10 @@ def _validate_launch_chain() -> dict[str, Any]:
         or start.get("role") != "v24790_cross_tab_execution_start_v2"
         or start.get("launch_authorized") is not True
         or not sealed(start, "execution_start_payload_sha256")
+        or start.get("protocol_sha256") != sha256(ROOT / PROTOCOL)
+        or start.get("package_build_sha256") != sha256(ROOT / PACKAGE_BUILD)
+        or start.get("preaudit_sha256") != sha256(ROOT / PREAUDIT)
+        or start.get("activation_sha256") != sha256(ROOT / ACTIVATION)
         or start.get("first_network_model_search_or_fetch_effect_started") is not False
         or start.get("authorization") != {
             "one_external_forward_launch": True,
