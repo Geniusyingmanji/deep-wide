@@ -1,8 +1,14 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.51
+> 版本：6.52
 >
-> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.51 覆盖。**
+> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.52 覆盖。**
+
+> **6.52 V2.48.50 完整 220 冷启动复现（2026-08-08）：按用户要求不再让小样门阻塞全集，V2.48.50 对当前内部最佳 V2.48.00 的 frozen policy 做了一次全新执行面复现。220 题向量、GPT-5.6、Tavily URL-lead transport、prompt、fixed-full-budget controller、每题 `3 model / 4 query / 10 fetch / 240s` hard caps，以及 `20 task / 8 model / 12 search` 并发均与 V2.48.00 相同；唯一变化是 create-only protocol/output/evaluator surface。runtime 严格只接收 `{opaque_id, question}`，60/60 preactivation tests、privileged-field/evaluator-capability/credential scan 全通过；禁止 resume、补题、选择性重跑或重评。完整 forward `220/220` terminal，219 model-generated、1 fallback，耗时 `726.766861s`；220/220 search/control receipts 有效，0 slot timeout、0 transport failure。全部 prediction freeze、forward artifact 提交推送并通过 audit 后，才开放 mapping/gold/evaluator。**
+
+> **固定 32-worker evaluator 对 220 条冻结预测 exactly once，210 valid、10 error 固定计零；结果 whole-table `7/220 = 3.1818%`，Entity `0.681818`，Row/Item/Column F1 `0.225550/0.390296/0.471082`，Composite `0.442187`，evaluator `331.453927s`。相对 V2.48.00 为 exact `-1`、Composite `-0.014647`，故没有复现其 `8/220 / 0.456834` 单轮峰值；相对最新 V2.48.48 为 exact `+2`、Composite `+0.005544`。postresult audit 复核 220 固定分母、32 分片、failure-as-zero、无选择性重评、watcher/lease/进程闭环，`findings=[]`。权威工件：[`results/v24850_v24800_replication_exact220_result_v1_20260808.json`](results/v24850_v24800_replication_exact220_result_v1_20260808.json) 与 [`results/v24850_v24800_replication_exact220_postresult_audit_v1_20260808.json`](results/v24850_v24800_replication_exact220_postresult_audit_v1_20260808.json)。当前仍不是 Avg@4、未提交 leaderboard、没有 SOTA 证据。**
+
+> **刷榜策略据此更新：同一 V2.48.00 policy 的三次完整冷运行 V2.48.00/07/50 得到 exact `8/8/7`、Composite `0.456834/0.438248/0.442187`；单次公开全集峰值不能再作为机制 GO。下一候选仍应是 visible-only evidence quality/dependency gate，但不再用旧公开题的历史分数、bin 或正确性作 runtime route。候选先在 fresh shared-prefix 外部人口比较 fixed-16k、fixed-30k、matched-cost quality-gated 三臂；通过后，public 220 至少做预注册的独立重复或 shared-prefix 对照，并报告跨 rollout 分布。entropy/IG 保持 shadow/VOC feature；signed credit 只能来自同状态 deletion/replacement、sibling continuation 或 outer terminal utility。**
 
 > **6.51 V2.48.48 完整 220 NO-GO（2026-08-08）：在 V2.48.47 shared-prefix external GO 后，V2.48.48 以 V2.48.44 为父算法，仅把原子投影总 cap `16k→30k`；220 题向量、prompt、GPT-5.6、keyless search/fetch、单题预算、`20 task / 8 model` 并发均不变。runtime 仍只接收 `{opaque_id, question}`，single-pass、failure-as-zero，禁止 resume/补题/选择性重跑或重评。108/108 preactivation tests、label-blind/evaluator-capability/credential audit 全通过。完整前向 `220/220` model-generated、0 fallback，耗时 `849.299702s`；220 个 content-free projection receipt 全有效、0 missing、0 orphan、0 missed supported requirement，总 rendered chars `4,494,390`（均值约20.4k/题），但本批网页没有触发 table continuation/header dependency。**
 

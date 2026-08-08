@@ -1,8 +1,16 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
-> 检索截止：2026-08-07 14:10 UTC；项目证据更新：2026-08-07 UTC（至 V2.48.08）
+> 检索截止：2026-08-07 14:10 UTC；项目证据更新：2026-08-08 UTC（至 V2.48.50）
 >
 > 结论强度：这是基于公开文献的 novelty audit，不是“没有任何相关工作”的证明。2026 年文献多为尚未同行评审的 arXiv 预印本，文中将预印本结果视为作者报告，而非独立复现事实。
+
+## 2026-08-08 V2.48.50：完整复现再次确认单 rollout 方差，未刷新前沿
+
+V2.48.50 使用与 V2.48.00 相同的 220 题向量、GPT-5.6、Tavily URL-lead transport、prompt、fixed-full-budget controller、hard caps 与并发，只更换全新的 create-only 执行和评测表面。forward 仍严格只读 `{opaque_id, question}`；`220/220` prediction 在 mapping、gold 与 evaluator 开放前冻结，219 个表由模型生成、1 个为预注册 fallback，前向耗时 `726.77s`。prediction freeze 与 forward audit 提交推送后，32-worker evaluator exactly-once 覆盖全部 220，210 valid、10 error 按固定规则计零。
+
+完整结果为 whole-table `7/220`、Entity `0.681818`、Row/Item/Column F1 `0.225550/0.390296/0.471082`、Composite `0.442187`。相对 V2.48.00，exact 少1、Composite 低 `0.014647`；相对 V2.48.48，exact 多2、Composite 高 `0.005544`。同一 V2.48.00 policy 的三次完整运行 V2.48.00/07/50 因而为 exact `8/8/7`、Composite `0.456834/0.438248/0.442187`。V2.48.00 仍是 observed single-rollout internal peak，但 V2.48.50 没有刷新 benchmark 前沿，也没有 leaderboard、Avg@4 或 SOTA 证据。权威结果和审计分别为 [`results/v24850_v24800_replication_exact220_result_v1_20260808.json`](results/v24850_v24800_replication_exact220_result_v1_20260808.json) 与 [`results/v24850_v24800_replication_exact220_postresult_audit_v1_20260808.json`](results/v24850_v24800_replication_exact220_postresult_audit_v1_20260808.json)。
+
+这一复现进一步限制 entropy/credit 的经验主张：同一无熵 fixed-full-budget policy 本身已有可观 rollout 波动，因此独立全集间的得分差不能识别 evidence selector、entropy 或 credit 的因果作用。后续必须共享 prefix、冻结 admissible action set 与成本，或进行预注册的独立重复；历史公开题的分数、正确性和 evaluator bin 不得进入 runtime route。entropy/IG 只能先作为动作价值或不确定性 feature，credit 的符号仍须由同状态 intervention 或 terminal outer utility 给出。
 
 ## 2026-08-07 V2.48.07/08：完整重复运行否定了单轮前沿的稳定性假设
 
