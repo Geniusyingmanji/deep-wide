@@ -470,6 +470,7 @@ def _direct_search_totals(root: Path) -> dict[str, Any]:
 def main() -> None:
     credentials = _read_credentials()
     configure(credentials)
+    parent_runner.contract = contract
     root = ROOT
     protocol = contract.validate_protocol(root, _read(root / contract.PROTOCOL))
     start = parent_runner.validate_execution_start(root, protocol)
