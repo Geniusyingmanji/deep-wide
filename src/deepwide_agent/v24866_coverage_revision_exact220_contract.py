@@ -27,9 +27,9 @@ from . import v24863_coverage_revision_child_bundle as bundle
 from . import v24865_coverage_revision_subprocess_gate as subprocess_gate
 
 
-DATE = "20260808"
-ROLE = "v24866_coverage_revision_exact220_preregistration"
-PROTOCOL_ID = "v24866_bounded_third_slot_coverage_revision_exact220_v1"
+DATE = "20260808r2"
+ROLE = "v24866_coverage_revision_exact220_r2_preregistration"
+PROTOCOL_ID = "v24866_bounded_third_slot_coverage_revision_exact220_v2"
 PROTOCOL = Path(
     f"results/v24866_coverage_revision_exact220_preregistration_v1_{DATE}.json"
 )
@@ -45,7 +45,7 @@ FORWARD_RESULT = Path(
 FORWARD_AUDIT = Path(
     f"results/v24866_coverage_revision_exact220_forward_audit_v1_{DATE}.json"
 )
-OUTPUT_ROOT = Path(f"outputs/v24866_coverage_revision_exact220_v1_{DATE}")
+OUTPUT_ROOT = Path(f"outputs/v24866_coverage_revision_exact220_v2_{DATE}")
 MODEL_SLOT_DIRECTORY = OUTPUT_ROOT / "model_slots"
 KEY_SLOT_DIRECTORY = OUTPUT_ROOT / "tavily_key_slots"
 TASK_ROOT = OUTPUT_ROOT / "tasks"
@@ -54,7 +54,7 @@ RUN_SUMMARY = OUTPUT_ROOT / "run_summary.json"
 PREDICTION_FREEZE = OUTPUT_ROOT / "prediction_freeze.json"
 SAFE_PROGRESS = OUTPUT_ROOT / "safe_forward_progress.json"
 LEASE_PATH = parent.LEASE_PATH
-LEASE_OWNER = "v24866_coverage_revision_exact220_forward_v1"
+LEASE_OWNER = "v24866_coverage_revision_exact220_forward_v2"
 LEASE_PURPOSE = "fresh_label_blind_bounded_third_slot_coverage_exact220"
 RUNNER_MARKER = "scripts/run_v24866_coverage_revision_exact220.py"
 CHILD_MARKER = "scripts/run_v24866_coverage_revision_exact220_task.py"
