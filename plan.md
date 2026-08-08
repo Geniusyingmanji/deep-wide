@@ -3080,3 +3080,26 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 5. 该实验是对已经评测过的公开 220 题 rollout 做 post-hoc ensemble，不是 held-out/cold execution，不是 Avg@4，也没有新的 entropy/credit intervention；因此不能支持信息熵 credit assignment 有效或 leaderboard/SOTA 主张。
 6. post-result audit 为 `8/8`、`findings=[]`；它复核 result seal、exact-220 行数、failure-as-zero、post-hoc/non-SOTA claims、无选择性重评、shared lease 释放与 4 个 protected watcher 稳定。结果冻结于 commit `fb3faa9`，审计冻结于 `daee3e1`。
 7. 这一公开 220 结果从此只用于汇总，不得依据逐题错误调 consensus、选择 source、补跑、补评或重评。下一优化门回到 benchmark-external fresh tasks，优先分离验证 entity anchoring、schema fidelity 与 long-tail row completeness；只有预注册的 fresh/disjoint paired gate 同时提升 exact-table 与 Composite，才能再设计新的 public exact-220。
+
+### V2.48.50–55：rate-aware transport 修复与 pacing 混入诊断（2026-08-08 UTC）
+
+1. V2.48.50 对 V2.48.00 做完整 220 题冷复现，得到 `7/220`、Composite `0.442186599`，但旧 transport 出现 `624` 个 429。V2.48.52 将 Tavily 改成 provider-wide pacing/cooldown、每 logical query 最多 2 个 provider attempt、credential-local 401/403/432；凭据仍只经 stdin/子进程内存注入，不持久化、打印或哈希。
+2. V2.48.54 完整 220 题得到 `6/220`、Composite `0.447337220`，220 份 rate receipt 全有效，827 次 provider attempt 全部 2xx，429/slot timeout/transport failure 均为 0；forward `829.331347s`、evaluator `219.44s`，219 model-generated、1 fallback。transport storm 被修复，但 wave-1 latency stop 从旧复现的 `2` 墆至 `27`。
+3. V2.48.55 更正后用关键路径 `max_provider_gate_wait_seconds` 而非并发 wait 之和判断 pacing mixture：27 个 stop 中 19 个是 pacing-mixed，8 个仍是真实慢检索。V2.48.54 相对 V2.48.00/50 的 paired Composite bootstrap 区间均跨 0，不能声称质量提升；V2.48.34 虽有 `8/220`，Composite 仅 `0.427480107`，也否定“只加证据必然更好”。
+4. 下一步因此只允许构建 same-pass content-free pacing-aware admission：raw wave-1 elapsed 不改写，只把同一 forward 的最大 provider gate wait（上限 30 秒）加到 admission ceiling；240 秒绝对 deadline、cleanup reserve、query/fetch/model/token/context cap 与 transport pacing/attempt cap全部不变。
+
+### V2.48.56–57：pacing-aware admission 完整 220 题项目内新最佳（2026-08-08 UTC）
+
+1. V2.48.56 用 closure-free `FunctionType` 隔离副本与 `contextvars` 实现 pacing-aware admission，不 monkey-patch 冻结父模块；专项 7/7、联合回归通过，AST privileged-field/evaluator capability 为 0。V2.48.57 再把该机制接入生产 exact-220，新增每题 pacing receipt；production integration 也使用隔离函数链，避免 20 路并发共享全局 binding。
+2. 代码、protocol、92/92 preactivation audit、execution-start 均在 clean 且 `HEAD==target/main` 状态分步提交推送。唯一一次 label-blind forward 输入严格为 `{opaque_id, question}`，20 executor、8 model slots、12 Tavily slots，在 `785.418692s` 内完成 220/220：220 model-generated、0 fallback、867 provider attempts 全部 2xx，0 个 429、slot timeout 或 transport failure。
+3. pacing receipt 220/220 有效；legacy admission 会有 26 个 latency stop，candidate 只剩 7 个，19 题从 stop 改为 expand，second-wave tasks=`213`。raw elapsed、绝对 deadline 与全部 hard cap 均未改写。全部 prediction 先冻结、审计、提交推送，之后才由固定 32 路 evaluator 对 220 题各评一次；210 valid、10 invalid 按零，无补评或选择性重评。
+4. 完整分数为 whole-table `9/220=4.0909%`、Composite `0.457248978`，Entity `0.713636364`、Row/Item/Column F1 `0.229739193/0.400228048/0.485392308`；forward `785.42s`、evaluator `252.99s`。它在仓库内 18 份完整可读 exact-220 结果中同时为唯一 Exact 与 Composite 第一，超过此前最佳 V2.48.00 的 `8/220`、`0.456833761`，但仍是 single rollout、未上榜、非 SOTA。
+5. post-result audit 为 `findings=[]`、`audit_valid=true`；完整结果冻结于 `7d6f43c`。这一次公开 220 人口从此只用于汇总和 aggregate diagnosis，不得依据 per-task outcome 调参、选择 cohort、补跑、重跑或重评。
+
+### V2.48.58：pacing 机制与质量归因诊断（2026-08-08 UTC）
+
+1. 对 V2.48.00/50/54/57 四份已冻结 220-vector 做 aggregate-only 配对分析；opaque id 只在内存对齐，不输出 question/prediction/query/URL/page/evaluator text、task id 或 per-task metric。历史 score、correctness、latency cohort 和 evaluator metadata 永久禁止进入 future runtime routing。
+2. V2.48.57 相对 V2.48.00/50/54 的 overall Composite delta 分别为 `+0.000415217 / +0.015062380 / +0.009911758`，但 20k task-cluster bootstrap 95% CI 全部跨 0；Exact discordant gains/losses 分别为 `1/0`、`3/1`、`3/0`，exact two-sided McNemar p 分别为 `1.0 / 0.625 / 0.25`。因此“项目内观测最佳”成立，“统计上已建立质量提升”不成立。
+3. 19 个真正改变 pacing admission 的题，在四次 rollout 中 whole-table exact 全部为 0；V2.48.57 的 9 个 exact 全来自 admission 未改变的 201 题。所以观测 Exact 增益不能归因于 pacing。该 19 题相对 V2.48.54 的 Composite 从 `0.425624017` 到 `0.478504922`，bootstrap CI 刚好排除 0，但这是 post-hoc cohort 加独立 search/generation/judge sampling，不能作为因果证据。
+4. 19 题 candidate 平均执行 4 queries、9.316 fetch、得到 6.789 usable/novel pages 和约 23.9k raw chars，却没有一个 exact table；核心瓶颈已从 transport/admission 转为 **evidence-to-complete-table conversion**。下一 candidate 不再增加预算，而是在共享 discovery/page prefix 下比较 `stable-first-seen` 与 visible-question-conditioned coverage-utility selection：使用 visible required columns、row-coverage utility 与 source novelty；entropy/IG 只记录 shadow credit，外部门未证明前不得路由。
+5. fresh benchmark-external shared-prefix 门必须固定相同 discovered lead vector、raw page bytes、model prompt/output cap、并发和 query/fetch/token/wall caps；GO 同时要求 candidate Exact 严格增加、Composite/Item F1 不降、invalid/fallback/transport failure 不增、visible coverage receipt 严格改善。当前不授权 fresh external launch、dev64、exact-220、leaderboard 或 SOTA。
