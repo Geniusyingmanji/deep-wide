@@ -84,7 +84,16 @@ def _task_command(root: Path, directory: Path) -> list[str]:
 
 
 def _child_env() -> dict[str, str]:
-    return algorithm._child_env()
+    return {
+        "HOME": os.environ.get("HOME", str(Path.home())),
+        "USER": os.environ.get("USER", "azureuser"),
+        "LOGNAME": os.environ.get("LOGNAME", "azureuser"),
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "TERM": "xterm-256color",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYTHONNOUSERSITE": "1",
+        "PYTHONSAFEPATH": "1",
+    }
 
 
 def _validate_bundle(_value: dict[str, Any], directory: Path) -> None:
