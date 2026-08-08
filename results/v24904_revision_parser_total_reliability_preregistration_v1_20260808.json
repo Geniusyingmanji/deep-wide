@@ -1,0 +1,126 @@
+{
+  "artifact_version": 1,
+  "authorization": {
+    "evaluator": false,
+    "exact220": false,
+    "execution_start": false,
+    "neutral_gate": false,
+    "preactivation_audit": true
+  },
+  "created_at_unix": 1786198074,
+  "execution": {
+    "executor_concurrency": 20,
+    "limits": {
+      "evidence_chars": 60000,
+      "fetch_targets": 10,
+      "model_calls": 3,
+      "page_chars": 5000,
+      "plan_output_tokens": 4000,
+      "repair_output_tokens": 12000,
+      "search_queries": 4,
+      "search_results_per_query": 3,
+      "synthesis_output_tokens": 30000,
+      "wall_seconds": 240
+    },
+    "model": {
+      "max_retries": 2,
+      "name": "gpt-5.6-sol",
+      "proxy_url": "http://127.0.0.1:9878/responses",
+      "reasoning_effort": "low",
+      "service_tier": "priority",
+      "timeout_seconds": 65
+    },
+    "model_slot_cap": 8,
+    "output_root": "outputs/v24904_revision_parser_total_reliability_v1_20260808",
+    "search": {
+      "batch_size": 8,
+      "context_size": "medium",
+      "fetch_timeout_seconds": 20,
+      "fetch_workers": 8,
+      "hard_fetch_deadline_seconds": 25,
+      "max_output_tokens": 7000,
+      "max_retries": 2,
+      "model": "gpt-5.6-sol",
+      "proxy_url": "http://127.0.0.1:9878/responses",
+      "timeout_seconds": 65,
+      "workers": 1
+    },
+    "single_fresh_no_retry_resume_or_selective_rerun": true,
+    "task_wall_seconds": 240
+  },
+  "gate": {
+    "maximum_hard_timeouts": 0,
+    "maximum_subprocess_exceptions": 0,
+    "minimum_valid_bundle_rate": 0.95,
+    "minimum_valid_bundles": 19
+  },
+  "git_head": "0b950f57317d13e814215a5c0cb34c8e2e51032f",
+  "protected_watchers": [
+    {
+      "marker": "scripts/watch_v2415_r1_checkpoint_liveness.py",
+      "pid": 795336,
+      "start_ticks": 713986317
+    },
+    {
+      "marker": "scripts/watch_v24218_exact220_executor.py",
+      "pid": 3061652,
+      "start_ticks": 747569004
+    },
+    {
+      "marker": "scripts/watch_v24215_joint_package_recovery.py",
+      "pid": 2808901,
+      "start_ticks": 746680268
+    },
+    {
+      "marker": "scripts/watch_v24216_package_gate.py",
+      "pid": 2889939,
+      "start_ticks": 746969965
+    }
+  ],
+  "protocol_id": "v24904_neutral_revision_parser_total_reliability_gate_v1",
+  "protocol_payload_sha256": "59bced6197fd7efb9e7c9ef50161dda5416f9c2cb87c8b56c8cbc1cb11a44489",
+  "role": "v24904_revision_parser_total_reliability_preregistration",
+  "source_manifest": {
+    "scripts/audit_v24883_mapping_recovery_reliability_result.py": "a74970b1e8ed07b3e026ce950aede8d21de2ec0bb0ec24e7ee2ad44b3b6dea8d",
+    "scripts/audit_v24904_revision_parser_total_reliability_result.py": "830c0cb8cceb5199875ea351a92345b2c5088fef054fc71f6523255001cc7ff9",
+    "scripts/control_v24883_mapping_recovery_reliability_gate.py": "889fb1cf31a20cec7637a959219943cc6ffdcd3269e708576e2d000121eb2d7e",
+    "scripts/control_v24904_revision_parser_total_reliability_gate.py": "98ef74115c18d82388419a39a47873520b62e972d5983b3eb0b0c8991fb3835d",
+    "scripts/deepwide_api_lease.py": "8d9cffa78617b458172307d3558c76e9370f045f531c2f5aaaceb866f5a78c7d",
+    "scripts/run_v24883_mapping_recovery_reliability_gate.py": "3c9b2fcc4a5a587e0346f4adbf924e6bc8384feef309e43ba8f15fae6be478d2",
+    "scripts/run_v24883_mapping_recovery_reliability_task.py": "d33a0125bb4dfc0bfd2c7e7b36e5f1708a165b9cac6f42e18079d3b3c8e79798",
+    "scripts/run_v24904_revision_parser_total_reliability_gate.py": "c9cc8eb8e2dbeae9c7e57e960db20bac16dee197d57d613d0b20a0aaad4bbe16",
+    "scripts/run_v24904_revision_parser_total_reliability_task.py": "7b0c2b68c31d4dac942607f3fca337a1d913a34e20aef5526da431e3c49abf88",
+    "src/deepwide_agent/v24859_full_evidence_coverage_revision.py": "98a85b7e74e3749453bf054e266262e9ebc33a61edb458bc681a4902665f4325",
+    "src/deepwide_agent/v24860_coverage_revision_integration.py": "008cf6966edf4f678ef68faa4e4bb7a86a866002ffe91f2f275808198680fe81",
+    "src/deepwide_agent/v24861_coverage_revision_exact_task.py": "c0e07255267009c0f15d02c37f419288f225fc886a797e7b036d8a5a73a03c63",
+    "src/deepwide_agent/v24873_keyless_fixed_coverage_runtime.py": "37337371205a712e3f876ae51a6f2f960c098a4b651af6cdf86b662566b9d673",
+    "src/deepwide_agent/v24879_mapping_recovery_effect_bundle.py": "4b00bb2bd2a96c035cae43f61a2174ee04b42672fcc9a352aec6e64598ba3711",
+    "src/deepwide_agent/v24882_mapping_recovery_stage_runtime.py": "075b392d02017635b110c7f0e8541b79b053c7476243b64a34a615d323763401",
+    "src/deepwide_agent/v24897_revision_parser_totality.py": "45d61fb9f706e631f2c87ae0bafeef5b8b8b1cd90674c79f8b86b2c28bb04b20",
+    "src/deepwide_agent/v24898_revision_parser_total_integration.py": "aa46c9f6c22b7d88355584280ed8dea29230732461d391ac52e4fbae78b165c0",
+    "src/deepwide_agent/v24899_revision_parser_total_exact_task.py": "cc0a908b69f5b4d31e281149006d68960df231006abfbb5edd938477cf7aebee",
+    "src/deepwide_agent/v24900_revision_parser_total_runtime.py": "b2e236e587e0e39466e7dea622de3e22b9e71bdb5206b904673e58a49cfcba85",
+    "src/deepwide_agent/v24901_revision_parser_total_mapping_bundle.py": "471c1bd8676523ca6bd788459029989701f1f8b3441c511453e32c3cc34edddb",
+    "src/deepwide_agent/v24902_revision_parser_total_child_runtime.py": "cc8011bb260bf64a3c10ec41ad71338e2a17469435c595bc97b1ffd4dbc0a7bd",
+    "src/deepwide_agent/v24903_revision_parser_total_subprocess_gate.py": "35cc462caeae825bd6c50aa4285907568f837095c11dffb4811d963afa493cdf",
+    "src/deepwide_agent/v24904_revision_parser_total_reliability_contract.py": "6a3d28c734f99c66ec6448d5a70cda100d9cfaa8aa85fb53a9edb61bdb532f86",
+    "tests/test_v24897_revision_parser_totality.py": "6d71c1aa4da4623f4a1068cfd1d083d9b4f82d372811df808d2efa7b0f65aca8",
+    "tests/test_v24898_revision_parser_total_integration.py": "749a0b20d36adf276d2cc3a7a00c67d5e0ebfaa710ff30850a2a2c57846104c0",
+    "tests/test_v24903_revision_parser_total_production_seam.py": "7c2c88c86fdd761eda37088cc01577a837a7685e5616d2d5f56ebf80f1c9a033",
+    "tests/test_v24904_revision_parser_total_reliability_gate.py": "3bc645c13a823d10a2e8f0f77971101c6de4c9d1089c84d6e245c63c7a2acaa4"
+  },
+  "source_manifest_sha256": "1df0cf49c3fddd320343603ce06342fdf0ffdf9871101e7a5e32a9fadee41986",
+  "source_policy": {
+    "benchmark_task_mapping_gold_category_question_type_split_evaluator_score_reward_read": false,
+    "entropy_or_information_gain_used_for_admission_or_routing": false,
+    "historical_prediction_correctness_or_score_read": false,
+    "neutral_nonbenchmark_tasks_only": true,
+    "private_task_query_url_page_prediction_answer_or_credential_persisted": false,
+    "runtime_input_keys": [
+      "opaque_id",
+      "question"
+    ]
+  },
+  "task_count": 20,
+  "task_vector_sha256": "bea3e935d6589ea574f7e4e861076eb8e7c30e33b1c7be3ca963a2a483b8443e"
+}
