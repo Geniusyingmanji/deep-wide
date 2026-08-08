@@ -11,7 +11,9 @@ from __future__ import annotations
 
 import copy
 import functools
+import hashlib
 import json
+import subprocess
 from collections.abc import Mapping
 from pathlib import Path
 from typing import Any
@@ -157,15 +159,40 @@ def task_vector(
 
 def dependency_manifest(root: Path) -> dict[str, str]:
     base = _parent_protocol_value(root)
-    relatives = {Path(name) for name in base["dependency_manifest"]}
-    relatives.add(PARENT_PROTOCOL)
-    relatives.update(COVERAGE_SOURCES)
-    relatives.update(COVERAGE_TESTS)
-    relatives.update(LOCAL_SOURCES)
-    return {
-        str(relative): sha256(_ordinary_tracked(root, relative))
-        for relative in sorted(relatives, key=str)
-    }
+    manifest = dict(base["dependency_manifest"])
+    relatives = {PARENT_PROTOCOL, *COVERAGE_SOURCES, *COVERAGE_TESTS, *LOCAL_SOURCES}
+    for relative in sorted(relatives, key=str):
+        path = root / relative
+        if (
+            relative.is_absolute()
+            or ".." in relative.parts
+            or path.is_symlink()
+            or not path.is_file()
+            or not path.resolve().is_relative_to(root.resolve())
+        ):
+            raise RuntimeError(f"V2.48.66 expected ordinary source: {relative}")
+        entry = subprocess.run(
+            ["git", "ls-files", "-s", "--", str(relative)],
+            cwd=root,
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.DEVNULL,
+            text=True,
+            timeout=20,
+            check=True,
+        ).stdout.strip()
+        parts = entry.split()
+        if len(parts) < 4:
+            raise RuntimeError(f"V2.48.66 expected tracked source: {relative}")
+        blob = parts[1]
+        content = path.read_bytes()
+        observed_blob = hashlib.sha1(
+            f"blob {len(content)}\0".encode("ascii") + content
+        ).hexdigest()
+        if observed_blob != blob:
+            raise RuntimeError(f"V2.48.66 tracked source bytes drifted: {relative}")
+        manifest[str(relative)] = sha256(path)
+    return dict(sorted(manifest.items()))
 
 
 def coverage_policy() -> dict[str, Any]:
