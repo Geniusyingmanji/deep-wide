@@ -43,6 +43,10 @@ class V24847ProjectionBudgetExternalTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             contract.validate_task_vector([{**task, "question_type": "hidden"} for task in self.tasks])
 
+    def test_protocol_uses_physically_separate_visible_task_artifact(self) -> None:
+        self.assertTrue(str(contract.VISIBLE_TASK_ARTIFACT).startswith("results/"))
+        self.assertNotIn("evaluation", str(contract.VISIBLE_TASK_ARTIFACT))
+
     def test_visible_tasks_do_not_project_private_values(self) -> None:
         encoded = json.dumps(self.tasks, ensure_ascii=False)
         for group in self.private["groups"]:

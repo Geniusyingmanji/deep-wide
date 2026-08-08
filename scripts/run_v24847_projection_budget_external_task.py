@@ -4,11 +4,13 @@
 from __future__ import annotations
 
 import argparse
+import fcntl
 import json
 import os
 import re
 import sys
 import time
+from contextlib import contextmanager
 from pathlib import Path
 from typing import Any
 
@@ -99,10 +101,11 @@ def _synthesize(question: str, evidence: str) -> tuple[str, dict[str, int]]:
         "store": False,
     }
     started = time.monotonic()
-    response = requests.post(
-        contract.MODEL["proxy_url"], json=payload,
-        timeout=contract.MODEL["timeout_seconds"],
-    )
+    with _model_slot():
+        response = requests.post(
+            contract.MODEL["proxy_url"], json=payload,
+            timeout=contract.MODEL["timeout_seconds"],
+        )
     response.raise_for_status()
     value = response.json()
     usage = value.get("usage") if isinstance(value, dict) else None
@@ -111,6 +114,34 @@ def _synthesize(question: str, evidence: str) -> tuple[str, dict[str, int]]:
         "output_tokens": int((usage or {}).get("output_tokens", 0)),
         "elapsed_milliseconds": int((time.monotonic() - started) * 1000),
     }
+
+
+@contextmanager
+def _model_slot():
+    directory = ROOT / contract.MODEL_SLOT_DIRECTORY
+    deadline = time.monotonic() + contract.TASK_WALL_SECONDS
+    handles = []
+    try:
+        while time.monotonic() < deadline:
+            for index in range(contract.MODEL_SLOT_CAP):
+                path = directory / f"slot_{index:02d}.lock"
+                handle = path.open("a+", encoding="utf-8")
+                handles.append(handle)
+                try:
+                    fcntl.flock(handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+                except BlockingIOError:
+                    handle.close()
+                    handles.pop()
+                    continue
+                yield index
+                fcntl.flock(handle.fileno(), fcntl.LOCK_UN)
+                return
+            time.sleep(0.01)
+        raise TimeoutError("V2.48.47 model slot deadline exhausted")
+    finally:
+        for handle in handles:
+            if not handle.closed:
+                handle.close()
 
 
 def main() -> None:

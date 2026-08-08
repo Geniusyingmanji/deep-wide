@@ -53,8 +53,9 @@ CONTROL_SOURCES = (
     Path("scripts/control_v24847_projection_budget_external.py"),
     Path("tests/test_v24847_projection_budget_external.py"),
 )
+FORWARD_DATA = (contract.VISIBLE_TASK_ARTIFACT,)
 TESTS = (
-    (Path("tests/test_v24847_projection_budget_external.py"), 10),
+    (Path("tests/test_v24847_projection_budget_external.py"), 11),
     (Path("tests/test_v24846_atomic_table_header_30k_profile.py"), 9),
     (Path("tests/test_v24842_atomic_table_header_closure.py"), 11),
 )
@@ -86,6 +87,15 @@ def _read(path: Path) -> dict[str, Any]:
     return value
 
 
+def _read_jsonl(path: Path) -> list[dict[str, Any]]:
+    if path.is_symlink() or not path.is_file() or not path.resolve().is_relative_to(ROOT.resolve()):
+        raise RuntimeError(f"V2.48.47 expected ordinary JSONL: {path}")
+    rows = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line]
+    if any(not isinstance(row, dict) for row in rows):
+        raise RuntimeError("V2.48.47 expected JSONL objects")
+    return rows
+
+
 def _sealed(value: Mapping[str, Any], field: str) -> bool:
     unsigned = dict(value)
     seal = unsigned.pop(field, None)
@@ -100,6 +110,17 @@ def _publish(path: Path, value: Mapping[str, Any]) -> None:
     with os.fdopen(descriptor, "w", encoding="utf-8") as handle:
         json.dump(dict(value), handle, ensure_ascii=False, indent=2, sort_keys=True)
         handle.write("\n")
+        handle.flush()
+        os.fsync(handle.fileno())
+
+
+def _publish_jsonl(path: Path, rows: list[dict[str, str]]) -> None:
+    if path.exists() or path.is_symlink():
+        raise FileExistsError(path)
+    descriptor = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
+    with os.fdopen(descriptor, "w", encoding="utf-8") as handle:
+        for row in rows:
+            handle.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
         handle.flush()
         os.fsync(handle.fileno())
 
@@ -156,6 +177,11 @@ def dependency_manifest() -> dict[str, str]:
             or not path.resolve().is_relative_to(ROOT.resolve()) or not tracked
         ):
             raise RuntimeError(f"V2.48.47 runtime dependency drifted: {relative}")
+        output[str(relative)] = contract.sha256(path)
+    for relative in FORWARD_DATA:
+        path = ROOT / relative
+        if path.is_symlink() or not path.is_file():
+            raise RuntimeError(f"V2.48.47 forward data drifted: {relative}")
         output[str(relative)] = contract.sha256(path)
     return dict(sorted(output.items()))
 
@@ -224,7 +250,6 @@ def _lease_inactive() -> bool:
 
 
 def build_protocol(*, now: int | None = None) -> dict[str, Any]:
-    private = _read(ROOT / POPULATION_PRIVATE)
     public = _read(ROOT / POPULATION_DESIGN)
     population_audit = _read(ROOT / POPULATION_AUDIT)
     profile_audit = _read(ROOT / PROFILE_AUDIT)
@@ -235,13 +260,25 @@ def build_protocol(*, now: int | None = None) -> dict[str, Any]:
         or public.get("selected_target_pair_overlap_count") != 0
     ):
         raise RuntimeError("V2.48.47 authority drifted")
-    tasks = project_tasks(private)
+    tasks = contract.validate_task_vector(
+        _read_jsonl(ROOT / contract.VISIBLE_TASK_ARTIFACT)
+    )
+    expected_response_sha256 = [
+        str(item["response_sha256"])
+        for item in public.get("indicator_snapshot_metadata", [])
+    ]
+    if len(expected_response_sha256) != 2:
+        raise RuntimeError("V2.48.47 public snapshot vector drifted")
     manifest = dependency_manifest()
     value = {
         "artifact_version": 1, "role": "v24847_projection_budget_external_preregistration",
         "protocol_id": contract.PROTOCOL_ID, "created_at_unix": int(time.time()) if now is None else int(now),
         "git_head": _git("rev-parse", "HEAD"),
-        "visible_tasks": tasks,
+        "visible_task_artifact": {
+            "path": str(contract.VISIBLE_TASK_ARTIFACT),
+            "sha256": contract.sha256(ROOT / contract.VISIBLE_TASK_ARTIFACT),
+            "row_schema": ["opaque_id", "question"],
+        },
         "task_contract": {
             "runtime_input_keys": ["opaque_id", "question"], "selected_count": 32,
             "opaque_id_vector_sha256": contract.payload_sha256([task["opaque_id"] for task in tasks]),
@@ -258,6 +295,7 @@ def build_protocol(*, now: int | None = None) -> dict[str, Any]:
         "shared_prefix": {
             "source_urls": [target["indicator"] + "@" + target["year"] for target in contract.TARGETS],
             "source_url_literals_absent_from_forward_protocol": True,
+            "expected_response_sha256": expected_response_sha256,
             "two_official_snapshots_fetched_once_before_arm_branch": True,
             "raw_snapshot_bytes_frozen_before_arm_branch": True,
             "same_raw_page_vector_for_every_arm": True,
@@ -275,7 +313,7 @@ def build_protocol(*, now: int | None = None) -> dict[str, Any]:
         "dependency_manifest": manifest,
         "dependency_manifest_sha256": contract.payload_sha256(manifest),
         "forward_dependency_manifest": {
-            str(path): manifest[str(path)] for path in FORWARD_SOURCES
+            str(path): manifest[str(path)] for path in (*FORWARD_SOURCES, *FORWARD_DATA)
         },
         "evaluator_source_physically_absent_from_forward_dependency_manifest": True,
         "source_policy": {
@@ -299,7 +337,7 @@ def build_audit(*, now: int | None = None) -> dict[str, Any]:
     observed, passed, suites = _run_tests()
     checks = {
         "protocol_sealed": _sealed(protocol, "protocol_payload_sha256"),
-        "focused_tests_exact30": passed and observed == 30,
+        "focused_tests_exact31": passed and observed == 31,
         "forward_privileged_field_access_zero": not fields,
         "credential_literal_zero": not secrets,
         "gpt56_endpoint_reachable_without_provider_request": _endpoint(),
@@ -314,7 +352,7 @@ def build_audit(*, now: int | None = None) -> dict[str, Any]:
         "artifact_version": 1, "role": "v24847_projection_budget_external_preactivation_audit",
         "protocol_id": contract.PROTOCOL_ID, "created_at_unix": int(time.time()) if now is None else int(now),
         "protocol_sha256": contract.sha256(ROOT / contract.PROTOCOL),
-        "tests": {"expected": 30, "observed": observed, "passed": passed, "suites": suites},
+        "tests": {"expected": 31, "observed": observed, "passed": passed, "suites": suites},
         "label_blind_audit": {"privileged_runtime_field_accesses": fields, "credential_literal_hits": secrets, "passed": not fields and not secrets},
         "checks": checks, "findings": sorted(name for name, okay in checks.items() if not okay),
         "authorization": {"execution_start_generation": all(checks.values()), "single_external_forward": False, "evaluator": False, "public_dev64_or_exact220": False},
@@ -354,8 +392,14 @@ def build_start(*, now: int | None = None) -> dict[str, Any]:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=("protocol", "audit", "start"))
+    parser.add_argument("command", choices=("tasks", "protocol", "audit", "start"))
     args = parser.parse_args()
+    if args.command == "tasks":
+        _clean_pushed()
+        rows = project_tasks(_read(ROOT / POPULATION_PRIVATE))
+        _publish_jsonl(ROOT / contract.VISIBLE_TASK_ARTIFACT, rows)
+        print(json.dumps({"path": str(contract.VISIBLE_TASK_ARTIFACT), "rows": len(rows), "row_keys": ["opaque_id", "question"]}, sort_keys=True))
+        return
     _clean_pushed()
     if args.command == "protocol":
         value, path = build_protocol(), contract.PROTOCOL

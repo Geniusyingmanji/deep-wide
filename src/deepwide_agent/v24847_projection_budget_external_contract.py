@@ -45,6 +45,9 @@ PROTECTED_WATCHERS = (
     (2889939, "scripts/watch_v24216_package_gate.py"),
 )
 PROTOCOL = Path(f"results/v24847_projection_budget_external_preregistration_v1_{DATE}.json")
+VISIBLE_TASK_ARTIFACT = Path(
+    f"results/v24847_projection_budget_external_visible_tasks_v1_{DATE}.jsonl"
+)
 PREAUDIT = Path(f"results/v24847_projection_budget_external_preactivation_audit_v1_{DATE}.json")
 EXECUTION_START = Path(f"results/v24847_projection_budget_external_execution_start_v1_{DATE}.json")
 FORWARD_RESULT = Path(f"results/v24847_projection_budget_external_forward_result_v1_{DATE}.json")

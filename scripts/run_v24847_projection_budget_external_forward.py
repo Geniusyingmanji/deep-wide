@@ -39,6 +39,12 @@ def _read(path: Path) -> dict[str, Any]:
     return value
 
 
+def _read_jsonl(path: Path) -> list[dict[str, Any]]:
+    if path.is_symlink() or not path.is_file():
+        raise RuntimeError("V2.48.47 runner expected ordinary JSONL")
+    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line]
+
+
 def _new(path: Path, value: Any) -> None:
     if path.exists() or path.is_symlink():
         raise FileExistsError(path)
@@ -69,6 +75,17 @@ def _jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
     with os.fdopen(descriptor, "w", encoding="utf-8") as handle:
         for row in rows:
             handle.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
+        handle.flush()
+        os.fsync(handle.fileno())
+
+
+def _new_bytes(path: Path, data: bytes) -> None:
+    if path.exists() or path.is_symlink():
+        raise FileExistsError(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    descriptor = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
+    with os.fdopen(descriptor, "wb") as handle:
+        handle.write(data)
         handle.flush()
         os.fsync(handle.fileno())
 
@@ -228,7 +245,13 @@ def main() -> None:
         raise RuntimeError("V2.48.47 forward requires clean worktree")
     if (ROOT / contract.OUTPUT_ROOT).exists():
         raise RuntimeError("V2.48.47 output root not pristine")
-    tasks = contract.validate_task_vector(protocol["visible_tasks"])
+    tasks = contract.validate_task_vector(
+        _read_jsonl(ROOT / contract.VISIBLE_TASK_ARTIFACT)
+    )
+    if protocol.get("visible_task_artifact", {}).get("sha256") != contract.sha256(
+        ROOT / contract.VISIBLE_TASK_ARTIFACT
+    ):
+        raise RuntimeError("V2.48.47 visible task artifact drifted")
     with acquire_deepwide_api_lease(
         ROOT, owner="v24847_projection_budget_external_forward_v1",
         purpose="target_cell_disjoint_projection_budget_shared_prefix_gate",
@@ -238,10 +261,19 @@ def main() -> None:
             raise RuntimeError("V2.48.47 protected watcher drifted")
         (ROOT / contract.OUTPUT_ROOT).mkdir(parents=True, mode=0o700)
         (ROOT / contract.TASK_ROOT).mkdir(mode=0o700)
+        (ROOT / contract.MODEL_SLOT_DIRECTORY).mkdir(mode=0o700)
         _jsonl(ROOT / contract.VISIBLE_TASKS, tasks)
         started = time.monotonic()
         with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
             blobs = list(pool.map(_fetch, URLS))
+        expected = protocol["shared_prefix"]["expected_response_sha256"]
+        observed = [hashlib.sha256(blob).hexdigest() for blob in blobs]
+        if observed != expected:
+            raise RuntimeError("V2.48.47 public snapshot bytes drifted from preregistration")
+        for index, blob in enumerate(blobs, 1):
+            _new_bytes(
+                ROOT / contract.RAW_PAGE_ROOT / f"response_{index:02d}.bin", blob
+            )
         raw = _raw_pages(blobs)
         _new(ROOT / contract.RAW_PAGE_FREEZE, raw)
         outcomes: dict[int, dict[str, Any]] = {}
