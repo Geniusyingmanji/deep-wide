@@ -115,13 +115,32 @@ rate_policy = parent.rate_policy
 
 @functools.lru_cache(maxsize=1)
 def parent_contract(root: Path) -> dict[str, Any]:
-    path = root / PARENT_PROTOCOL
-    if path.is_symlink() or not path.is_file():
-        raise RuntimeError("V2.48.66 parent protocol is not ordinary")
-    value = json.loads(path.read_text(encoding="utf-8"))
-    if not isinstance(value, dict):
-        raise RuntimeError("V2.48.66 parent protocol is not an object")
-    return parent.validate_protocol(root, value)
+    value = _parent_protocol_value(root)
+    unsigned = dict(value)
+    seal = unsigned.pop("protocol_payload_sha256", None)
+    task = value.get("task_contract") or {}
+    execution = value.get("execution") or {}
+    if (
+        value.get("role") != parent.ROLE
+        or value.get("protocol_id") != parent.PROTOCOL_ID
+        or seal != payload_sha256(unsigned)
+        or task.get("runtime_input_keys") != ["opaque_id", "question"]
+        or task.get("selected_count") != SELECTED_COUNT
+        or execution.get("executor_concurrency") != EXECUTOR_CONCURRENCY
+        or execution.get("model_slot_cap") != MODEL_SLOT_CAP
+        or execution.get("tavily_key_slot_cap") != TAVILY_KEY_SLOT_CAP
+        or execution.get("task_wall_seconds") != LIMITS["wall_seconds"]
+        or execution.get("model_calls_per_task") != LIMITS["model_calls"]
+        or execution.get("search_queries_per_task") != LIMITS["search_queries"]
+        or execution.get("fetch_targets_per_task") != LIMITS["fetch_targets"]
+        or execution.get("model") != MODEL
+        or execution.get("search") != SEARCH
+        or execution.get("two_wave_policy") != TWO_WAVE_POLICY
+        or value.get("dependency_manifest_sha256")
+        != payload_sha256(value.get("dependency_manifest"))
+    ):
+        raise RuntimeError("V2.48.66 frozen parent protocol drifted")
+    return value
 
 
 def _parent_protocol_value(root: Path) -> dict[str, Any]:
