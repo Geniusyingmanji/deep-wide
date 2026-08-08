@@ -1,0 +1,93 @@
+{
+  "artifact_version": 1,
+  "authorization": {
+    "benchmark_external_gate": false,
+    "evaluator": false,
+    "leaderboard_submission": false,
+    "prefix_totality_repair_build": true,
+    "public_dev64_or_exact220": false,
+    "sota_claim": false
+  },
+  "checks": {
+    "all_220_projection_receipts_valid": true,
+    "all_fallbacks_stop_after_plan_before_synthesis": true,
+    "all_generated_rows_reach_projection_and_synthesis": true,
+    "failure_message_matches_structural_selection_cap": true,
+    "fallback_count_exact174": true,
+    "model_generated_count_exact46": true,
+    "parent_exact220_result_and_postaudit_valid": true,
+    "production_shaped_cap_failure_reproduced": true,
+    "progress_partition_matches_174_46": true,
+    "projection_mechanism_naturally_engaged": true,
+    "source_evaluator_capability_zero": true,
+    "source_privileged_access_zero": true,
+    "source_secret_literal_zero": true,
+    "terminal_result_vector_exact220": true
+  },
+  "created_at_unix": 1786216044,
+  "diagnosis_payload_sha256": "6d8a638c81f6f917cd846c662ba7d050a0bd662e12bf9ebadadb7aeaaf0d3013",
+  "diagnosis_valid": true,
+  "findings": [],
+  "observed": {
+    "fallback_model_request_count_distribution": {
+      "1": 174
+    },
+    "fallback_projected_character_count_distribution": {
+      "0": 174
+    },
+    "last_safe_progress_stage_counts": {
+      "retrieval_terminal": 174,
+      "terminal": 46
+    },
+    "long_page_mechanism_engaged_tasks": 4,
+    "model_generated_tables": 46,
+    "projection_receipts": 220,
+    "selected": 220,
+    "worker_failure_fallbacks": 174
+  },
+  "parent": {
+    "postresult_audit": {
+      "path": "results/v24914_cap_bound_long_page_exact220_postresult_audit_v1_20260808.json",
+      "sha256": "74e3247647f55eb87b4e8722ce63b5a17faac06d4276540b94a6c412fd8308c7"
+    },
+    "result": {
+      "path": "results/v24914_cap_bound_long_page_exact220_result_v1_20260808.json",
+      "sha256": "f6fd711d5c6c23282140f00adf9f2d83e1eaa85b015e2f106fb6e17603277591"
+    }
+  },
+  "role": "v24915_v24914_projection_cap_failure_aggregate_diagnosis",
+  "root_cause": {
+    "effect": "joined_excerpt_can_exceed_5000_and_raise_before_synthesis",
+    "evaluator_failure": false,
+    "location": "v24911_long_page_evidence_packer._pack_long_page",
+    "mechanism": "selector_accounts_block_content_but_join_inserts_unaccounted_newlines",
+    "transport_or_gpt56_endpoint_failure": false,
+    "trigger": "real_12000_character_page_activates_multi_block_structural_selection",
+    "v24911_nonengagement_masked_bug": true
+  },
+  "source_manifest": {
+    "results/v24914_cap_bound_long_page_exact220_postresult_audit_v1_20260808.json": "74e3247647f55eb87b4e8722ce63b5a17faac06d4276540b94a6c412fd8308c7",
+    "results/v24914_cap_bound_long_page_exact220_result_v1_20260808.json": "f6fd711d5c6c23282140f00adf9f2d83e1eaa85b015e2f106fb6e17603277591",
+    "scripts/diagnose_v24915_v24914_projection_cap_failure.py": "c47e4cfb37fcf770871fa74597ec721dd589bad462e7ea56e73df0f47f715fac",
+    "src/deepwide_agent/v24842_atomic_table_header_closure.py": "ce51fcee5543e8ae30abce7be186d03131d106fc1ff046682deb0b9582877016",
+    "src/deepwide_agent/v24911_long_page_evidence_packer.py": "ed3cfae20d8b349b9e77496c33d04b39af945876349100ff779c4a06c4ac42b4",
+    "src/deepwide_agent/v24913_long_page_runtime_binding.py": "e6cc78c69e65fb8074b60628be36d5b92f9d311b00311f3554c792f561b970e3",
+    "src/deepwide_agent/v24913_observable_long_page_packer.py": "6134e2f0d0d03920e3b879e7b8a89af2c70b9445bcecc3e254a3ed88e809fa0b"
+  },
+  "source_manifest_sha256": "0adf8b12643b761cd60f536fbb4b04a1a109aaae55f33ca72db956a7ef7d678b",
+  "source_policy": {
+    "aggregate_only_no_question_query_url_page_prediction_or_opaque_id_emitted": true,
+    "credential_value_read_persisted_hashed_or_emitted": false,
+    "entropy_or_information_gain_assigns_signed_credit": false,
+    "network_model_search_fetch_or_evaluator_called_by_diagnosis": false,
+    "runtime_mapping_gold_category_question_type_split_evaluator_score_reward_read": false
+  },
+  "synthetic_reproduction": {
+    "failure_reproduced": true,
+    "first_error_class": "RuntimeError",
+    "first_error_matches_structural_selection_cap": true,
+    "production_shaped_cases": 15,
+    "projection_cap_failures": 14,
+    "question_page_or_generated_content_persisted": false
+  }
+}
