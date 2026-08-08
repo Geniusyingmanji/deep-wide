@@ -10,6 +10,7 @@ source support decides whether any proposed table change is admitted.
 from __future__ import annotations
 
 import copy
+import functools
 import json
 from collections.abc import Mapping
 from pathlib import Path
@@ -109,6 +110,7 @@ validate_transport_gate = parent.validate_transport_gate
 rate_policy = parent.rate_policy
 
 
+@functools.lru_cache(maxsize=1)
 def parent_contract(root: Path) -> dict[str, Any]:
     path = root / PARENT_PROTOCOL
     if path.is_symlink() or not path.is_file():
@@ -119,10 +121,20 @@ def parent_contract(root: Path) -> dict[str, Any]:
     return parent.validate_protocol(root, value)
 
 
+def _parent_protocol_value(root: Path) -> dict[str, Any]:
+    path = root / PARENT_PROTOCOL
+    if path.is_symlink() or not path.is_file():
+        raise RuntimeError("V2.48.66 parent protocol is not ordinary")
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise RuntimeError("V2.48.66 parent protocol is not an object")
+    return value
+
+
 def task_vector(
     root: Path, protocol: Mapping[str, Any] | None = None
 ) -> list[dict[str, str]]:
-    tasks = parent.task_vector(root, parent_contract(root))
+    tasks = parent.task_vector(root, _parent_protocol_value(root))
     if len(tasks) != SELECTED_COUNT or any(
         set(task) != {"opaque_id", "question"} for task in tasks
     ):
@@ -144,7 +156,7 @@ def task_vector(
 
 
 def dependency_manifest(root: Path) -> dict[str, str]:
-    base = parent_contract(root)
+    base = _parent_protocol_value(root)
     relatives = {Path(name) for name in base["dependency_manifest"]}
     relatives.add(PARENT_PROTOCOL)
     relatives.update(COVERAGE_SOURCES)
