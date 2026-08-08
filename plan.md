@@ -3122,3 +3122,10 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 4. V2.48.62 用 closure-free `FunctionType` 隔离父函数链，不 monkey-patch 冻结模块，也不使用 module-global/contextvar/thread-local task store。自定义 cache subclass 只把当前 task 实际 selected fetched leads 对应的成功缓存页复制到当前 inner search 实例；未进入 active prefix 的缓存项不导出，捕获失败退化为空 prefix并禁止第三调用。pacing receipt 在 seam 内用既有 validator 强验证。
 5. 专项与父链联合回归 `77/77` 通过，包含真实 synthetic `plan→two-wave retrieval→fetch→parent synthesis→page capture→third-slot revision→dual receipts` 全链；语义 AST 对 V2.48.59–62 的 privileged-field 与 evaluator capability 检查均为 0，credential literal scan 为 0，四个 protected watcher identity 不变。
 6. 该阶段仍是 build-only runtime seam：尚未接入新的 child/runner/control/protocol，没有写 benchmark output、调用真实 API、读取 mapping/gold/evaluator、运行 dev64/exact-220，亦不授权 launch、retry/resume/补题/重评、leaderboard 或 SOTA。下一步先完成独立 child artifact 写入与 bundle validation，再构建 fresh benchmark-external shared-prefix paired gate；未过 GO 不运行下一次公开 220。
+
+### V2.48.63：create-exclusive child artifact bundle（build-only，2026-08-08 UTC）
+
+1. 新 bundle 把最终结果、parent/final model-slot、transport、single-shot、title-backfill、coverage、pacing、direct-search 与 rate-aware search 共10份 data artifacts 独立写盘；result envelope 中的副本不能替代缺失的外部 receipt。所有 data artifact 先独立验证并交叉绑定，最后才写只含文件 SHA-256 与安全声明的 bundle commit marker。
+2. 跨 artifact 守恒绑定最终/parent slot cap 与第三槽 delta、retrieval queries 与 parent search calls/direct receipt、direct provider attempts 与 rate reservations、429计数、pacing admission decision/reason/raw wave-1 elapsed/effective ceiling。成功 query 数不得超过 provider attempts；任何缺失、symlink、重封篡改、hash漂移或副本不一致都 fail closed。
+3. 本地全链 bundle 测试 `4/4`：完整包可重读验证；删除独立 parent-slot receipt 即使 envelope 含副本仍拒绝；重封 coverage receipt 仍被 manifest/copy binding拒绝；第4个文件写入时注入异常不会产生 bundle commit marker。
+4. 该提交仍是 build-only bundle library，不是可启动 child/protocol；零真实 API、零 benchmark/evaluator、零 mapping/gold/score。下一步是把 bundle writer 接入一个独立、无 evaluator capability 的 child entrypoint并做 synthetic subprocess bundle gate，之后才允许设计 fresh benchmark-external paired run。
