@@ -1,0 +1,119 @@
+{
+  "artifact_version": 1,
+  "authorization": {
+    "evaluator": false,
+    "exact220": false,
+    "execution_start": false,
+    "neutral_gate": false,
+    "preactivation_audit": true
+  },
+  "created_at_unix": 1786186746,
+  "execution": {
+    "executor_concurrency": 20,
+    "limits": {
+      "evidence_chars": 60000,
+      "fetch_targets": 10,
+      "model_calls": 3,
+      "page_chars": 5000,
+      "plan_output_tokens": 4000,
+      "repair_output_tokens": 12000,
+      "search_queries": 4,
+      "search_results_per_query": 3,
+      "synthesis_output_tokens": 30000,
+      "wall_seconds": 240
+    },
+    "model": {
+      "max_retries": 2,
+      "name": "gpt-5.6-sol",
+      "proxy_url": "http://127.0.0.1:9878/responses",
+      "reasoning_effort": "low",
+      "service_tier": "priority",
+      "timeout_seconds": 65
+    },
+    "model_slot_cap": 8,
+    "output_root": "outputs/v24883_mapping_recovery_reliability_v1_20260808",
+    "search": {
+      "batch_size": 8,
+      "context_size": "medium",
+      "fetch_timeout_seconds": 20,
+      "fetch_workers": 8,
+      "hard_fetch_deadline_seconds": 25,
+      "max_output_tokens": 7000,
+      "max_retries": 2,
+      "model": "gpt-5.6-sol",
+      "proxy_url": "http://127.0.0.1:9878/responses",
+      "timeout_seconds": 65,
+      "workers": 1
+    },
+    "single_fresh_no_retry_resume_or_selective_rerun": true,
+    "task_wall_seconds": 240
+  },
+  "gate": {
+    "maximum_hard_timeouts": 0,
+    "maximum_subprocess_exceptions": 0,
+    "minimum_valid_bundle_rate": 0.95,
+    "minimum_valid_bundles": 19
+  },
+  "git_head": "b74cc6bdf4c3693a8759ba9dd0535ca4c8de2281",
+  "protected_watchers": [
+    {
+      "marker": "scripts/watch_v2415_r1_checkpoint_liveness.py",
+      "pid": 795336,
+      "start_ticks": 713986317
+    },
+    {
+      "marker": "scripts/watch_v24218_exact220_executor.py",
+      "pid": 3061652,
+      "start_ticks": 747569004
+    },
+    {
+      "marker": "scripts/watch_v24215_joint_package_recovery.py",
+      "pid": 2808901,
+      "start_ticks": 746680268
+    },
+    {
+      "marker": "scripts/watch_v24216_package_gate.py",
+      "pid": 2889939,
+      "start_ticks": 746969965
+    }
+  ],
+  "protocol_id": "v24883_neutral_mapping_recovery_reliability_gate_v1",
+  "protocol_payload_sha256": "517a15b8f5f650ee8eb7c448585684f9e9e855a339af6cd2ff52181f8b187792",
+  "role": "v24883_mapping_recovery_reliability_preregistration",
+  "source_manifest": {
+    "scripts/control_v24883_mapping_recovery_reliability_gate.py": "889fb1cf31a20cec7637a959219943cc6ffdcd3269e708576e2d000121eb2d7e",
+    "scripts/deepwide_api_lease.py": "8d9cffa78617b458172307d3558c76e9370f045f531c2f5aaaceb866f5a78c7d",
+    "scripts/run_v24883_mapping_recovery_reliability_gate.py": "3c9b2fcc4a5a587e0346f4adbf924e6bc8384feef309e43ba8f15fae6be478d2",
+    "scripts/run_v24883_mapping_recovery_reliability_task.py": "d33a0125bb4dfc0bfd2c7e7b36e5f1708a165b9cac6f42e18079d3b3c8e79798",
+    "src/deepwide_agent/v24312_deadline_reliability.py": "2adaab53f558f101b65d842417097e3782038a3d24fbcc6de6259ac609f762b4",
+    "src/deepwide_agent/v24468_total_wall_transport.py": "8b8da4f9a8f450dfdc8b55e5ad8e15876590ff2cfdd251a1fb1684a029727417",
+    "src/deepwide_agent/v24630_thin_backfill_search.py": "5e9294649917059c551719d73b38308e81c655c5611bea34b6e95fe9faa82fef",
+    "src/deepwide_agent/v24873_keyless_fixed_coverage_runtime.py": "37337371205a712e3f876ae51a6f2f960c098a4b651af6cdf86b662566b9d673",
+    "src/deepwide_agent/v24874_keyless_coverage_bundle.py": "4264bbdb7eb33c4514f149206f4afdee8cb73e697fa8ca804e1aa1e47081222a",
+    "src/deepwide_agent/v24875_keyless_coverage_child_runtime.py": "89bdf7fe75c6f8eb057cf019f4067f5b700ed7c039fe3e48069c94359a7d8ab8",
+    "src/deepwide_agent/v24876_keyless_coverage_subprocess_gate.py": "3ea13333b8f00433cd6788050c1823766de6d3d0b3c3e4c3df69ac7bd6b1f2dd",
+    "src/deepwide_agent/v24879_mapping_recovery_effect_bundle.py": "4b00bb2bd2a96c035cae43f61a2174ee04b42672fcc9a352aec6e64598ba3711",
+    "src/deepwide_agent/v24881_mapping_recovery_subprocess_gate.py": "d47740e3b11550967c8562641e995eb9d159ff5afcaa206371bcaf4f9fdeadd1",
+    "src/deepwide_agent/v24882_mapping_recovery_stage_runtime.py": "075b392d02017635b110c7f0e8541b79b053c7476243b64a34a615d323763401",
+    "src/deepwide_agent/v24883_mapping_recovery_reliability_contract.py": "b3654cd370af9ebe3fb354c7d159f4262a8fdcf692f1db2a9fc14833397ef8a7",
+    "tests/test_v24879_mapping_recovery_effect_bundle.py": "83468c573e104ebfe7e5462ef1e0d061cd26b68d71ffaa0ef931043c5a2c91ae",
+    "tests/test_v24880_mapping_recovery_child_runtime.py": "7322f0a221efa3a496cbba292d412e724ef98470199b8fc76221164994380d5d",
+    "tests/test_v24881_mapping_recovery_subprocess_gate.py": "df80faa7841a612d181936dda828224c71324bb872730f920d2a00a907c61e5b",
+    "tests/test_v24882_mapping_recovery_stage_runtime.py": "0ac4570d06970ae7626ca822013fba2959184e2625ec65bf6338fce706754847",
+    "tests/test_v24883_mapping_recovery_reliability_gate.py": "c5630932318979023f9707bd87e9a081a2228d22737d05d56895947cadc9d8df"
+  },
+  "source_manifest_sha256": "98ba359d37fd33e45a7349afd553937d1a7b6ed0ad59c3297a98797d3ecacc13",
+  "source_policy": {
+    "benchmark_task_mapping_gold_category_question_type_split_evaluator_score_reward_read": false,
+    "entropy_or_information_gain_used_for_admission_or_routing": false,
+    "historical_prediction_correctness_or_score_read": false,
+    "neutral_nonbenchmark_tasks_only": true,
+    "private_task_query_url_page_prediction_answer_or_credential_persisted": false,
+    "runtime_input_keys": [
+      "opaque_id",
+      "question"
+    ]
+  },
+  "task_count": 20,
+  "task_vector_sha256": "c85a0600cf2b093115dc868d082b39e9cd17133e8f4e5bd0c46b2fb5cd05c4f4"
+}
