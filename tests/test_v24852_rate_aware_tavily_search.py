@@ -20,6 +20,7 @@ for path in (ROOT, ROOT / "src"):
 from deepwide_agent.v24852_rate_aware_tavily_search import (  # noqa: E402
     GATE_BASENAME,
     RateAwareDeadlineTavilyThinCompatibilityClient,
+    empty_rate_aware_receipt,
     prepare_rate_aware_key_slots,
     validate_receipt,
     validate_search_class,
@@ -99,6 +100,14 @@ class V24852RateAwareTavilyTests(unittest.TestCase):
             self.assertTrue((path / GATE_BASENAME).is_file())
             with self.assertRaises(FileExistsError):
                 prepare_rate_aware_key_slots(path, 2)
+
+    def test_empty_rate_receipt_is_valid_and_content_free(self) -> None:
+        value = empty_rate_aware_receipt()
+        self.assertEqual(value["provider_start_reservations"], 0)
+        self.assertEqual(value["provider_429_responses"], 0)
+        self.assertFalse(
+            value["credential_value_persisted_hashed_emitted_or_in_error"]
+        )
 
     def test_success_keeps_header_only_projection(self) -> None:
         post = Mock(return_value=success())

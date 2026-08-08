@@ -693,6 +693,50 @@ def validate_receipt(value: Mapping[str, Any]) -> dict[str, Any]:
     return copied
 
 
+def empty_rate_aware_receipt() -> dict[str, Any]:
+    """Return a valid all-zero receipt when construction fails before search."""
+
+    value = {
+        "artifact_version": 1,
+        "role": ROLE,
+        "policy_id": POLICY_ID,
+        "pool_id": POOL_ID,
+        "provider_non_key_local_attempt_cap_per_logical_query": (
+            DEFAULT_PROVIDER_ATTEMPT_CAP
+        ),
+        "minimum_start_interval_seconds": (
+            DEFAULT_MINIMUM_START_INTERVAL_SECONDS
+        ),
+        "default_provider_cooldown_seconds": (
+            DEFAULT_PROVIDER_COOLDOWN_SECONDS
+        ),
+        "maximum_provider_cooldown_seconds": (
+            DEFAULT_MAXIMUM_COOLDOWN_SECONDS
+        ),
+        "provider_start_reservations": 0,
+        "provider_gate_timeouts": 0,
+        "provider_pacing_wait_events": 0,
+        "provider_cooldown_wait_events": 0,
+        "provider_cooldown_activations": 0,
+        "retry_after_values_honored": 0,
+        "total_provider_gate_wait_seconds": 0.0,
+        "max_provider_gate_wait_seconds": 0.0,
+        "provider_429_responses": 0,
+        "provider_non429_retryable_responses": 0,
+        "provider_transport_retry_events": 0,
+        "provider_wide_429_rotates_all_keys_immediately": False,
+        "credential_local_statuses_remain_key_local": True,
+        "provider_answer_snippet_raw_content_or_score_forwarded": False,
+        "deterministic_public_page_fetch_is_only_active_evidence": True,
+        "credential_value_persisted_hashed_emitted_or_in_error": False,
+        "question_query_url_page_prediction_answer_or_opaque_id_persisted": False,
+        "mapping_gold_category_question_type_split_evaluator_score_reward_read": False,
+        "benchmark_launch_or_evaluator_authorized": False,
+    }
+    value["receipt_payload_sha256"] = payload_sha256(value)
+    return validate_receipt(value)
+
+
 def validate_search_class() -> None:
     cls = RateAwareDeadlineTavilyThinCompatibilityClient
     search_owner = next(base for base in cls.__mro__ if "_direct_search" in base.__dict__)
@@ -712,6 +756,7 @@ __all__ = [
     "POOL_ID",
     "ROLE",
     "RateAwareDeadlineTavilyThinCompatibilityClient",
+    "empty_rate_aware_receipt",
     "prepare_rate_aware_key_slots",
     "validate_receipt",
     "validate_search_class",
