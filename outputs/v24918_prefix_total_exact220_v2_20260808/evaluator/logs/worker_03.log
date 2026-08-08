@@ -1,0 +1,49 @@
+INFO: Pandarallel will run on 8 workers.
+INFO: Pandarallel will use Memory file system to transfer data between the main process and workers.
+{"event": "eval_start", "selected": 7, "resume_committed": 0, "committed_errors": 0, "crash_only_resume": false}
+{"event": "eval_done", "idx": 1, "instance_id": "deep2wide_result_16_约瑟夫·鲁斯纳克", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 3.035, "running_n": 1}
+2026-08-08 20:15:31.774 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 电影名称 | 导演 | 编剧 |
+| --- | --- | --- |
+| 《心迷宫》 | 忻钰坤 | 忻钰坤、冯元良  ...
+2026-08-08 20:15:33.101 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "《心迷宫》": "心迷宫",
+  "《一个勺子》": "一个勺子"
+}
+```
+2026-08-08 20:15:33.102 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 电影名称, primary_key_map {'《心迷宫》': '心迷宫', '《一个勺子》': '一个勺子'}
+2026-08-08 20:15:33.108 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_17_第七届“中国影协杯”十佳优秀电影剧本, df_inner shape: (2, 6), answer_df shape: (10, 3), response_df shape: (10, 4)
+2026-08-08 20:15:35.393 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_17_第七届“中国影协杯”十佳优秀电影剧本, col 导演, metric_func_name llm_judge, score [1, 1]
+2026-08-08 20:15:38.019 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_17_第七届“中国影协杯”十佳优秀电影剧本, col 编剧, metric_func_name llm_judge, score [1, 1]
+2026-08-08 20:15:38.024 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_17_第七届“中国影协杯”十佳优秀电影剧本, P/R/F1 by unique_columns: 0.2000/0.2000/0.2000
+2026-08-08 20:15:38.024 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_17_第七届“中国影协杯”十佳优秀电影剧本, P/R/F1 by row: 0.2000/0.2000/0.2000
+2026-08-08 20:15:38.024 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_17_第七届“中国影协杯”十佳优秀电影剧本, P/R/F1 by item: 0.2000/0.2000/0.2000
+2026-08-08 20:15:38.025 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_17_第七届“中国影协杯”十佳优秀电影剧本, final table score: 0.0
+{"event": "eval_done", "idx": 2, "instance_id": "deep2wide_result_17_第七届“中国影协杯”十佳优秀电影剧本", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.20000000000000004, "f1_by_item": 0.20000000000000004, "column_f1": 0.20000000000000004, "error": null, "elapsed_seconds": 12.249, "running_n": 2}
+2026-08-08 20:15:42.835 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 播出时间 | 节目名称 | 播出单位 | 期数 |
+| --- | --- | --- | --- |
+| Dec 27, ...
+2026-08-08 20:15:45.777 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "明日之子乐团季": "《明日之子乐团季》"
+}
+```
+2026-08-08 20:15:45.777 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 节目名称, primary_key_map {'明日之子乐团季': '《明日之子乐团季》'}
+2026-08-08 20:15:45.915 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_20_朴树, df_inner shape: (1, 8), answer_df shape: (9, 4), response_df shape: (11, 5)
+2026-08-08 20:15:45.918 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 2020-07-11 00:00:00, target: 2020-05-01 00:00:00
+2026-08-08 20:15:45.918 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_20_朴树, col 播出时间, metric_func_name date_near, score [0.0]
+2026-08-08 20:15:47.978 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_20_朴树, col 播出单位, metric_func_name llm_judge, score [1]
+2026-08-08 20:15:47.979 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 1.0, target: 10.0
+2026-08-08 20:15:47.979 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_20_朴树, col 期数, metric_func_name number_near, score [0.0]
+2026-08-08 20:15:47.983 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_20_朴树, P/R/F1 by unique_columns: 0.0909/0.1111/0.1000
+2026-08-08 20:15:47.983 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_20_朴树, P/R/F1 by row: 0.0000/0.0000/0.0000
+2026-08-08 20:15:47.983 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_20_朴树, P/R/F1 by item: 0.0455/0.0556/0.0500
+2026-08-08 20:15:47.984 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_20_朴树, final table score: 0.0
+{"event": "eval_done", "idx": 3, "instance_id": "deep2wide_result_20_朴树", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0, "f1_by_item": 0.049999999999999996, "column_f1": 0.09999999999999999, "error": null, "elapsed_seconds": 9.945, "running_n": 3}
+{"event": "eval_done", "idx": 4, "instance_id": "deep2wide_result_21_唐汉霄", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.934, "running_n": 4}
+{"event": "eval_done", "idx": 5, "instance_id": "deep2wide_result_23_王栎鑫", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 0.931, "running_n": 5}
+{"event": "eval_done", "idx": 6, "instance_id": "deep2wide_result_24_平安", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 1.118, "running_n": 6}
+{"event": "eval_done", "idx": 7, "instance_id": "deep2wide_result_25_费翔", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 0.827, "running_n": 7}
+SUMMARY {"n": 7, "valid_n": 7, "errors": 0, "complete": true, "judge_calls_current_process": 12, "score": 0.0, "entity_acc": 0.2857142857142857, "precision_by_row": 0.028571428571428574, "recall_by_row": 0.028571428571428574, "f1_by_row": 0.028571428571428577, "precision_by_item": 0.03506493506493507, "recall_by_item": 0.0365079365079365, "f1_by_item": 0.03571428571428572, "column_precision": 0.04155844155844156, "column_recall": 0.044444444444444446, "column_f1": 0.042857142857142864}

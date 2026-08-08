@@ -1,0 +1,124 @@
+INFO: Pandarallel will run on 8 workers.
+INFO: Pandarallel will use Memory file system to transfer data between the main process and workers.
+{"event": "eval_start", "selected": 7, "resume_committed": 0, "committed_errors": 0, "crash_only_resume": false}
+2026-08-08 20:15:26.626 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| Line Number | Line Name | Total Stations | Termini |
+| --- |  ...
+2026-08-08 20:15:29.163 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "M1": "M1",
+  "T1": "T1",
+  "T2": "T2",
+  "T4": "T4",
+  "T5": "T5",
+  "T6": "T6",
+  "T7": "T7",
+  "T8": "T8",
+  "T9": "T9"
+}
+```
+2026-08-08 20:15:29.163 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: linenumber, primary_key_map {'M1': 'M1', 'T1': 'T1', 'T2': 'T2', 'T4': 'T4', 'T5': 'T5', 'T6': 'T6', 'T7': 'T7', 'T8': 'T8', 'T9': 'T9'}
+2026-08-08 20:15:29.170 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - wide2deep_ws_en_032, df_inner shape: (9, 8), answer_df shape: (10, 4), response_df shape: (9, 5)
+2026-08-08 20:15:33.609 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_032, col linename, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 1, 1, 1]
+2026-08-08 20:15:33.610 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 56, target: 56
+2026-08-08 20:15:33.610 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 37, target: 37
+2026-08-08 20:15:33.610 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 33, target: 33
+2026-08-08 20:15:33.610 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 23, target: 30
+2026-08-08 20:15:33.610 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 6, target: 6
+2026-08-08 20:15:33.610 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 2, target: 2
+2026-08-08 20:15:33.610 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 31, target: 34
+2026-08-08 20:15:33.610 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 21, target: 31
+2026-08-08 20:15:33.610 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 21, target: 21
+2026-08-08 20:15:33.611 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_032, col totalstations, metric_func_name exact_match, score [1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0]
+2026-08-08 20:15:35.980 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_032, col termini, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 0, 0, 1]
+2026-08-08 20:15:35.987 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - wide2deep_ws_en_032, P/R/F1 by unique_columns: 1.0000/0.9000/0.9474
+2026-08-08 20:15:35.987 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - wide2deep_ws_en_032, P/R/F1 by row: 0.6667/0.6000/0.6316
+2026-08-08 20:15:35.987 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - wide2deep_ws_en_032, P/R/F1 by item: 0.8611/0.7750/0.8158
+2026-08-08 20:15:35.989 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - wide2deep_ws_en_032, final table score: 0.0
+{"event": "eval_done", "idx": 1, "instance_id": "wide2deep_ws_en_032", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.631578947368421, "f1_by_item": 0.8157894736842106, "column_f1": 0.9473684210526316, "error": null, "elapsed_seconds": 12.725, "running_n": 1}
+{"event": "eval_done", "idx": 2, "instance_id": "wide2deep_ws_en_046", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 0.889, "running_n": 2}
+{"event": "eval_done", "idx": 3, "instance_id": "wide2deep_ws_en_059", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.079, "running_n": 3}
+{"event": "eval_done", "idx": 4, "instance_id": "wide2deep_ws_en_075", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.078, "running_n": 4}
+2026-08-08 20:15:43.569 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| Release Year |
+| --- |
+| 2010 |
+| 2010 |
+| 2010 |
+| 2011 |
+|  ...
+2026-08-08 20:15:45.526 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "releaseyear": "releaseyear"
+}
+```
+2026-08-08 20:15:45.526 | INFO     | eval.evaluation.evaluation:evaluate_single_query:172 - column map: {'releaseyear': 'releaseyear'}
+2026-08-08 20:15:45.526 | INFO     | eval.evaluation.evaluation:evaluate_single_query:173 - befor mapping: Index(['releaseyear'], dtype='object')
+2026-08-08 20:15:45.526 | INFO     | eval.evaluation.evaluation:evaluate_single_query:175 - after mapping: Index(['releaseyear'], dtype='object')
+2026-08-08 20:15:45.527 | INFO     | eval.evaluation.evaluation:evaluate_single_query:179 - instance_id: wide2deep_ws_en_094, msg: required_columns ['releaseyear', 'title', 'genre', 'director', 'leadactor/actress', 'totalboxoffice(billionsofkrw)', 'totaladmissions'] != response_df Index(['releaseyear'], dtype='object')
+{"event": "eval_done", "idx": 5, "instance_id": "wide2deep_ws_en_094", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 4.423, "running_n": 5}
+2026-08-08 20:15:47.426 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| Camera Model | Effective Pixels | Weight | Maximum Frames per ...
+2026-08-08 20:15:51.206 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "Nikon Z 5": "Z5",
+  "Nikon Z 5II": "Z5Ⅱ",
+  "Nikon Z 6": "Z6",
+  "Nikon Z 6II": "Z6Ⅱ",
+  "Nikon Z 6III": "Z6Ⅲ",
+  "Nikon Z 7": "Z7",
+  "Nikon Z 7II": "Z7Ⅱ",
+  "Nikon Z 8": "Z8",
+  "Nikon Z 9": "Z9",
+  "Nikon Z 30": "Z30",
+  "Nikon Z 50": "Z50",
+  "Nikon Z 50II": "Z50Ⅱ",
+  "Nikon Z fc": "Zfc",
+  "Nikon Z f": "Zf"
+}
+```
+2026-08-08 20:15:51.206 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: cameramodel, primary_key_map {'Nikon Z 5': 'Z5', 'Nikon Z 5II': 'Z5Ⅱ', 'Nikon Z 6': 'Z6', 'Nikon Z 6II': 'Z6Ⅱ', 'Nikon Z 6III': 'Z6Ⅲ', 'Nikon Z 7': 'Z7', 'Nikon Z 7II': 'Z7Ⅱ', 'Nikon Z 8': 'Z8', 'Nikon Z 9': 'Z9', 'Nikon Z 30': 'Z30', 'Nikon Z 50': 'Z50', 'Nikon Z 50II': 'Z50Ⅱ', 'Nikon Z fc': 'Zfc', 'Nikon Z f': 'Zf'}
+2026-08-08 20:15:51.213 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - wide2deep_ws_en_096, df_inner shape: (14, 18), answer_df shape: (14, 9), response_df shape: (14, 10)
+2026-08-08 20:15:55.253 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_096, col effectivepixels, metric_func_name llm_judge, score [1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+2026-08-08 20:15:55.254 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1340.0, target: 1340.0
+2026-08-08 20:15:55.254 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 910.0, target: 910.0
+2026-08-08 20:15:55.254 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 705.0, target: 705.0
+2026-08-08 20:15:55.254 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 675.0, target: 675.0
+2026-08-08 20:15:55.254 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 760.0, target: 760.0
+2026-08-08 20:15:55.254 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 705.0, target: 705.0
+2026-08-08 20:15:55.254 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 675.0, target: 675.0
+2026-08-08 20:15:55.254 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 700.0, target: 700.0
+2026-08-08 20:15:55.254 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 675.0, target: 675.0
+2026-08-08 20:15:55.254 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 710.0, target: 710.0
+2026-08-08 20:15:55.254 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 445.0, target: 445.0
+2026-08-08 20:15:55.254 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 550.0, target: 550.0
+2026-08-08 20:15:55.254 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 450.0, target: 450.0
+2026-08-08 20:15:55.254 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 405.0, target: 405.0
+2026-08-08 20:15:55.255 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_096, col weight, metric_func_name number_near, score [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-08 20:15:55.255 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 120fps(11mpjpeg);20fpsraw, target: 120fps
+2026-08-08 20:15:55.255 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 120fps(11mpjpeg);20fpsraw, target: 120fps
+2026-08-08 20:15:55.255 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 10fps, target: 10fps
+2026-08-08 20:15:55.255 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 9fps, target: 9fps
+2026-08-08 20:15:55.255 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 120fps(10.6mpjpeg);20fpsraw, target: 120fps
+2026-08-08 20:15:55.255 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 14fps, target: 14fps
+2026-08-08 20:15:55.255 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 12fps, target: 12fps
+2026-08-08 20:15:55.255 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 30fps(jpeg);15fpsraw, target: 30fps
+2026-08-08 20:15:55.256 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 4.5fps, target: 4.5fps
+2026-08-08 20:15:55.256 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 30fps(jpeg);14fpsraw, target: 30fps
+2026-08-08 20:15:55.256 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 11fps, target: 11fps
+2026-08-08 20:15:55.256 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 30fps(jpeg);11fpsraw, target: 30fps
+2026-08-08 20:15:55.256 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 11fps, target: 11fps
+2026-08-08 20:15:55.256 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 11fps, target: 11fps
+2026-08-08 20:15:55.263 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_096, col maximumframespersecond, metric_func_name exact_match, score [0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0]
+2026-08-08 20:16:00.397 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_096, col shutterspeedrange, metric_func_name llm_judge, score [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+2026-08-08 20:16:04.678 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_096, col highestnumberoffocuspoints, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1]
+2026-08-08 20:16:08.674 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_096, col digitalimageprocessor, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+2026-08-08 20:16:12.504 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_096, col isorange, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+2026-08-08 20:16:18.927 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_096, col in-cameravibrationreductiontechnology, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+2026-08-08 20:16:18.933 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - wide2deep_ws_en_096, P/R/F1 by unique_columns: 1.0000/1.0000/1.0000
+2026-08-08 20:16:18.933 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - wide2deep_ws_en_096, P/R/F1 by row: 0.0000/0.0000/0.0000
+2026-08-08 20:16:18.933 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - wide2deep_ws_en_096, P/R/F1 by item: 0.8175/0.8175/0.8175
+2026-08-08 20:16:18.935 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - wide2deep_ws_en_096, final table score: 0.0
+{"event": "eval_done", "idx": 6, "instance_id": "wide2deep_ws_en_096", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0, "f1_by_item": 0.8174603174603176, "column_f1": 1.0, "error": null, "elapsed_seconds": 33.391, "running_n": 6}
+{"event": "eval_done", "idx": 7, "instance_id": "wide2deep_ws_zh_053", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.322, "running_n": 7}
+SUMMARY {"n": 7, "valid_n": 7, "errors": 0, "complete": true, "judge_calls_current_process": 18, "score": 0.0, "entity_acc": 0.42857142857142855, "precision_by_row": 0.09523809523809523, "recall_by_row": 0.08571428571428572, "f1_by_row": 0.09022556390977443, "precision_by_item": 0.23979591836734696, "recall_by_item": 0.22749433106575964, "f1_by_item": 0.2333213987349326, "column_precision": 0.2857142857142857, "column_recall": 0.2714285714285714, "column_f1": 0.2781954887218045}

@@ -1,0 +1,88 @@
+INFO: Pandarallel will run on 8 workers.
+INFO: Pandarallel will use Memory file system to transfer data between the main process and workers.
+{"event": "eval_start", "selected": 7, "resume_committed": 0, "committed_errors": 0, "crash_only_resume": false}
+2026-08-08 20:15:24.977 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 名称 | 面积 | 评定时间 |
+| --- | --- | --- |
+| 青海隆宝国家级自然保护区 | 10,000公 ...
+2026-08-08 20:15:27.142 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "青海隆宝国家级自然保护区": "隆宝国家级自然保护区",
+  "青海湖国家级自然保护区": "青海湖国家级自然保护区",
+  "青海可可西里国家级自然保护区": "青海可可西里国家级自然保护区",
+  "青海循化孟达国家级自然保护区": "青海孟达国家级自然保护区",
+  "青海三江源国家级自然保护区": "青海三江源国家级自然保护区",
+  "青海柴达木梭梭林国家级自然保护区": "青海柴达木梭梭林国家级自然保护区",
+  "青海大通北川河源区国家级自然保护区": "青海大通北川河源区国家级自然保护区"
+}
+```
+2026-08-08 20:15:27.143 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 名称, primary_key_map {'青海隆宝国家级自然保护区': '隆宝国家级自然保护区', '青海湖国家级自然保护区': '青海湖国家级自然保护区', '青海可可西里国家级自然保护区': '青海可可西里国家级自然保护区', '青海循化孟达国家级自然保护区': '青海孟达国家级自然保护区', '青海三江源国家级自然保护区': '青海三江源国家级自然保护区', '青海柴达木梭梭林国家级自然保护区': '青海柴达木梭梭林国家级自然保护区', '青海大通北川河源区国家级自然保护区': '青海大通北川河源区国家级自然保护区'}
+2026-08-08 20:15:29.526 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_77_青海省, df_inner shape: (7, 6), answer_df shape: (7, 3), response_df shape: (7, 4)
+2026-08-08 20:15:29.528 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 17290.0, target: 17290.0
+2026-08-08 20:15:29.528 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 495200.0, target: 495200.0
+2026-08-08 20:15:29.528 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 4500000.0, target: 45000.0
+2026-08-08 20:15:29.528 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 10000.0, target: 10000.0
+2026-08-08 20:15:29.528 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 15230000.0, target: 1523.0
+2026-08-08 20:15:29.528 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 2177500.0, target: 3105.0
+2026-08-08 20:15:29.528 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 107870.0, target: 107870.0
+2026-08-08 20:15:29.529 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_77_青海省, col 面积, metric_func_name number_near, score [1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0]
+2026-08-08 20:15:29.580 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 2000-04-04, target: 36617
+2026-08-08 20:15:29.633 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 1997-12-08, target: 35765
+2026-08-08 20:15:29.683 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 1997-12-08, target: 35765
+2026-08-08 20:15:29.734 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 1986-07-09, target: 31625
+2026-08-08 20:15:29.785 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 2003-01-24, target: 36729
+2026-08-08 20:15:29.833 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 2006-02-11, target: 41456
+2026-08-08 20:15:29.882 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 2013-06-04, target: 41633
+2026-08-08 20:15:29.883 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_77_青海省, col 评定时间, metric_func_name date_near, score [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+2026-08-08 20:15:29.888 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_77_青海省, P/R/F1 by unique_columns: 1.0000/1.0000/1.0000
+2026-08-08 20:15:29.888 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_77_青海省, P/R/F1 by row: 0.0000/0.0000/0.0000
+2026-08-08 20:15:29.888 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_77_青海省, P/R/F1 by item: 0.5238/0.5238/0.5238
+2026-08-08 20:15:29.891 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_77_青海省, final table score: 0.0
+{"event": "eval_done", "idx": 1, "instance_id": "deep2wide_result_77_青海省", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0, "f1_by_item": 0.5238095238095238, "column_f1": 1.0, "error": null, "elapsed_seconds": 6.397, "running_n": 1}
+{"event": "eval_done", "idx": 2, "instance_id": "deep2wide_result_78_韶关市", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 1.045, "running_n": 2}
+2026-08-08 20:15:32.802 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 名称 | 创办时间 | 院校代码 |
+| --- | --- | --- |
+| 北京大学 | -, 1898 | 100 ...
+2026-08-08 20:15:34.128 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "北京大学": "北京大学",
+  "中国人民大学": "中国人民大学",
+  "清华大学": "清华大学",
+  "北京航空航天大学": "北京航空航天大学",
+  "北京理工大学": "北京理工大学",
+  "中国农业大学": "中国农业大学",
+  "北京师范大学": "北京师范大学",
+  "中央民族大学": "中央民族大学"
+}
+```
+2026-08-08 20:15:34.128 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 名称, primary_key_map {'北京大学': '北京大学', '中国人民大学': '中国人民大学', '清华大学': '清华大学', '北京航空航天大学': '北京航空航天大学', '北京理工大学': '北京理工大学', '中国农业大学': '中国农业大学', '北京师范大学': '北京师范大学', '中央民族大学': '中央民族大学'}
+2026-08-08 20:15:34.205 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_79_北京, df_inner shape: (8, 6), answer_df shape: (9, 3), response_df shape: (8, 4)
+2026-08-08 20:15:34.208 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 1.0 msg date near, response: 1898-08-01 00:00:00, target: 1898-07-03 00:00:00
+2026-08-08 20:15:34.210 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 1937-08-01 00:00:00, target: 1989-08-08 00:00:00
+2026-08-08 20:15:34.213 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 1911-08-01 00:00:00, target: 4109-08-01 00:00:00
+2026-08-08 20:15:34.295 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 1902-08-01, target: 124-08-08
+2026-08-08 20:15:34.297 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 1940-08-01 00:00:00, target: 1986-08-08 00:00:00
+2026-08-08 20:15:34.349 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 1952-08-01, target: 19292
+2026-08-08 20:15:34.352 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 1941-08-01 00:00:00, target: 1975-08-08 00:00:00
+2026-08-08 20:15:34.437 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 1905-08-01, target: 121-08-08
+2026-08-08 20:15:34.438 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_79_北京, col 创办时间, metric_func_name date_near, score [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+2026-08-08 20:15:34.439 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 10001.0, target: 10001.0
+2026-08-08 20:15:34.439 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 10002.0, target: 10002.0
+2026-08-08 20:15:34.439 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 10003.0, target: 10003.0
+2026-08-08 20:15:34.439 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 10027.0, target: 10027.0
+2026-08-08 20:15:34.439 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 10007.0, target: 10007.0
+2026-08-08 20:15:34.439 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 10006.0, target: 10006.0
+2026-08-08 20:15:34.439 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 10052.0, target: 10052.0
+2026-08-08 20:15:34.439 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 10019.0, target: 10019.0
+2026-08-08 20:15:34.440 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_79_北京, col 院校代码, metric_func_name number_near, score [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-08 20:15:34.444 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_79_北京, P/R/F1 by unique_columns: 1.0000/0.8889/0.9412
+2026-08-08 20:15:34.444 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_79_北京, P/R/F1 by row: 0.1250/0.1111/0.1176
+2026-08-08 20:15:34.444 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_79_北京, P/R/F1 by item: 0.7083/0.6296/0.6667
+2026-08-08 20:15:34.445 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_79_北京, final table score: 0.0
+{"event": "eval_done", "idx": 3, "instance_id": "deep2wide_result_79_北京", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.11764705882352941, "f1_by_item": 0.6666666666666667, "column_f1": 0.9411764705882353, "error": null, "elapsed_seconds": 3.478, "running_n": 3}
+{"event": "eval_done", "idx": 4, "instance_id": "deep2wide_result_80_安徽萧县", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 1.439, "running_n": 4}
+{"event": "eval_done", "idx": 5, "instance_id": "deep2wide_result_83_Cameroon", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 1.8, "running_n": 5}
+{"event": "eval_done", "idx": 6, "instance_id": "wide2deep_ws_en_009", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 1.944, "running_n": 6}
+{"event": "eval_done", "idx": 7, "instance_id": "wide2deep_ws_en_024", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 0.802, "running_n": 7}
+SUMMARY {"n": 7, "valid_n": 7, "errors": 0, "complete": true, "judge_calls_current_process": 9, "score": 0.0, "entity_acc": 0.2857142857142857, "precision_by_row": 0.017857142857142856, "recall_by_row": 0.015873015873015872, "f1_by_row": 0.01680672268907563, "precision_by_item": 0.1760204081632653, "recall_by_item": 0.16477702191987906, "f1_by_item": 0.17006802721088438, "column_precision": 0.2857142857142857, "column_recall": 0.2698412698412698, "column_f1": 0.2773109243697479}
