@@ -326,7 +326,9 @@ def _probe(ordinal: int, credential: str, root: Path) -> dict[str, int | bool]:
         fetch_workers=1,
         fetch_timeout=10,
         max_page_chars=1000,
-        hard_fetch_deadline_seconds=10,
+        # Inherited constructor identity is frozen at 25 seconds.  This gate
+        # never calls fetch_urls, so the helper remains effect-free.
+        hard_fetch_deadline_seconds=25,
         credentials=(credential,),
         key_slot_directory=directory,
         output_root=root,
