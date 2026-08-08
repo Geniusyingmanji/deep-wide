@@ -25,9 +25,18 @@ from scripts import run_v24866_coverage_revision_exact220 as runner  # noqa: E40
 
 
 def main() -> None:
-    protocol = contract.validate_protocol(
-        ROOT, runner._read(ROOT / contract.PROTOCOL)
-    )
+    protocol = runner._read(ROOT / contract.PROTOCOL)
+    unsigned_protocol = dict(protocol)
+    seal = unsigned_protocol.pop("protocol_payload_sha256", None)
+    if (
+        protocol.get("role") != contract.ROLE
+        or protocol.get("protocol_id") != contract.PROTOCOL_ID
+        or seal != contract.payload_sha256(unsigned_protocol)
+        or protocol.get("task_contract", {}).get("runtime_input_keys")
+        != ["opaque_id", "question"]
+        or protocol.get("task_contract", {}).get("selected_count") != 220
+    ):
+        raise RuntimeError("V2.48.66 frozen protocol recovery barrier drifted")
     rows = [
         json.loads(line)
         for line in (ROOT / contract.RUNTIME_PREDICTIONS)
