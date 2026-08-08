@@ -1,0 +1,106 @@
+{
+  "artifact_version": 1,
+  "authorization": {
+    "additional_rollout_avg4_leaderboard_or_sota": false,
+    "postfreeze_exact220_evaluation": true,
+    "selective_retry_or_revaluation": false
+  },
+  "control_manifest": {
+    "scripts/deepwide_api_lease.py": "8d9cffa78617b458172307d3558c76e9370f045f531c2f5aaaceb866f5a78c7d",
+    "scripts/finalize_fullset_rollout.py": "3e886b73cca2b011853a605091eab0d13004de5edee95b14627d1706d69808e5",
+    "scripts/finalize_v24287_exact220.py": "31e55e6d8825f810125897395abb746ad9ba1cffa595e8dc463b1d173e55eed2",
+    "scripts/finalize_v24791_exact220.py": "b4ba46aecd3a4187f27d36b2572cda97605cfc21c4e13eb0d778d544d620f827",
+    "scripts/finalize_v24896_collector_recovery_exact220.py": "5d06d4db7020afb1856578bc9e679279881bacb46b22f647c39bb093b69b0bb4",
+    "scripts/recover_v24896_collector_exact220.py": "cec9ad5c919f9d13f8dbbc6acec227a5f454fccc6390c2c84c792448acc23628",
+    "scripts/run_official_eval_local.py": "ab3d3ba3f15143d9f0f46816d7b9eb61f3f8915172dc14fe50d02b96b645c1ca",
+    "tests/test_recover_v24896_collector_exact220.py": "25fd9ab75c6fe1de78cd2887e6e94165fbbe149e5207b3b845be135ea41d0de4"
+  },
+  "control_manifest_sha256": "115a5642d0172baf66bb8e9f7e3a0379df04bb8982c7c44f964aea5297424e9c",
+  "created_at_unix": 1786196488,
+  "evaluation_contract": {
+    "conservative_denominators": {
+      "all_220": 220,
+      "test_156": 156
+    },
+    "fixed_contiguous_32_way_partition_in_prediction_order": true,
+    "official_evaluator_on_every_recovered_prediction_exactly_once": true,
+    "selective_retry_revaluation_or_prediction_selection": false,
+    "worker_error_rows_are_terminal_failure_as_zero": true
+  },
+  "evaluator_contract": {
+    "answer_corpus": {
+      "manifest_sha256": "5ddc76dd9e9fa4a7080f84e824de6230c62101d2375dee72a0f508b7cfa4ec7e",
+      "root": "external/Marco-Search-Agent/Marco-DeepResearch-Family/DeepWideSearch/data/overall_20250916_tables"
+    },
+    "evaluator_source": {
+      "manifest_sha256": "2829e4808226bd35e4e312f024ceded3a9bc2b1e923493e06503278e382ba061"
+    },
+    "judge": {
+      "max_output_tokens": 8192,
+      "max_retries": 12,
+      "model": "gpt-5.6-sol",
+      "proxy_url": "http://127.0.0.1:9878/responses",
+      "reasoning_effort": "low",
+      "timeout_seconds": 600
+    },
+    "mapping": {
+      "path": "outputs/runtime_manifest_v1_repro/evaluator_mapping.jsonl",
+      "sha256": "3d6f8f71e8136f5a3fe9385e2511e50a367e220dd84e790ba3c7dec975ab5d86"
+    },
+    "mapping_query_answer_or_gold_bytes_opened_or_hashed": true,
+    "opened_only_after_v24791_exact220_prediction_freeze": true,
+    "opened_only_after_v24896_collector_recovery_prediction_freeze": true,
+    "query_data": {
+      "path": "external/Marco-Search-Agent/Marco-DeepResearch-Family/DeepWideSearch/data/overall_20250916.jsonl",
+      "sha256": "4dd18df4ab8d166f14a1458f884fd8e0652f970764e245e868d75947daa5e5cf"
+    },
+    "recovery_policy": {
+      "canonical_result_file_atomic_replace_per_task": true,
+      "committed_rows_must_be_exact_prediction_prefix": true,
+      "committed_success_or_error_is_terminal": true,
+      "explicit_resume_required": true,
+      "selective_error_retry_allowed": false
+    },
+    "release_seal": {
+      "path": "results/full220_v2403_r1_20260725_finalize_seal.json",
+      "sha256": "6353c3d1caa05fc67f750570d3b3e5909d23945cc69b63f479a47c23d6b3c63f"
+    },
+    "released_evaluator_contract": {
+      "path": "outputs/full220_v2403_r1_eval_20260725/run_config.json",
+      "sha256": "b1040a303a71955b8b8d669c497e24100ec2d8de06d73aa30c3496d69a8559e1"
+    }
+  },
+  "evaluator_workers": 32,
+  "forward_barrier": {
+    "collector_rule_created_after_first_evaluation": true,
+    "collector_used_correctness_score_or_evaluator_rows": false,
+    "mapping_or_evaluator_opened_during_original_forward": false,
+    "prediction_freeze_sha256": "8563f4abfce7753def01f0b804f61f3c0be9d5e80ba59096a344a164dd87861c",
+    "recovered_forward_audit_sha256": "93e658bbaf16951ecbabb08892667b730e5398302c0b4b30b82a9690d896c1a7",
+    "recovered_forward_result_sha256": "6d51bb027a351c3589002aee493a64ad38e9dce847bd3c019660b40b2229cb3b",
+    "runtime_predictions_sha256": "d259e76907a505f6de33eed1d58b60e86b086a3ddf8822e27f711216f1a8af9a",
+    "source_v24895_forward_result_sha256": "f94e2c440d5d7115d254f9a4fae2a8aa083ba1c7dca675cd77c15de5e73b29f0",
+    "terminal_predictions": 220
+  },
+  "lease": {
+    "owner": "v24896_collector_recovery_exact220_evaluator_v1",
+    "path": "outputs/deepwide_benchmark_api.lease.lock",
+    "purpose": "posthoc_infrastructure_correction_exact220_official_evaluator"
+  },
+  "outputs": {
+    "evaluator_root": "outputs/v24896_collector_recovery_exact220_v1_20260808/evaluator",
+    "final_result": "results/v24896_collector_recovery_exact220_result_v1_20260808.json",
+    "postresult_audit": "results/v24896_collector_recovery_exact220_postresult_audit_v1_20260808.json"
+  },
+  "protocol_payload_sha256": "65cb7a37df6b0752ee1c5585c37dbcac8f9edb907527132576d1d9bd15b512f3",
+  "role": "v24896_collector_recovery_exact220_evaluator_preregistration",
+  "selected": 220,
+  "source_policy": {
+    "cold_execution_claimed": false,
+    "collector_read_mapping_gold_score_correctness_or_evaluator_rows": false,
+    "cross_version_public_benchmark_feedback_overfitting_remains_a_limitation": true,
+    "posthoc_infrastructure_correction": true,
+    "same_fixed_rule_applied_to_all_220_positions": true,
+    "sota_leaderboard_or_avg4_claimed": false
+  }
+}
