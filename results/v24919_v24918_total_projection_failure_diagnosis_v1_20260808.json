@@ -1,0 +1,155 @@
+{
+  "aggregate": {
+    "completion_kind_counts": {
+      "normalized_primary": 4,
+      "primary": 144,
+      "worker_failure_fallback": 72
+    },
+    "fallback_actual_fetch_call_distribution": {
+      "10": 50,
+      "6": 7,
+      "7": 1,
+      "8": 3,
+      "9": 11
+    },
+    "fallback_admitted_model_call_distribution": {
+      "1": 72
+    },
+    "fallback_admitted_search_query_distribution": {
+      "4": 72
+    },
+    "fallback_elapsed_seconds": {
+      "maximum": 105.342,
+      "mean": 38.186069,
+      "minimum": 19.361
+    },
+    "fallback_failure_type_counts": {
+      "ValidationError": 72
+    },
+    "fallback_projection_input_page_distribution": {
+      "0": 72
+    },
+    "fallback_transport_totals": {
+      "fetch_helper_failures": 0,
+      "hard_fetch_deadline_failures": 2,
+      "hard_fetch_helper_calls": 672,
+      "hosted_search_attempts": 139
+    },
+    "generated_actual_fetch_call_distribution": {
+      "10": 66,
+      "4": 1,
+      "6": 56,
+      "7": 1,
+      "8": 10,
+      "9": 14
+    },
+    "generated_elapsed_seconds": {
+      "maximum": 168.454,
+      "mean": 68.099223,
+      "minimum": 26.04
+    },
+    "generated_projection_input_page_distribution": {
+      "1": 6,
+      "10": 4,
+      "2": 9,
+      "3": 18,
+      "4": 26,
+      "5": 26,
+      "6": 14,
+      "7": 19,
+      "8": 15,
+      "9": 11
+    },
+    "last_safe_progress_stage_counts": {
+      "retrieval_terminal": 72,
+      "terminal": 148
+    },
+    "selected": 220
+  },
+  "artifact_version": 1,
+  "authorization": {
+    "append_only_projection_totality_repair_build": true,
+    "benchmark_external_regression": true,
+    "evaluator_or_revaluation": false,
+    "leaderboard_submission": false,
+    "public_dev64_or_exact220": false,
+    "sota_claim": false
+  },
+  "checks": {
+    "all_fallback_projection_receipts_are_empty_terminal_receipts": true,
+    "all_fallbacks_coarse_validation_error": true,
+    "all_fallbacks_last_safe_after_retrieval_before_projection": true,
+    "all_fallbacks_plan_only_model_and_four_queries": true,
+    "failure_partition_exact72_148": true,
+    "fallback_provider_and_fetch_deadline_not_systemic": true,
+    "fallbacks_executed_real_fetch_effects": true,
+    "parent_result_and_postresult_audit_valid": true,
+    "production_shaped_exact_total_cap_reproduced": true,
+    "source_evaluator_capability_zero": true,
+    "source_privileged_access_zero": true,
+    "source_secret_literal_zero": true,
+    "synthetic_controls_valid": true,
+    "terminal_vector_exact220": true
+  },
+  "created_at_unix": 1786222782,
+  "diagnosis_payload_sha256": "d89fc74c88041a3acf536cbf3fe99cac575653675a8c73a7de28f1f32d36c91d",
+  "diagnosis_valid": true,
+  "findings": [],
+  "git_head": "c7101fe2b89b78e197f8a8bcf30a3697bd406586",
+  "mechanical_conclusion": {
+    "all_72_failures_uniquely_attributed_from_frozen_artifacts": false,
+    "empty_projection_receipt_is_postfailure_terminal_backfill_not_zero_retrieval": true,
+    "endpoint_transport_model_slot_or_evaluator_failure": false,
+    "exact_reproduced_sufficient_cause": "rendered_headers_plus_bounded_page_content_exceed_the_60000_total_projection_cap",
+    "failure_window": "after_retrieval_terminal_before_page_projection_terminal",
+    "legacy_per_page_overflow_is_totalized": true,
+    "next_safe_step": "append_only_projection_totality_repair_plus_benchmark_external_production_shaped_regression",
+    "reason_unique_attribution_is_unavailable": "frozen_failure_artifacts_retain_only_coarse_exception_class_and_last_safe_stage",
+    "remaining_unhandled_overflow": "V2.49.11 rendered projection exceeded total cap"
+  },
+  "parent": {
+    "postresult_audit": {
+      "path": "results/v24918_prefix_total_exact220_postresult_audit_v2_20260808.json",
+      "sha256": "665a0ad933dbb8a405b5805f999de050017da380eb68613ad1a912677420d11f"
+    },
+    "result": {
+      "path": "results/v24918_prefix_total_exact220_result_v2_20260808.json",
+      "sha256": "2e517be0864961fdc715ea95a02c9909681e1c1df5d5314551831fd1570c5433"
+    }
+  },
+  "role": "v24919_v24918_aggregate_total_projection_failure_diagnosis",
+  "source_audit": {
+    "credential_literal_files": [],
+    "evaluator_capability_hits": [],
+    "runtime_privileged_access_hits": []
+  },
+  "source_manifest": {
+    "results/v24918_prefix_total_exact220_postresult_audit_v2_20260808.json": "665a0ad933dbb8a405b5805f999de050017da380eb68613ad1a912677420d11f",
+    "results/v24918_prefix_total_exact220_result_v2_20260808.json": "2e517be0864961fdc715ea95a02c9909681e1c1df5d5314551831fd1570c5433",
+    "scripts/diagnose_v24919_v24918_total_projection_failure.py": "124bbf849d9bb639783a7e1508be8a8b1835456998cccd6628d28e85e8b9deb7",
+    "src/deepwide_agent/v24911_long_page_evidence_packer.py": "ed3cfae20d8b349b9e77496c33d04b39af945876349100ff779c4a06c4ac42b4",
+    "src/deepwide_agent/v24916_prefix_total_long_page_packer.py": "db34a39d1a8efb7af53f7c987e5546e4d91d702b84a479cb6675edb264728bba",
+    "src/deepwide_agent/v24916_prefix_total_runtime_binding.py": "149a272ba04fb1fb809a48978bf7f364b7a6b8e243da4d33d20e99b5d35b9b39"
+  },
+  "source_manifest_sha256": "08285d4f8ca8ac3648f53e49f63657653cdd579e3ad90b4af90530c9c0fb68b8",
+  "source_policy": {
+    "aggregate_only_no_task_id_question_query_url_page_prediction_or_answer_emitted": true,
+    "credential_value_read_persisted_hashed_or_emitted": false,
+    "entropy_or_information_gain_assigns_signed_credit": false,
+    "network_model_search_fetch_or_evaluator_called_by_diagnosis": false,
+    "runtime_mapping_gold_category_question_type_split_evaluator_score_reward_read": false,
+    "same_population_retry_resume_skip_selective_rerun_or_revaluation": false
+  },
+  "synthetic_reproduction": {
+    "duplicate_url_control_deduplicates": true,
+    "exact_total_render_overflow_cases": 2,
+    "first_error_class": "RuntimeError",
+    "first_error_matches_exact_total_cap": true,
+    "network_model_search_fetch_or_evaluator_called": false,
+    "production_shaped_cases": 8,
+    "question_url_page_or_projection_persisted": false,
+    "runtime_binding_exact_total_cap_reproduced": true,
+    "short_page_control_succeeds": true,
+    "total_render_overflow_reproduced": true
+  }
+}
