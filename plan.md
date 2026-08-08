@@ -1,8 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.52
+> 版本：6.53
 >
-> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.52 覆盖。**
+> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.53 覆盖。**
+
+> **6.53 V2.49.22 target–value coverage 完整 220 结果（2026-08-08）：按全集优先要求，V2.49.22 已完成 single-pass DeepWideBench `220/220` forward，并在全部 prediction 冻结、forward audit 推送后才开放 mapping/gold/evaluator。runtime 只读 `{opaque_id, question}`；114/114 preactivation tests 与 forward audit 均为 `findings=[]`。forward 用时 `782.780341s`（13.05 min），产生 219 个 model-generated table、1 个 fallback、647,654 system tokens；没有 resume、retry、补题或选择性重跑。**
+
+> **固定 32-worker evaluator 对冻结的 220 条 prediction exactly once：207 valid，13 error 按预注册固定分母计零；用时 `263.185477s`。all-220 得分为 whole-table Exact `7/220 = 3.1818%`、Entity `0.686364`、Row F1 `0.192148`、Item F1 `0.366439`、Column F1 `0.455804`、Composite `0.425189`。post-result audit 为 `audit_valid=true, findings=[]`，并确认 220 条 join、无选择性重评、进程/lease 闭合及四个 protected watcher 身份不变。权威工件：[`results/v24922_target_value_exact220_result_v1_20260808.json`](results/v24922_target_value_exact220_result_v1_20260808.json) 与 [`results/v24922_target_value_exact220_postresult_audit_v1_20260808.json`](results/v24922_target_value_exact220_postresult_audit_v1_20260808.json)。**
+
+> **V2.49.22 严格 NO-GO：相对当前项目单轮最佳 V2.48.57 的 `9/220 / 0.457249`，Exact `-2`、Composite `-0.032060`；不是项目新最佳、没有 leaderboard submission，也不是 SOTA。更关键的是，12 个 Tavily key 各在首次 provider attempt 返回 HTTP `432` 并被 key-local disable；880 个 logical query 全失败，successful query、URL lead、fetch、supported/retained target–value pair、dependency addition 均为 0。因此本轮虽是有效的固定 220 分母全集成绩，实质衡量的是 GPT-5.6 在无网页证据下的退化表现，不能检验 V2.49.21 target–value projector，更不能验证 entropy/IG credit。**
+
+> **下一策略：不重跑或补评本次 population，也不根据逐题 correctness 调参。target–value projector 暂不退役，但在 transport 恢复并使 mechanism exposure 非零前，不再消费公开 220。先做新的 aggregate、credential-blind transport gate，要求预冻结池全部 2xx 且零 401/403/432；随后在 fresh benchmark-external shared-prefix population 上比较 parent projector 与 target–value projector，必须同页字节、同模型/预算，且自然产生 supported/retained pair 与 prediction change。entropy/IG 仍只作 shadow/VOC feature；正 credit 只能在 identity/target–value/source-dependency 门通过后，由 deletion/replacement、sibling continuation 或 post-freeze signed outer utility确定。外部门严格 GO 后，才允许一次新的 fixed-policy public 220；内部参考前沿仍为 V2.48.57 `9/220 / 0.457249`。**
 
 > **6.52 V2.48.50 完整 220 冷启动复现（2026-08-08）：按用户要求不再让小样门阻塞全集，V2.48.50 对当前内部最佳 V2.48.00 的 frozen policy 做了一次全新执行面复现。220 题向量、GPT-5.6、Tavily URL-lead transport、prompt、fixed-full-budget controller、每题 `3 model / 4 query / 10 fetch / 240s` hard caps，以及 `20 task / 8 model / 12 search` 并发均与 V2.48.00 相同；唯一变化是 create-only protocol/output/evaluator surface。runtime 严格只接收 `{opaque_id, question}`，60/60 preactivation tests、privileged-field/evaluator-capability/credential scan 全通过；禁止 resume、补题、选择性重跑或重评。完整 forward `220/220` terminal，219 model-generated、1 fallback，耗时 `726.766861s`；220/220 search/control receipts 有效，0 slot timeout、0 transport failure。全部 prediction freeze、forward artifact 提交推送并通过 audit 后，才开放 mapping/gold/evaluator。**
 
