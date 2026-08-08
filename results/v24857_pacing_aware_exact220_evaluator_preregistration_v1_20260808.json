@@ -1,0 +1,111 @@
+{
+  "artifact_version": 1,
+  "authorization": {
+    "additional_rollout_avg4_leaderboard_or_sota": false,
+    "postfreeze_exact220_evaluation": true,
+    "selective_retry_or_revaluation": false
+  },
+  "control_manifest": {
+    "scripts/control_v24857_pacing_aware_exact220.py": "1f2e62a8489f4e81bed5c7efae53d955c639057ac57c562b23597d88ad2cd7eb",
+    "scripts/deepwide_api_lease.py": "8d9cffa78617b458172307d3558c76e9370f045f531c2f5aaaceb866f5a78c7d",
+    "scripts/finalize_fullset_rollout.py": "3e886b73cca2b011853a605091eab0d13004de5edee95b14627d1706d69808e5",
+    "scripts/finalize_v24287_exact220.py": "31e55e6d8825f810125897395abb746ad9ba1cffa595e8dc463b1d173e55eed2",
+    "scripts/finalize_v24800_exact220.py": "38abc8511e600cdc48bbe196cdced984b2c804d8727a14525f3563d621b07760",
+    "scripts/finalize_v24857_pacing_aware_exact220.py": "38cadf024cba83004ccb78613ef8d664497bf7984af458ee3156633fd5683126",
+    "scripts/run_official_eval_local.py": "ab3d3ba3f15143d9f0f46816d7b9eb61f3f8915172dc14fe50d02b96b645c1ca",
+    "scripts/run_v24857_pacing_aware_exact220.py": "6a728049f72d9f17e05c7966912294980f7c563e5c6b00b13f6ca915f392fe96",
+    "scripts/run_v24857_pacing_aware_exact220_task.py": "a2f21b87fda0c975db5e6eec1605814267b1ef5f00b0b964363277fcd665992b",
+    "src/deepwide_agent/v24852_rate_aware_tavily_search.py": "b6ede054a07f9e483727317315959e73ad37491fddfbd93cef352498994e7d81",
+    "src/deepwide_agent/v24856_pacing_aware_admission.py": "872b3b8e42fa9535d270faf476a377407e566da727bc72d65a2b2c54510f1f20",
+    "src/deepwide_agent/v24857_pacing_aware_exact220_contract.py": "9dc373654ffd67d61c5c500d3360da66d10d7ad85ae53b21a7de2eb58f4038bd",
+    "tests/test_v24857_pacing_aware_exact220.py": "4e73bfef0a6142f4b53c1c7c7be451c59ffd7f529aa87517b2f8d86ed899c8e9"
+  },
+  "control_manifest_sha256": "108108acf355569a1a41ab227f18444014c0c65bb7e3f7acc0a432f8512e9d12",
+  "created_at_unix": 1786172250,
+  "evaluation_contract": {
+    "all_220_predictions_frozen_before_mapping_query_answer_or_evaluator_open": true,
+    "conservative_denominators": {
+      "all_220": 220,
+      "test_156": 156
+    },
+    "fixed_contiguous_32_way_partition_in_prediction_order": true,
+    "official_evaluator_on_every_frozen_prediction_exactly_once": true,
+    "selective_retry_revaluation_or_prediction_selection": false,
+    "worker_error_rows_are_terminal_failure_as_zero": true
+  },
+  "evaluator_contract": {
+    "answer_corpus": {
+      "manifest_sha256": "5ddc76dd9e9fa4a7080f84e824de6230c62101d2375dee72a0f508b7cfa4ec7e",
+      "root": "external/Marco-Search-Agent/Marco-DeepResearch-Family/DeepWideSearch/data/overall_20250916_tables"
+    },
+    "evaluator_source": {
+      "manifest_sha256": "2829e4808226bd35e4e312f024ceded3a9bc2b1e923493e06503278e382ba061"
+    },
+    "judge": {
+      "max_output_tokens": 8192,
+      "max_retries": 12,
+      "model": "gpt-5.6-sol",
+      "proxy_url": "http://127.0.0.1:9878/responses",
+      "reasoning_effort": "low",
+      "timeout_seconds": 600
+    },
+    "mapping": {
+      "path": "outputs/runtime_manifest_v1_repro/evaluator_mapping.jsonl",
+      "sha256": "3d6f8f71e8136f5a3fe9385e2511e50a367e220dd84e790ba3c7dec975ab5d86"
+    },
+    "mapping_query_answer_or_gold_bytes_opened_or_hashed": true,
+    "opened_only_after_v24800_exact220_prediction_freeze": true,
+    "query_data": {
+      "path": "external/Marco-Search-Agent/Marco-DeepResearch-Family/DeepWideSearch/data/overall_20250916.jsonl",
+      "sha256": "4dd18df4ab8d166f14a1458f884fd8e0652f970764e245e868d75947daa5e5cf"
+    },
+    "recovery_policy": {
+      "canonical_result_file_atomic_replace_per_task": true,
+      "committed_rows_must_be_exact_prediction_prefix": true,
+      "committed_success_or_error_is_terminal": true,
+      "explicit_resume_required": true,
+      "selective_error_retry_allowed": false
+    },
+    "release_seal": {
+      "path": "results/full220_v2403_r1_20260725_finalize_seal.json",
+      "sha256": "6353c3d1caa05fc67f750570d3b3e5909d23945cc69b63f479a47c23d6b3c63f"
+    },
+    "released_evaluator_contract": {
+      "path": "outputs/full220_v2403_r1_eval_20260725/run_config.json",
+      "sha256": "b1040a303a71955b8b8d669c497e24100ec2d8de06d73aa30c3496d69a8559e1"
+    }
+  },
+  "evaluator_workers": 32,
+  "forward_audit_payload_sha256": "b9e95570fc54ac4a4c052f77ac23b59da651b17bec37ea7f36143fbba75db0a4",
+  "forward_barrier": {
+    "forward_audit_sha256": "dacd35b31f78a8e04ee39b23efbd275a0c44a367e62e8ca90e7caf21bc092fe0",
+    "forward_result_sha256": "1b03564da3dae00bbbfb75e1fd68f425e2fd12c40eac615b6a69558040680581",
+    "mapping_or_evaluator_opened_during_forward": false,
+    "prediction_freeze_sha256": "3ac7f95b0f69d8f1b1036e5817c6744f79a37bbb5be8cd6fe5ebea3ca48beda9",
+    "run_summary_sha256": "f34fc04629b4424bf87aa8284a2188f7d9edcada8768da34732863b3db39de38",
+    "runtime_predictions_sha256": "efa0c153f2ec287dcd92627dc0ee37ef4cb6390c178ec04c0b68bf0cf23e7c30",
+    "terminal_predictions": 220
+  },
+  "lease": {
+    "nonblocking_single_owner": true,
+    "owner": "v24857_pacing_aware_exact220_evaluator_v1",
+    "path": "outputs/deepwide_benchmark_api.lease.lock",
+    "purpose": "postfreeze_fixed_partition_parallel_v24857_pacing_aware_exact220_evaluator"
+  },
+  "outputs": {
+    "evaluator_root": "outputs/v24857_pacing_aware_exact220_v1_20260808/evaluator",
+    "final_result": "results/v24857_pacing_aware_exact220_result_v1_20260808.json",
+    "postresult_audit": "results/v24857_pacing_aware_exact220_postresult_audit_v1_20260808.json"
+  },
+  "protocol_id": "v24857_same_pass_pacing_aware_fixed_full_budget_exact220_v1",
+  "protocol_payload_sha256": "e28d84f8edaaddde252d30a997252a07568bbd6a3946566daab871bec0843d52",
+  "role": "v24800_exact220_evaluator_preregistration",
+  "selected": 220,
+  "source_policy": {
+    "cross_version_public_benchmark_feedback_overfitting_remains_a_limitation": true,
+    "fixed_public_exact220_task_set_reexecuted": true,
+    "mapping_opened_only_after_exact220_prediction_freeze_and_pushed_audit": true,
+    "new_or_disjoint_task_population_claimed": false,
+    "same_run_evaluator_feedback_used_for_forward_or_prediction_selection": false
+  }
+}
