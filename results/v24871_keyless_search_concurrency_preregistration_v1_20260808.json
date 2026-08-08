@@ -1,0 +1,65 @@
+{
+  "artifact_version": 1,
+  "authorization": {
+    "benchmark_external_or_exact220_launch": false,
+    "evaluator": false,
+    "leaderboard_or_sota": false,
+    "one_current_keyless_concurrency_gate": true
+  },
+  "created_at_unix": 1786181726,
+  "gates": {
+    "failed_query_rows": 0,
+    "failed_task_count": 0,
+    "logical_query_rows": 80,
+    "maximum_batch_wall_seconds": 120.0,
+    "maximum_hosted_search_deadline_failures": 0,
+    "maximum_provider_response_calls": 20,
+    "maximum_task_p95_wall_seconds": 60.0,
+    "maximum_transport_failures": 0,
+    "minimum_provider_response_calls": 20,
+    "minimum_tool_calls": 20,
+    "successful_query_rows": 80,
+    "successful_task_count": 20,
+    "terminal_task_count": 20
+  },
+  "git_head": "85ce7a972876fbf5b8df24921ab19e48e86348e7",
+  "protocol_id": "v24871_keyless_gpt56_hosted_search_concurrency_gate_v1",
+  "protocol_payload_sha256": "915adb1e67d090022a10505b395315691b89aa757f102a1e34ab873433cb60f3",
+  "provider": {
+    "endpoint": "http://127.0.0.1:9878/responses",
+    "keyless": true,
+    "max_retries": 2,
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "low",
+    "search_context_size": "medium",
+    "service_tier": "priority"
+  },
+  "role": "v24871_keyless_search_concurrency_preregistration",
+  "schedule": {
+    "executor_concurrency": 20,
+    "logical_queries_per_task": 4,
+    "one_batched_hosted_search_invocation_per_task_intended": true,
+    "query_vector_sha256": "1c86cd57a3723ee099366eaca38c3ab37f05e0e9db1a205066a8054564496505",
+    "results_per_query": 3,
+    "task_count": 20,
+    "task_deadline_seconds": 90.0,
+    "total_logical_queries": 80
+  },
+  "source_manifest": {
+    "scripts/deepwide_api_lease.py": "8d9cffa78617b458172307d3558c76e9370f045f531c2f5aaaceb866f5a78c7d",
+    "scripts/preregister_v24278_search_context_pair.py": "f833bdee06b9c590cb2dfb1e7438879612dd53b2d9373dc3bdddcf1227c6ad91",
+    "scripts/v24871_keyless_hosted_search_concurrency_gate.py": "937ff73b32138d2623c76c28354353db23f5c7f752c3ccce887cbee0ee6f816d",
+    "src/deepwide_agent/native_search.py": "cd0d6bfccf4b345b11274558bdcffb39d279697d183242baf811dfd56ac71e50",
+    "src/deepwide_agent/v24287_hard_deadline_fetch.py": "da4ee0fb7ffaf99389c6c6c0a5d8f075b72e15bd99a1e72f534ccc3f29cde468",
+    "src/deepwide_agent/v24316_deadline_search.py": "dd5ded612bfecb624f38d5d86d379be1e973dbbd6df55084157cb33a758b3260",
+    "tests/test_v24871_keyless_hosted_search_concurrency_gate.py": "a328ff4012f08cef5378313a715f3f7e5fe00cacd6f588ce2d17d664b873ae7d"
+  },
+  "source_manifest_sha256": "927b34c10483e59ccf923d3384adff3078a70c96ada8f67765908b1e964ccc49",
+  "source_policy": {
+    "benchmark_manifest_question_prediction_mapping_gold_category_split_evaluator_score_reward_read": false,
+    "credential_value_environment_or_keyring_read": false,
+    "neutral_public_software_documentation_queries_only": true,
+    "public_page_fetch_model_synthesis_or_evaluator_effect": false,
+    "query_url_title_snippet_page_answer_provider_payload_or_per_task_row_persisted": false
+  }
+}
