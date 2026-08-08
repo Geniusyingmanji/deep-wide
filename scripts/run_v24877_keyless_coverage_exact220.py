@@ -57,6 +57,10 @@ from scripts.deepwide_api_lease import acquire_deepwide_api_lease  # noqa: E402
 
 PREAUDIT_ROLE = "v24877_keyless_coverage_exact220_preactivation_audit"
 START_ROLE = "v24877_keyless_coverage_exact220_execution_start"
+PROGRESS_ROLE = "v24877_keyless_coverage_exact220_safe_forward_progress"
+SUMMARY_ROLE = "v24877_keyless_coverage_exact220_run_summary"
+FREEZE_ROLE = "v24877_keyless_coverage_exact220_prediction_freeze"
+FORWARD_ROLE = "v24877_keyless_coverage_exact220_forward_result"
 
 
 def _read(path: Path) -> dict[str, Any]:
@@ -350,7 +354,7 @@ def configure_algorithm() -> None:
 def _progress(completed: int) -> dict[str, Any]:
     value = {
         "artifact_version": 1,
-        "role": "v24877_keyless_coverage_exact220_safe_forward_progress",
+        "role": PROGRESS_ROLE,
         "created_at_unix": int(time.time()),
         "selected": contract.SELECTED_COUNT,
         "completed": completed,
@@ -573,7 +577,7 @@ def main() -> None:
     rows = [algorithm._runtime_row(item.result) for item in outcomes]
     algorithm._write_jsonl_new(root / contract.RUNTIME_PREDICTIONS, rows)
     summary = algorithm._summary(outcomes, wall)
-    summary["role"] = "v24877_keyless_coverage_exact220_run_summary"
+    summary["role"] = SUMMARY_ROLE
     summary["protocol_id"] = contract.PROTOCOL_ID
     summary["executor_concurrency"] = contract.EXECUTOR_CONCURRENCY
     summary["fixed_full_budget_control_totals"] = _fixed_full_budget_totals(outcomes)
@@ -584,7 +588,7 @@ def main() -> None:
     algorithm._new_json(root / contract.RUN_SUMMARY, summary)
     freeze = {
         "artifact_version": 1,
-        "role": "v24877_keyless_coverage_exact220_prediction_freeze",
+        "role": FREEZE_ROLE,
         "protocol_id": contract.PROTOCOL_ID,
         "selected": contract.SELECTED_COUNT,
         "terminal": contract.SELECTED_COUNT,
@@ -603,7 +607,7 @@ def main() -> None:
     algorithm._new_json(root / contract.PREDICTION_FREEZE, freeze)
     forward = {
         "artifact_version": 1,
-        "role": "v24877_keyless_coverage_exact220_forward_result",
+        "role": FORWARD_ROLE,
         "protocol_id": contract.PROTOCOL_ID,
         "created_at_unix": int(time.time()),
         "selected": contract.SELECTED_COUNT,
