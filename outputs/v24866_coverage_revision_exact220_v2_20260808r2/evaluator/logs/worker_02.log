@@ -1,0 +1,79 @@
+INFO: Pandarallel will run on 8 workers.
+INFO: Pandarallel will use Memory file system to transfer data between the main process and workers.
+{"event": "eval_start", "selected": 7, "resume_committed": 0, "committed_errors": 0, "crash_only_resume": false}
+2026-08-08 09:02:08.681 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 时间 | 风格 | 时期 | 艺术类型 | 绘画媒材 | 收藏类型和艺术品名称 |
+| --- | --- | --- | ...
+2026-08-08 09:02:12.674 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "时间": "时间",
+  "风格": "风格",
+  "时期": "时期",
+  "艺术类型": "艺术类型",
+  "绘画媒材": "绘画媒材"
+}
+```
+2026-08-08 09:02:12.674 | INFO     | eval.evaluation.evaluation:evaluate_single_query:172 - column map: {'时间': '时间', '风格': '风格', '时期': '时期', '艺术类型': '艺术类型', '绘画媒材': '绘画媒材'}
+2026-08-08 09:02:12.674 | INFO     | eval.evaluation.evaluation:evaluate_single_query:173 - befor mapping: Index(['时间', '风格', '时期', '艺术类型', '绘画媒材', '收藏类型和艺术品名称'], dtype='object')
+2026-08-08 09:02:12.675 | INFO     | eval.evaluation.evaluation:evaluate_single_query:175 - after mapping: Index(['时间', '风格', '时期', '艺术类型', '绘画媒材', '收藏类型和艺术品名称'], dtype='object')
+2026-08-08 09:02:12.675 | INFO     | eval.evaluation.evaluation:evaluate_single_query:179 - instance_id: deep2wide_result_8_保罗高更, msg: required_columns ['时间', '风格', '时期', '艺术类型', '绘画媒材', '收藏类型', '艺术品名称'] != response_df Index(['时间', '风格', '时期', '艺术类型', '绘画媒材', '收藏类型和艺术品名称'], dtype='object')
+{"event": "eval_done", "idx": 1, "instance_id": "deep2wide_result_8_保罗高更", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 8.296, "running_n": 1}
+{"event": "eval_done", "idx": 2, "instance_id": "deep2wide_result_9_凌洁", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 3.562, "running_n": 2}
+2026-08-08 09:02:24.977 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 俱乐部名称 | 执教时间 | 俱乐部主场馆 |
+| --- | --- | --- |
+| 格雷米奥足球俱乐部（Grêmi ...
+2026-08-08 09:02:30.384 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "格雷米奥足球俱乐部（Grêmio）": "格雷米奥足球俱乐部",
+  "科林蒂安保利斯塔体育俱乐部（Corinthians）": "科林蒂安足球俱乐部",
+  "米内罗竞技俱乐部（Atlético Mineiro）": "米内罗竞技足球俱乐部",
+  "帕尔梅拉斯体育俱乐部（Palmeiras）": "帕尔梅拉斯足球俱乐部",
+  "艾因足球俱乐部（Al Ain）": "阿联酋阿尔艾因足球俱乐部",
+  "巴西国际体育俱乐部（Internacional）": "巴西国际足球俱乐部",
+  "阿布扎比统一足球俱乐部（Al Wahda）": "阿联酋瓦赫达足球俱乐部"
+}
+```
+2026-08-08 09:02:30.384 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 俱乐部名称, primary_key_map {'格雷米奥足球俱乐部（Grêmio）': '格雷米奥足球俱乐部', '科林蒂安保利斯塔体育俱乐部（Corinthians）': '科林蒂安足球俱乐部', '米内罗竞技俱乐部（Atlético Mineiro）': '米内罗竞技足球俱乐部', '帕尔梅拉斯体育俱乐部（Palmeiras）': '帕尔梅拉斯足球俱乐部', '艾因足球俱乐部（Al Ain）': '阿联酋阿尔艾因足球俱乐部', '巴西国际体育俱乐部（Internacional）': '巴西国际足球俱乐部', '阿布扎比统一足球俱乐部（Al Wahda）': '阿联酋瓦赫达足球俱乐部'}
+2026-08-08 09:02:32.709 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_10_蒂特, df_inner shape: (7, 6), answer_df shape: (7, 3), response_df shape: (8, 4)
+2026-08-08 09:02:32.788 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: -, 2001–2003, target: 23-08-08
+2026-08-08 09:02:32.882 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 1.0 msg date near, response: -, 2004–2005, target: 2004年5月—2005年2月
+2026-08-08 09:02:32.898 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 2005-08-01, target: 2005年3月—7月
+2026-08-08 09:02:32.913 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 2006-08-01, target: 2006年5月—11月
+2026-08-08 09:02:32.921 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 2007-08-01, target: 2008年上半年
+2026-08-08 09:02:33.014 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 1.0 msg date near, response: -, 2008–2009, target: 2008年6月—2009年10月
+2026-08-08 09:02:33.016 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 2010-08-01 00:00:00, target: 2010-10-09 00:00:00
+2026-08-08 09:02:33.018 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_10_蒂特, col 执教时间, metric_func_name date_near, score [0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0]
+2026-08-08 09:02:39.570 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_10_蒂特, col 俱乐部主场馆, metric_func_name llm_judge, score [1, 0, 1, 0, 0, 1, 1]
+2026-08-08 09:02:39.576 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_10_蒂特, P/R/F1 by unique_columns: 0.8750/1.0000/0.9333
+2026-08-08 09:02:39.576 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_10_蒂特, P/R/F1 by row: 0.1250/0.1429/0.1333
+2026-08-08 09:02:39.576 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_10_蒂特, P/R/F1 by item: 0.5417/0.6190/0.5778
+2026-08-08 09:02:39.578 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_10_蒂特, final table score: 0.0
+{"event": "eval_done", "idx": 3, "instance_id": "deep2wide_result_10_蒂特", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.13333333333333333, "f1_by_item": 0.5777777777777778, "column_f1": 0.9333333333333333, "error": null, "elapsed_seconds": 23.305, "running_n": 3}
+2026-08-08 09:02:49.683 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 赛事名称 | 时间 | 名次 |
+| --- | --- | --- |
+| 2006年多哈亚洲运动会花样游泳团体赛 |  ...
+2026-08-08 09:02:52.293 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{}
+```
+2026-08-08 09:02:52.293 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 赛事名称, primary_key_map {}
+2026-08-08 09:02:52.319 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_11_印毅俊, df_inner shape: (0, 6), answer_df shape: (7, 3), response_df shape: (13, 4)
+2026-08-08 09:02:52.320 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 1.0 msg date near, response: nan, target: nan
+2026-08-08 09:02:52.321 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_11_印毅俊, col 时间, metric_func_name date_near, score []
+2026-08-08 09:02:52.324 | ERROR    | eval.evaluation.evaluation:evaluate_single_query:401 - evaluator error: 
+Traceback (most recent call last):
+  File "/home/azureuser/workspace-gzy/zyf/deep/external/Marco-Search-Agent/Marco-DeepResearch-Family/DeepWideSearch/eval/evaluation/evaluation.py", line 315, in evaluate_single_query
+    df_inner_score[f"{col}_{metric_func_name}"] = (
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/azureuser/workspace-gzy/zyf/deep/.venv-eval/lib/python3.12/site-packages/pandas/core/frame.py", line 4312, in __setitem__
+    self._set_item_frame_value(key, value)
+  File "/home/azureuser/workspace-gzy/zyf/deep/.venv-eval/lib/python3.12/site-packages/pandas/core/frame.py", line 4470, in _set_item_frame_value
+    raise ValueError(
+ValueError: Cannot set a DataFrame with multiple columns to the single column 名次_number_near
+
+{"event": "eval_done", "idx": 4, "instance_id": "deep2wide_result_11_印毅俊", "score": null, "entity_acc": null, "f1_by_row": null, "f1_by_item": null, "column_f1": null, "error": "RuntimeError: official evaluator reported an internal error", "elapsed_seconds": 12.722, "running_n": 4}
+{"event": "eval_done", "idx": 5, "instance_id": "deep2wide_result_13_张国立", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 3.417, "running_n": 5}
+{"event": "eval_done", "idx": 6, "instance_id": "deep2wide_result_14_李川", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.506, "running_n": 6}
+{"event": "eval_done", "idx": 7, "instance_id": "deep2wide_result_15_肖央", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.845, "running_n": 7}
+SUMMARY {"n": 7, "valid_n": 6, "errors": 1, "complete": false, "judge_calls_current_process": 11, "score": 0.0, "entity_acc": 0.3333333333333333, "precision_by_row": 0.020833333333333332, "recall_by_row": 0.023809523809523808, "f1_by_row": 0.022222222222222223, "precision_by_item": 0.09027777777777778, "recall_by_item": 0.10317460317460318, "f1_by_item": 0.09629629629629631, "column_precision": 0.14583333333333334, "column_recall": 0.16666666666666666, "column_f1": 0.15555555555555556}
