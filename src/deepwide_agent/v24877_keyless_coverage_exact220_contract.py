@@ -164,6 +164,99 @@ def dependency_manifest(root: Path) -> dict[str, str]:
     }
 
 
+def frozen_dependency_manifest(root: Path) -> dict[str, str]:
+    """Bind the launch to tracked HEAD bytes without consulting parent state."""
+
+    parent_value = _read(root / PARENT_PROTOCOL)
+    relatives = {Path(name) for name in parent_value["dependency_manifest"]}
+    relatives.update((PARENT_PROTOCOL, BUILD_AUDIT))
+    relatives.update(SEAM_SOURCES)
+    relatives.update(SEAM_TESTS)
+    relatives.update(LOCAL_SOURCES)
+    relatives.update(
+        (
+            Path("src/deepwide_agent/v24799_fixed_full_budget_control.py"),
+            Path("src/deepwide_agent/v24859_full_evidence_coverage_revision.py"),
+            Path("src/deepwide_agent/v24860_coverage_revision_integration.py"),
+            Path("src/deepwide_agent/v24861_coverage_revision_exact_task.py"),
+            Path("scripts/run_v24635_exact220.py"),
+            Path("scripts/run_v24831_keyless_exact220.py"),
+        )
+    )
+    return {
+        str(relative): sha256(_ordinary_tracked(root, relative))
+        for relative in sorted(relatives, key=str)
+    }
+
+
+def validate_frozen_protocol(root: Path, value: Mapping[str, Any]) -> dict[str, Any]:
+    """Validate a published protocol without reopening benchmark task bytes."""
+
+    copied = copy.deepcopy(dict(value))
+    unsigned = dict(copied)
+    seal = unsigned.pop("protocol_payload_sha256", None)
+    parent_value = _read(root / PARENT_PROTOCOL)
+    parent_unsigned = dict(parent_value)
+    parent_seal = parent_unsigned.pop("protocol_payload_sha256", None)
+    manifest = frozen_dependency_manifest(root)
+    execution = copied.get("execution") or {}
+    task = copied.get("task_contract") or {}
+    if (
+        copied.get("role") != ROLE
+        or copied.get("protocol_id") != PROTOCOL_ID
+        or seal != payload_sha256(unsigned)
+        or parent_seal != payload_sha256(parent_unsigned)
+        or copied.get("parent_algorithm")
+        != {
+            "path": str(PARENT_PROTOCOL),
+            "sha256": sha256(root / PARENT_PROTOCOL),
+            "protocol_id": parent_value["protocol_id"],
+            "dependency_manifest_sha256": parent_value["dependency_manifest_sha256"],
+            "prior_output_prediction_result_score_or_evaluator_read_or_reused": False,
+        }
+        or copied.get("production_seam")
+        != {
+            "build_audit": str(BUILD_AUDIT),
+            "build_audit_sha256": sha256(root / BUILD_AUDIT),
+            "coverage_policy": coverage_policy(),
+        }
+        or task.get("runtime_input_keys") != ["opaque_id", "question"]
+        or task.get("selected_count") != SELECTED_COUNT
+        or not isinstance(task.get("opaque_id_vector_sha256"), str)
+        or not isinstance(task.get("visible_question_vector_sha256"), str)
+        or copied.get("dependency_manifest") != manifest
+        or copied.get("dependency_manifest_sha256") != payload_sha256(manifest)
+        or execution.get("executor_concurrency") != 20
+        or execution.get("model_slot_cap") != 8
+        or execution.get("task_wall_seconds") != 240
+        or execution.get("model_calls_per_task") != 3
+        or execution.get("search_queries_per_task") != 4
+        or execution.get("fetch_targets_per_task") != 10
+        or execution.get("model") != MODEL
+        or execution.get("search") != SEARCH
+        or execution.get("two_wave_policy") != TWO_WAVE_POLICY
+        or execution.get("protected_watchers") != protected_watcher_snapshot()
+        or execution.get("output_root") != str(OUTPUT_ROOT)
+        or copied.get("single_change")
+        != {
+            "parent": "v24831_keyless_exact220",
+            "change": "fixed_full_budget_same_forward_coverage_revision",
+            "parent_equalities": _parent_equalities(),
+            "frozen_keyless_coverage_production_seam": True,
+        }
+        or copied.get("authorization")
+        != {
+            "preactivation_audit_generation": True,
+            "execution_start_generation": False,
+            "single_fresh_exact220_forward": False,
+            "evaluator_call": False,
+            "retry_resume_skip_or_selective_rerun": False,
+        }
+    ):
+        raise RuntimeError("V2.48.77 frozen protocol drifted")
+    return copied
+
+
 def coverage_policy() -> dict[str, Any]:
     return {
         "runtime_policy_id": RUNTIME_POLICY_ID,
@@ -380,10 +473,12 @@ __all__ = [name for name in globals() if name.isupper()] + [
     "build_protocol",
     "coverage_policy",
     "dependency_manifest",
+    "frozen_dependency_manifest",
     "parent_contract",
     "payload_sha256",
     "protected_watcher_snapshot",
     "sha256",
     "task_vector",
     "validate_protocol",
+    "validate_frozen_protocol",
 ]

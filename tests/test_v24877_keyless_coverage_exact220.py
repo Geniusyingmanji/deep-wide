@@ -41,6 +41,13 @@ class V24877KeylessCoverageExact220Tests(unittest.TestCase):
         self.assertEqual(len(tasks), 220)
         self.assertTrue(all(set(task) == {"opaque_id", "question"} for task in tasks))
 
+    def test_frozen_protocol_validator_does_not_open_task_vector(self) -> None:
+        source = (ROOT / contract.SOURCE).read_text(encoding="utf-8")
+        body = source.split("def validate_frozen_protocol", 1)[1].split(
+            "def coverage_policy", 1
+        )[0]
+        self.assertNotIn("task_vector(", body)
+
     def test_coverage_policy_is_source_gated_and_entropy_shadow_only(self) -> None:
         policy = contract.coverage_policy()
         self.assertEqual(policy["unknown_fill_minimum_independent_sources"], 2)

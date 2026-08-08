@@ -47,7 +47,7 @@ def configure() -> None:
         Path("scripts/run_v24635_exact220.py"),
     )
     base.TEST_SUITES = (
-        (contract.TEST, 11, 240),
+        (contract.TEST, 12, 240),
         (Path("tests/test_v24873_keyless_fixed_coverage_runtime.py"), 5, 240),
         (Path("tests/test_v24874_keyless_coverage_bundle.py"), 10, 240),
         (Path("tests/test_v24875_keyless_coverage_child_runtime.py"), 6, 240),
@@ -60,7 +60,7 @@ def configure() -> None:
         (Path("tests/test_v24635_exact220.py"), 10, 240),
         (Path("tests/test_v24630_thin_backfill_search.py"), 2, 240),
     )
-    base.EXPECTED_TESTS = 95
+    base.EXPECTED_TESTS = 96
 
     inherited_build_preaudit = base.build_preaudit
     inherited_validate_preaudit = base.validate_preaudit

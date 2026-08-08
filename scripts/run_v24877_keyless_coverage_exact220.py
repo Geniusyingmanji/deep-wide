@@ -51,7 +51,6 @@ from deepwide_agent.v24876_keyless_coverage_subprocess_gate import (  # noqa: E4
     validate_parent_bundle_receipt,
 )
 from scripts import run_v24635_exact220 as algorithm  # noqa: E402
-from scripts import run_v24831_keyless_exact220 as parent_runner  # noqa: E402
 from scripts import run_v24800_exact220 as fixed_runner  # noqa: E402
 from scripts.deepwide_api_lease import acquire_deepwide_api_lease  # noqa: E402
 
@@ -262,20 +261,51 @@ def validate_execution_start(root: Path, protocol: dict[str, Any]) -> dict[str, 
         "v24831_keyless_exact220_execution_start",
         "execution_start_payload_sha256",
     )
-    inherited_read = parent_runner._read
-
-    def compatible_read(path: Path) -> dict[str, Any]:
-        if path == root / contract.PREAUDIT:
-            return projected_audit
-        if path == root / contract.EXECUTION_START:
-            return projected_start
-        return inherited_read(path)
-
-    parent_runner._read = compatible_read
-    try:
-        parent_runner.validate_execution_start(root, protocol)
-    finally:
-        parent_runner._read = inherited_read
+    audit_unsigned = dict(projected_audit)
+    audit_seal = audit_unsigned.pop("audit_payload_sha256", None)
+    start_unsigned = dict(projected_start)
+    start_seal = start_unsigned.pop("execution_start_payload_sha256", None)
+    if (
+        projected_audit.get("audit_valid") is not True
+        or projected_audit.get("findings") != []
+        or projected_audit.get("protocol_sha256")
+        != contract.sha256(root / contract.PROTOCOL)
+        or projected_audit.get("dependency_manifest_sha256")
+        != protocol["dependency_manifest_sha256"]
+        or projected_audit.get("authorization")
+        != {
+            "execution_start_generation": True,
+            "single_fresh_exact220_forward": False,
+            "evaluator_call": False,
+            "retry_resume_skip_or_selective_rerun": False,
+        }
+        or audit_seal != contract.payload_sha256(audit_unsigned)
+        or projected_start.get("status") != "authorized_not_started"
+        or projected_start.get("findings") != []
+        or projected_start.get("protocol_sha256")
+        != contract.sha256(root / contract.PROTOCOL)
+        or projected_start.get("preactivation_audit_sha256")
+        != contract.sha256(root / contract.PREAUDIT)
+        or projected_start.get("dependency_manifest_sha256")
+        != protocol["dependency_manifest_sha256"]
+        or projected_start.get("selected") != 220
+        or projected_start.get("executor_concurrency") != 20
+        or projected_start.get("model_slot_cap") != 8
+        or projected_start.get("runtime_input_contract")
+        != ["opaque_id", "question"]
+        or projected_start.get("protected_watchers")
+        != protocol["execution"]["protected_watchers"]
+        or projected_start.get("first_network_model_search_or_fetch_effect_started")
+        is not False
+        or projected_start.get("authorization")
+        != {
+            "single_fresh_exact220_forward": True,
+            "evaluator_call": False,
+            "retry_resume_skip_or_selective_rerun": False,
+        }
+        or start_seal != contract.payload_sha256(start_unsigned)
+    ):
+        raise RuntimeError("V2.48.77 execution authorization drifted")
     return start
 
 
@@ -465,7 +495,9 @@ def main() -> None:
 
         algorithm._v24877_parent_validate_scheduler_result = validate_v24318_result
     root = ROOT
-    protocol = contract.validate_protocol(root, _read(root / contract.PROTOCOL))
+    protocol = contract.validate_frozen_protocol(
+        root, _read(root / contract.PROTOCOL)
+    )
     start = validate_execution_start(root, protocol)
     tasks = contract.task_vector(root, protocol)
     head = subprocess.run(
