@@ -345,8 +345,8 @@ def _coverage_totals(root: Path) -> dict[str, Any]:
         changed += int(receipt["prediction_changed"])
         logical_calls += int(receipt["logical_revision_call_admitted"])
         nested = receipt["coverage_receipt"]
-        admitted_cells += int(nested["admitted_unknown_fills"]) + int(
-            nested["admitted_overrides"]
+        admitted_cells += int(nested["admitted_existing_unknown_fills"]) + int(
+            nested["admitted_existing_overrides"]
         )
         admitted_rows += int(nested["admitted_new_rows"])
     return {
