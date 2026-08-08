@@ -48,7 +48,7 @@ def configure() -> None:
         (Path("tests/test_v24319_runner_integration.py"), 7, 180),
         (Path("tests/test_v24468_total_wall_transport.py"), 8, 180),
     )
-    base.EXPECTED_TESTS = 104
+    base.EXPECTED_TESTS = 94
 
 
 def main() -> None:

@@ -23,13 +23,13 @@ def configure() -> None:
     date = contract.DATE
     evaluator_root = contract.OUTPUT_ROOT / "evaluator"
     engine.EVALUATOR_PROTOCOL = Path(
-        f"results/v24918_prefix_total_exact220_evaluator_preregistration_v1_{date}.json"
+        f"results/v24918_prefix_total_exact220_evaluator_preregistration_v2_{date}.json"
     )
     engine.FINAL_RESULT = Path(
-        f"results/v24918_prefix_total_exact220_result_v1_{date}.json"
+        f"results/v24918_prefix_total_exact220_result_v2_{date}.json"
     )
     engine.POSTAUDIT = Path(
-        f"results/v24918_prefix_total_exact220_postresult_audit_v1_{date}.json"
+        f"results/v24918_prefix_total_exact220_postresult_audit_v2_{date}.json"
     )
     engine.EVALUATOR_ROOT = evaluator_root
     engine.PREPARE_ATTESTATION = evaluator_root / "prepare_attestation.json"
@@ -40,7 +40,7 @@ def configure() -> None:
     engine.MERGED_RESULTS = evaluator_root / "official_eval_results.jsonl"
     engine.MERGE_ATTESTATION = evaluator_root / "merge_attestation.json"
     engine.SUMMARY = evaluator_root / "conservative_summary.json"
-    engine.EVALUATOR_OWNER = "v24918_prefix_total_exact220_evaluator_v1"
+    engine.EVALUATOR_OWNER = "v24918_prefix_total_exact220_evaluator_v2"
     engine.EVALUATOR_PURPOSE = (
         "postfreeze_fixed_partition_parallel_prefix_total_exact220_evaluator"
     )
