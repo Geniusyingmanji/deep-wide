@@ -1,0 +1,84 @@
+{
+  "artifact_version": 1,
+  "authorization": {
+    "benchmark_external_or_exact220_launch": false,
+    "evaluator": false,
+    "leaderboard_or_sota": false,
+    "one_current_keyless_union_retrieval_gate": true
+  },
+  "created_at_unix": 1786181993,
+  "gates": {
+    "completed_retrieval_count": 20,
+    "failed_retrieval_count": 0,
+    "fetches_attempted": 200,
+    "logical_queries": 80,
+    "maximum_batch_wall_seconds": 170.0,
+    "maximum_fetch_helper_failures": 40,
+    "maximum_hard_fetch_deadline_failures": 0,
+    "maximum_hosted_search_deadline_failures": 0,
+    "maximum_provider_response_calls": 80,
+    "maximum_task_p95_wall_seconds": 120.0,
+    "maximum_transport_failures": 0,
+    "maximum_unrecoverable_search_failures": 0,
+    "minimum_provider_response_calls": 40,
+    "minimum_task_fetches_attempted": 10,
+    "minimum_task_usable_pages": 6,
+    "minimum_total_usable_pages": 140,
+    "terminal_task_count": 20
+  },
+  "git_head": "5d83ee75ca00164df9d26f67a70f1ecdd3fa322b",
+  "protocol_id": "v24872_keyless_task_union_two_wave_concurrency_gate_v1",
+  "protocol_payload_sha256": "f7033f8695316940f16f808f3b7fc53e46c2d784d4328bd4d49d419c6e5dbd35",
+  "provider": {
+    "endpoint": "http://127.0.0.1:9878/responses",
+    "executor_concurrency": 20,
+    "keyless": true,
+    "model": "gpt-5.6-sol"
+  },
+  "role": "v24872_keyless_union_retrieval_preregistration",
+  "schedule": {
+    "deterministic_public_page_fetch_only_active_evidence": true,
+    "fetch_cap_per_task": 10,
+    "fixed_full_budget_no_entropy_policy": {
+      "beta_prior_alpha": 1.0,
+      "beta_prior_beta": 1.0,
+      "content_chars_per_column": 1000000000,
+      "information_gain_weight": 0.0,
+      "latency_loss_per_second": 0.0,
+      "maximum_wave1_seconds": 100.0,
+      "minimum_net_value": -1.0,
+      "minimum_novel_pages": 6,
+      "minimum_unique_hosts": 6,
+      "minimum_usable_pages": 6,
+      "wave1_fetches": 6,
+      "wave1_queries": 2,
+      "wave2_fetches": 4,
+      "wave2_queries": 2
+    },
+    "logical_queries_per_task": 4,
+    "query_vector_sha256": "9d05593ff18c5984e2c70aa6603b522b2c87ed72eb40101d0e2b3d4783a6217e",
+    "task_count": 20,
+    "task_local_action_source_union": true
+  },
+  "source_manifest": {
+    "scripts/deepwide_api_lease.py": "8d9cffa78617b458172307d3558c76e9370f045f531c2f5aaaceb866f5a78c7d",
+    "scripts/v24872_keyless_union_retrieval_gate.py": "d71b2116838908bcb29ff4150dc908549539a216ec585be3cd7645c366b87991",
+    "src/deepwide_agent/native_search.py": "cd0d6bfccf4b345b11274558bdcffb39d279697d183242baf811dfd56ac71e50",
+    "src/deepwide_agent/v24269_task_union_discovery.py": "f8c439e9d4000788e2e9c3afef37e29ee21e655faf57921572628ac350beb9be",
+    "src/deepwide_agent/v24270_budget_equivalent_union.py": "fd1e2a208c773dd00c38560e0aeca5d9bec293bac408e1899391bc40da01b944",
+    "src/deepwide_agent/v24272_two_wave_entropy_voc.py": "2e618c1ac0888650d12b42ab93feb043379fa7b5be0262ab1ae857cce05e8532",
+    "src/deepwide_agent/v24272_two_wave_retrieval.py": "2bdf33fe3fe7d182c730be9ad29abb766d1d04f970b546a86da15d5a33bb010d",
+    "src/deepwide_agent/v24287_hard_deadline_fetch.py": "da4ee0fb7ffaf99389c6c6c0a5d8f075b72e15bd99a1e72f534ccc3f29cde468",
+    "src/deepwide_agent/v24316_deadline_search.py": "dd5ded612bfecb624f38d5d86d379be1e973dbbd6df55084157cb33a758b3260",
+    "tests/test_v24872_keyless_union_retrieval_gate.py": "fe48d3237af3c8b58dd39aa16834c0cc73f49344e59f7b040dcb638f1610301c"
+  },
+  "source_manifest_sha256": "648db708804a86708938fbb01c83616cde3a73c91c6ffec08afd3b078e5d0ffb",
+  "source_policy": {
+    "benchmark_manifest_question_prediction_mapping_gold_category_split_evaluator_score_reward_read": false,
+    "credential_value_environment_or_keyring_read": false,
+    "entropy_or_information_gain_used_for_admission": false,
+    "model_synthesis_or_evaluator_effect": false,
+    "neutral_public_software_documentation_queries_only": true,
+    "query_url_title_snippet_page_answer_provider_payload_or_per_task_row_persisted": false
+  }
+}
