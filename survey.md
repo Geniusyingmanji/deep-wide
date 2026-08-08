@@ -1184,3 +1184,10 @@ V2.47.23–26 完成了上一节要求的独立复验。fresh population 不是�
 这个结果只支持一个窄结论：对这两个预先选定的 fresh indicators，bulk ZIP 可作为下一机制实验的稳定 primary transport。它不证明 aggregate JSON 普遍不可用，也不证明 bulk 对任意 namespace、任意时间或 DeepWideBench 都可靠；两次 comparator failure 反而说明 endpoint/indicator 层异质性仍需 fail-closed。更重要的是，transport GO 没有产生 benchmark observation、belief change、prediction 或 evaluator call，所以它的 task credit 和 DeepWideBench delta 都未定义，不能写成提分，更不能写成 entropy-credit 验证或 SOTA。
 
 对信息熵视角，V2.47.26 把随机变量的支撑域问题固定下来：primary belief state 应以 265-code bulk universe 为准；跨表示一致性只能在显式 260-code intersection 上计算，5 个 bulk-only codes 不能被误记成 disagreement 或 entropy reduction。下一阶段必须把“数据可达”与“任务可达”分开：先在预冻结、task-cluster-disjoint 的多题外部人口中自然产生至少两个 cluster 的 identity-bound、target-value-bound、prediction-changing intervention，再比较 deterministic Unknown-target、entropy/dynamic-VOC 与 matched-cost control。只有 entropy arm 在同一 admissible observation、同一 verifier 和同一预算下提供额外 outer utility，才有资格获得增量 credit；V2.47.26 本身只清除了 transport 这一前置混杂。
+## 2026-08-08：30k 证据预算得到 shared-prefix 因果支持
+
+V2.48.44 是 V2.48.42 原子表头闭包的首个完整 DeepWideBench 220 结果：whole-table `5/220`，Composite `0.449620`，Entity/Row/Item/Column F1 为 `0.704545/0.217208/0.394956/0.481768`。它相对 V2.48.40 提高 Composite、降低 exact，且仍低于 V2.48.00 的 `8/220 / 0.456834`，因此不是 SOTA。逐题配对仍被独立搜索、抓取、生成和judge采样混杂；运行也没有记录原子依赖实际触发次数，不能据此声称表头闭包带来因果质量增益。
+
+冻结后 V2.48.45 显示证据供给是更强的观察梯度：fetch failure为0的33题 Composite为 `0.6104`，5–7次failure的59题为 `0.3589`；投影达到15k的155题为 `0.4931`，4–8k的19题为 `0.3397`。V2.48.00 与V2.48.44又同时在检索后端（Tavily URL-lead vs keyless hosted search）和投影预算（约30k vs16k）上不同，所以跨版本差异不能识别单一机制。
+
+V2.48.46/47 因此做了matched shared-prefix验证。两臂共享完全相同的两份World Bank原始响应、固定8页结构向量、可见任务、模型、prompt、输出cap和并发；唯一行为差异是原子闭包总cap `16k -> 30k`，每页仍为5k。32个任务的64份prediction全部冻结后才打开private evaluator。16k取得 `10/32` Exact、Composite `0.792969`，30k取得 `25/32`、`0.835938`，Exact `+15`、Composite `+0.042969`，其余质量指标均不降；两臂orphan均为0，原子依赖补入均触发37次。该结果是“在target-cell-disjoint结构表格人口上，30k证据预算优于16k”的因果证据；它不是一般网页搜索或DeepWideBench SOTA证据，也没有验证entropy credit。
