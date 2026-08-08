@@ -1,0 +1,58 @@
+{
+  "artifact_version": 1,
+  "authorization": {
+    "evaluator": false,
+    "exact220_launch": false,
+    "exact220_protocol_design": false,
+    "leaderboard_or_sota": false,
+    "one_neutral_old_vs_rate_aware_live_smoke": true
+  },
+  "created_at_unix": 1786164869,
+  "gates": {
+    "new_credential_echo_rejections": 0,
+    "new_failed_query_rows": 0,
+    "new_minimum_projected_url_leads": 4,
+    "new_search_query_rows": 4,
+    "new_slot_timeouts": 0,
+    "new_successful_query_rows": 4,
+    "new_terminal": true,
+    "old_arm_is_descriptive_not_a_launch_gate": true
+  },
+  "git_head": "ce3b84e44e3bb2c88410434ee684a63a1de04c19",
+  "protocol_id": "v24853_neutral_old_vs_rate_aware_tavily_transport_v1",
+  "protocol_payload_sha256": "aba79a6361d542694f25d0f7c38259150338d0f71085fac4b6b7312eab2ded54",
+  "rate_policy": {
+    "default_provider_cooldown_seconds": 30.0,
+    "maximum_provider_cooldown_seconds": 60.0,
+    "minimum_start_interval_seconds": 0.75,
+    "provider_non_key_local_attempt_cap_per_logical_query": 2,
+    "provider_wide_429_rotates_all_keys_immediately": false
+  },
+  "role": "v24853_rate_aware_transport_smoke_preregistration",
+  "schedule": {
+    "expected_ephemeral_key_count": 12,
+    "fetch_cap": 8,
+    "neutral_query_count": 4,
+    "old_then_rate_aware_same_neutral_query_vector": true,
+    "phase_deadline_seconds": 180,
+    "query_vector_sha256": "0d0c901c3a99482fdbc61c4805127dbe1c5785c01a50aa7d905a572319d20a0e",
+    "results_per_query": 3
+  },
+  "source_manifest": {
+    "scripts/deepwide_api_lease.py": "8d9cffa78617b458172307d3558c76e9370f045f531c2f5aaaceb866f5a78c7d",
+    "scripts/preregister_v24278_search_context_pair.py": "f833bdee06b9c590cb2dfb1e7438879612dd53b2d9373dc3bdddcf1227c6ad91",
+    "scripts/v24853_rate_aware_transport_smoke.py": "6dd7899b6c78d1ed42c0a4e5a9aa04cb3961c2ce02358ac91c38de84b3063594",
+    "src/deepwide_agent/v24796_deadline_tavily_search.py": "196f88bfcfe01c52a2e95f9cc775d2f2934e4c2afd714b14e12ee33b77109ba7",
+    "src/deepwide_agent/v24852_rate_aware_tavily_search.py": "766afaad01ad45765ac677fe323348c40c3d66f6530fb483fa457e33a3081294",
+    "tests/test_v24853_rate_aware_transport_smoke.py": "c784c66eee9663d844bfd4cd78ac764faa912b23121e0608ff44d11abd5de2ce"
+  },
+  "source_manifest_sha256": "ec8c8ff2cf7ca1762e12e0a68db48b284e08102f70b6e53332000d3228df504b",
+  "source_policy": {
+    "benchmark_manifest_question_prediction_mapping_gold_category_split_evaluator_score_reward_read": false,
+    "credential_values_stdin_memory_only_not_persisted_hashed_or_emitted": true,
+    "deterministically_fetched_public_pages_are_only_active_evidence": true,
+    "neutral_public_software_documentation_queries_only": true,
+    "query_url_page_answer_or_opaque_id_persisted": false,
+    "tavily_answer_snippet_raw_content_and_score_are_discarded": true
+  }
+}
