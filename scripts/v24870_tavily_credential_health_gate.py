@@ -40,8 +40,11 @@ from deepwide_agent.v24852_rate_aware_tavily_search import (  # noqa: E402
 from scripts.deepwide_api_lease import acquire_deepwide_api_lease  # noqa: E402
 
 
-DATE = "20260808"
+DATE = "20260808r2"
 PROTOCOL_ID = "v24870_tavily_per_credential_neutral_health_gate_v1"
+PREDECESSOR_PROTOCOL = Path(
+    "results/v24870_tavily_credential_health_preregistration_v1_20260808.json"
+)
 PROTOCOL = Path(
     f"results/v24870_tavily_credential_health_preregistration_v1_{DATE}.json"
 )
@@ -168,6 +171,37 @@ def _sealed(value: Mapping[str, Any], field: str) -> bool:
     return seal == payload_sha256(unsigned)
 
 
+def predecessor_invalidation() -> dict[str, Any]:
+    value = _read(ROOT / PREDECESSOR_PROTOCOL)
+    if (
+        value.get("role")
+        != "v24870_tavily_credential_health_preregistration"
+        or value.get("protocol_id") != PROTOCOL_ID
+        or not _sealed(value, "protocol_payload_sha256")
+        or subprocess.run(
+            ["git", "ls-files", "--error-unmatch", str(PREDECESSOR_PROTOCOL)],
+            cwd=ROOT,
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            timeout=20,
+            check=False,
+        ).returncode
+        != 0
+    ):
+        raise RuntimeError("V2.48.70 predecessor protocol is invalid")
+    return {
+        "path": str(PREDECESSOR_PROTOCOL),
+        "sha256": sha256(ROOT / PREDECESSOR_PROTOCOL),
+        "invalidation_reason": "client_constructor_identity_failure_before_search_many",
+        "exception_type": "ValueError",
+        "network_provider_search_fetch_model_or_evaluator_effect": False,
+        "credential_health_conclusion_drawn": False,
+        "result_or_output_artifact_created": False,
+        "authorization_reused_by_r2": True,
+    }
+
+
 def publish_new(path: Path, value: Mapping[str, Any]) -> None:
     if path.exists() or path.is_symlink():
         raise FileExistsError(path)
@@ -231,6 +265,7 @@ def build_protocol(
         "protocol_id": PROTOCOL_ID,
         "created_at_unix": int(time.time()) if now is None else int(now),
         "git_head": _git("rev-parse", "HEAD") if require_clean else "build-only",
+        "supersedes_pre_effect_invalid_protocol": predecessor_invalidation(),
         "schedule": {
             "ephemeral_key_count": EXPECTED_KEY_COUNT,
             "executor_concurrency": EXECUTOR_CONCURRENCY,
@@ -292,6 +327,8 @@ def validate_protocol(
         != ATTEMPTS_PER_KEY
         or copied.get("schedule", {}).get("neutral_query_sha256")
         != payload_sha256(NEUTRAL_QUERY)
+        or copied.get("supersedes_pre_effect_invalid_protocol")
+        != predecessor_invalidation()
         or copied.get("source_manifest") != manifest
         or copied.get("source_manifest_sha256") != payload_sha256(manifest)
         or copied.get("authorization")

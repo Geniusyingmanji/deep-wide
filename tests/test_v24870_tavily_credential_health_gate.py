@@ -28,6 +28,16 @@ class V24870TavilyCredentialHealthGateTests(unittest.TestCase):
         )
         self.assertFalse(value["authorization"]["external_or_exact220_launch"])
         self.assertFalse(value["authorization"]["evaluator"])
+        self.assertFalse(
+            value["supersedes_pre_effect_invalid_protocol"][
+                "network_provider_search_fetch_model_or_evaluator_effect"
+            ]
+        )
+        self.assertFalse(
+            value["supersedes_pre_effect_invalid_protocol"][
+                "credential_health_conclusion_drawn"
+            ]
+        )
 
     def test_credentials_are_exactly_twelve_distinct_ephemeral_lines(self) -> None:
         values = tuple(f"neutral-secret-{index:02d}" for index in range(12))
