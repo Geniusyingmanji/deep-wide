@@ -89,13 +89,33 @@ def protected_watcher_snapshot(proc_root: Path = Path("/proc")) -> list[dict[str
 
 
 def parent_contract(root: Path) -> dict[str, Any]:
-    return parent.validate_protocol(root, _read(root / PARENT_PROTOCOL))
+    value = _read(root / PARENT_PROTOCOL)
+    unsigned = dict(value)
+    seal = unsigned.pop("protocol_payload_sha256", None)
+    if (
+        value.get("role") != parent.ROLE
+        or value.get("protocol_id") != parent.PROTOCOL_ID
+        or seal != payload_sha256(unsigned)
+        or value.get("git_head") is None
+        or not isinstance(value.get("dependency_manifest"), dict)
+        or value.get("dependency_manifest_sha256")
+        != payload_sha256(value["dependency_manifest"])
+        or value.get("task_contract", {}).get("selected_count") != SELECTED_COUNT
+        or value.get("source_policy", {}).get(
+            "mapping_gold_category_question_type_split_evaluator_score_reward_read_by_forward"
+        )
+        is not False
+    ):
+        raise RuntimeError("V2.48.44 frozen parent protocol drifted")
+    return value
 
 
 def _parent_tasks(root: Path) -> list[dict[str, str]]:
     """Load the frozen public vector without recursively revalidating its manifest."""
 
-    return parent.parent.task_vector(root)
+    base = parent.parent.parent.parent.parent.parent
+    frozen = base.read_object(root / base.FORWARD_CONTRACT)
+    return base.selected_tasks(root, frozen)
 
 
 def task_vector(
