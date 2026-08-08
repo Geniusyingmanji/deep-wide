@@ -18,6 +18,7 @@ from collections.abc import Mapping
 from pathlib import Path
 from typing import Any
 
+from . import v24635_exact220_contract as task_source
 from . import v24857_pacing_aware_exact220_contract as parent
 from . import v24859_full_evidence_coverage_revision as coverage
 from . import v24860_coverage_revision_integration as integration
@@ -136,11 +137,26 @@ def _parent_protocol_value(root: Path) -> dict[str, Any]:
 def task_vector(
     root: Path, protocol: Mapping[str, Any] | None = None
 ) -> list[dict[str, str]]:
-    tasks = parent.task_vector(root, _parent_protocol_value(root))
+    base = _parent_protocol_value(root)
+    forward_contract = task_source.read_object(root / task_source.FORWARD_CONTRACT)
+    tasks = task_source.selected_tasks(root, forward_contract)
     if len(tasks) != SELECTED_COUNT or any(
         set(task) != {"opaque_id", "question"} for task in tasks
     ):
         raise RuntimeError("V2.48.66 visible exact-220 vector drifted")
+    expected_parent_task = base.get("task_contract")
+    observed_parent_task = {
+        "runtime_input_keys": ["opaque_id", "question"],
+        "selected_count": SELECTED_COUNT,
+        "opaque_id_vector_sha256": payload_sha256(
+            [task["opaque_id"] for task in tasks]
+        ),
+        "visible_question_vector_sha256": payload_sha256(
+            [task["question"] for task in tasks]
+        ),
+    }
+    if expected_parent_task != observed_parent_task:
+        raise RuntimeError("V2.48.66 parent-visible task hash drifted")
     if protocol is not None:
         observed = {
             "runtime_input_keys": ["opaque_id", "question"],
