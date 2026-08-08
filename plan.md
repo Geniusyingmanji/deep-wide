@@ -3136,3 +3136,10 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 2. 全部10个 data artifact、bundle marker 与 terminal surface 在任何 forward effect 前必须 pristine；旧文件或 symlink 直接零模型/零搜索 fail closed。特权字段输入由 `validate_visible_task` 在 effect 前拒绝，terminal 只记录固定 `ValidationError`，不产生 bundle marker。
 3. synthetic production-shaped child 测试 `3/3`：成功路径精确产生 committed bundle + terminal，并可独立重读；`question_type` 注入时 model/search 均0 effect且只有 child-exception terminal；预置 `result.json` 时在 effect 前拒绝，model/search均0。
 4. 该层仍不是 CLI、protocol、runner 或 benchmark authorization；没有真实 API、mapping/gold/evaluator/score读取。下一步必须做独立 synthetic subprocess parent gate，证明子进程 return code/timeout/terminal/bundle commit marker与父分类一致，然后才设计 fresh benchmark-external paired protocol。
+
+### V2.48.65：content-free subprocess parent bundle gate（build-only，2026-08-08 UTC）
+
+1. 父门复用既有真实 `Popen`/process-group/timeout observer，但把 result validator 提升为完整 V2.48.63 bundle 验证；基础 parent-exit receipt 继续负责 return code、timeout、terminal、result/final-model/transport 分类。其后单独写 V2.48.65 parent commit receipt，绑定基础 receipt SHA、bundle marker、10个 data-artifact presence 与 coarse disposition。
+2. `success` 必须同时满足 child return code 0、非 timeout、有效 child terminal、基础 taxonomy success、bundle commit marker 存在且完整 bundle 可独立验证；`result.json` 或 envelope 副本不能替代 marker。child 非零、父 timeout、parent subprocess exception 与 bundle missing/invalid 均为不同终态。
+3. network-free 真子进程矩阵 `4/4`：完整成功；特权输入导致 child nonzero但有合法 content-free terminal；父在0.2秒强制 timeout；child 完整写包后删除 marker并以0退出。最后一种仍被基础 observer判 `result_envelope_invalid`、V2.48.65 判 `bundle_missing_or_invalid`，证明“0退出+10个data artifacts”不能冒充 committed success。
+4. 该提交仍是 build-only parent gate与测试 fixture，不是 benchmark protocol、CLI或API授权；未读取 mapping/gold/evaluator/score。下一步才可设计 fresh benchmark-external shared-prefix paired protocol，必须冻结数据 population、两臂 page bytes、预算与 GO/NO-GO 门，且在正式预注册与审计前不得启动。
