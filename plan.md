@@ -3143,3 +3143,12 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 2. `success` 必须同时满足 child return code 0、非 timeout、有效 child terminal、基础 taxonomy success、bundle commit marker 存在且完整 bundle 可独立验证；`result.json` 或 envelope 副本不能替代 marker。child 非零、父 timeout、parent subprocess exception 与 bundle missing/invalid 均为不同终态。
 3. network-free 真子进程矩阵 `4/4`：完整成功；特权输入导致 child nonzero但有合法 content-free terminal；父在0.2秒强制 timeout；child 完整写包后删除 marker并以0退出。最后一种仍被基础 observer判 `result_envelope_invalid`、V2.48.65 判 `bundle_missing_or_invalid`，证明“0退出+10个data artifacts”不能冒充 committed success。
 4. 该提交仍是 build-only parent gate与测试 fixture，不是 benchmark protocol、CLI或API授权；未读取 mapping/gold/evaluator/score。下一步才可设计 fresh benchmark-external shared-prefix paired protocol，必须冻结数据 population、两臂 page bytes、预算与 GO/NO-GO 门，且在正式预注册与审计前不得启动。
+
+### V2.48.66：完整 220 题第三槽覆盖修订失败审计（2026-08-08 UTC）
+
+1. 用户给出新的完整 220 外部 GO 后，V2.48.66 固定继承 V2.48.57 的 20 executor、8 model slots、12 Tavily slots 与每题 `4 query / 10 fetch / 3 model calls / 240s` 上限；runtime 输入仍严格为 `{opaque_id, question}`。125/125 preactivation tests、AST privileged-field/evaluator capability 与 credential scan 均通过；四个 protected watcher 未重启或停止。
+2. 唯一一次 forward 已覆盖 220/220，墙钟 `858.274889s`。预测全部冻结后才打开 mapping/gold/evaluator；32 路 evaluator 对每个冻结 prediction 精确评测一次，218 valid、2 invalid 按零，无补评或选择性重评；evaluator 墙钟 `58.931675s`。
+3. 完整分数为 whole-table `0/220`、Composite `0.0173121393`、Entity `0.0363636364`、Row/Item/Column F1 `0.0034469697 / 0.0118405483 / 0.0175974026`。这显著低于 V2.48.57 的 `9/220`、Composite `0.457248978`，严格为 NO-GO，不是提升或 SOTA。
+4. 失败主因不是信息熵门或 benchmark label routing，而是 production bundle 接线：只有 25 个 bundle 完整成功，195 个 child 在父任务完成后的 bundle consistency gate 以 `ValidationError` 终态，按预注册规则变为 fallback；禁止补跑。25 个有效 revision 全部使用现有第三槽，但 `20` 个无足够重复来源支持、`5` 个 proposal 格式无效，prediction changed=`0`、admitted cell/new row=`0`。
+5. 信息熵/IG 全程只做 shadow measurement，未用于 admission/routing；本结果既不支持也不反驳 entropy credit assignment 的一般有效性，只证明当前 evidence gate 过严/页面谱系与 prompt-table 兼容性不足，而且 bundle validator 对合法 parent completion 的覆盖不完整。
+6. 下一步禁止重跑本次 220 或选择性补题。先用已冻结、去内容化的 195 个 `ValidationError` artifact 在 benchmark 外复现 bundle failure，修复 child exception fallback，使父 prediction 在 revision/bundle failure 时仍能原样提交；再以 synthetic + fresh/disjoint paired gate 验证 bundle success、model-generated 与 coverage engagement，不通过不得再启动 public exact-220。
