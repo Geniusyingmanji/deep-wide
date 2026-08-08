@@ -1,0 +1,134 @@
+{
+  "artifact_version": 1,
+  "authorization": {
+    "evaluator": false,
+    "preactivation_audit_generation": true,
+    "public_dev64_or_exact220": false,
+    "single_external_forward": false
+  },
+  "created_at_unix": 1786156599,
+  "dependency_manifest": {
+    "results/v24847_projection_budget_external_visible_tasks_v1_20260808.jsonl": "d134d8af25696588ea20f867393d7ee0356a0d707ba5c0396f2cf3a514ffaf61",
+    "scripts/control_v24847_projection_budget_external.py": "6eee3a133a71b82e2336bac1d7a3534c2c69da1067e7c0cf010646f874546576",
+    "scripts/deepwide_api_lease.py": "8d9cffa78617b458172307d3558c76e9370f045f531c2f5aaaceb866f5a78c7d",
+    "scripts/run_v24847_projection_budget_external_forward.py": "7749417a5ca40d3b11685519b743b46ada7d41164db1bf60a9e8d2efb6a1d6e7",
+    "scripts/run_v24847_projection_budget_external_task.py": "c4c9dea46310c53e1e03977d36cdfed65822deb1a795daadfa58164bfb2d5c19",
+    "src/deepwide_agent/v24839_structure_preserving_projector.py": "7212adc13f59b9154ed84b0991eb134e58774b1f8d523786d16badcafc9bb82a",
+    "src/deepwide_agent/v24842_atomic_table_header_closure.py": "ce51fcee5543e8ae30abce7be186d03131d106fc1ff046682deb0b9582877016",
+    "src/deepwide_agent/v24846_atomic_table_header_30k_profile.py": "efa4308533564a3f4f53f24caef50a7030eecb7aaa2cb9b9e3290f83e72c60df",
+    "src/deepwide_agent/v24847_projection_budget_external_contract.py": "a305db5cb633c633699fd0874b283863c98d892253084653a73a4291d28ce9c7",
+    "tests/test_v24847_projection_budget_external.py": "a88e0fa76ce08c191fc7d0b8e05b0311f40a1088e798aaf90a33b9d621330f30"
+  },
+  "dependency_manifest_sha256": "6915fc7359cfa8cf9e94e830223de1be89749ea8f6eb204b489ddd0aef699e81",
+  "evaluator_source_physically_absent_from_forward_dependency_manifest": true,
+  "execution": {
+    "arms": [
+      "atomic_16k",
+      "atomic_30k"
+    ],
+    "candidate_total_character_cap": 30000,
+    "control_total_character_cap": 16000,
+    "executor_concurrency": 16,
+    "failure_as_zero_no_resume_retry_skip_or_selective_rerun": true,
+    "maximum_page_chars_both_arms": 5000,
+    "model": {
+      "max_output_tokens": 8000,
+      "max_retries": 2,
+      "name": "gpt-5.6-sol",
+      "proxy_url": "http://127.0.0.1:9878/responses",
+      "reasoning_effort": "low",
+      "service_tier": "priority",
+      "timeout_seconds": 65
+    },
+    "model_slot_cap": 8,
+    "prediction_freeze_before_private_evaluator": true,
+    "protected_watchers": [
+      {
+        "marker": "scripts/watch_v2415_r1_checkpoint_liveness.py",
+        "pid": 795336,
+        "start_ticks": 713986317
+      },
+      {
+        "marker": "scripts/watch_v24218_exact220_executor.py",
+        "pid": 3061652,
+        "start_ticks": 747569004
+      },
+      {
+        "marker": "scripts/watch_v24215_joint_package_recovery.py",
+        "pid": 2808901,
+        "start_ticks": 746680268
+      },
+      {
+        "marker": "scripts/watch_v24216_package_gate.py",
+        "pid": 2889939,
+        "start_ticks": 746969965
+      }
+    ],
+    "same_model_prompt_output_cap_and_concurrency": true,
+    "task_wall_seconds": 180
+  },
+  "forward_dependency_manifest": {
+    "results/v24847_projection_budget_external_visible_tasks_v1_20260808.jsonl": "d134d8af25696588ea20f867393d7ee0356a0d707ba5c0396f2cf3a514ffaf61",
+    "scripts/deepwide_api_lease.py": "8d9cffa78617b458172307d3558c76e9370f045f531c2f5aaaceb866f5a78c7d",
+    "scripts/run_v24847_projection_budget_external_forward.py": "7749417a5ca40d3b11685519b743b46ada7d41164db1bf60a9e8d2efb6a1d6e7",
+    "scripts/run_v24847_projection_budget_external_task.py": "c4c9dea46310c53e1e03977d36cdfed65822deb1a795daadfa58164bfb2d5c19",
+    "src/deepwide_agent/v24839_structure_preserving_projector.py": "7212adc13f59b9154ed84b0991eb134e58774b1f8d523786d16badcafc9bb82a",
+    "src/deepwide_agent/v24842_atomic_table_header_closure.py": "ce51fcee5543e8ae30abce7be186d03131d106fc1ff046682deb0b9582877016",
+    "src/deepwide_agent/v24846_atomic_table_header_30k_profile.py": "efa4308533564a3f4f53f24caef50a7030eecb7aaa2cb9b9e3290f83e72c60df",
+    "src/deepwide_agent/v24847_projection_budget_external_contract.py": "a305db5cb633c633699fd0874b283863c98d892253084653a73a4291d28ce9c7"
+  },
+  "git_head": "47a59e4b79e04e258235bb83cff0a60c9ce0358b",
+  "population_binding": {
+    "entities": 128,
+    "entity_disjoint": false,
+    "entity_overlap": 128,
+    "gold_cells": 256,
+    "private_population_sha256": "7807985c98002365dd0055de10750127c3fe5512f49df8f4ecb1b31280891bbc",
+    "public_design_sha256": "3710fd775ab9a6d5cf27f5e81ef66a993bf6446e93c5187f0ac27cca47b915d1",
+    "publication_audit_sha256": "c5a82ced252d0474b376df2f5062a53e28b32d3341e7d4c7bbb34efafb9b7461",
+    "target_cell_disjoint": true,
+    "target_cell_overlap": 0,
+    "target_pair_overlap": 0,
+    "tasks": 32
+  },
+  "protocol_id": "v24847_target_cell_disjoint_projection_budget_shared_prefix_v1",
+  "protocol_payload_sha256": "5fdd11d27be31328fd17e3c49f1f09279a22199da5a59995a4a08a1fad159c38",
+  "role": "v24847_projection_budget_external_preregistration",
+  "shared_prefix": {
+    "expected_response_sha256": [
+      "28477bd3f99b872a0b7579ea10865b4c472c84afbeb345d7081e8e0c0896cb66",
+      "36b58c264ac4e53695c4cbb10491f6479272de250e70447885ebc5c58e56d5ea"
+    ],
+    "raw_snapshot_bytes_frozen_before_arm_branch": true,
+    "same_raw_page_vector_for_every_arm": true,
+    "source_url_literals_absent_from_forward_protocol": true,
+    "source_urls": [
+      "SH.STA.BASS.ZS@2022",
+      "SL.UEM.TOTL.ZS@2023"
+    ],
+    "two_official_snapshots_fetched_once_before_arm_branch": true
+  },
+  "source_policy": {
+    "entropy_or_information_gain_assigns_credit": false,
+    "mapping_category_question_type_split_score_reward_read_by_forward": false,
+    "private_population_values_provenance_gold_or_evaluator_absent_from_forward": true,
+    "runtime_reads_only_opaque_id_question_and_frozen_raw_pages": true
+  },
+  "task_contract": {
+    "opaque_id_vector_sha256": "ae6680d50b5d74c7b9b5e44c8957d4c0d7b3ee26cbe74576a34a4391d83b964b",
+    "runtime_input_keys": [
+      "opaque_id",
+      "question"
+    ],
+    "selected_count": 32,
+    "visible_question_vector_sha256": "2b52adb127a2a8a32c16ea2cafd0fea4c2a585e1f567f386db0cef7f95af0d01"
+  },
+  "visible_task_artifact": {
+    "path": "results/v24847_projection_budget_external_visible_tasks_v1_20260808.jsonl",
+    "row_schema": [
+      "opaque_id",
+      "question"
+    ],
+    "sha256": "d134d8af25696588ea20f867393d7ee0356a0d707ba5c0396f2cf3a514ffaf61"
+  }
+}
