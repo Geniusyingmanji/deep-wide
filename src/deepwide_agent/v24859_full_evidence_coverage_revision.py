@@ -370,6 +370,14 @@ def _stable_pages(
     return output
 
 
+def prepare_evidence_pages(
+    values: Sequence[EvidencePage | Mapping[str, Any]],
+) -> tuple[EvidencePage, ...]:
+    """Validate and deterministically deduplicate one same-forward page vector."""
+
+    return tuple(_stable_pages(values))
+
+
 def _matrix(table: str) -> tuple[list[str], list[list[str]]]:
     groups = _markdown_groups(table)
     if len(groups) != 1:
@@ -1049,5 +1057,6 @@ __all__ = [
     "ROLE",
     "apply_full_evidence_revision",
     "payload_sha256",
+    "prepare_evidence_pages",
     "validate_receipt",
 ]

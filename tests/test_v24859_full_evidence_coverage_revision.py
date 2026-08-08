@@ -17,6 +17,7 @@ from deepwide_agent.v24859_full_evidence_coverage_revision import (  # noqa: E40
     EvidencePage,
     apply_full_evidence_revision,
     payload_sha256,
+    prepare_evidence_pages,
     validate_receipt,
 )
 
@@ -201,6 +202,19 @@ class V24859FullEvidenceCoverageRevisionTests(unittest.TestCase):
             pages=pages,
         )
         self.assertIn("| Alpha | Unknown | Paris |", value["candidate_table"])
+
+    def test_public_page_preparation_is_stable_and_deduplicated(self) -> None:
+        pages = [
+            page(1, "Alpha record. Year: 2025."),
+            {
+                **page(2, "duplicate alias"),
+                "url": "https://h1.example/record/",
+            },
+        ]
+        prepared = prepare_evidence_pages(pages)
+        self.assertEqual(len(prepared), 1)
+        self.assertEqual(prepared[0].evidence_id, "E0001")
+        self.assertTrue(prepared[0].fetch_integrity)
 
     def test_distant_prose_field_cannot_lend_support(self) -> None:
         source = "Alpha record. " + ("unrelated filler " * 40) + "Year: 2025."
