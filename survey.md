@@ -1191,3 +1191,11 @@ V2.48.44 是 V2.48.42 原子表头闭包的首个完整 DeepWideBench 220 结果
 冻结后 V2.48.45 显示证据供给是更强的观察梯度：fetch failure为0的33题 Composite为 `0.6104`，5–7次failure的59题为 `0.3589`；投影达到15k的155题为 `0.4931`，4–8k的19题为 `0.3397`。V2.48.00 与V2.48.44又同时在检索后端（Tavily URL-lead vs keyless hosted search）和投影预算（约30k vs16k）上不同，所以跨版本差异不能识别单一机制。
 
 V2.48.46/47 因此做了matched shared-prefix验证。两臂共享完全相同的两份World Bank原始响应、固定8页结构向量、可见任务、模型、prompt、输出cap和并发；唯一行为差异是原子闭包总cap `16k -> 30k`，每页仍为5k。32个任务的64份prediction全部冻结后才打开private evaluator。16k取得 `10/32` Exact、Composite `0.792969`，30k取得 `25/32`、`0.835938`，Exact `+15`、Composite `+0.042969`，其余质量指标均不降；两臂orphan均为0，原子依赖补入均触发37次。该结果是“在target-cell-disjoint结构表格人口上，30k证据预算优于16k”的因果证据；它不是一般网页搜索或DeepWideBench SOTA证据，也没有验证entropy credit。
+
+## 2026-08-08：30k 外部门收益未迁移到 DeepWideBench 全集
+
+V2.48.48 把上述 treatment 以严格单变量方式迁移到完整 DeepWideBench：父算法为 V2.48.44，除总投影 cap `16k→30k` 外，220题向量、prompt、GPT-5.6、keyless search/fetch、单题预算和 `20 task / 8 model` 并发均不变。forward 只读 `{opaque_id, question}`，220个预测在mapping/evaluator打开前全部冻结；220个content-free receipt显示0 missing、0 orphan、0 missed supported requirement，总投影4,494,390字符。值得注意的是，本批抓取页面没有自然产生长表 continuation 或表头依赖补入，因此这次实验主要检验更宽的通用证据窗口，而没有重新检验V2.48.47中实际触发的结构闭包机制。
+
+官方32-worker evaluator exactly-once覆盖220条预测，13个evaluator error按预注册规则计0。结果为whole-table `5/220`、Entity/Row/Item/Column F1 `0.690909/0.205215/0.381860/0.468587`、Composite `0.436643`。相对16k父版本V2.48.44，exact不变，Composite下降`0.012977`；相对内部最佳V2.48.00，exact少3、Composite下降`0.020191`。因此“30k在结构化matched-prefix人口有效”不能外推为“在开放网页检索上普遍有效”。更大的窗口同时增加潜在支持证据、冗余、冲突和生成负担；若不显式估计证据质量与依赖关系，容量不是单调收益变量。
+
+这也收紧了entropy/credit的主张。投影字符增加本身既不是信息增益，也不应得到正credit；必须把可见需求覆盖、source/record identity、target-value binding、独立来源、新颖性、冲突与冗余纳入belief update，再用同状态deletion/replacement或sibling continuation估计signed outer utility。下一可识别实验应在fresh shared-prefix任务上比较fixed-16k、fixed-30k与matched-cost quality-gated三臂；entropy/IG只预测动作排序或value-of-computation，verifier-negative、identity-unbound、重复或outer-zero证据的credit必须为0或负。V2.48.48没有验证entropy credit，也没有刷新benchmark前沿或SOTA。

@@ -1,8 +1,14 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.50
+> 版本：6.51
 >
-> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.50 覆盖。**
+> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.51 覆盖。**
+
+> **6.51 V2.48.48 完整 220 NO-GO（2026-08-08）：在 V2.48.47 shared-prefix external GO 后，V2.48.48 以 V2.48.44 为父算法，仅把原子投影总 cap `16k→30k`；220 题向量、prompt、GPT-5.6、keyless search/fetch、单题预算、`20 task / 8 model` 并发均不变。runtime 仍只接收 `{opaque_id, question}`，single-pass、failure-as-zero，禁止 resume/补题/选择性重跑或重评。108/108 preactivation tests、label-blind/evaluator-capability/credential audit 全通过。完整前向 `220/220` model-generated、0 fallback，耗时 `849.299702s`；220 个 content-free projection receipt 全有效、0 missing、0 orphan、0 missed supported requirement，总 rendered chars `4,494,390`（均值约20.4k/题），但本批网页没有触发 table continuation/header dependency。**
+
+> **prediction freeze 后，32-worker evaluator 对全部220条预测 exactly once，207 valid、13 error 固定计零；结果 whole-table `5/220`、Entity `0.690909`、Row/Item/Column F1 `0.205215/0.381860/0.468587`、Composite `0.436643`。相对 V2.48.44 exact 持平但 Composite `-0.012977`；相对内部最佳 V2.48.00 exact `-3`、Composite `-0.020191`。因此 30k 在结构化 shared-prefix 外部人口的收益没有迁移为 keyless DeepWideBench 全集收益，V2.48.48 严格 NO-GO、不是 benchmark 提升、更不是 SOTA。权威工件：[`results/v24848_atomic_table_header_30k_exact220_result_v1_20260808.json`](results/v24848_atomic_table_header_30k_exact220_result_v1_20260808.json) 与 [`results/v24848_atomic_table_header_30k_exact220_postresult_audit_v1_20260808.json`](results/v24848_atomic_table_header_30k_exact220_postresult_audit_v1_20260808.json)。**
+
+> **优化方向随之更新：停止继续盲增 evidence cap。下一门必须在 fresh benchmark-external shared-prefix population 上，把“多证据”拆成 requirement coverage、source/record identity、target-value binding、冲突/冗余与噪声负担，并比较 fixed-16k、fixed-30k、visible-only quality-gated 选择三臂；entropy/IG 继续只作 shadow feature，credit 必须由同状态 deletion/replacement 或 sibling continuation 的 signed outer utility 给出。只有 quality-gated arm 在 matched cost 下同时提高 exact 与 Composite、且自然触发不依赖 benchmark label/gold/evaluator，才可再设计新的 public exact-220。内部前沿仍是 V2.48.00 的 `8/220 / 0.456834`，未有 SOTA。**
 
 > **6.50 V2.48.44 完整 220、V2.48.45 诊断与 V2.48.47 external GO（2026-08-08）：V2.48.44 已按 `{opaque_id, question}`、20 task/8 model、高并发、single-pass、failure-as-zero 完成完整 220。前向 `220/220` 模型生成、`0` fallback、`811.060097s`、`11,297,816` system tokens；32-worker evaluator 得到 whole-table `5/220`、Entity `0.704545`、Row/Item/Column F1 `0.217208/0.394956/0.481768`、Composite `0.449620`，209 valid、11 invalid 固定计零。相对 V2.48.40，Composite `+0.017313` 但 exact `-2`；相对内部 best V2.48.00，Composite `-0.007214`、exact `-3`，不是 SOTA。V2.48.45 冻结后聚合诊断显示 fetch failure=0 的33题 Composite `0.6104`，5–7次 failure 的59题仅 `0.3589`；15k+ projection 的155题 Composite `0.4931`，4–8k 的19题 `0.3397`。这些是观察梯度，不是因果结论；V2.48.44 又缺少表头依赖实际触发 receipt，故不能把分数变化归因于原子闭包。**
 
