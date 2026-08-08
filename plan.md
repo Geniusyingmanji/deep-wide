@@ -3129,3 +3129,10 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 2. 跨 artifact 守恒绑定最终/parent slot cap 与第三槽 delta、retrieval queries 与 parent search calls/direct receipt、direct provider attempts 与 rate reservations、429计数、pacing admission decision/reason/raw wave-1 elapsed/effective ceiling。成功 query 数不得超过 provider attempts；任何缺失、symlink、重封篡改、hash漂移或副本不一致都 fail closed。
 3. 本地全链 bundle 测试 `4/4`：完整包可重读验证；删除独立 parent-slot receipt 即使 envelope 含副本仍拒绝；重封 coverage receipt 仍被 manifest/copy binding拒绝；第4个文件写入时注入异常不会产生 bundle commit marker。
 4. 该提交仍是 build-only bundle library，不是可启动 child/protocol；零真实 API、零 benchmark/evaluator、零 mapping/gold/score。下一步是把 bundle writer 接入一个独立、无 evaluator capability 的 child entrypoint并做 synthetic subprocess bundle gate，之后才允许设计 fresh benchmark-external paired run。
+
+### V2.48.64：可注入客户端的 label-blind child runtime（build-only，2026-08-08 UTC）
+
+1. V2.48.64 只接收已验证 visible task、已构造的 bounded model/search clients、父 limits/two-wave policy、task-local output directory 与 content-free cap；endpoint 与 credentials 不在模块内读取或持久化。它调用 V2.48.62，同一 search 实例提供 direct/rate/pacing receipts，再由 V2.48.63 写 create-exclusive bundle，最后才写既有 content-free child terminal receipt。
+2. 全部10个 data artifact、bundle marker 与 terminal surface 在任何 forward effect 前必须 pristine；旧文件或 symlink 直接零模型/零搜索 fail closed。特权字段输入由 `validate_visible_task` 在 effect 前拒绝，terminal 只记录固定 `ValidationError`，不产生 bundle marker。
+3. synthetic production-shaped child 测试 `3/3`：成功路径精确产生 committed bundle + terminal，并可独立重读；`question_type` 注入时 model/search 均0 effect且只有 child-exception terminal；预置 `result.json` 时在 effect 前拒绝，model/search均0。
+4. 该层仍不是 CLI、protocol、runner 或 benchmark authorization；没有真实 API、mapping/gold/evaluator/score读取。下一步必须做独立 synthetic subprocess parent gate，证明子进程 return code/timeout/terminal/bundle commit marker与父分类一致，然后才设计 fresh benchmark-external paired protocol。
