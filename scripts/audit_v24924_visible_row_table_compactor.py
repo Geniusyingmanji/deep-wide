@@ -185,8 +185,10 @@ def build(*, now: int | None = None) -> dict[str, Any]:
         "pure_component_forbidden_import_zero": not forbidden_imports,
         "pure_component_dynamic_io_call_zero": not forbidden_calls,
         "credential_literal_zero": not secret_hits,
-        "parent_reachability_matches_frozen_diagnosis_420": sum(parent_reachable)
-        == 420,
+        "target_value_parent_reachability_matches_frozen_diagnosis_432": sum(
+            parent_reachable
+        )
+        == 432,
         "candidate_reachability_full_576": sum(candidate_reachable) == 576,
         "candidate_all_12_tasks_have_48_values_reachable": all(
             value == external.ROWS_PER_TASK * len(external.TARGETS)
