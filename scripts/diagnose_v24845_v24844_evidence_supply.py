@@ -279,7 +279,7 @@ def _paired(
 ) -> dict[str, Any]:
     exact: Counter[str] = Counter()
     deltas: list[float] = []
-    for item in ids:
+    for item in sorted(ids):
         before = float(control[item]["metrics"]["score"]) > 0
         after = float(candidate[item]["metrics"]["score"]) > 0
         exact[
