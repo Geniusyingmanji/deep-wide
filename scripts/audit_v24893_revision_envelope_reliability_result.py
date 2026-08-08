@@ -41,8 +41,6 @@ def configure() -> None:
             value.__annotations__ = current.__annotations__
             value._v24893_translated = True
             setattr(base, name, value)
-
-
 def main() -> None:
     configure()
     base.main()
