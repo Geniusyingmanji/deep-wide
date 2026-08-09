@@ -387,7 +387,7 @@ def identity_format_aggregate(
         tagged_keys = {_norm(f"{name} [{iso3}]") for name, iso3 in entities}
         for arm in contract.ARMS:
             prediction = str(arms[arm])
-            if hashes[arm] != hashlib.sha256(prediction.encode()).hexdigest():
+            if hashes[arm] != contract.payload_sha256(prediction):
                 raise RuntimeError("V2.49.36 frozen prediction hash drifted")
             _columns, matrix = _matrix(prediction)
             output[arm]["tables"] += 1
