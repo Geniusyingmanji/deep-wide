@@ -1259,3 +1259,15 @@ V2.49.36 在预测、页面、gold value、数值比较和GO门完全不变的�
 与同算法 V2.49.32 相比，V2.49.35 的 Exact 从6降到5，而Composite从`0.421283`升到`0.446682`；Entity及三个F1也全部上升。该方向相反的变化说明 whole-table Exact 对独立检索页面、生成采样和evaluator error较敏感，单次跨运行差值不能识别 projector 或信息熵策略的因果贡献。与项目当前最佳 V2.48.57 的`9/220 / 0.457249`相比，本轮仍少4个Exact、Composite低`0.010567`，所以不是SOTA。
 
 对 entropy credit assignment，V2.49.34–36/35 合起来支持更严格的三段式归因：首先检查机制是否发生；其次检查 observation 是否 identity/target/source-bound 且可采纳；最后用共享前缀、matched cost 的 prediction change 和 post-freeze outer utility给 signed credit。V2.49.36 的候选既有540个retained pair又有正outer utility，因而可获得正的机制级credit；原错误evaluator则说明credit本身也必须带evaluator/provenance有效性门。仅有更多pair、更多字符、projection change或单次全集分数波动仍不足以证明 information gain。下一实验应在 fresh/disjoint paired population 上把 entropy/IG 保持为 shadow predictor，比较它对真实边际效用的校准度；校准通过前不得把它用于公开 benchmark 的在线路由或credit更新。
+
+## 2026-08-09：V2.49.38 完整 220——contextual-record 在真实检索页面上仍为零暴露
+
+V2.49.37 先用两个新 World Bank target cells 和两种普通文本布局复核 contextual-record 机制。24 个任务的两臂共享相同页面、模型、prompt 和预算，candidate 在 13 题改变投影并保留 384 个 contextual pairs；但两臂都达到 Exact `24/24`、Composite `1.0`，因此预注册的 strict exact-gain 门判 NO-GO。这是 evaluator ceiling，不是负效应证据，也不授权公开 220。
+
+按用户随后“先跑全集”的明确授权，V2.49.38 在固定 DeepWideBench 220 上做一次 exploratory single rollout。运行时仍只读 `{opaque_id, question}`；220 题、GPT-5.6 keyless model/search、每题 `4 query / 10 fetch / 3 model calls / 240s`、`20/8` 并发和 evaluator 均沿用 V2.49.35，唯一算法变化是 V2.49.28 projector 替换为 V2.49.33。forward 用时 `889.850088s`，220/220 model-generated、0 fallback；mapping/gold/evaluator 直到 prediction freeze 和 content-free audit 提交推送后才打开。
+
+完整结果为 Exact `7/220=3.1818%`、Entity `0.681818`、Row/Item/Column F1 `0.216565/0.386647/0.471674`、Composite `0.439176`。固定 32-worker evaluator 恰好覆盖全部 220 条，210 valid、10 error-as-zero；post-result audit 为 `findings=[]`。相对 V2.49.35，Exact 增加 2 而 Composite 下降 `0.007506`；相对项目最佳 V2.48.57 的 `9/220 / 0.457249` 仍为 Exact `-2`、Composite `-0.018073`。所以它不是项目新最佳或 SOTA。
+
+关键结论来自 220 份 content-free receipt，而不是分数差：1,302 个页面和约 431 万投影字符中，visible row targets 只有 11，bound/contextual target–value pairs 都是 0，context dependency addition 也是 0。V2.49.33 在这次全集 forward 中根本没有自然触发；跨 rollout 的 Exact 波动不能冒充 projector 效果。与此同时 11,939 个 action sources 全缺 title，69 次 backfill 只覆盖 47 个 URL，最终 surviving union lead 仍为 0。这把瓶颈进一步定位为 source metadata 与 entity–target–value binding，而不是搜索次数、字符窗口或 heading context。
+
+对信息熵 credit assignment，这轮给出一个更强的 production 负控制：即使系统调用 443 次模型、378 次搜索、1,882 次 fetch 并获得 7 个 exact tables，只要目标机制没有产生 admissible bound observation，它的 realized epistemic/task credit 就必须为 0。下一可识别实验应借鉴 WebSwarm 与 Search–Inspect–Fetch 的分工，但把协作产物收敛为 source-bound cell/record ledger：每个 observation 先通过 source identity、record identity、entity、target、value、独立来源与冲突 gate；IG/entropy 只预测在该 ledger 上继续 inspect/fetch 的 value-of-computation。最终 signed credit 必须由 shared-prefix deletion/replacement 或 sibling continuation 的 post-freeze outer utility决定，而不能由网页数、字符数、token数或未绑定的 entropy reduction决定。
