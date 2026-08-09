@@ -1,8 +1,18 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.67
+> 版本：6.68
 >
-> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.67 覆盖。**
+> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.68 覆盖。**
+
+> **6.68 V2.50.01–03 page-visible-link runtime、全新外部门与严格 NO-GO（2026-08-09）：V2.50.01 从首波已抓页面的 `page_links` 构建纯 URL/anchor frontier。第二波搜索已选 URL 是两臂共同且不可挤出的前缀；只有 `4-prefix` 个未用槽由 control 按 canonical URL stable-first-seen 填充，candidate 才用 V2.49.98 相同的 exact identity path token + distinctive authority host/path token 排序。相对链接按 attesting page 解析，canonical URL 去重，原页面、已选 URL、embedded credential、localhost/private literal address 与非 HTTP(S) 全拒绝；若 bound-link prefix 不严格增加则 candidate 逐字回退 control。正文、页面标题、anchor text、provider narrative/snippet/query/score 均不参与排序，entropy/IG signed credit 恒为0。**
+
+> **V2.50.02 将该 treatment 接入 append-only production-shaped paired runtime，不修改冻结 V2.49.99：两臂共享同一 planner、legacy 4-query vector、首波页面字节及完整 link vector、第二波 search response 与两臂 URL union fetch；未选页面正文不得进入该臂。每臂仍为 `4 query / ≤10 fetch / 1 synthesis`，paired 物理上限仍为 `4 query / ≤14 fetch / 3 model`，不新增 token/context/network-byte/wall cap。相对链接、去重、私网/credential 拒绝、搜索前缀不可挤出、无严格增益 identity handoff、matched cost、负 page/record delta、nested/joint reseal tamper 与 extra runtime metadata 全部覆盖；相关完整父链 `64/64` 通过，实现以 `6e368f4f` 推送。**
+
+> **V2.50.03 冻结历史全部 TLD cohort 之外的 `.aaa`–`.aeg` 20项；选择只依据公开命名空间字典序与已冻结 helper 的256-link上限，protocol freeze 前不访问最终 URL/page。implementation/build、protocol、preactivation、execution-start 分别以 `d59a1824 / 49d9c883 / 973a2b8f / cba4faf5` 分阶段推送；clean-build/preactivation 均为 `131/131`，privileged/evaluator/credential findings 为空，GPT-5.6、lease、未来 surface 和四个 protected watcher 全绿。唯一 forward 在 `111.479345s` 完成20/20 terminal，每题物理 query 恰为4、fetch≤14，无 retry/resume/补题；prediction/result以 `539242d3` 冻结，content-free audit `224f52ec` 为 `audit_valid=true, findings=[]`。forward 仅读 `{opaque_id, question}` 与同轮公开页面，mapping/gold/category/question_type/split/evaluator/score/reward 均未读。**
+
+> **机制严格 NO-GO。70个首波页面暴露4,320个 raw/resolved public links，canonical/exclusion后共有2,810个 available links；8/20题发生 selection change，candidate 比 control 多11个 exact identity+authority-bound link，证明 page-visible-link reachability 与 selector 本身自然触发。两臂仍完全相同：各80 executed queries、136 logical fetch attempts、133 usable pages、32 search-prefix URL、32 visible-link URL、2 target-bound projected pages、92 retained records与387,024 evidence chars；positive projected-page/record gain均0/20、mechanism engaged=0/20、prediction change=0/20。双臂模型成功17/20；因3题没有完整双臂 synthesis，预注册 executed-order completeness 也失败。evaluator preregister已实测fail closed，evaluator protocol、post-freeze IANA gold、quality result与public220均未创建。**
+
+> **去标识 changed-only 诊断进一步定位为 external population 的冗余 ceiling：8个selection-changed任务中两臂usable pages同为65，projected page/record同为0/0，8/8双臂model success但prediction change仍0；共享首波/搜索前缀已贡献全部2页/92 records，而新选中的IANA detail links没有形成当前 visible `Domain/Type/TLD Manager` schema record。因此不得放宽identity/authority匹配、降低门、复用/重跑V2.50.03或直接跑220。下一外部门必须换成全新官方“index page仅暴露member links、detail page才暴露目标字段”的目录（优先CRAN package index→package detail），control/candidate仍共享index bytes与预算；机制门继续要求bound-link、projected page、record与prediction四级严格增加。完整DeepWideBench口径不变：项目单轮最佳V2.48.57 Exact `9/220`、Composite `0.457249`；最新完整V2.49.69为transport-degraded `5/220 / 0.430226`；无leaderboard/SOTA。**
 
 > **6.67 V2.49.98–V2.50.00 shared-response identity/authority selection 外部门与严格 NO-GO（2026-08-09）：V2.49.98 保留 query-local citations 的完整前缀与顺序，只在 action-only source 后缀内使用可见 tagged identity 与明示 authority phrase 做 URL host/path 绑定。identity 必须为 path 中的精确 token，不允许 `.ch` 类身份匹配站点 TLD；authority 必须命中非 generic distinctive token；authority-only、identity 子串、look-alike host 都不可提升。candidate 前缀若不严格增加 joint-bound URL，则逐字回退 control。纯组件及 action/source/requirement-aware 父链联合回归 `27/27` 通过，以 `a1f20b42` 推送。**
 >
