@@ -1,0 +1,62 @@
+{
+  "artifact_version": 1,
+  "audit_payload_sha256": "aa4194904679a75d513c8901957bcc9287ce6c3c896aabcae44ef2dbce4d0994",
+  "audit_valid": true,
+  "authorization": {
+    "leaderboard_or_sota": false,
+    "postfreeze_external_evaluator_protocol": false,
+    "public_exact220_launch": false
+  },
+  "checks": {
+    "all_rows_valid": true,
+    "forward_aggregate_arm_totals_bound": true,
+    "forward_aggregate_model_success_bound": true,
+    "forward_aggregate_prediction_change_bound": true,
+    "forward_aggregate_query_local_advantage_bound": true,
+    "forward_aggregate_query_vector_bound": true,
+    "forward_aggregate_record_advantage_bound": true,
+    "forward_aggregate_strategy_bound": true,
+    "forward_aggregate_terminal_bound": true,
+    "forward_process_absent": true,
+    "mapping_gold_evaluator_closed_during_forward": true,
+    "postfreeze_gold_absent": true,
+    "prediction_freeze_bound": true,
+    "protected_watchers_exact": true,
+    "task_results_bound": true
+  },
+  "created_at_unix": 1786298840,
+  "findings": [],
+  "forward_result_sha256": "16adb9c9363932491f4f5a6677abc8a8e18f9f912923b3188786b80aed73a912",
+  "mechanism_gate": {
+    "all_task_evidence_character_counts_equal_between_arms": true,
+    "all_tasks_execute_exactly_four_queries_per_arm": false,
+    "all_tasks_plan_exactly_four_queries_per_arm": true,
+    "arms": {
+      "legacy_completed_queries": {
+        "query_local_results": 30,
+        "retained_records": 92,
+        "sources_discovered": 66,
+        "usable_pages": 60
+      },
+      "short_authority_identity_queries": {
+        "query_local_results": 2,
+        "retained_records": 0,
+        "sources_discovered": 177,
+        "usable_pages": 166
+      }
+    },
+    "both_arms_model_success_tasks": 19,
+    "completed_task_model_calls_at_most_three": true,
+    "executed_arm_order_matches_frozen_vector": true,
+    "passed": false,
+    "prediction_changed_tasks": 9,
+    "query_vector_changed_tasks": 20,
+    "short_query_strategy_applied_tasks": 20,
+    "tasks_with_candidate_query_local_result_advantage": 0,
+    "tasks_with_candidate_record_advantage": 0,
+    "terminal_tasks": 20
+  },
+  "prediction_freeze_sha256": "da6b4bc362e93a0d117c4893b773a453b87eeed94ad64b02db2c79e806b87acc",
+  "protocol_id": "v24991_paired_short_authority_query_external_gate_v1",
+  "role": "v24991_short_query_external_forward_audit"
+}
