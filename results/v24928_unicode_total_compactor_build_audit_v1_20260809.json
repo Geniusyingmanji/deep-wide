@@ -1,0 +1,80 @@
+{
+  "artifact_version": 1,
+  "audit_payload_sha256": "d7e8f5bbba3ae278a47e019249767865a0751175a5a91b055e75344d4d43d703",
+  "audit_valid": true,
+  "authorization": {
+    "evaluator": false,
+    "fresh_benchmark_external_reliability_gate_design": true,
+    "leaderboard_submission": false,
+    "public_dev64_or_exact220": false,
+    "sota_claim": false
+  },
+  "checks": {
+    "candidate_nfkc_expansion_total_8_of_8": true,
+    "credential_literal_zero": true,
+    "entropy_assigns_no_credit": true,
+    "fixed_30k_total_and_5k_page_caps": true,
+    "focused_tests_exact12": true,
+    "parent_nfkc_expansion_failure_reproduced_8_of_8": true,
+    "runtime_dynamic_or_io_call_zero": true,
+    "runtime_forbidden_import_zero": true,
+    "source_files_tracked": true,
+    "v24927_failure_count_is_90": true,
+    "v24927_fixed_denominator_220": true,
+    "v24927_hosted_search_deadline_failures_zero": true,
+    "v24927_postresult_audit_valid": true,
+    "v24927_transport_receipts_complete": true
+  },
+  "created_at_unix": 1786235919,
+  "diagnosis": {
+    "benchmark_question_page_prediction_or_per_task_correctness_read": false,
+    "causal_scope": "component bug is reproduced and consistent with the aggregate failure boundary; no claim is made that all 90 benchmark fallbacks had this cause",
+    "confirmed_component_bug": "V2.49.24 compared NFKC-normalized output length with raw input length; compatibility expansion therefore raised ValidationError before synthesis",
+    "v24927_content_free_aggregate": {
+      "fallback_tables": 90,
+      "hard_fetch_helper_calls": 1886,
+      "hosted_search_attempts": 381,
+      "hosted_search_deadline_failures": 0,
+      "model_generated_tables": 130,
+      "postresult_audit_valid": true,
+      "selected": 220,
+      "valid_single_shot_receipts": 220,
+      "valid_transport_receipts": 220,
+      "worker_failure_fallback": 90
+    }
+  },
+  "findings": [],
+  "neutral_reproduction": {
+    "candidate_projection_successes": 8,
+    "compatibility_glyph_cases": 8,
+    "parent_validation_failures": 8
+  },
+  "role": "v24928_unicode_total_compactor_build_audit",
+  "runtime_semantic_audit": {
+    "credential_literal_hits": [],
+    "dynamic_or_io_calls": [],
+    "forbidden_imports": []
+  },
+  "source_manifest": {
+    "results/v24927_sparse_target_value_exact220_postresult_audit_v1_20260808.json": "1eab0a32c316be42d9855faad09e275fda80c3f4df4d0c857d02f12b0dc7c191",
+    "src/deepwide_agent/v24921_target_value_coverage_projector.py": "4579affb4bbff7c84da5404bb233b41bd7e2a259ad49c635f756b262e7d2369d",
+    "src/deepwide_agent/v24924_visible_row_table_compactor.py": "46d81f591da0d8271e157ad6a4881146dba161d6b295c5a264ed09135455aba4",
+    "src/deepwide_agent/v24928_unicode_total_visible_row_compactor.py": "334deede85698b1c85db7d61832bd94a22010378cb288cfc40a26845c75428fc",
+    "tests/test_v24928_unicode_total_visible_row_compactor.py": "2e90c4ea8a8171b75c7ff5d0441f8c7818950b056ff422ca8cc75e665890a3c0"
+  },
+  "source_manifest_sha256": "d85fae0f351e9078659442aa629f0f069e92e338434f64edb6f42f64e6316508",
+  "source_policy": {
+    "benchmark_label_mapping_gold_evaluator_score_reward_read": false,
+    "entropy_information_gain_shadow_only": true,
+    "entropy_or_information_gain_assigns_credit": false,
+    "v24927_postfreeze_content_free_aggregate_only": true,
+    "visible_question_and_same_forward_pages_only": true
+  },
+  "tests": {
+    "expected": 12,
+    "observed": 12,
+    "output_sha256": "c66e70788c7e67cd48694aafbfadef3eb3faa8d2894b1f8853db6a691f7cbcb0",
+    "passed": true,
+    "path": "tests/test_v24928_unicode_total_visible_row_compactor.py"
+  }
+}
