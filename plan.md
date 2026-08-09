@@ -1,8 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.71
+> 版本：6.72
 >
-> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.71 覆盖。**
+> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.72 覆盖。**
+
+> **6.72 V2.50.18 multi-identity distinct-coverage 外部质量 GO（2026-08-09）：在 V2.50.17 的 production-shaped synthetic 闭环后，V2.50.18 冻结 20 task×4 visible rows=`80` 个全新 IANA identity，与历史 180 个 TLD 零交集，protocol freeze 前未探测最终 endpoint/page。control 保持 stable-first-seen；candidate 只在同一 index/page/link/search/fetch union 和相同 `4 query / 10 fetch / 3 model / 60k / 240s` 每臂上限内，优先覆盖不同的 exact visible identity；paired physical cap 为 `4 query / 14 fetch`，20 executor、8 model slots，entropy/IG 仍不路由且 signed credit 恒为 0。实现补齐了 executed-order receipt、自身测试纳入完整回归及质量门的显式 fallback nonincrease；最终 V2.50.18+父链 `145/145`、compile、AST privileged/evaluator、credential、label-blind 与 watcher audit 全绿。实现/build audit/protocol/preactivation/execution-start 分别以 `6aafaa31 / 179ae6ef / 0fdd3682 / d5c99b53 / 262ab776` 从 clean pushed HEAD 独立冻结推送。**
+
+> **唯一 external forward 在 `47.922915s` 完成并以 `2e989790` 冻结：20/20 terminal、20/20 双臂 model success、20/20 executed order complete/matched、每题恰 4 physical query 且 ≤14 fetch、两臂 evidence chars 完全相等。candidate/control 的 new-distinct identity 为 `32/0`，target-bound projected pages 与 records 均为 `39/7`；10/20 strategy eligible、10/20 selection changed、10/20 positive identity/page/record gain，11/20 prediction changed。content-free audit `05f86abf` 为 `audit_valid=true, findings=[]`，所有预注册机制阈值严格通过后才以 `86de445a` 开放固定 80-row post-freeze evaluator。**
+
+> **唯一质量评测对 80 个 frozen endpoint 各访问一次、无 retry/refetch/replacement，80/80 gold rows 有效。stable control 为 Exact `3/20`、Entity/Row/Column F1 `1.0`、Item F1 `0.35`、Composite `0.8375`；distinct-coverage candidate 为 Exact `11/20`、Entity/Row/Column F1 `1.0`、Item F1 `0.75`、Composite `0.9375`，即 Exact `+8`、Item F1 `+0.40`、Composite `+0.10`，两臂 invalid/fallback 均为 0。result `9e6ac6d8` 与 post-audit `d4ccc1fb` 已推送，post-audit `findings=[]`。这是首个同时证明 `candidate-only distinct identity → projected/retained record → prediction change → Exact/Item-F1` 的 matched external quality GO，但不是 DeepWideBench 分数、entropy-credit 证据、leaderboard 或 SOTA。**
+
+> **下一执行顺序固定为：(1) 将 V2.50.17 treatment 作为 append-only、label-blind production integration 接入当前 V2.48.57 exact-220 父链，只接受 visible question 中严格可解析的多个明示 identity；非 multi-identity、歧义或无严格 distinct-coverage gain 必须逐字 identity handoff；(2) 不扩 query/fetch/model/token/context/wall cap，继续使用同轮 page/link union 与 task-local receipt；(3) production-shaped synthetic 和完整父回归必须证明父 globals 不变、并发隔离、fallback/invalid 不增、runtime 仅接收 `{opaque_id, question}`；(4) 从 clean pushed HEAD 分阶段冻结一次新的完整 220，20 executor/8 model slots，全部 220 prediction 先冻结后固定 32-worker 各评一次，无重试/补题/选择性重评；(5) GO 必须同时超过项目最佳 V2.48.57 的 Exact `9/220` 与 Composite `0.457249`，并保持 Entity/Row/Item/Column、invalid/fallback/transport reliability 不退，否则严格 NO-GO。当前仍无 leaderboard 提交或 SOTA。四个 protected watcher PID/start-time 未改变且从未重启。**
 
 > **6.71 V2.50.14–17 multi-identity detail coverage build-only 主线（2026-08-09）：V2.50.14 只接受一个连续编号的 visible plural-tag 身份块，或同一 inline tag 的多个显式身份；任一页必须在 exact URL-path token 与 title/leading surface 上联合且唯一匹配其中一行，同页所有 target fields 必须唯一、无冲突，每条 record 原子 admission；身份编号错位、重复/混合 tag、两个相似身份同时匹配、authority/path/surface 错绑或字段缺失/重复/冲突均逐字回退父 5k prefix。实现以 `7f1564d4` 推送。接线审查发现新 compact marker 虽语义正确，但冻结父 parser 只认 `[IDENTITY-TARGET-BOUND LATE-PAGE RECORDS]`，会把完整 multi-row record 误计0；`c4e52ed0` 改为保持父 wire-format marker，并新增父 `_target_bound_record_count()` 直接回归，不叉新 parser。**
 
