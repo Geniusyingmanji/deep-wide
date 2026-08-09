@@ -26,7 +26,7 @@ from deepwide_agent import v24949_mutual_partial_signature_ledger as candidate  
 
 
 DATE = "20260809"
-OUTPUT = ROOT / f"results/v24950_mutual_partial_signature_build_audit_v1_{DATE}.json"
+OUTPUT = ROOT / f"results/v24950_mutual_partial_signature_build_audit_v2_{DATE}.json"
 AUDIT_SOURCE = Path("scripts/audit_v24950_mutual_partial_signature_build.py")
 RUNTIME_SOURCE = Path("src/deepwide_agent/v24949_mutual_partial_signature_ledger.py")
 TEST_SOURCE = Path("tests/test_v24949_mutual_partial_signature_ledger.py")
@@ -261,6 +261,7 @@ def main() -> None:
         "mutual_unique_injective_fail_closed": True,
         "no_synonym_or_unit_dictionary": True,
         "partial_matching_table_headers_only": True,
+        "compact_header_declares_partial_binding": True,
         "entropy_information_gain_shadow_only": True,
         "unbound_observation_positive_credit_forced_zero": True,
         "external_or_public_launch_not_authorized": True,

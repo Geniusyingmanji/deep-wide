@@ -25,6 +25,7 @@ from __future__ import annotations
 
 import copy
 import hashlib
+import json
 from collections import Counter, defaultdict
 from collections.abc import Mapping, Sequence
 from typing import Any
@@ -423,6 +424,100 @@ def _discover(
     return records, counts
 
 
+def _compact_header(
+    page: Mapping[str, Any], schema: Sequence[Mapping[str, Any]]
+) -> str:
+    return "[SBCL-SCHEMA] " + json.dumps(
+        {
+            "source_host": page["host"],
+            "row_key_label": schema[0]["display"],
+            "targets": [
+                [int(column["index"]), str(column["display"])]
+                for column in schema[1:]
+            ],
+            "binding": "exact_or_full_or_mutual_partial_token_signature",
+            "conflicts": "omitted",
+        },
+        ensure_ascii=False,
+        separators=(",", ":"),
+    )
+
+
+def _compact_augment_pages(
+    pages: Sequence[Mapping[str, Any]],
+    records: Sequence[Mapping[str, Any]],
+    conflicts: set[tuple[str, int]],
+    schema: Sequence[Mapping[str, Any]],
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]], int, int]:
+    lines_by_page: dict[int, list[str]] = defaultdict(list)
+    partial_pages: set[int] = set()
+    observations: list[dict[str, Any]] = []
+    seen: set[tuple[str, str, int, str]] = set()
+    maximum_line = 0
+    compact_characters = 0
+    for record in records:
+        row = ledger_parent._canonical(record["row_key"])
+        eligible: list[Mapping[str, Any]] = []
+        for field in record["fields"]:
+            target = int(field["target_index"])
+            identity = (
+                str(record["source_url"]),
+                row,
+                target,
+                ledger_parent._canonical(field["value"]),
+            )
+            if (row, target) in conflicts or identity in seen:
+                continue
+            eligible.append(field)
+            seen.add(identity)
+        if not eligible:
+            continue
+        token, line = parent._compact_line(record, eligible)
+        if len(line) > BLOCK_CHARACTER_CAP:
+            raise ValueError("V2.49.49 compact record exceeds atomic block cap")
+        maximum_line = max(maximum_line, len(line))
+        compact_characters += len(line)
+        page_ordinal = int(record["source_page_ordinal"])
+        lines_by_page[page_ordinal].append(line)
+        if record["binding_kind"] == "mutually_unique_partial_signature_header_bound_table":
+            partial_pages.add(page_ordinal)
+        for field in eligible:
+            observation = {
+                "token": token,
+                "record_id": record["record_id"],
+                "source_page_ordinal": record["source_page_ordinal"],
+                "source_url": record["source_url"],
+                "source_host": record["source_host"],
+                "binding_kind": record["binding_kind"],
+                "row_key": record["row_key"],
+                "target_index": int(field["target_index"]),
+                "target_label": field["target_label"],
+                "value": field["value"],
+            }
+            observation["observation_payload_sha256"] = payload_sha256(observation)
+            observations.append(observation)
+    output: list[dict[str, Any]] = []
+    for page in pages:
+        copied = {
+            "title": str(page["title"]),
+            "url": str(page["url"]),
+            "content": str(page["content"]),
+        }
+        lines = lines_by_page.get(int(page["ordinal"]), [])
+        if lines:
+            header = (
+                _compact_header(page, schema)
+                if int(page["ordinal"]) in partial_pages
+                else parent._compact_header(page, schema)
+            )
+            compact_characters += len(header)
+            copied["content"] = (
+                header + "\n" + "\n".join(lines) + "\n\n" + copied["content"]
+            )
+        output.append(copied)
+    return output, observations, maximum_line, compact_characters
+
+
 _DISCOVERY_COUNT_NAMES = tuple(_zero_discovery_counts())
 _RECEIPT_COUNT_NAMES = (
     "input_page_count",
@@ -461,6 +556,7 @@ def _receipt(value: Mapping[str, Any]) -> dict[str, Any]:
         "ambiguous_duplicate_or_competing_partial_edge_fails_closed": True,
         "partial_signature_disabled_for_labelled_records": True,
         "non_ascii_and_single_token_partial_binding_disabled": True,
+        "compact_header_declares_partial_binding": True,
         "table_header_and_row_never_joined_across_page_or_structure_group": True,
         "source_url_host_record_row_target_and_value_atomically_bound": True,
         "conflicting_coordinates_fail_closed_before_projection": True,
@@ -492,6 +588,7 @@ def validate_receipt(value: Mapping[str, Any]) -> dict[str, Any]:
         "ambiguous_duplicate_or_competing_partial_edge_fails_closed",
         "partial_signature_disabled_for_labelled_records",
         "non_ascii_and_single_token_partial_binding_disabled",
+        "compact_header_declares_partial_binding",
         "table_header_and_row_never_joined_across_page_or_structure_group",
         "source_url_host_record_row_target_and_value_atomically_bound",
         "conflicting_coordinates_fail_closed_before_projection",
@@ -565,7 +662,7 @@ def build_projection(
     conflicts, coordinate_hosts, coordinate_urls = ledger_parent._coordinate_summary(
         records
     )
-    augmented, observations, maximum_line, ledger_chars = parent._compact_augment_pages(
+    augmented, observations, maximum_line, ledger_chars = _compact_augment_pages(
         stable, records, conflicts, schema
     )
     inherited = projector_parent.build_projection(

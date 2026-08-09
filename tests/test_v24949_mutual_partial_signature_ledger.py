@@ -41,6 +41,10 @@ class V24949MutualPartialSignatureLedgerTests(unittest.TestCase):
         self.assertEqual(receipt["partial_header_bound_table_count"], 1)
         self.assertEqual(receipt["discovered_row_key_count"], 2)
         self.assertEqual(receipt["retained_admissible_bound_observation_count"], 6)
+        self.assertIn(
+            '"binding":"exact_or_full_or_mutual_partial_token_signature"',
+            new["projection"],
+        )
         self.assertTrue(
             all(
                 record["binding_kind"]
