@@ -1,0 +1,67 @@
+clinic,clinic_before_map,exist_flag_gt,exist_flag_response,clinic_exact_match,clinic_exact_match_eval_msg,county_exact_match,county_exact_match_eval_msg,county_query,county_response,fulladdress_llm_judge,fulladdress_llm_judge_eval_msg,fulladdress_query,fulladdress_response,phonenumber_exact_match,phonenumber_exact_match_eval_msg,phonenumber_query,phonenumber_response,saturdayoperationhours_llm_judge,saturdayoperationhours_llm_judge_eval_msg,saturdayoperationhours_query,saturdayoperationhours_response
+plannedparenthood-fultonstreethealthcenter,Planned Parenthood Mar Monte – Fresno Health Center,,,1.0,key_match,1.0,"exact match, response: fresno, target: fresno",fresno,fresno,1.0,"- **idx_0:** Same address; “n” is equivalent to “N.” → 1
+- **idx_1:** Same address; “n” abbreviates “north.” → 1
+- **idx_2:** Different street address and city → 0
+
+```json
+{
+  ""idx_0"": 1,
+  ""idx_1"": 1,
+  ""idx_2"": 0
+}
+```","650n.fultonstreet,fresno,ca93728","650nfultonstreet,fresno,ca93728",1.0,"exact match, response: (559)488-4900, target: (559)488-4900",(559)488-4900,(559)488-4900,0.0,"- **idx_0:** Incorrect. The response closes at 4:00pm, while the target closes at 4:30pm.
+- **idx_1:** Incorrect. The response gives opening hours, but the target says closed.
+- **idx_2:** Incorrect. The response gives opening hours, but the target says closed.
+
+```json
+{
+  ""idx_0"": 0,
+  ""idx_1"": 0,
+  ""idx_2"": 0
+}
+```",8am-4:30pm,8:00am–4:00pm
+fpawomen'shealth-fresno,FPA Women’s Health – Fresno,,,1.0,key_match,1.0,"exact match, response: fresno, target: fresno",fresno,fresno,1.0,"- **idx_0:** Same address; “n” is equivalent to “N.” → 1
+- **idx_1:** Same address; “n” abbreviates “north.” → 1
+- **idx_2:** Different street address and city → 0
+
+```json
+{
+  ""idx_0"": 1,
+  ""idx_1"": 1,
+  ""idx_2"": 0
+}
+```","165northclarkstreet,fresno,ca93701","165nclarkstreet,fresno,ca93701",1.0,"exact match, response: (559)233-8657, target: (559)233-8657",(559)233-8657,(559)233-8657,0.0,"- **idx_0:** Incorrect. The response closes at 4:00pm, while the target closes at 4:30pm.
+- **idx_1:** Incorrect. The response gives opening hours, but the target says closed.
+- **idx_2:** Incorrect. The response gives opening hours, but the target says closed.
+
+```json
+{
+  ""idx_0"": 0,
+  ""idx_1"": 0,
+  ""idx_2"": 0
+}
+```",closed,8:00am–4:00pm
+plannedparenthood-familyfirsthealthcenter,Planned Parenthood Mar Monte – Visalia Health Center,,,1.0,key_match,0.0,"exact not match, response: tulare, target: fresno",fresno,tulare,0.0,"- **idx_0:** Same address; “n” is equivalent to “N.” → 1
+- **idx_1:** Same address; “n” abbreviates “north.” → 1
+- **idx_2:** Different street address and city → 0
+
+```json
+{
+  ""idx_0"": 1,
+  ""idx_1"": 1,
+  ""idx_2"": 0
+}
+```","6095n.1ststreet,fresno,ca93710","211nstevensonstreet,visalia,ca93291",0.0,"exact not match, response: (559)732-1529, target: (559)446-1515",(559)446-1515,(559)732-1529,0.0,"- **idx_0:** Incorrect. The response closes at 4:00pm, while the target closes at 4:30pm.
+- **idx_1:** Incorrect. The response gives opening hours, but the target says closed.
+- **idx_2:** Incorrect. The response gives opening hours, but the target says closed.
+
+```json
+{
+  ""idx_0"": 0,
+  ""idx_1"": 0,
+  ""idx_2"": 0
+}
+```",closed,8:00am–4:00pm
+fpawomen'shealth-tulare,,1.0,,,,,,tulare,,,,"1068ncherrystreet,tulare,ca93274",,,,(559)233-0990,,,,closed,
+plannedparenthood-maderahealthcenter,,1.0,,,,,,madera,,,,"500e.almondave,#1,madera,ca93637",,,,(559)675-1133,,,,closed,
+plannedparenthood-mercedhealthcenter,,1.0,,,,,,merced,,,,"3166collinsdrive,merced,ca95348",,,,(209)723-7751,,,,closed,

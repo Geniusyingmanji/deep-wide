@@ -1,0 +1,79 @@
+INFO: Pandarallel will run on 8 workers.
+INFO: Pandarallel will use Memory file system to transfer data between the main process and workers.
+{"event": "eval_start", "selected": 7, "resume_committed": 0, "committed_errors": 0, "crash_only_resume": false}
+{"event": "eval_done", "idx": 1, "instance_id": "deep2wide_result_68_胡润中国500强", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.288, "running_n": 1}
+2026-08-09 09:41:00.341 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 简称 | 中文全名 | 英文全名 | 举行周期 |
+| --- | --- | --- | --- |
+| CVPR |  ...
+2026-08-09 09:41:02.880 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "CVPR": "CVPR",
+  "ICCV": "ICCV",
+  "ECCV": "ECCV"
+}
+```
+2026-08-09 09:41:02.881 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 简称, primary_key_map {'CVPR': 'CVPR', 'ICCV': 'ICCV', 'ECCV': 'ECCV'}
+2026-08-09 09:41:02.887 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_69_ICCV, df_inner shape: (3, 8), answer_df shape: (3, 4), response_df shape: (3, 5)
+2026-08-09 09:41:05.096 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_69_ICCV, col 中文全名, metric_func_name llm_judge, score [1, 1, 1]
+2026-08-09 09:41:08.600 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_69_ICCV, col 英文全名, metric_func_name llm_judge, score [1, 1, 1]
+2026-08-09 09:41:08.600 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 每两年一届（奇数年）, target: 两年一次
+2026-08-09 09:41:08.600 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 每年一届, target: 一年一次
+2026-08-09 09:41:08.600 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 每两年一届（偶数年）, target: 两年一次
+2026-08-09 09:41:08.601 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_69_ICCV, col 举行周期, metric_func_name exact_match, score [0.0, 0.0, 0.0]
+2026-08-09 09:41:08.607 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_69_ICCV, P/R/F1 by unique_columns: 1.0000/1.0000/1.0000
+2026-08-09 09:41:08.607 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_69_ICCV, P/R/F1 by row: 0.0000/0.0000/0.0000
+2026-08-09 09:41:08.607 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_69_ICCV, P/R/F1 by item: 0.7500/0.7500/0.7500
+2026-08-09 09:41:08.609 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_69_ICCV, final table score: 0.0
+{"event": "eval_done", "idx": 2, "instance_id": "deep2wide_result_69_ICCV", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0, "f1_by_item": 0.75, "column_f1": 1.0, "error": null, "elapsed_seconds": 9.374, "running_n": 2}
+{"event": "eval_done", "idx": 3, "instance_id": "deep2wide_result_70_苏州大学", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 1.088, "running_n": 3}
+2026-08-09 09:41:12.372 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 中文名字 | 外文名 | 面积 | 地理位置 |
+| --- | --- | --- | --- |
+| 大开曼岛 | G ...
+2026-08-09 09:41:13.692 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "大开曼岛": "大开曼岛",
+  "开曼布拉克岛": "开曼布拉克",
+  "小开曼岛": "小开曼"
+}
+```
+2026-08-09 09:41:13.692 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 中文名字, primary_key_map {'大开曼岛': '大开曼岛', '开曼布拉克岛': '开曼布拉克', '小开曼岛': '小开曼'}
+2026-08-09 09:41:13.698 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_73_开曼群岛, df_inner shape: (3, 8), answer_df shape: (3, 4), response_df shape: (3, 5)
+2026-08-09 09:41:15.482 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_73_开曼群岛, col 外文名, metric_func_name llm_judge, score [1, 1, 1]
+2026-08-09 09:41:15.482 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 38.0, target: 23.0
+2026-08-09 09:41:15.482 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 28.5, target: 26.0
+2026-08-09 09:41:15.482 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 196.0, target: 220.0
+2026-08-09 09:41:15.483 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_73_开曼群岛, col 面积, metric_func_name number_near, score [0.0, 0.0, 0.0]
+2026-08-09 09:41:19.990 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_73_开曼群岛, col 地理位置, metric_func_name llm_judge, score [1, 1, 0]
+2026-08-09 09:41:19.995 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_73_开曼群岛, P/R/F1 by unique_columns: 1.0000/1.0000/1.0000
+2026-08-09 09:41:19.996 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_73_开曼群岛, P/R/F1 by row: 0.0000/0.0000/0.0000
+2026-08-09 09:41:19.996 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_73_开曼群岛, P/R/F1 by item: 0.6667/0.6667/0.6667
+2026-08-09 09:41:19.997 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_73_开曼群岛, final table score: 0.0
+{"event": "eval_done", "idx": 4, "instance_id": "deep2wide_result_73_开曼群岛", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0, "f1_by_item": 0.6666666666666666, "column_f1": 1.0, "error": null, "elapsed_seconds": 10.269, "running_n": 4}
+{"event": "eval_done", "idx": 5, "instance_id": "deep2wide_result_74_约翰·弗兰克海默", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 3.087, "running_n": 5}
+2026-08-09 09:41:26.154 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 中文名称 | 英文名称 | 校训 |
+| --- | --- | --- |
+| 斯坦福大学 | Stanford Uni ...
+2026-08-09 09:41:27.826 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "斯坦福大学": "斯坦福大学",
+  "圣克拉拉大学": "圣塔克拉拉大学",
+  "圣何塞州立大学": "圣何塞州立大学"
+}
+```
+2026-08-09 09:41:27.826 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 中文名称, primary_key_map {'斯坦福大学': '斯坦福大学', '圣克拉拉大学': '圣塔克拉拉大学', '圣何塞州立大学': '圣何塞州立大学'}
+2026-08-09 09:41:27.832 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_75_硅谷, df_inner shape: (3, 6), answer_df shape: (5, 3), response_df shape: (3, 4)
+2026-08-09 09:41:27.832 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: stanforduniversity, target: stanforduniversity
+2026-08-09 09:41:27.833 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: santaclarauniversity, target: santaclarauniversity
+2026-08-09 09:41:27.833 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: sanjoséstateuniversity, target: sanjosestateuniversity
+2026-08-09 09:41:27.833 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_75_硅谷, col 英文名称, metric_func_name exact_match, score [1.0, 1.0, 0.0]
+2026-08-09 09:41:31.498 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_75_硅谷, col 校训, metric_func_name llm_judge, score [1, 1, 1]
+2026-08-09 09:41:31.503 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_75_硅谷, P/R/F1 by unique_columns: 1.0000/0.6000/0.7500
+2026-08-09 09:41:31.503 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_75_硅谷, P/R/F1 by row: 0.6667/0.4000/0.5000
+2026-08-09 09:41:31.503 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_75_硅谷, P/R/F1 by item: 0.8889/0.5333/0.6667
+2026-08-09 09:41:31.504 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_75_硅谷, final table score: 0.0
+{"event": "eval_done", "idx": 6, "instance_id": "deep2wide_result_75_硅谷", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.5, "f1_by_item": 0.6666666666666667, "column_f1": 0.7499999999999999, "error": null, "elapsed_seconds": 8.393, "running_n": 6}
+{"event": "eval_done", "idx": 7, "instance_id": "deep2wide_result_76_跟着贝尔去冒险", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 4.201, "running_n": 7}
+SUMMARY {"n": 7, "valid_n": 7, "errors": 0, "complete": true, "judge_calls_current_process": 15, "score": 0.0, "entity_acc": 0.42857142857142855, "precision_by_row": 0.09523809523809523, "recall_by_row": 0.05714285714285715, "f1_by_row": 0.07142857142857142, "precision_by_item": 0.32936507936507936, "recall_by_item": 0.2785714285714286, "f1_by_item": 0.2976190476190476, "column_precision": 0.42857142857142855, "column_recall": 0.37142857142857144, "column_f1": 0.39285714285714285}
