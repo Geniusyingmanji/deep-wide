@@ -27,11 +27,6 @@ from .v24269_task_union_discovery import (
     _counter_snapshot,
     _source_lead,
 )
-from .v24270_budget_equivalent_union import (
-    SELECTION_POLICY as PARENT_SELECTION_POLICY,
-    payload_sha256,
-    validate_receipt as validate_budget_receipt,
-)
 
 
 POLICY_ID = "v24957_action_group_fair_task_union_v1"
@@ -413,29 +408,15 @@ class ActionFairBudgetEquivalentTaskUnionSearchClient:
         return self.parent.fetch_urls(requests_)
 
     def receipt(self) -> dict[str, Any]:
-        parent_receipt = self.parent.receipt()
-        value = {
-            "artifact_version": 1,
-            "role": "v24270_budget_equivalent_union_receipt",
-            "search_invocations": self.search_invocations,
-            "logical_query_count": self.logical_query_count,
-            "search_results_per_query": self.search_results_per_query,
-            "declared_query_result_capacity": self.declared_query_result_capacity,
-            "global_fetch_cap": self.global_fetch_cap,
-            "pre_cap_source_count": self.pre_cap_source_count,
-            "post_cap_source_count": self.post_cap_source_count,
-            "truncated_source_count": self.truncated_source_count,
-            "remaining_global_fetch_capacity": max(
-                0, self.global_fetch_cap - self.post_cap_source_count
-            ),
-            "selection_policy": PARENT_SELECTION_POLICY,
-            "parent_discovery_receipt_sha256": payload_sha256(parent_receipt),
-            "content_score_url_host_or_benchmark_metadata_used_for_selection": False,
-            "contains_question_query_url_host_page_candidate_prediction_answer_opaque_id_or_credential": False,
-            "mapping_gold_category_question_type_split_evaluator_score_read": False,
-        }
-        validate_budget_receipt(value)
-        return value
+        """Return only the truthful successor receipt.
+
+        The parent V2.42.70 schema hard-codes ``stable_first_seen`` and must
+        not be reused to describe this action-fair ordering.  A future
+        production integration needs a successor validator rather than a
+        semantic downcast.
+        """
+
+        return self.action_fair_budget_receipt()
 
     def action_fair_budget_receipt(self) -> dict[str, Any]:
         value = {

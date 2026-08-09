@@ -83,11 +83,21 @@ class V24957ActionFairDiscoveryTests(unittest.TestCase):
         self.assertEqual(receipt["fair_prefix_action_group_count"], 3)
         self.assertEqual(receipt["action_group_coverage_gain"], 2)
         self.assertEqual(receipt["selection_changed_invocation_count"], 1)
-        self.assertEqual(client.receipt()["post_cap_source_count"], 4)
+        self.assertEqual(client.receipt(), receipt)
         self.assertEqual(client.parent.receipt()["union_source_count"], 9)
         self.assertEqual(
             client.parent.action_fair_receipt()["raw_action_source_count"], 8
         )
+
+    def test_successor_receipt_does_not_mislabel_order_as_stable_first_seen(self) -> None:
+        client = target.ActionFairBudgetEquivalentTaskUnionSearchClient(
+            Inner(), search_results_per_query=3, global_fetch_cap=4
+        )
+        client.search_many(["q1", "q2"], max_results=3)
+        receipt = client.receipt()
+        self.assertEqual(receipt["ordering_policy"], target.ORDERING_POLICY)
+        self.assertNotIn("selection_policy", receipt)
+        self.assertNotIn("parent_discovery_receipt_sha256", receipt)
 
     def test_duplicate_url_across_groups_is_emitted_once_and_credits_membership(self) -> None:
         raw = batches()

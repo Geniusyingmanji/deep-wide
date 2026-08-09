@@ -29,7 +29,7 @@ from deepwide_agent.v24957_action_fair_discovery import (  # noqa: E402
 
 DATE = "20260809"
 ROLE = "v24957_action_fair_discovery_build_audit"
-OUTPUT = Path(f"results/v24957_action_fair_discovery_build_audit_v1_{DATE}.json")
+OUTPUT = Path(f"results/v24957_action_fair_discovery_build_audit_v2_{DATE}.json")
 SOURCES = (
     Path("src/deepwide_agent/v24957_action_fair_discovery.py"),
     Path("tests/test_v24957_action_fair_discovery.py"),
@@ -46,7 +46,7 @@ TEST_MODULES = (
     "tests.test_v24630_thin_backfill_search",
     "tests.test_v24957_action_fair_discovery",
 )
-EXPECTED_TESTS = 35
+EXPECTED_TESTS = 36
 PRIVILEGED_KEYS = frozenset(
     {
         "answer_key",
@@ -228,7 +228,7 @@ def build(*, now: int | None = None, require_clean: bool = True) -> dict[str, An
     synthetic = _synthetic()
     tests = _tests()
     checks = {
-        "tests_exactly_35_of_35": tests["passed"],
+        "tests_exactly_36_of_36": tests["passed"],
         "runtime_privileged_subscripts_absent": not ast_audit["privileged_subscripts"],
         "runtime_evaluator_imports_absent": not ast_audit["evaluator_imports"],
         "source_set_conserved": synthetic["source_set_equal"],
