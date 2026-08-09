@@ -1,0 +1,126 @@
+{
+  "arms": {
+    "candidate_8787": {
+      "endpoint": "http://127.0.0.1:8787/responses",
+      "max_retries": 1,
+      "model": "gpt-5.6-sol",
+      "reasoning_effort": "low",
+      "search_context_size": "medium",
+      "service_tier": "priority"
+    },
+    "control_9878": {
+      "endpoint": "http://127.0.0.1:9878/responses",
+      "max_retries": 1,
+      "model": "gpt-5.6-sol",
+      "reasoning_effort": "low",
+      "search_context_size": "medium",
+      "service_tier": "priority"
+    }
+  },
+  "artifact_version": 1,
+  "authorization": {
+    "benchmark_external_or_exact220_launch": false,
+    "evaluator": false,
+    "leaderboard_or_sota": false,
+    "one_neutral_dual_transport_gate": true,
+    "production_shaped_live_exposure_gate_design": false
+  },
+  "created_at_unix": 1786270560,
+  "gates": {
+    "candidate_absolute": {
+      "http_2xx": 8,
+      "maximum_deadline_failures": 0,
+      "maximum_task_p95_seconds": 75.0,
+      "maximum_transport_failures": 0,
+      "minimum_action_sources": 8,
+      "minimum_url_citations": 16,
+      "minimum_web_search_actions": 8,
+      "positive_total_tokens": true,
+      "provider_attempts": 8,
+      "provider_response_calls": 8,
+      "query_rows_with_url_citation": 16,
+      "successful_query_rows": 16,
+      "successful_task_count": 8,
+      "terminal_task_count": 8
+    },
+    "candidate_relative": {
+      "maximum_task_p95_wall_ratio": 1.5,
+      "maximum_total_token_ratio": 1.5,
+      "minimum_action_source_ratio": 0.75,
+      "minimum_successful_query_row_ratio": 1.0,
+      "minimum_url_citation_ratio": 1.0
+    },
+    "control_reference": {
+      "http_2xx": 8,
+      "maximum_deadline_failures": 0,
+      "maximum_task_p95_seconds": 75.0,
+      "maximum_transport_failures": 0,
+      "minimum_action_sources": 6,
+      "minimum_query_rows_with_url_citation": 12,
+      "minimum_successful_query_rows": 12,
+      "minimum_successful_task_count": 6,
+      "minimum_url_citations": 12,
+      "minimum_web_search_actions": 6,
+      "positive_total_tokens": true,
+      "provider_attempts": 8,
+      "provider_response_calls": 8,
+      "terminal_task_count": 8
+    },
+    "maximum_batch_wall_seconds": 120.0
+  },
+  "git_head": "71496c58d071548734210e670a917541403bfd52",
+  "protected_watchers": [
+    {
+      "marker": "scripts/watch_v2415_r1_checkpoint_liveness.py",
+      "pid": 795336,
+      "start_ticks": 713986317
+    },
+    {
+      "marker": "scripts/watch_v24218_exact220_executor.py",
+      "pid": 3061652,
+      "start_ticks": 747569004
+    },
+    {
+      "marker": "scripts/watch_v24215_joint_package_recovery.py",
+      "pid": 2808901,
+      "start_ticks": 746680268
+    },
+    {
+      "marker": "scripts/watch_v24216_package_gate.py",
+      "pid": 2889939,
+      "start_ticks": 746969965
+    }
+  ],
+  "protocol_id": "v24956_neutral_dual_responses_transport_gate_v1",
+  "protocol_payload_sha256": "096c0997e69f6dde1f5dd9689de92a764c0315bc349373f0f752b2684a38387f",
+  "role": "v24956_neutral_dual_transport_preregistration",
+  "schedule": {
+    "executor_concurrency": 16,
+    "invocation_schedule_sha256": "3368a0981695d7f28f1cc2c236238377b155d24ac23d6b2cb62468236c8f59a6",
+    "one_provider_attempt_per_invocation": true,
+    "queries_per_task": 2,
+    "query_rows_per_arm": 16,
+    "query_vector_sha256": "40fda1332e8b1a0325d149dd87f3ab3983ee59414d2b794c9e6815128655edea",
+    "results_per_query": 3,
+    "task_deadline_seconds": 90.0,
+    "tasks_per_arm": 8,
+    "total_invocations": 16
+  },
+  "source_manifest": {
+    "scripts/deepwide_api_lease.py": "8d9cffa78617b458172307d3558c76e9370f045f531c2f5aaaceb866f5a78c7d",
+    "scripts/preregister_v24278_search_context_pair.py": "f833bdee06b9c590cb2dfb1e7438879612dd53b2d9373dc3bdddcf1227c6ad91",
+    "scripts/v24956_neutral_dual_transport_gate.py": "40e02bde7792b7f24b33e3c77efc6f96e21655e3e9b5c97fe27c7876ebabba97",
+    "src/deepwide_agent/native_search.py": "cd0d6bfccf4b345b11274558bdcffb39d279697d183242baf811dfd56ac71e50",
+    "src/deepwide_agent/v24287_hard_deadline_fetch.py": "da4ee0fb7ffaf99389c6c6c0a5d8f075b72e15bd99a1e72f534ccc3f29cde468",
+    "src/deepwide_agent/v24316_deadline_search.py": "dd5ded612bfecb624f38d5d86d379be1e973dbbd6df55084157cb33a758b3260",
+    "tests/test_v24956_neutral_dual_transport_gate.py": "d2700f5d53b25b33ebe86c501535ab6fbb43545e34e95fd0ab72f3dcee5c6c99"
+  },
+  "source_manifest_sha256": "d4e140c780da292d1b25f20ca7f15f08f567acc4b425d1d34a927427f3c35fc4",
+  "source_policy": {
+    "benchmark_manifest_question_prediction_mapping_gold_category_question_type_split_evaluator_score_reward_read": false,
+    "credential_value_environment_or_keyring_read": false,
+    "neutral_public_software_documentation_queries_only": true,
+    "public_page_fetch_task_answer_synthesis_or_evaluator_effect": false,
+    "query_url_title_snippet_page_answer_provider_payload_or_per_task_row_persisted": false
+  }
+}
