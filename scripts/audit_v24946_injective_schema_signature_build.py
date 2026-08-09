@@ -179,6 +179,17 @@ def _candidate_process_absent() -> bool:
         "v24945_injective_schema_signature",
         "v24946_injective_schema_signature",
     )
+    excluded = {os.getpid()}
+    cursor = os.getppid()
+    while cursor > 1 and cursor not in excluded:
+        excluded.add(cursor)
+        try:
+            fields = (Path("/proc") / str(cursor) / "stat").read_text(
+                encoding="utf-8"
+            ).split()
+            cursor = int(fields[3])
+        except (FileNotFoundError, PermissionError, ProcessLookupError, ValueError, IndexError):
+            break
     for entry in Path("/proc").iterdir():
         if not entry.name.isdigit():
             continue
@@ -188,7 +199,7 @@ def _candidate_process_absent() -> bool:
             )
         except (FileNotFoundError, PermissionError, ProcessLookupError):
             continue
-        if any(marker in command for marker in markers) and entry.name != str(os.getpid()):
+        if any(marker in command for marker in markers) and int(entry.name) not in excluded:
             return False
     return True
 
