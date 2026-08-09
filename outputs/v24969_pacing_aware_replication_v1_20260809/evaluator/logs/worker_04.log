@@ -1,0 +1,104 @@
+INFO: Pandarallel will run on 8 workers.
+INFO: Pandarallel will use Memory file system to transfer data between the main process and workers.
+{"event": "eval_start", "selected": 7, "resume_committed": 0, "committed_errors": 0, "crash_only_resume": false}
+2026-08-09 13:08:13.157 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 职务 | 姓名 | 出生日期 | 出生地 |
+| --- | --- | --- | --- |
+| 澳门特别行政区行政长 ...
+2026-08-09 13:08:16.794 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "岑浩辉": "岑浩辉",
+  "张永春": "张永春",
+  "戴建业": "戴建业",
+  "黄少泽": "黄少泽",
+  "柯岚": "柯岚",
+  "谭伟文": "谭伟文",
+  "欧阳湘": "欧阳湘",
+  "陈子劲": "陈子劲",
+  "梁文昌": "梁文昌"
+}
+```
+2026-08-09 13:08:16.794 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 姓名, primary_key_map {'岑浩辉': '岑浩辉', '张永春': '张永春', '戴建业': '戴建业', '黄少泽': '黄少泽', '柯岚': '柯岚', '谭伟文': '谭伟文', '欧阳湘': '欧阳湘', '陈子劲': '陈子劲', '梁文昌': '梁文昌'}
+2026-08-09 13:08:18.290 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_27_澳门, df_inner shape: (9, 8), answer_df shape: (13, 4), response_df shape: (11, 5)
+2026-08-09 13:08:20.336 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_27_澳门, col 职务, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 1, 1, 1]
+2026-08-09 13:08:20.340 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 1962-08-01 00:00:00, target: 1962-05-01 00:00:00
+2026-08-09 13:08:20.342 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 1.0 msg date near, response: 1966-08-01 00:00:00, target: 1966-09-01 00:00:00
+2026-08-09 13:08:20.349 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 不详, target: 58-08-09
+2026-08-09 13:08:20.351 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 1.0 msg date near, response: 1968-08-01 00:00:00, target: 1968-09-01 00:00:00
+2026-08-09 13:08:20.357 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 不详, target: 52-08-09
+2026-08-09 13:08:20.362 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 不详, target: 66-08-09
+2026-08-09 13:08:20.367 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 不详, target: 42-08-09
+2026-08-09 13:08:20.372 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 不详, target: 62-08-09
+2026-08-09 13:08:20.378 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 不详, target: 56-08-09
+2026-08-09 13:08:20.379 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_27_澳门, col 出生日期, metric_func_name date_near, score [0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+2026-08-09 13:08:25.173 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_27_澳门, col 出生地, metric_func_name llm_judge, score [1, 1, 1, 0, 0, 1, 0, 1, 0]
+2026-08-09 13:08:25.180 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_27_澳门, P/R/F1 by unique_columns: 0.8182/0.6923/0.7500
+2026-08-09 13:08:25.180 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_27_澳门, P/R/F1 by row: 0.0909/0.0769/0.0833
+2026-08-09 13:08:25.180 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_27_澳门, P/R/F1 by item: 0.5682/0.4808/0.5208
+2026-08-09 13:08:25.183 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_27_澳门, final table score: 0.0
+{"event": "eval_done", "idx": 1, "instance_id": "deep2wide_result_27_澳门", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.08333333333333334, "f1_by_item": 0.5208333333333334, "column_f1": 0.7500000000000001, "error": null, "elapsed_seconds": 22.599, "running_n": 1}
+{"event": "eval_done", "idx": 2, "instance_id": "deep2wide_result_28_延边朝鲜族自治州", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 5.408, "running_n": 2}
+{"event": "eval_done", "idx": 3, "instance_id": "deep2wide_result_29_浙江省东阳市", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.277, "running_n": 3}
+2026-08-09 13:08:36.191 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 角色姓名 | 角色类型 | 头发颜色 |
+| --- | --- | --- |
+| 小叶子 | 死神 | 白色 |
+|  ...
+2026-08-09 13:08:37.798 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "小叶子": "小叶子",
+  "特莉波卡": "特莉波卡",
+  "霞露零": "霞露零",
+  "耶芙娜": "耶芙娜"
+}
+```
+2026-08-09 13:08:37.799 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 角色姓名, primary_key_map {'小叶子': '小叶子', '特莉波卡': '特莉波卡', '霞露零': '霞露零', '耶芙娜': '耶芙娜'}
+2026-08-09 13:08:37.804 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_30_犹格索托斯的庭院, df_inner shape: (4, 6), answer_df shape: (4, 3), response_df shape: (4, 4)
+2026-08-09 13:08:45.526 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_30_犹格索托斯的庭院, col 角色类型, metric_func_name llm_judge, score [0, 0, 0, 0]
+2026-08-09 13:08:47.843 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_30_犹格索托斯的庭院, col 头发颜色, metric_func_name llm_judge, score [0, 0, 0, 1]
+2026-08-09 13:08:47.847 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_30_犹格索托斯的庭院, P/R/F1 by unique_columns: 1.0000/1.0000/1.0000
+2026-08-09 13:08:47.847 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_30_犹格索托斯的庭院, P/R/F1 by row: 0.0000/0.0000/0.0000
+2026-08-09 13:08:47.847 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_30_犹格索托斯的庭院, P/R/F1 by item: 0.4167/0.4167/0.4167
+2026-08-09 13:08:47.848 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_30_犹格索托斯的庭院, final table score: 0.0
+{"event": "eval_done", "idx": 4, "instance_id": "deep2wide_result_30_犹格索托斯的庭院", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0, "f1_by_item": 0.4166666666666667, "column_f1": 1.0, "error": null, "elapsed_seconds": 14.932, "running_n": 4}
+{"event": "eval_done", "idx": 5, "instance_id": "deep2wide_result_31_四川省九大高原湖泊", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 1.648, "running_n": 5}
+2026-08-09 13:08:50.579 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 自然保护地名称 | 保护类型 | 面积单位公顷 | 设立时间 | 所属区域 |
+| --- | --- | --- | - ...
+2026-08-09 13:08:53.258 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "自然保护地名称": "自然保护地名称",
+  "保护类型": "保护类型",
+  "面积单位公顷": "面积（单位：公顷）",
+  "设立时间": "设立时间",
+  "所属区域": "所属区域"
+}
+```
+2026-08-09 13:08:53.258 | INFO     | eval.evaluation.evaluation:evaluate_single_query:172 - column map: {'自然保护地名称': '自然保护地名称', '保护类型': '保护类型', '面积单位公顷': '面积（单位：公顷）', '设立时间': '设立时间', '所属区域': '所属区域'}
+2026-08-09 13:08:53.258 | INFO     | eval.evaluation.evaluation:evaluate_single_query:173 - befor mapping: Index(['自然保护地名称', '保护类型', '面积单位公顷', '设立时间', '所属区域'], dtype='object')
+2026-08-09 13:08:53.259 | INFO     | eval.evaluation.evaluation:evaluate_single_query:175 - after mapping: Index(['自然保护地名称', '保护类型', '面积（单位：公顷）', '设立时间', '所属区域'], dtype='object')
+2026-08-09 13:08:55.797 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "海南东寨港国家级自然保护区": "海南东寨港国家级自然保护区",
+  "海南大田国家级自然保护区": "海南大田国家级自然保护区"
+}
+```
+2026-08-09 13:08:55.797 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 自然保护地名称, primary_key_map {'海南东寨港国家级自然保护区': '海南东寨港国家级自然保护区', '海南大田国家级自然保护区': '海南大田国家级自然保护区'}
+2026-08-09 13:08:55.824 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_32_海南省, df_inner shape: (2, 10), answer_df shape: (10, 5), response_df shape: (10, 6)
+2026-08-09 13:08:55.825 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 国家级自然保护区, target: 自然保护区
+2026-08-09 13:08:55.825 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 国家级自然保护区, target: 自然保护区
+2026-08-09 13:08:55.826 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_32_海南省, col 保护类型, metric_func_name exact_match, score [0.0, 0.0]
+2026-08-09 13:08:55.826 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1314.0, target: 1308.57
+2026-08-09 13:08:55.826 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 3337.6, target: 3421.32
+2026-08-09 13:08:55.826 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_32_海南省, col 面积（单位：公顷）, metric_func_name number_near, score [1.0, 1.0]
+2026-08-09 13:08:55.829 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 1976-08-01 00:00:00, target: 2040-08-09 00:00:00
+2026-08-09 13:08:55.831 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 1980-08-01 00:00:00, target: 2046-08-09 00:00:00
+2026-08-09 13:08:55.832 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_32_海南省, col 设立时间, metric_func_name date_near, score [0.0, 0.0]
+2026-08-09 13:08:58.492 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_32_海南省, col 所属区域, metric_func_name llm_judge, score [0, 0]
+2026-08-09 13:08:58.497 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_32_海南省, P/R/F1 by unique_columns: 0.2000/0.2000/0.2000
+2026-08-09 13:08:58.497 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_32_海南省, P/R/F1 by row: 0.0000/0.0000/0.0000
+2026-08-09 13:08:58.497 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_32_海南省, P/R/F1 by item: 0.0800/0.0800/0.0800
+2026-08-09 13:08:58.498 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_32_海南省, final table score: 0.0
+{"event": "eval_done", "idx": 6, "instance_id": "deep2wide_result_32_海南省", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0, "f1_by_item": 0.08, "column_f1": 0.20000000000000004, "error": null, "elapsed_seconds": 8.959, "running_n": 6}
+{"event": "eval_done", "idx": 7, "instance_id": "deep2wide_result_33_宁德市", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.54, "running_n": 7}
+SUMMARY {"n": 7, "valid_n": 7, "errors": 0, "complete": true, "judge_calls_current_process": 16, "score": 0.0, "entity_acc": 0.42857142857142855, "precision_by_row": 0.012987012987012988, "recall_by_row": 0.01098901098901099, "f1_by_row": 0.011904761904761906, "precision_by_item": 0.15212121212121213, "recall_by_item": 0.13963369963369962, "f1_by_item": 0.14535714285714288, "column_precision": 0.2883116883116883, "column_recall": 0.2703296703296703, "column_f1": 0.2785714285714286}
