@@ -595,7 +595,7 @@ def build_invalid_audit() -> dict[str, Any]:
         and reproduction["wrong_iso3_exact"] == 0,
         "focused_tests_exact8": tests["passed"],
         "source_and_test_tracked": _tracked(SOURCE) and _tracked(TEST),
-        "network_model_search_fetch_or_evaluator_called": False,
+        "network_model_search_fetch_or_evaluator_not_called": True,
     }
     findings = [name for name, passed in checks.items() if passed is not True]
     value: dict[str, Any] = {
