@@ -1,8 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.61
+> 版本：6.62
 >
-> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.61 覆盖。**
+> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.62 覆盖。**
+
+> **6.62 V2.49.80–83 late-page production-isomorphic 外部门与机制 NO-GO（2026-08-09）：V2.49.80 在同一 fetch 完整解码后、旧5k截断前生成 identity/target-bound compact evidence；无安全绑定时逐字回退旧 prefix。V2.49.81 保留同 fetch 的 raw-prefix shadow；V2.49.82 固定同页字节、顺序、prompt/model/output/evidence cap，每题最多 `4 query / 10 fetch / 3 model / 240s`，entropy/IG 仅 shadow、signed credit 恒为 0。80/80 直接与父链测试通过，runtime privileged/evaluator/credential findings 均为空。V2.49.83 冻结 20 个新 IANA TLD 可见任务，forward 仅读 `{opaque_id, question}` 与同轮公开页，gold/mapping/evaluator 在预测冻结和 forward audit 前均关闭。**
+>
+> **唯一 forward 在 `31.174163s` 终止 `20/20`，两臂 evidence 字符严格相等（各 `94,326`），无 retry/resume/补题。但只有 `2/20` 双臂模型成功、`11/20` 有 usable page、`0/20` 页面表示变化、`0/20` 机制触发、`1/20` prediction change；预注册机制门严格 NO-GO。`c8a62c3e` 已冻结并推送 forward result/20 行 task result/prediction freeze，`563966b3` 已推送 `audit_valid=true, findings=[]`的 forward audit；`postfreeze_external_evaluator_protocol=false`，因此未抓取 IANA gold、未评分，也未授权新 DeepWideBench 220。**
+>
+> **content-free 失败归因已定位三个通用控制面缺陷。第一，旧 visible-column parser 会把英文列声明的句号后指令吞入最后一列：本人口的真实列是 `Domain, Type, TLD Manager`，旧 score-first parser 实际只得到两列，ledger parser 则把整个尾句并入第三列；仓库已有 label-blind robust parser 能正确得到三列，但 V2.49.80/82 未接入。这同时解释页面表头无法绑定和大量 synthesis exact-header `ValueError`：11 题进入三次 logical model call，仅 2 题双臂成功，8 题双臂同时 `ValueError`，1 题仅 control `ValueError`。第二，所谓 fixed-full-budget 会被 planner 返回的 query 条数静默缩容：18 题只计划/执行 1 query、2 题为 2 query，20/20 controller 都因 `no_delta_budget` 停止，实际仅 `22 query / 33 fetch`。第三，32 个 usable page 含 `411,963` 解码字符，其中 `321,815` 在旧 5k 之后，但旧 schema 绑定下 discovered/admissible/retained record 全为 0；这是 parser/structure engagement 失败，不是页面太短。**
+>
+> **下一候选顺序固定为：(1) 在新 append-only runtime/projector 统一复用现有 robust visible-schema parser；(2) 将 fixed-full-budget 修正为“planner 少于四条时，只用可见问题和已规划 query 确定性补全不重复的通用 official/list/index/database 变体”，不从答案或任务标签生成 query；(3) 在不新增 model call 的前提下复用已有 deterministic table normalizer，只做表头顺序/等宽位置、明确序号列删除和空格 Unknown，不改写非空事实单元格。先用全新 benchmark-external population 重新冻结 matched paired gate；必须同时达到 `20/20` 双臂成功、非零且达阈值的 record/mechanism/prediction change，并在 post-freeze quality 上 Exact 严格增加、其他指标不退，才能设计新的 keyless public 220。当前完整 220 分数不变：项目单轮最佳 V2.48.57 为 Exact `9/220`、Composite `0.457249`；最新 V2.49.69 为 transport-degraded `5/220 / 0.430226`；没有 leaderboard/SOTA。entropy/IG 继续仅作 shadow/VOC feature，未通过 admissible observation、identity/target/source binding 与 matched counterfactual outer utility 时 signed credit 恒为 0。**
 
 > **6.61 V2.49.70–71 same-process readiness 修复与真实 NO-GO（2026-08-09）：V2.49.69 已证明旧控制面存在 authorization bug——launch 前 V2.49.55 已得到 `0/12 healthy, 12/12 HTTP 432, passed=false`，但 execution-start 只检查 GPT-5.6 端口、旧 transport evidence、lease/process/watcher，未消费该 NO-GO，仍授权了退化全集。V2.49.70 因此新增 production-shaped、benchmark-blind readiness：12 个 ephemeral key 各用固定中性 query 经相同 rate-aware transport exactly once；每个 key 都必须得到合法 2xx 和至少一个 URL lead，任一 401/403/429/432、空结果、transport failure 或 credential echo 都 fail closed。receipt 只保留聚合计数；成功时才返回不可复制、不可序列化、一次性消费的内存 capability，交付的正是刚探测过的同一 tuple 凭据。10/10 定向测试与父 transport 回归通过。**
 >
