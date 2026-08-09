@@ -1,0 +1,66 @@
+{
+  "artifact_version": 1,
+  "audit_payload_sha256": "bdc7d90b73a5b23fb22d812a85e7d6cb9bf71fa27e2b4e5f61660af54678b77a",
+  "audit_valid": true,
+  "authorization": {
+    "leaderboard_or_sota": false,
+    "postfreeze_external_evaluator_protocol": false,
+    "public_exact220_launch": false
+  },
+  "checks": {
+    "all_rows_valid": true,
+    "forward_aggregate_anchor_preservation_bound": true,
+    "forward_aggregate_arm_totals_bound": true,
+    "forward_aggregate_authority_selection_bound": true,
+    "forward_aggregate_model_success_bound": true,
+    "forward_aggregate_prediction_change_bound": true,
+    "forward_aggregate_query_local_advantage_bound": true,
+    "forward_aggregate_query_vector_bound": true,
+    "forward_aggregate_record_advantage_bound": true,
+    "forward_aggregate_strategy_bound": true,
+    "forward_aggregate_terminal_bound": true,
+    "forward_process_absent": true,
+    "mapping_gold_evaluator_closed_during_forward": true,
+    "postfreeze_gold_absent": true,
+    "prediction_freeze_bound": true,
+    "protected_watchers_exact": true,
+    "task_results_bound": true
+  },
+  "created_at_unix": 1786300154,
+  "findings": [],
+  "forward_result_sha256": "d2c2903775038ba79308a73dc8f9addddf3b8efb0b25cc436a3e107751d9d671",
+  "mechanism_gate": {
+    "all_task_evidence_character_counts_equal_between_arms": true,
+    "all_tasks_execute_exactly_four_queries_per_arm": true,
+    "all_tasks_plan_exactly_four_queries_per_arm": true,
+    "arms": {
+      "legacy_completed_queries": {
+        "query_local_results": 34,
+        "retained_records": 46,
+        "sources_discovered": 86,
+        "usable_pages": 83
+      },
+      "provider_anchor_hybrid_queries": {
+        "query_local_results": 6,
+        "retained_records": 0,
+        "sources_discovered": 187,
+        "usable_pages": 185
+      }
+    },
+    "both_arms_model_success_tasks": 19,
+    "completed_task_model_calls_at_most_three": true,
+    "executed_arm_order_matches_frozen_vector": true,
+    "first_explicit_authority_phrase_selected_tasks": 20,
+    "hybrid_query_strategy_applied_tasks": 20,
+    "passed": false,
+    "prediction_changed_tasks": 7,
+    "provider_anchor_preserved_tasks": 20,
+    "query_vector_changed_tasks": 20,
+    "tasks_with_candidate_query_local_result_advantage": 1,
+    "tasks_with_candidate_record_advantage": 0,
+    "terminal_tasks": 20
+  },
+  "prediction_freeze_sha256": "201b655a50c625ac9fd324a78c08eda7eb9c10691a7ff96bddf7f502a30abda9",
+  "protocol_id": "v24994_paired_provider_anchor_hybrid_query_external_gate_v1",
+  "role": "v24994_hybrid_query_external_forward_audit"
+}
