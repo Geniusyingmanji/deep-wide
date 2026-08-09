@@ -20,6 +20,9 @@ from deepwide_agent import v24940_open_world_ledger_external_contract as contrac
 from scripts import run_v24923_target_value_external as engine  # noqa: E402
 
 
+_INHERITED_BUILD_FORWARD_AUDIT = engine.build_forward_audit
+
+
 def parse_target(
     blob: bytes, target: dict[str, str], url: str
 ) -> tuple[dict[str, str], dict[str, dict[str, str]]]:
@@ -220,7 +223,7 @@ def build_snapshot(
 
 
 def build_forward_audit(*, now: int | None = None) -> dict[str, Any]:
-    value = engine.build_forward_audit(now=now)
+    value = _INHERITED_BUILD_FORWARD_AUDIT(now=now)
     projections = engine._read_jsonl(ROOT / contract.PROJECTIONS)
     candidate_receipts = [
         row["projection_receipts"]["target_value_30k"]
@@ -249,6 +252,17 @@ def build_forward_audit(*, now: int | None = None) -> dict[str, Any]:
         and row.get("policy_id") == candidate.POLICY_ID
         and row.get("entropy_or_information_gain_assigns_credit") is False
         for row in candidate_receipts
+    )
+    value["checks"]["candidate_receipts_valid"] = value["checks"][
+        "schema_bound_candidate_receipts_valid"
+    ]
+    value["checks"]["parent_receipts_valid"] = all(
+        row.get("role") == "v24940_content_free_contextual_parent_receipt"
+        and row.get("entropy_or_information_gain_assigns_credit") is False
+        for row in (
+            projection["projection_receipts"]["parent_30k"]
+            for projection in projections
+        )
     )
     value["checks"]["open_world_ledger_mechanism_exposed"] = (
         admissible >= int(gate["minimum_admissible_bound_observations"])
