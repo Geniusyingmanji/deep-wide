@@ -1,6 +1,6 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
-> 检索截止：2026-08-07 14:10 UTC；项目证据更新：2026-08-08 UTC（至 V2.48.50）
+> 检索截止：2026-08-07 14:10 UTC；项目证据更新：2026-08-09 UTC（至 V2.49.48）
 >
 > 结论强度：这是基于公开文献的 novelty audit，不是“没有任何相关工作”的证明。2026 年文献多为尚未同行评审的 arXiv 预印本，文中将预印本结果视为作者报告，而非独立复现事实。
 
@@ -1285,3 +1285,15 @@ V2.49.42 将 V2.49.39 每条 record 重复的 source、binding、row-label 和 t
 V2.49.44 将 compact ledger 接入完整 DeepWideBench 220，保持 task vector、GPT-5.6 transport、`4 query/10 fetch/3 model/240s`、`20/8` 并发与 evaluator 不变。forward `870.668666s` 完成220/220、0 fallback；206 evaluator-valid、14 error-as-zero，最终 Exact `6/220`、Entity `0.704545`、Row/Item/Column F1 `0.206221/0.389805/0.477624`、Composite `0.444549`。相对 V2.49.38 的 Exact 下降1、Composite上升`0.005373`；相对项目最佳 V2.48.57 仍低3个Exact和`0.012700` Composite，因此不是新最佳或SOTA。
 
 更关键的是220份content-free receipt再次给出生产负控制：1,313 pages和约433万投影字符中虽解析出1,092个visible schema columns，却没有发现任何schema-bound record、row或admissible observation。V2.49.42在真实forward中未自然触发，所以本轮分数不能归因于compact ledger；external GO证明的是“结构已经形成后如何压缩”，尚未解决“native fetch文本如何可靠恢复结构”。后续创新点应落在真实HTML-to-text布局上的header/record recovery与provenance-preserving binding，并在external frozen native-layout人口先验证；raw entropy、页面数和跨rollout波动仍不得获得正credit。
+
+## 2026-08-09：V2.49.45–48——native-layout 外部门通过，但完整 220 未触发新机制
+
+V2.49.45 用一个窄而可审计的规则扩展 schema binding。删除 bracket code 与四位年份后，page label 和 visible column 只有在多 token ASCII multiset 完全相同、且全表映射唯一一对一时才能绑定。单 token、非 ASCII、重复列、共享 signature、坏列宽、跨页或冲突全部 fail closed。V2.49.46 的 47/47 clean-build tests 和 label-blind audit 均通过；entropy/IG 仍仅是 shadow signal，signed credit 恒为 0。因此该实现检验的是 provenance-preserving schema recovery，不是在线 credit shaping。
+
+V2.49.47 在 fresh `SP.POP.TOTL@2019` 的 18 个 task-disjoint cohort 上检验真实 native HTML 经生产 `html_to_text` 后的布局。两臂共享冻结页面、prompt、GPT-5.6、调用次数和预算。candidate 在 18/18 题改变 projection，形成 18 个 signature-bound tables、288 个 row keys 与 864/864 admissible/retained observations。Exact 从 `0/18` 升至 `13/18`，Composite 从 `0.708333` 升至 `0.973958`，Entity 从 `0.500000` 升至 `0.965278`，Row/Item F1 均从 `0.666667` 升至 `0.965278`，Column F1 保持 `1.0`。这个 matched shared-prefix 结果支持 native-layout schema recovery 的外部效用，但 claim scope 明确排除 DeepWideBench、entropy/signed credit 与 SOTA。权威结果与审计为 [`results/v24947_native_layout_signature_external_result_v1_20260809.json`](results/v24947_native_layout_signature_external_result_v1_20260809.json) 和 [`results/v24947_native_layout_signature_external_postresult_audit_v1_20260809.json`](results/v24947_native_layout_signature_external_postresult_audit_v1_20260809.json)。
+
+V2.49.48 随后完成完整 DeepWideBench 220。forward 仍只读 `{opaque_id, question}` 与同次 fetched pages，mapping、gold、category、question type、split 和 evaluator 在全部 prediction 冻结前保持关闭。唯一 single-pass forward 用时 `864.734237s`，220/220 model-generated、0 fallback，共 `10,759,349` system tokens。固定 32-worker evaluator 对全部冻结预测各评一次，用时 `277.104120s`；213 valid、7 error-as-zero。最终 Exact `6/220=2.7273%`、Entity `0.672727`、Row/Item/Column F1 `0.221687/0.386769/0.467035`、Composite `0.437055`。相对 V2.49.44，Exact 不变而 Composite 下降 `0.007494`；相对项目单轮最佳 V2.48.57，Exact 少3个、Composite低 `0.020194`。因此它不是 benchmark 提升、leaderboard 结果或 SOTA。权威结果与审计为 [`results/v24948_schema_signature_exact220_result_v1_20260809.json`](results/v24948_schema_signature_exact220_result_v1_20260809.json) 和 [`results/v24948_schema_signature_exact220_postresult_audit_v1_20260809.json`](results/v24948_schema_signature_exact220_postresult_audit_v1_20260809.json)。
+
+本轮最有识别力的证据仍是 content-free mechanism receipt。1,271 个页面包含 5,882 个 pipe groups、8,323 个 pipe lines 和 63 个 schema-touching lines，但只形成4个 exact header mappings；signature header mappings、discovered records/rows 和 admissible observations全部为0。V2.49.45 在完整运行中没有自然触发，故 `6/220` 不能获得 signature recovery 或 entropy credit。结果也修正了下一假设：问题不只是 HTML-to-text 是否保留 pipe group，而是生产页面 header 与 visible schema 之间常含部分 token、同义词、单位或更复杂的对齐差异。
+
+下一实验应把 header alignment 从终局 score 调参中分离。在新的 benchmark-external、生产同形 frozen native-layout population 上，先做不读取 gold 或题类的 token-overlap bipartite 诊断，再逐项检验唯一 partial signature 和受控 synonym/unit binding。候选只有在歧义仍 fail closed、自然产生非零 schema-bound observation、改变 prediction、提高 Exact，且 Composite、Entity、Row、Item、Column、fallback 与 invalid 全不退时，才能进入下一次公开 220。信息熵可预测候选 observation 或 action 的 value of computation，但在 admissibility、identity/source binding 与 matched counterfactual outer utility 建立前，不能直接按 entropy drop 分配正 credit。

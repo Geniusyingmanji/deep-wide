@@ -1,8 +1,18 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.55
+> 版本：6.56
 >
-> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.55 覆盖。**
+> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.56 覆盖。**
+
+> **6.56 V2.49.45–48 native-layout signature 与完整 220 结果（2026-08-09）：V2.49.45 在 compact schema-bound ledger 上增加唯一的一对一 token-signature 绑定。它先删除 bracket code 与四位年份，再比较多 token ASCII multiset；单 token、非 ASCII、重复列、共享 signature、错列宽、跨页或冲突一律 fail closed。V2.49.46 的 47/47 clean-build tests 与 label-blind audit 通过，entropy/IG 仍仅为 shadow，所有 signed credit 保持 0。**
+
+> **V2.49.47 在 fresh `SP.POP.TOTL@2019`、18 个 task-disjoint cohort 上，把真实 native HTML 经生产 `html_to_text` 后冻结，并做 matched shared-prefix 比较。candidate 自然形成 18 个 signature-bound tables、288 个 row keys 与 864/864 admissible/retained observations；Exact 从 `0/18` 升至 `13/18`，Composite 从 `0.708333` 升至 `0.973958`，Entity 从 `0.500000` 升至 `0.965278`，Row/Item F1 均从 `0.666667` 升至 `0.965278`，Column F1 保持 `1.0`。该结果是 benchmark-external native-layout GO，只授权设计一次 label-blind public successor，不是 DeepWideBench 提升、entropy-credit 验证或 SOTA。权威工件：[`results/v24947_native_layout_signature_external_result_v1_20260809.json`](results/v24947_native_layout_signature_external_result_v1_20260809.json) 与 [`results/v24947_native_layout_signature_external_postresult_audit_v1_20260809.json`](results/v24947_native_layout_signature_external_postresult_audit_v1_20260809.json)。**
+
+> **V2.49.48 已完成完整 DeepWideBench `220/220` single-pass forward。runtime 只读 `{opaque_id, question}` 与同次 fetched pages；全部 prediction 在 mapping、gold、category、question type、split 与 evaluator 开放前冻结。forward 用时 `864.734237s`（14.41 min），220 个表均为 model-generated、0 fallback，共 `10,759,349` system tokens。固定 32-worker evaluator 对全部冻结预测 exactly once，用时 `277.104120s`；213 valid、7 error 按预注册固定计零。all-220 为 Exact `6/220=2.7273%`、Entity `0.672727`、Row/Item/Column F1 `0.221687/0.386769/0.467035`、Composite `0.437055`。post-result audit 为 `audit_valid=true, findings=[]`。权威工件：[`results/v24948_schema_signature_exact220_result_v1_20260809.json`](results/v24948_schema_signature_exact220_result_v1_20260809.json) 与 [`results/v24948_schema_signature_exact220_postresult_audit_v1_20260809.json`](results/v24948_schema_signature_exact220_postresult_audit_v1_20260809.json)。**
+
+> **全集质量判定为 NO-GO。相对 V2.49.44，Exact 持平而 Composite `-0.007494`；相对项目单轮最佳 V2.48.57 的 `9/220 / 0.457249`，Exact 少 3 个、Composite `-0.020194`。V2.49.48 不是项目新最佳、未提交 leaderboard、不是 Avg@4 或 SOTA。更关键的是 220 份 content-free receipt 显示 1,271 pages、5,882 pipe groups、8,323 pipe lines 和 63 schema-touching lines 最终只形成 4 个 exact header mappings，signature header mapping、discovered row/record 与 admissible observation 全为 0。新机制没有自然触发，`6/220` 不能归因于 V2.49.45。过早生成且未满足 pushed-forward 条件的 [`results/DO_NOT_USE_v24948_schema_signature_exact220_prepush_forward_audit_v1_20260809.json`](results/DO_NOT_USE_v24948_schema_signature_exact220_prepush_forward_audit_v1_20260809.json) 继续隔离，不得引用。**
+
+> **当前优化策略：停止将 external synthetic/native-layout GO 直接外推为公开全集收益，也不根据 V2.49.48 逐题 correctness 调 parser。下一候选先在新的 benchmark-external、生产同形 frozen native-layout population 上做 content-free header-alignment 诊断，依次检验 token-overlap bipartite matching、唯一 partial signature，以及受控 synonym/unit binding；所有绑定仍须 injective，歧义与冲突 fail closed。只有自然产生非零 schema-bound records/observations、candidate prediction change、Exact 严格增加，且 Composite/Entity/Row/Item/Column、fallback 与 invalid 全不退，才授权下一次 fixed-policy public 220。entropy/IG 继续只作 shadow/VOC predictor；在 admissibility、identity/source binding 与 matched counterfactual outer utility 通过前，signed credit 恒为 0。**
 
 > **6.55 V2.49.32 Unicode-total 完整 220 结果（2026-08-09）：按用户“先跑出全集”指令，V2.49.32 相对 V2.49.27 只把 evidence projector 从 V2.49.24 换成已审计的 V2.49.28；同一 220 题向量、GPT-5.6、prompt、search/fetch/model/token/context/wall caps 与 `20 task / 8 model` 并发均不变。runtime 只读 `{opaque_id, question}`；98/98 preactivation tests、prediction freeze、forward audit 与 post-result audit 均通过且 `findings=[]`。single-pass forward 在 `839.875004s`（14.00 min）完成 `220/220` model-generated、`0` fallback、`220/220` Unicode projection/transport/single-shot receipts；没有 retry、resume、补题或选择性重跑。**
 
@@ -3287,3 +3297,18 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 3. 220 份 content-free receipt 全有效，但机制仍为零暴露：1,313 pages、约 433 万 projected chars、1,092 visible schema columns，`discovered records/rows=0/0`、`admissible/retained observations=0/0`。因此 V2.49.43 的 external GO 未迁移到真实 DeepWide fetched text；V2.49.44 只能视为同预算独立 rollout，分数变化不能归因于 compact ledger。
 4. 固定 32-worker evaluator 覆盖完整 220：206 valid、14 error-as-zero。Exact `6/220=2.7273%`，Entity `0.704545`，Row/Item/Column F1 `0.206221/0.389805/0.477624`，Composite `0.444549`。相对 V2.49.38 为 Exact `-1`、Composite `+0.005373`；相对项目最佳 V2.48.57 为 Exact `-3`、Composite `-0.012700`。post-audit `findings=[]`，但不是项目最佳、SOTA 或机制提分证据。
 5. 下一瓶颈不再是 ledger 压缩，而是真实 fetch transport 将 HTML table 输出为无 `|...|` 包围的 pipe rows、普通文本 record 与大量非结构 text，现有 exact table scanner 对这些页面仍过窄。下一步应在 benchmark-external、页面布局来自真实 `native_search.html_to_text` 的 frozen population 上扩展 header-bound scanner；必须保持错表头/坏列数/跨页/conflict fail-closed。禁止从 V2.49.44 per-task correctness 反推 parser 或路由。
+
+### V2.49.45–47：injective token signature 与 native-layout 外部门（2026-08-09 UTC）
+
+1. V2.49.45 仅扩展 header/identity label 与 visible schema 的绑定规则。删除 bracket code 和四位年份后，page label 与 visible column 必须具有相同的多 token ASCII multiset；映射必须唯一且一对一。单 token、非 ASCII、重复列、共享 signature、错列宽、跨页和 coordinate conflict 均拒绝，避免用宽松字符串相似度把无关列绑定到一起。
+2. content-free receipt 单列 exact/signature/ambiguous mapping、table/record/row/observation、冲突与 retention。entropy 与 information gain 不分配在线 credit，`positive_signed_credit_count=0` 和 `unbound_observation_positive_credit_count=0` 为硬约束。V2.49.46 对 candidate、父链与生产 `native_search` 的 47/47 clean-build tests 通过，runtime privileged-field、credential 与 evaluator capability finding 均为 0。
+3. V2.49.47 使用 fresh `SP.POP.TOTL@2019`、18 个 task-disjoint cohort 和生产 `html_to_text` 的 frozen native-layout 页面。两臂共享页面、prompt、GPT-5.6、调用次数与预算；candidate 在 18/18 题改变 projection，形成 18 个 signature-bound tables、288 row keys 与 864/864 retained observations，0 failure。
+4. parent 为 Exact `0/18`、Entity `0.500000`、Row/Item `0.666667/0.666667`、Column `1.0`、Composite `0.708333`；candidate 为 Exact `13/18`、Entity `0.965278`、Row/Item `0.965278/0.965278`、Column `1.0`、Composite `0.973958`。strict shared-prefix gate 为 GO，post-audit `findings=[]`，但 claim scope 明确排除 DeepWideBench、entropy/signed-credit 与 SOTA。
+
+### V2.49.48：schema signature 完整 220（2026-08-09 UTC）
+
+1. V2.49.48 将 V2.49.45 接入与 V2.49.44 相同的完整执行链。220 task vector、GPT-5.6 keyless model/search、每题 `4 query / 10 fetch / 3 model / 240s`、`20 executor / 8 model slots` 与 evaluator 均不变；forward 只读 `{opaque_id, question}` 和同次 pages。
+2. 唯一 forward 在 `864.734237s` 完成 `220/220` terminal predictions，220 model-generated、0 fallback、`10,759,349` system tokens。全部预测在 evaluator surface 开放前冻结；没有 retry、resume、skip、补题或选择性重跑。四个 protected watcher 未重启，shared API lease 已释放。
+3. 220/220 content-free receipts 有效，但 signature 机制没有自然触发。1,271 pages 中有 5,882 pipe groups、8,323 pipe lines 与 63 schema-touching lines；仅 4 个 exact header mappings，signature header mappings 为 0。discovered records、rows、admissible/retained observations 与 positive signed credit 均为 0。
+4. 固定 32-worker evaluator 对全部冻结预测各评一次，用时 `277.104120s`；213 valid、7 error-as-zero。Exact `6/220=2.7273%`，Entity `0.672727`，Row/Item/Column F1 `0.221687/0.386769/0.467035`，Composite `0.437055`。相对 V2.49.44 为 Exact `0`、Composite `-0.007494`；相对 V2.48.57 为 Exact `-3`、Composite `-0.020194`，因此严格 NO-GO，不是新最佳或 SOTA。
+5. 本轮直接排除了“只要 native pipe group 存在，injective exact-signature 就会迁移”的假设。下一候选不再扩大网页数、token 或公开运行次数，而在 fresh production-isomorphic population 上比较 content-free token overlap、唯一 partial signature 与受控 synonym/unit binding。门禁必须同时要求非零机制暴露、prediction change、Exact 正增益及所有质量/可靠性指标不退；否则不启动下一次公开 220。V2.49.48 per-task correctness、category、gold 与 evaluator score 不得进入 parser、router 或 prompt。
