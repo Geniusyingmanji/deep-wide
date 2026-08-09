@@ -1235,3 +1235,15 @@ V2.49.29–31 使用20个benchmark-external Unicode官方文档任务，在生�
 整体门仍按预注册判为NO-GO，因为要求logical query至少72条，planner实际只提出58条。不能事后把58解释成72或删除条件；但也不能反向说Unicode修复失败。query数是检索强度代理，totality直接证据是20/20 projection receipt与0 fallback。该门揭示了实验设计问题：当155个usable pages已经超过80页门槛时，强迫planner接近4 query/task并不能增加可靠性，反而把“少而足够的查询”错误判负。后续门应直接约束usable evidence、identity/target binding、mechanism engagement、prediction change与outer utility，并只把query/fetch作为成本与守恒统计。
 
 因此下一可识别实验不是再跑公开220，而是fresh shared-prefix质量门：两臂共享同一冻结页面字节、模型、prompt与output cap；父臂V2.49.24遇到NFKC扩张按预注册failure-as-zero，candidate使用V2.49.28。只有candidate除20/20 totality外还提高Exact、保持Composite/Entity/Row/Item/Column全不降，才说明工程可靠性修复转化为任务效用。即使该门通过，credit也应归给“避免无效失败、恢复可执行路径”的outer utility，而不是归给字符扩张或熵下降；entropy/VOC仍需在相同admissible observation、matched cost和counterfactual continuation下另行识别。
+
+## 2026-08-09：V2.49.32 完整 220——totality 修复成功，质量没有刷新前沿
+
+按“先跑出全集”的明确指令，V2.49.32 将 V2.49.28 Unicode-total projector 接入与 V2.49.27 相同的完整 DeepWideBench 执行链。唯一算法变化是把 compaction budget domain 从 raw input length 改为 NFKC-normalized input length；220题向量、GPT-5.6、prompt、search/fetch/model/token/context/wall caps、`20 task / 8 model`并发均保持不变。forward 仍只读 `{opaque_id, question}`，98项冻结前测试和 label/evaluator/credential audit 全通过。唯一 single-pass forward 用时 `839.875004s`，220条 prediction 在 mapping、gold 和 evaluator 打开前全部冻结；220题均生成模型表格，fallback为0，Unicode projection、transport和single-shot receipt均为220/220。
+
+这给出了比中性门更强的公开全集 totality 证据。故障父版本 V2.49.27 只有130个projection receipt并产生90个fallback；V2.49.32变为220个receipt和0 fallback。在固定分母下，Exact由`5/220`升至`6/220`，Composite由`0.294284`升至`0.421283`，Entity由`0.468182`升至`0.663636`，Row/Item/Column F1由`0.144019/0.253297/0.311637`升至`0.200021/0.370574/0.450899`。这支持“组件修复恢复了原本被错误拒绝的执行路径”，但不是严格的同页面、同生成随机数因果质量估计；跨完整运行的搜索页面和模型输出并不共享前缀。
+
+固定32-worker evaluator对全部冻结预测exactly once，212条有效，8条error按预注册规则计零，用时`248.872243s`。最终Exact `6/220=2.7273%`、Composite `0.421283`。它仍低于V2.49.22的`7/220 / 0.425189`，也低于项目单轮最佳V2.48.57的`9/220 / 0.457249`；因此质量判定严格NO-GO，不是benchmark新最佳或SOTA。post-result audit复核220行join、32个固定分片、全部worker returncode为0、8个error-as-zero、无重评/选择性重跑、lease和四个protected watcher闭环，`findings=[]`。
+
+这个全集结果进一步区分了两类credit。第一类是execution/reliability credit：删除Unicode长度域bug后，90个失败路径消失，因而可以给“保持合法观察可执行”正的系统效用credit。第二类才是epistemic/task credit：NFKC字符扩张本身仍不改变关于目标值的语义belief，不能按扩张字符数、token数或压缩率获得信息增益credit。要把credit归给检索或证据选择动作，仍需证明observation可采纳、source/record identity与target绑定成立，并用matched shared-prefix deletion/replacement、sibling continuation或post-freeze signed outer utility确认边际贡献。
+
+因此下一优化不应继续修补totality或盲增证据量，而应在fresh benchmark-external shared-prefix人口上识别质量选择器：baseline固定为V2.49.32，两臂共享完全相同的页面字节、模型、prompt、输出cap和成本；candidate只改变identity/target-value/dependency-aware evidence selection，并把entropy/IG作为shadow/VOC特征。只有Exact严格增加、Composite/Entity/Row/Item/Column全不降、fallback和invalid不增加，且自然产生非零mechanism engagement与prediction change，才授权下一次公开220。权威全集结果与审计分别为[`results/v24932_unicode_total_exact220_result_v1_20260809.json`](results/v24932_unicode_total_exact220_result_v1_20260809.json)和[`results/v24932_unicode_total_exact220_postresult_audit_v1_20260809.json`](results/v24932_unicode_total_exact220_postresult_audit_v1_20260809.json)。

@@ -1,8 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.54
+> 版本：6.55
 >
-> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.54 覆盖。**
+> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.55 覆盖。**
+
+> **6.55 V2.49.32 Unicode-total 完整 220 结果（2026-08-09）：按用户“先跑出全集”指令，V2.49.32 相对 V2.49.27 只把 evidence projector 从 V2.49.24 换成已审计的 V2.49.28；同一 220 题向量、GPT-5.6、prompt、search/fetch/model/token/context/wall caps 与 `20 task / 8 model` 并发均不变。runtime 只读 `{opaque_id, question}`；98/98 preactivation tests、prediction freeze、forward audit 与 post-result audit 均通过且 `findings=[]`。single-pass forward 在 `839.875004s`（14.00 min）完成 `220/220` model-generated、`0` fallback、`220/220` Unicode projection/transport/single-shot receipts；没有 retry、resume、补题或选择性重跑。**
+
+> **固定 32-worker evaluator 对 220 条冻结预测 exactly once，用时 `248.872243s`；212 valid，8 error 按预注册固定计零。all-220 为 Exact `6/220=2.7273%`、Entity `0.663636`、Row/Item/Column F1 `0.200021/0.370574/0.450899`、Composite `0.421283`。权威工件：[`results/v24932_unicode_total_exact220_result_v1_20260809.json`](results/v24932_unicode_total_exact220_result_v1_20260809.json) 与 [`results/v24932_unicode_total_exact220_postresult_audit_v1_20260809.json`](results/v24932_unicode_total_exact220_postresult_audit_v1_20260809.json)。**
+
+> **结论分为可靠性 GO、质量 NO-GO。相对故障父版本 V2.49.27，fallback `90→0`、Exact `+1`、Composite `+0.126999`，说明 Unicode-total 修复确实恢复了执行路径；但相对 V2.49.22，Exact `-1`、Composite `-0.003906`，相对项目单轮最佳 V2.48.57 的 `9/220 / 0.457249`，Exact `-3`、Composite `-0.035966`。因此 V2.49.32 不是项目新最佳、未提交 leaderboard、不是 SOTA；它只关闭了 totality bug，不能把随机生成/检索差异或 evaluator error 数变化归因于 projector。**
+
+> **当前优化策略：冻结 V2.49.32 为 reliability baseline，不再对这批公开题补评或选择性分析后重跑。下一候选应转向 fresh benchmark-external shared-prefix 质量门：共享完全相同的 frozen page bytes、模型、prompt、输出 cap 与成本，比较 Unicode-total baseline 和 identity/target-value/dependency-aware quality selector；GO 要求 Exact 严格增加、Composite/Entity/Row/Item/Column 全不降、fallback/invalid 不增加，并报告 mechanism engagement 与 prediction change。信息熵/IG 仍只作 shadow/VOC 排序特征；Unicode 字符扩张不计信息增益，正 credit 必须经过 admissible observation、identity binding、counterfactual deletion/replacement 或 signed outer utility。只有外部门严格 GO，才授权下一次 fixed-policy public 220。内部参考前沿仍为 V2.48.57 `9/220 / 0.457249`。**
 
 > **6.54 V2.49.27 sparse target–value 完整 220 结果（2026-08-09）：V2.49.27 已按 `20 task / 8 model` 高并发完成 DeepWideBench `220/220` single-pass forward；runtime 只读 `{opaque_id, question}`，75/75 preactivation tests、prediction freeze、forward audit 和 post-result audit 均为 `findings=[]`。forward 用时 `656.872813s`（10.95 min），130 个 model-generated table、90 个 failure-as-zero fallback；32-worker evaluator 用时 `170.054642s`，217 valid、3 error 固定计零。all-220 为 Exact `5/220=2.2727%`、Entity `0.468182`、Row/Item/Column F1 `0.144019/0.253297/0.311637`、Composite `0.294284`。权威工件：[`results/v24927_sparse_target_value_exact220_result_v1_20260808.json`](results/v24927_sparse_target_value_exact220_result_v1_20260808.json) 与 [`results/v24927_sparse_target_value_exact220_postresult_audit_v1_20260808.json`](results/v24927_sparse_target_value_exact220_postresult_audit_v1_20260808.json)。**
 
