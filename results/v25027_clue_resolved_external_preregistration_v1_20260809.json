@@ -1,0 +1,158 @@
+{
+  "artifact_version": 1,
+  "authorization": {
+    "leaderboard_or_sota": false,
+    "one_external_forward": false,
+    "postfreeze_evaluator": false,
+    "preactivation_audit_generation": true,
+    "public_exact220_launch": false
+  },
+  "created_at_unix": 1786319607,
+  "dependency_manifest": {
+    "scripts/control_v25027_clue_resolved_external.py": "dcd63e912be28d92ea7ed3987cc6125b611b9568523e59f0b84c82c7ff42c8b4",
+    "scripts/deepwide_api_lease.py": "8d9cffa78617b458172307d3558c76e9370f045f531c2f5aaaceb866f5a78c7d",
+    "scripts/run_v24985_robust_late_page_fetch_helper.py": "ec6eb535a616ba68ae9bb40364e8763dd5632885c76c268f0ad131d57ecdb65c",
+    "scripts/run_v24997_shared_first_wave_external.py": "a6b5775474cdcc2a53040a168e5e68263b6e12f448c44beec1e8189bad1bb57f",
+    "scripts/run_v25027_clue_resolved_external.py": "8acabeb43d079a5b7e58378a8c7ff5d7b857f7ee28278fd28c51344bf53290e9",
+    "src/deepwide_agent/v24985_robust_late_page_fetch.py": "ac399f6b3e57d592b6d598d7485deb58ab653ba263e92973641095cc6c3c79ff",
+    "src/deepwide_agent/v24996_shared_first_wave_paired_runtime.py": "869568c52294d05e45925b5983795414d73e8bdc111fb670fbff7c7d7727e97c",
+    "src/deepwide_agent/v25024_evidence_conditioned_queries.py": "8b1ac6052f380b52e8889ba238e7e12f99564e56393233abef33c8e5f5f4ea84",
+    "src/deepwide_agent/v25025_evidence_conditioned_paired_runtime.py": "0f94d44786e92aa72a90e54aae4189a57cd3e000748e77f1292d62362dd572d7",
+    "src/deepwide_agent/v25026_resolved_schema_reachability.py": "1352e31d95f1750206ad27d6ddaa2f6989118dc605b50aa201ac70fd88861c1c",
+    "src/deepwide_agent/v25027_clue_resolved_external_contract.py": "084438ef344234cc879b4d2dd45f5dae70b58c9eef6c8719357748361c54cf5d",
+    "tests/test_v25024_evidence_conditioned_queries.py": "3ea40f65bef8d95ee2fa485a068c288148b05ad2b27191f6d1a81447644a40a4",
+    "tests/test_v25025_evidence_conditioned_paired_runtime.py": "6ffbd8a5238140b0029aa0c0d25d99cfba3ae508e2a0a921ba530f0f6d32f125",
+    "tests/test_v25026_resolved_schema_reachability.py": "cc5c8eda896e7113866d27f5a07040ac94024b07e484d4e0a452530c28ffc0f2",
+    "tests/test_v25027_clue_resolved_external.py": "590022114aa039a1e3015b08d9df5c4efab79e9432333ce91c0ddb761701daa5"
+  },
+  "dependency_manifest_sha256": "559751ad91fe8b84d38b1c3603b1ad091db6c516e16b9dc2d6e54f6f22016153",
+  "execution": {
+    "executor_concurrency": 20,
+    "limits_per_arm": {
+      "evidence_chars": 60000,
+      "fetch_targets": 10,
+      "model_calls": 3,
+      "page_chars": 5000,
+      "plan_output_tokens": 4000,
+      "repair_output_tokens": 12000,
+      "search_queries": 4,
+      "search_results_per_query": 3,
+      "synthesis_output_tokens": 30000,
+      "wall_seconds": 240
+    },
+    "model": {
+      "max_retries": 2,
+      "name": "gpt-5.6-sol",
+      "proxy_url": "http://127.0.0.1:9878/responses",
+      "reasoning_effort": "low",
+      "service_tier": "priority",
+      "timeout_seconds": 65
+    },
+    "model_slot_cap": 8,
+    "output_root": "outputs/v25027_clue_resolved_external_v1_20260809",
+    "protected_watchers": [
+      {
+        "marker": "scripts/watch_v2415_r1_checkpoint_liveness.py",
+        "pid": 795336,
+        "start_ticks": 713986317
+      },
+      {
+        "marker": "scripts/watch_v24218_exact220_executor.py",
+        "pid": 3061652,
+        "start_ticks": 747569004
+      },
+      {
+        "marker": "scripts/watch_v24215_joint_package_recovery.py",
+        "pid": 2808901,
+        "start_ticks": 746680268
+      },
+      {
+        "marker": "scripts/watch_v24216_package_gate.py",
+        "pid": 2889939,
+        "start_ticks": 746969965
+      }
+    ],
+    "search": {
+      "batch_size": 8,
+      "context_size": "medium",
+      "fetch_timeout_seconds": 20,
+      "fetch_workers": 8,
+      "hard_fetch_deadline_seconds": 25,
+      "max_output_tokens": 7000,
+      "max_retries": 2,
+      "model": "gpt-5.6-sol",
+      "provider": "azure-native-keyless-bounded-same-response-title-backfill",
+      "proxy_url": "http://127.0.0.1:9878/responses",
+      "server_auto_fetch_enabled": false,
+      "timeout_seconds": 65,
+      "workers": 1
+    },
+    "single_atomic_forward_no_retry_resume_or_selective_rerun": true
+  },
+  "git_head": "17f1695aff406719e0b56fbc7f287937ed121df0",
+  "mechanism_gate_before_evaluator": {
+    "all_tasks_execute_at_most_six_physical_queries": true,
+    "all_tasks_fetch_at_most_fourteen_physical_pages": true,
+    "all_tasks_use_at_most_four_physical_model_calls": true,
+    "executed_arm_order_matches_frozen_vector": true,
+    "minimum_both_arms_model_success_tasks": 18,
+    "minimum_candidate_resolved_schema_pages": 6,
+    "minimum_prediction_changed_tasks": 6,
+    "minimum_refinement_model_call_attempted_tasks": 18,
+    "minimum_refinement_strategy_applied_tasks": 12,
+    "minimum_tasks_with_candidate_resolved_schema_strict_advantage": 6,
+    "shared_prefix_byte_equal_tasks": 20,
+    "terminal_tasks": 20
+  },
+  "population": {
+    "arm_order_vector_sha256": "5af27b557984f1272059416ce83ae7d1a1a53d3c8a215bc5d52735e7e8bd114a",
+    "country_tld_or_gold_mapping_module_present_opened_or_hashed": false,
+    "final_population_network_model_or_evaluator_probed_before_freeze": false,
+    "opaque_id_vector_sha256": "045ce13aeb701acd07577cd29230d2554b4c65a486087c2ac4ddec21a9ea7896",
+    "public_clue_vector_sha256": "a24302811fc7ce0158a03b5c0f70b2d3207361db99ee1c41f56e60bf79a85ef9",
+    "selected_tasks": 20,
+    "task_vector_sha256": "2139e1fab7f5f19203015ccf2c49f5aa7532cc6ae2401bb99158bc9a9b550d4a",
+    "visible_question_vector_sha256": "ef4d53714a9d47b5c68cd77de0f9a08e267fe438a75c52eefbf39826a30bee28"
+  },
+  "protocol_id": "v25027_clue_resolved_evidence_conditioned_external_gate_v1",
+  "protocol_payload_sha256": "919df54eeffea295e4e851d408926e13ee104149fd0a5d3c51e2308594c77d58",
+  "quality_gate": {
+    "candidate_composite_strictly_greater": true,
+    "candidate_exact_strictly_greater": true,
+    "entity_row_item_column_nonregression": true,
+    "fixed_denominator": 20,
+    "invalid_or_fallback_nonincrease": true
+  },
+  "role": "v25027_clue_resolved_external_preregistration",
+  "source_policy": {
+    "candidate_uses_refinement_only_after_strict_visible_support_gate": true,
+    "control_ignores_refinement_and_replays_legacy_second_wave": true,
+    "entropy_or_information_gain_assigns_credit_or_routes": false,
+    "evaluator_only_country_tld_mapping_module_absent_before_prediction_freeze": true,
+    "excluded_development_probe_not_in_final_population": true,
+    "mapping_gold_category_question_type_split_evaluator_score_reward_read_by_forward": false,
+    "one_physical_first_wave_reused_byte_exactly_by_both_arms": true,
+    "one_shared_evidence_conditioned_refinement_call": true,
+    "one_shared_visible_only_planning_call": true,
+    "paired_physical_model_query_fetch_caps": {
+      "fetches": 14,
+      "models": 4,
+      "queries": 6
+    },
+    "per_arm_logical_model_query_fetch_caps": {
+      "fetches": 10,
+      "models": 3,
+      "queries": 4
+    },
+    "prediction_freeze_before_mapping_gold_evaluator_or_quality_decision": true,
+    "public_deepwidebench_exact220_launch_authorized": false,
+    "resolved_schema_observer_changes_no_runtime_effect": true,
+    "runtime_boundary": [
+      "opaque_id",
+      "question",
+      "same_forward_public_pages"
+    ],
+    "same_projector_evidence_prompt_model_output_and_deadline": true,
+    "visible_population_contains_capital_currency_clues_but_no_country_or_tld_mapping": true
+  }
+}
