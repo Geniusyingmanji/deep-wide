@@ -20,6 +20,7 @@ from deepwide_agent.v24952_bounded_snapshot_transport import (  # noqa: E402
     READ_TIMEOUT_SECONDS,
     payload_sha256,
     snapshot_request_key,
+    validate_content_free_receipt,
     validate_helper_result,
 )
 from scripts.run_v24952_worldbank_snapshot_fetch_helper import (  # noqa: E402
@@ -182,6 +183,21 @@ class V24952BoundedSnapshotTransportTests(unittest.TestCase):
         changed["result_payload_sha256"] = payload_sha256(changed)
         with self.assertRaises(ValueError):
             validate_helper_result(changed)
+
+    def test_persisted_receipt_validates_without_raw_content(self) -> None:
+        value = fetch_snapshot_json(
+            TARGET_URL,
+            session=FakeSession([FakeResponse(200, valid_raw())]),
+            monotonic=Clock(),
+        )
+        receipt = value["content_free_receipt"]
+        self.assertEqual(validate_content_free_receipt(receipt), receipt)
+        changed = copy.deepcopy(receipt)
+        changed["attempts"][-1]["response_bytes"] += 1
+        changed.pop("receipt_payload_sha256")
+        changed["receipt_payload_sha256"] = payload_sha256(changed)
+        with self.assertRaises(ValueError):
+            validate_content_free_receipt(changed)
 
 
 if __name__ == "__main__":

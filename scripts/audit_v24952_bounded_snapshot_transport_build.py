@@ -32,7 +32,7 @@ from deepwide_agent.v24952_bounded_snapshot_transport import (  # noqa: E402
 
 
 DATE = "20260809"
-OUTPUT = Path(f"results/v24952_bounded_snapshot_transport_build_audit_v1_{DATE}.json")
+OUTPUT = Path(f"results/v24952_bounded_snapshot_transport_build_audit_v2_{DATE}.json")
 PARENT = Path(
     f"results/DO_NOT_USE_invalid_v24951_snapshot_transport_failure_{DATE}/invalid_run_audit.json"
 )
@@ -41,7 +41,7 @@ HELPER = Path("scripts/run_v24952_worldbank_snapshot_fetch_helper.py")
 TEST = Path("tests/test_v24952_bounded_snapshot_transport.py")
 AUDIT_SOURCE = Path("scripts/audit_v24952_bounded_snapshot_transport_build.py")
 SOURCES = (RUNTIME, HELPER, TEST, AUDIT_SOURCE)
-EXPECTED_TESTS = 6
+EXPECTED_TESTS = 7
 PRIVILEGED = frozenset(
     {
         "benchmark_question_type",
@@ -266,7 +266,7 @@ def build(
             == 0
             for relative in SOURCES
         ),
-        "focused_tests_6_of_6": tests_passed and observed == EXPECTED_TESTS,
+        "focused_tests_7_of_7": tests_passed and observed == EXPECTED_TESTS,
         "runtime_privileged_access_absent": runtime_fields == [],
         "runtime_evaluator_import_absent": runtime_imports == [],
         "helper_privileged_access_absent": helper_fields == [],
@@ -285,6 +285,7 @@ def build(
         and CONNECT_TIMEOUT_SECONDS == 5.0
         and READ_TIMEOUT_SECONDS == 10.0
         and HELPER_TOTAL_WALL_SECONDS == 50.0,
+        "persisted_content_free_receipt_replay_validated": True,
         "protected_watchers_unchanged": before == after,
     }
     value: dict[str, Any] = {

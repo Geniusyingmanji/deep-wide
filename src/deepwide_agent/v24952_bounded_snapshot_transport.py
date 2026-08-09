@@ -89,6 +89,135 @@ def snapshot_request_key(url: object) -> str:
     return f"{parts[4]}@{parameters['date']}"
 
 
+def validate_content_free_receipt(value: Mapping[str, Any]) -> dict[str, Any]:
+    copied = copy.deepcopy(dict(value))
+    expected = {
+        "request_key",
+        "url_sha256",
+        "maximum_attempts",
+        "connect_timeout_seconds",
+        "read_timeout_seconds",
+        "helper_total_wall_seconds",
+        "maximum_response_bytes",
+        "attempt_count",
+        "attempts",
+        "terminal_outcome",
+        "elapsed_seconds",
+        "response_bytes",
+        "response_sha256",
+        "url_or_response_content_emitted",
+        "benchmark_metadata_answer_evaluator_score_reward_or_credential_read",
+        "receipt_payload_sha256",
+    }
+    unsigned = dict(copied)
+    seal = unsigned.pop("receipt_payload_sha256", None)
+    attempts = copied.get("attempts")
+    request_key = copied.get("request_key")
+    if (
+        set(copied) != expected
+        or not isinstance(request_key, str)
+        or (
+            request_key != "country_catalog"
+            and re.fullmatch(r"[A-Z][A-Z0-9.]{4,40}@20[0-3][0-9]", request_key)
+            is None
+        )
+        or SHA256.fullmatch(str(copied.get("url_sha256", ""))) is None
+        or copied.get("maximum_attempts") != MAXIMUM_ATTEMPTS
+        or copied.get("connect_timeout_seconds") != CONNECT_TIMEOUT_SECONDS
+        or copied.get("read_timeout_seconds") != READ_TIMEOUT_SECONDS
+        or copied.get("helper_total_wall_seconds") != HELPER_TOTAL_WALL_SECONDS
+        or copied.get("maximum_response_bytes") != MAXIMUM_RESPONSE_BYTES
+        or isinstance(copied.get("attempt_count"), bool)
+        or not isinstance(copied.get("attempt_count"), int)
+        or not 1 <= copied["attempt_count"] <= MAXIMUM_ATTEMPTS
+        or not isinstance(attempts, list)
+        or len(attempts) != copied["attempt_count"]
+        or copied.get("terminal_outcome") not in {"success", "exhausted"}
+        or isinstance(copied.get("elapsed_seconds"), bool)
+        or not isinstance(copied.get("elapsed_seconds"), (int, float))
+        or not math.isfinite(float(copied["elapsed_seconds"]))
+        or not 0 <= float(copied["elapsed_seconds"]) <= HELPER_TOTAL_WALL_SECONDS
+        or isinstance(copied.get("response_bytes"), bool)
+        or not isinstance(copied.get("response_bytes"), int)
+        or not 0 <= copied["response_bytes"] <= MAXIMUM_RESPONSE_BYTES
+        or (
+            copied.get("response_sha256") is not None
+            and SHA256.fullmatch(str(copied["response_sha256"])) is None
+        )
+        or copied.get("url_or_response_content_emitted") is not False
+        or copied.get(
+            "benchmark_metadata_answer_evaluator_score_reward_or_credential_read"
+        )
+        is not False
+        or seal != payload_sha256(unsigned)
+    ):
+        raise ValueError("V2.49.52 content-free receipt drifted")
+    successes = 0
+    provider_bytes = 0
+    for index, attempt in enumerate(attempts, 1):
+        if (
+            not isinstance(attempt, Mapping)
+            or set(attempt)
+            != {
+                "attempt",
+                "outcome",
+                "http_status",
+                "error_type",
+                "retryable",
+                "elapsed_seconds",
+                "response_bytes",
+                "response_sha256",
+            }
+            or attempt.get("attempt") != index
+            or attempt.get("outcome") not in {"success", "failure"}
+            or (
+                attempt.get("http_status") is not None
+                and (
+                    isinstance(attempt.get("http_status"), bool)
+                    or not isinstance(attempt.get("http_status"), int)
+                    or not 100 <= attempt["http_status"] <= 599
+                )
+            )
+            or (
+                attempt.get("error_type") is not None
+                and not isinstance(attempt.get("error_type"), str)
+            )
+            or not isinstance(attempt.get("retryable"), bool)
+            or isinstance(attempt.get("elapsed_seconds"), bool)
+            or not isinstance(attempt.get("elapsed_seconds"), (int, float))
+            or not math.isfinite(float(attempt["elapsed_seconds"]))
+            or float(attempt["elapsed_seconds"]) < 0
+            or isinstance(attempt.get("response_bytes"), bool)
+            or not isinstance(attempt.get("response_bytes"), int)
+            or not 0 <= attempt["response_bytes"] <= MAXIMUM_RESPONSE_BYTES
+            or (
+                attempt.get("response_sha256") is not None
+                and SHA256.fullmatch(str(attempt["response_sha256"])) is None
+            )
+        ):
+            raise ValueError("V2.49.52 content-free attempt drifted")
+        successes += int(attempt["outcome"] == "success")
+        provider_bytes += int(attempt["response_bytes"])
+    if copied["terminal_outcome"] == "success":
+        if (
+            successes != 1
+            or attempts[-1]["outcome"] != "success"
+            or copied["response_bytes"] <= 0
+            or copied["response_sha256"] != attempts[-1]["response_sha256"]
+            or copied["response_bytes"] != attempts[-1]["response_bytes"]
+        ):
+            raise ValueError("V2.49.52 successful receipt drifted")
+    elif (
+        successes != 0
+        or copied["response_bytes"] != 0
+        or copied["response_sha256"] is not None
+    ):
+        raise ValueError("V2.49.52 exhausted receipt drifted")
+    if provider_bytes > MAXIMUM_ATTEMPTS * MAXIMUM_RESPONSE_BYTES:
+        raise ValueError("V2.49.52 receipt byte conservation drifted")
+    return copied
+
+
 def validate_helper_result(value: Mapping[str, Any]) -> dict[str, Any]:
     copied = copy.deepcopy(dict(value))
     expected = {
@@ -181,7 +310,7 @@ def validate_helper_result(value: Mapping[str, Any]) -> dict[str, Any]:
         ):
             raise ValueError("V2.49.52 helper attempt drifted")
         successes += int(attempt["outcome"] == "success")
-    expected_receipt = {
+    expected_receipt: dict[str, Any] = {
         "request_key": copied["request_key"],
         "url_sha256": copied["url_sha256"],
         "maximum_attempts": MAXIMUM_ATTEMPTS,
@@ -199,7 +328,10 @@ def validate_helper_result(value: Mapping[str, Any]) -> dict[str, Any]:
         "benchmark_metadata_answer_evaluator_score_reward_or_credential_read": False,
     }
     expected_receipt["receipt_payload_sha256"] = payload_sha256(expected_receipt)
-    if dict(receipt) != expected_receipt:
+    if (
+        validate_content_free_receipt(receipt) != dict(receipt)
+        or dict(receipt) != expected_receipt
+    ):
         raise ValueError("V2.49.52 content-free receipt drifted")
     if copied["status"] == "ok":
         raw = copied["raw_content"].encode()
@@ -235,5 +367,6 @@ __all__ = [
     "READ_TIMEOUT_SECONDS",
     "payload_sha256",
     "snapshot_request_key",
+    "validate_content_free_receipt",
     "validate_helper_result",
 ]
