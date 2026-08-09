@@ -494,10 +494,8 @@ def _ledger_line(
     record: Mapping[str, Any],
     fields: Sequence[Mapping[str, Any]],
 ) -> tuple[list[str], str]:
-    tokens = [
-        f"[SBCL:{record['record_id']}:T{int(field['target_index']):02d}]"
-        for field in fields
-    ]
+    token = f"[SBCL:{record['record_id']}]"
+    tokens = [token for _field in fields]
     payload = {
         "binding": record["binding_kind"],
         "row_key_label": record["row_key_label"],
@@ -507,7 +505,7 @@ def _ledger_line(
         ],
         "source_host": record["source_host"],
     }
-    return tokens, " ".join(tokens) + " " + json.dumps(
+    return tokens, token + " " + json.dumps(
         payload, ensure_ascii=False, separators=(",", ":")
     )
 
@@ -758,8 +756,15 @@ def build_projection(
         question, augmented_pages, explicit_groups=explicit_groups
     )
     projection = str(inherited["projection"])
+    retained_tokens = {
+        observation["token"]
+        for observation in observations
+        if observation["token"] in projection
+    }
     retained_observations = [
-        observation for observation in observations if observation["token"] in projection
+        observation
+        for observation in observations
+        if observation["token"] in retained_tokens
     ]
     admissible_record_ids = {str(value["record_id"]) for value in observations}
     retained_record_ids = {
