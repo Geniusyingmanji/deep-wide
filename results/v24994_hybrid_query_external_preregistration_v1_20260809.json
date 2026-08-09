@@ -1,0 +1,178 @@
+{
+  "artifact_version": 1,
+  "authorization": {
+    "leaderboard_or_sota": false,
+    "one_external_forward": false,
+    "postfreeze_evaluator": false,
+    "preactivation_audit_generation": true,
+    "public_exact220_launch": false
+  },
+  "created_at_unix": 1786300001,
+  "dependency_manifest": {
+    "scripts/control_v24994_hybrid_query_external.py": "52dec71ea7b8e12ed1fd594abe3c65a3d384a47e50d07f97c0685fba57c32ef9",
+    "scripts/evaluate_v24994_hybrid_query_external.py": "696ce01090be829443ed8f27370edb3705ca0ab10860ad259026fbf1cc272839",
+    "scripts/run_v24985_robust_late_page_fetch_helper.py": "ec6eb535a616ba68ae9bb40364e8763dd5632885c76c268f0ad131d57ecdb65c",
+    "scripts/run_v24994_hybrid_query_external.py": "539d34b60c1100e07b3100bf197af4bbbd7b36c090acd6763086179ba031057c",
+    "src/deepwide_agent/v24984_robust_late_page_projection.py": "632c673fc5b42ac5370f6078e47afc14dae920d7b6723e6ef78789690f349cef",
+    "src/deepwide_agent/v24985_robust_late_page_fetch.py": "ac399f6b3e57d592b6d598d7485deb58ab653ba263e92973641095cc6c3c79ff",
+    "src/deepwide_agent/v24991_short_query_external_contract.py": "6783cf9f9aa6d6258dce9caad049885da434d93b5629bc778f6058b6d4541c8a",
+    "src/deepwide_agent/v24992_hybrid_authority_queries.py": "5185f28848c07262db5e7cce174711613a67160a079bd1d0052b693a158f0f29",
+    "src/deepwide_agent/v24993_hybrid_query_paired_runtime.py": "b3289e7930073d13a198ffa88deaa0ffeaa73bb9b2acbb725f8659c93b901dac",
+    "src/deepwide_agent/v24994_hybrid_query_external_contract.py": "d3601ef4389163759a662634372865182d45e0e195462fc834e566df463c12d1",
+    "tests/test_v24984_robust_late_page_projection.py": "1fe3fad5e15fd1efe05c313140d2ecc4c08156289c3353a0faf4378ce71b87d3",
+    "tests/test_v24985_robust_late_page_fetch.py": "621dcde0a278b608bcd7df5acf61e54432fbfa3d3866b71979a6cd121a9bbaa7",
+    "tests/test_v24992_hybrid_authority_queries.py": "161e30456edad4110eef827258882ad6d5fe041f858bcfad6f8bb5b7d702949c",
+    "tests/test_v24993_hybrid_query_paired_runtime.py": "eafdaecf62cd138bb508f5eb90842fe0ace516686e9de3858056cdf16259cbcc",
+    "tests/test_v24994_hybrid_query_external.py": "3320e7fb390136f1089fa9f18f4968bcb4e68dc13dda1b3a207e70d9257cac10"
+  },
+  "dependency_manifest_sha256": "6b19826ac0dc5e498521b3d96ec5b5c9b4ce8493688d1a1fdf4dc44c51515131",
+  "execution": {
+    "executor_concurrency": 20,
+    "limits_per_arm": {
+      "evidence_chars": 60000,
+      "fetch_targets": 10,
+      "model_calls": 3,
+      "page_chars": 5000,
+      "plan_output_tokens": 4000,
+      "repair_output_tokens": 12000,
+      "search_queries": 4,
+      "search_results_per_query": 3,
+      "synthesis_output_tokens": 30000,
+      "wall_seconds": 240
+    },
+    "model": {
+      "max_retries": 2,
+      "name": "gpt-5.6-sol",
+      "proxy_url": "http://127.0.0.1:9878/responses",
+      "reasoning_effort": "low",
+      "service_tier": "priority",
+      "timeout_seconds": 65
+    },
+    "model_slot_cap": 8,
+    "output_root": "outputs/v24994_hybrid_query_external_v1_20260809",
+    "protected_watchers": [
+      {
+        "marker": "scripts/watch_v2415_r1_checkpoint_liveness.py",
+        "pid": 795336,
+        "start_ticks": 713986317
+      },
+      {
+        "marker": "scripts/watch_v24218_exact220_executor.py",
+        "pid": 3061652,
+        "start_ticks": 747569004
+      },
+      {
+        "marker": "scripts/watch_v24215_joint_package_recovery.py",
+        "pid": 2808901,
+        "start_ticks": 746680268
+      },
+      {
+        "marker": "scripts/watch_v24216_package_gate.py",
+        "pid": 2889939,
+        "start_ticks": 746969965
+      }
+    ],
+    "search": {
+      "batch_size": 8,
+      "context_size": "medium",
+      "fetch_timeout_seconds": 20,
+      "fetch_workers": 8,
+      "hard_fetch_deadline_seconds": 25,
+      "max_output_tokens": 7000,
+      "max_retries": 2,
+      "model": "gpt-5.6-sol",
+      "provider": "azure-native-keyless-bounded-same-response-title-backfill",
+      "proxy_url": "http://127.0.0.1:9878/responses",
+      "server_auto_fetch_enabled": false,
+      "timeout_seconds": 65,
+      "workers": 1
+    },
+    "single_atomic_forward_no_retry_resume_or_selective_rerun": true,
+    "two_wave_policy_per_arm": {
+      "beta_prior_alpha": 1.0,
+      "beta_prior_beta": 1.0,
+      "content_chars_per_column": 1000000000,
+      "information_gain_weight": 0.0,
+      "latency_loss_per_second": 0.0,
+      "maximum_wave1_seconds": 30.0,
+      "minimum_net_value": -1.0,
+      "minimum_novel_pages": 6,
+      "minimum_unique_hosts": 6,
+      "minimum_usable_pages": 6,
+      "wave1_fetches": 6,
+      "wave1_queries": 2,
+      "wave2_fetches": 4,
+      "wave2_queries": 2
+    }
+  },
+  "git_head": "e24f03587ad2fa22f824736cf78fe7c653833b93",
+  "mechanism_gate_before_evaluator": {
+    "all_task_evidence_character_counts_equal_between_arms": true,
+    "all_tasks_execute_exactly_four_queries_per_arm": true,
+    "all_tasks_plan_exactly_four_queries_per_arm": true,
+    "candidate_total_query_local_results_nonregression": true,
+    "candidate_total_retained_records_nonregression": true,
+    "completed_task_model_calls_at_most_three": true,
+    "executed_arm_order_matches_frozen_vector": true,
+    "fetch_cap_per_arm_per_task": 10,
+    "first_explicit_authority_phrase_selected_tasks": 20,
+    "hybrid_query_strategy_applied_tasks": 20,
+    "minimum_both_arms_model_success_tasks": 18,
+    "minimum_candidate_retained_records": 4,
+    "minimum_prediction_changed_tasks": 4,
+    "minimum_tasks_with_candidate_query_local_result_advantage": 4,
+    "minimum_tasks_with_candidate_record_advantage": 4,
+    "provider_anchor_preserved_tasks": 20,
+    "query_cap_per_arm_per_task": 4,
+    "query_vector_changed_tasks": 20,
+    "terminal_tasks": 20
+  },
+  "population": {
+    "arm_order_vector_sha256": "4d835aef869c4f4c3172eae4e5f1441d608e20e7b29a9ba353531b364467f03b",
+    "disjoint_from_all_prior_tld_cohorts": true,
+    "final_population_url_or_page_probed_before_protocol_freeze": false,
+    "official_gold_endpoint_sha256": "40ec0a286d3af4d316fbed1a46ebfe8ee17a055a2b8a24eea93898521239d557",
+    "opaque_id_vector_sha256": "114d67a8c372569cf2010b65fac2e45b6f8b5dc74ef39b99e97a41329ec8747b",
+    "selected_tasks": 20,
+    "task_vector_sha256": "40551f0f7a22ff7ab88c842e033a3cfb6450a51990822dfbeb8b926f41acd2d1",
+    "tld_vector_sha256": "7e6e942fa884094dbb1aed57e479225793391af19ec833b8576d6911a87e239a",
+    "visible_question_vector_sha256": "632f97a4a3e0a699864bcdd9966f370f1779372a7d5441e12b3d5fb283dbb7ae"
+  },
+  "protocol_id": "v24994_paired_provider_anchor_hybrid_query_external_gate_v1",
+  "protocol_payload_sha256": "87d346aa98602f9d533fc718a76455de71434f0dec57c6002aa02476568f956d",
+  "quality_gate": {
+    "candidate_exact_strictly_greater": true,
+    "entity_row_item_column_composite_nonregression": true,
+    "fixed_denominator": 20,
+    "invalid_or_fallback_nonincrease": true
+  },
+  "role": "v24994_hybrid_query_external_preregistration",
+  "source_policy": {
+    "action_source_and_page_volume_are_diagnostics_not_gate_targets": true,
+    "candidate_preserves_provider_anchor_and_replaces_only_other_three": true,
+    "candidate_uses_visible_tagged_identity_authority_and_schema_only": true,
+    "control_uses_legacy_visible_query_completion": true,
+    "entropy_or_information_gain_assigns_credit_or_routes": false,
+    "external_gate_not_a_production_latency_or_throughput_measurement": true,
+    "external_gate_total_retrieval_budget_doubles_production": true,
+    "final_iana_url_or_population_probed_before_protocol_freeze": false,
+    "fresh_population_disjoint_from_all_prior_tld_cohorts": true,
+    "independent_equal_per_arm_retrieval_budgets": true,
+    "mapping_gold_category_question_type_split_evaluator_score_reward_read_by_forward": false,
+    "one_shared_visible_only_planning_call": true,
+    "per_arm_query_fetch_caps": {
+      "fetches": 10,
+      "queries": 4
+    },
+    "prediction_freeze_before_gold_fetch_or_quality_decision": true,
+    "public_deepwidebench_exact220_launch_authorized": false,
+    "retrieval_and_synthesis_order_balanced_before_outcomes": true,
+    "runtime_boundary": [
+      "opaque_id",
+      "question",
+      "same_forward_public_pages"
+    ],
+    "same_columns_prompt_model_output_cap_and_task_deadline": true,
+    "same_robust_compact_projector_and_evidence_renderer": true
+  }
+}
