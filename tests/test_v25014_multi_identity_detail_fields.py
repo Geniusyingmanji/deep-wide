@@ -13,6 +13,9 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from deepwide_agent import v25014_multi_identity_detail_fields as target  # noqa: E402
+from deepwide_agent.v24999_shared_response_selection_runtime import (  # noqa: E402
+    _target_bound_record_count,
+)
 from deepwide_agent.v24980_late_page_bound_projection import payload_sha256  # noqa: E402
 
 
@@ -69,6 +72,22 @@ class MultiIdentityDetailFieldTests(unittest.TestCase):
         self.assertIn('"row":"BetaCore"', value["projection"])
         self.assertNotIn('"row":"AlphaKit"', value["projection"])
         self.assertEqual(len(value["projection"]), len(page("BetaCore")["text"]))
+
+        class Prefix:
+            @staticmethod
+            def parent_prefix_for(_url: str) -> str:
+                return page("BetaCore")["text"][:5_000]
+
+        self.assertEqual(
+            _target_bound_record_count(
+                {
+                    "requested_url": page("BetaCore")["url"],
+                    "content": value["projection"],
+                },
+                Prefix(),
+            ),
+            1,
+        )
 
     def test_repeated_single_tag_vector_is_supported_but_mixed_tags_fail(self) -> None:
         repeated = QUESTION.replace(

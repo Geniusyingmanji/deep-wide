@@ -370,7 +370,11 @@ def build_projection(
         matched_identity = joint_matches[0]
         compact = "\n".join(
             (
-                "[MULTI-IDENTITY-TARGET-BOUND DETAIL RECORD]",
+                # Preserve the frozen parent compact-record wire format so the
+                # production runtime counts this one page-local row without a
+                # parser fork.  Multi-identity semantics live in the stricter
+                # receipt and page binding, not in a new marker string.
+                "[IDENTITY-TARGET-BOUND LATE-PAGE RECORDS]",
                 "untrusted_public_page_record=true",
                 "source_url=" + normalized_page["url"],
                 "row_key_label=" + json.dumps(schema[0], ensure_ascii=False),
@@ -391,7 +395,7 @@ def build_projection(
                     ensure_ascii=False,
                     separators=(",", ":"),
                 ),
-                "[/MULTI-IDENTITY-TARGET-BOUND DETAIL RECORD]",
+                "[/IDENTITY-TARGET-BOUND LATE-PAGE RECORDS]",
             )
         )
         marker = "\n[INHERITED RAW PAGE PREFIX]\n"
