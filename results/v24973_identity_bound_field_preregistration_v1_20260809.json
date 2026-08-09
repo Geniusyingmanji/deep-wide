@@ -1,0 +1,114 @@
+{
+  "artifact_version": 1,
+  "authorization": {
+    "evaluator": false,
+    "one_external_forward": false,
+    "preactivation_audit_generation": true,
+    "public_exact220_or_sota": false,
+    "retry_resume_selective_rerun": false
+  },
+  "build_audit_sha256": "76801978dfa5dc3a1ae7f05463754716a6b8d30e13952497df7ccdec9998d851",
+  "created_at_unix": 1786288206,
+  "dependency_manifest": {
+    "scripts/control_v24973_identity_bound_field_quality.py": "365f4597a2daa4e19f0825960fc3c4c785badc716ac40e376cda9a53a5aa576c",
+    "scripts/finalize_v24973_identity_bound_field_quality.py": "bb00fae71759b6be58b995c76a38c096a26fbc1bd092d2adc23328fdeb22ca79",
+    "scripts/run_v24973_identity_bound_field_quality.py": "7276dfda7bf138a15bc5fdfe549e14c36c7c371567eecee51e506adb2665ba7b",
+    "src/deepwide_agent/v24972_identity_bound_compact_fields.py": "372bded9c0f84bd621f87620c9cf4f39f6f9517212f5d35b86257d6b06e4df72",
+    "src/deepwide_agent/v24973_identity_bound_field_quality_contract.py": "800e4712c02a31906e51b4a20174e977c35baf0244ada4e59a4d59dfc9e39286",
+    "tests/test_v24972_identity_bound_compact_fields.py": "6e47336d7d45cb1ff23d176f3ad90127576343851f67851e57ab9bcdf8bf574b",
+    "tests/test_v24973_identity_bound_field_quality.py": "7375056ae8986eaddada108eb27b861b01a28f08d0ef40a6f0b8e5b3a8be31f9"
+  },
+  "dependency_manifest_sha256": "6e29d02736c71720d7200920b1d1f7bf5eab57a66c16ae27b61f2a1ce71ddcd0",
+  "execution": {
+    "arms": [
+      "raw_authoritative_pages",
+      "identity_bound_compact_fields"
+    ],
+    "evidence_chars_per_arm": 16000,
+    "exactly_one_model_attempt_per_arm": true,
+    "executor_concurrency": 20,
+    "fetch_targets_per_task": 2,
+    "model": "gpt-5.6-sol",
+    "model_concurrency": 8,
+    "model_endpoint": "http://127.0.0.1:9878/responses",
+    "model_output_tokens": 2400,
+    "namespace_evidence_chars": 8000,
+    "only_treatment": "identity_bound_compact_field_prefix_under_same_total_cap",
+    "task_deadline_seconds": 180.0,
+    "unified_pair_failure_as_zero": true
+  },
+  "gates": {
+    "mechanism": {
+      "admitted_compact_records": 20,
+      "candidate_evidence_changed_tasks": 20,
+      "evidence_chars_per_arm": 320000,
+      "fallback_tasks": 0,
+      "field_conflicts": 0,
+      "minimum_prediction_changed_tasks": 10,
+      "model_successes_per_arm": 20,
+      "successful_shared_fetches": 40,
+      "terminal_tasks": 20,
+      "unique_bound_fields": 80
+    },
+    "quality": {
+      "candidate_exact_strictly_greater": true,
+      "entity_row_item_column_composite_nonregression": true,
+      "evaluator_invalid_and_fallback_nonincrease": true,
+      "fixed_denominator": 20
+    }
+  },
+  "git_head": "298f59f72a4d4b8e13eb4bf1d965bd2fbd0d77db",
+  "population": {
+    "arm_order_vector_sha256": "0c4b403d0152d572593a1ed43d6a48477131f51d5539b171e12cbf507717bbd7",
+    "endpoint_vector_sha256": "ddb60cb6b79b8d18be2f15faec18b7193da02648ccadd7e81ac2afcc6dbcaf8d",
+    "fresh_against_v24966_v24968_model_and_evaluator_populations": true,
+    "postfreeze_gold_endpoint_vector_sha256": "c5cf1e1856d1c6cf2256e36d0b4518cfcdad1599856792d55f83070abedb58b8",
+    "task_count": 20,
+    "task_vector_sha256": "e23a72c20fc14fe3a21e434b20c92c66d254003c6060c170ba10f72a59f265dd",
+    "transport_layout_preflight_only_without_model_or_evaluator": true
+  },
+  "protected_watchers": [
+    {
+      "marker": "scripts/watch_v2415_r1_checkpoint_liveness.py",
+      "pid": 795336,
+      "start_ticks": 713986317
+    },
+    {
+      "marker": "scripts/watch_v24218_exact220_executor.py",
+      "pid": 3061652,
+      "start_ticks": 747569004
+    },
+    {
+      "marker": "scripts/watch_v24215_joint_package_recovery.py",
+      "pid": 2808901,
+      "start_ticks": 746680268
+    },
+    {
+      "marker": "scripts/watch_v24216_package_gate.py",
+      "pid": 2889939,
+      "start_ticks": 746969965
+    }
+  ],
+  "protocol_id": "v24973_fresh_identity_bound_compact_field_quality_gate_v1",
+  "protocol_payload_sha256": "23cb2b175cca745cd7904066541e535d8e705954a1de8a7772fd02a44b47edea",
+  "role": "v24973_identity_bound_field_preregistration",
+  "source_policy": {
+    "candidate_prefixes_compact_record_then_same_ordered_raw_evidence": true,
+    "control_has_fixed_equal_namespace_raw_char_quota": true,
+    "deepwidebench_manifest_mapping_gold_category_question_type_split_evaluator_score_reward_read_by_forward": false,
+    "entropy_or_information_gain_assigns_credit": false,
+    "only_treatment_is_identity_bound_compact_field_prefix": true,
+    "prediction_freeze_before_evaluator_metrics_or_quality_decision": true,
+    "public_authority_pages_are_task_evidence_not_benchmark_metadata": true,
+    "public_exact220_or_sota_authorized": false,
+    "runtime_boundary": [
+      "opaque_id",
+      "question",
+      "same_forward_public_pages"
+    ],
+    "same_evidence_chars_prompt_model_output_cap_and_attempt_count": true,
+    "same_exact_address_page_bytes_for_both_arms": true,
+    "search_tool_or_github_api_used": false,
+    "short_exact_projection_space_padded_to_fixed_namespace_cap": true
+  }
+}
