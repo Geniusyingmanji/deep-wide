@@ -1,0 +1,118 @@
+INFO: Pandarallel will run on 8 workers.
+INFO: Pandarallel will use Memory file system to transfer data between the main process and workers.
+{"event": "eval_start", "selected": 7, "resume_committed": 0, "committed_errors": 0, "crash_only_resume": false}
+{"event": "eval_done", "idx": 1, "instance_id": "deep2wide_result_1_苏笑柏", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 3.555, "running_n": 1}
+{"event": "eval_done", "idx": 2, "instance_id": "deep2wide_result_2_成都", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.671, "running_n": 2}
+2026-08-09 11:28:12.467 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 年份 | 院校 | 专业组 | 投档线总分 | 本段人数 | 累计人数 |
+| --- | --- | --- | --- ...
+2026-08-09 11:28:15.960 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "2024": "2024",
+  "2023": "2023",
+  "2022": "2022",
+  "2021": "2021",
+  "2020": "2020"
+}
+```
+2026-08-09 11:28:15.960 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 年份, primary_key_map {'2024': '2024', '2023': '2023', '2022': '2022', '2021': '2021', '2020': '2020'}
+2026-08-09 11:28:20.186 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{}
+```
+2026-08-09 11:28:20.186 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 院校, primary_key_map {}
+2026-08-09 11:28:24.829 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "未知": "未知"
+}
+```
+2026-08-09 11:28:24.829 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 专业组, primary_key_map {'未知': '未知'}
+2026-08-09 11:28:24.845 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_3_北京, df_inner shape: (0, 12), answer_df shape: (1355, 6), response_df shape: (5, 9)
+2026-08-09 11:28:24.850 | ERROR    | eval.evaluation.evaluation:evaluate_single_query:401 - evaluator error: 
+Traceback (most recent call last):
+  File "/home/azureuser/workspace-gzy/zyf/deep/external/Marco-Search-Agent/Marco-DeepResearch-Family/DeepWideSearch/eval/evaluation/evaluation.py", line 315, in evaluate_single_query
+    df_inner_score[f"{col}_{metric_func_name}"] = (
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/azureuser/workspace-gzy/zyf/deep/.venv-eval/lib/python3.12/site-packages/pandas/core/frame.py", line 4312, in __setitem__
+    self._set_item_frame_value(key, value)
+  File "/home/azureuser/workspace-gzy/zyf/deep/.venv-eval/lib/python3.12/site-packages/pandas/core/frame.py", line 4470, in _set_item_frame_value
+    raise ValueError(
+ValueError: Cannot set a DataFrame with multiple columns to the single column 投档线总分_number_near
+
+{"event": "eval_done", "idx": 3, "instance_id": "deep2wide_result_3_北京", "score": null, "entity_acc": null, "f1_by_row": null, "f1_by_item": null, "column_f1": null, "error": "RuntimeError: official evaluator reported an internal error", "elapsed_seconds": 14.887, "running_n": 3}
+2026-08-09 11:28:34.087 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 法规名称 | 制定机关 | 时效性 | 公布日期 | 共几章几条 |
+| --- | --- | --- | --- |  ...
+2026-08-09 11:28:36.320 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{}
+```
+2026-08-09 11:28:36.320 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 法规名称, primary_key_map {}
+2026-08-09 11:28:36.379 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_4_四川省阿坝藏族羌族自治州茂县, df_inner shape: (0, 10), answer_df shape: (27, 5), response_df shape: (1, 6)
+2026-08-09 11:28:38.415 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_4_四川省阿坝藏族羌族自治州茂县, col 制定机关, metric_func_name llm_judge, score []
+2026-08-09 11:28:38.416 | ERROR    | eval.evaluation.evaluation:evaluate_single_query:401 - evaluator error: 
+Traceback (most recent call last):
+  File "/home/azureuser/workspace-gzy/zyf/deep/external/Marco-Search-Agent/Marco-DeepResearch-Family/DeepWideSearch/eval/evaluation/evaluation.py", line 315, in evaluate_single_query
+    df_inner_score[f"{col}_{metric_func_name}"] = (
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/azureuser/workspace-gzy/zyf/deep/.venv-eval/lib/python3.12/site-packages/pandas/core/frame.py", line 4312, in __setitem__
+    self._set_item_frame_value(key, value)
+  File "/home/azureuser/workspace-gzy/zyf/deep/.venv-eval/lib/python3.12/site-packages/pandas/core/frame.py", line 4470, in _set_item_frame_value
+    raise ValueError(
+ValueError: Cannot set a DataFrame with multiple columns to the single column 时效性_exact_match
+
+{"event": "eval_done", "idx": 4, "instance_id": "deep2wide_result_4_四川省阿坝藏族羌族自治州茂县", "score": null, "entity_acc": null, "f1_by_row": null, "f1_by_item": null, "column_f1": null, "error": "RuntimeError: official evaluator reported an internal error", "elapsed_seconds": 13.55, "running_n": 4}
+{"event": "eval_done", "idx": 5, "instance_id": "deep2wide_result_5_林丹", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.272, "running_n": 5}
+2026-08-09 11:28:49.697 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 年份 | 赛事 | 地点 | 场数 | 得分 | 篮板 | 助攻 | 名次 |
+| --- | --- | --- | - ...
+2026-08-09 11:28:52.456 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "世界男子篮球锦标赛": "男篮世锦赛",
+  "夏季奥运会男子篮球赛": "奥运会男篮比赛"
+}
+```
+2026-08-09 11:28:52.456 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 赛事, primary_key_map {'世界男子篮球锦标赛': '男篮世锦赛', '夏季奥运会男子篮球赛': '奥运会男篮比赛'}
+2026-08-09 11:28:52.477 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_6_刘玉栋, df_inner shape: (3, 15), answer_df shape: (4, 8), response_df shape: (13, 9)
+2026-08-09 11:28:55.693 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_6_刘玉栋, col 地点, metric_func_name llm_judge, score [0, 1, 1]
+2026-08-09 11:28:55.693 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 8.0, target: 8.0
+2026-08-09 11:28:55.693 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 8.0, target: 7.0
+2026-08-09 11:28:55.693 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 6.0, target: 5.0
+2026-08-09 11:28:55.694 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_6_刘玉栋, col 场数, metric_func_name number_near, score [1.0, 0.0, 0.0]
+2026-08-09 11:28:55.694 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 122.0, target: 11.5
+2026-08-09 11:28:55.694 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 101.0, target: 8.6
+2026-08-09 11:28:55.694 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 64.0, target: 7.8
+2026-08-09 11:28:55.695 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_6_刘玉栋, col 得分, metric_func_name number_near, score [0.0, 0.0, 0.0]
+2026-08-09 11:28:55.695 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not convertable, response: None, target: 4.3
+2026-08-09 11:28:55.695 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not convertable, response: None, target: 4.0
+2026-08-09 11:28:55.695 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not convertable, response: None, target: 1.0
+2026-08-09 11:28:55.696 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_6_刘玉栋, col 篮板, metric_func_name number_near, score [0.0, 0.0, 0.0]
+2026-08-09 11:28:55.696 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not convertable, response: None, target: 1.5
+2026-08-09 11:28:55.696 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not convertable, response: None, target: 1.1
+2026-08-09 11:28:55.696 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not convertable, response: None, target: 0.6
+2026-08-09 11:28:55.697 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_6_刘玉栋, col 助攻, metric_func_name number_near, score [0.0, 0.0, 0.0]
+2026-08-09 11:28:55.697 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 第8名, target: 第8名
+2026-08-09 11:28:55.697 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 第8名, target: 第8名
+2026-08-09 11:28:55.697 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 第10名, target: 第10名
+2026-08-09 11:28:55.698 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_6_刘玉栋, col 名次, metric_func_name exact_match, score [1.0, 1.0, 1.0]
+2026-08-09 11:28:55.703 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_6_刘玉栋, P/R/F1 by unique_columns: 0.2308/0.7500/0.3529
+2026-08-09 11:28:55.703 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_6_刘玉栋, P/R/F1 by row: 0.0000/0.0000/0.0000
+2026-08-09 11:28:55.703 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_6_刘玉栋, P/R/F1 by item: 0.1154/0.3750/0.1765
+2026-08-09 11:28:55.706 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_6_刘玉栋, final table score: 0.0
+{"event": "eval_done", "idx": 6, "instance_id": "deep2wide_result_6_刘玉栋", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0, "f1_by_item": 0.1764705882352941, "column_f1": 0.3529411764705882, "error": null, "elapsed_seconds": 14.984, "running_n": 6}
+2026-08-09 11:28:58.789 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 时间 | 赛事 | 名次 |
+| --- | --- | --- |
+| -, 1990 | 第七届世界女子垒球锦标赛 | ...
+2026-08-09 11:28:58.897 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_7_阎芳, df_inner shape: (0, 5), answer_df shape: (5, 3), response_df shape: (5, 3)
+2026-08-09 11:28:58.900 | ERROR    | eval.evaluation.evaluation:evaluate_single_query:401 - evaluator error: 
+Traceback (most recent call last):
+  File "/home/azureuser/workspace-gzy/zyf/deep/external/Marco-Search-Agent/Marco-DeepResearch-Family/DeepWideSearch/eval/evaluation/evaluation.py", line 315, in evaluate_single_query
+    df_inner_score[f"{col}_{metric_func_name}"] = (
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/azureuser/workspace-gzy/zyf/deep/.venv-eval/lib/python3.12/site-packages/pandas/core/frame.py", line 4312, in __setitem__
+    self._set_item_frame_value(key, value)
+  File "/home/azureuser/workspace-gzy/zyf/deep/.venv-eval/lib/python3.12/site-packages/pandas/core/frame.py", line 4470, in _set_item_frame_value
+    raise ValueError(
+ValueError: Cannot set a DataFrame with multiple columns to the single column 赛事_exact_match
+
+{"event": "eval_done", "idx": 7, "instance_id": "deep2wide_result_7_阎芳", "score": null, "entity_acc": null, "f1_by_row": null, "f1_by_item": null, "column_f1": null, "error": "RuntimeError: official evaluator reported an internal error", "elapsed_seconds": 3.174, "running_n": 7}
+SUMMARY {"n": 7, "valid_n": 4, "errors": 3, "complete": false, "judge_calls_current_process": 14, "score": 0.0, "entity_acc": 0.25, "precision_by_row": 0.0, "recall_by_row": 0.0, "f1_by_row": 0.0, "precision_by_item": 0.028846153846153848, "recall_by_item": 0.09375, "f1_by_item": 0.044117647058823525, "column_precision": 0.057692307692307696, "column_recall": 0.1875, "column_f1": 0.08823529411764705}
