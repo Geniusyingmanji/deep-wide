@@ -1,8 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.72
+> 版本：6.73
 >
-> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.72 覆盖。**
+> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.73 覆盖。**
+
+> **6.73 V2.50.23 完整 220 控制面与自然机制暴露严格 NO-GO（2026-08-09）：V2.50.23 已完成对 V2.48.57 的 append-only production integration，保持 `220 task / 20 executor / 8 model slots / 12 Tavily slots`，每题仍为 `4 query / 10 fetch / 3 model / 240s`；control 逐字重放冻结第二波 URL 前缀，candidate fetch 数相同，无 strict distinct-identity gain、非 multi-identity 或 projector 不 admission 时逐字 handoff。direct/rate/pacing/distinct-selection/multi-identity-projection sidecar、固定 32-worker post-freeze evaluator 与 Exact `>9/220`、Composite `>0.457248978` 且其余质量/可靠性不退的 strict gate 均已接线。**
+
+> **启动前新增 counts-only exposure gate，只把冻结的 220 个公开 `question` 送入 V2.50.14 parser；不读取或输出 task ID、题面、identity/list item、prediction、mapping/gold/category/question_type/split/evaluator/score。权威 aggregate 为 `strict_multi_identity_task_count=0/220`、identity-count distribution `{"0":220}`。另有 35 个连续 bullet/numbered block，但 35/35 的前三行公开上下文都含 `输出要求/格式/Requirements/Note/columns/table` 等格式提示，非格式上下文列表为 0；把它们当 row identity 会系统性把 Markdown 模板要求误路由成实体。故该失败不是“少支持一种列表 regex”，而是 V2.50.18 的明示多实体 treatment 与 DeepWideBench 开放世界 `resolve clue → enumerate set → enrich rows` 任务形态不匹配。**
+
+> **控制面现已 fail closed：exposure audit 未 strict GO 时 protocol、preactivation、execution-start 和 forward 在任何网络/model/search/fetch/output-root effect 前均禁止；不得通过扩宽逗号、引号或格式 bullet parser 来制造暴露。V2.50.23 专项 `13/13`、完整父链 `148/148`、compile、runtime privileged/evaluator/credential audit 全绿，四个 protected watcher PID/start ticks 未改变。该 NO-GO 不产生 DeepWideBench prediction/result，不消耗公开 220，不改变项目分数：最佳仍为 V2.48.57 Exact `9/220`、Composite `0.457249`；V2.49.69 为最新完整但 transport-degraded `5/220 / 0.430226`，无 leaderboard/SOTA。**
+
+> **下一主线转为 evidence-conditioned resolve-then-expand，而不是继续 URL/实体 parser 微调。冻结 legacy planning 与首波前两条 query/至多6 fetch；第三个显式 model slot只读取 visible question 与同轮首波 fetched pages，生成剩余两条 enumeration/enrichment query，随后至多4个第二波 fetch并做一次 synthesis，总量仍 `≤3 model / 4 query / 10 fetch / 240s`。query-refinement 必须作为独立守恒阶段记录 provider request/attempt/slot rejection，失败时回退 legacy 第二波且不得隐式增加 repair/第四次调用。先在全新、与历史 query/TLD/PyPI 人口零交集的 production-shaped matched external gate 证明 query-local result、row/target-bound record、prediction change 与 post-freeze Exact/Composite 同时严格改善且 invalid/fallback/transport 不退；只有 strict GO 才冻结下一次公开 220。entropy/IG 继续 shadow-only、signed credit=0，直至 matched counterfactual outer utility 证据成立。**
 
 > **6.72 V2.50.18 multi-identity distinct-coverage 外部质量 GO（2026-08-09）：在 V2.50.17 的 production-shaped synthetic 闭环后，V2.50.18 冻结 20 task×4 visible rows=`80` 个全新 IANA identity，与历史 180 个 TLD 零交集，protocol freeze 前未探测最终 endpoint/page。control 保持 stable-first-seen；candidate 只在同一 index/page/link/search/fetch union 和相同 `4 query / 10 fetch / 3 model / 60k / 240s` 每臂上限内，优先覆盖不同的 exact visible identity；paired physical cap 为 `4 query / 14 fetch`，20 executor、8 model slots，entropy/IG 仍不路由且 signed credit 恒为 0。实现补齐了 executed-order receipt、自身测试纳入完整回归及质量门的显式 fallback nonincrease；最终 V2.50.18+父链 `145/145`、compile、AST privileged/evaluator、credential、label-blind 与 watcher audit 全绿。实现/build audit/protocol/preactivation/execution-start 分别以 `6aafaa31 / 179ae6ef / 0fdd3682 / d5c99b53 / 262ab776` 从 clean pushed HEAD 独立冻结推送。**
 
