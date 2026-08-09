@@ -1,0 +1,115 @@
+{
+  "artifact_version": 1,
+  "authorization": {
+    "additional_rollout_avg4_leaderboard_or_sota": false,
+    "postfreeze_exact220_evaluation": true,
+    "selective_retry_or_revaluation": false
+  },
+  "control_manifest": {
+    "scripts/control_v24964_partial_signature_replication.py": "41e033c616e25e0bb8a276f9ba9b988e813fd1475320fc80afaf1ece4b1b1244",
+    "scripts/deepwide_api_lease.py": "8d9cffa78617b458172307d3558c76e9370f045f531c2f5aaaceb866f5a78c7d",
+    "scripts/finalize_fullset_rollout.py": "3e886b73cca2b011853a605091eab0d13004de5edee95b14627d1706d69808e5",
+    "scripts/finalize_v24287_exact220.py": "31e55e6d8825f810125897395abb746ad9ba1cffa595e8dc463b1d173e55eed2",
+    "scripts/finalize_v24791_exact220.py": "b4ba46aecd3a4187f27d36b2572cda97605cfc21c4e13eb0d778d544d620f827",
+    "scripts/finalize_v24831_keyless_exact220.py": "7dee699bf812df14ec3a8792f54c6c2ff31b76c441b30ceb5c1f0d038845f0cc",
+    "scripts/finalize_v24964_partial_signature_replication.py": "964ef5ef053e27ae8b62992bb81064392955aa0ad205565efaa1b02b235a670f",
+    "scripts/run_official_eval_local.py": "ab3d3ba3f15143d9f0f46816d7b9eb61f3f8915172dc14fe50d02b96b645c1ca",
+    "scripts/run_v24964_partial_signature_replication.py": "9caf5c7065d6868fad0ef76a628b9f97f9796a376b86e3fa3d2db0d0f755f6a9",
+    "scripts/run_v24964_partial_signature_replication_task.py": "fb5eac4571bb7345bed2cf211626aec810086f9ee07bc613f7a536790d02b6a2",
+    "src/deepwide_agent/v24907_keyless_fixed_budget_binding.py": "6d18343b6bad0d12e1a07fb9a46020353960c395240d2bbe8c76db7b4cf663c5",
+    "src/deepwide_agent/v24921_target_value_coverage_projector.py": "4579affb4bbff7c84da5404bb233b41bd7e2a259ad49c635f756b262e7d2369d",
+    "src/deepwide_agent/v24945_injective_schema_signature_ledger.py": "f0695577030b26290a2452ce6e557fa0389723ccaca8b4ae563e3863a833f12e",
+    "src/deepwide_agent/v24949_mutual_partial_signature_ledger.py": "be64149df01c8bf108f71806bf82a5c5bebe1e72b489e3cfd144230e7edb25cf",
+    "src/deepwide_agent/v24964_partial_signature_replication_contract.py": "4971ca3755708e66e2b82fd87274aa1700ecf81b8b43c5233175a5f40ff22c36",
+    "tests/test_v24831_keyless_exact220.py": "34a73312bac7de832a24a883e799074e3ca346bc77c0c9e26c344a4c343e852d",
+    "tests/test_v24964_partial_signature_replication.py": "0a7bc5e6d729c6dc93f4cb34a7ce5f33a27361b65aad869f365fb96b5633dd3b"
+  },
+  "control_manifest_sha256": "d86b77fd03a166bf54e2894e8968e1374d416c20d6aa2af11b29e3bc61b01562",
+  "created_at_unix": 1786274845,
+  "evaluation_contract": {
+    "all_220_predictions_frozen_before_mapping_query_answer_or_evaluator_open": true,
+    "conservative_denominators": {
+      "all_220": 220,
+      "test_156": 156
+    },
+    "fixed_contiguous_32_way_partition_in_prediction_order": true,
+    "official_evaluator_on_every_frozen_prediction_exactly_once": true,
+    "selective_retry_revaluation_or_prediction_selection": false,
+    "worker_error_rows_are_terminal_failure_as_zero": true
+  },
+  "evaluator_contract": {
+    "answer_corpus": {
+      "manifest_sha256": "5ddc76dd9e9fa4a7080f84e824de6230c62101d2375dee72a0f508b7cfa4ec7e",
+      "root": "external/Marco-Search-Agent/Marco-DeepResearch-Family/DeepWideSearch/data/overall_20250916_tables"
+    },
+    "evaluator_source": {
+      "manifest_sha256": "2829e4808226bd35e4e312f024ceded3a9bc2b1e923493e06503278e382ba061"
+    },
+    "judge": {
+      "max_output_tokens": 8192,
+      "max_retries": 12,
+      "model": "gpt-5.6-sol",
+      "proxy_url": "http://127.0.0.1:9878/responses",
+      "reasoning_effort": "low",
+      "timeout_seconds": 600
+    },
+    "mapping": {
+      "path": "outputs/runtime_manifest_v1_repro/evaluator_mapping.jsonl",
+      "sha256": "3d6f8f71e8136f5a3fe9385e2511e50a367e220dd84e790ba3c7dec975ab5d86"
+    },
+    "mapping_query_answer_or_gold_bytes_opened_or_hashed": true,
+    "opened_only_after_v24791_exact220_prediction_freeze": true,
+    "query_data": {
+      "path": "external/Marco-Search-Agent/Marco-DeepResearch-Family/DeepWideSearch/data/overall_20250916.jsonl",
+      "sha256": "4dd18df4ab8d166f14a1458f884fd8e0652f970764e245e868d75947daa5e5cf"
+    },
+    "recovery_policy": {
+      "canonical_result_file_atomic_replace_per_task": true,
+      "committed_rows_must_be_exact_prediction_prefix": true,
+      "committed_success_or_error_is_terminal": true,
+      "explicit_resume_required": true,
+      "selective_error_retry_allowed": false
+    },
+    "release_seal": {
+      "path": "results/full220_v2403_r1_20260725_finalize_seal.json",
+      "sha256": "6353c3d1caa05fc67f750570d3b3e5909d23945cc69b63f479a47c23d6b3c63f"
+    },
+    "released_evaluator_contract": {
+      "path": "outputs/full220_v2403_r1_eval_20260725/run_config.json",
+      "sha256": "b1040a303a71955b8b8d669c497e24100ec2d8de06d73aa30c3496d69a8559e1"
+    }
+  },
+  "evaluator_workers": 32,
+  "forward_audit_payload_sha256": "febbcd6279762a56af8583730da2b97c25148bd3871c5c8656b2b9458674ebbb",
+  "forward_barrier": {
+    "forward_audit_sha256": "6a3147bd4efa1f1555b4bdd575036e4168bdb2d1ee8e1ad1e16baf5d64ccd4e6",
+    "forward_result_sha256": "b660752fd973314b28b722e3a8c5830e234d0a88cefbb8b4109f7cd2dd9120a1",
+    "mapping_or_evaluator_opened_during_forward": false,
+    "prediction_freeze_sha256": "1ef027d0b54f7415cc77802aad476c8d7eab139d2b6f5f40a5a5731b4ba90518",
+    "run_summary_sha256": "e31adc824b667c86f05923a8c6d574a43979447e7cc40640b5470343b4e05b84",
+    "runtime_predictions_sha256": "74966ec9e2301fbfaa8a65b7cfa9a610ed4729106486ef37685716c8fe36368f",
+    "terminal_predictions": 220
+  },
+  "lease": {
+    "nonblocking_single_owner": true,
+    "owner": "v24964_partial_signature_replication_evaluator_v1",
+    "path": "outputs/deepwide_benchmark_api.lease.lock",
+    "purpose": "postfreeze_fixed_partition_parallel_v24964_exact220_evaluator"
+  },
+  "outputs": {
+    "evaluator_root": "outputs/v24964_partial_signature_replication_v1_20260809/evaluator",
+    "final_result": "results/v24964_partial_signature_replication_result_v1_20260809.json",
+    "postresult_audit": "results/v24964_partial_signature_replication_postresult_audit_v1_20260809.json"
+  },
+  "protocol_id": "v24964_partial_signature_keyless_exact220_cold_replication_v1",
+  "protocol_payload_sha256": "988ec8e896bc0d0a03779f67ed0b5f38bde7b89ebcda7085afea48fe792fe28b",
+  "role": "v24791_exact220_evaluator_preregistration",
+  "selected": 220,
+  "source_policy": {
+    "cross_version_public_benchmark_feedback_overfitting_remains_a_limitation": true,
+    "fixed_public_exact220_task_set_reexecuted": true,
+    "mapping_opened_only_after_exact220_prediction_freeze_and_pushed_audit": true,
+    "new_or_disjoint_task_population_claimed": false,
+    "same_run_evaluator_feedback_used_for_forward_or_prediction_selection": false
+  }
+}
