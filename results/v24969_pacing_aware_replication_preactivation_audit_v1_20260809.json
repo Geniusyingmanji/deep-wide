@@ -1,0 +1,176 @@
+{
+  "artifact_version": 1,
+  "audit_payload_sha256": "edd656301ebfb57bdb6b2e6993bf251c43c3ccdce9f8eec7c9f10ba27de3d576",
+  "audit_valid": true,
+  "authorization": {
+    "evaluator_call": false,
+    "execution_start_generation": true,
+    "retry_resume_skip_or_selective_rerun": false,
+    "single_fresh_exact220_forward": false
+  },
+  "created_at_unix": 1786279492,
+  "dependency_manifest_sha256": "a9877f94f1c478a496dd4ee0a1465b674946efb5f0a1aeb67e3cbc9800a2a0a7",
+  "findings": [],
+  "fixed_full_budget_control_gate": {
+    "audit_sha256": "ec322fcfcefcb05664f3a4d9033b3e806d5189657ca1ca1f9d71b7904f791d5b",
+    "diagnosis_opened_or_hashed_by_protocol": false,
+    "entropy_or_information_gain_used_for_admission": false,
+    "gate_parent_diagnosis_sha256": "fa89b34eb843823f08bb48eee17a5f0c61219605b494d66f041121023d631963",
+    "hard_fetch_cap": 10,
+    "hard_query_cap": 4,
+    "policy_id": "v24799_deadline_bounded_fixed_full_budget_no_entropy_control_v1",
+    "pre_synthesis_safety_ceiling_expand_count": 9072,
+    "synthetic_observation_count": 9072
+  },
+  "git": {
+    "head": "26c939f944a5a5b0b5fc728d0bb0cb9ccf613358",
+    "head_equals_target_main": true,
+    "target_main": "26c939f944a5a5b0b5fc728d0bb0cb9ccf613358",
+    "worktree_clean": true
+  },
+  "label_blind_audit": {
+    "credential_literal_hits": [],
+    "evaluator_capabilities": [],
+    "passed": true,
+    "privileged_runtime_field_accesses": []
+  },
+  "neutral_transport_gate": {
+    "failed_query_rows": 0,
+    "protocol_path": "results/v24853_rate_aware_transport_smoke_preregistration_v1_20260808.json",
+    "protocol_sha256": "15b10c4a3902c3d8a9a59dd6af31e7c75bbbcf9fcfca58899892d7f904692372",
+    "provider_429_responses": 0,
+    "provider_wide_429_rotates_all_keys_immediately": false,
+    "result_path": "results/v24853_rate_aware_transport_smoke_result_v1_20260808.json",
+    "result_payload_sha256": "c634d21655759e3710e3a0f2dd90986977eec462bc4b12b4a1062f1d640c37b7",
+    "result_sha256": "97a8f4d8f0fb71e9f83a1361e449583441885b2a62ac96eb22e12d466895074b",
+    "successful_query_rows": 4
+  },
+  "protocol_id": "v24969_v24857_pacing_aware_exact220_cold_replication_v1",
+  "protocol_sha256": "a7accff144e80bfb67752dc1e0a434cecdb29376f8b1a1c3eab16f25358fdeea",
+  "role": "v24800_exact220_preactivation_audit",
+  "runtime_state": {
+    "conflicting_process_pids": [],
+    "future_surface_pristine": true,
+    "gpt56_endpoint_reachable_without_provider_request": true,
+    "protected_watchers": [
+      {
+        "marker": "scripts/watch_v2415_r1_checkpoint_liveness.py",
+        "pid": 795336,
+        "start_ticks": 713986317
+      },
+      {
+        "marker": "scripts/watch_v24218_exact220_executor.py",
+        "pid": 3061652,
+        "start_ticks": 747569004
+      },
+      {
+        "marker": "scripts/watch_v24215_joint_package_recovery.py",
+        "pid": 2808901,
+        "start_ticks": 746680268
+      },
+      {
+        "marker": "scripts/watch_v24216_package_gate.py",
+        "pid": 2889939,
+        "start_ticks": 746969965
+      }
+    ],
+    "shared_api_lease_inactive": true
+  },
+  "source_policy": {
+    "credential_values_read_persisted_hashed_or_emitted_by_audit": false,
+    "mapping_gold_category_question_type_split_evaluator_score_reward_read": false,
+    "network_model_search_fetch_or_evaluator_called_by_audit": false,
+    "prior_v24798_output_prediction_result_score_or_evaluator_opened_or_hashed": false
+  },
+  "tests": {
+    "expected": 102,
+    "observed": 102,
+    "passed": true,
+    "suites": [
+      {
+        "expected": 10,
+        "observed": 10,
+        "output_sha256": "48d11463da409097c336205152e0848dec3da30ed999ae4c95331b4c27b8e792",
+        "passed": true,
+        "path": "tests/test_v24969_pacing_aware_replication.py"
+      },
+      {
+        "expected": 13,
+        "observed": 13,
+        "output_sha256": "df6a74198504d37006f14af51e21b1a51ef642fa30935140e0b51799c70cb802",
+        "passed": true,
+        "path": "tests/test_v24857_pacing_aware_exact220.py"
+      },
+      {
+        "expected": 7,
+        "observed": 7,
+        "output_sha256": "a96b2f844e7a098c7da807e63b727eb3de48b6ab38b21e2267b55c876453f735",
+        "passed": true,
+        "path": "tests/test_v24856_pacing_aware_admission.py"
+      },
+      {
+        "expected": 11,
+        "observed": 11,
+        "output_sha256": "62bdda58f6dcb8e5f476cbea8f1a57c474c2d4b7535ad06ce103fa8d91a50e5a",
+        "passed": true,
+        "path": "tests/test_v24854_rate_aware_exact220.py"
+      },
+      {
+        "expected": 11,
+        "observed": 11,
+        "output_sha256": "db1df828d05ee251f4d53f130277dac0660e454c6a8b14f5cd8593ce471a4023",
+        "passed": true,
+        "path": "tests/test_v24852_rate_aware_tavily_search.py"
+      },
+      {
+        "expected": 12,
+        "observed": 12,
+        "output_sha256": "4853db12193f2e7e4fa21209d2b595c23bd6f86819c3f11b18d9277128e83323",
+        "passed": true,
+        "path": "tests/test_v24800_exact220.py"
+      },
+      {
+        "expected": 5,
+        "observed": 5,
+        "output_sha256": "e62c6374f4ea52848e1112ab0b6e29afc441262c251a87ffca8494921b6467ad",
+        "passed": true,
+        "path": "tests/test_v24799_fixed_full_budget_control.py"
+      },
+      {
+        "expected": 6,
+        "observed": 6,
+        "output_sha256": "7fc08d2dbb82c4bdb8dac6eab87a8a039b308172479635d55bd2d3d3cd8a2819",
+        "passed": true,
+        "path": "tests/test_v24796_deadline_tavily_search.py"
+      },
+      {
+        "expected": 10,
+        "observed": 10,
+        "output_sha256": "928f8232844187649ab20ca8a91e88d43c4bc96f26bd2e0360350c51bb8d3d01",
+        "passed": true,
+        "path": "tests/test_v24635_exact220.py"
+      },
+      {
+        "expected": 2,
+        "observed": 2,
+        "output_sha256": "732ac55215981c999f1f7c2e4ce4be47622b0729eea81b44477aafb497970348",
+        "passed": true,
+        "path": "tests/test_v24630_thin_backfill_search.py"
+      },
+      {
+        "expected": 7,
+        "observed": 7,
+        "output_sha256": "d18df9ed84ba2fef53376e58e0b13951c8769072eb908d62c55541526dd5930c",
+        "passed": true,
+        "path": "tests/test_v24319_runner_integration.py"
+      },
+      {
+        "expected": 8,
+        "observed": 8,
+        "output_sha256": "b888550b02d29f8dd0ff90b0b2cb136c6b7dfde3c1118468879d7deb37313ede",
+        "passed": true,
+        "path": "tests/test_v24468_total_wall_transport.py"
+      }
+    ]
+  }
+}
