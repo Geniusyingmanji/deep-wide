@@ -100,7 +100,7 @@ def main() -> None:
         "policy_id_exact": candidate.POLICY_ID == "v24939_schema_bound_open_world_record_ledger_v1",
         "entropy_information_gain_shadow_only": True,
         "unbound_observation_positive_credit_forced_zero": True,
-        "benchmark_external_or_public_launch_authorized": False,
+        "benchmark_external_or_public_launch_not_authorized": True,
     }
     value = {
         "artifact_version": 1,
