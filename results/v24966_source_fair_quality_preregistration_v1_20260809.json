@@ -1,0 +1,126 @@
+{
+  "artifact_version": 1,
+  "authorization": {
+    "evaluator_only_after_prediction_freeze_and_pushed_forward_audit": true,
+    "leaderboard_or_sota": false,
+    "one_external_forward_after_preactivation_and_start": true,
+    "public_exact220_or_other_benchmark_launch": false,
+    "retry_resume_selective_rerun_or_revaluation": false
+  },
+  "created_at_unix": 1786276955,
+  "execution": {
+    "arm_call_order_exactly_balanced_by_preoutcome_opaque_hash_rank": true,
+    "candidate": "cumulative_source_fair",
+    "control": "stable_first_seen",
+    "evidence_chars_per_arm": 24000,
+    "executor_concurrency": 20,
+    "fixed_denominator_failure_as_zero": true,
+    "model": "gpt-5.6-sol",
+    "model_attempts_per_arm": 1,
+    "model_concurrency": 8,
+    "model_output_tokens": 2400,
+    "only_treatment": "stable_first_seen_vs_cumulative_registrable_source_fair_order",
+    "queries_per_wave": 2,
+    "reasoning_effort": "low",
+    "same_fetched_bytes_for_shared_urls": true,
+    "same_search_response_replayed": true,
+    "same_task_local_fetch_union": true,
+    "service_tier": "priority",
+    "task_deadline_seconds": 240.0,
+    "wave_fetch_caps": [
+      6,
+      4
+    ]
+  },
+  "gates": {
+    "evidence_chars_per_task_per_arm": 24000,
+    "gold_valid_tasks": 20,
+    "logical_query_rows": 80,
+    "maximum_candidate_over_control_model_token_ratio": 1.1,
+    "maximum_failure_as_zero_tasks": 0,
+    "maximum_fetch_deadline_failures": 0,
+    "maximum_fetch_deadline_rejections": 0,
+    "maximum_fetch_helper_failures": 0,
+    "maximum_search_deadline_failures": 0,
+    "maximum_transport_failures": 0,
+    "minimum_candidate_over_control_source_ratio": 1.25,
+    "minimum_candidate_over_control_usable_page_ratio": 0.9,
+    "minimum_candidate_registrable_sources": 80,
+    "minimum_prediction_changed_tasks": 10,
+    "minimum_selected_leads_per_arm": 180,
+    "minimum_selected_leads_per_task_per_arm": 8,
+    "minimum_selection_changed_tasks": 16,
+    "minimum_source_gain_tasks": 12,
+    "minimum_usable_pages_per_arm": 120,
+    "model_attempts_per_arm": 20,
+    "quality_rule": "candidate_exact_strictly_greater_and_entity_row_item_column_composite_all_nonregressing",
+    "search_http_2xx": 40,
+    "search_provider_attempts": 40,
+    "search_provider_response_calls": 40,
+    "task_count": 20
+  },
+  "git_head": "63efbe9f4096d5cf165bc9f1ed3bd9c65f758528",
+  "population": {
+    "arm_order_vector_sha256": "f446d24533361ecf302f7afc053666c50cd88e7ebc2181c5e0948f9b1e2f43d6",
+    "disjoint_from_v24958_v24960_v24962_v24963_query_vectors": true,
+    "kind": "fresh_public_pypi_metadata_tasks",
+    "package_vector_sha256": "30fdb1137e787558fd176d76443ab3bfe9f5e6986bfed7807a54bce8efd8743f",
+    "postfreeze_gold_endpoint_vector_sha256": "4b3f36144af0df510b9690d2db1057468eb7a947f00acc791743e58a249787b8",
+    "query_vector_sha256": "60e90b9e2947dba498473f16041503bf85be5b13c4e0908f368046490ecb8e89",
+    "task_count": 20,
+    "task_vector_sha256": "bda7f73fbe2248941705a47e5c3a4736f2390a2abf2fa9eca20477fb4b411eb4"
+  },
+  "protected_watchers": [
+    {
+      "marker": "scripts/watch_v2415_r1_checkpoint_liveness.py",
+      "pid": 795336,
+      "start_ticks": 713986317
+    },
+    {
+      "marker": "scripts/watch_v24218_exact220_executor.py",
+      "pid": 3061652,
+      "start_ticks": 747569004
+    },
+    {
+      "marker": "scripts/watch_v24215_joint_package_recovery.py",
+      "pid": 2808901,
+      "start_ticks": 746680268
+    },
+    {
+      "marker": "scripts/watch_v24216_package_gate.py",
+      "pid": 2889939,
+      "start_ticks": 746969965
+    }
+  ],
+  "protocol_id": "v24966_fresh_pypi_cumulative_source_fair_quality_gate_v1",
+  "protocol_payload_sha256": "5e224cf8522a43043a5581b470b64248df27ee8c3625328885905c9fef93a757",
+  "role": "v24966_source_fair_quality_preregistration",
+  "source_manifest": {
+    "scripts/deepwide_api_lease.py": "8d9cffa78617b458172307d3558c76e9370f045f531c2f5aaaceb866f5a78c7d",
+    "scripts/v24960_source_fair_live_gate.py": "85e15a136863e531013cd0439b778979e2afadf55bab07f3a13b6c39f51d95e7",
+    "scripts/v24962_cumulative_source_fair_live_gate.py": "2d7dd8309399ef6c7f42ad5d29eb814884b5f71a21c1df517e9b83b575c34c90",
+    "scripts/v24966_source_fair_quality_gate.py": "5bf1550ccbbb3ec16b3b39df258435900f1f274e26f9f4d1594814c2ab638a9a",
+    "src/deepwide_agent/native_search.py": "cd0d6bfccf4b345b11274558bdcffb39d279697d183242baf811dfd56ac71e50",
+    "src/deepwide_agent/v24280_task_union_single_shot.py": "112b8a349141e986de4f7d94c0fcb201693ee961c9fff9eeda29f297415e1142",
+    "src/deepwide_agent/v24287_hard_deadline_fetch.py": "da4ee0fb7ffaf99389c6c6c0a5d8f075b72e15bd99a1e72f534ccc3f29cde468",
+    "src/deepwide_agent/v24316_deadline_search.py": "dd5ded612bfecb624f38d5d86d379be1e973dbbd6df55084157cb33a758b3260",
+    "src/deepwide_agent/v24957_action_fair_discovery.py": "98bbc01168c135b6997fe35227349d59f832aa825edb8d8ba64d6d2653433e91",
+    "src/deepwide_agent/v24959_source_fair_discovery.py": "515d821fdf969cd6dd4facd46e49817b1eb94d9d3ec3244a26069628236bd76c",
+    "src/deepwide_agent/v24961_cumulative_source_fair.py": "2d9a66a000db7ac472211f26ca4e6c948aa8727a6375174b99433e1537b12492",
+    "tests/test_v24966_source_fair_quality_gate.py": "31482393039c782659ee24ee92e89e32c83228f55088ae1cfcca6bc4d17b25e2"
+  },
+  "source_manifest_sha256": "c11e2b219e11b897a9d5561de22737c04c536de3189cac3069b478daca59b7b5",
+  "source_policy": {
+    "credential_value_environment_or_keyring_read": false,
+    "deepwidebench_manifest_prediction_mapping_gold_category_question_type_split_evaluator_score_reward_read_by_forward": false,
+    "entropy_or_information_gain_used_for_selection_or_credit": false,
+    "forward_persists_no_query_url_host_title_page_or_provider_payload": true,
+    "fresh_benchmark_external_pypi_population_only": true,
+    "provider_narrative_or_snippet_used_as_active_evidence": false,
+    "pypi_gold_endpoint_opened_only_after_prediction_freeze": true,
+    "retry_resume_skip_or_selective_rerun": false,
+    "same_evidence_character_budget_model_prompt_and_output_cap": true,
+    "same_provider_payload_replayed_by_both_arms": true,
+    "same_task_local_union_fetch_bytes_for_shared_urls": true
+  }
+}
