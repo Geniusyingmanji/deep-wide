@@ -1,0 +1,114 @@
+{
+  "arms": {
+    "action_group_fair": "query_local_prefix_then_action_group_round_robin",
+    "stable_first_seen": "query_local_prefix_then_stable_first_seen_action_sources"
+  },
+  "artifact_version": 1,
+  "authorization": {
+    "benchmark_external_or_exact220_launch": false,
+    "benchmark_external_quality_gate_design": false,
+    "evaluator": false,
+    "leaderboard_or_sota": false,
+    "one_neutral_shared_response_live_gate": true
+  },
+  "created_at_unix": 1786271513,
+  "gates": {
+    "completed_task_count": 20,
+    "maximum_batch_wall_seconds": 170.0,
+    "maximum_fetch_helper_failures": 4,
+    "maximum_hard_fetch_deadline_failures": 4,
+    "maximum_hosted_search_deadline_failures": 0,
+    "maximum_task_p95_wall_seconds": 130.0,
+    "maximum_transport_failures": 0,
+    "minimum_action_group_coverage_gain_task_count": 16,
+    "minimum_candidate_over_control_selected_host_ratio": 0.95,
+    "minimum_candidate_over_control_usable_char_ratio": 0.9,
+    "minimum_candidate_over_control_usable_page_ratio": 1.0,
+    "minimum_control_usable_pages": 120,
+    "minimum_matched_selection_task_count": 20,
+    "minimum_raw_action_group_count": 40,
+    "minimum_raw_action_source_count": 400,
+    "minimum_selected_leads_per_task_per_arm": 8,
+    "minimum_selection_changed_task_count": 16,
+    "minimum_total_action_group_coverage_gain": 20,
+    "minimum_total_selected_leads_per_arm": 180,
+    "search_http_2xx": 40,
+    "search_provider_attempts": 40,
+    "search_provider_response_calls": 40,
+    "terminal_task_count": 20
+  },
+  "git_head": "6f15ab45059d5ce51dfd78aa6f92d0b8738692c2",
+  "protected_watchers": [
+    {
+      "marker": "scripts/watch_v2415_r1_checkpoint_liveness.py",
+      "pid": 795336,
+      "start_ticks": 713986317
+    },
+    {
+      "marker": "scripts/watch_v24218_exact220_executor.py",
+      "pid": 3061652,
+      "start_ticks": 747569004
+    },
+    {
+      "marker": "scripts/watch_v24215_joint_package_recovery.py",
+      "pid": 2808901,
+      "start_ticks": 746680268
+    },
+    {
+      "marker": "scripts/watch_v24216_package_gate.py",
+      "pid": 2889939,
+      "start_ticks": 746969965
+    }
+  ],
+  "protocol_id": "v24958_action_fair_shared_response_live_gate_v1",
+  "protocol_payload_sha256": "42ba63af779d30601b0c9bc7ae303cfe83649a7dae7679d0520f5824ed0affe2",
+  "provider": {
+    "endpoint": "http://127.0.0.1:9878/responses",
+    "keyless": true,
+    "max_retries": 1,
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "low",
+    "search_context_size": "medium",
+    "service_tier": "priority"
+  },
+  "role": "v24958_action_fair_live_preregistration",
+  "schedule": {
+    "executor_concurrency": 20,
+    "fetch_cap_per_arm": 10,
+    "logical_queries_per_task": 4,
+    "maximum_shared_physical_fetches_per_task": 20,
+    "one_provider_attempt_per_wave": true,
+    "queries_per_wave": 2,
+    "query_vector_sha256": "47cf286e8596ab5cc6bdf41de340c40986328b4c9e6b819ad7dac94d1f00987c",
+    "shared_response_replay": true,
+    "task_count": 20,
+    "task_deadline_seconds": 150.0,
+    "task_local_shared_fetch_union": true,
+    "wave_fetch_caps": [
+      6,
+      4
+    ]
+  },
+  "source_manifest": {
+    "scripts/deepwide_api_lease.py": "8d9cffa78617b458172307d3558c76e9370f045f531c2f5aaaceb866f5a78c7d",
+    "scripts/v24958_action_fair_live_gate.py": "8aa5a92a4ed6a0a5b7152df45588834738810158c8df23e8f0b7432366df5fac",
+    "src/deepwide_agent/native_search.py": "cd0d6bfccf4b345b11274558bdcffb39d279697d183242baf811dfd56ac71e50",
+    "src/deepwide_agent/v24280_task_union_single_shot.py": "112b8a349141e986de4f7d94c0fcb201693ee961c9fff9eeda29f297415e1142",
+    "src/deepwide_agent/v24287_hard_deadline_fetch.py": "da4ee0fb7ffaf99389c6c6c0a5d8f075b72e15bd99a1e72f534ccc3f29cde468",
+    "src/deepwide_agent/v24316_deadline_search.py": "dd5ded612bfecb624f38d5d86d379be1e973dbbd6df55084157cb33a758b3260",
+    "src/deepwide_agent/v24957_action_fair_discovery.py": "98bbc01168c135b6997fe35227349d59f832aa825edb8d8ba64d6d2653433e91",
+    "tests/test_v24958_action_fair_live_gate.py": "c7544fefb0f92570d62c30a6d1b3182714daebdd630aee6ad299a65a0c2c7a1d"
+  },
+  "source_manifest_sha256": "ba0bfb66e4e0ba69857d702ad0d6b862fb2273b175a6e1202f7f187f754f9a58",
+  "source_policy": {
+    "benchmark_manifest_question_prediction_mapping_gold_category_question_type_split_evaluator_score_reward_read": false,
+    "credential_value_environment_or_keyring_read": false,
+    "entropy_or_information_gain_used_for_selection_or_credit": false,
+    "neutral_public_software_documentation_queries_only": true,
+    "provider_narrative_or_snippet_used_as_active_evidence": false,
+    "query_url_host_title_page_answer_provider_payload_selection_or_per_task_row_persisted": false,
+    "same_fetched_page_bytes_used_for_shared_urls": true,
+    "same_provider_payload_replayed_by_both_arms": true,
+    "task_answer_synthesis_or_evaluator_effect": false
+  }
+}
