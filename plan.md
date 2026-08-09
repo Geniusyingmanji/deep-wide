@@ -1,8 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.59
+> 版本：6.60
 >
-> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.59 覆盖。**
+> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.60 覆盖。**
+
+> **6.60 V2.49.69 完整 220 transport-degraded 冷复现（2026-08-09）：为落实“先跑出个全集结果”，V2.49.69 仅为项目内单轮最佳 V2.48.57 创建新执行/产物 namespace；220 task vector、Tavily rate-aware transport、pacing-aware admission、GPT-5.6、prompt、每题 `4 query / 10 fetch / 3 model / 240s`、`20 executor / 8 model slots / 12 search slots` 全部不变。新增 10/10 专项测试与完整 102/102 preactivation tests 通过；runtime privileged-field、evaluator capability、credential literal findings 均为 0，四个 protected watcher 未停止或重启。代码、protocol、preactivation audit、execution-start 均在 clean pushed HEAD 上分阶段提交。**
+>
+> **唯一 forward 在 `794.618906s`（13.24 分钟）完成 `220/220` terminal predictions，220 model-generated、0 fallback、`640,880` system tokens；全部 predictions 在 mapping/gold/evaluator 打开前冻结，没有 retry、resume、skip、补题或选择性重跑。forward audit 的 exact-220 barrier、pushed commit、lease、process、watcher 与 future evaluator surface 全部通过，`findings=[]`。**
+>
+> **本轮不是健康的 V2.48.57 算法复现：12 个输入 Tavily credentials 的首次 provider attempt 全部返回 HTTP 432，12/12 key-local disable；`880/880` logical search queries 失败，0 successful query、0 URL lead、0 fetch。协议禁止补跑，因此仍对冻结的无搜索 prediction 做固定 32-worker 全集评价。evaluator 对 220 条 prediction 各评一次，213 valid、7 error 固定计零，平行墙钟 `220.852234s`。最终 Exact `5/220=2.2727%`、Entity `0.681818`、Row/Item/Column F1 `0.206291/0.370221/0.462572`、Composite `0.430226`。post-result audit 15 项全部通过，`findings=[]`。**
+>
+> **结论：V2.49.69 是完整、label-blind、可审计但 transport-degraded 的 220 题结果，不是 V2.48.57 正常检索质量的反证，更不是新最佳或 SOTA；项目单轮最佳仍为 V2.48.57 的 Exact `9/220`、Composite `0.457249`。这轮直接暴露了启动策略缺口：端口可达与旧 credential-health 结果不足以保证 launch-time search 可用。任何下一次 Tavily 全集必须先在同一 credential pool、同一 transport class 上完成 fresh pre-effect health gate，并要求每个 key 2xx 或至少预注册的健康槽数/查询覆盖；health gate 失败时不得生成 execution-start。已失效 key pool 不得再用于全集。下一算法候选仍回到 fresh benchmark-external identity-bound compact field gate；公开 220 不用于逐题调参，entropy/IG 继续只作 shadow/VOC feature。**
 
 > **6.59 V2.49.67–68 requirement-aware authority allocation 与三臂机制 NO-GO（2026-08-09）：V2.49.67 新增纯函数、零 I/O 的 URL-only authority policy。它只接受 visible question 中显式 PyPI project 与 GitHub owner/repository identity；仅精确 `pypi.org/project/<project>` 和 `github.com/<owner>/<repo>/releases...` 可获得 requirement credit。仿冒子域、相似 project、错误 repo、issues 页面、provider title/summary 或正文自称均不能通过；选择先补未覆盖 requirement，再按 cumulative source-fair 顺序填充。同一 fixed evidence budget 下，candidate 可为两个权威 namespace 各预留固定字符配额。8/8 attack/unit tests 与父 source-fair 回归通过，组件不导入 network/model/evaluator，也不读取 benchmark label、mapping、gold、score 或 reward。**
 >
