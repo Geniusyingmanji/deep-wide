@@ -8,8 +8,9 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-if str(ROOT / "src") not in sys.path:
-    sys.path.insert(0, str(ROOT / "src"))
+for path in (ROOT, ROOT / "src"):
+    if str(path) not in sys.path:
+        sys.path.insert(0, str(path))
 
 from deepwide_agent import v24939_schema_bound_record_ledger as parent  # noqa: E402
 from deepwide_agent import v24942_compact_schema_bound_record_ledger as candidate  # noqa: E402
