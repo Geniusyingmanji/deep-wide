@@ -1,0 +1,176 @@
+{
+  "artifact_version": 1,
+  "audit_payload_sha256": "ced04f329ff1dc3c5df402d6092cb14e93ac842febdcc77b0f81e24da676e635",
+  "audit_valid": true,
+  "authorization": {
+    "evaluator_call": false,
+    "execution_start_generation": false,
+    "retry_resume_skip_or_selective_rerun": false,
+    "same_process_readiness_arming": true,
+    "single_fresh_exact220_forward": false
+  },
+  "created_at_unix": 1786285496,
+  "dependency_manifest_sha256": "ac20a9bf617cde4cc6e271eb9e44b5de0bcf1237239f14a233e4f911c32615b0",
+  "findings": [],
+  "git": {
+    "head": "98c2a808b9482431572f2ead4bb73cfb6240d0a4",
+    "head_equals_target_main": true,
+    "target_main": "98c2a808b9482431572f2ead4bb73cfb6240d0a4",
+    "worktree_clean": true
+  },
+  "label_blind_audit": {
+    "credential_literal_hits": [],
+    "evaluator_capabilities": [],
+    "passed": true,
+    "privileged_runtime_field_accesses": []
+  },
+  "protocol_id": "v24971_readiness_armed_v24857_exact220_v1",
+  "protocol_sha256": "7553609c75a6e54642d30d05cf4243957789195c69f24c853788f3c3330e78a8",
+  "readiness_policy": {
+    "all_keys_require_2xx_and_nonempty_url_lead": true,
+    "attempts_per_key": 1,
+    "authorization_wait_seconds": 1800,
+    "credential_value_or_hash_persisted": false,
+    "ephemeral_key_count": 12,
+    "executor_concurrency": 12,
+    "neutral_query_sha256": "68b0cfda323e59097a3a070cb57935911c96a6af7150fa5f9902a325648c164b",
+    "per_key_deadline_seconds": 45.0,
+    "policy_id": "v24970_same_process_all_key_search_readiness_v1",
+    "receipt_alone_authorizes_benchmark_forward": false,
+    "results_per_query": 1,
+    "same_process_same_memory_pool_handoff": true
+  },
+  "role": "v24971_readiness_armed_exact220_preactivation_audit",
+  "runtime_state": {
+    "armed_surface_pristine": true,
+    "conflicting_process_pids": [],
+    "future_surface_pristine": true,
+    "gpt56_endpoint_reachable_without_provider_request": true,
+    "protected_watchers": [
+      {
+        "marker": "scripts/watch_v2415_r1_checkpoint_liveness.py",
+        "pid": 795336,
+        "start_ticks": 713986317
+      },
+      {
+        "marker": "scripts/watch_v24218_exact220_executor.py",
+        "pid": 3061652,
+        "start_ticks": 747569004
+      },
+      {
+        "marker": "scripts/watch_v24215_joint_package_recovery.py",
+        "pid": 2808901,
+        "start_ticks": 746680268
+      },
+      {
+        "marker": "scripts/watch_v24216_package_gate.py",
+        "pid": 2889939,
+        "start_ticks": 746969965
+      }
+    ],
+    "shared_api_lease_inactive": true
+  },
+  "source_policy": {
+    "credential_values_read_persisted_hashed_or_emitted_by_audit": false,
+    "mapping_gold_category_question_type_split_evaluator_score_reward_read": false,
+    "network_model_search_fetch_or_evaluator_called_by_audit": false
+  },
+  "tests": {
+    "expected": 122,
+    "observed": 122,
+    "passed": true,
+    "suites": [
+      {
+        "expected": 20,
+        "observed": 20,
+        "output_sha256": "9abdc8ff870ab09eaab113077cf5d0ca634754f71652450950f1d84ad3c387fd",
+        "passed": true,
+        "path": "tests/test_v24971_readiness_armed_exact220.py"
+      },
+      {
+        "expected": 10,
+        "observed": 10,
+        "output_sha256": "870009ee9108eb2d65427171d433a0b1890da9c423c4b9d7913da991f01570b5",
+        "passed": true,
+        "path": "tests/test_v24970_same_process_search_readiness.py"
+      },
+      {
+        "expected": 13,
+        "observed": 13,
+        "output_sha256": "93170f4655d59f8b891428db76b7d2374469831f52b93907120dea1fc4e8764b",
+        "passed": true,
+        "path": "tests/test_v24857_pacing_aware_exact220.py"
+      },
+      {
+        "expected": 7,
+        "observed": 7,
+        "output_sha256": "4a0ed17d26fdce949f3dd87887b5d3e3d6eee78343584cc9d9288ae8ac49b91b",
+        "passed": true,
+        "path": "tests/test_v24856_pacing_aware_admission.py"
+      },
+      {
+        "expected": 11,
+        "observed": 11,
+        "output_sha256": "d973ee38c9b270e1abdb94f3b6ef0edcc6df00b11b48884570f2e5d3a34787e8",
+        "passed": true,
+        "path": "tests/test_v24854_rate_aware_exact220.py"
+      },
+      {
+        "expected": 11,
+        "observed": 11,
+        "output_sha256": "b8f380a991bf786a69e24cf90528930fdfecadc8022b335367f2c0d780c1f1bd",
+        "passed": true,
+        "path": "tests/test_v24852_rate_aware_tavily_search.py"
+      },
+      {
+        "expected": 12,
+        "observed": 12,
+        "output_sha256": "ad3b69715eea47065bace76eede5aa44f50177d0aba17618d4f561ef1618723f",
+        "passed": true,
+        "path": "tests/test_v24800_exact220.py"
+      },
+      {
+        "expected": 5,
+        "observed": 5,
+        "output_sha256": "b6f1838193a2d34b6c62239275a64bbfd4395fc9350163b7aae33f319e3f9806",
+        "passed": true,
+        "path": "tests/test_v24799_fixed_full_budget_control.py"
+      },
+      {
+        "expected": 6,
+        "observed": 6,
+        "output_sha256": "bc83d37455df55c88b9919c965b1905cbc8e3460df3445422a7f9c8ec2920994",
+        "passed": true,
+        "path": "tests/test_v24796_deadline_tavily_search.py"
+      },
+      {
+        "expected": 10,
+        "observed": 10,
+        "output_sha256": "c8bee0624cbf3e15bf9e799d16eb055d4277755e347ef06b61947fd674b2a67c",
+        "passed": true,
+        "path": "tests/test_v24635_exact220.py"
+      },
+      {
+        "expected": 2,
+        "observed": 2,
+        "output_sha256": "732ac55215981c999f1f7c2e4ce4be47622b0729eea81b44477aafb497970348",
+        "passed": true,
+        "path": "tests/test_v24630_thin_backfill_search.py"
+      },
+      {
+        "expected": 7,
+        "observed": 7,
+        "output_sha256": "c682042922a875bf633d99de44dfbeff15f60d203e0eff1e4a647957873cdcbe",
+        "passed": true,
+        "path": "tests/test_v24319_runner_integration.py"
+      },
+      {
+        "expected": 8,
+        "observed": 8,
+        "output_sha256": "3df63cd298c6026557722bcd0db5d0e7cf65106d6d1869ee5fe16ad0dc3d807d",
+        "passed": true,
+        "path": "tests/test_v24468_total_wall_transport.py"
+      }
+    ]
+  }
+}
