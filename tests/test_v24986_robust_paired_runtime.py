@@ -249,6 +249,7 @@ class RobustPairedRuntimeTests(unittest.TestCase):
         receipt = target._runtime_receipt(
             {
                 "provider_unique_query_count": 1,
+                "first_synthesis_arm": target.CONTROL_ARM,
                 "completed_query_count": 4,
                 "deterministically_added_query_count": 3,
                 "robust_visible_schema_column_count": 2,
@@ -261,6 +262,41 @@ class RobustPairedRuntimeTests(unittest.TestCase):
         encoded = json.dumps(receipt)
         for forbidden in ("Entity", "Value", "visible query", "Late Entity"):
             self.assertNotIn(forbidden, encoded)
+
+    def test_explicit_arm_order_is_validated_and_applied(self) -> None:
+        with self.assertRaisesRegex(ValueError, "arm order"):
+            with tempfile.TemporaryDirectory(dir=ROOT / "outputs") as raw:
+                output_root = Path(raw)
+                slots = output_root / "slots"
+                slots.mkdir()
+                for index in range(1, 9):
+                    (slots / f"slot_{index:02d}.lock").write_text(
+                        "{}\n", encoding="utf-8"
+                    )
+                model = DeadlineAwareGlobalModelSlotLimiter(
+                    InnerModel(),
+                    slot_directory=slots,
+                    output_root=output_root,
+                    slot_cap=8,
+                    absolute_deadline=time.monotonic() + 240,
+                )
+                target.run_paired_task(
+                    {
+                        "opaque_id": "task_0123456789abcdef01234567",
+                        "question": QUESTION,
+                    },
+                    model=model,
+                    search=SyntheticSearch(QUESTION),
+                    limits=ScoreFirstLimits(
+                        wall_seconds=240,
+                        model_calls=3,
+                        search_queries=4,
+                        fetch_targets=10,
+                        evidence_chars=60_000,
+                        page_chars=5_000,
+                    ),
+                    arm_order=[target.CONTROL_ARM, target.CONTROL_ARM],
+                )
 
 
 if __name__ == "__main__":

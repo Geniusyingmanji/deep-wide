@@ -129,6 +129,7 @@ def _runtime_receipt(value: Mapping[str, Any]) -> dict[str, Any]:
         "artifact_version": 1,
         "role": RECEIPT_ROLE,
         "policy_id": POLICY_ID,
+        "first_synthesis_arm": str(value["first_synthesis_arm"]),
         "provider_unique_query_count": int(value["provider_unique_query_count"]),
         "completed_query_count": int(value["completed_query_count"]),
         "deterministically_added_query_count": int(
@@ -192,6 +193,7 @@ def validate_runtime_receipt(value: Mapping[str, Any]) -> dict[str, Any]:
         copied.get("artifact_version") != 1
         or copied.get("role") != RECEIPT_ROLE
         or copied.get("policy_id") != POLICY_ID
+        or copied.get("first_synthesis_arm") not in ARMS
         or any(
             isinstance(copied.get(name), bool)
             or not isinstance(copied.get(name), int)
@@ -236,6 +238,7 @@ def run_paired_task(
     model: DeadlineAwareGlobalModelSlotLimiter,
     search: LatePageBoundSearchClient,
     limits: score.ScoreFirstLimits,
+    arm_order: Sequence[str] | None = None,
     monotonic: Callable[[], float] = time.monotonic,
 ) -> dict[str, Any]:
     visible = score.validate_visible_task(task)
@@ -258,6 +261,9 @@ def run_paired_task(
         field: getattr(fixed, field) for field in POLICY_VALUES
     }:
         raise RuntimeError("V2.49.86 fixed no-entropy controller drifted")
+    chosen_order = tuple(arm_order or parent._arm_order(visible["opaque_id"]))
+    if len(chosen_order) != len(ARMS) or set(chosen_order) != set(ARMS):
+        raise ValueError("V2.49.86 arm order drifted")
 
     model_before = parent._counter(model, parent._MODEL_COUNTERS)
     search_before = parent._counter(search, parent._SEARCH_COUNTERS)
@@ -323,7 +329,7 @@ def run_paired_task(
     success = {arm: False for arm in ARMS}
     normalizer_statuses: list[str] = []
     if pages:
-        for arm in parent._arm_order(visible["opaque_id"]):
+        for arm in chosen_order:
             try:
                 logical_model_calls += 1
                 response = model.complete(
@@ -402,6 +408,7 @@ def run_paired_task(
     robust_receipt = _runtime_receipt(
         {
             "provider_unique_query_count": provider_count,
+            "first_synthesis_arm": chosen_order[0],
             "completed_query_count": len(queries),
             "deterministically_added_query_count": len(queries) - provider_count,
             "robust_visible_schema_column_count": int(
