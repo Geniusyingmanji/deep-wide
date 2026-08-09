@@ -134,7 +134,7 @@ def dependency_manifest(root: Path) -> dict[str, str]:
     relatives.update(LOCAL_SOURCES)
     return {
         str(relative): sha256(
-            parent.parent.parent._ordinary_tracked(root, relative)
+            parent.parent.parent.parent._ordinary_tracked(root, relative)
         )
         for relative in sorted(relatives, key=str)
     }
@@ -176,7 +176,7 @@ def build_protocol(
     require_clean: bool = True,
     require_pristine: bool = True,
 ) -> dict[str, Any]:
-    git = parent.parent.parent._git
+    git = parent.parent.parent.parent._git
     if require_clean and (
         git(root, "status", "--porcelain")
         or git(root, "rev-parse", "HEAD") != git(root, "rev-parse", "target/main")
