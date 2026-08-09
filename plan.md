@@ -1,8 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.60
+> 版本：6.61
 >
-> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.60 覆盖。**
+> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.61 覆盖。**
+
+> **6.61 V2.49.70–71 same-process readiness 修复与真实 NO-GO（2026-08-09）：V2.49.69 已证明旧控制面存在 authorization bug——launch 前 V2.49.55 已得到 `0/12 healthy, 12/12 HTTP 432, passed=false`，但 execution-start 只检查 GPT-5.6 端口、旧 transport evidence、lease/process/watcher，未消费该 NO-GO，仍授权了退化全集。V2.49.70 因此新增 production-shaped、benchmark-blind readiness：12 个 ephemeral key 各用固定中性 query 经相同 rate-aware transport exactly once；每个 key 都必须得到合法 2xx 和至少一个 URL lead，任一 401/403/429/432、空结果、transport failure 或 credential echo 都 fail closed。receipt 只保留聚合计数；成功时才返回不可复制、不可序列化、一次性消费的内存 capability，交付的正是刚探测过的同一 tuple 凭据。10/10 定向测试与父 transport 回归通过。**
+>
+> **V2.49.71 将该 capability 接入 exact-220 控制面。runner 从 stdin 读取凭据，在同一进程持有共享 lease并先做 readiness；只有 12/12 GO 才写无凭据 armed receipt。control 还必须验证 bound runner 的 PID/start-ticks/command marker、30 分钟 deadline、lease ownership、watcher、冲突进程、GPT-5.6、armed commit 已推送及 arming HEAD 为其严格祖先，才可写 execution-start；runner 又要求远端 HEAD 同时精确包含 armed/start bytes，随后才消费同一 capability并进入冻结 V2.48.57 forward。失败 readiness 在 armed receipt、execution-start和 benchmark output root创建前退出。20/20 新专项测试、完整 122/122 preactivation suites、runtime privileged/evaluator/credential scan均通过，`findings=[]`；实现、protocol和preactivation分别以 `5b5b436a / 98c2a808 / 1f645aa8` 提交推送。**
+>
+> **对用户提供的同一 12-key pool 做唯一一次真实 same-process aggregate readiness：`tested=12, healthy=0, unhealthy=12`，12次 provider attempt 全部 HTTP 432，`status_2xx=0`、successful query=0、URL lead=0；401/403/429/5xx、transport failure、slot timeout与credential echo均为0。runner 返回 `readiness_rejected_no_benchmark_started`。退出后复核 armed receipt、execution-start、forward result和 V2.49.71 benchmark output root全部不存在，runner/child/evaluator进程不存在，仓库 credential literal scan为空，四个 protected watcher PID/start-ticks不变。该 pool 禁止再次用于 public 220；本次没有新 benchmark 分数。**
+>
+> **当前分数口径不变：最新完整结果仍是 transport-degraded V2.49.69 的 Exact `5/220`、Composite `0.430226`；项目单轮观测最佳仍是正常 Tavily V2.48.57 的 Exact `9/220`、Composite `0.457249`，没有 leaderboard/SOTA。可用替代 transport 是本地 GPT-5.6 keyless hosted search：历史健康全集通常约 `12.6–17.2 min`，可达 220 model-generated/0 fallback；但 keyless 分支最高仅 Exact `7/220`，Composite最高约 `0.446682`，且 V2.49.54/64 已显示独立 rollout 方差，继续原样复跑不能构成优化证据。下一主线按 V2.49.68 结论先做 fresh benchmark-external shared-prefix identity-bound compact-field gate：复用同一 authoritative response/page bytes，candidate 只从精确 PyPI project/GitHub repo record抽取预注册字段并绑定 field provenance；缺失为 Unknown、冲突 fail closed、同 prompt/model/output/evidence caps。只有机制自然触发、prediction change、Exact严格增加且所有质量/可靠性不退，才设计新的 keyless public 220。entropy/IG仍只作 shadow/VOC feature；未通过 identity/target/source binding 与 matched counterfactual outer utility 的步骤 signed credit 恒为0。**
 
 > **6.60 V2.49.69 完整 220 transport-degraded 冷复现（2026-08-09）：为落实“先跑出个全集结果”，V2.49.69 仅为项目内单轮最佳 V2.48.57 创建新执行/产物 namespace；220 task vector、Tavily rate-aware transport、pacing-aware admission、GPT-5.6、prompt、每题 `4 query / 10 fetch / 3 model / 240s`、`20 executor / 8 model slots / 12 search slots` 全部不变。新增 10/10 专项测试与完整 102/102 preactivation tests 通过；runtime privileged-field、evaluator capability、credential literal findings 均为 0，四个 protected watcher 未停止或重启。代码、protocol、preactivation audit、execution-start 均在 clean pushed HEAD 上分阶段提交。**
 >
