@@ -1,8 +1,20 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.53
+> 版本：6.54
 >
-> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.53 覆盖。**
+> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.54 覆盖。**
+
+> **6.54 V2.49.27 sparse target–value 完整 220 结果（2026-08-09）：V2.49.27 已按 `20 task / 8 model` 高并发完成 DeepWideBench `220/220` single-pass forward；runtime 只读 `{opaque_id, question}`，75/75 preactivation tests、prediction freeze、forward audit 和 post-result audit 均为 `findings=[]`。forward 用时 `656.872813s`（10.95 min），130 个 model-generated table、90 个 failure-as-zero fallback；32-worker evaluator 用时 `170.054642s`，217 valid、3 error 固定计零。all-220 为 Exact `5/220=2.2727%`、Entity `0.468182`、Row/Item/Column F1 `0.144019/0.253297/0.311637`、Composite `0.294284`。权威工件：[`results/v24927_sparse_target_value_exact220_result_v1_20260808.json`](results/v24927_sparse_target_value_exact220_result_v1_20260808.json) 与 [`results/v24927_sparse_target_value_exact220_postresult_audit_v1_20260808.json`](results/v24927_sparse_target_value_exact220_postresult_audit_v1_20260808.json)。**
+
+> **V2.49.27 严格 NO-GO：相对项目单轮最佳 V2.48.57 的 `9/220 / 0.457249`，Exact `-4`、Composite `-0.162965`；相对 V2.49.22 的 `7/220 / 0.425189`，Exact `-2`、Composite `-0.130905`。它不是提升、没有 leaderboard submission，也不是 SOTA。90/90 fallback 的 content-free coarse failure 都是投影/守恒边界前的 `ValidationError`，安全进度停在 `retrieval_terminal`；220/220 transport 与 single-shot receipt 有效、hosted-search deadline failure=0。由于诊断严格不读取冻结页面、题目、预测或逐题 correctness，这只能把根因缩到 evidence projector 邻域，不能逐题声称 90 个 fallback 的确切异常消息。**
+
+> **V2.49.28 Unicode-total 修复：V2.49.24 先用 inherited cleaner 做 NFKC，却要求 `normalized output chars <= raw input chars`；`½→1⁄2`、`Ⅷ→VIII`、`℡→TEL`、`™→TM`、`℃→°C`、`ﬃ→ffi` 等合法扩张会触发 `ValidationError`。append-only V2.49.28 把 compaction budget domain 改为 NFKC-normalized input chars，并分开记录 raw、normalized、expansion/contraction；搜索、模型、30k/5k投影和所有 hard cap 不变。8/8 父故障复现、8/8 candidate success、12/12 定向测试、300 个随机 Unicode/表格 fuzz、AST 零 I/O 与 credential scan 均通过；build audit `findings=[]`。权威工件：[`results/v24928_unicode_total_compactor_build_audit_v1_20260809.json`](results/v24928_unicode_total_compactor_build_audit_v1_20260809.json)。审计只声明组件 bug 与 V2.49.27 aggregate boundary 一致，不声称它已逐题解释全部 90 个 fallback。**
+
+> **V2.49.29–31 benchmark-external 生产同形门：20 个 Unicode 官方文档任务复用本地免 key GPT-5.6、真实 hosted search/fetch、`20/8` 并发和每题 `3 model / 4 query / 10 fetch / 240s`。启动前另发现 V2.49.29 controller 把合法空列表 `conflicting_process_pids=[]` 当 false；V2.49.30 append-only 修正为 `==[]`，V2.49.31 只适配 corrected-start role，未改算法。唯一 forward 在 `41.549525s` 完成：`20/20` parent success、`20/20` primary model-generated、`20/20` projection/retrieval receipts、0 fallback、0 hard timeout、0 hosted-search deadline failure、0 model-slot timeout、155 usable pages；真实页面中 15/20 任务发生 NFKC 扩张，共135字符，故 Unicode-total reliability 子目标得到强支持。**
+
+> **整体门仍严格 NO-GO：协议要求至少72条 logical query，实际planner自然生成58条，故 `gate_passed=false`，不能事后把阈值改成通过。这个失败不否定修复：query数量是检索强度门，不是 Unicode-totality 门；155 usable pages已超过80页阈值，所有可靠性/机制指标均通过。它说明未来门禁应直接约束 usable evidence、mechanism engagement、prediction/outer utility，而不能把“接近4 query/task”当作可靠性代理。权威结果与审计：[`results/v24929_unicode_total_neutral_result_v1_20260809.json`](results/v24929_unicode_total_neutral_result_v1_20260809.json)、[`results/v24929_unicode_total_neutral_postresult_audit_v1_20260809.json`](results/v24929_unicode_total_neutral_postresult_audit_v1_20260809.json)。**
+
+> **当前策略：不重跑 V2.49.27/29，不补题、不选择性重评，也不直接消费下一次公开220。下一实验必须使用全新 benchmark-external population 做 shared-prefix 质量比较：同一 frozen page bytes、同一模型/prompt/output cap下比较 V2.49.24 与 V2.49.28，父臂对含 NFKC 扩张页面按预注册 failure-as-zero，candidate 必须在 `20/20` totality之外让 Exact 严格增加且 Composite/Entity/Row/Item/Column全不降；否则可靠性修复只作为工程修复保留。query-count不再作为独立GO条件，只报告实际 query/fetch/usable-page守恒。entropy/IG继续只作shadow/VOC feature；Unicode规范化扩张不是信息增益，也不能获得正credit。内部参考前沿仍是V2.48.57 `9/220 / 0.457249`，当前没有SOTA。**
 
 > **6.53 V2.49.22 target–value coverage 完整 220 结果（2026-08-08）：按全集优先要求，V2.49.22 已完成 single-pass DeepWideBench `220/220` forward，并在全部 prediction 冻结、forward audit 推送后才开放 mapping/gold/evaluator。runtime 只读 `{opaque_id, question}`；114/114 preactivation tests 与 forward audit 均为 `findings=[]`。forward 用时 `782.780341s`（13.05 min），产生 219 个 model-generated table、1 个 fallback、647,654 system tokens；没有 resume、retry、补题或选择性重跑。**
 

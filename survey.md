@@ -1215,3 +1215,23 @@ V2.49.22 已完成完整 DeepWideBench `220/220` single-pass forward。forward �
 该分数不能回答 target–value projector 是否有效。12 个 Tavily key 各在第一次 provider attempt 返回 HTTP `432`，随后被 key-local disable；880 个 logical query 全部失败，successful query、URL lead 和 fetch 都为 0。由此 220 个 projector receipt 中 supported/retained target–value pair、table-header dependency addition 和 selected continuation 全为 0。换言之，V2.49.21 的核心 treatment 从未接触可投影页面；本轮主要测得 GPT-5.6 无网页证据时的退化基线，而不是“target–value coverage 对 parent projector”的有效比较。完整固定分母仍然有效，但 mechanism estimand 不可识别。
 
 这也是 entropy-credit 的一个重要负控制。无 observation 时，realized information gain、evidence credit 与 mechanism exposure 必须为 0；不能因为模型仍输出表格、最终有 7 个 Exact，便把 credit 追溯给未发生的 search 或 projector action。下一可识别实验必须先通过独立的 credential-blind aggregate transport gate，再在 fresh benchmark-external shared-prefix population 上让 parent 与 target–value 两臂共享完全相同的 fetched page bytes、模型和预算。只有自然出现 identity-bound、target–value-bound、source-dependency-aware pair，并由 prediction change 与 post-freeze signed outer utility确认增量贡献，才可给该步骤正 credit。V2.49.22 不支持“信息熵增益越大 credit 越大”，但支持一个更严格的零点公理：无可采纳 observation 或零 mechanism exposure 时，epistemic/task credit 必须为零。
+
+## 2026-08-09：V2.49.27 全集暴露 Unicode totality，而非搜索容量瓶颈
+
+V2.49.27 将 visible-row sparse compaction 与 target–value projection 接到本地免 key GPT-5.6 production path，并完成完整 DeepWideBench `220/220`。全部 prediction 在 mapping/gold/evaluator 打开前冻结；32-worker evaluator 对每个 prediction exactly once，3个 evaluator error 固定计零。最终 Exact `5/220`，Entity/Row/Item/Column F1 为 `0.468182/0.144019/0.253297/0.311637`，Composite `0.294284`。forward `656.872813s`，130个 model-generated、90个 fallback。它显著低于 V2.48.57 的 `9/220 / 0.457249` 和 V2.49.22 的 `7/220 / 0.425189`，因此不是 benchmark 提升或 SOTA。
+
+冻结后 content-free aggregate 将90个 fallback 全部定位为 synthesis 前的 coarse `ValidationError`，最后安全阶段为 `retrieval_terminal`；220个transport和single-shot receipt均有效，hosted-search deadline failure为0。130个正常任务恰好有130个 sparse projection receipt，90个失败任务没有。这个一一对应把系统性故障缩到 evidence projector 邻域，而不是endpoint、并发或模型生成。为保持 label-blind，诊断没有读取冻结题目、页面、预测或逐题correctness，因此不能进一步宣称每个失败任务的原始异常消息。
+
+纯组件审计随后复现了 V2.49.24 的确定性 totality bug。组件先用 NFKC 清理页面，却在receipt中要求规范化后的输出长度不超过原始输入长度；兼容字符可以合法扩张，例如 `½→1⁄2`、`Ⅷ→VIII`、`℡→TEL`、`™→TM`、`℃→°C`、`ﬃ→ffi`。结果是证据内容越丰富并不一定越接近synthesis；一个单字符页面即可在投影receipt处fail closed。V2.49.28以append-only方式把预算域改成NFKC规范化后的输入长度，同时分开记录raw、normalized、expansion与contraction；30k总cap、5k/page、search/fetch/model/token/context/wall caps均不变。8类扩张字符父版本全部失败、candidate全部成功，12/12定向测试和300个随机Unicode/结构fuzz通过。
+
+这个结果对信息熵/credit有一个容易忽视的含义：representation normalization的字符数变化不是belief entropy变化。`½`展开为三个code points既没有自动增加关于答案的知识，也不应得到epistemic credit；它只是编码/规范化层面的可表示性变化。若将token数、字符数或压缩率直接当作信息增益，系统会给Unicode展开、重复格式和冗长证据错误的正credit。credit状态必须定义在语义变量与admissible observation上，而不是字符串长度上。
+
+## 2026-08-09：V2.49.29 中性门严格 NO-GO，但 totality 子目标通过
+
+V2.49.29–31 使用20个benchmark-external Unicode官方文档任务，在生产同形的本地GPT-5.6 hosted search/fetch、`20 task / 8 model`并发、每题`3 model / 4 query / 10 fetch / 240s`下检验V2.49.28。控制面先暴露一个独立bug：空的`conflicting_process_pids=[]`被通用truthiness检查误判为失败；V2.49.30修正布尔极性，V2.49.31只适配corrected-start role，没有改变算法或预算。
+
+唯一forward在`41.549525s`结束，20/20 parent success、20/20 primary model-generated、20/20 projection/retrieval receipt，fallback、hard timeout、hosted-search deadline failure和model-slot timeout全部为0。共164次fetch、155个usable pages；真实网页中15/20任务出现NFKC扩张，总扩张135字符。这是对Unicode-total reliability的强外部支持：机制在真实页面中自然触发，并没有只通过合成样例。
+
+整体门仍按预注册判为NO-GO，因为要求logical query至少72条，planner实际只提出58条。不能事后把58解释成72或删除条件；但也不能反向说Unicode修复失败。query数是检索强度代理，totality直接证据是20/20 projection receipt与0 fallback。该门揭示了实验设计问题：当155个usable pages已经超过80页门槛时，强迫planner接近4 query/task并不能增加可靠性，反而把“少而足够的查询”错误判负。后续门应直接约束usable evidence、identity/target binding、mechanism engagement、prediction change与outer utility，并只把query/fetch作为成本与守恒统计。
+
+因此下一可识别实验不是再跑公开220，而是fresh shared-prefix质量门：两臂共享同一冻结页面字节、模型、prompt与output cap；父臂V2.49.24遇到NFKC扩张按预注册failure-as-zero，candidate使用V2.49.28。只有candidate除20/20 totality外还提高Exact、保持Composite/Entity/Row/Item/Column全不降，才说明工程可靠性修复转化为任务效用。即使该门通过，credit也应归给“避免无效失败、恢复可执行路径”的outer utility，而不是归给字符扩张或熵下降；entropy/VOC仍需在相同admissible observation、matched cost和counterfactual continuation下另行识别。
