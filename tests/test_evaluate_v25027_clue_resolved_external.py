@@ -14,6 +14,14 @@ from scripts import evaluate_v25027_clue_resolved_external as target  # noqa: E4
 
 
 class ClueResolvedEvaluatorTests(unittest.TestCase):
+    def test_main_uses_create_exclusive_runner_publisher(self) -> None:
+        source = (ROOT / "scripts/evaluate_v25027_clue_resolved_external.py").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("engine._publish_json(ROOT / path, value)", source)
+        self.assertIn("engine._publish_json(ROOT / contract.POSTFREEZE_GOLD", source)
+        self.assertNotIn("engine._publish(path, value)", source)
+
     def test_mapping_is_fixed_unique_and_evaluator_only(self) -> None:
         vector = target._mapping()
         self.assertEqual(len(vector), 20)

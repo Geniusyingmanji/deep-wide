@@ -256,7 +256,7 @@ def main() -> None:
             },
             "gold_payload_sha256",
         )
-        engine._publish(contract.POSTFREEZE_GOLD, gold_artifact)
+        engine._publish_json(ROOT / contract.POSTFREEZE_GOLD, gold_artifact)
         metrics = evaluate_rows(engine._read_jsonl(contract.TASK_RESULTS), gold)
         delta = metrics[f"{contract.CANDIDATE_ARM}_minus_{contract.CONTROL_ARM}"]
         passed = (
@@ -321,7 +321,7 @@ def main() -> None:
             "audit_payload_sha256",
         )
         path = contract.POSTAUDIT
-    engine._publish(path, value)
+    engine._publish_json(ROOT / path, value)
     print(json.dumps({
         "path": str(path), "status": value.get("status"),
         "passed": value.get("passed"), "metrics": value.get("metrics"),
