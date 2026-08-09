@@ -1,0 +1,83 @@
+{
+  "artifact_version": 1,
+  "audit_payload_sha256": "b38753eccd1d31cd61acfed588202d64b845a16d827ce4767232688020614f76",
+  "audit_valid": true,
+  "authorization": {
+    "append_only_complete_erratum_protocol_generation": true,
+    "public_exact220_candidate_design": false,
+    "public_exact220_launch": false,
+    "sota_claim": false
+  },
+  "checks": {
+    "all_384_rows_use_matching_visible_name_iso3": true,
+    "focused_tests_exact8": true,
+    "frozen_prediction_vector_exact24x2": true,
+    "network_model_search_fetch_or_evaluator_not_called": true,
+    "original_entity_row_item_metrics_all_zero": true,
+    "original_freeze_and_seals_valid": true,
+    "source_and_test_tracked": true,
+    "synthetic_corrected_identity_recovers_exact": true,
+    "synthetic_old_evaluator_reproduces_zero": true,
+    "synthetic_wrong_iso3_remains_rejected": true
+  },
+  "created_at_unix": 1786251362,
+  "findings": [],
+  "identity_format_aggregate": {
+    "parent_30k": {
+      "exact_visible_name_rows": 0,
+      "matching_name_iso3_rows": 192,
+      "other_rows": 0,
+      "rows": 192,
+      "tables": 24,
+      "wrong_iso3_rows": 0
+    },
+    "target_value_30k": {
+      "exact_visible_name_rows": 0,
+      "matching_name_iso3_rows": 192,
+      "other_rows": 0,
+      "rows": 192,
+      "tables": 24,
+      "wrong_iso3_rows": 0
+    }
+  },
+  "invalid_quality_artifacts": {
+    "results/v24934_contextual_record_external_postresult_audit_v1_20260809.json": "1c12edac08eb05a15e0cd69773a517f1d993d259cc1e2929b83ddfed4d175a32",
+    "results/v24934_contextual_record_external_result_v1_20260809.json": "73737627f3440f64fad3eddcbd78fac6f95005b0f8a0fb5af8a5aa8a588771ea"
+  },
+  "role": "v24936_v24934_evaluator_identity_mismatch_invalid_audit",
+  "root_cause": {
+    "effect": "all_valid_rows_mechanically_missed_for_both_arms",
+    "frozen_evaluator_behavior": "punctuation_stripped_exact_string_identity",
+    "gold_identity_rendering": "visible_name_without_iso3",
+    "prediction_identity_rendering": "visible_name_with_matching_iso3"
+  },
+  "source_policy": {
+    "benchmark_forward_model_search_fetch_or_api_called": false,
+    "complete_frozen_population_only": true,
+    "mapping_category_question_type_split_or_deepwidebench_evaluator_read": false,
+    "per_task_correctness_used_for_selection_or_tuning": false,
+    "postfreeze_visible_task_and_prediction_read": true,
+    "prediction_or_page_modified": false
+  },
+  "status": "invalid_for_quality_evaluator_entity_identity_mismatch",
+  "synthetic_reproduction": {
+    "corrected_entity_recall": 1.0,
+    "corrected_exact": 1,
+    "old_entity_recall": 0.0,
+    "old_exact": 0,
+    "wrong_iso3_entity_recall": 0.0,
+    "wrong_iso3_exact": 0
+  },
+  "tests": {
+    "expected": 8,
+    "observed": 8,
+    "output_sha256": "daa87a631653ee9c5b6b4c157faf1fb04450e39943e003982dc98ff469f808c9",
+    "passed": true
+  },
+  "valid_reusable_frozen_artifacts": {
+    "outputs/v24934_contextual_record_external_v1_20260809/frozen_predictions.jsonl": "7ab46372d07ba27d0415606d7808fd0ed6f0e4fbadd5d522d0fd3ce1ca654ce7",
+    "outputs/v24934_contextual_record_external_v1_20260809/prediction_freeze.json": "a442426547ec49e3c4a8557439fe229ff3272022388005c81d57c17c89f01240",
+    "outputs/v24934_contextual_record_external_v1_20260809/snapshot/frozen_pages.json": "20a34d95e0778086171b6d20f2498c2f94f1e71abc00b9a525dbb21bf98e5b88",
+    "outputs/v24934_contextual_record_external_v1_20260809/visible_tasks.jsonl": "78bc8cbbfaf3f0437fe1c777107b297af68ec0cfab628364c237e6aacb0ed389"
+  }
+}
