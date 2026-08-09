@@ -1,8 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.58
+> 版本：6.59
 >
-> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.58 覆盖。**
+> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.59 覆盖。**
+
+> **6.59 V2.49.67–68 requirement-aware authority allocation 与三臂机制 NO-GO（2026-08-09）：V2.49.67 新增纯函数、零 I/O 的 URL-only authority policy。它只接受 visible question 中显式 PyPI project 与 GitHub owner/repository identity；仅精确 `pypi.org/project/<project>` 和 `github.com/<owner>/<repo>/releases...` 可获得 requirement credit。仿冒子域、相似 project、错误 repo、issues 页面、provider title/summary 或正文自称均不能通过；选择先补未覆盖 requirement，再按 cumulative source-fair 顺序填充。同一 fixed evidence budget 下，candidate 可为两个权威 namespace 各预留固定字符配额。8/8 attack/unit tests 与父 source-fair 回归通过，组件不导入 network/model/evaluator，也不读取 benchmark label、mapping、gold、score 或 reward。**
+>
+> **V2.49.68 随后冻结 21 个与 V2.49.66、pydantic/numpy development probe 全不重叠的 PyPI+GitHub release task。每题四个固定查询、两次 2-query hosted-search response；stable-first-seen、cumulative-source-fair 与 requirement-aware 三臂从同一 response 分支，共享一次 task-local URL union fetch。三臂各固定 6k evidence chars、同一 GPT-5.6 prompt/output cap和 exactly-one model attempt；requirement arm 为 PyPI/GitHub 各保留2.5k目标、要求至少2k实际字符。21题的三臂首个 model call 按 pre-outcome opaque hash rank 严格7/7/7平衡。12/12定向测试、总计50项直接/相关回归、AST/credential scan、四 watcher、lease和create-only surface全部通过；实现、build audit、protocol、preactivation与execution-start均先提交推送。**
+>
+> **唯一 forward 在 `45.408886s` 完成21/21三臂、63/63 model success、0 fallback；42/42 hosted-search response 2xx，162/162 union fetch helper完成且0 deadline/helper failure。三臂各126,000 evidence chars且candidate model token不扩张。requirement coverage达到19/21，双2k quota达到18/21，candidate evidence相对两个control均在19/21改变；故authority识别与fixed allocation机制确实自然触发。但candidate URL选择相对stable为21/21变化、相对source-fair仅7/21，且终局prediction相对两个control都只有3/21变化；每臂最小leads为4而预注册为5。机制门因此在selection-change-vs-source、minimum leads和两项minimum 10 prediction-change上失败。forward audit `audit_valid=true, findings=[]`，但 `postfreeze_external_evaluator_protocol=false`；双API gold/evaluator从未打开，禁止重跑、补题、降阈值或根据该人口答案质量调参。**
+>
+> **结论与下一策略：V2.49.66说明registrable-source数量不是质量代理；V2.49.68进一步说明即使两个权威namespace被识别、19/21 evidence allocation已改变，长原始页面的固定重排仍很少改变终局表格。当前瓶颈是 `authority/record identity → target field extraction → compact active evidence → table synthesis`，不是继续扩大域名数或页面字符。下一candidate必须在全新benchmark-external人口上共享同一authoritative response/page bytes，比较raw fixed-budget control与identity-bound compact field evidence；compact extractor只能从精确绑定的PyPI/GitHub record抽取预注册字段，保留field-level provenance、缺失即Unknown、冲突fail closed，并用同一prompt/model/output cap。机制门先要求compact field records与prediction change；质量门仍要求Exact严格增加、Entity/Row/Item/Column/Composite全不退、invalid/fallback不增。只有该门严格GO，才允许设计以V2.48.57为control的新完整220；内部单轮前沿仍为Exact `9/220`、Composite `0.457249`，没有SOTA。entropy/IG仍仅作shadow/VOC feature，不能为未绑定字段或零outer-utility步骤创造正credit。**
 
 > **6.58 V2.49.64–66 完整 220 冷复现、方差归因与 cumulative-source 质量门（2026-08-09）：V2.49.64 已完成另一轮 single-pass、fixed-denominator DeepWideBench `220/220`。forward 到 prediction freeze 只读 `{opaque_id, question}` 与同轮 fetched pages；`220/220` model-generated、0 fallback、`11,069,536` system tokens，墙钟 `799.208773s`。预测全部冻结且 forward audit 推送后，固定 32-worker evaluator 对 220 条 prediction exactly once，用时 `243.967923s`；206 valid、14 error 固定计零。最终 Exact `7/220=3.1818%`、Entity `0.704545`、Row/Item/Column F1 `0.216260/0.384869/0.468441`、Composite `0.443529`。post-result audit 为 `audit_valid=true, findings=[]`。它不是 Avg@4、未提交 leaderboard、不是 unseen/held-out，也不是 SOTA；项目内单轮观测最佳仍为 V2.48.57 的 Exact `9/220`、Composite `0.457249`。**
 >
