@@ -1,8 +1,18 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.56
+> 版本：6.57
 >
-> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.56 覆盖。**
+> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.57 覆盖。**
+
+> **6.57 V2.49.49–54 mutual-partial signature、完整 220 与刷榜主线纠偏（2026-08-09）：V2.49.49 只对完整 pipe-table header 增加双向唯一的 strict token-multiset containment；至少共享两个不同 token、最多三个额外 token，exact/full-signature 优先，非 ASCII、单 token、labelled record、竞争边、重复列、错列宽、跨页与冲突均 fail closed。V2.49.50 clean-build audit 59/59 通过；entropy/IG 仍只作 shadow，positive signed credit 恒为 0。V2.49.51 的 fresh World Bank 外部门在任何模型请求前遇到旧 transport read timeout，已以 `model_requests=0 / predictions=0 / evaluator_calls=0` 隔离且同人口禁止重试。V2.49.52 随后冻结 3-attempt、`5s connect + 10s read`、50s helper wall 的 content-free bounded transport receipt；这只修复 transport contract，不是质量证据。**
+
+> **按“先跑出全集”要求，V2.49.54 没有再让小门阻塞公开结果，而是在 build audit 后直接冻结一次 single fresh fixed-220。runtime 到 prediction freeze 只读 `{opaque_id, question}` 与同次 fetched pages；93/93 preactivation tests、label-blind AST/credential scan、四 watcher、lease、process conflict 与 create-only surface 全通过。唯一 forward 在 `756.425535s`（12.61 min）完成 `220/220` model-generated、0 fallback、`11,269,048` system tokens；无 retry/resume/skip/selective rerun。prediction freeze 与 forward audit 推送后，固定 32-worker evaluator 对全部 220 条预测各评一次，210 valid、10 error 固定计零。最终 Exact `7/220=3.1818%`、Entity `0.695455`、Row/Item/Column F1 `0.214752/0.386390/0.467948`、Composite `0.441136`。post-result audit 为 `audit_valid=true, findings=[]`。权威工件为 [`results/v24954_partial_signature_exact220_result_v1_20260809.json`](results/v24954_partial_signature_exact220_result_v1_20260809.json) 与 [`results/v24954_partial_signature_exact220_postresult_audit_v1_20260809.json`](results/v24954_partial_signature_exact220_postresult_audit_v1_20260809.json)。**
+
+> **V2.49.54 的质量结论是 NO-GO、机制结论是 non-engagement。相对 V2.49.48，Exact `+1`、Composite `+0.004081`、Entity `+0.022727`，但 Row `-0.006935`、Item `-0.000379`；220 份有效 content-free receipt 中虽出现 27 条 partial candidate edge，7 个 header 因 partial ambiguity fail closed，最终 `partial_header_bound_table_count=0`、admissible observation=`0`、自然触发任务=`0/220`。因此任何分数波动都不能归因于 partial signature。它也低于项目单轮观测前沿 V2.48.57 的 Exact `9/220`、Composite `0.457249`，未提交 leaderboard、没有 Avg@4 或同协议外部比较，不是 SOTA。**
+
+> **聚合复盘进一步纠正主线：36 份合法 fixed-220 结果中，V2.48.57 同时保持最高 Exact `9/220` 与最高 Composite `0.457249`，forward 只用 `3,781,060` system tokens；V2.49.54 的 keyless 分支只有 376 次 hosted-search、约 4.26M projected chars，却消耗 11.27M tokens，低于 V2.48.57 的质量。V2.49.44 compact ledger 在 keyless 全集也是严格 `0/220` mechanism exposure；因此停止继续沿 keyless parser/signature 分支盲跑全集，也不能把 synthetic/native-layout external GO 直接外推到真实公开页面。下一公开 220 候选必须以 V2.48.57 的 paced Tavily 主干为控制，并在 launch 前用 production-shaped live retrieval 冻结 content-free structural exposure receipt：非零 schema-bound records/observations、两臂 prediction change、固定成本和质量 non-regression 缺一不可。页面正文、query、URL、prediction、gold、category、question type、score 均不得进入该 receipt 或未来 runtime routing。若 live exposure 仍为 0，该结构化路线直接退役，不再消耗一轮 220。**
+
+> **刷榜与研究目标分开记账。短期 benchmark 目标是以 matched-cost V2.48.57 control 为基线，在固定 `4 query / 10 fetch / 3 model / 240s` 与 `20 task / 8 model / 12 search` 上提高 complete-table conversion；成功线为 Exact 严格超过 `9/220`，且 Composite 不低于 `0.457249`，Entity/Row/Item/Column、fallback/evaluator-invalid 至少满足预注册 non-regression。长期创新仍是 calibrated four-layer open-world task risk + same-state/provenance-grounded credit；entropy/IG 只作为 epistemic/VOC feature，只有 admissible observation、identity/source binding 与 counterfactual outer utility 都成立后才可调节 credit 幅度，不能创造或翻转 sign。**
 
 > **6.56 V2.49.45–48 native-layout signature 与完整 220 结果（2026-08-09）：V2.49.45 在 compact schema-bound ledger 上增加唯一的一对一 token-signature 绑定。它先删除 bracket code 与四位年份，再比较多 token ASCII multiset；单 token、非 ASCII、重复列、共享 signature、错列宽、跨页或冲突一律 fail closed。V2.49.46 的 47/47 clean-build tests 与 label-blind audit 通过，entropy/IG 仍仅为 shadow，所有 signed credit 保持 0。**
 

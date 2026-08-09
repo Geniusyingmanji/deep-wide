@@ -1,8 +1,16 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
-> 检索截止：2026-08-07 14:10 UTC；项目证据更新：2026-08-09 UTC（至 V2.49.48）
+> 检索截止：2026-08-07 14:10 UTC；项目证据更新：2026-08-09 UTC（至 V2.49.54）
 >
 > 结论强度：这是基于公开文献的 novelty audit，不是“没有任何相关工作”的证明。2026 年文献多为尚未同行评审的 arXiv 预印本，文中将预印本结果视为作者报告，而非独立复现事实。
+
+## 2026-08-09 实验更新：V2.49.54 完整 220 与机制可迁移性边界
+
+V2.49.54 已完成严格 label-blind、固定 220 分母、failure-as-zero 的一次完整 DeepWideBench rollout。全部预测在 mapping、gold、category、question type、split 与 evaluator 开放前冻结；forward 为 `220/220` model-generated、0 fallback、`756.425535s` 和 `11,269,048` system tokens。固定 32-worker evaluator 对每条冻结预测各评一次，210 valid、10 error-as-zero；Exact `7/220=3.1818%`，Entity `0.695455`，Row/Item/Column F1 `0.214752/0.386390/0.467948`，Composite `0.441136`。结果 seal 与 post-result audit 均通过，`findings=[]`。[`results/v24954_partial_signature_exact220_result_v1_20260809.json`](results/v24954_partial_signature_exact220_result_v1_20260809.json) 和 [`results/v24954_partial_signature_exact220_postresult_audit_v1_20260809.json`](results/v24954_partial_signature_exact220_postresult_audit_v1_20260809.json) 是权威工件。
+
+该结果不支持 mutual-partial signature 提升。220 份 content-free projection receipt 全部有效，但 27 条 partial candidate edge 中有 7 个 header 因竞争关系 fail closed，最终 partial-bound table、schema-bound record 与 admissible observation 均为 0。相对 V2.49.48 的 Exact/Composite 上升只能视为独立 search/model/judge rollout 波动，不能作机制 credit。更广的 36 份合法 fixed-220 结果复核显示，项目单轮观测前沿仍是 V2.48.57：Exact `9/220`、Composite `0.457249`、Entity `0.713636`、Row/Item/Column F1 `0.229739/0.400228/0.485392`。这仍不是 leaderboard、Avg@4 或 SOTA 证据。
+
+这个失败对文献与方法设计有直接含义。World Bank/ROR 等预构造表格上的 matched shared-prefix GO 只能证明 parser 在对应 layout 上有效，不能证明 live search 会返回同类页面；“外部机制 GO→公开全集零触发”已在 compact ledger、full signature 和 mutual-partial signature 三条链重复出现。后续必须在答案生成前冻结一个不含 query/URL/page text/prediction/score 的 live structural-exposure receipt，并把自然触发当作进入质量门的必要条件。信息熵也必须位于 `admissible observation → calibrated belief change → provenance/source-dependence → same-state outer utility` 之后；零触发的规则不能获得正 credit，熵下降更不能替代 task utility。
 
 ## 2026-08-08 V2.48.50：完整复现再次确认单 rollout 方差，未刷新前沿
 
