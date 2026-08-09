@@ -11,6 +11,7 @@ from __future__ import annotations
 import copy
 import json
 from collections.abc import Mapping
+from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
@@ -80,8 +81,16 @@ def protected_watcher_snapshot(proc_root: Path = Path("/proc")) -> list[dict[str
     return parent.protected_watcher_snapshot(proc_root)
 
 
-def parent_contract(root: Path) -> dict[str, Any]:
+@lru_cache(maxsize=1)
+def _cached_parent_contract(root_string: str) -> dict[str, Any]:
+    root = Path(root_string)
     return parent.validate_protocol(root, _read(root / PARENT_PROTOCOL))
+
+
+def parent_contract(root: Path) -> dict[str, Any]:
+    """Validate the immutable parent once per control-plane process."""
+
+    return copy.deepcopy(_cached_parent_contract(str(root.resolve())))
 
 
 def _task_contract(tasks: list[dict[str, str]]) -> dict[str, Any]:
