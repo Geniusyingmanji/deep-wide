@@ -1,8 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.63
+> 版本：6.64
 >
-> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.63 覆盖。**
+> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.64 覆盖。**
+
+> **6.64 V2.49.88–91 短 authority query 因果外部门与严格 NO-GO（2026-08-09）：V2.49.88 从同轮可见 question 中只读取 tagged identity、显式 authority phrase 与 robust schema，生成四条短互补 query；无任一安全 facet、provider query vector 无效/为空或 planning 抛错时均逐字交回父链。V2.49.89 只代理已有 planning response，不增加 model/search/fetch/token/byte/wall cap；非法 JSON 和 planning exception 保留父 fallback。V2.49.90 为避免把跨人口历史差异冒充因果证据，新增 benchmark-external 专用 query-vector paired runtime：每题一次共享 planner，legacy completed-query 与 short-query 两臂各自拥有相同的 `4 query / 10 fetch / 1 synthesis` 配额、相同 robust compact projector/evidence renderer、prompt/model/output cap与绝对 deadline，预冻结顺序10/10平衡。总检索预算因因果配对而翻倍，receipt 明确禁止把其时延/吞吐或分数当 production/DeepWideBench 结果。实现依次以 `96fce8c0 / 84d0f40f` 推送，提交后父链与专项 `71/71` 通过，privileged/evaluator/credential findings 为空。**
+>
+> **V2.49.91 冻结了仓库历史 external cohort 未出现的20个 TLD（`.bf`至`.cg`）；implementation、build-audit、protocol、preaudit、execution-start 分别以 `9ac2dd94 / 048b07e3 / 8e7fd295 / 71dabb3d / 604a2dea` 分阶段推送；正式 build/preactivation 为 `109/109`，GPT-5.6 端口、lease、四 watcher、create-only surface和label-blind audit全绿。唯一 forward 在 `124.653152s` 完成20/20 terminal，无 retry/resume/补题；20/20 short strategy 激活、20/20 query vector改变、19/20双臂model success、9/20 prediction change，两臂 evidence各 `666,878` 字符。prediction/result以 `1302e427`冻结推送，content-free audit `77f6fdea` 为 `audit_valid=true, findings=[]`。**
+>
+> **机制结果严格 NO-GO。legacy arm为 `80/80` logical query、66 sources、60 usable pages、30 query-local results、100 discovered/100 admissible/92 retained records；short arm为 `78/80` query、177 sources、166 usable pages、仅2 query-local results、0/0/0 records。候选虽将 action-trace sources增至 `871 vs 165` 并产生9个终局变化，却在20/20题都没有 retained target record，逐题 query-local/record advantage均为0；一题第二波因首波检索超过30s latency ceiling而只执行2 query。10/10顺序分组复核表明主结论不由先后顺序造成：short先后两组都显著扩大页面覆盖但破坏query-local binding。机制门因此在80/80执行、query-local严格改善、record engagement及逐题优势上失败；`postfreeze_external_evaluator_protocol=false`，IANA gold/evaluator/result从未创建，禁止重跑、换题、降门或事后评分。**
+>
+> **根因定位为两个可见且通用的 query-construction bug：(1) authority parser收集多个显式短语后按最短字符串选取，使首次完整 `IANA Root Zone Database` 被后文较短的 `IANA table` 覆盖；(2)候选用四条短 query 全量替换 provider query，丢失了唯一保留任务语义/authority/输出要求的长 anchor。下一 build-only 候选固定为 hybrid：按文本首次出现选择完整显式 authority；保留并原样使用首条 provider anchor，只用 identity+authority、identity+fields、authority+schema 替换三个冗余 legacy suffix；四条去重不足时 fail closed回父链。先做纯组件、合成因果账本和全父回归，再在全新不重叠 external population冻结 query-local/retained-record门；不得复用V2.49.91人口或读取其gold。page-visible-link reserve推迟，避免同时改变两个retrieval treatment。完整220口径不变：项目最佳V2.48.57 Exact `9/220`、Composite `0.457249`；最新V2.49.69为transport-degraded `5/220 / 0.430226`；无SOTA。entropy/IG继续仅作shadow/VOC，当前signed credit为0。**
 
 > **6.63 V2.49.84–87 robust schema/full-budget 修复、新外部门与检索归因（2026-08-09）：针对 V2.49.83 暴露的通用 bug，V2.49.84 在新 append-only projector 复用已验证的 sentence/bracket/quote-aware visible-schema parser，并对完整解码页面增加 page-local、等宽、连续表格范围；表头精确绑定可见三列，行 identity 保留 `.aa` 类首尾标点，错宽/冲突/无 schema 逐字回退旧 5k prefix。V2.49.85 只替换硬截止 helper 内的纯 projector，network byte/fetch/page/process/wall cap 不变。V2.49.86 使用 robust 可见列；planner 少于 4 个 query 时，只根据可见 question 和同轮 plan 补全通用 official/list/index/database 变体；两臂共享无额外 model-call 的 conservative table normalizer，非空事实单元格不改写。预冻结 arm-order 逐题传入并以 content-free receipt 验证。**
 >
