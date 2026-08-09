@@ -1,8 +1,18 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.62
+> 版本：6.63
 >
-> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.62 覆盖。**
+> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.63 覆盖。**
+
+> **6.63 V2.49.84–87 robust schema/full-budget 修复、新外部门与检索归因（2026-08-09）：针对 V2.49.83 暴露的通用 bug，V2.49.84 在新 append-only projector 复用已验证的 sentence/bracket/quote-aware visible-schema parser，并对完整解码页面增加 page-local、等宽、连续表格范围；表头精确绑定可见三列，行 identity 保留 `.aa` 类首尾标点，错宽/冲突/无 schema 逐字回退旧 5k prefix。V2.49.85 只替换硬截止 helper 内的纯 projector，network byte/fetch/page/process/wall cap 不变。V2.49.86 使用 robust 可见列；planner 少于 4 个 query 时，只根据可见 question 和同轮 plan 补全通用 official/list/index/database 变体；两臂共享无额外 model-call 的 conservative table normalizer，非空事实单元格不改写。预冻结 arm-order 逐题传入并以 content-free receipt 验证。**
+>
+> **V2.49.87 冻结了与 V2.49.83 不重叠的 20 个新 TLD（`.ad`至`.be`）；control/candidate 共享 robust schema、四查询、normalizer、search response、page bytes、prompt/model/output/evidence cap，唯一差异仍是同 fetch 的 raw 5k prefix 对 identity/target-bound compact projection。build/preactivation 各自 `116/116` 通过，privileged/evaluator/credential findings 为空，三步冻结后唯一 forward 在 `37.662492s` 完成 `20/20` terminal，无 retry/resume/补题。两臂 evidence 各 `248,696` 字符且逐题等长；预冻结首臂顺序精确 `10/10`。**
+>
+> **修复的控制面效果明确：相对 V2.49.83，planned/executed query 从 `22/22` 提升到严格 `80/80`，usable-page task 从 `11/20` 提升到 `17/20`，usable page 为 `73`，双臂 model success 从 `2/20` 提升到 `17/20`，robust visible-schema column 为 `60/60`。两波 controller 为 `20/20 expand`，73/73 fetch 成功且无 helper/deadline failure；17 个有页面任务的 `34/34` synthesis 均已是 exact table，normalizer recovery 为 0，故 synthesis 不再是当前瓶颈。prediction freeze 与 forward audit 分别以 `1ee669e3 / d61eef36` 提交推送，audit `findings=[]`。**
+>
+> **但机制门仍严格 NO-GO：73 个页面共 `1,673,851` 解码字符，其中 `1,433,866` 在 5k 之后，却仍为 discovered/admissible/retained record `0/0/0`、changed page `0`、mechanism task `0/20`、prediction change `0/20`。hosted-search 又有 `38` 个 query-local failure；因此多数补全 query 未产生独立目标 lead，少量 same-response backfill 页面也不包含可绑定的目标表记录。`postfreeze_external_evaluator_protocol=false`，IANA gold/evaluator 继续未打开，新 public 220 不授权。**
+>
+> **下一主线不再修 synthesis 或盲目扩大 token/page cap，而是两个通用 retrieval treatment：(1) 从可见 question 中保守提取 tagged identity、明示 authority/source phrase 和 robust columns，生成简短且互补的 authority+identity / identity+fields / official-list query，不再对同一长 planner query 仅加后缀；(2) 对已抓公开页的 page-visible links 做 URL/anchor-only、label-blind parent/index/directory expansion，只使用 10-fetch 硬上限中未消耗的配额，不增加 query/model/network-byte/wall cap。先在不重叠的多目录 benchmark-external population 上冻结机制门；必须先产生非零 target-bound record/changed page/prediction change，才允许 post-freeze quality 评估。完整 220 口径不变：最佳 V2.48.57 Exact `9/220`、Composite `0.457249`；最新 V2.49.69 是 transport-degraded `5/220 / 0.430226`；仍无 SOTA。entropy/IG 继续只作 shadow/VOC，此轮 positive signed credit 为 0。**
 
 > **6.62 V2.49.80–83 late-page production-isomorphic 外部门与机制 NO-GO（2026-08-09）：V2.49.80 在同一 fetch 完整解码后、旧5k截断前生成 identity/target-bound compact evidence；无安全绑定时逐字回退旧 prefix。V2.49.81 保留同 fetch 的 raw-prefix shadow；V2.49.82 固定同页字节、顺序、prompt/model/output/evidence cap，每题最多 `4 query / 10 fetch / 3 model / 240s`，entropy/IG 仅 shadow、signed credit 恒为 0。80/80 直接与父链测试通过，runtime privileged/evaluator/credential findings 均为空。V2.49.83 冻结 20 个新 IANA TLD 可见任务，forward 仅读 `{opaque_id, question}` 与同轮公开页，gold/mapping/evaluator 在预测冻结和 forward audit 前均关闭。**
 >
