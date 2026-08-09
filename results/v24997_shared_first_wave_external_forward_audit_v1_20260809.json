@@ -1,0 +1,72 @@
+{
+  "artifact_version": 1,
+  "audit_payload_sha256": "7f4c98c2b88ef537f662f3246c4f55f59c4bf0d83b5bf4c829806f6edad8223b",
+  "audit_valid": true,
+  "authorization": {
+    "leaderboard_or_sota": false,
+    "postfreeze_external_evaluator_protocol": false,
+    "public_exact220_launch": false
+  },
+  "checks": {
+    "all_rows_valid": true,
+    "forward_aggregate_arm_totals_bound": true,
+    "forward_aggregate_first_two_preservation_bound": true,
+    "forward_aggregate_model_success_bound": true,
+    "forward_aggregate_physical_fetch_bound": true,
+    "forward_aggregate_physical_query_bound": true,
+    "forward_aggregate_prediction_change_bound": true,
+    "forward_aggregate_query_local_advantage_bound": true,
+    "forward_aggregate_record_advantage_bound": true,
+    "forward_aggregate_second_wave_only_bound": true,
+    "forward_aggregate_shared_completion_bound": true,
+    "forward_aggregate_shared_equality_bound": true,
+    "forward_aggregate_strategy_bound": true,
+    "forward_aggregate_terminal_bound": true,
+    "forward_process_absent": true,
+    "mapping_gold_evaluator_closed_during_forward": true,
+    "postfreeze_gold_absent": true,
+    "prediction_freeze_bound": true,
+    "protected_watchers_exact": true,
+    "task_results_bound": true
+  },
+  "created_at_unix": 1786301458,
+  "findings": [],
+  "forward_result_sha256": "f569058beb2714574e1d6bfe5d833f6bd56af62555651a0689d0e9ba4f6874e2",
+  "mechanism_gate": {
+    "all_task_evidence_character_counts_equal_between_arms": true,
+    "all_tasks_execute_exactly_four_queries_per_arm": true,
+    "all_tasks_execute_exactly_six_physical_queries": true,
+    "all_tasks_fetch_at_most_fourteen_physical_pages": true,
+    "all_tasks_plan_exactly_four_queries_per_arm": true,
+    "arms": {
+      "legacy_completed_queries": {
+        "query_local_results": 26,
+        "retained_records": 92,
+        "union_sources": 282,
+        "usable_pages": 106
+      },
+      "second_wave_hybrid_queries": {
+        "query_local_results": 10,
+        "retained_records": 46,
+        "union_sources": 780,
+        "usable_pages": 163
+      }
+    },
+    "both_arms_model_success_tasks": 18,
+    "completed_task_model_calls_at_most_three": true,
+    "executed_arm_order_matches_frozen_vector": true,
+    "first_two_completed_queries_preserved_tasks": 20,
+    "passed": false,
+    "prediction_changed_tasks": 2,
+    "query_vectors_differ_only_in_second_wave_tasks": 20,
+    "second_wave_strategy_applied_tasks": 20,
+    "shared_first_wave_completed_tasks": 20,
+    "shared_prefix_byte_equal_tasks": 20,
+    "tasks_with_candidate_query_local_result_advantage": 0,
+    "tasks_with_candidate_record_advantage": 0,
+    "terminal_tasks": 20
+  },
+  "prediction_freeze_sha256": "ff2493a4418d0e367ae24d7e5376ed52f2d1257eb17fdfb28fb6d8ae4ba6f3df",
+  "protocol_id": "v24997_paired_shared_first_wave_second_wave_hybrid_external_gate_v1",
+  "role": "v24997_shared_first_wave_external_forward_audit"
+}
