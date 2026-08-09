@@ -1,8 +1,14 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.73
+> 版本：6.74
 >
-> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.73 覆盖。**
+> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.74 覆盖。**
+
+> **6.74 V2.50.24–25 evidence-conditioned resolve-then-expand build-only（2026-08-09）：V2.50.24 已实现纯、fail-closed 的第二波 query refinement。输入严格限于 visible question、legacy 四条 query、同次首波至多 6 个公开页面及 caller-supplied model output；输出必须是恰好两条有 visible-question token overlap、且至少含一个由首波 evidence 支持的新 token 的单行查询。URL、页面指令、多行、重复、非法 JSON、首波 query 重复或无证据支持均逐字回退 legacy 第二波。tokenizer 已修复句末标点边界，避免把 question 中的 `Alpha.` 与 query 中的 `Alpha` 错判成不同 anchor；定向测试 `8/8`。receipt 只保存计数与 seal，不保存 question/query/URL/title/page/entity/value/prediction/opaque id/credential，entropy/IG 不分配 signed credit。**
+
+> **V2.50.25 将 refinement 接入 shared-first-wave matched runtime：control 与 candidate 共享一次 visible-only planning、前两条 query 的一次物理首波和一次 evidence-conditioned refinement；control 忽略 refinement，candidate 仅在 V2.50.24 strict gate 通过时替换后两条 query，然后两臂各一次 synthesis。每臂概念预算仍为 `3 model / 4 query / 10 fetch / 60k evidence / 240s`，paired 物理上限为 `4 model / 6 query / 14 fetch`；失败保持 exact legacy handoff 或 content-free failure，不增加 repair/第五次 model call。V2.50.25 定向 `6/6`，V2.49.82/85/86/90/96 与 V2.50.24/25 联合父链 `42/42`、py_compile 全过。新模块 AST privileged-field/evaluator capability 与 credential literal findings 均为空；传递依赖唯一静态命中是既有 `clients.py` 的 Tavily 公共 relevance `score`，手工确认它不是 benchmark/evaluator score，且不进入 refinement gate。四个 protected watcher PID/start ticks 保持 `795336/713986317`、`2808901/746680268`、`2889939/746969965`、`3061652/747569004`。**
+
+> **当前仍不授权 external forward、evaluator 或 public 220。下一步须先冻结一个全新且与 V2.49.91/94/97、V2.50.03/07/12/18 及开发 fixture 人口不重叠的 production-shaped matched external gate；forward 仅传 `{opaque_id, question}` 与同轮页面，必须先证明 refinement 自然触发、query-local yield 和 bound-record advantage 非零、双臂成功且 prediction change 达预注册阈值，prediction freeze/content-free audit 推送后才可打开 evaluator。quality GO 必须 candidate Exact 与 Composite 同时严格增加，Entity/Row/Item/Column、invalid/fallback/transport 全不退。只有 strict GO 才冻结下一次完整 220；当前 DeepWideBench 最佳仍为 V2.48.57 Exact `9/220`、Composite `0.457249`，最新完整 V2.49.69 为 `5/220 / 0.430226`，无 leaderboard/SOTA。**
 
 > **6.73 V2.50.23 完整 220 控制面与自然机制暴露严格 NO-GO（2026-08-09）：V2.50.23 已完成对 V2.48.57 的 append-only production integration，保持 `220 task / 20 executor / 8 model slots / 12 Tavily slots`，每题仍为 `4 query / 10 fetch / 3 model / 240s`；control 逐字重放冻结第二波 URL 前缀，candidate fetch 数相同，无 strict distinct-identity gain、非 multi-identity 或 projector 不 admission 时逐字 handoff。direct/rate/pacing/distinct-selection/multi-identity-projection sidecar、固定 32-worker post-freeze evaluator 与 Exact `>9/220`、Composite `>0.457248978` 且其余质量/可靠性不退的 strict gate 均已接线。**
 
