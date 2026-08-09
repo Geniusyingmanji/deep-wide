@@ -1,8 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.65
+> 版本：6.66
 >
-> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.65 覆盖。**
+> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.66 覆盖。**
+
+> **6.66 V2.49.95–97 shared-first-wave 因果门与 short-query 路线退役（2026-08-09）：V2.49.95 保留 completed-query slots 1–2，只用 visible identity+fields 与 authority+schema 替换 slots 3–4；无安全 facets、无效 provider vector、去重后不足四条或 planning failure 都完整回退父 vector。V2.49.96 将 paired execution 改为每题物理执行一次共享首波 `2 query / ≤6 fetch`，两臂再分别执行第二波 `2 query / ≤4 fetch`；每臂逻辑预算仍为 `4 query / ≤10 fetch / 1 synthesis`，paired 物理上限为 `6 query / 14 fetch / 3 model calls`。共享页字节在两臂中相同，second-wave 去除已抓 URL，单臂失败也记录实际 query/fetch effect；定向与 broader runtime 回归 `41/41` 通过。两个实现分别以 `ba7f64f6 / 602a2baa` 推送。**
+>
+> **V2.49.97 从历史 80 个 TLD cohort 之外冻结全新 20 项 `.ec`–`.gi`；人口在 protocol freeze 前没有网络预探测，不复用 V2.49.94 题目。build、protocol、preactivation、execution-start 以 `c6c89fc6 / 81ea9103 / 3414689d / 79f613c0` 分步从 clean pushed HEAD 冻结，build/preactivation 均为 `118/118`，privileged/evaluator/credential findings 为空，GPT-5.6、lease、四个 protected watcher 和 future surface 全绿。唯一 forward 在 `60.273226s` 完成 `20/20` terminal；`20/20` 共享首波完成且两臂字节相等，每题物理 query 恰为 6、fetch 不超过 14，`18/20` 双臂 model success，prediction change 仅 `2/20`。prediction/result 以 `237a3e64` 冻结，content-free audit `508dd136` 为 `audit_valid=true, findings=[]`；forward 只读 `{opaque_id, question}` 与同轮公开检索，mapping/gold/category/question_type/split/evaluator/score/reward 均未读。**
+>
+> **三阶段冻结总账定位了因果瓶颈。共享首波产生 `8` 个 query-local result、`46` 个 retained record、`86` 次 fetch、`83` 个 usable page；legacy 第二波只需 `23` 次 fetch 就新增 `18` 个 query-local result 和 `46` 个 retained record；hybrid 第二波消耗 `80` 次 fetch、返回 `80` 个 usable page 和 `593` 个 action source，却只新增 `2` 个 query-local result、`0` retained record。最终 legacy/hybrid 为 `26/10` query-local 与 `92/46` retained records，candidate 逐题 query-local advantage=`0/20`、record advantage=`0/20`。因此 mechanism 严格 `passed=false`，不是首波不共享、arm 预算不对等或页面数不足造成的假象；更短的 identity/authority/schema query 能扩大 source/page 数，但在该 hosted-search 映射下会破坏 target-bound record conversion。post-freeze evaluator、gold、quality result 与 public 220 都未创建，不得补题、降门、换人口追认或事后评分。**
+>
+> **当前决策是停止 short-query 压缩/改写路线，不再从 V2.49.94/97 人口学习或重跑。下一 treatment 必须保留已证实有效的 legacy completed-query vector、同一 search responses 与同一逻辑 `4 query / 10 fetch / 1 synthesis` cap，只研究在原第二波最多 4 个 fetch 中如何用 visible identity/authority 进行 URL/record binding 与 page selection；不再以 registrable-domain diversity、action-source 数、usable-page 数或 entropy 增加作质量代理。先对照 V2.49.58 action-fair、V2.49.60 source-fair、V2.49.62 cumulative-source-fair 的 NO-GO 和 V2.49.66 `selection 20/20 changed` 但 prediction change 仅 `6/20` 的失败边界，再构建全新 disjoint external gate。GO 必须先证明 identity/authority-bound selected URL、target-bound record 和 prediction change 都达到预注册门，才可在预测冻结后评质；否则不得消耗新的 public 220。完整 DeepWideBench 口径不变：项目单轮最佳 V2.48.57 为 Exact `9/220`、Composite `0.457249`；最新完整 V2.49.69 为 transport-degraded `5/220 / 0.430226`，尚无 leaderboard/SOTA。entropy/IG 继续只作 shadow/VOC，signed credit 恒为 0。**
 
 > **6.65 V2.49.92–94 provider-anchor hybrid 外部门与严格 NO-GO（2026-08-09）：V2.49.92 修正 V2.49.91 的两个 query-construction 缺陷：authority 按可见文本首次出现选择完整短语；保留第一条 provider query，只用 identity+authority、identity+fields、authority+schema 替换其余三槽；facet 缺失、provider vector 无效、生成重复或不足四条时完整回退父 vector。V2.49.93 将其接入 append-only paired runtime，不修改已由 V2.49.91 manifest 冻结的 V2.49.90；每题仍为一次共享 planner、两臂各 `4 query / 10 fetch / 1 synthesis`、同 robust projector/evidence/prompt/model/output/deadline，entropy/IG signed credit 恒为0。缺 facets、非法 planning、单臂 retrieval failure、负 cost、重封篡改与额外 task metadata 均 fail closed；V2.49.8x–93 相关回归和新增边界合计96项通过，源码 privileged/evaluator/secret findings为空。实现分别以 `01f646d2 / 202561cf` 推送。**
 >
