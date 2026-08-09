@@ -1,0 +1,115 @@
+{
+  "artifact_version": 1,
+  "authorization": {
+    "additional_rollout_avg4_leaderboard_or_sota": false,
+    "postfreeze_exact220_evaluation": true,
+    "selective_retry_or_revaluation": false
+  },
+  "control_manifest": {
+    "scripts/control_v24932_unicode_total_exact220.py": "eb9b58b3e910e6e7f80f36b7c404f147b604304ad8e37954731e3e20d74b2f7e",
+    "scripts/deepwide_api_lease.py": "8d9cffa78617b458172307d3558c76e9370f045f531c2f5aaaceb866f5a78c7d",
+    "scripts/finalize_fullset_rollout.py": "3e886b73cca2b011853a605091eab0d13004de5edee95b14627d1706d69808e5",
+    "scripts/finalize_v24287_exact220.py": "31e55e6d8825f810125897395abb746ad9ba1cffa595e8dc463b1d173e55eed2",
+    "scripts/finalize_v24791_exact220.py": "b4ba46aecd3a4187f27d36b2572cda97605cfc21c4e13eb0d778d544d620f827",
+    "scripts/finalize_v24831_keyless_exact220.py": "7dee699bf812df14ec3a8792f54c6c2ff31b76c441b30ceb5c1f0d038845f0cc",
+    "scripts/finalize_v24932_unicode_total_exact220.py": "004727a256111c62054da90131e11eb8708846a89408323de76b307caaa8f219",
+    "scripts/run_official_eval_local.py": "ab3d3ba3f15143d9f0f46816d7b9eb61f3f8915172dc14fe50d02b96b645c1ca",
+    "scripts/run_v24932_unicode_total_exact220.py": "cec3d8912e7310d32532277eb9cdfd0f6b9a629a87b73d0b7820f6f85bac8548",
+    "scripts/run_v24932_unicode_total_exact220_task.py": "21a644e23b1acde9f82755912f1fbc80e252239e918f0d119bc6db64eab60714",
+    "src/deepwide_agent/v24907_keyless_fixed_budget_binding.py": "6d18343b6bad0d12e1a07fb9a46020353960c395240d2bbe8c76db7b4cf663c5",
+    "src/deepwide_agent/v24921_target_value_coverage_projector.py": "4579affb4bbff7c84da5404bb233b41bd7e2a259ad49c635f756b262e7d2369d",
+    "src/deepwide_agent/v24924_visible_row_table_compactor.py": "46d81f591da0d8271e157ad6a4881146dba161d6b295c5a264ed09135455aba4",
+    "src/deepwide_agent/v24928_unicode_total_visible_row_compactor.py": "334deede85698b1c85db7d61832bd94a22010378cb288cfc40a26845c75428fc",
+    "src/deepwide_agent/v24932_unicode_total_exact220_contract.py": "c896df44b7c9a003a784b1dca6062dcc55b18224c854b4a2053c5fb6e3c87c9f",
+    "tests/test_v24831_keyless_exact220.py": "34a73312bac7de832a24a883e799074e3ca346bc77c0c9e26c344a4c343e852d",
+    "tests/test_v24932_unicode_total_exact220.py": "990bf1c8d23af50b57c3836e0a307cda0a4326a39c6a736858fecf0475625678"
+  },
+  "control_manifest_sha256": "62e4e58568eb06534fd36bd8a8232370807ea5ebd214f14ccd1e5aaa2541bca5",
+  "created_at_unix": 1786240821,
+  "evaluation_contract": {
+    "all_220_predictions_frozen_before_mapping_query_answer_or_evaluator_open": true,
+    "conservative_denominators": {
+      "all_220": 220,
+      "test_156": 156
+    },
+    "fixed_contiguous_32_way_partition_in_prediction_order": true,
+    "official_evaluator_on_every_frozen_prediction_exactly_once": true,
+    "selective_retry_revaluation_or_prediction_selection": false,
+    "worker_error_rows_are_terminal_failure_as_zero": true
+  },
+  "evaluator_contract": {
+    "answer_corpus": {
+      "manifest_sha256": "5ddc76dd9e9fa4a7080f84e824de6230c62101d2375dee72a0f508b7cfa4ec7e",
+      "root": "external/Marco-Search-Agent/Marco-DeepResearch-Family/DeepWideSearch/data/overall_20250916_tables"
+    },
+    "evaluator_source": {
+      "manifest_sha256": "2829e4808226bd35e4e312f024ceded3a9bc2b1e923493e06503278e382ba061"
+    },
+    "judge": {
+      "max_output_tokens": 8192,
+      "max_retries": 12,
+      "model": "gpt-5.6-sol",
+      "proxy_url": "http://127.0.0.1:9878/responses",
+      "reasoning_effort": "low",
+      "timeout_seconds": 600
+    },
+    "mapping": {
+      "path": "outputs/runtime_manifest_v1_repro/evaluator_mapping.jsonl",
+      "sha256": "3d6f8f71e8136f5a3fe9385e2511e50a367e220dd84e790ba3c7dec975ab5d86"
+    },
+    "mapping_query_answer_or_gold_bytes_opened_or_hashed": true,
+    "opened_only_after_v24791_exact220_prediction_freeze": true,
+    "query_data": {
+      "path": "external/Marco-Search-Agent/Marco-DeepResearch-Family/DeepWideSearch/data/overall_20250916.jsonl",
+      "sha256": "4dd18df4ab8d166f14a1458f884fd8e0652f970764e245e868d75947daa5e5cf"
+    },
+    "recovery_policy": {
+      "canonical_result_file_atomic_replace_per_task": true,
+      "committed_rows_must_be_exact_prediction_prefix": true,
+      "committed_success_or_error_is_terminal": true,
+      "explicit_resume_required": true,
+      "selective_error_retry_allowed": false
+    },
+    "release_seal": {
+      "path": "results/full220_v2403_r1_20260725_finalize_seal.json",
+      "sha256": "6353c3d1caa05fc67f750570d3b3e5909d23945cc69b63f479a47c23d6b3c63f"
+    },
+    "released_evaluator_contract": {
+      "path": "outputs/full220_v2403_r1_eval_20260725/run_config.json",
+      "sha256": "b1040a303a71955b8b8d669c497e24100ec2d8de06d73aa30c3496d69a8559e1"
+    }
+  },
+  "evaluator_workers": 32,
+  "forward_audit_payload_sha256": "0ea69ee697a2b50268861b0d67543506b8d92a0da6aefdbe9794ddd18aefe156",
+  "forward_barrier": {
+    "forward_audit_sha256": "10fd6d807136b58d82cb61bdf26c286223297978cadb42d3d08677c811869297",
+    "forward_result_sha256": "f8bdec9c57e17676f5d11aab8975690a998ab49f892d8cfae88b52f4463f5cc5",
+    "mapping_or_evaluator_opened_during_forward": false,
+    "prediction_freeze_sha256": "59cbc736160518d72448d64185d47cfa955233102d4e237775917bd61a429c60",
+    "run_summary_sha256": "f53ce5d7a80146fb025ee5487044df487e10000b6ed7e3eb02962cdbc0d839a2",
+    "runtime_predictions_sha256": "220acd07a52c4a449cbeb356ea097193d0e3bf275ca1e5aa8a7e5b0d3a34fd33",
+    "terminal_predictions": 220
+  },
+  "lease": {
+    "nonblocking_single_owner": true,
+    "owner": "v24932_unicode_total_exact220_evaluator_v1",
+    "path": "outputs/deepwide_benchmark_api.lease.lock",
+    "purpose": "postfreeze_fixed_partition_parallel_unicode_total_exact220_evaluator"
+  },
+  "outputs": {
+    "evaluator_root": "outputs/v24932_unicode_total_exact220_v1_20260809/evaluator",
+    "final_result": "results/v24932_unicode_total_exact220_result_v1_20260809.json",
+    "postresult_audit": "results/v24932_unicode_total_exact220_postresult_audit_v1_20260809.json"
+  },
+  "protocol_id": "v24932_keyless_unicode_total_exact220_v1",
+  "protocol_payload_sha256": "783cb2595beb88609051b645218a7135f4c61d4f43d052a848d6b6ec7b9378d7",
+  "role": "v24791_exact220_evaluator_preregistration",
+  "selected": 220,
+  "source_policy": {
+    "cross_version_public_benchmark_feedback_overfitting_remains_a_limitation": true,
+    "fixed_public_exact220_task_set_reexecuted": true,
+    "mapping_opened_only_after_exact220_prediction_freeze_and_pushed_audit": true,
+    "new_or_disjoint_task_population_claimed": false,
+    "same_run_evaluator_feedback_used_for_forward_or_prediction_selection": false
+  }
+}
