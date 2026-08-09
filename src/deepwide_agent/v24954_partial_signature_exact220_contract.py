@@ -128,7 +128,7 @@ def dependency_manifest(root: Path):
         )
     )
     return {
-        str(relative): sha256(parent.parent._ordinary_tracked(root, relative))
+        str(relative): sha256(parent.parent.parent._ordinary_tracked(root, relative))
         for relative in sorted(relatives, key=str)
     }
 
@@ -160,9 +160,9 @@ def _single_change():
 
 def build_protocol(root: Path, *, now: int, require_clean: bool = True, require_pristine: bool = True):
     if require_clean and (
-        parent.parent._git(root, "status", "--porcelain")
-        or parent.parent._git(root, "rev-parse", "HEAD")
-        != parent.parent._git(root, "rev-parse", "target/main")
+        parent.parent.parent._git(root, "status", "--porcelain")
+        or parent.parent.parent._git(root, "rev-parse", "HEAD")
+        != parent.parent.parent._git(root, "rev-parse", "target/main")
     ):
         raise RuntimeError("V2.49.54 protocol requires clean pushed HEAD")
     future = (PROTOCOL, PREAUDIT, EXECUTION_START, FORWARD_RESULT, FORWARD_AUDIT, OUTPUT_ROOT)
@@ -177,7 +177,7 @@ def build_protocol(root: Path, *, now: int, require_clean: bool = True, require_
         "role": ROLE,
         "protocol_id": PROTOCOL_ID,
         "created_at_unix": int(now),
-        "git_head": parent.parent._git(root, "rev-parse", "HEAD"),
+        "git_head": parent.parent.parent._git(root, "rev-parse", "HEAD"),
         "parent_algorithm": {
             "path": str(PARENT_PROTOCOL),
             "sha256": sha256(root / PARENT_PROTOCOL),

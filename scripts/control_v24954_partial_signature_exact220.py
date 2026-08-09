@@ -36,7 +36,7 @@ def configure() -> None:
         Path("scripts/run_v24635_exact220_task.py"),
     )
     base.TEST_SUITES = (
-        (contract.TEST, 12, 240),
+        (contract.TEST, 13, 240),
         (Path("tests/test_v24949_mutual_partial_signature_ledger.py"), 12, 240),
         (Path("tests/test_v24945_injective_schema_signature_ledger.py"), 10, 240),
         (Path("tests/test_v24942_compact_schema_bound_record_ledger.py"), 8, 240),
@@ -46,7 +46,7 @@ def configure() -> None:
         (Path("tests/test_v24319_runner_integration.py"), 7, 180),
         (Path("tests/test_v24468_total_wall_transport.py"), 8, 180),
     )
-    base.EXPECTED_TESTS = 92
+    base.EXPECTED_TESTS = 93
 
 
 def main() -> None:

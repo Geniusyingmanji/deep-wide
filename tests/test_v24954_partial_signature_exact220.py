@@ -66,6 +66,13 @@ class V24954Tests(unittest.TestCase):
         self.assertTrue(evidence["mutual_partial_signature_build_audit_valid"])
         self.assertTrue(evidence["implementation_audit_is_not_quality_evidence"])
 
+    def test_protocol_build_reaches_inherited_git_helpers(self):
+        value = contract.build_protocol(
+            ROOT, now=1, require_clean=False, require_pristine=False
+        )
+        self.assertEqual(value["protocol_id"], contract.PROTOCOL_ID)
+        self.assertEqual(value["task_contract"]["selected_count"], 220)
+
     def test_projection_and_receipt(self):
         child._VISIBLE_QUESTION = QUESTION
         limits = type("L", (), {"page_chars": 5000, "evidence_chars": 30000})()
