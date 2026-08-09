@@ -29,6 +29,7 @@ from . import v24986_robust_paired_runtime as robust
 from . import v24990_query_vector_paired_runtime as compact
 from . import v24996_shared_first_wave_paired_runtime as parent
 from . import v25024_evidence_conditioned_queries as refinement
+from . import v25026_resolved_schema_reachability as reachability
 from .clients import parse_json_object
 from .v24263_global_model_limiter import payload_sha256
 from .v24312_deadline_reliability import DeadlineAwareGlobalModelSlotLimiter
@@ -97,6 +98,9 @@ def _receipt(value: Mapping[str, Any]) -> dict[str, Any]:
         "prediction_changed": bool(value["prediction_changed"]),
         "both_arms_model_success": bool(value["both_arms_model_success"]),
         "refinement_receipt": copy.deepcopy(dict(value["refinement_receipt"])),
+        "resolved_schema_reachability_receipt": copy.deepcopy(
+            dict(value["resolved_schema_reachability_receipt"])
+        ),
         "one_shared_visible_only_planning_call": True,
         "one_shared_evidence_conditioned_refinement_call_charged_to_both_arms": True,
         "one_physical_first_wave_reused_by_both_arms": True,
@@ -128,6 +132,7 @@ def validate_receipt(value: Mapping[str, Any]) -> dict[str, Any]:
     seal = unsigned.pop("receipt_payload_sha256", None)
     metrics = copied.get("arm_metrics")
     refine = copied.get("refinement_receipt")
+    resolved = copied.get("resolved_schema_reachability_receipt")
     count_fields = (
         "provider_unique_query_count",
         "shared_prefix_page_count",
@@ -182,6 +187,7 @@ def validate_receipt(value: Mapping[str, Any]) -> dict[str, Any]:
         "actual_first_synthesis_arm",
         "arm_metrics",
         "refinement_receipt",
+        "resolved_schema_reachability_receipt",
         *true_flags,
         *false_flags,
         "receipt_payload_sha256",
@@ -228,6 +234,8 @@ def validate_receipt(value: Mapping[str, Any]) -> dict[str, Any]:
         or refine["strategy_applied"] is not copied["refinement_strategy_applied"]
         or refine["exact_legacy_second_wave_handoff"]
         is not copied["exact_legacy_second_wave_handoff"]
+        or not isinstance(resolved, Mapping)
+        or reachability.validate_receipt(resolved) != dict(resolved)
         or not isinstance(metrics, Mapping)
         or set(metrics) != set(ARMS)
         or any(copied.get(name) is not True for name in true_flags)
@@ -429,6 +437,19 @@ def run_paired_task(
             failures["retrieval"][arm] = "SharedFirstWaveFailure"
 
     arm_pages = {arm: [*shared_pages, *delta_pages[arm]] for arm in ARMS}
+    resolved_schema_reachability = reachability.build_receipt(
+        visible["question"],
+        {
+            SHARED_PHASE: completed_queries[:2],
+            CONTROL_ARM: queries[CONTROL_ARM][2:],
+            CANDIDATE_ARM: queries[CANDIDATE_ARM][2:],
+        },
+        {
+            SHARED_PHASE: shared_pages,
+            CONTROL_ARM: delta_pages[CONTROL_ARM],
+            CANDIDATE_ARM: delta_pages[CANDIDATE_ARM],
+        },
+    )
     shared_prefix_equal = bool(
         phases[SHARED_PHASE] is not None
         and all(arm_pages[arm][: len(shared_pages)] == shared_pages for arm in ARMS)
@@ -531,6 +552,7 @@ def run_paired_task(
             "prediction_changed": predictions[CONTROL_ARM] != predictions[CANDIDATE_ARM],
             "both_arms_model_success": all(success.values()),
             "refinement_receipt": refinement_receipt,
+            "resolved_schema_reachability_receipt": resolved_schema_reachability,
         }
     )
     value: dict[str, Any] = {
@@ -545,6 +567,9 @@ def run_paired_task(
         "prediction_changed": predictions[CONTROL_ARM] != predictions[CANDIDATE_ARM],
         "evidence_characters": {arm: len(evidence[arm]) for arm in ARMS},
         "refinement_receipt": copy.deepcopy(refinement_receipt),
+        "resolved_schema_reachability_receipt": copy.deepcopy(
+            resolved_schema_reachability
+        ),
         "physical_wave_receipts": phase_receipts,
         "physical_effects": physical_effects,
         "cost": {"model": model_cost, "search": search_cost},
@@ -565,6 +590,7 @@ def validate_result(value: Mapping[str, Any]) -> dict[str, Any]:
     failures = copied.get("failure_types")
     evidence = copied.get("evidence_characters")
     refine = copied.get("refinement_receipt")
+    resolved = copied.get("resolved_schema_reachability_receipt")
     phases = copied.get("physical_wave_receipts")
     effects = copied.get("physical_effects")
     costs = copied.get("cost")
@@ -581,6 +607,7 @@ def validate_result(value: Mapping[str, Any]) -> dict[str, Any]:
         "prediction_changed",
         "evidence_characters",
         "refinement_receipt",
+        "resolved_schema_reachability_receipt",
         "physical_wave_receipts",
         "physical_effects",
         "cost",
@@ -612,6 +639,8 @@ def validate_result(value: Mapping[str, Any]) -> dict[str, Any]:
         )
         or not isinstance(refine, Mapping)
         or refinement.validate_receipt(refine) != dict(refine)
+        or not isinstance(resolved, Mapping)
+        or reachability.validate_receipt(resolved) != dict(resolved)
         or not isinstance(phases, Mapping)
         or set(phases) != set(PHASES)
         or not isinstance(effects, Mapping)
@@ -627,6 +656,7 @@ def validate_result(value: Mapping[str, Any]) -> dict[str, Any]:
         or not isinstance(receipt, Mapping)
         or validate_receipt(receipt) != dict(receipt)
         or receipt["refinement_receipt"] != refine
+        or receipt["resolved_schema_reachability_receipt"] != resolved
         or copied.get("prediction_changed")
         is not (predictions[CONTROL_ARM] != predictions[CANDIDATE_ARM])
         or receipt["prediction_changed"] != copied["prediction_changed"]

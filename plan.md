@@ -1,8 +1,14 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.74
+> 版本：6.75
 >
-> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.74 覆盖。**
+> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.75 覆盖。**
+
+> **6.75 V2.50.26 resolved-schema reachability observer（2026-08-09）：在永久排除、历史已消费的 `.ec` 开发样例上做了两次单题 production-shaped live probe；均使用本地 GPT-5.6 keyless search/model、同一 `4 model physical / 6 query / ≤14 fetch` paired 上限和临时自动删除输出，未读取 DeepWideBench task/mapping/gold/category/evaluator，lease 自然释放。首个 counts-only probe证明 refinement 自然触发、query vector 改变、双臂 synthesis 成功，但旧 `retained_records` scanner 两臂均为0且 prediction 未变。第二个可见开发 trace 解释了原因：首波从 capital/currency clue 解析出隐藏 country，candidate 后两条 query 抓到正确 IANA detail page并改变 manager 预测；control 只抓 root index并给出旧 manager。旧 schema-bound record scanner不识别 detail-layout，所以用 `retained_records=0` 否定该链路属于观测口径错误，而非 treatment 不可达。开发 trace 不进入最终人口、protocol、receipt 或质量分数。**
+
+> **V2.50.26 因此新增纯 counts-only observer：resolved token 必须不在 visible question、同时存在于首波 page、某臂第二波 query 与该臂第二波 fetched page；同一 page 还必须命中至少两个 visible schema column token，才计一个 `resolved_schema_page`。receipt 不保存或哈希 pivot/query/URL/title/page/schema/value/prediction/opaque id/credential，不改变 query selection、fetch、projection、evidence 或 synthesis，entropy/IG signed credit仍为0。已排除开发 trace 的离线回放为 control `0`、candidate `1` resolved-schema page；V2.50.26 定向 `6/6`，V2.50.25 接线 `6/6`，与 V2.49.82/85/86/90/96、V2.50.24 联合父链 `48/48`，py_compile、AST privileged/evaluator 与 credential scan均通过，四个 protected watcher identity未变。**
+
+> **下一步冻结 V2.50.27：20个未进入历史 TLD/开发人口的 clue-resolved jurisdiction 任务，visible question只给 capital/currency clue与输出 schema，不给 country/TLD；forward仍只接收 `{opaque_id, question}`。隐藏 evaluator mapping必须与 forward dependency分离，prediction freeze/content-free audit之前不得打开。机制门要求 20/20 refinement尝试、自然 strategy exposure、candidate resolved-schema strict advantage、双臂成功与 prediction change达到预注册阈值；旧 query-local/record计数仅作诊断，不再错误充当 detail-layout硬门。post-freeze quality仍要求 candidate Exact与Composite严格增加且Entity/Row/Item/Column、invalid/fallback/transport不退。当前不授权 public 220；DeepWideBench最佳仍为V2.48.57 `9/220 / 0.457249`，无SOTA。**
 
 > **6.74 V2.50.24–25 evidence-conditioned resolve-then-expand build-only（2026-08-09）：V2.50.24 已实现纯、fail-closed 的第二波 query refinement。输入严格限于 visible question、legacy 四条 query、同次首波至多 6 个公开页面及 caller-supplied model output；输出必须是恰好两条有 visible-question token overlap、且至少含一个由首波 evidence 支持的新 token 的单行查询。URL、页面指令、多行、重复、非法 JSON、首波 query 重复或无证据支持均逐字回退 legacy 第二波。tokenizer 已修复句末标点边界，避免把 question 中的 `Alpha.` 与 query 中的 `Alpha` 错判成不同 anchor；定向测试 `8/8`。receipt 只保存计数与 seal，不保存 question/query/URL/title/page/entity/value/prediction/opaque id/credential，entropy/IG 不分配 signed credit。**
 

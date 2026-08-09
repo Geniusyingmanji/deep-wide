@@ -134,6 +134,12 @@ class EvidenceConditionedPairedRuntimeTests(unittest.TestCase):
                 3,
             )
         self.assertTrue(result["prediction_changed"])
+        self.assertEqual(
+            result["content_free_receipt"][
+                "resolved_schema_reachability_receipt"
+            ],
+            result["resolved_schema_reachability_receipt"],
+        )
         self.assertIn("111", result["predictions"][target.CONTROL_ARM])
         self.assertIn("999", result["predictions"][target.CANDIDATE_ARM])
         self.assertEqual(searches[target.PHASES[0]].calls, 1)
