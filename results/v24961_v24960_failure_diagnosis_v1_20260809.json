@@ -1,0 +1,53 @@
+{
+  "aggregate_signature": {
+    "actual_hard_fetch_helper_calls": 209,
+    "completed_tasks": 15,
+    "expected_rows_if_failures_stop_after_second_response_before_second_selection_commit": 70,
+    "failed_tasks": 5,
+    "logical_query_rows": 70,
+    "planned_shared_url_union_count": 242,
+    "search_http_2xx": 40,
+    "search_provider_attempts": 40,
+    "search_provider_response_calls": 40,
+    "terminal_tasks": 20
+  },
+  "artifact_version": 1,
+  "authorization": {
+    "benchmark_external_or_exact220_launch": false,
+    "evaluator": false,
+    "fresh_successor_live_gate_design": true,
+    "same_population_retry_resume_or_rerun": false
+  },
+  "checks": {
+    "all_provider_attempts_and_responses_completed": true,
+    "cumulative_successor_accepts_same_synthetic_state": true,
+    "legacy_local_invariant_reproduced_synthetically": true,
+    "logical_row_signature_matches_second_wave_postresponse_failure": true,
+    "unfetched_planned_union_tail_exists": true
+  },
+  "conclusion": "v24960 is consistent with the legacy current-wave source invariant rejecting a valid cumulative two-wave state; v24961 repairs that invariant without claiming per-task exception recovery",
+  "created_at_unix": 1786272381,
+  "diagnosis_payload_sha256": "ce2ccb2fc5270fc539987642737a75fd8881f2e6ecfd31751edb536e83a1a206",
+  "diagnosis_valid": true,
+  "findings": [],
+  "parent": {
+    "path": "results/v24960_source_fair_live_result_v1_20260809.json",
+    "sha256": "2fc5610f59fdbb6bce48f505434961b860bcd7d72f629569f840e400795ca5a5"
+  },
+  "role": "v24961_v24960_content_free_failure_diagnosis",
+  "source_policy": {
+    "network_model_search_fetch_or_evaluator_effect": false,
+    "parent_aggregate_only": true,
+    "parent_task_query_url_page_prediction_or_evaluator_opened": false,
+    "synthetic_values_only": true
+  },
+  "synthetic_reproduction": {
+    "candidate_cumulative_sources": 4,
+    "candidate_current_sources": 2,
+    "contains_query_url_page_prediction_or_score": false,
+    "control_cumulative_sources": 3,
+    "control_current_sources": 3,
+    "legacy_local_invariant_raises": true,
+    "repaired_cumulative_invariant_accepts": true
+  }
+}
