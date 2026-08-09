@@ -1,8 +1,12 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.75
+> 版本：6.76
 >
-> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.75 覆盖。**
+> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.76 覆盖。**
+
+> **6.76 V2.50.27 clue-resolved external gate build-only（2026-08-09）：已冻结20个最终 population 的公开 task spec，每题只包含唯一 capital + ISO 4217 currency clue、IANA authority描述和 `Domain / Type / TLD Manager` schema，不含country或TLD identity。`.ec`开发probe永久排除；最终20题覆盖 `.in` 至 `.la` 对应的全新历史未用ccTLD区间。country/TLD映射与gold evaluator在build/protocol/forward阶段不仅不导入，而且 evaluator module 与 mapping module 必须物理不存在；只有prediction freeze与content-free mechanism audit严格GO后才允许append-only创建。**
+
+> **runner继续使用本地GPT-5.6 keyless model/search，20 executor、8 model slots；每臂概念预算 `3 model / 4 query / 10 fetch / 60k / 240s`，paired physical上限 `4 model / 6 query / 14 fetch`。机制门预注册为20 terminal、refinement attempted≥18、strategy applied≥12、candidate resolved-schema pages≥6、strict-advantage tasks≥6、双臂model success≥18、prediction change≥6，且shared prefix、物理预算与冻结arm order守恒。quality门要求candidate Exact与Composite均严格增加，Entity/Row/Item/Column及invalid/fallback不退。专项10/10，V2.50.24/25/26与V2.49.82/85/86/90/96联合58/58，forward manifest显式覆盖wrapper、继承runner engine与shared lease；10个forward source AST privileged/evaluator findings为空，credential scan为空，四watcher不变。当前只授权从clean pushed HEAD生成build audit/protocol，不授权external forward、evaluator或public220。**
 
 > **6.75 V2.50.26 resolved-schema reachability observer（2026-08-09）：在永久排除、历史已消费的 `.ec` 开发样例上做了两次单题 production-shaped live probe；均使用本地 GPT-5.6 keyless search/model、同一 `4 model physical / 6 query / ≤14 fetch` paired 上限和临时自动删除输出，未读取 DeepWideBench task/mapping/gold/category/evaluator，lease 自然释放。首个 counts-only probe证明 refinement 自然触发、query vector 改变、双臂 synthesis 成功，但旧 `retained_records` scanner 两臂均为0且 prediction 未变。第二个可见开发 trace 解释了原因：首波从 capital/currency clue 解析出隐藏 country，candidate 后两条 query 抓到正确 IANA detail page并改变 manager 预测；control 只抓 root index并给出旧 manager。旧 schema-bound record scanner不识别 detail-layout，所以用 `retained_records=0` 否定该链路属于观测口径错误，而非 treatment 不可达。开发 trace 不进入最终人口、protocol、receipt 或质量分数。**
 
