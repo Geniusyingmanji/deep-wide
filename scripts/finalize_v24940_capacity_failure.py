@@ -90,8 +90,10 @@ def main() -> None:
         "snapshot_files_exactly_catalog_and_one_target_response": observed_files == expected_files,
         "capacity_below_preregistered_requirement": len(eligible) < contract.SELECTED_RECORD_COUNT,
         "no_visible_tasks_materialized": not (ROOT / contract.VISIBLE_TASKS).exists(),
-        "no_task_directory_materialized": not (ROOT / contract.TASK_ROOT).exists(),
-        "no_model_slot_directory_materialized": not (ROOT / contract.MODEL_SLOT_DIRECTORY).exists(),
+        "task_directory_created_but_empty": (ROOT / contract.TASK_ROOT).is_dir()
+        and not any((ROOT / contract.TASK_ROOT).iterdir()),
+        "model_slot_directory_created_but_empty": (ROOT / contract.MODEL_SLOT_DIRECTORY).is_dir()
+        and not any((ROOT / contract.MODEL_SLOT_DIRECTORY).iterdir()),
         "no_predictions_or_projections_materialized": not any((ROOT / path).exists() for path in (contract.PREDICTIONS, contract.PROJECTIONS, contract.PREDICTION_FREEZE, contract.RUN_SUMMARY)),
         "no_evaluator_surface_materialized": not any((ROOT / path).exists() for path in (contract.EVALUATOR_PROTOCOL, contract.RESULT, contract.POSTAUDIT)),
         "shared_api_lease_released": _lease_free(),
