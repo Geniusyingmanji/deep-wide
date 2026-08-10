@@ -1,8 +1,14 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.81
+> 版本：6.82
 >
-> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.81 覆盖。**
+> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.82 覆盖。**
+
+> **6.82 V2.50.37 source-only query-width开发阶梯与新matched-gate方向（2026-08-10）：在V2.50.36 prompt-only NO-GO后，V2.50.37复用V2.42.81已执行且永久排除于confirmation的中性pair 3–4，共4条公开文档query；同一query vector并发比较`width=1/2/4`，分别严格4/2/1次source-only hosted-search调用。三臂均max_retries=1、零fetch/生成/evaluator，不打开DeepWideBench或持久化query/URL/page/provider payload/credential。实现从clean pushed `a71fe7bb`冻结；新测试6/6、加直接父链总计45/45通过，AST privileged-field/evaluator capability/credential literal均为空。**
+
+> **唯一运行3/3 terminal，三臂exact action query均4/4，provider calls/attempts精确`4/4, 2/2, 1/1`，0 exception/retry/unrecoverable/recursive split/hard timeout。width 1/2/4的input token=`33,840 / 17,062 / 12,797`、total=`33,990 / 17,162 / 12,872`、wall-sum=`17.980 / 7.425 / 4.938s`、union source=`38 / 19 / 21`、跨chunk去重distinct source=`30 / 19 / 21`。width4相对width1的input/total仅`0.3782/0.3787×`，但union/distinct yield只有`0.5526/0.7000×`，低于预注册0.85，因此严格 **development NO-GO**；不得事后改阈值、复用同query或直接授权fresh confirmation/benchmark。**
+
+> **不过预注册的完整三臂对比暴露一个可验证的新方向：生产V2.50.30每题正是两波`2+2`，而本样例width4相对width2的input/total=`0.7500/0.7500×`，union/distinct source=`1.1053/1.1053×`，即单次4-query同时更省token且source更多。这个ratio是post-result diagnosis，不是GO，也尚未包含V2.50.30的evidence-conditioned第二波、deterministic fetch、usable-page或终局质量。下一步不再测试width1，而是在全新benchmark-external任务上冻结matched pair：control保持production-shaped adaptive `2-query first wave + visible/evidence-conditioned 2-query second wave`，candidate一次性4-query；共享visible plan和总query/fetch/model/evidence/deadline上限，比较hosted input/total token、exact query coverage、source union、deterministic fetch success、usable page/char、authority/schema coverage和同prompt synthesis质量。若candidate成本显著下降但fetch/evidence/quality任一退化，仍NO-GO；只有fallback、Entity/Row、成本三门同时GO才允许新220。当前完整分数不变：V2.50.30=`7/220 / 0.450291`，项目最佳V2.48.57=`9/220 / 0.457249`，无SOTA。entropy/IG继续shadow-only、signed credit=0。**
 
 > **6.81 V2.50.36 source-only hosted-search 开发门 NO-GO（2026-08-10）：针对V2.50.30总token中约72%来自两波hosted search、且生产只消费`web_search_call.action.sources → task-union → deterministic fetch`的事实，V2.50.36只改hosted-search request representation：medium context、模型、query、tool-required、action sources、retry/deadline/task-union均不变；不再要求每query生成700字符摘要，只要求每个exact query独立执行并最终返回`done`，output cap由双query请求的2200降至1000。实现/开发probe分别从clean pushed `a2846c6a`冻结；直接与父transport/task-union回归`39/39`通过，AST privileged-field/evaluator capability/credential literal均为空。**
 
