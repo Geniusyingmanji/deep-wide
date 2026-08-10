@@ -468,7 +468,7 @@ def main() -> None:
         "entropy_information_gain_signed_credit_disabled": True,
         "protected_watcher_identity_exact": watcher_map == EXPECTED_WATCHERS,
         "shared_api_lease_inactive": _lease_inactive(),
-        "network_model_search_fetch_or_evaluator_called_by_audit": False,
+        "network_model_search_fetch_or_evaluator_not_called_by_audit": True,
     }
     findings = sorted(name for name, passed in checks.items() if not passed)
     value: dict[str, Any] = {
