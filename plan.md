@@ -1,8 +1,14 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.76
+> 版本：6.77
 >
-> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.76 覆盖。**
+> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.77 覆盖。**
+
+> **6.77 V2.50.27–29 external strict GO 与 production单臂实现（2026-08-10）：V2.50.27唯一20题matched forward用时`66.999957s`，20/20 terminal；refinement attempted/applied=`18/15`，candidate/control resolved-schema pages=`32/4`，strict advantage=`14/20`，prediction change=`8/20`，双臂model success=`19/20`；每题≤`4 physical model / 6 query / 14 fetch`，shared prefix与冻结arm order全守恒。prediction以`ab49ecf5`冻结，content-free audit `46d37797` 为`audit_valid=true, findings=[]`且机制strict GO，mapping/evaluator在freeze前物理不存在。**
+
+> **post-freeze evaluator首次attempt成功一次性抓取20-row IANA gold并create-exclusive冻结，但在0 prediction metric后因错误调用不存在的`_read_jsonl` helper fail closed；gold未重抓、forward未重跑，failure与gold以`a34695ec/5d12a6fd`封存。V2.50.28随后精确绑定frozen gold、20 predictions、prediction freeze、failure、父audit与evaluator protocol，执行零network/model/search/fetch的全40 prediction一次性恢复评测。control Exact=`14/20`、Entity/Row/Column=`0.95/0.95/1.0`、Item=`0.825`、Composite=`0.93125`；candidate Exact=`18/20`、Entity/Row/Column=`0.95/0.95/1.0`、Item=`0.925`、Composite=`0.95625`，即Exact`+4`、Item`+0.10`、Composite`+0.025`且无指标退化，strict quality GO；result/postaudit以`5438618a/10998dc4`推送，postaudit findings=[]。该结果证明外部clue-resolve→refined query→schema-page→终局质量链路，但不是DeepWideBench分数或entropy-credit证据。**
+
+> **V2.50.29实现真正production单臂，不复用paired control effects：一次plan、首波`2 query/≤6 fetch`、一次evidence-conditioned refinement、次波`2 query/≤4 fetch`、一次synthesis，严格总上限`3 model / 4 query / 10 fetch / 60k evidence / 240s`。首波空则不调用refinement，invalid refinement精确回退legacy第二波；receipt嵌套验证每wave query/fetch/usable守恒并拒绝resealed tamper。V2.50.29定向`4/4`、与V2.50.24及V2.49.82/85/86/90/96父链联合`40/40`通过。下一步V2.50.30明确使用V2.48.57相同220 visible task vector，但transport为GPT-5.6 keyless resolve-then-expand successor而非Tavily pacing主干；不得伪称只改query或与V2.48.57同transport。20 executor/8 model slots和每题硬预算不变，prediction先freeze再official evaluator各评一次。**
 
 > **6.76 V2.50.27 clue-resolved external gate build-only（2026-08-09）：已冻结20个最终 population 的公开 task spec，每题只包含唯一 capital + ISO 4217 currency clue、IANA authority描述和 `Domain / Type / TLD Manager` schema，不含country或TLD identity。`.ec`开发probe永久排除；最终20题覆盖 `.in` 至 `.la` 对应的全新历史未用ccTLD区间。country/TLD映射与gold evaluator在build/protocol/forward阶段不仅不导入，而且 evaluator module 与 mapping module 必须物理不存在；只有prediction freeze与content-free mechanism audit严格GO后才允许append-only创建。**
 
