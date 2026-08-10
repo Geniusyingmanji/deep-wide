@@ -107,6 +107,8 @@ class SourceOnlyHostedSearchTests(unittest.TestCase):
         self.assertEqual(body["include"], ["web_search_call.action.sources"])
         serialized = str(body).casefold()
         self.assertIn("return only the word done", serialized)
+        self.assertIn("separate search action", serialized)
+        self.assertIn("preserving each query verbatim", serialized)
         self.assertNotIn("700 characters", serialized)
         self.assertNotIn("evidence summary", serialized)
 
