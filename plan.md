@@ -1,8 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.79
+> 版本：6.80
 >
-> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.79 覆盖。**
+> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.80 覆盖。**
+
+> **6.80 V2.50.32–35 单列归一化修复与 external ceiling NO-GO（2026-08-10）：V2.50.30 的5个 synthesis `ValueError` fallback 做 label-blind 聚合后，可见列宽精确为`{1列:3, 3列:1, 7列:1}`；全部已使用4 query/10 fetch且refinement applied。旧V2.42.59 `_split_pipe_row()` 对少于2格恒返回空，因此合法`| Name | / | --- | / | Alice |`无法进入normalizer；exact parser本身则接受该单列表。V2.50.32 append-only修复只新增boundary-pipe、单header/单separator/至少一完整行的严格单列路径，多表、裸行、坏行、escaped/extra pipe继续fail closed，非空事实cell改写与额外model/search/fetch恒为0。V2.50.33只把该pure normalizer接入V2.50.29 synthesis边界，planning、两波retrieval、refinement、prompt和`3 model / 4 query / 10 fetch / 60k / 240s`上限不变；synthetic matched gate中旧父fallback、新候选primary且两臂cost/effect相同，多列输出与父逐字相同。**
+
+> **V2.50.34 clean-build audit在`bdb7f4f5`冻结：49/49回归通过，privileged/evaluator/credential findings为空，四watcher identity不变、lease inactive。审计明确限制历史因果结论：V2.50.30没有持久化5个失败的raw synthesis output，故`3个一列fallback`只表示修复的schema可达上界，不能事后声称已反事实救回3题；旧220不retry/resume/replay。**
+
+> **V2.50.35随后冻结40个历史提交`bdb7f4f5`全仓literal零命中的fresh PyPI项目，英/中各20题；冻结前未访问最终URL/model/evaluator。每题先exact PyPI fetch，40/40 readiness后才以production synthesis system/user、GPT-5.6调用一次；两臂共享同一个raw model output，唯一差异为V2.42.59 vs V2.50.32 normalizer。唯一forward完成`40/40 fetch + 40/40 model success`、40 provider attempts、总token=`13,664`，但模型对两种长表头均40/40直接输出exact canonical table：两臂均`exact=40 / normalized=0 / fallback=0`，prediction change与natural recovery均为0。故机制门因`minimum_natural_recovery`和`candidate_fallback_strictly_less`失败，严格ceiling **NO-GO**；evaluator protocol实测fail closed，gold/result/postaudit均未创建，无retry/rerun/换题。**
+
+> **结论与授权：单列修复是低风险totality improvement，可保留为production候选，但当前external数据不证明自然质量收益，不能单独授权新DeepWideBench 220。下一主线停止继续扩大单列population，转向V2.50.30的确定成本瓶颈：`13,973,126` token中首/次波hosted search约`5.452M/4.602M`，合计约72%。`context_size=low`单项probe只省约0.7%，已排除。下一步必须在同一fresh neutral query、同hosted response source-union、同deterministic fetch的matched gate中比较响应输出上限/查询批形/工具返回投影，要求URL discovery、fetch success、usable pages和terminal reliability不退，同时search token显著下降；只有成本、fallback、Entity/Row三门都GO才允许下一次完整220。entropy/IG继续shadow-only、signed credit=0。**
 
 > **6.79 V2.50.30 完整220结果与V2.50.31诊断（2026-08-10）：V2.50.30 唯一完整forward一次性完成`220/220`，20 executor/8 model slots，总用时`972.152450s`（约16.2分钟）；model-generated/fallback=`215/5`，refinement attempted/applied=`218/129`，physical query=`880=220×4`、fetch=`2195≤2200`，全部资源上限成立，无retry/resume/补题。预测先以`f4fe4cb2`冻结推送，content-free forward audit `d919a244` 为`findings=[]`后才打开evaluator surface；32-worker官方评测joined/official/merged均`220`、unique IDs=`220`、all worker returncode zero、无selective revaluation，post-result audit `e4889b95` 全绿。**
 
