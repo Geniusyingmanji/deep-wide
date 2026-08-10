@@ -1,0 +1,137 @@
+{
+  "arms": {
+    "candidate": "v25032_single_column_normalizer",
+    "control": "frozen_v24259_normalizer",
+    "only_difference": "deterministic_table_normalizer",
+    "shared_raw_model_output": true
+  },
+  "artifact_version": 1,
+  "authorization": {
+    "external_forward": false,
+    "leaderboard_or_sota": false,
+    "new_deepwidebench_exact220": false,
+    "postfreeze_evaluator": false,
+    "preactivation_audit_generation": true
+  },
+  "build_audit": {
+    "path": "results/v25035_single_column_external_build_audit_v1_20260810.json",
+    "payload_sha256": "9df3571cd1499395a22b95b2c2a29356bcf81595bde797e8538532c96187a023",
+    "sha256": "1b6a7975403ce04bcfc2c9b7be0541616f568eb939e4824590433799f832745f"
+  },
+  "created_at_unix": 1786325828,
+  "dependency_manifest": {
+    "results/v25034_single_column_build_audit_v1_20260810.json": "f3511ee87ce152434e2ffafea4d2aabe323672a6323914a47714c5e0ae4cd1a7",
+    "scripts/control_v25035_single_column_external.py": "fa04d236e4c0b1e67f96cf0da151bf5b971e736cf65c050af142dad6d2a48909",
+    "scripts/finalize_v25035_single_column_external.py": "42695135745f9444f7346acef78c49695355552abf7ddf635ffc56ee17735c72",
+    "scripts/run_v25035_single_column_external.py": "54436cd9af0942f0ca626c3b3c30e914b0cc0b0ae067ffbfe44d9bf0cb186e3c",
+    "src/deepwide_agent/v24257_score_first_runtime.py": "c4e3f818d0306f53d40f641a7a580aa7238e0698d2863301fe8399d8e3c1fa3e",
+    "src/deepwide_agent/v24259_deterministic_table_normalizer.py": "bc2ed6ae62cd68cf908ff2c50f59caa37cf6f57d9d12ab3db5294cf39b2c5f91",
+    "src/deepwide_agent/v25032_single_column_table_normalizer.py": "cc6c647fec3e915959c4f8a347e5320554d108e34aebad25680ef2a8911e9ebb",
+    "src/deepwide_agent/v25033_single_column_evidence_conditioned_runtime.py": "9066daba8151f2d4655a40ada6dd766359a72c226f30eb3634f9108be47a2fba",
+    "src/deepwide_agent/v25035_single_column_external_contract.py": "a3871ab642cb08734a2fd390d89687e1308ff0d293f270c31ed740f50dc0cd67",
+    "tests/test_v25035_single_column_external.py": "b25cd890b694b5c442bc19edc46f7c8a3e553c63e94077c7549b026ac6815373"
+  },
+  "dependency_manifest_sha256": "46c6436c13e2b206cd222a5645392a59c3696f2d453c3a6ed2b5404639ce0e17",
+  "execution": {
+    "executor_concurrency": 20,
+    "failure_as_zero": true,
+    "fetch_targets_per_task": 1,
+    "max_response_bytes": 32000000,
+    "model": "gpt-5.6-sol",
+    "model_calls_per_task": 1,
+    "model_concurrency": 8,
+    "model_output_tokens": 1200,
+    "reasoning_effort": "low",
+    "retry_resume_skip_or_population_replacement": false,
+    "service_tier": "priority",
+    "task_deadline_seconds": 120.0
+  },
+  "future_surfaces": {
+    "evaluator_protocol": "results/v25035_single_column_external_evaluator_preregistration_v1_20260810.json",
+    "forward_audit": "results/v25035_single_column_external_forward_audit_v1_20260810.json",
+    "forward_result": "results/v25035_single_column_external_forward_result_v1_20260810.json",
+    "output_root": "outputs/v25035_single_column_external_v1_20260810",
+    "postaudit": "results/v25035_single_column_external_postresult_audit_v1_20260810.json",
+    "readiness": "results/v25035_single_column_external_readiness_v1_20260810.json",
+    "result": "results/v25035_single_column_external_result_v1_20260810.json"
+  },
+  "gates": {
+    "mechanism": {
+      "additional_model_search_or_fetch_calls": 0,
+      "candidate_fallback_strictly_less": true,
+      "fetch_successes": 40,
+      "fixed_denominator": 40,
+      "minimum_candidate_natural_recoveries": 1,
+      "model_provider_attempts": 40,
+      "model_successes": 40,
+      "multi_column_or_extra_row_admission_count": 0,
+      "nonempty_factual_cell_rewrite_count": 0,
+      "shared_raw_model_outputs": 40
+    },
+    "quality": {
+      "candidate_cell_accuracy_nonregression": true,
+      "candidate_evaluator_invalid_nonincrease": true,
+      "candidate_exact_strictly_greater": true,
+      "candidate_fallback_strictly_less": true,
+      "candidate_schema_validity_nonregression": true,
+      "fixed_denominator": 40
+    }
+  },
+  "population": {
+    "chinese_tasks": 20,
+    "endpoint_vector_sha256": "1ccad777bc41a2b7f5d5122431a5978fa8a97c2b89275b111847de013f154d38",
+    "english_tasks": 20,
+    "final_population_url_model_or_evaluator_probe_count": 0,
+    "opaque_id_vector_sha256": "554683d47a97f2266a3c9fa8d32289be3ae7fbe2d45bca12771c1b69094e0aea",
+    "prior_population_overlap_count": 0,
+    "project_vector_sha256": "920410ea24ff8cad779bfc0ec4b4aa1db280666c898858287a8d57d577b86bba",
+    "task_count": 40,
+    "task_vector_sha256": "429479f9d2be42f9a5fd4eda1a7499bbb2fa06aaeba21661d98eb99dcb163fb5",
+    "visible_question_vector_sha256": "62f9e1d3c561d983b473a2c68b0c5a4419eb15880287570219f6e5dc7755fee8"
+  },
+  "protected_watchers": [
+    {
+      "marker": "scripts/watch_v2415_r1_checkpoint_liveness.py",
+      "pid": 795336,
+      "start_ticks": 713986317
+    },
+    {
+      "marker": "scripts/watch_v24218_exact220_executor.py",
+      "pid": 3061652,
+      "start_ticks": 747569004
+    },
+    {
+      "marker": "scripts/watch_v24215_joint_package_recovery.py",
+      "pid": 2808901,
+      "start_ticks": 746680268
+    },
+    {
+      "marker": "scripts/watch_v24216_package_gate.py",
+      "pid": 2889939,
+      "start_ticks": 746969965
+    }
+  ],
+  "protocol_id": "v25035_fresh_shared_output_single_column_pypi_gate_v1",
+  "protocol_payload_sha256": "c648875ba4556fecdc7ca3e9c6a765d91d262803ad557a8689183c52ef9ba2ec",
+  "role": "v25035_single_column_external_preregistration",
+  "source_policy": {
+    "all_pages_fetched_before_any_model_call": true,
+    "entropy_or_information_gain_assigns_signed_credit": false,
+    "mapping_gold_category_question_type_split_answer_evaluator_score_reward_or_historical_quality_used_for_forward": false,
+    "one_exact_page_fetch_per_task": true,
+    "one_model_call_per_task": true,
+    "only_arm_difference_is_deterministic_normalizer": true,
+    "population_selected_after_repository_literal_zero_probe": true,
+    "population_url_model_or_evaluator_probed_before_freeze": false,
+    "prediction_freeze_before_evaluator_or_gold_refetch": true,
+    "production_synthesis_system_and_user_template_used": true,
+    "public_deepwidebench_dev64_exact220_leaderboard_or_sota_authorized": false,
+    "readiness_failure_stops_before_model_and_prediction_output": true,
+    "runtime_boundary": [
+      "opaque_id",
+      "question",
+      "same_forward_public_pypi_json"
+    ],
+    "same_raw_model_output_for_both_arms": true
+  }
+}
