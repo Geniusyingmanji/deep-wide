@@ -1,0 +1,154 @@
+{
+  "artifact_version": 1,
+  "audit_payload_sha256": "c03aacb54d3227df9d1fc6cafcfc2b78c4b472954770833b1f65641476b132b7",
+  "audit_valid": true,
+  "authorization": {
+    "deepwidebench_dev64_exact220_or_sota": false,
+    "evaluator": false,
+    "execution_start_generation": true,
+    "external_forward": false
+  },
+  "checks": {
+    "credential_literal_zero": true,
+    "evaluator_capability_absent": true,
+    "focused_and_parent_tests_pass": true,
+    "future_surface_pristine": true,
+    "keyless_gpt56_endpoint_reachable": true,
+    "predeclared_evaluator_endpoint_vector_absent_and_not_directly_accessed": true,
+    "protected_watchers_exact": true,
+    "protocol_valid": true,
+    "shared_api_lease_inactive": true,
+    "unexpected_privileged_field_access_zero": true
+  },
+  "created_at_unix": 1786330081,
+  "findings": [],
+  "protocol_id": "v25038_source_only_split2_vs_oneshot4_external_v1",
+  "protocol_sha256": "c1d58df7ee11f28300d2480c598bfa674c9801f8e97941fe5a941f70bf8aa051",
+  "role": "v25038_batching_external_preactivation_audit",
+  "semantic_audit": {
+    "allowed_negative_policy_or_provider_rank_accesses": [
+      "src/deepwide_agent/clients.py:565:score"
+    ],
+    "credential_literal_hits": [],
+    "dependency_closure": [
+      "scripts/deepwide_api_lease.py",
+      "scripts/run_v25038_batching_external.py",
+      "src/deepwide_agent/clients.py",
+      "src/deepwide_agent/native_search.py",
+      "src/deepwide_agent/v24257_score_first_runtime.py",
+      "src/deepwide_agent/v24259_deterministic_table_normalizer.py",
+      "src/deepwide_agent/v24263_global_model_limiter.py",
+      "src/deepwide_agent/v24267_total_fallback.py",
+      "src/deepwide_agent/v24268_keyless_batched_runtime.py",
+      "src/deepwide_agent/v24269_task_union_discovery.py",
+      "src/deepwide_agent/v24270_budget_equivalent_union.py",
+      "src/deepwide_agent/v24272_two_wave_entropy_voc.py",
+      "src/deepwide_agent/v24272_two_wave_retrieval.py",
+      "src/deepwide_agent/v24273_two_wave_task_runtime.py",
+      "src/deepwide_agent/v24275_forward_contract.py",
+      "src/deepwide_agent/v24275_hard_deadline_fetch.py",
+      "src/deepwide_agent/v24280_task_union_single_shot.py",
+      "src/deepwide_agent/v24286_visible_schema_runtime.py",
+      "src/deepwide_agent/v24287_forward_contract.py",
+      "src/deepwide_agent/v24287_hard_deadline_fetch.py",
+      "src/deepwide_agent/v24289_low_coverage_rescue.py",
+      "src/deepwide_agent/v24290_low_coverage_task_runtime.py",
+      "src/deepwide_agent/v24294_staged_reserve.py",
+      "src/deepwide_agent/v24296_staged_reserve_task_runtime.py",
+      "src/deepwide_agent/v24299_synthesis_recovery.py",
+      "src/deepwide_agent/v24308_child_exit_observability.py",
+      "src/deepwide_agent/v24310_paired_dev_runtime.py",
+      "src/deepwide_agent/v24312_deadline_reliability.py",
+      "src/deepwide_agent/v24316_deadline_search.py",
+      "src/deepwide_agent/v24468_total_wall_transport.py",
+      "src/deepwide_agent/v24630_exact220_contract.py",
+      "src/deepwide_agent/v24630_thin_backfill_search.py",
+      "src/deepwide_agent/v24839_structure_preserving_projector.py",
+      "src/deepwide_agent/v24842_atomic_table_header_closure.py",
+      "src/deepwide_agent/v24921_target_value_coverage_projector.py",
+      "src/deepwide_agent/v24924_visible_row_table_compactor.py",
+      "src/deepwide_agent/v24928_unicode_total_visible_row_compactor.py",
+      "src/deepwide_agent/v24933_contextual_record_value_projector.py",
+      "src/deepwide_agent/v24939_schema_bound_record_ledger.py",
+      "src/deepwide_agent/v24942_compact_schema_bound_record_ledger.py",
+      "src/deepwide_agent/v24945_injective_schema_signature_ledger.py",
+      "src/deepwide_agent/v24949_mutual_partial_signature_ledger.py",
+      "src/deepwide_agent/v24980_late_page_bound_projection.py",
+      "src/deepwide_agent/v24981_late_page_bound_fetch.py",
+      "src/deepwide_agent/v24985_robust_late_page_fetch.py",
+      "src/deepwide_agent/v25032_single_column_table_normalizer.py",
+      "src/deepwide_agent/v25036_source_only_hosted_search.py",
+      "src/deepwide_agent/v25038_batching_external_contract.py",
+      "src/deepwide_agent/v25038_source_only_batching.py"
+    ],
+    "dependency_closure_sha256": "9fdb5e31f072e3a6f6688f25c39f39b2e9e69aefd2ebd732c454448d7ec45b0d",
+    "evaluator_capabilities": [],
+    "privileged_field_accesses": [
+      "src/deepwide_agent/clients.py:565:score"
+    ],
+    "unexpected_privileged_field_accesses": []
+  },
+  "tests": {
+    "expected": 41,
+    "observed": 41,
+    "passed": true,
+    "suites": [
+      {
+        "expected": 10,
+        "observed": 10,
+        "output_sha256": "4f28118634b5b3901a297d74f5fff99404ce852f2284c3a08b2db0bac07ce657",
+        "passed": true,
+        "pattern": "test_v25038_batching_external.py",
+        "returncode": 0
+      },
+      {
+        "expected": 5,
+        "observed": 5,
+        "output_sha256": "182deda5caec88f60e3d258b3657f06fecdee4edc93049eedfd34bfb143311a5",
+        "passed": true,
+        "pattern": "test_v25036_source_only_hosted_search.py",
+        "returncode": 0
+      },
+      {
+        "expected": 5,
+        "observed": 5,
+        "output_sha256": "05eda6079550d372210f096084899608484df37dd6c696b543df4dc35a0a6b17",
+        "passed": true,
+        "pattern": "test_v24269_task_union_discovery.py",
+        "returncode": 0
+      },
+      {
+        "expected": 4,
+        "observed": 4,
+        "output_sha256": "f75584f6e934d965a0a04d4a055a1b9b462630dbc3762e6b701e8450ef7d10ec",
+        "passed": true,
+        "pattern": "test_v24280_task_union_single_shot.py",
+        "returncode": 0
+      },
+      {
+        "expected": 7,
+        "observed": 7,
+        "output_sha256": "7e87e1192027037a4113bcc329945f81bd8078563c89010c77e4e7ab2e443314",
+        "passed": true,
+        "pattern": "test_v24316_deadline_search.py",
+        "returncode": 0
+      },
+      {
+        "expected": 8,
+        "observed": 8,
+        "output_sha256": "f20de8164d4577d90b17bbdb1bb3c2c2b068af71a5390810d1f2ae6a306eb9da",
+        "passed": true,
+        "pattern": "test_v24468_total_wall_transport.py",
+        "returncode": 0
+      },
+      {
+        "expected": 2,
+        "observed": 2,
+        "output_sha256": "720616bc2cffb84375b2c8117590927f456452542eb36bba5b58cc53e43e8105",
+        "passed": true,
+        "pattern": "test_v24985_robust_late_page_fetch.py",
+        "returncode": 0
+      }
+    ]
+  }
+}
