@@ -279,6 +279,97 @@ def run_task(
     return validate_result(value)
 
 
+def project_terminal_failure(
+    task: Mapping[str, Any], *, failure_type: str, elapsed_seconds: float = 0.0
+) -> dict[str, Any]:
+    """Project an unexpected in-runtime exception to a fixed-denominator row.
+
+    This function performs no model, search, fetch, file, environment, or
+    evaluator effect.  It is only valid after the caller has entered the one
+    authorized ``run_task`` attempt; it records that logical planning attempt
+    with zero provider requests and freezes a visible-schema fallback table.
+    """
+
+    visible = score.validate_visible_task(task)
+    if (
+        not isinstance(failure_type, str)
+        or not failure_type
+        or len(failure_type) > 120
+        or any(character in failure_type for character in "\r\n\x00")
+        or isinstance(elapsed_seconds, bool)
+        or not isinstance(elapsed_seconds, (int, float))
+        or elapsed_seconds < 0
+    ):
+        raise ValueError("V2.50.29 terminal failure projection drifted")
+    limits = score.ScoreFirstLimits(
+        wall_seconds=240,
+        model_calls=3,
+        search_queries=4,
+        fetch_targets=10,
+        search_results_per_query=3,
+        evidence_chars=60_000,
+        page_chars=5_000,
+    )
+    plan = robust.validated_robust_plan({}, visible["question"], limits)
+    prepared = refinement.prepare_refinement(
+        visible["question"], plan["queries"], []
+    )
+    refined = refinement.select_refined_queries(
+        prepared, "", model_call_attempted=False
+    )
+    receipt = _receipt(
+        {
+            "physical_query_count": 0,
+            "physical_fetch_count": 0,
+            "model_logical_call_count": 1,
+            "model_provider_request_count": 0,
+            "model_provider_attempt_count": 0,
+            "usable_page_count": 0,
+            "evidence_characters": 0,
+            "refinement_model_call_attempted": False,
+            "refinement_strategy_applied": False,
+            "exact_legacy_second_wave_handoff": True,
+            "model_success": False,
+            "normalizer_status": "not_attempted",
+            "refinement_receipt": refined["content_free_receipt"],
+            "first_wave_receipt": None,
+            "second_wave_receipt": None,
+        }
+    )
+    zero_model = {name: 0 for name in counters._MODEL_COUNTERS}
+    zero_search = {name: 0 for name in counters._SEARCH_COUNTERS}
+    prediction = counters._fallback(plan["columns"])
+    value = {
+        "artifact_version": 1,
+        "role": ROLE,
+        "policy_id": POLICY_ID,
+        "opaque_id": visible["opaque_id"],
+        "status": "terminal",
+        "prediction": prediction,
+        "prediction_sha256": hashlib.sha256(prediction.encode()).hexdigest(),
+        "completion_kind": "best_effort_fallback",
+        "elapsed_seconds": round(float(elapsed_seconds), 6),
+        "model_success": False,
+        "failure_types": {
+            "plan": failure_type,
+            "refinement": None,
+            "retrieval": {phase: None for phase in PHASES},
+            "synthesis": None,
+        },
+        "cost": {
+            "model": zero_model,
+            "search": {phase: dict(zero_search) for phase in PHASES},
+            "system_total_tokens": 0,
+        },
+        "content_free_receipt": receipt,
+        "unexpected_runtime_exception_projected_without_retry": True,
+        "mapping_gold_category_question_type_split_evaluator_score_reward_or_historical_result_read": False,
+        "benchmark_launch_or_evaluator_authorized": False,
+    }
+    value["result_payload_sha256"] = payload_sha256(value)
+    return validate_result(value)
+
+
 def validate_result(value: Mapping[str, Any]) -> dict[str, Any]:
     copied = copy.deepcopy(dict(value))
     unsigned = dict(copied)
@@ -304,4 +395,7 @@ def validate_result(value: Mapping[str, Any]) -> dict[str, Any]:
     return copied
 
 
-__all__ = ["PHASES", "POLICY_ID", "ROLE", "run_task", "validate_receipt", "validate_result"]
+__all__ = [
+    "PHASES", "POLICY_ID", "ROLE", "project_terminal_failure", "run_task",
+    "validate_receipt", "validate_result",
+]

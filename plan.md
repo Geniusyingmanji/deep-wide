@@ -1,8 +1,10 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.77
+> 版本：6.78
 >
-> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.77 覆盖。**
+> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.78 覆盖。**
+
+> **6.78 V2.50.30 完整220冻结设计（2026-08-10）：V2.50.30 已实现新的 label-blind exact-220 contract、20 executor/8 model-slot 单进程调度器、create-exclusive 预测/receipt/freeze、官方32-worker evaluator兼容投影与固定分母异常终态。visible task vector 的 opaque-id/question SHA 分别为 `3c4b3eeb...f83665a` / `d009f9f1...bcd82b7`，与V2.48.57完全一致；forward只接受 `{opaque_id, question}` 与同轮公开页面。每题仍严格 `3 model / 4 query / 10 fetch / 60k evidence / 240s`，V2.50.29 evidence-conditioned refinement接入GPT-5.6 keyless robust late-page transport；明确不是V2.48.57 Tavily transport，不得将跨rollout差值解释成纯query treatment因果效应。递归本地import闭包审计覆盖57+ forward源，privileged/evaluator/secret findings为空；定向与父链52/52通过。单题未预期异常只在同一唯一forward内零网络投影为fallback终态，不retry/resume/补题，确保220固定分母。下一步严格分阶段冻结build/protocol/preaudit/start并推送，然后唯一执行完整220；预测与content-free audit推送前不得打开mapping/gold/evaluator。**
 
 > **6.77 V2.50.27–29 external strict GO 与 production单臂实现（2026-08-10）：V2.50.27唯一20题matched forward用时`66.999957s`，20/20 terminal；refinement attempted/applied=`18/15`，candidate/control resolved-schema pages=`32/4`，strict advantage=`14/20`，prediction change=`8/20`，双臂model success=`19/20`；每题≤`4 physical model / 6 query / 14 fetch`，shared prefix与冻结arm order全守恒。prediction以`ab49ecf5`冻结，content-free audit `46d37797` 为`audit_valid=true, findings=[]`且机制strict GO，mapping/evaluator在freeze前物理不存在。**
 

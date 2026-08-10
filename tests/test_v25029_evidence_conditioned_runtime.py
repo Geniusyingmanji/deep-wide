@@ -67,5 +67,20 @@ class EvidenceConditionedRuntimeTests(unittest.TestCase):
         changed["receipt_payload_sha256"]=payload_sha256(changed)
         with self.assertRaises(ValueError): target.validate_receipt(changed)
 
+    def test_unexpected_failure_projects_terminal_without_effect_or_retry(self):
+        result = target.project_terminal_failure(
+            {"opaque_id": "task_" + "2" * 24, "question": QUESTION},
+            failure_type="SyntheticFailure",
+            elapsed_seconds=1.25,
+        )
+        checked = target.validate_result(result)
+        receipt = checked["content_free_receipt"]
+        self.assertEqual(checked["completion_kind"], "best_effort_fallback")
+        self.assertTrue(checked["unexpected_runtime_exception_projected_without_retry"])
+        self.assertEqual(receipt["physical_query_count"], 0)
+        self.assertEqual(receipt["physical_fetch_count"], 0)
+        self.assertEqual(receipt["model_provider_request_count"], 0)
+        self.assertFalse(receipt["model_success"])
+
 
 if __name__ == "__main__": unittest.main()
