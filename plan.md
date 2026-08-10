@@ -1,8 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.78
+> 版本：6.79
 >
-> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.78 覆盖。**
+> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.79 覆盖。**
+
+> **6.79 V2.50.30 完整220结果与V2.50.31诊断（2026-08-10）：V2.50.30 唯一完整forward一次性完成`220/220`，20 executor/8 model slots，总用时`972.152450s`（约16.2分钟）；model-generated/fallback=`215/5`，refinement attempted/applied=`218/129`，physical query=`880=220×4`、fetch=`2195≤2200`，全部资源上限成立，无retry/resume/补题。预测先以`f4fe4cb2`冻结推送，content-free forward audit `d919a244` 为`findings=[]`后才打开evaluator surface；32-worker官方评测joined/official/merged均`220`、unique IDs=`220`、all worker returncode zero、无selective revaluation，post-result audit `e4889b95` 全绿。**
+
+> **全集分数：Exact=`7/220`、Composite=`0.450290836`、Entity/Row/Item/Column=`0.690909/0.220192/0.400029/0.490033`，evaluator valid=`208/220`。它比最新完整V2.49.69的`5/220 / 0.430225661`提升Exact`+2`、Composite`+0.020065`，证明keyless retrieval退化已明显恢复；但仍低于项目最佳V2.48.57的`9/220 / 0.457248978`，Exact`-2`、Composite`-0.006958`，所以不是项目最佳、无leaderboard、无SOTA。值得注意的是Column F1比V2.48.57高`+0.004641`，但Entity/Row分别低`-0.022727/-0.009547`；总token=`13,973,126`，为V2.48.57的`3.696×`，forward wall为`1.238×`。**
+
+> **V2.50.31只做post-freeze聚合诊断：相对V2.48.57逐题Composite为58 win/76 tie/86 loss，Exact gain/loss=`2/4`；相对V2.49.69为75/83/62，Exact gain/loss=`4/2`。refinement-applied 129题Composite=`0.508993`，legacy-handoff 91题=`0.367076`，但该差值受题目难度和evidence availability混杂，不是随机或因果证据。evaluator-only family审计还显示deep→wide中applied反而低于handoff (`0.189069` vs `0.329291`)，而wide→deep en/zh相反；这些family标签严禁用于runtime路由，只能促成新的visible-only matched gate。5个forward fallback全部为synthesis normalization `ValueError`；12个evaluator-invalid为10 internal error +2 out-of-range，按冻结契约计零且不得选择性重评。**
+
+> **下一优化顺序固定为：(1) 在纯synthetic/全新external matched gate中消除5个synthesis normalization fallback，保持同一model/search/fetch/token/wall上限；(2) 用question-visible schema/cardinality与same-forward evidence改善Entity/Row coverage，不使用benchmark family/category/question_type/split；(3) 对search evidence、refinement prompt和重复页面做有上限的压缩，目标先把token降至V2.48.57的≤`1.5×`且质量不退；(4) 任意refinement eligibility变化必须先做matched label-blind gate，不能凭post-hoc family关联直接改路由；(5) 只有机制、质量、成本三门同时GO才允许下一次完整220。entropy/IG继续shadow-only，V2.50.30不验证signed credit。**
 
 > **6.78 V2.50.30 完整220冻结设计（2026-08-10）：V2.50.30 已实现新的 label-blind exact-220 contract、20 executor/8 model-slot 单进程调度器、create-exclusive 预测/receipt/freeze、官方32-worker evaluator兼容投影与固定分母异常终态。visible task vector 的 opaque-id/question SHA 分别为 `3c4b3eeb...f83665a` / `d009f9f1...bcd82b7`，与V2.48.57完全一致；forward只接受 `{opaque_id, question}` 与同轮公开页面。每题仍严格 `3 model / 4 query / 10 fetch / 60k evidence / 240s`，V2.50.29 evidence-conditioned refinement接入GPT-5.6 keyless robust late-page transport；明确不是V2.48.57 Tavily transport，不得将跨rollout差值解释成纯query treatment因果效应。递归本地import闭包审计覆盖57+ forward源，privileged/evaluator/secret findings为空；定向与父链52/52通过。单题未预期异常只在同一唯一forward内零网络投影为fallback终态，不retry/resume/补题，确保220固定分母。下一步严格分阶段冻结build/protocol/preaudit/start并推送，然后唯一执行完整220；预测与content-free audit推送前不得打开mapping/gold/evaluator。**
 
