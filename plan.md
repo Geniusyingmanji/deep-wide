@@ -1,8 +1,14 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.80
+> 版本：6.81
 >
-> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.80 覆盖。**
+> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.81 覆盖。**
+
+> **6.81 V2.50.36 source-only hosted-search 开发门 NO-GO（2026-08-10）：针对V2.50.30总token中约72%来自两波hosted search、且生产只消费`web_search_call.action.sources → task-union → deterministic fetch`的事实，V2.50.36只改hosted-search request representation：medium context、模型、query、tool-required、action sources、retry/deadline/task-union均不变；不再要求每query生成700字符摘要，只要求每个exact query独立执行并最终返回`done`，output cap由双query请求的2200降至1000。实现/开发probe分别从clean pushed `a2846c6a`冻结；直接与父transport/task-union回归`39/39`通过，AST privileged-field/evaluator capability/credential literal均为空。**
+
+> **唯一开发probe复用V2.42.81已经执行过的前两个中性public-documentation query pair，明确永久排除于未来confirmation；control/candidate各2个请求，四臂并发，不fetch、不synthesis、不打开DeepWideBench manifest/mapping/gold/evaluator，也不持久化query/URL/page/provider payload/credential。结果4/4 terminal、两臂各2 HTTP calls、0 arm exception、0 unrecoverable failure、0 recursive split；candidate精确观察4/4 action query，action/union source=`25/25`，control为`21/21`且只观察2/4 exact action query。candidate相对control output token=`104/903=0.1152×`、wall-sum=`8.394/86.612=0.0969×`、source yield=`1.1905×`，但input token=`17,188/17,886=0.9610×`、total token=`17,292/18,789=0.9203×`，没有达到预注册的两项`≤0.90`成本门；control还有一次provider retry，使attempt为3对2。故严格判定 **development NO-GO**，不允许fresh confirmation、benchmark、dev64、exact220、evaluator或leaderboard。**
+
+> **结论：缩短assistant narrative能显著减少output和时延，却几乎不减少由provider搜索上下文主导的input token；V2.50.36 prompt-only路线到此停止，不得用更宽松阈值重解释或复用同两对query。下一步转向provider计费结构与query batch-width：在其余已经消费的中性query上做零fetch/零生成的`width=1/2/4` source-only阶梯，要求每条exact action query可观察、无retry/不可恢复失败，并比较每query input/total token与source-union yield；只有width=4显示显著固定调用成本摊薄且source yield不退，才设计fresh benchmark-external的one-shot 4-query versus adaptive `2+2` matched gate。完整220口径不变：最新V2.50.30为Exact `7/220`、Composite `0.450291`；项目最佳V2.48.57为`9/220 / 0.457249`，仍无leaderboard/SOTA。entropy/IG继续shadow-only、signed credit=0。**
 
 > **6.80 V2.50.32–35 单列归一化修复与 external ceiling NO-GO（2026-08-10）：V2.50.30 的5个 synthesis `ValueError` fallback 做 label-blind 聚合后，可见列宽精确为`{1列:3, 3列:1, 7列:1}`；全部已使用4 query/10 fetch且refinement applied。旧V2.42.59 `_split_pipe_row()` 对少于2格恒返回空，因此合法`| Name | / | --- | / | Alice |`无法进入normalizer；exact parser本身则接受该单列表。V2.50.32 append-only修复只新增boundary-pipe、单header/单separator/至少一完整行的严格单列路径，多表、裸行、坏行、escaped/extra pipe继续fail closed，非空事实cell改写与额外model/search/fetch恒为0。V2.50.33只把该pure normalizer接入V2.50.29 synthesis边界，planning、两波retrieval、refinement、prompt和`3 model / 4 query / 10 fetch / 60k / 240s`上限不变；synthetic matched gate中旧父fallback、新候选primary且两臂cost/effect相同，多列输出与父逐字相同。**
 
