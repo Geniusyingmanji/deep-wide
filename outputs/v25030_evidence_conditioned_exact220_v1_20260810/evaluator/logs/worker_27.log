@@ -1,0 +1,153 @@
+INFO: Pandarallel will run on 8 workers.
+INFO: Pandarallel will use Memory file system to transfer data between the main process and workers.
+{"event": "eval_start", "selected": 7, "resume_committed": 0, "committed_errors": 0, "crash_only_resume": false}
+{"event": "eval_done", "idx": 1, "instance_id": "deep2wide_result_19_四川省", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 5.184, "running_n": 1}
+{"event": "eval_done", "idx": 2, "instance_id": "deep2wide_result_26_陈奕迅", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 1.796, "running_n": 2}
+2026-08-10 00:47:53.848 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 中文名称 | 配音角色 | 原作者 | 原版名称 |
+| --- | --- | --- | --- |
+| 玻璃假面 | ...
+2026-08-10 00:47:57.336 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "玻璃假面": "玻璃假面",
+  "机兽创世纪": "机兽创世纪"
+}
+```
+2026-08-10 00:47:57.336 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 中文名称, primary_key_map {'玻璃假面': '玻璃假面', '机兽创世纪': '机兽创世纪'}
+2026-08-10 00:47:57.344 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_39_根本圭子, df_inner shape: (2, 8), answer_df shape: (10, 4), response_df shape: (3, 5)
+2026-08-10 00:48:00.363 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_39_根本圭子, col 配音角色, metric_func_name llm_judge, score [0, 0]
+2026-08-10 00:48:03.946 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_39_根本圭子, col 原作者, metric_func_name llm_judge, score [1, 0]
+2026-08-10 00:48:06.934 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_39_根本圭子, col 原版名称, metric_func_name llm_judge, score [1, 1]
+2026-08-10 00:48:06.940 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_39_根本圭子, P/R/F1 by unique_columns: 0.6667/0.2000/0.3077
+2026-08-10 00:48:06.940 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_39_根本圭子, P/R/F1 by row: 0.0000/0.0000/0.0000
+2026-08-10 00:48:06.941 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_39_根本圭子, P/R/F1 by item: 0.4167/0.1250/0.1923
+2026-08-10 00:48:06.942 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_39_根本圭子, final table score: 0.0
+{"event": "eval_done", "idx": 3, "instance_id": "deep2wide_result_39_根本圭子", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0, "f1_by_item": 0.1923076923076923, "column_f1": 0.30769230769230765, "error": null, "elapsed_seconds": 16.027, "running_n": 3}
+2026-08-10 00:48:10.585 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 名称 | 营业收入百万美元 | 所属国家 |
+| --- | --- | --- |
+| 沃尔玛 | 680,985 |  ...
+2026-08-10 00:48:11.909 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "名称": "名称",
+  "营业收入百万美元": "营业收入（百万美元）",
+  "所属国家": "所属国家"
+}
+```
+2026-08-10 00:48:11.909 | INFO     | eval.evaluation.evaluation:evaluate_single_query:172 - column map: {'名称': '名称', '营业收入百万美元': '营业收入（百万美元）', '所属国家': '所属国家'}
+2026-08-10 00:48:11.910 | INFO     | eval.evaluation.evaluation:evaluate_single_query:173 - befor mapping: Index(['名称', '营业收入百万美元', '所属国家'], dtype='object')
+2026-08-10 00:48:11.910 | INFO     | eval.evaluation.evaluation:evaluate_single_query:175 - after mapping: Index(['名称', '营业收入（百万美元）', '所属国家'], dtype='object')
+2026-08-10 00:48:17.297 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "沃尔玛": "沃尔玛公司",
+  "亚马逊": "亚马逊",
+  "国家电网有限公司": "国家电网有限公司",
+  "沙特阿美公司": "沙特阿拉伯国家石油公司",
+  "中国石油天然气集团有限公司": "中国石油天然气集团有限公司",
+  "中国石油化工集团有限公司": "中国石油化工集团有限公司",
+  "联合健康集团": "联合健康集团",
+  "苹果公司": "苹果公司",
+  "CVS Health公司": "CVS Health",
+  "伯克希尔－哈撒韦公司": "伯克希尔·哈撒韦公司"
+}
+```
+2026-08-10 00:48:17.297 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 名称, primary_key_map {'沃尔玛': '沃尔玛公司', '亚马逊': '亚马逊', '国家电网有限公司': '国家电网有限公司', '沙特阿美公司': '沙特阿拉伯国家石油公司', '中国石油天然气集团有限公司': '中国石油天然气集团有限公司', '中国石油化工集团有限公司': '中国石油化工集团有限公司', '联合健康集团': '联合健康集团', '苹果公司': '苹果公司', 'CVS Health公司': 'CVS Health', '伯克希尔－哈撒韦公司': '伯克希尔·哈撒韦公司'}
+2026-08-10 00:48:17.302 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_43_《财富》世界500强, df_inner shape: (10, 6), answer_df shape: (10, 3), response_df shape: (10, 4)
+2026-08-10 00:48:17.303 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 680985.0, target: 680985.0
+2026-08-10 00:48:17.303 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 637959.0, target: 637959.0
+2026-08-10 00:48:17.303 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 548414.0, target: 548414.4
+2026-08-10 00:48:17.303 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 480194.0, target: 480193.5
+2026-08-10 00:48:17.303 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 412645.0, target: 412645.3
+2026-08-10 00:48:17.303 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 407490.0, target: 407490.1
+2026-08-10 00:48:17.303 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 400278.0, target: 400278.0
+2026-08-10 00:48:17.303 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 391035.0, target: 391035.0
+2026-08-10 00:48:17.303 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 372809.0, target: 372809.0
+2026-08-10 00:48:17.303 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 371433.0, target: 371433.0
+2026-08-10 00:48:17.304 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_43_《财富》世界500强, col 营业收入（百万美元）, metric_func_name number_near, score [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-10 00:48:17.304 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 美国, target: 美国
+2026-08-10 00:48:17.304 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 美国, target: 美国
+2026-08-10 00:48:17.304 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-10 00:48:17.304 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 沙特阿拉伯, target: 沙特阿拉伯
+2026-08-10 00:48:17.305 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-10 00:48:17.305 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-10 00:48:17.305 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 美国, target: 美国
+2026-08-10 00:48:17.305 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 美国, target: 美国
+2026-08-10 00:48:17.305 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 美国, target: 美国
+2026-08-10 00:48:17.305 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 美国, target: 美国
+2026-08-10 00:48:17.305 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_43_《财富》世界500强, col 所属国家, metric_func_name exact_match, score [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-10 00:48:17.309 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_43_《财富》世界500强, P/R/F1 by unique_columns: 1.0000/1.0000/1.0000
+2026-08-10 00:48:17.309 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_43_《财富》世界500强, P/R/F1 by row: 1.0000/1.0000/1.0000
+2026-08-10 00:48:17.309 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_43_《财富》世界500强, P/R/F1 by item: 1.0000/1.0000/1.0000
+2026-08-10 00:48:17.311 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_43_《财富》世界500强, final table score: 1
+{"event": "eval_done", "idx": 4, "instance_id": "deep2wide_result_43_《财富》世界500强", "score": 1, "entity_acc": 1.0, "f1_by_row": 1.0, "f1_by_item": 1.0, "column_f1": 1.0, "error": null, "elapsed_seconds": 10.352, "running_n": 4}
+2026-08-10 00:48:19.435 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 排名 | 公司名称 | 总部所在地 | 处方药年销售额 | 年研发投入 |
+| --- | --- | --- | --- ...
+2026-08-10 00:48:23.674 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "辉瑞（Pfizer）": "辉瑞(Pfizer)",
+  "艾伯维（AbbVie）": "艾伯维(AbbVie)",
+  "强生（Johnson & Johnson）": "强生(Johnson & Johnson)",
+  "诺华（Novartis）": "诺华(Novartis)",
+  "默沙东（Merck & Co.）": "默沙东(Merck & Co.，在北美为默克公司)",
+  "罗氏（Roche）": "罗氏(Roche)",
+  "百时美施贵宝（Bristol Myers Squibb）": "百时美施贵宝(Bristol-Myers Squibb)",
+  "阿斯利康（AstraZeneca）": "阿斯利康(AstraZeneca)",
+  "赛诺菲（Sanofi）": "赛诺菲(Sanofi)",
+  "葛兰素史克（GSK）": "葛兰素史克(GSK)"
+}
+```
+2026-08-10 00:48:23.674 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 公司名称, primary_key_map {'辉瑞（Pfizer）': '辉瑞(Pfizer)', '艾伯维（AbbVie）': '艾伯维(AbbVie)', '强生（Johnson & Johnson）': '强生(Johnson & Johnson)', '诺华（Novartis）': '诺华(Novartis)', '默沙东（Merck & Co.）': '默沙东(Merck & Co.，在北美为默克公司)', '罗氏（Roche）': '罗氏(Roche)', '百时美施贵宝（Bristol Myers Squibb）': '百时美施贵宝(Bristol-Myers Squibb)', '阿斯利康（AstraZeneca）': '阿斯利康(AstraZeneca)', '赛诺菲（Sanofi）': '赛诺菲(Sanofi)', '葛兰素史克（GSK）': '葛兰素史克(GSK)'}
+2026-08-10 00:48:23.680 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_44_全球制药50强, df_inner shape: (10, 10), answer_df shape: (10, 5), response_df shape: (10, 6)
+2026-08-10 00:48:23.680 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1.0, target: 1.0
+2026-08-10 00:48:23.680 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 2.0, target: 2.0
+2026-08-10 00:48:23.680 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 3.0, target: 3.0
+2026-08-10 00:48:23.680 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 4.0, target: 4.0
+2026-08-10 00:48:23.680 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 5.0, target: 5.0
+2026-08-10 00:48:23.680 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 6.0, target: 6.0
+2026-08-10 00:48:23.680 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 7.0, target: 7.0
+2026-08-10 00:48:23.681 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 8.0, target: 8.0
+2026-08-10 00:48:23.681 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 9.0, target: 9.0
+2026-08-10 00:48:23.681 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 10.0, target: 10.0
+2026-08-10 00:48:23.681 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_44_全球制药50强, col 排名, metric_func_name number_near, score [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-10 00:48:23.682 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 美国纽约州纽约市, target: 美国
+2026-08-10 00:48:23.682 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 美国伊利诺伊州北芝加哥, target: 美国
+2026-08-10 00:48:23.682 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 美国新泽西州新不伦瑞克, target: 美国
+2026-08-10 00:48:23.682 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 瑞士巴塞尔, target: 瑞士
+2026-08-10 00:48:23.682 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 美国新泽西州拉威, target: 美国
+2026-08-10 00:48:23.682 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 瑞士巴塞尔, target: 瑞士
+2026-08-10 00:48:23.682 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 美国新泽西州普林斯顿, target: 美国
+2026-08-10 00:48:23.682 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 英国剑桥, target: 英国
+2026-08-10 00:48:23.682 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 法国巴黎, target: 法国
+2026-08-10 00:48:23.682 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 英国伦敦, target: 英国
+2026-08-10 00:48:23.682 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_44_全球制药50强, col 总部所在地, metric_func_name exact_match, score [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+2026-08-10 00:48:23.683 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 913.03, target: 913.03
+2026-08-10 00:48:23.683 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 561.79, target: 561.79
+2026-08-10 00:48:23.683 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 501.79, target: 501.79
+2026-08-10 00:48:23.683 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 500.79, target: 500.79
+2026-08-10 00:48:23.683 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 496.27, target: 496.27
+2026-08-10 00:48:23.683 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 479.09, target: 479.09
+2026-08-10 00:48:23.683 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 454.17, target: 454.17
+2026-08-10 00:48:23.683 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 429.98, target: 429.98
+2026-08-10 00:48:23.683 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 403.53, target: 403.53
+2026-08-10 00:48:23.683 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 382.54, target: 382.54
+2026-08-10 00:48:23.683 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_44_全球制药50强, col 处方药年销售额, metric_func_name number_near, score [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-10 00:48:23.684 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 123.81, target: 123.81
+2026-08-10 00:48:23.684 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 64.35, target: 64.35
+2026-08-10 00:48:23.684 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 141.4, target: 141.4
+2026-08-10 00:48:23.684 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 90.88, target: 90.88
+2026-08-10 00:48:23.684 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 118.42, target: 118.42
+2026-08-10 00:48:23.684 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 147.81, target: 147.81
+2026-08-10 00:48:23.684 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 100.16, target: 100.16
+2026-08-10 00:48:23.684 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 95.0, target: 95.0
+2026-08-10 00:48:23.684 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 71.56, target: 71.56
+2026-08-10 00:48:23.684 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 63.37, target: 63.37
+2026-08-10 00:48:23.684 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_44_全球制药50强, col 年研发投入, metric_func_name number_near, score [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-10 00:48:23.689 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_44_全球制药50强, P/R/F1 by unique_columns: 1.0000/1.0000/1.0000
+2026-08-10 00:48:23.689 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_44_全球制药50强, P/R/F1 by row: 0.0000/0.0000/0.0000
+2026-08-10 00:48:23.689 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_44_全球制药50强, P/R/F1 by item: 0.8000/0.8000/0.8000
+2026-08-10 00:48:23.691 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_44_全球制药50强, final table score: 0.0
+{"event": "eval_done", "idx": 5, "instance_id": "deep2wide_result_44_全球制药50强", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0, "f1_by_item": 0.8000000000000002, "column_f1": 1.0, "error": null, "elapsed_seconds": 6.359, "running_n": 5}
+{"event": "eval_done", "idx": 6, "instance_id": "deep2wide_result_46_肠炎宁片", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.105, "running_n": 6}
+{"event": "eval_done", "idx": 7, "instance_id": "deep2wide_result_55_魔法使之夜", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.047, "running_n": 7}
+SUMMARY {"n": 7, "valid_n": 7, "errors": 0, "complete": true, "judge_calls_current_process": 14, "score": 0.14285714285714285, "entity_acc": 0.42857142857142855, "precision_by_row": 0.14285714285714285, "recall_by_row": 0.14285714285714285, "f1_by_row": 0.14285714285714285, "precision_by_item": 0.3166666666666667, "recall_by_item": 0.275, "f1_by_item": 0.2846153846153846, "column_precision": 0.38095238095238093, "column_recall": 0.31428571428571433, "column_f1": 0.32967032967032966}

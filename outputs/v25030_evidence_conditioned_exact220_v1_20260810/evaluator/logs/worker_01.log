@@ -1,0 +1,143 @@
+INFO: Pandarallel will run on 8 workers.
+INFO: Pandarallel will use Memory file system to transfer data between the main process and workers.
+{"event": "eval_start", "selected": 7, "resume_committed": 0, "committed_errors": 0, "crash_only_resume": false}
+{"event": "eval_done", "idx": 1, "instance_id": "deep2wide_result_1_苏笑柏", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 4.595, "running_n": 1}
+{"event": "eval_done", "idx": 2, "instance_id": "deep2wide_result_2_成都", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.324, "running_n": 2}
+2026-08-10 00:47:53.994 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 年份 | 院校 | 专业组 | 投档线总分 | 本段人数 | 累计人数 |
+| --- | --- | --- | --- ...
+2026-08-10 00:47:58.122 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{}
+```
+2026-08-10 00:47:58.122 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 年份, primary_key_map {}
+2026-08-10 00:48:01.726 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{}
+```
+2026-08-10 00:48:01.726 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 院校, primary_key_map {}
+2026-08-10 00:48:04.728 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{}
+```
+2026-08-10 00:48:04.728 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 专业组, primary_key_map {}
+2026-08-10 00:48:04.745 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_3_北京, df_inner shape: (0, 12), answer_df shape: (1355, 6), response_df shape: (1, 9)
+2026-08-10 00:48:04.749 | ERROR    | eval.evaluation.evaluation:evaluate_single_query:401 - evaluator error: 
+Traceback (most recent call last):
+  File "/home/azureuser/workspace-gzy/zyf/deep/external/Marco-Search-Agent/Marco-DeepResearch-Family/DeepWideSearch/eval/evaluation/evaluation.py", line 315, in evaluate_single_query
+    df_inner_score[f"{col}_{metric_func_name}"] = (
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/azureuser/workspace-gzy/zyf/deep/.venv-eval/lib/python3.12/site-packages/pandas/core/frame.py", line 4312, in __setitem__
+    self._set_item_frame_value(key, value)
+  File "/home/azureuser/workspace-gzy/zyf/deep/.venv-eval/lib/python3.12/site-packages/pandas/core/frame.py", line 4470, in _set_item_frame_value
+    raise ValueError(
+ValueError: Cannot set a DataFrame with multiple columns to the single column 投档线总分_number_near
+
+{"event": "eval_done", "idx": 3, "instance_id": "deep2wide_result_3_北京", "score": null, "entity_acc": null, "f1_by_row": null, "f1_by_item": null, "column_f1": null, "error": "RuntimeError: official evaluator reported an internal error", "elapsed_seconds": 13.956, "running_n": 3}
+{"event": "eval_done", "idx": 4, "instance_id": "deep2wide_result_4_四川省阿坝藏族羌族自治州茂县", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.261, "running_n": 4}
+2026-08-10 00:48:09.480 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 时间 | 赛事名称 | 级别 | 项目 | 赛事成绩 | 1/16赛-对手 | 1/16赛比分 | 1/16赛胜负 | 1 ...
+2026-08-10 00:48:14.907 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "时间": "时间",
+  "赛事名称": "赛事名称",
+  "级别": "级别",
+  "项目": "项目",
+  "赛事成绩": "赛事成绩",
+  "1/16赛-对手": "1/16赛-对手",
+  "1/16赛比分": "1/16赛-比分",
+  "1/16赛胜负": "1/16赛-胜负",
+  "1/8赛对手": "1/8赛-对手",
+  "1/8赛比分": "1/8赛-比分",
+  "1/8赛胜负": "1/8赛-胜负",
+  "1/4赛对手": "1/4赛-对手",
+  "1/4赛比分": "1/4赛-比分",
+  "1/4赛胜负": "1/4赛-胜负",
+  "半决赛对手": "半决赛-对手",
+  "半决赛比分": "半决赛-比分",
+  "半决赛胜负": "半决赛-胜负",
+  "决赛对手": "决赛-对手",
+  "决赛比分": "决赛-比分",
+  "决赛胜负": "决赛-胜负"
+}
+```
+2026-08-10 00:48:14.907 | INFO     | eval.evaluation.evaluation:evaluate_single_query:172 - column map: {'时间': '时间', '赛事名称': '赛事名称', '级别': '级别', '项目': '项目', '赛事成绩': '赛事成绩', '1/16赛-对手': '1/16赛-对手', '1/16赛比分': '1/16赛-比分', '1/16赛胜负': '1/16赛-胜负', '1/8赛对手': '1/8赛-对手', '1/8赛比分': '1/8赛-比分', '1/8赛胜负': '1/8赛-胜负', '1/4赛对手': '1/4赛-对手', '1/4赛比分': '1/4赛-比分', '1/4赛胜负': '1/4赛-胜负', '半决赛对手': '半决赛-对手', '半决赛比分': '半决赛-比分', '半决赛胜负': '半决赛-胜负', '决赛对手': '决赛-对手', '决赛比分': '决赛-比分', '决赛胜负': '决赛-胜负'}
+2026-08-10 00:48:14.907 | INFO     | eval.evaluation.evaluation:evaluate_single_query:173 - befor mapping: Index(['时间', '赛事名称', '级别', '项目', '赛事成绩', '1/16赛-对手', '1/16赛比分', '1/16赛胜负',
+       '1/8赛对手', '1/8赛比分', '1/8赛胜负', '1/4赛对手', '1/4赛比分', '1/4赛胜负', '半决赛对手',
+       '半决赛比分', '半决赛胜负', '决赛对手', '决赛比分', '决赛胜负'],
+      dtype='object')
+2026-08-10 00:48:14.909 | INFO     | eval.evaluation.evaluation:evaluate_single_query:175 - after mapping: Index(['时间', '赛事名称', '级别', '项目', '赛事成绩', '1/16赛-对手', '1/16赛-比分', '1/16赛-胜负',
+       '1/8赛-对手', '1/8赛-比分', '1/8赛-胜负', '1/4赛-对手', '1/4赛-比分', '1/4赛-胜负',
+       '半决赛-对手', '半决赛-比分', '半决赛-胜负', '决赛-对手', '决赛-比分', '决赛-胜负'],
+      dtype='object')
+2026-08-10 00:48:17.808 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "伦敦奥运会羽毛球比赛": "2012年伦敦奥运会羽毛球赛",
+  "里约热内卢奥运会羽毛球比赛": "2016年里约奥运会羽毛球赛"
+}
+```
+2026-08-10 00:48:17.809 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 赛事名称, primary_key_map {'伦敦奥运会羽毛球比赛': '2012年伦敦奥运会羽毛球赛', '里约热内卢奥运会羽毛球比赛': '2016年里约奥运会羽毛球赛'}
+2026-08-10 00:48:18.093 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_5_林丹, df_inner shape: (2, 39), answer_df shape: (132, 20), response_df shape: (8, 21)
+2026-08-10 00:48:18.095 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 奥运会, target: 奥运会
+2026-08-10 00:48:18.095 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 奥运会, target: 奥运会
+2026-08-10 00:48:18.096 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_5_林丹, col 级别, metric_func_name exact_match, score [1.0, 1.0]
+2026-08-10 00:48:18.096 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 男子单打, target: 男单
+2026-08-10 00:48:18.096 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 男子单打, target: 男单
+2026-08-10 00:48:18.097 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_5_林丹, col 项目, metric_func_name exact_match, score [0.0, 0.0]
+2026-08-10 00:48:21.495 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_5_林丹, col 赛事成绩, metric_func_name llm_judge, score [0, 1]
+2026-08-10 00:48:24.775 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_5_林丹, col 1/16赛-对手, metric_func_name llm_judge, score [1, 1]
+2026-08-10 00:48:24.775 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: /, target: /
+2026-08-10 00:48:24.775 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: /, target: /
+2026-08-10 00:48:24.776 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_5_林丹, col 1/16赛-比分, metric_func_name exact_match, score [1.0, 1.0]
+2026-08-10 00:48:24.776 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: /, target: /
+2026-08-10 00:48:24.776 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: /, target: /
+2026-08-10 00:48:24.777 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_5_林丹, col 1/16赛-胜负, metric_func_name exact_match, score [1.0, 1.0]
+2026-08-10 00:48:28.057 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_5_林丹, col 1/8赛-对手, metric_func_name llm_judge, score [0, 1]
+2026-08-10 00:48:28.057 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 21-6、21-16, target: /
+2026-08-10 00:48:28.057 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 21-9、21-12, target: 21-9,21-12
+2026-08-10 00:48:28.058 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_5_林丹, col 1/8赛-比分, metric_func_name exact_match, score [0.0, 0.0]
+2026-08-10 00:48:28.058 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 胜, target: /
+2026-08-10 00:48:28.058 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 胜, target: 胜
+2026-08-10 00:48:28.059 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_5_林丹, col 1/8赛-胜负, metric_func_name exact_match, score [0.0, 1.0]
+2026-08-10 00:48:33.902 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_5_林丹, col 1/4赛-对手, metric_func_name llm_judge, score [1, 1]
+2026-08-10 00:48:33.902 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 21-6、11-21、21-18, target: 21-6,11-21,21-18
+2026-08-10 00:48:33.902 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 21-12、16-21、21-16, target: 21-12,16-21,21-16
+2026-08-10 00:48:33.903 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_5_林丹, col 1/4赛-比分, metric_func_name exact_match, score [0.0, 0.0]
+2026-08-10 00:48:33.903 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 胜, target: 胜
+2026-08-10 00:48:33.903 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 胜, target: 胜
+2026-08-10 00:48:33.904 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_5_林丹, col 1/4赛-胜负, metric_func_name exact_match, score [1.0, 1.0]
+2026-08-10 00:48:36.311 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_5_林丹, col 半决赛-对手, metric_func_name llm_judge, score [1, 1]
+2026-08-10 00:48:36.311 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 21-15、11-21、20-22, target: 15-21,21-11,22-20
+2026-08-10 00:48:36.311 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 21-12、21-10, target: 21-12,21-10
+2026-08-10 00:48:36.312 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_5_林丹, col 半决赛-比分, metric_func_name exact_match, score [0.0, 0.0]
+2026-08-10 00:48:36.312 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 负, target: 负
+2026-08-10 00:48:36.312 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 胜, target: 胜
+2026-08-10 00:48:36.313 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_5_林丹, col 半决赛-胜负, metric_func_name exact_match, score [1.0, 1.0]
+2026-08-10 00:48:38.606 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_5_林丹, col 决赛-对手, metric_func_name llm_judge, score [1, 1]
+2026-08-10 00:48:38.606 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: /, target: /
+2026-08-10 00:48:38.606 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 15-21、21-10、21-19, target: 15-21,21-10,21-19
+2026-08-10 00:48:38.608 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_5_林丹, col 决赛-比分, metric_func_name exact_match, score [1.0, 0.0]
+2026-08-10 00:48:38.608 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: /, target: /
+2026-08-10 00:48:38.608 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 胜, target: 胜
+2026-08-10 00:48:38.609 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_5_林丹, col 决赛-胜负, metric_func_name exact_match, score [1.0, 1.0]
+2026-08-10 00:48:38.620 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_5_林丹, P/R/F1 by unique_columns: 0.2500/0.0152/0.0286
+2026-08-10 00:48:38.620 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_5_林丹, P/R/F1 by row: 0.0000/0.0000/0.0000
+2026-08-10 00:48:38.620 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_5_林丹, P/R/F1 by item: 0.1750/0.0106/0.0200
+2026-08-10 00:48:38.625 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_5_林丹, final table score: 0.0
+{"event": "eval_done", "idx": 5, "instance_id": "deep2wide_result_5_林丹", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0, "f1_by_item": 0.02, "column_f1": 0.028571428571428574, "error": null, "elapsed_seconds": 31.578, "running_n": 5}
+{"event": "eval_done", "idx": 6, "instance_id": "deep2wide_result_6_刘玉栋", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.082, "running_n": 6}
+2026-08-10 00:48:45.113 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 时间 | 赛事 | 名次 |
+| --- | --- | --- |
+| -, 1990 | 第7届世界女子垒球锦标赛 | ...
+2026-08-10 00:48:45.143 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_7_阎芳, df_inner shape: (0, 5), answer_df shape: (5, 3), response_df shape: (5, 3)
+2026-08-10 00:48:45.144 | ERROR    | eval.evaluation.evaluation:evaluate_single_query:401 - evaluator error: 
+Traceback (most recent call last):
+  File "/home/azureuser/workspace-gzy/zyf/deep/external/Marco-Search-Agent/Marco-DeepResearch-Family/DeepWideSearch/eval/evaluation/evaluation.py", line 315, in evaluate_single_query
+    df_inner_score[f"{col}_{metric_func_name}"] = (
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/azureuser/workspace-gzy/zyf/deep/.venv-eval/lib/python3.12/site-packages/pandas/core/frame.py", line 4312, in __setitem__
+    self._set_item_frame_value(key, value)
+  File "/home/azureuser/workspace-gzy/zyf/deep/.venv-eval/lib/python3.12/site-packages/pandas/core/frame.py", line 4470, in _set_item_frame_value
+    raise ValueError(
+ValueError: Cannot set a DataFrame with multiple columns to the single column 赛事_exact_match
+
+{"event": "eval_done", "idx": 7, "instance_id": "deep2wide_result_7_阎芳", "score": null, "entity_acc": null, "f1_by_row": null, "f1_by_item": null, "column_f1": null, "error": "RuntimeError: official evaluator reported an internal error", "elapsed_seconds": 4.403, "running_n": 7}
+SUMMARY {"n": 7, "valid_n": 5, "errors": 2, "complete": false, "judge_calls_current_process": 18, "score": 0.0, "entity_acc": 0.2, "precision_by_row": 0.0, "recall_by_row": 0.0, "f1_by_row": 0.0, "precision_by_item": 0.034999999999999996, "recall_by_item": 0.0021212121212121214, "f1_by_item": 0.004, "column_precision": 0.05, "column_recall": 0.0030303030303030303, "column_f1": 0.005714285714285715}
