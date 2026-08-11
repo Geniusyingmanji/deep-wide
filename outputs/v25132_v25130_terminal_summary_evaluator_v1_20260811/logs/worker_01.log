@@ -1,0 +1,135 @@
+INFO: Pandarallel will run on 8 workers.
+INFO: Pandarallel will use Memory file system to transfer data between the main process and workers.
+{"event": "eval_start", "selected": 7, "resume_committed": 0, "committed_errors": 0, "crash_only_resume": false}
+2026-08-11 23:24:23.249 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 个人展览 | 展览地点 | 展览城市 | 展览时间 |
+| --- | --- | --- | --- |
+| 苏笑柏：绘 ...
+2026-08-11 23:24:29.447 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "苏笑柏：绘画与存在（Su Xiaobai: Painting and Being）": "繪畫與存在",
+  "苏笑柏个展": "苏笑柏个展",
+  "色彩的王朝（The Dynasty of Colours）": "色彩王朝 — 蘇笑柏個展",
+  "苏笑柏绘画展": "苏笑柏绘画作品展",
+  "大象无形——苏笑柏作品展": "大象無形 — 蘇笑柏繪畫展"
+}
+```
+2026-08-11 23:24:29.447 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 个人展览, primary_key_map {'苏笑柏：绘画与存在（Su Xiaobai: Painting and Being）': '繪畫與存在', '苏笑柏个展': '苏笑柏个展', '色彩的王朝（The Dynasty of Colours）': '色彩王朝 — 蘇笑柏個展', '苏笑柏绘画展': '苏笑柏绘画作品展', '大象无形——苏笑柏作品展': '大象無形 — 蘇笑柏繪畫展'}
+2026-08-11 23:24:30.841 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_1_苏笑柏, df_inner shape: (5, 8), answer_df shape: (29, 4), response_df shape: (9, 5)
+2026-08-11 23:24:34.601 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_1_苏笑柏, col 展览地点, metric_func_name llm_judge, score [0, 1, 1, 0, 0]
+2026-08-11 23:24:38.049 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_1_苏笑柏, col 展览城市, metric_func_name llm_judge, score [0, 1, 1, 0, 0]
+2026-08-11 23:24:38.053 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 2013-08-01 00:00:00, target: 2002-08-01 00:00:00
+2026-08-11 23:24:38.056 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 1.0 msg date near, response: 2007-08-01 00:00:00, target: 2007-08-01 00:00:00
+2026-08-11 23:24:38.058 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 2015-08-01 00:00:00, target: 2010-08-01 00:00:00
+2026-08-11 23:24:38.060 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 2018-08-01 00:00:00, target: 2011-08-01 00:00:00
+2026-08-11 23:24:38.086 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: Sep 14, 2023–Oct 28, 2023, target: 2014-08-01
+2026-08-11 23:24:38.087 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_1_苏笑柏, col 展览时间, metric_func_name date_near, score [0.0, 1.0, 0.0, 0.0, 0.0]
+2026-08-11 23:24:38.092 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_1_苏笑柏, P/R/F1 by unique_columns: 0.5556/0.1724/0.2632
+2026-08-11 23:24:38.092 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_1_苏笑柏, P/R/F1 by row: 0.1111/0.0345/0.0526
+2026-08-11 23:24:38.092 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_1_苏笑柏, P/R/F1 by item: 0.2778/0.0862/0.1316
+2026-08-11 23:24:38.093 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_1_苏笑柏, final table score: 0.0
+{"event": "eval_done", "idx": 1, "instance_id": "deep2wide_result_1_苏笑柏", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.05263157894736842, "f1_by_item": 0.13157894736842107, "column_f1": 0.26315789473684215, "error": null, "elapsed_seconds": 19.793, "running_n": 1}
+{"event": "eval_done", "idx": 2, "instance_id": "deep2wide_result_2_成都", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 6.83, "running_n": 2}
+2026-08-11 23:24:47.736 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 年份 | 院校 | 专业组 | 投档线总分 | 本段人数 | 累计人数 |
+| --- | --- | --- | --- ...
+2026-08-11 23:24:49.019 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "2024": "2024",
+  "2023": "2023",
+  "2022": "2022",
+  "2021": "2021",
+  "2020": "2020"
+}
+```
+2026-08-11 23:24:49.019 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 年份, primary_key_map {'2024': '2024', '2023': '2023', '2022': '2022', '2021': '2021', '2020': '2020'}
+2026-08-11 23:24:54.539 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{}
+```
+2026-08-11 23:24:54.539 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 院校, primary_key_map {}
+2026-08-11 23:24:56.507 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{}
+```
+2026-08-11 23:24:56.507 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 专业组, primary_key_map {}
+2026-08-11 23:24:56.522 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_3_北京, df_inner shape: (0, 12), answer_df shape: (1355, 6), response_df shape: (5, 9)
+2026-08-11 23:24:56.525 | ERROR    | eval.evaluation.evaluation:evaluate_single_query:401 - evaluator error: 
+Traceback (most recent call last):
+  File "/home/azureuser/workspace-gzy/zyf/deep/external/Marco-Search-Agent/Marco-DeepResearch-Family/DeepWideSearch/eval/evaluation/evaluation.py", line 315, in evaluate_single_query
+    df_inner_score[f"{col}_{metric_func_name}"] = (
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/azureuser/workspace-gzy/zyf/deep/.venv-eval/lib/python3.12/site-packages/pandas/core/frame.py", line 4312, in __setitem__
+    self._set_item_frame_value(key, value)
+  File "/home/azureuser/workspace-gzy/zyf/deep/.venv-eval/lib/python3.12/site-packages/pandas/core/frame.py", line 4470, in _set_item_frame_value
+    raise ValueError(
+ValueError: Cannot set a DataFrame with multiple columns to the single column 投档线总分_number_near
+
+{"event": "eval_done", "idx": 3, "instance_id": "deep2wide_result_3_北京", "score": null, "entity_acc": null, "f1_by_row": null, "f1_by_item": null, "column_f1": null, "error": "RuntimeError: official evaluator reported an internal error", "elapsed_seconds": 11.552, "running_n": 3}
+{"event": "eval_done", "idx": 4, "instance_id": "deep2wide_result_4_四川省阿坝藏族羌族自治州茂县", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 1.001, "running_n": 4}
+2026-08-11 23:24:59.083 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 时间 | 赛事名称 | 级别 | 项目 | 赛事成绩 | 1/16赛-对手 | 1/16赛比分 | 1/16赛胜负 | 1 ...
+2026-08-11 23:25:02.786 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "时间": "时间",
+  "赛事名称": "赛事名称",
+  "级别": "级别",
+  "项目": "项目",
+  "赛事成绩": "赛事成绩",
+  "1/16赛-对手": "1/16赛-对手",
+  "1/16赛比分": "1/16赛-比分",
+  "1/16赛胜负": "1/16赛-胜负",
+  "1/8赛对手": "1/8赛-对手",
+  "1/8赛比分": "1/8赛-比分",
+  "1/8赛胜负": "1/8赛-胜负",
+  "1/4赛对手": "1/4赛-对手",
+  "1/4赛比分": "1/4赛-比分",
+  "1/4赛胜负": "1/4赛-胜负",
+  "半决赛对手": "半决赛-对手",
+  "半决赛比分": "半决赛-比分",
+  "半决赛胜负": "半决赛-胜负",
+  "决赛对手": "决赛-对手",
+  "决赛比分": "决赛-比分",
+  "决赛胜负": "决赛-胜负"
+}
+```
+2026-08-11 23:25:02.786 | INFO     | eval.evaluation.evaluation:evaluate_single_query:172 - column map: {'时间': '时间', '赛事名称': '赛事名称', '级别': '级别', '项目': '项目', '赛事成绩': '赛事成绩', '1/16赛-对手': '1/16赛-对手', '1/16赛比分': '1/16赛-比分', '1/16赛胜负': '1/16赛-胜负', '1/8赛对手': '1/8赛-对手', '1/8赛比分': '1/8赛-比分', '1/8赛胜负': '1/8赛-胜负', '1/4赛对手': '1/4赛-对手', '1/4赛比分': '1/4赛-比分', '1/4赛胜负': '1/4赛-胜负', '半决赛对手': '半决赛-对手', '半决赛比分': '半决赛-比分', '半决赛胜负': '半决赛-胜负', '决赛对手': '决赛-对手', '决赛比分': '决赛-比分', '决赛胜负': '决赛-胜负'}
+2026-08-11 23:25:02.786 | INFO     | eval.evaluation.evaluation:evaluate_single_query:173 - befor mapping: Index(['时间', '赛事名称', '级别', '项目', '赛事成绩', '1/16赛-对手', '1/16赛比分', '1/16赛胜负',
+       '1/8赛对手', '1/8赛比分', '1/8赛胜负', '1/4赛对手', '1/4赛比分', '1/4赛胜负', '半决赛对手',
+       '半决赛比分', '半决赛胜负', '决赛对手', '决赛比分', '决赛胜负'],
+      dtype='object')
+2026-08-11 23:25:02.787 | INFO     | eval.evaluation.evaluation:evaluate_single_query:175 - after mapping: Index(['时间', '赛事名称', '级别', '项目', '赛事成绩', '1/16赛-对手', '1/16赛-比分', '1/16赛-胜负',
+       '1/8赛-对手', '1/8赛-比分', '1/8赛-胜负', '1/4赛-对手', '1/4赛-比分', '1/4赛-胜负',
+       '半决赛-对手', '半决赛-比分', '半决赛-胜负', '决赛-对手', '决赛-比分', '决赛-胜负'],
+      dtype='object')
+2026-08-11 23:25:11.526 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+[
+  {"世界羽毛球锦标赛": "2010年世界羽毛球锦标赛"},
+  {"广州亚洲运动会羽毛球比赛": "第十六届亚运会羽毛球赛｜单项"},
+  {"世界羽毛球锦标赛": "2011年世界羽毛球锦标赛"},
+  {"伦敦奥运会羽毛球比赛": "2012年伦敦奥运会羽毛球赛"},
+  {"世界羽毛球锦标赛": "2013年世界羽毛球锦标赛"},
+  {"仁川亚洲运动会羽毛球比赛": "第十七届亚运会羽毛球赛｜单项"},
+  {"世界羽毛球锦标赛": "2015年世界羽毛球锦标赛"},
+  {"里约奥运会羽毛球比赛": "2016年里约奥运会羽毛球赛"},
+  {"世界羽毛球锦标赛": "2017年世界羽毛球锦标赛"},
+  {"世界羽毛球锦标赛": "2018年世界羽毛球锦标赛"},
+  {"雅加达亚洲运动会羽毛球比赛": "第十八届亚运会羽毛球赛｜团体"},
+  {"世界羽毛球锦标赛": "2019年世界羽毛球锦标赛"}
+]
+```
+2026-08-11 23:25:11.526 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 赛事名称, primary_key_map {}
+2026-08-11 23:25:11.703 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_5_林丹, df_inner shape: (0, 39), answer_df shape: (132, 20), response_df shape: (13, 21)
+2026-08-11 23:25:11.705 | ERROR    | eval.evaluation.evaluation:evaluate_single_query:401 - evaluator error: 
+Traceback (most recent call last):
+  File "/home/azureuser/workspace-gzy/zyf/deep/external/Marco-Search-Agent/Marco-DeepResearch-Family/DeepWideSearch/eval/evaluation/evaluation.py", line 315, in evaluate_single_query
+    df_inner_score[f"{col}_{metric_func_name}"] = (
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/azureuser/workspace-gzy/zyf/deep/.venv-eval/lib/python3.12/site-packages/pandas/core/frame.py", line 4312, in __setitem__
+    self._set_item_frame_value(key, value)
+  File "/home/azureuser/workspace-gzy/zyf/deep/.venv-eval/lib/python3.12/site-packages/pandas/core/frame.py", line 4470, in _set_item_frame_value
+    raise ValueError(
+ValueError: Cannot set a DataFrame with multiple columns to the single column 级别_exact_match
+
+{"event": "eval_done", "idx": 5, "instance_id": "deep2wide_result_5_林丹", "score": null, "entity_acc": null, "f1_by_row": null, "f1_by_item": null, "column_f1": null, "error": "RuntimeError: official evaluator reported an internal error", "elapsed_seconds": 14.14, "running_n": 5}
+{"event": "eval_done", "idx": 6, "instance_id": "deep2wide_result_6_刘玉栋", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.572, "running_n": 6}
+{"event": "eval_done", "idx": 7, "instance_id": "deep2wide_result_7_阎芳", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 4.49, "running_n": 7}
+SUMMARY {"n": 7, "valid_n": 5, "errors": 2, "complete": false, "judge_calls_current_process": 15, "score": 0.0, "entity_acc": 0.2, "precision_by_row": 0.02222222222222222, "recall_by_row": 0.006896551724137931, "f1_by_row": 0.010526315789473684, "precision_by_item": 0.05555555555555556, "recall_by_item": 0.017241379310344827, "f1_by_item": 0.026315789473684216, "column_precision": 0.11111111111111112, "column_recall": 0.034482758620689655, "column_f1": 0.05263157894736843}

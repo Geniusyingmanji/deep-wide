@@ -1,0 +1,58 @@
+INFO: Pandarallel will run on 8 workers.
+INFO: Pandarallel will use Memory file system to transfer data between the main process and workers.
+{"event": "eval_start", "selected": 7, "resume_committed": 0, "committed_errors": 0, "crash_only_resume": false}
+2026-08-11 23:24:21.350 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 论文题目 | 作者 | 发表时间 | 发表刊物 | 关键词 | DOI号 | 基金资助 |
+| --- | --- | - ...
+2026-08-11 23:24:22.315 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "生成式人工智能的法律定位与分层治理": "生成式人工智能的法律定位与分层治理"
+}
+```
+2026-08-11 23:24:22.315 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 论文题目, primary_key_map {'生成式人工智能的法律定位与分层治理': '生成式人工智能的法律定位与分层治理'}
+2026-08-11 23:24:22.324 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - wide2deep_ws_zh_077, df_inner shape: (1, 14), answer_df shape: (26, 7), response_df shape: (1, 8)
+2026-08-11 23:24:25.236 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_077, col 作者, metric_func_name llm_judge, score [1]
+2026-08-11 23:24:25.236 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 2023/07/15, target: 2023/7/15
+2026-08-11 23:24:25.237 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_077, col 发表时间, metric_func_name exact_match, score [0.0]
+2026-08-11 23:24:26.306 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_077, col 发表刊物, metric_func_name llm_judge, score [1]
+2026-08-11 23:24:30.245 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_077, col 关键词, metric_func_name llm_judge, score [0]
+2026-08-11 23:24:30.246 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: nan, target: nan
+2026-08-11 23:24:30.246 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_077, col doi号, metric_func_name exact_match, score [1.0]
+2026-08-11 23:24:32.049 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_077, col 基金资助, metric_func_name llm_judge, score [0]
+2026-08-11 23:24:32.057 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - wide2deep_ws_zh_077, P/R/F1 by unique_columns: 1.0000/0.0385/0.0741
+2026-08-11 23:24:32.058 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - wide2deep_ws_zh_077, P/R/F1 by row: 0.0000/0.0000/0.0000
+2026-08-11 23:24:32.058 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - wide2deep_ws_zh_077, P/R/F1 by item: 0.5714/0.0220/0.0423
+2026-08-11 23:24:32.060 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - wide2deep_ws_zh_077, final table score: 0.0
+{"event": "eval_done", "idx": 1, "instance_id": "wide2deep_ws_zh_077", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0, "f1_by_item": 0.04232804232804233, "column_f1": 0.07407407407407407, "error": null, "elapsed_seconds": 13.713, "running_n": 1}
+{"event": "eval_done", "idx": 2, "instance_id": "wide2deep_ws_zh_093", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 0.886, "running_n": 2}
+{"event": "eval_done", "idx": 3, "instance_id": "wide2deep_ws_zh_097", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.392, "running_n": 3}
+{"event": "eval_done", "idx": 4, "instance_id": "wide2deep_ws_en_001", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 1.027, "running_n": 4}
+{"event": "eval_done", "idx": 5, "instance_id": "wide2deep_ws_en_003", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.556, "running_n": 5}
+{"event": "eval_done", "idx": 6, "instance_id": "wide2deep_ws_en_004", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.538, "running_n": 6}
+2026-08-11 23:24:45.440 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| Restaurant | Main Cuisine Style | Address |
+| --- | --- | --- ...
+2026-08-11 23:24:47.271 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "Alléno Paris au Pavillon Ledoyen": "Alléno Paris au Pavillon Ledoyen",
+  "Arpège": "Arpège",
+  "Épicure": "Épicure",
+  "Kei": "Kei",
+  "L’Ambroisie": "L'Ambroisie",
+  "Le Cinq": "Le Cinq",
+  "Le Gabriel": "Le Gabriel-La Reserve Paris",
+  "Le Pré Catelan": "Le Pré Catelan",
+  "Pierre Gagnaire": "Pierre Gagnaire",
+  "Plénitude – Cheval Blanc Paris": "Plénitude"
+}
+```
+2026-08-11 23:24:47.271 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: restaurant, primary_key_map {'Alléno Paris au Pavillon Ledoyen': 'Alléno Paris au Pavillon Ledoyen', 'Arpège': 'Arpège', 'Épicure': 'Épicure', 'Kei': 'Kei', 'L’Ambroisie': "L'Ambroisie", 'Le Cinq': 'Le Cinq', 'Le Gabriel': 'Le Gabriel-La Reserve Paris', 'Le Pré Catelan': 'Le Pré Catelan', 'Pierre Gagnaire': 'Pierre Gagnaire', 'Plénitude – Cheval Blanc Paris': 'Plénitude'}
+2026-08-11 23:24:47.276 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - wide2deep_ws_en_021, df_inner shape: (10, 6), answer_df shape: (10, 3), response_df shape: (10, 4)
+2026-08-11 23:24:51.286 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_021, col maincuisinestyle, metric_func_name llm_judge, score [1, 1, 1, 1, 0, 1, 1, 0, 1, 1]
+2026-08-11 23:24:55.587 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_021, col address, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+2026-08-11 23:24:55.590 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - wide2deep_ws_en_021, P/R/F1 by unique_columns: 1.0000/1.0000/1.0000
+2026-08-11 23:24:55.590 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - wide2deep_ws_en_021, P/R/F1 by row: 0.8000/0.8000/0.8000
+2026-08-11 23:24:55.590 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - wide2deep_ws_en_021, P/R/F1 by item: 0.9333/0.9333/0.9333
+2026-08-11 23:24:55.591 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - wide2deep_ws_en_021, final table score: 0.0
+{"event": "eval_done", "idx": 7, "instance_id": "wide2deep_ws_en_021", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.8000000000000002, "f1_by_item": 0.9333333333333333, "column_f1": 1.0, "error": null, "elapsed_seconds": 14.022, "running_n": 7}
+SUMMARY {"n": 7, "valid_n": 7, "errors": 0, "complete": true, "judge_calls_current_process": 15, "score": 0.0, "entity_acc": 0.2857142857142857, "precision_by_row": 0.1142857142857143, "recall_by_row": 0.1142857142857143, "f1_by_row": 0.11428571428571431, "precision_by_item": 0.21496598639455783, "recall_by_item": 0.13647305075876506, "f1_by_item": 0.13938019652305367, "column_precision": 0.2857142857142857, "column_recall": 0.14835164835164835, "column_f1": 0.15343915343915343}
