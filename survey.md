@@ -1,10 +1,22 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
-> 检索截止：2026-08-07 14:10 UTC；项目证据更新：2026-08-11 UTC（至 V2.50.48）
+> 检索截止：2026-08-07 14:10 UTC；项目证据更新：2026-08-11 UTC（至 V2.50.58）
 >
 > 结论强度：这是基于公开文献的 novelty audit，不是“没有任何相关工作”的证明。2026 年文献多为尚未同行评审的 arXiv 预印本，文中将预印本结果视为作者报告，而非独立复现事实。
 
-## 2026-08-11 实验更新：query batching 降低成本，但未通过质量门
+## 2026-08-11 实验更新：结构化表示收益没有迁移到普通网页或完整 220
+
+V2.50.48 给出了当前最强的表示层正结果，但后续实验限定了它的适用范围。在20个 fresh PyPI任务上，control与candidate逐题共享同一个exact JSON snapshot、问题、12k evidence、GPT-5.6调用次数和arm-balanced顺序。control只接收raw prefix，candidate前置同一current-release record中的project identity、version、earliest upload date与Requires-Python。20/20任务在模型调用前通过parser readiness，candidate改变20/20 prediction。固定20分母的post-freeze评价得到Exact `0→20/20`、Item F1 `0.483333→1.0`和Composite `0.870833→1.0`；Entity、Row与Column均保持1，且两臂均无invalid或fallback。[`results/v25048_atomic_pypi_result_v1_20260811.json`](results/v25048_atomic_pypi_result_v1_20260811.json)与[`results/v25048_atomic_pypi_postresult_audit_v1_20260811.json`](results/v25048_atomic_pypi_postresult_audit_v1_20260811.json)支持“同一结构化authority中的identity/target/value/coherence绑定改善了这组外部任务”，但没有检验普通网页可达性、DeepWideBench迁移或entropy/IG credit。
+
+普通HTML bridge没有复现这一机制。V2.50.50虽然完成20/20 CRAN页面fetch并形成20个identity-bound records和60个bound fields，但parser-ready为0；V2.50.51和V2.50.52分别只有19/20和17/20 ready，均按预注册完整性门停止。V2.50.53保留固定20分母并无条件运行两臂，最终18题ready、2题paired fallback、40个terminal prediction，但prediction change为`0/20`，所以没有开放外部evaluator。[`results/v25053_cran_unconditional_forward_result_v1_20260811.json`](results/v25053_cran_unconditional_forward_result_v1_20260811.json)只支持机制NO-GO。V2.50.54进一步确认V2.50.30的1534个生产页面中，196题在5k prefix以后仍有内容，合计`23,595,703`字符，但旧identity-required projector的natural exposure仍为0。[`results/v25054_representation_opportunity_diagnosis_v1_20260811.json`](results/v25054_representation_opportunity_diagnosis_v1_20260811.json)把剩余瓶颈定位到页面自描述身份与target-field-value record的绑定，而不是简单缺少后缀字符。
+
+V2.50.57随后把page-self representation接到生产fetch seam，并完成一次严格label-blind、固定220分母、failure-as-zero的冷运行。forward得到220/220 terminal predictions，其中214个model-generated、6个fallback，耗时`1058.769355s`；32-worker evaluator对全部220题各评一次，209 valid、11 error-as-zero，耗时`275.247622s`。完整指标为Exact `6/220=2.7273%`、Entity `0.686364`、Row/Item/Column F1 `0.230564/0.398949/0.483962`和Composite `0.449960`。该结果低于V2.50.30的`7/220 / 0.450291`和项目单轮最佳V2.48.57的`9/220 / 0.457249`，也没有Avg@4、leaderboard或SOTA证据。[`results/v25057_page_self_exact220_result_r2_20260811.json`](results/v25057_page_self_exact220_result_r2_20260811.json)与[`results/v25057_page_self_exact220_postresult_audit_r2_20260811.json`](results/v25057_page_self_exact220_postresult_audit_r2_20260811.json)给出结果与闭环审计。
+
+全集运行本身没有触发所测试的表示。1523个投影页面在5k prefix以后共有`30,104,588`字符，但natural mechanism exposure、changed evidence page和positive signed credit均为0，所有页面都精确回退到parent raw prefix。V2.50.57与V2.50.30只有12/220 prediction hash相同，208/220不同；Exact和Composite差值分别为`-1`与`-0.000331233`。由于treatment exposure为0，V2.50.58只能把这些差异归为独立冷搜索与模型rollout变化，不能归因于page-self表示。[`results/v25058_v25057_zero_exposure_diagnosis_v1_20260811.json`](results/v25058_v25057_zero_exposure_diagnosis_v1_20260811.json)因此禁止用同一binding重复220，并要求下一extractor先在全新普通网页外部门证明非零natural exposure、matched prediction change和post-freeze outer utility。
+
+这条证据链也收紧了信息熵与credit assignment的主张。结构化记录表示可以得到正的机制级outer credit，但本轮没有让entropy/IG选择动作或分配credit；普通网页和完整220又都没有产生可归因的observation。因而当前entropy/IG signed credit仍为0。下一实验可以用四层开放世界风险或expected information gain预测动作优先级，但credit的正负必须来自同状态删除、替换、suffix intervention，或与开发工件隔离的终局评价。单纯的后缀长度、局部熵下降、parser readiness或prediction change均不足以获得正credit。
+
+## 2026-08-11 实验更新：PyPI 结构化表示通过外部门，但尚未迁移到普通网页
 
 V2.50.47–48 已把 V2.50.46 提出的“改变证据表示而非继续加重 prompt”假设做成完整 matched external gate。20 个 fresh PyPI 任务的两臂共享同一次 exact JSON response、同一问题、GPT-5.6、一次调用、12k evidence 和 arm-balanced order；control 只看 raw prefix，candidate 从完整响应确定性前置 `project identity / current version / current-release earliest upload date / Requires-Python` 的同记录绑定。atomic readiness 在模型前得到 20/20 fetch、20/20 parser-ready、80/80 fields、1 Unknown；之后两臂各 20/20 model success、0 fallback，candidate 自然改变 20/20 prediction，超过预注册 8 题机制门。
 
