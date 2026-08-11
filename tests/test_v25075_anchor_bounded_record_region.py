@@ -111,20 +111,36 @@ class AnchorBoundedRecordRegionTests(unittest.TestCase):
             wrong_identity["content_free_receipt"]["rejected_row_identity_binding_count"], 1
         )
 
-    def test_repeated_field_or_value_inside_region_fails_closed(self) -> None:
+    def test_repeated_field_or_value_uses_unique_nearest_pair(self) -> None:
+        repeated = "Latest version: 2.4.0 " + CONTENT
         repeated_label = run(
             proposal(),
-            pages=[{"url": "https://example.test/x", "content": CONTENT + " Latest version: archived"}],
+            pages=[{"url": "https://example.test/x", "content": repeated}],
         )
+        self.assertEqual(repeated_label["content_free_receipt"]["verified_region_record_count"], 1)
+        repeated_date = CONTENT.replace(
+            "Latest release date: 2026-08-01",
+            "Latest release date: 2026-08-01 Latest release date: 2026-08-01",
+        )
+        repeated_value = run(proposal(), pages=[{"url": "https://example.test/x", "content": repeated_date}])
+        self.assertEqual(repeated_value["content_free_receipt"]["verified_region_record_count"], 1)
+
+    def test_tied_minimum_label_value_pairs_fail_closed(self) -> None:
+        content = CONTENT.replace(
+            "Latest release date: 2026-08-01",
+            "Latest release date: 2026-08-01 / Latest release date: 2026-08-01",
+        )
+        value = proposal()
+        value["records"][0]["fields"] = [
+            {
+                "column": "Latest release date (YYYY-MM-DD)",
+                "source_field": "Latest release date",
+                "value": "2026-08-01",
+            }
+        ]
+        result = run(value, pages=[{"url": "https://example.test/x", "content": content}])
         self.assertEqual(
-            repeated_label["content_free_receipt"]["rejected_nonunique_field_coordinate_count"], 1
-        )
-        repeated_value = run(
-            proposal(),
-            pages=[{"url": "https://example.test/x", "content": CONTENT + " 2026-08-01"}],
-        )
-        self.assertEqual(
-            repeated_value["content_free_receipt"]["rejected_nonunique_field_coordinate_count"], 1
+            result["content_free_receipt"]["rejected_nonunique_field_coordinate_count"], 1
         )
 
     def test_field_span_over_cap_fails_closed(self) -> None:

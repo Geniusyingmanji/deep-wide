@@ -5,8 +5,8 @@ field quote.  In production this was safe but rarely reachable: eighteen of
 twenty valid proposal calls returned an empty record list.  This append-only
 successor asks for one unique same-page anchor and field label/value pairs.
 The verifier deterministically derives one bounded region around the anchor,
-requires every label and value to occur uniquely inside that region, and
-constructs the minimal contiguous field quote itself.
+requires one unique minimum-span label/value coordinate inside that region,
+and constructs the contiguous field quote itself.
 
 The component is pure.  It receives caller-owned visible inputs, same-forward
 fetched pages, one model response, and control evidence.  It has no file,
@@ -56,7 +56,8 @@ Return exactly one JSON object and no prose:
 {"records":[{"page_ordinal":1,"record_anchor":"one unique contiguous verbatim passage containing the row identity","row_identity":"verbatim identity inside record_anchor","fields":[{"column":"exact requested non-key column","source_field":"verbatim source label","value":"verbatim value"}]}]}
 
 The verifier derives a bounded same-page region around record_anchor. Every
-source_field and value must occur uniquely and verbatim inside that region.
+source_field and value must form one unique minimum-span verbatim coordinate
+inside that region.
 Do not copy field quotes and do not repeat record_anchor in each field. Never
 splice pages, identities, records, releases, dates, or entities. Never
 paraphrase anchors, labels, identities, or values. Use an empty records list
@@ -219,6 +220,37 @@ def _bounded_region(content: str, anchor: str) -> tuple[str, int, int] | None:
     return region, start, end
 
 
+def _unique_minimum_field_quote(
+    region: str, source_field: str, value: str
+) -> str | None:
+    """Return the only shortest source/value quote, otherwise fail closed."""
+
+    sources = _phrase_spans(region, source_field)
+    values = _phrase_spans(region, value)
+    candidates: list[tuple[int, int, str]] = []
+    for source_start, source_end in sources:
+        for value_start, value_end in values:
+            start = min(source_start, value_start)
+            end = max(source_end, value_end)
+            if end - start <= MAXIMUM_FIELD_QUOTE_CHARACTERS:
+                candidates.append((start, end, region[start:end]))
+    if not candidates:
+        return None
+    minimum = min(end - start for start, end, _quote in candidates)
+    shortest = [item for item in candidates if item[1] - item[0] == minimum]
+    if len(shortest) != 1:
+        return None
+    quote = shortest[0][2]
+    if (
+        not quote
+        or region.count(quote) != 1
+        or not parent._contains_phrase(quote, source_field)
+        or not parent._contains_phrase(quote, value)
+    ):
+        return None
+    return quote
+
+
 class CounterLike(defaultdict[str, int]):
     def __init__(self) -> None:
         super().__init__(int)
@@ -269,20 +301,19 @@ def _verified_records(
                 break
             source_spans = _phrase_spans(region, str(field["source_field"]))
             value_spans = _phrase_spans(region, str(field["value"]))
-            if len(source_spans) != 1 or len(value_spans) != 1:
-                failure = "rejected_nonunique_field_coordinate_count"
-                break
-            quote_start = min(source_spans[0][0], value_spans[0][0])
-            quote_end = max(source_spans[0][1], value_spans[0][1])
-            quote = region[quote_start:quote_end]
-            if (
-                not quote
-                or len(quote) > MAXIMUM_FIELD_QUOTE_CHARACTERS
-                or region.count(quote) != 1
-                or not parent._contains_phrase(quote, field["source_field"])
-                or not parent._contains_phrase(quote, field["value"])
-            ):
-                failure = "rejected_field_span_count"
+            quote = _unique_minimum_field_quote(
+                region, str(field["source_field"]), str(field["value"])
+            )
+            if quote is None:
+                if not source_spans or not value_spans or all(
+                    max(source_end, value_end) - min(source_start, value_start)
+                    > MAXIMUM_FIELD_QUOTE_CHARACTERS
+                    for source_start, source_end in source_spans
+                    for value_start, value_end in value_spans
+                ):
+                    failure = "rejected_field_span_count"
+                else:
+                    failure = "rejected_nonunique_field_coordinate_count"
                 break
             seen_columns.add(column_key)
             fields.append(
@@ -454,7 +485,7 @@ _TRUE_FLAGS = (
     "one_unique_verbatim_record_anchor_per_record_required",
     "row_identity_must_be_inside_record_anchor",
     "record_region_is_deterministic_same_page_and_bounded",
-    "each_field_label_and_value_is_unique_inside_record_region",
+    "each_field_quote_has_unique_minimum_span_inside_record_region",
     "field_quote_is_deterministically_derived_not_model_proposed",
     "field_quote_need_not_contain_record_anchor",
     "visible_target_column_requires_unique_lexical_source_label_binding",
