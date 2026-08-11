@@ -1,0 +1,114 @@
+{
+  "artifact_version": 1,
+  "role": "v24791_exact220_result",
+  "protocol_id": "v25057_page_self_evidence_conditioned_keyless_exact220_r2",
+  "created_at_unix": 1786449604,
+  "status": "exact220_single_rollout_complete",
+  "selected": 220,
+  "failure_as_zero": true,
+  "exact220_prediction_freeze_before_evaluator": true,
+  "metrics": {
+    "test_156": {
+      "selected": 156,
+      "evaluator_valid": 147,
+      "evaluator_invalid_or_not_run": 9,
+      "whole_table_successes": 2,
+      "entity_acc": 0.6923076923076923,
+      "f1_by_row": 0.21756987726646765,
+      "f1_by_item": 0.3824750844529127,
+      "column_f1": 0.4654529118431869,
+      "quality_composite": 0.43945139146756484,
+      "score": 0.01282051282051282
+    },
+    "all_220": {
+      "selected": 220,
+      "evaluator_valid": 209,
+      "evaluator_invalid_or_not_run": 11,
+      "whole_table_successes": 6,
+      "entity_acc": 0.6863636363636364,
+      "f1_by_row": 0.23056421534257857,
+      "f1_by_item": 0.39894904255637653,
+      "column_f1": 0.4839615187455933,
+      "quality_composite": 0.4499596032520462,
+      "score": 0.02727272727272727,
+      "model_generated_tables": 214,
+      "fallback_tables": 6,
+      "system_total_tokens": 14302160
+    }
+  },
+  "efficiency": {
+    "forward_wall_seconds": 1058.769355,
+    "evaluator_parallel_wall_seconds": 275.247622,
+    "evaluator_workers": 32
+  },
+  "comparisons": {
+    "v24857_best": {
+      "reference_result_sha256": "a9e51c5c479a79e46f74574dac905bc607032be501b8a21a696106172f59f1d9",
+      "whole_table_success_delta": -3,
+      "score_delta": -0.013636363636363637,
+      "quality_composite_delta": -0.007289374996079845
+    },
+    "v25030_latest_complete": {
+      "reference_result_sha256": "2d5aa05c1005b79a33bcafe4a2d16cb614df67e2091006de9716ae75cc1703b6",
+      "whole_table_success_delta": -1,
+      "score_delta": -0.0045454545454545435,
+      "quality_composite_delta": -0.0003312325898634505
+    }
+  },
+  "provenance": {
+    "evaluator_protocol_sha256": "5c895913cfa6cb3265aed6cee41c1dfefd09399e31e1b44e895deb492f60a7d6",
+    "forward_result_sha256": "b1a074983eb4313046859b87c83c7cdd1a3369b18e73337af221fb03eb928e7b",
+    "forward_audit_sha256": "6f6e8fadc3798f43408a91f596c5d653a5c28e2d9e88721f5475e85c76687e86",
+    "prediction_freeze_sha256": "d8792fb1273109a480578543d321f1bafb9d60e335fda3ab20e08818fb76d093",
+    "mapping_sha256": "3d6f8f71e8136f5a3fe9385e2511e50a367e220dd84e790ba3c7dec975ab5d86",
+    "query_data_sha256": "4dd18df4ab8d166f14a1458f884fd8e0652f970764e245e868d75947daa5e5cf",
+    "answer_corpus_manifest_sha256": "5ddc76dd9e9fa4a7080f84e824de6230c62101d2375dee72a0f508b7cfa4ec7e",
+    "evaluator_source_manifest_sha256": "2829e4808226bd35e4e312f024ceded3a9bc2b1e923493e06503278e382ba061",
+    "judge": {
+      "max_output_tokens": 8192,
+      "max_retries": 12,
+      "model": "gpt-5.6-sol",
+      "proxy_url": "http://127.0.0.1:9878/responses",
+      "reasoning_effort": "low",
+      "timeout_seconds": 600
+    },
+    "recovery_policy": {
+      "canonical_result_file_atomic_replace_per_task": true,
+      "committed_rows_must_be_exact_prediction_prefix": true,
+      "committed_success_or_error_is_terminal": true,
+      "explicit_resume_required": true,
+      "selective_error_retry_allowed": false
+    },
+    "merged_official_eval_results_sha256": "ac4026de742aba075ff4c6cdd7e74648692aea163c2cd1b371826a42d78cc02e",
+    "parallel_merge_attestation_sha256": "209a104ee579df707b9225aec9f94c953611ebad0e250a9d368c83b2d3106079",
+    "conservative_summary_sha256": "9d858108ed91da51e1f75178715276c274af9adc23d48cba3005597b5cddca42"
+  },
+  "source_policy": {
+    "runtime_boundary": [
+      "opaque_id",
+      "question"
+    ],
+    "mapping_opened_only_after_exact220_prediction_freeze_and_pushed_audit": true,
+    "same_run_evaluator_feedback_used_for_forward_or_prediction_selection": false,
+    "fixed_public_exact220_task_set_reexecuted": true,
+    "new_or_disjoint_task_population_claimed": false,
+    "cross_version_public_benchmark_feedback_overfitting_remains_a_limitation": true
+  },
+  "authorization": {
+    "additional_rollout_or_avg4": false,
+    "selective_retry_or_revaluation": false,
+    "leaderboard_submission": false,
+    "sota_claim": false
+  },
+  "claims": {
+    "public_exact220_single_rollout": true,
+    "cold_execution": true,
+    "unseen_or_held_out": false,
+    "new_or_disjoint_task_population": false,
+    "cross_version_public_benchmark_feedback_overfitting_remains_a_limitation": true,
+    "avg_at_4": false,
+    "leaderboard_submitted": false,
+    "sota": false
+  },
+  "result_payload_sha256": "de372e29f89bd72f583bd5b48a45815e12392d8bc82c11ffb1698f7df964c2fa"
+}

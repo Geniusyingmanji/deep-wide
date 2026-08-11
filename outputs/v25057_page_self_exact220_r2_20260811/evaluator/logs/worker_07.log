@@ -1,0 +1,162 @@
+INFO: Pandarallel will run on 8 workers.
+INFO: Pandarallel will use Memory file system to transfer data between the main process and workers.
+{"event": "eval_start", "selected": 7, "resume_committed": 0, "committed_errors": 0, "crash_only_resume": false}
+2026-08-11 11:55:35.804 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 角色名字 | 身高 | 生日 | 出生地 |
+| --- | --- | --- | --- |
+| 小仓朝日／大藏游星  ...
+2026-08-11 11:55:39.676 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "小仓朝日／大藏游星": "小仓朝日",
+  "樱小路露娜": "樱小路露娜",
+  "尤尔希尔·弗勒尔·让梅尔": "尤希尔·弗洛·让梅尔",
+  "花之宫瑞穗": "花之宫瑞穗",
+  "柳之濑凑": "柳之濑凑"
+}
+```
+2026-08-11 11:55:39.676 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 角色名字, primary_key_map {'小仓朝日／大藏游星': '小仓朝日', '樱小路露娜': '樱小路露娜', '尤尔希尔·弗勒尔·让梅尔': '尤希尔·弗洛·让梅尔', '花之宫瑞穗': '花之宫瑞穗', '柳之濑凑': '柳之濑凑'}
+2026-08-11 11:55:42.323 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_58_《近月少女的礼仪》, df_inner shape: (5, 8), answer_df shape: (12, 4), response_df shape: (5, 5)
+2026-08-11 11:55:42.325 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 164.0, target: 164.0
+2026-08-11 11:55:42.325 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 145.0, target: 145.0
+2026-08-11 11:55:42.325 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 161.0, target: 154.0
+2026-08-11 11:55:42.325 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 157.0, target: 157.0
+2026-08-11 11:55:42.325 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 160.0, target: 160.0
+2026-08-11 11:55:42.326 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_58_《近月少女的礼仪》, col 身高, metric_func_name number_near, score [1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-11 11:55:42.379 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 1994-01-07, target: 45663
+2026-08-11 11:55:42.432 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 1994-03-21, target: 45743
+2026-08-11 11:55:42.485 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 1994-08-02, target: 45770
+2026-08-11 11:55:42.537 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 1994-05-04, target: 45870
+2026-08-11 11:55:42.590 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 1994-10-02, target: 45699
+2026-08-11 11:55:42.591 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_58_《近月少女的礼仪》, col 生日, metric_func_name date_near, score [0.0, 0.0, 0.0, 0.0, 0.0]
+2026-08-11 11:55:48.404 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_58_《近月少女的礼仪》, col 出生地, metric_func_name llm_judge, score [1, 1, 0, 1, 0]
+2026-08-11 11:55:48.410 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_58_《近月少女的礼仪》, P/R/F1 by unique_columns: 1.0000/0.4167/0.5882
+2026-08-11 11:55:48.410 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_58_《近月少女的礼仪》, P/R/F1 by row: 0.0000/0.0000/0.0000
+2026-08-11 11:55:48.410 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_58_《近月少女的礼仪》, P/R/F1 by item: 0.6500/0.2708/0.3824
+2026-08-11 11:55:48.412 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_58_《近月少女的礼仪》, final table score: 0.0
+{"event": "eval_done", "idx": 1, "instance_id": "deep2wide_result_58_《近月少女的礼仪》", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0, "f1_by_item": 0.3823529411764705, "column_f1": 0.5882352941176471, "error": null, "elapsed_seconds": 17.872, "running_n": 1}
+{"event": "eval_done", "idx": 2, "instance_id": "deep2wide_result_59_《魔女之泉》", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.552, "running_n": 2}
+2026-08-11 11:55:54.741 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 中文名称 | 外文名称 | 移动速度 |
+| --- | --- | --- |
+| 普通僵尸 | Zombie | 约  ...
+2026-08-11 11:56:07.959 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "普通僵尸": "普通僵尸",
+  "旗帜僵尸": "旗子僵尸",
+  "路障僵尸": "路障僵尸",
+  "撑杆僵尸": "撑杆僵尸",
+  "铁桶僵尸": "铁桶僵尸",
+  "读报僵尸": "报纸僵尸",
+  "铁栅门僵尸": "铁门僵尸",
+  "橄榄球僵尸": "橄榄球僵尸",
+  "舞王僵尸": "舞王僵尸",
+  "伴舞僵尸": "伴舞僵尸",
+  "鸭子救生圈僵尸": "鸭子救生圈僵尸",
+  "潜水僵尸": "潜水僵尸",
+  "雪橇车僵尸小队": "雪橇车僵尸",
+  "海豚骑士僵尸": "海豚骑士僵尸",
+  "玩偶匣僵尸": "玩偶匣僵尸",
+  "气球僵尸": "气球僵尸",
+  "矿工僵尸": "矿工僵尸",
+  "跳跳僵尸": "蹦蹦僵尸",
+  "僵尸雪人": "僵尸雪人",
+  "蹦极僵尸": "蹦极僵尸",
+  "扶梯僵尸": "梯子僵尸",
+  "投石车僵尸": "投石车僵尸",
+  "伽刚特尔": "巨人僵尸",
+  "小鬼僵尸": "小鬼僵尸",
+  "僵王博士": "埃德加·乔治·僵王博士"
+}
+```
+2026-08-11 11:56:07.960 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 中文名称, primary_key_map {'普通僵尸': '普通僵尸', '旗帜僵尸': '旗子僵尸', '路障僵尸': '路障僵尸', '撑杆僵尸': '撑杆僵尸', '铁桶僵尸': '铁桶僵尸', '读报僵尸': '报纸僵尸', '铁栅门僵尸': '铁门僵尸', '橄榄球僵尸': '橄榄球僵尸', '舞王僵尸': '舞王僵尸', '伴舞僵尸': '伴舞僵尸', '鸭子救生圈僵尸': '鸭子救生圈僵尸', '潜水僵尸': '潜水僵尸', '雪橇车僵尸小队': '雪橇车僵尸', '海豚骑士僵尸': '海豚骑士僵尸', '玩偶匣僵尸': '玩偶匣僵尸', '气球僵尸': '气球僵尸', '矿工僵尸': '矿工僵尸', '跳跳僵尸': '蹦蹦僵尸', '僵尸雪人': '僵尸雪人', '蹦极僵尸': '蹦极僵尸', '扶梯僵尸': '梯子僵尸', '投石车僵尸': '投石车僵尸', '伽刚特尔': '巨人僵尸', '小鬼僵尸': '小鬼僵尸', '僵王博士': '埃德加·乔治·僵王博士'}
+2026-08-11 11:56:07.968 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_61_植物大战僵尸, df_inner shape: (25, 6), answer_df shape: (33, 3), response_df shape: (26, 4)
+2026-08-11 11:56:13.954 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_61_植物大战僵尸, col 外文名称, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+2026-08-11 11:56:13.955 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 4.7, target: 4.7
+2026-08-11 11:56:13.955 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 3.7, target: 3.7
+2026-08-11 11:56:13.955 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 4.7, target: 4.7
+2026-08-11 11:56:13.955 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 2.5, target: 2.5
+2026-08-11 11:56:13.955 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 4.7, target: 4.7
+2026-08-11 11:56:13.955 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 4.7, target: 4.7
+2026-08-11 11:56:13.955 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 2.5, target: 2.5
+2026-08-11 11:56:13.955 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 2.5, target: 1.2
+2026-08-11 11:56:13.955 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 4.7, target: 5.5
+2026-08-11 11:56:13.955 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 4.7, target: 4.7
+2026-08-11 11:56:13.955 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 4.7, target: 4.0
+2026-08-11 11:56:13.955 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 1.2, target: 3.0
+2026-08-11 11:56:13.955 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 2.5, target: 0.8
+2026-08-11 11:56:13.955 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 2.5, target: 2.2
+2026-08-11 11:56:13.955 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 2.5, target: 2.5
+2026-08-11 11:56:13.955 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1.2, target: 1.2
+2026-08-11 11:56:13.955 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 4.7, target: 5.0
+2026-08-11 11:56:13.955 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 2.5, target: 2.5
+2026-08-11 11:56:13.956 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 4.7, target: 4.7
+2026-08-11 11:56:13.956 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 4.7, target: 1.9
+2026-08-11 11:56:13.956 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number equal, response: NULL, target: NULL
+2026-08-11 11:56:13.956 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number equal, response: NULL, target: NULL
+2026-08-11 11:56:13.956 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 2.5, target: 1.9
+2026-08-11 11:56:13.956 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 2.5, target: 2.0
+2026-08-11 11:56:13.956 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not convertable, response: 4.7, target: None
+2026-08-11 11:56:13.956 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_61_植物大战僵尸, col 移动速度, metric_func_name number_near, score [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0]
+2026-08-11 11:56:13.963 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_61_植物大战僵尸, P/R/F1 by unique_columns: 0.9615/0.7576/0.8475
+2026-08-11 11:56:13.963 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_61_植物大战僵尸, P/R/F1 by row: 0.5385/0.4242/0.4746
+2026-08-11 11:56:13.963 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_61_植物大战僵尸, P/R/F1 by item: 0.8077/0.6364/0.7119
+2026-08-11 11:56:13.965 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_61_植物大战僵尸, final table score: 0.0
+{"event": "eval_done", "idx": 3, "instance_id": "deep2wide_result_61_植物大战僵尸", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.47457627118644075, "f1_by_item": 0.7118644067796609, "column_f1": 0.8474576271186441, "error": null, "elapsed_seconds": 22.956, "running_n": 3}
+{"event": "eval_done", "idx": 4, "instance_id": "deep2wide_result_63_常春藤联盟", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 3.12, "running_n": 4}
+2026-08-11 11:56:20.024 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 名字 | 出生日期 | 军衔 | 祖籍 |
+| --- | --- | --- | --- |
+| 李长才 | -, 19 ...
+2026-08-11 11:56:23.923 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{}
+```
+2026-08-11 11:56:23.923 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 名字, primary_key_map {}
+2026-08-11 11:56:23.960 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_64_哈尔滨工业大学, df_inner shape: (0, 8), answer_df shape: (12, 4), response_df shape: (9, 5)
+2026-08-11 11:56:23.961 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 1.0 msg date near, response: nan, target: nan
+2026-08-11 11:56:23.962 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_64_哈尔滨工业大学, col 出生日期, metric_func_name date_near, score []
+2026-08-11 11:56:23.965 | ERROR    | eval.evaluation.evaluation:evaluate_single_query:401 - evaluator error: 
+Traceback (most recent call last):
+  File "/home/azureuser/workspace-gzy/zyf/deep/external/Marco-Search-Agent/Marco-DeepResearch-Family/DeepWideSearch/eval/evaluation/evaluation.py", line 315, in evaluate_single_query
+    df_inner_score[f"{col}_{metric_func_name}"] = (
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/azureuser/workspace-gzy/zyf/deep/.venv-eval/lib/python3.12/site-packages/pandas/core/frame.py", line 4312, in __setitem__
+    self._set_item_frame_value(key, value)
+  File "/home/azureuser/workspace-gzy/zyf/deep/.venv-eval/lib/python3.12/site-packages/pandas/core/frame.py", line 4470, in _set_item_frame_value
+    raise ValueError(
+ValueError: Cannot set a DataFrame with multiple columns to the single column 军衔_exact_match
+
+{"event": "eval_done", "idx": 5, "instance_id": "deep2wide_result_64_哈尔滨工业大学", "score": null, "entity_acc": null, "f1_by_row": null, "f1_by_item": null, "column_f1": null, "error": "RuntimeError: official evaluator reported an internal error", "elapsed_seconds": 6.843, "running_n": 5}
+{"event": "eval_done", "idx": 6, "instance_id": "deep2wide_result_66_中国科学技术大学", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 4.663, "running_n": 6}
+2026-08-11 11:56:32.894 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 时间 | 荣誉表彰 | 授予单位 | 任教单位 | 社会任职 |
+| --- | --- | --- | --- | -- ...
+2026-08-11 11:56:38.368 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "名誉博士（Doctoris Honoris Causa）": "莫斯科大学荣誉博士",
+  "Richtmyer Memorial Award（里克特迈耶纪念奖）": "里克特迈耶纪念奖",
+  "Julius Edgar Lilienfeld Prize（朱利叶斯·埃德加·利林菲尔德奖）": "朱利叶斯·埃德加·利连菲尔德奖",
+  "Karl Schwarzschild Medal（卡尔·史瓦西奖章）": "卡尔·史瓦西奖章",
+  "当选外籍院士": "俄罗斯科学院外籍院士",
+  "当选会士（Elected Member）": "美国哲学学会会士",
+  "名誉理学博士": "犹他州立大学名誉理学博士"
+}
+```
+2026-08-11 11:56:38.368 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 荣誉表彰, primary_key_map {'名誉博士（Doctoris Honoris Causa）': '莫斯科大学荣誉博士', 'Richtmyer Memorial Award（里克特迈耶纪念奖）': '里克特迈耶纪念奖', 'Julius Edgar Lilienfeld Prize（朱利叶斯·埃德加·利林菲尔德奖）': '朱利叶斯·埃德加·利连菲尔德奖', 'Karl Schwarzschild Medal（卡尔·史瓦西奖章）': '卡尔·史瓦西奖章', '当选外籍院士': '俄罗斯科学院外籍院士', '当选会士（Elected Member）': '美国哲学学会会士', '名誉理学博士': '犹他州立大学名誉理学博士'}
+2026-08-11 11:56:38.392 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_67_基普·索恩, df_inner shape: (7, 10), answer_df shape: (7, 5), response_df shape: (8, 6)
+2026-08-11 11:56:38.394 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 1981-08-01 00:00:00, target: 2045-08-11 00:00:00
+2026-08-11 11:56:38.396 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 1992-08-01 00:00:00, target: 2034-08-11 00:00:00
+2026-08-11 11:56:38.399 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 1996-08-01 00:00:00, target: 2011-08-30 00:00:00
+2026-08-11 11:56:38.402 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 1996-08-01 00:00:00, target: 2011-08-30 00:00:00
+2026-08-11 11:56:38.404 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 1999-08-01 00:00:00, target: 2011-08-27 00:00:00
+2026-08-11 11:56:38.406 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 1999-08-01 00:00:00, target: 2011-08-27 00:00:00
+2026-08-11 11:56:38.408 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 2000-08-01 00:00:00, target: 2011-08-26 00:00:00
+2026-08-11 11:56:38.410 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_67_基普·索恩, col 时间, metric_func_name date_near, score [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+2026-08-11 11:56:43.506 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_67_基普·索恩, col 授予单位, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 1]
+2026-08-11 11:56:48.216 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_67_基普·索恩, col 任教单位, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 1]
+2026-08-11 11:56:51.761 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_67_基普·索恩, col 社会任职, metric_func_name llm_judge, score [1, 0, 1, 1, 1, 1, 0]
+2026-08-11 11:56:51.766 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_67_基普·索恩, P/R/F1 by unique_columns: 0.8750/1.0000/0.9333
+2026-08-11 11:56:51.766 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_67_基普·索恩, P/R/F1 by row: 0.0000/0.0000/0.0000
+2026-08-11 11:56:51.766 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_67_基普·索恩, P/R/F1 by item: 0.6500/0.7429/0.6933
+2026-08-11 11:56:51.768 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_67_基普·索恩, final table score: 0.0
+{"event": "eval_done", "idx": 7, "instance_id": "deep2wide_result_67_基普·索恩", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0, "f1_by_item": 0.6933333333333334, "column_f1": 0.9333333333333333, "error": null, "elapsed_seconds": 23.101, "running_n": 7}
+SUMMARY {"n": 7, "valid_n": 6, "errors": 1, "complete": false, "judge_calls_current_process": 16, "score": 0.0, "entity_acc": 0.5, "precision_by_row": 0.08974358974358974, "recall_by_row": 0.0707070707070707, "f1_by_row": 0.07909604519774012, "precision_by_item": 0.3512820512820513, "recall_by_item": 0.2750090187590188, "f1_by_item": 0.29792511354824414, "column_precision": 0.4727564102564103, "column_recall": 0.3623737373737374, "column_f1": 0.3948377090949375}
