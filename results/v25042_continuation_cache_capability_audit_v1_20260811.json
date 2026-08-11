@@ -1,0 +1,143 @@
+{
+  "artifact_version": 1,
+  "audit_payload_sha256": "541790dff357cb6ebbd461d49825670dce4f8dfe189622c3d0ca3d77c36bb2d8",
+  "authorization": {
+    "dev64_exact220_evaluator_leaderboard_or_sota": false,
+    "previous_response_id_cost_gate": false,
+    "prompt_cache_effect_probe": false,
+    "resume_shared_page_quality_mainline": true,
+    "search_cost_continuation_or_cache_mainline": false
+  },
+  "created_at_unix": 1786435578,
+  "decision": {
+    "checks": {
+      "active_client_has_no_cache_or_continuation_request_fields": true,
+      "active_client_has_no_cache_read_write_accounting": true,
+      "historical_cache_observation_is_ineligible_negative_control": true,
+      "local_proxy_schema_not_discoverable_at_standard_routes": true,
+      "official_cache_cost_requires_reads_and_writes": true,
+      "official_cache_requires_eligible_exact_prefix": true,
+      "official_previous_response_history_is_billed": true
+    },
+    "failed_checks": [],
+    "previous_response_id_input_token_savings_hypothesis": "no_go",
+    "prompt_cache_effect_probe_authorized": false,
+    "prompt_cache_net_cost_savings_established": false,
+    "prompt_cache_support_on_local_proxy_established": false,
+    "quality_mainline_should_resume": true,
+    "reason": "previous_response_id preserves context but does not remove billed history; prompt caching remains unestablished locally and current clients neither request it nor account for cache writes",
+    "search_cost_continuation_or_cache_mainline_authorized": false
+  },
+  "git_head": "c144a793747f23f0bab4a7bd1bcf29aacaa43f86",
+  "historical_usage_evidence": {
+    "all_requests_below_official_1024_token_cache_minimum": true,
+    "cached_input_tokens": 0,
+    "does_not_test_cache_eligible_prefix": true,
+    "input_tokens": 5888,
+    "maximum_input_tokens_per_request": 212,
+    "minimum_input_tokens_per_request": 156,
+    "outcomes": 32,
+    "path": "results/v24279_synthesis_factorial_result_v1_20260803.json",
+    "sha256": "fc3fec71bb33b932f6191609d0a1ce34c7281cacd920696e2617120180ab0781"
+  },
+  "local_proxy_schema_probe": {
+    "discoverable_schema_found": false,
+    "model_search_fetch_or_evaluator_calls": 0,
+    "request_count": 2,
+    "requests": [
+      {
+        "error": null,
+        "http_status": 404,
+        "method": "GET",
+        "path": "/openapi.json"
+      },
+      {
+        "error": null,
+        "http_status": 404,
+        "method": "OPTIONS",
+        "path": "/responses"
+      }
+    ],
+    "response_bodies_persisted_or_hashed": false
+  },
+  "local_source_evidence": {
+    "active_cache_usage_fields_all_absent": true,
+    "active_request_field_occurrences": {
+      "src/deepwide_agent/native_search.py": {
+        "previous_response_id": 0,
+        "prompt_cache_breakpoint": 0,
+        "prompt_cache_key": 0,
+        "prompt_cache_options": 0
+      },
+      "src/deepwide_agent/v25036_source_only_hosted_search.py": {
+        "previous_response_id": 0,
+        "prompt_cache_breakpoint": 0,
+        "prompt_cache_key": 0,
+        "prompt_cache_options": 0
+      },
+      "src/deepwide_agent/v25041_adaptive_single_request.py": {
+        "previous_response_id": 0,
+        "prompt_cache_breakpoint": 0,
+        "prompt_cache_key": 0,
+        "prompt_cache_options": 0
+      }
+    },
+    "active_request_fields_all_absent": true,
+    "active_source_sha256": {
+      "src/deepwide_agent/native_search.py": "cd0d6bfccf4b345b11274558bdcffb39d279697d183242baf811dfd56ac71e50",
+      "src/deepwide_agent/v25036_source_only_hosted_search.py": "b5c882d491d51fa4a228ff5d8de5889d14ea57a555930c46609e273c2861709f",
+      "src/deepwide_agent/v25041_adaptive_single_request.py": "da014673471985e145bde0fe55e1332e7aeac0af12eb0fbcd1d7caf65eb8a731"
+    },
+    "active_usage_field_occurrences": {
+      "src/deepwide_agent/native_search.py": {
+        "cache_write_tokens": 0,
+        "cached_tokens": 0,
+        "input_tokens_details": 0
+      },
+      "src/deepwide_agent/v25036_source_only_hosted_search.py": {
+        "cache_write_tokens": 0,
+        "cached_tokens": 0,
+        "input_tokens_details": 0
+      },
+      "src/deepwide_agent/v25041_adaptive_single_request.py": {
+        "cache_write_tokens": 0,
+        "cached_tokens": 0,
+        "input_tokens_details": 0
+      }
+    },
+    "historical_parser_reads_cache_write_tokens": false,
+    "historical_parser_reads_cached_tokens": true,
+    "historical_usage_field_occurrences": {
+      "cache_write_tokens": 0,
+      "cached_tokens": 1,
+      "input_tokens_details": 2
+    },
+    "historical_usage_parser_sha256": "54cfd67d0c7ddf05013ce7f5c458349d8fc177f03f3af42432c08ee92b3244ef"
+  },
+  "official_documentation": {
+    "claims": {
+      "cache_usage_read_field": "usage.input_tokens_details.cached_tokens",
+      "cache_usage_write_field": "usage.input_tokens_details.cache_write_tokens",
+      "gpt56_cache_exact_prefix_at_breakpoint": true,
+      "gpt56_cache_write_uncached_input_rate_multiplier": 1.25,
+      "gpt56_minimum_cacheable_prefix_tokens": 1024,
+      "previous_response_id_all_prior_input_tokens_billed": true,
+      "previous_response_id_carries_context": true,
+      "prompt_cache_key_improves_matching_but_does_not_guarantee_hit": true
+    },
+    "retrieved_at_utc": "2026-08-11",
+    "sources": {
+      "conversation_state": "https://developers.openai.com/api/docs/guides/conversation-state#passing-context-from-the-previous-response",
+      "prompt_caching": "https://developers.openai.com/api/docs/guides/prompt-caching"
+    }
+  },
+  "role": "v25042_continuation_cache_capability_audit",
+  "source_policy": {
+    "benchmark_manifest_question_mapping_gold_category_question_type_split_score_or_reward_read": false,
+    "credential_read_print_persist_hash_or_emit": false,
+    "entropy_or_information_gain_assigns_signed_credit": false,
+    "local_schema_discovery_http_requests": 2,
+    "model_search_fetch_evaluator_or_benchmark_calls": 0,
+    "query_url_page_prediction_or_provider_payload_persisted": false
+  }
+}
