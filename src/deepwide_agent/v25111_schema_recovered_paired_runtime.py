@@ -68,6 +68,12 @@ class ExactVisibleSchemaStageModel(DeadlineAwareGlobalModelSlotLimiter):
     def visible_schema_column_count(self) -> int:
         return len(self._columns)
 
+    def remaining_effect_seconds(self) -> float:
+        return float(self._bounded.remaining_effect_seconds())
+
+    def receipt(self) -> dict[str, Any]:
+        return self._bounded.receipt()
+
     def complete(
         self,
         system: str,

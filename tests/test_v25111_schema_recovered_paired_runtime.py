@@ -98,6 +98,12 @@ class SchemaRecoveredRuntimeTests(unittest.TestCase):
             searches = {
                 phase: SyntheticRobustSearch(QUESTION, "111") for phase in target.PHASES
             }
+            wrapped = target.ExactVisibleSchemaStageModel(model, QUESTION)
+            with mock.patch.object(
+                model, "remaining_effect_seconds", return_value=123.0
+            ), mock.patch.object(model, "receipt", return_value={"delegated": True}):
+                self.assertEqual(wrapped.remaining_effect_seconds(), 123.0)
+                self.assertEqual(wrapped.receipt(), {"delegated": True})
             result = target.run_paired_task(
                 {"opaque_id": "task_0123456789abcdef01234567", "question": QUESTION},
                 model=model,
