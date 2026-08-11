@@ -1,10 +1,16 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
-> 检索截止：2026-08-07 14:10 UTC；项目证据更新：2026-08-11 UTC（至 V2.50.40）
+> 检索截止：2026-08-07 14:10 UTC；项目证据更新：2026-08-11 UTC（至 V2.50.46）
 >
 > 结论强度：这是基于公开文献的 novelty audit，不是“没有任何相关工作”的证明。2026 年文献多为尚未同行评审的 arXiv 预印本，文中将预印本结果视为作者报告，而非独立复现事实。
 
 ## 2026-08-11 实验更新：query batching 降低成本，但未通过质量门
+
+V2.50.43进一步比较了最新V2.50.30与项目最佳V2.48.57的冻结输出形态。V2.50.30总行数多105，Unknown value cell多1,019，但Exact仍从9降到7；两轮只有2题表宽变化。4个Exact loss与2个gain几乎都发生在相同行数和表宽下，因此当前瓶颈主要是同形表格里的事实选择，而不是简单少输出行。这个结果也再次否定“Unknown越少或coverage越满就越好”：强制completion可能把不确定性换成错误事实，不能获得正entropy/task credit。该分析不输出题目、任务身份、prediction、gold或逐题metric，见[`results/v25043_v25030_v24857_output_shape_diagnosis_v1_20260811.json`](results/v25043_v25030_v24857_output_shape_diagnosis_v1_20260811.json)。
+
+V2.50.44–46随后检验了一个预算中性的合成假设。candidate prompt要求每个非Unknown cell由exact row identity、field、value与同一source record联合支持，并禁止把旧版本日期、邻近实体或不同记录拼接为“latest”答案；冲突时保留Unknown。V2.50.45在20个fresh PyPI任务上让两臂共享同一次`2+2`检索、同一187个usable page集合和逐字相同的12k evidence，各只做一次GPT-5.6 synthesis。运行20/20 terminal、0 fallback、无retry或transport failure，但candidate仅改变2/20 prediction，低于预注册4题门，因此没有打开gold/evaluator。
+
+冻结后counts-only诊断显示，这两个变化都只是把一个非Unknown cell改成Unknown；没有行列变化、Unknown→事实或事实→不同事实，candidate模型token还高`1.055678×`。所以更严格的自然语言约束只带来弱abstention，没有形成可识别的fact correction机制。下一步应改变同一页面的证据表示：先确定性构造identity-bound compact record，再让相同模型合成；不能继续把prompt强度、页面数量或主观熵下降当作质量代理。V2.50.45/46工件为[`results/v25045_evidence_constrained_forward_result_v1_20260811.json`](results/v25045_evidence_constrained_forward_result_v1_20260811.json)、[`results/v25045_evidence_constrained_forward_audit_v1_20260811.json`](results/v25045_evidence_constrained_forward_audit_v1_20260811.json)和[`results/v25046_v25045_weak_abstention_diagnosis_v1_20260811.json`](results/v25046_v25045_weak_abstention_diagnosis_v1_20260811.json)。这些结果不是DeepWideBench提分，当前最佳仍是V2.48.57的`9/220 / 0.457249`。
 
 V2.50.42用官方文档和本地零模型审计封闭了两个容易混淆的成本假设。OpenAI的Responses文档说明，`previous_response_id`能延续上下文，但链中历史input tokens仍计费；它不是删除第二次请求历史input的机制。[Conversation state](https://developers.openai.com/api/docs/guides/conversation-state#passing-context-from-the-previous-response) Prompt caching则可降低精确重复prefix的读取成本，但GPT-5.6要求至少1,024-token exact prefix，cache write按uncached input的`1.25×`计，且需要同时报告`cached_tokens`与`cache_write_tokens`才能判断净成本。[Prompt caching](https://developers.openai.com/api/docs/guides/prompt-caching)
 
