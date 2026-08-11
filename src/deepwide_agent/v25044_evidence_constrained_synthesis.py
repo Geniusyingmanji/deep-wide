@@ -111,9 +111,7 @@ def synthesis_prompt(
         "arm": arm,
         "column_count": len(required),
         "evidence_characters": len(supplied),
-        "evidence_sha256_equal_to_caller_supplied": hashlib.sha256(
-            supplied.encode("utf-8")
-        ).hexdigest(),
+        "evidence_bytes_preserved_from_caller": True,
         "candidate_treatment_applied": arm == CANDIDATE_ARM,
         "candidate_requires_exact_row_identity_field_value_binding": arm
         == CANDIDATE_ARM,
@@ -171,7 +169,7 @@ def validate_receipt(value: Mapping[str, Any]) -> dict[str, Any]:
         "arm",
         "column_count",
         "evidence_characters",
-        "evidence_sha256_equal_to_caller_supplied",
+        "evidence_bytes_preserved_from_caller",
         *true_for_candidate,
         *false_flags,
         "receipt_payload_sha256",
@@ -189,8 +187,7 @@ def validate_receipt(value: Mapping[str, Any]) -> dict[str, Any]:
         or isinstance(copied.get("evidence_characters"), bool)
         or not isinstance(copied.get("evidence_characters"), int)
         or not 1 <= copied["evidence_characters"] <= 120_000
-        or not isinstance(copied.get("evidence_sha256_equal_to_caller_supplied"), str)
-        or len(copied["evidence_sha256_equal_to_caller_supplied"]) != 64
+        or copied.get("evidence_bytes_preserved_from_caller") is not True
         or any(copied.get(name) is not candidate for name in true_for_candidate)
         or any(copied.get(name) is not False for name in false_flags)
         or seal != payload_sha256(unsigned)

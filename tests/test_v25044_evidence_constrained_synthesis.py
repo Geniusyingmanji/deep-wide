@@ -32,6 +32,7 @@ class V25044EvidenceConstrainedSynthesisTests(unittest.TestCase):
             self.assertIn(QUESTION, user)
             self.assertIn(EVIDENCE, user)
             self.assertEqual(receipt["evidence_characters"], len(EVIDENCE))
+            self.assertTrue(receipt["evidence_bytes_preserved_from_caller"])
             self.assertFalse(
                 receipt[
                     "evidence_bytes_parsed_ranked_truncated_reordered_or_modified"
@@ -76,6 +77,13 @@ class V25044EvidenceConstrainedSynthesisTests(unittest.TestCase):
                 receipt["entropy_or_information_gain_assigns_credit_or_routes"]
             )
             self.assertFalse(receipt["benchmark_launch_or_evaluator_authorized"])
+            self.assertFalse(
+                any(
+                    "sha" in key.casefold() or "hash" in key.casefold()
+                    for key in receipt
+                    if key != "receipt_payload_sha256"
+                )
+            )
 
     def test_invalid_or_injected_schema_fails_closed(self) -> None:
         for columns in (("A", "a"), ("A|B",), (), ("A\nB",)):
