@@ -61,6 +61,15 @@ class PageSelfIdentifiedRecordTests(unittest.TestCase):
         self.assertNotIn("2.4.1", value["control_evidence"][:200])
         self.assertIn('"row":"AlphaKit"', value["candidate_evidence"])
         self.assertIn('["Published","2026-07-08"]', value["candidate_evidence"])
+        self.assertEqual(
+            target.extract_record(QUESTION, page()),
+            {
+                "Package": "AlphaKit",
+                "Version": "2.4.1",
+                "Published": "2026-07-08",
+                "License": "Apache-2.0",
+            },
+        )
 
     def test_exact_row_label_field_can_supply_second_surface(self) -> None:
         raw = page(
@@ -95,6 +104,8 @@ class PageSelfIdentifiedRecordTests(unittest.TestCase):
                 self.assertTrue(
                     value["page_self_record_receipt"]["exact_parent_prefix_handoff"]
                 )
+                with self.assertRaises(ValueError):
+                    target.extract_record(QUESTION, raw)
 
     def test_title_leading_identity_disagreement_fails_closed(self) -> None:
         raw = page(page()["text"].replace("Package AlphaKit", "Package Beta", 1))

@@ -290,6 +290,36 @@ def validate_receipt(value: Mapping[str, Any]) -> dict[str, Any]:
     return copied
 
 
+def extract_record(question: str, page: Mapping[str, Any]) -> dict[str, str]:
+    """Return one fully bound page-self record or fail closed."""
+
+    if not isinstance(question, str) or not question.strip():
+        raise ValueError("V2.50.49 visible question is absent")
+    normalized_page, raw_text = detail._page(page)
+    schema = detail._schema(question)
+    if len(schema) < 2:
+        raise ValueError("V2.50.49 visible schema is absent")
+    identity, counts = _bound_identity(
+        title=normalized_page["title"],
+        text=raw_text,
+        url=normalized_page["url"],
+        row_label=schema[0],
+    )
+    targets = schema[1:]
+    fields, _raw, _target, conflicts = detail._field_map(raw_text, targets)
+    if (
+        identity is None
+        or counts["jointly_bound_identity_count"] != 1
+        or conflicts != 0
+        or set(fields) != set(targets)
+    ):
+        raise ValueError("V2.50.49 page-self record is not fully bound")
+    return {
+        schema[0]: identity,
+        **{target: fields[target] for target in targets},
+    }
+
+
 def build_representation(
     question: str,
     page: Mapping[str, Any],
@@ -541,5 +571,6 @@ def validate_representation(
 
 __all__ = [
     "MAXIMUM_INPUT_PAGE_CHARACTERS", "PAGE_CHARACTER_CAP", "POLICY_ID", "ROLE",
-    "build_representation", "validate_receipt", "validate_representation",
+    "build_representation", "extract_record", "validate_receipt",
+    "validate_representation",
 ]
