@@ -1,0 +1,186 @@
+{
+  "artifact_version": 1,
+  "authorization": {
+    "deepwidebench_dev64_exact220_or_sota": false,
+    "evaluator_only_after_prediction_freeze_and_pushed_forward_audit": true,
+    "one_fixed_denominator_external_forward_after_clean_pushed_start": true,
+    "retry_resume_population_replacement_or_selective_revaluation": false
+  },
+  "build_audit_sha256": "44e41c939168e5d061efb54e6dcc3d823521f1814b7dd367956fc4055c6ef691",
+  "created_at_unix": 1786444468,
+  "execution": {
+    "arms": [
+      "raw_decoded_html_prefix",
+      "page_self_identified_record"
+    ],
+    "control_plane_change_from_v25051": "fixed_denominator_paired_preparation_failure_as_zero",
+    "evidence_character_cap_per_ready_arm": 5000,
+    "executor_concurrency": 20,
+    "fetch_attempts_per_task": 1,
+    "fetch_timeout": [
+      5.0,
+      60.0
+    ],
+    "max_response_bytes": 4194304,
+    "minimum_ready_tasks": 18,
+    "model": "gpt-5.6-sol",
+    "model_calls_per_ready_arm": 1,
+    "model_calls_per_unready_arm": 0,
+    "model_concurrency": 8,
+    "model_endpoint": "http://127.0.0.1:9878/responses",
+    "model_output_tokens": 2400,
+    "only_treatment_on_ready_tasks": "raw_decoded_prefix_vs_page_self_identified_record_representation",
+    "task_deadline_seconds": 180.0
+  },
+  "freshness": {
+    "endpoint_page_answer_model_or_evaluator_opened_during_selection": false,
+    "parent_commit": "a55858e0a1c07abf34abf579abbd7b717dbdf215",
+    "parent_history_literal_zero_hit_projects": [
+      "sapflow",
+      "psychonetrics",
+      "carbonr",
+      "camtrapR",
+      "photobiology",
+      "taper",
+      "TreeLS",
+      "rayrender",
+      "mapme.biodiversity",
+      "psborrow",
+      "mmrm",
+      "rbmi",
+      "admiral",
+      "pharmaverse",
+      "rtables",
+      "cardx",
+      "metalite",
+      "xportr",
+      "riskmetric",
+      "chevron"
+    ],
+    "predecessor_no_go_retried_or_resumed": false,
+    "zero_overlap_with_predecessor_projects": true
+  },
+  "gates": {
+    "mechanism": {
+      "maximum_evidence_chars_per_arm": 100000,
+      "maximum_preparation_failure_tasks": 2,
+      "minimum_prediction_changed_tasks": 6,
+      "minimum_ready_tasks": 18,
+      "model_successes_and_attempts_equal_ready_tasks": true,
+      "paired_preparation_failures_equal_fallback_tasks": true,
+      "terminal_arm_predictions": 40,
+      "terminal_tasks": 20
+    },
+    "quality": {
+      "candidate_exact_strict_gain": true,
+      "entity_row_item_column_composite_nonregression": true,
+      "fixed_denominator": 20,
+      "invalid_and_fallback_nonincrease": true,
+      "preparation_failures_score_zero_in_both_arms": true
+    },
+    "readiness": {
+      "maximum_preparation_failure_tasks": 2,
+      "minimum_ready_tasks": 18,
+      "model_calls_before_go": 0,
+      "terminal_preparations": 20
+    }
+  },
+  "population": {
+    "arm_order_vector_sha256": "0b4178f5b82d210f1239f0217e13e533dc06a28d4c1c45943a668941f634495f",
+    "endpoint_vector_sha256": "8eb867c786a053c2db2fcb46735f7342af57af21f64ed733c8c0212327847560",
+    "project_vector_sha256": "0d664842a7c46dbb0e039b3be3efe84c98a5d6782b16d05045403a62b313d1c8",
+    "task_count": 20,
+    "task_vector_sha256": "8e1bce4cb5b48ecbc086310c17c92f32a279235899e09ac130f5cbf8b0120c85"
+  },
+  "protected_watchers": [
+    {
+      "marker": "scripts/watch_v2415_r1_checkpoint_liveness.py",
+      "pid": 795336,
+      "start_ticks": 713986317
+    },
+    {
+      "marker": "scripts/watch_v24218_exact220_executor.py",
+      "pid": 3061652,
+      "start_ticks": 747569004
+    },
+    {
+      "marker": "scripts/watch_v24215_joint_package_recovery.py",
+      "pid": 2808901,
+      "start_ticks": 746680268
+    },
+    {
+      "marker": "scripts/watch_v24216_package_gate.py",
+      "pid": 2889939,
+      "start_ticks": 746969965
+    }
+  ],
+  "protocol_id": "v25052_cran_fixed_denominator_paired_failure_as_zero_quality_v1",
+  "protocol_payload_sha256": "f0f36337529b6861f12a7d3c4ab2e166f06e361187ebb9b82cc5727479537299",
+  "role": "v25052_cran_fixed_denominator_preregistration",
+  "source_manifest": {
+    "scripts/control_v25052_cran_fixed_denominator.py": "d78ca837215d06318d8dca6f7fe7c1a5fcb4d0aa986dfe2e5e2fafc857aef3f5",
+    "scripts/deepwide_api_lease.py": "8d9cffa78617b458172307d3558c76e9370f045f531c2f5aaaceb866f5a78c7d",
+    "scripts/run_v25050_cran_html_representation.py": "96a0556ca9cec235089384ac35bcf544eb8d81cc3449e668d68d68207ed4bd67",
+    "scripts/run_v25052_cran_fixed_denominator.py": "5b73c0fb01e093d26e7eb0e66cdc82d7a21d72be7d85f7c01fd4e0a150581690",
+    "src/deepwide_agent/clients.py": "339d923973f07ebcd33cb12cee2c26103df70ed3aea1fc0a737ffd675ac06fbc",
+    "src/deepwide_agent/native_search.py": "cd0d6bfccf4b345b11274558bdcffb39d279697d183242baf811dfd56ac71e50",
+    "src/deepwide_agent/v24257_score_first_runtime.py": "c4e3f818d0306f53d40f641a7a580aa7238e0698d2863301fe8399d8e3c1fa3e",
+    "src/deepwide_agent/v24259_deterministic_table_normalizer.py": "bc2ed6ae62cd68cf908ff2c50f59caa37cf6f57d9d12ab3db5294cf39b2c5f91",
+    "src/deepwide_agent/v24263_global_model_limiter.py": "050751273bf28520bb82799e5194b9b404c58fecf6c5a725cfea93da0d041497",
+    "src/deepwide_agent/v24267_total_fallback.py": "6c75ee5e87a671d3d1a7644ed430d59aba01dca0886e8b30706da24e2f49bf89",
+    "src/deepwide_agent/v24268_keyless_batched_runtime.py": "776d6724f2024ff82e2b851e7a367c1b1657abc6ec80dcebe97c6fb22f85a51a",
+    "src/deepwide_agent/v24269_task_union_discovery.py": "f8c439e9d4000788e2e9c3afef37e29ee21e655faf57921572628ac350beb9be",
+    "src/deepwide_agent/v24270_budget_equivalent_union.py": "fd1e2a208c773dd00c38560e0aeca5d9bec293bac408e1899391bc40da01b944",
+    "src/deepwide_agent/v24272_two_wave_entropy_voc.py": "2e618c1ac0888650d12b42ab93feb043379fa7b5be0262ab1ae857cce05e8532",
+    "src/deepwide_agent/v24272_two_wave_retrieval.py": "2bdf33fe3fe7d182c730be9ad29abb766d1d04f970b546a86da15d5a33bb010d",
+    "src/deepwide_agent/v24273_two_wave_task_runtime.py": "1abe5b2ef6e85471d79e3da8c95d85437e477db043194acdb060e6690a9ea1e0",
+    "src/deepwide_agent/v24286_visible_schema_runtime.py": "0ef6c31beca9a776bc8ecb1ff8e0c2dd50b42821dd77e6e3b1ecdd7e78cb6dce",
+    "src/deepwide_agent/v24839_structure_preserving_projector.py": "7212adc13f59b9154ed84b0991eb134e58774b1f8d523786d16badcafc9bb82a",
+    "src/deepwide_agent/v24842_atomic_table_header_closure.py": "ce51fcee5543e8ae30abce7be186d03131d106fc1ff046682deb0b9582877016",
+    "src/deepwide_agent/v24921_target_value_coverage_projector.py": "4579affb4bbff7c84da5404bb233b41bd7e2a259ad49c635f756b262e7d2369d",
+    "src/deepwide_agent/v24924_visible_row_table_compactor.py": "46d81f591da0d8271e157ad6a4881146dba161d6b295c5a264ed09135455aba4",
+    "src/deepwide_agent/v24928_unicode_total_visible_row_compactor.py": "334deede85698b1c85db7d61832bd94a22010378cb288cfc40a26845c75428fc",
+    "src/deepwide_agent/v24933_contextual_record_value_projector.py": "404ed18911583f9db404a01a67d74f5e3f4b336b66a5bf4a2cc1acd596dc17b9",
+    "src/deepwide_agent/v24939_schema_bound_record_ledger.py": "a7336a7c6a5a05b5eccfc8bec79c448725b20f64bfcd9c2b0cecb09304fe3d7d",
+    "src/deepwide_agent/v24942_compact_schema_bound_record_ledger.py": "545f614517ee8ba352eee7fe7a82495bb2d835e802fc4e2c711deca0f3d30385",
+    "src/deepwide_agent/v24945_injective_schema_signature_ledger.py": "f0695577030b26290a2452ce6e557fa0389723ccaca8b4ae563e3863a833f12e",
+    "src/deepwide_agent/v24949_mutual_partial_signature_ledger.py": "be64149df01c8bf108f71806bf82a5c5bebe1e72b489e3cfd144230e7edb25cf",
+    "src/deepwide_agent/v24980_late_page_bound_projection.py": "942f1b8835016ac16e9529086639eda48c324ad0d62eef1da6d4fb94446c2ba8",
+    "src/deepwide_agent/v24984_robust_late_page_projection.py": "632c673fc5b42ac5370f6078e47afc14dae920d7b6723e6ef78789690f349cef",
+    "src/deepwide_agent/v24992_hybrid_authority_queries.py": "5185f28848c07262db5e7cce174711613a67160a079bd1d0052b693a158f0f29",
+    "src/deepwide_agent/v25004_identity_bound_detail_fields.py": "ce1094cf1d5f0d0a28a9e50894ac32d1058429bf9a7fe49746eef0918d0b6388",
+    "src/deepwide_agent/v25048_atomic_pypi_representation_contract.py": "e17a4d3ace481cc6409012ba3639f125e7ffdb6e149220b98bdeea47d290c24f",
+    "src/deepwide_agent/v25049_page_self_identified_record.py": "445e30a6c8dd874e943554b65d74b51d96efcf799e230edd0851abdca884a8c6",
+    "src/deepwide_agent/v25050_cran_html_representation_contract.py": "40fc2e98db280c4a4b53beaeec2c5a3f85e7bf8da917f10ad4babc18170b4a28",
+    "src/deepwide_agent/v25051_cran_shared_length_contract.py": "7dd54293d5c8e5fe5c7e2b08f91cfdc0c743ce8507af66571996a02721f829cc",
+    "src/deepwide_agent/v25052_cran_fixed_denominator_contract.py": "491d64f3c100147fa7075f7cabf3eeecefd498b57c208064966d09a836e330b1",
+    "tests/test_v25052_cran_fixed_denominator.py": "48ad8ac67c99c59d04c10b20e3132affba037a451d1c6b8f1f2e6132a1194a8d"
+  },
+  "source_manifest_sha256": "4b25efc9339d78f99080b64e82eaae6ca2a8b79204bcefbb493239826e0a0d41",
+  "source_policy": {
+    "all_twenty_preparations_terminal_before_any_model_call": true,
+    "deepwidebench_dev64_exact220_leaderboard_or_sota_authorized": false,
+    "entropy_or_information_gain_assigns_credit_or_routes": false,
+    "final_population_endpoint_page_answer_model_or_evaluator_not_probed_before_freeze": true,
+    "fixed_twenty_task_and_forty_prediction_denominator": true,
+    "fresh_population_zero_overlap_with_v25050_and_v25051": true,
+    "identity_discovered_from_same_page_url_title_and_visible_surface": true,
+    "mapping_gold_category_question_type_split_evaluator_score_reward_read_by_forward": false,
+    "minimum_eighteen_ready_required_before_any_model_call": true,
+    "no_retry_resume_replacement_or_selective_rerun": true,
+    "only_treatment_on_ready_tasks_is_evidence_representation": true,
+    "ordinary_html_decoded_by_production_html_to_document": true,
+    "prediction_freeze_before_evaluator_module_or_quality_decision": true,
+    "public_snapshot_published_only_after_all_predictions": true,
+    "question_does_not_enumerate_or_name_row_identity": true,
+    "ready_task_evidence_lengths_positive_equal_between_arms_and_at_most_cap": true,
+    "runtime_boundary": [
+      "opaque_id",
+      "question",
+      "same_forward_public_cran_html_bytes"
+    ],
+    "same_exact_response_and_decoded_page_underlie_both_ready_arms": true,
+    "same_prompt_model_output_cap_attempt_count_and_deadline": true,
+    "unready_tasks_receive_paired_identical_failure_as_zero_without_model_call": true
+  }
+}
