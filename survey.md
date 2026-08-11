@@ -1,6 +1,6 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
-> 检索截止：2026-08-07 14:10 UTC；项目证据更新：2026-08-11 UTC（至 V2.50.61）
+> 检索截止：2026-08-07 14:10 UTC；项目证据更新：2026-08-11 UTC（至 V2.50.62）
 >
 > 结论强度：这是基于公开文献的 novelty audit，不是“没有任何相关工作”的证明。2026 年文献多为尚未同行评审的 arXiv 预印本，文中将预印本结果视为作者报告，而非独立复现事实。
 
@@ -19,6 +19,10 @@ V2.50.59与V2.50.60随后把身份识别面从显式row label扩展为同页共�
 V2.50.61在20个fresh docs.rs页面上做了固定分母的零模型自然曝光检验。为保证零模型门的能力边界，生产runner改用与V2.50.60逐字段等价、但不导入历史runtime链的纯模块；42/42专项及父链测试通过，forward闭包只有4个文件，privileged、evaluator、credential与model/hosted-search findings均为空。唯一forward用20 workers对每个冻结endpoint请求一次，不redirect、不retry、不替换人口。20/20 fetch成功，20/20形成version-qualified identity，10/20形成完整record，8/20页面超过5k，但只有4/20 target field真正位于5k之后并改变candidate evidence。预注册门要求至少8/20 natural exposure，因此结果为NO-GO；projection failure和positive signed credit均为0。[`results/v25061_docsrs_late_record_forward_result_v1_20260811.json`](results/v25061_docsrs_late_record_forward_result_v1_20260811.json)与[`results/v25061_docsrs_late_record_forward_audit_v1_20260811.json`](results/v25061_docsrs_late_record_forward_audit_v1_20260811.json)记录结果及`findings=[]`的审计。
 
 这一结果把表示路线的瓶颈进一步分解。version-qualified identity在该固定人口上达到20/20，因此不能再把零曝光笼统归因于身份识别失败。完整target record只有10/20，而absolute-late target只有4/20，说明“页面长度超过5k”不等同于“5k之后包含任务所需新字段”。后续应把late-information recovery与salience/atomicity representation分开检验。前者只在prefix之外出现新target时触发；后者可以重排prefix内已经完整绑定的record，但必须在fresh disjoint人口上通过shared-page、matched-budget的prediction-change与post-freeze outer utility门。V2.50.61没有模型、evaluator或DeepWideBench运行，因此不提供质量、SOTA或entropy-credit证据，也不能用20/20 identity或4/20 exposure替代这些证据。
+
+V2.50.62随后独立检验prefix-salience/atomicity，不再把late-information recovery算作同一机制。候选只在identity和全部target field已经位于父5k prefix内时前置一个原子record；任一target位于5k之后就逐字返回父prefix。20个fresh且与V2.50.59–61不交的docs.rs页面全部fetch成功并形成唯一identity，14页超过5k，但只有4页形成完整License record，且4个target全部位于5k之后。因此prefix-complete、candidate change与mechanism exposure均为`0/20`，低于预注册的`8/20`门；capacity、projection与transport failure均为0。[`results/v25062_prefix_salience_forward_result_v1_20260811.json`](results/v25062_prefix_salience_forward_result_v1_20260811.json)和[`results/v25062_prefix_salience_forward_audit_v1_20260811.json`](results/v25062_prefix_salience_forward_audit_v1_20260811.json)记录该NO-GO及`findings=[]`审计。
+
+V2.50.61与V2.50.62使用不同的fresh人口，不能把两轮计数相加或直接解释为同一个处理效应。两轮共同支持的是version-qualified identity route在各自20页上均达到20/20；target completeness与字段位置则明显依赖页面人口。V2.50.61为10个完整record、4个late target，V2.50.62为4个完整record且全部late。因而当前没有证据支持prefix-salience的稳定覆盖，也没有证据把late recovery迁移到DeepWideBench质量。后续不应继续通过更换docs.rs人口追逐覆盖率，而应先检查冻结220输出中的通用、label-blind结构错误，再为确定性变换建立全220开发评价和独立冷运行复现。
 
 这条证据链也收紧了信息熵与credit assignment的主张。结构化记录表示可以得到正的机制级outer credit，但本轮没有让entropy/IG选择动作或分配credit；普通网页和完整220又都没有产生可归因的observation。因而当前entropy/IG signed credit仍为0。下一实验可以用四层开放世界风险或expected information gain预测动作优先级，但credit的正负必须来自同状态删除、替换、suffix intervention，或与开发工件隔离的终局评价。单纯的后缀长度、局部熵下降、parser readiness或prediction change均不足以获得正credit。
 

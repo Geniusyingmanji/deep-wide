@@ -1,8 +1,14 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.88
+> 版本：6.89
 >
-> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.88 覆盖。**
+> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.89 覆盖。**
+
+> **6.89 V2.50.62 prefix-salience/atomicity 独立覆盖门严格NO-GO（2026-08-11）：V2.50.62把V2.50.61中混在一起的两类机制拆开，只允许identity与全部target field已经位于父5k prefix内的完整record被原子前置；任何late target都不触发，因此该门不测试后缀恢复。20个fresh docs.rs crate在父提交逐项literal-zero，且与V2.50.59–61开发/确认人口完全不交。代码、build audit、protocol、preactivation audit与start分别以`8f571fd3/aa0cfbfc/645d8894/4977f1f1/a631a816`推送；9项纯表示、9项门控与V2.50.61/60/59/49父链合计60/60通过。forward闭包仅为runner、HTML surface、两个纯表示模块和contract共5文件，privileged/evaluator/credential/model/hosted-search findings均为空。**
+
+> **唯一固定20页、20-worker、每页一次fetch、无redirect/retry/replacement的零模型forward在`0.589207s`完成。20/20 fetch成功，20/20唯一identity，14/20页面超过5k，只有4/20形成完整License record；这4个record的target全部位于5k之后，所以prefix-complete=`0/20`、mechanism exposure=`0/20`、changed evidence=`0/20`。compact capacity、projection failure、failure-as-zero与positive signed credit均为0。预注册的`≥8` prefix-complete与`≥8` exposure两项均失败，结果与审计以`9e688e1d/926cca1a`推送；audit `findings=[]`，同人口paired quality/model/evaluator、补跑、换题、降门和选择性重评均未授权。[`results/v25062_prefix_salience_forward_result_v1_20260811.json`](results/v25062_prefix_salience_forward_result_v1_20260811.json)与[`results/v25062_prefix_salience_forward_audit_v1_20260811.json`](results/v25062_prefix_salience_forward_audit_v1_20260811.json)是权威工件。**
+
+> **当前决策：V2.50.61和V2.50.62必须分开解释。前者在另一组20页上观察到`20 identity → 10 complete → 4 late exposure`；后者观察到`20 identity → 4 complete → 0 prefix-complete → 0 prefix exposure`。两组人口不同，不能相加、直接比较或据此估计普适成功率。现有证据只支持identity route稳定可达，而target completeness与字段位置随页面人口变化，且两个预注册覆盖门均未达到。停止继续消耗fresh docs.rs人口或事后扩展field grammar；下一步转向冻结完整220预测的label-blind输出有效性诊断，只从prediction文本统计all-Unknown row、重复row、空表、表宽/行数与evaluator error signature，不让category/gold/score进入变换逻辑。若找到一个不读题目标签、页面或评价的确定性通用postprocessor，必须先冻结变换与220输入hash，再对全部220一次性failure-as-zero评价；该结果只作开发证据，只有新冷220复现且超过V2.48.57 `9/220 / 0.457249`才构成新内部前沿。当前最新完整V2.50.57仍为`6/220 / 0.449960`，无Avg@4、leaderboard或SOTA；entropy/IG signed credit继续为0。**
 
 > **6.88 V2.50.59–61 version-qualified representation 与 fresh docs.rs 自然曝光门（2026-08-11）：V2.50.59要求URL path、title segment与独立正文heading三方形成唯一identity共识，并继续要求target field exact-label、unique-value、same-page与整记录原子绑定；11/11专项与父链通过。V2.50.60增加`<identity> <semantic-version>`和`<identity>-<semantic-version>`表面，identity仍必须是完整URL path component，title与独立heading必须只有同一版本；9/9专项与父链通过。开发探针仅使用随后永久排除的`serde/tokio/clap`，2页成功fetch、2页identity绑定、1页形成完整late record，0 model call。**
 
