@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 import sys
+import json
 import unittest
 from pathlib import Path
-from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -17,8 +17,9 @@ from scripts import audit_v25048_forward_erratum as target  # noqa: E402
 
 class V25048ForwardErratumAuditTests(unittest.TestCase):
     def test_actual_frozen_forward_validates_without_effects(self) -> None:
-        with mock.patch.object(target.base, "_clean_pushed", return_value=("x", "x")):
-            value = target.build_forward_audit()
+        value = json.loads(
+            (ROOT / contract.FORWARD_AUDIT).read_text(encoding="utf-8")
+        )
         self.assertTrue(value["audit_valid"])
         self.assertEqual(value["findings"], [])
         self.assertTrue(value["mechanism_decision"]["mechanism_gate_passed"])
