@@ -1,0 +1,97 @@
+{
+  "artifact_version": 1,
+  "authorization": {
+    "deepwidebench_dev64_exact220_leaderboard_or_sota": false,
+    "full220_successor_build_only_if_quality_go": true,
+    "one_postfreeze_external_evaluation": true,
+    "retry_refetch_selective_revaluation": false
+  },
+  "created_at_unix": 1786488065,
+  "evaluation": {
+    "calls_per_endpoint": 1,
+    "concurrency": 20,
+    "exact_endpoint_calls": 20,
+    "fixed_denominator_failure_as_zero": true,
+    "gold_rule": {
+      "package": "pypi_info_name_canonical_identity_checked",
+      "released": "earliest_upload_date_among_files_under_info_version",
+      "requires": "pypi_info_requires_python_or_Unknown",
+      "version": "pypi_info_version"
+    },
+    "metrics": [
+      "exact_table_successes",
+      "entity_recall",
+      "row_f1",
+      "item_f1",
+      "column_f1",
+      "composite"
+    ],
+    "quality_rule": {
+      "all_postfreeze_gold_tasks_valid": true,
+      "candidate_composite_nonregression": true,
+      "candidate_entity_row_item_column_composite_nonregression": true,
+      "candidate_exact_strict_gain": true,
+      "entity_row_item_column_nonregression": true,
+      "fixed_denominator": 20,
+      "invalid_or_fallback_nonincrease": true,
+      "mechanism_equal_search_fetch_evidence_and_effective_model_budget": true,
+      "same_search_fetch_evidence_length_and_effective_model_budget": true
+    },
+    "redirects": 0,
+    "retries_or_refetches": 0,
+    "same_postfreeze_gold_snapshot_for_both_arms": true
+  },
+  "evaluator_protocol_payload_sha256": "1f91d4325e908119bedbe2a0f79993d304bf782c942acafa2af3d87754508912",
+  "implementation_audit": {
+    "audit_valid": true,
+    "checks": {
+      "credential_literal_zero": true,
+      "evaluator_and_test_are_ordinary": true,
+      "independent_test_count_at_least_eight": true,
+      "network_capability_only_in_fetch_gold": true,
+      "privileged_benchmark_field_access_zero": true,
+      "runner_capability_limited_to_frozen_validation": true
+    },
+    "evaluator_sha256": "139bfe0043574857cd823bda5f563b5a1bb51c27aca27eacd87d3e256e1ac9dd",
+    "findings": [],
+    "privileged_accesses": [],
+    "request_calls": [
+      {
+        "function": "_fetch_gold",
+        "method": "get"
+      }
+    ],
+    "runner_attributes": [
+      "validate_forward_result",
+      "validate_task_row"
+    ],
+    "test_count": 10,
+    "test_sha256": "e203c55ae40eeeefb61f5c4573f06bea1801c005bb3d30f754ee959197684dc9"
+  },
+  "parents": {
+    "evaluator_sha256": "139bfe0043574857cd823bda5f563b5a1bb51c27aca27eacd87d3e256e1ac9dd",
+    "evaluator_test_sha256": "e203c55ae40eeeefb61f5c4573f06bea1801c005bb3d30f754ee959197684dc9",
+    "forward_audit_sha256": "18d787501e611aa5a5ffd292fda1f2f7c09ffcbf7c88207a032f1317e0b80375",
+    "forward_protocol_sha256": "5a6184826d895f283db61fd98e80d96cf325938c7d7f536f15765dcf1712f920",
+    "forward_result_sha256": "cca5d71c114de06848693a9128ee051359c4a0de33d6c9e5b7adadecc3b9cb52",
+    "prediction_freeze_sha256": "1b83657070c9221e8085f27c3146140846bccd8135c478f963255b3f080f359f",
+    "task_rows_sha256": "82f392b84d3f4b84c5413756a391cad6bb82cdb34b53a2747a1eda3b1737eef2"
+  },
+  "population": {
+    "clue_vector_sha256": "27dba26d67ea065717ca187a65e38be7e110edca68b90e711dee0c62d1d7ff25",
+    "endpoint_vector_sha256": "6ee76d3bd760b7de189b94f2731516b8bd0f07b7fc0ea389b8467107fef35759",
+    "fixed_denominator": 20,
+    "package_vector_sha256": "4dbc6ab970408748b7e3bc36b40743dbac273a684be66228b6d7d41d3d31425a",
+    "prediction_rows": 20
+  },
+  "protocol_id": "v25129_causal_salience_external_mechanism_v1",
+  "role": "v25129_causal_salience_external_evaluator_preregistration",
+  "source_policy": {
+    "category_question_type_split_or_deepwidebench_gold_read": false,
+    "created_only_after_pushed_prediction_freeze_and_forward_audit": true,
+    "entropy_or_information_gain_credit_validated": false,
+    "forward_files_are_read_only": true,
+    "gold_or_evaluator_feedback_to_forward": false,
+    "mapping_frozen_from_public_clues_before_prediction_text_read": true
+  }
+}
