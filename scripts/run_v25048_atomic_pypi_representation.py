@@ -758,7 +758,7 @@ def validate_snapshot_rows(values: Sequence[Mapping[str, Any]]) -> list[dict[str
             or row["raw_response_bytes"] <= 0
             or row.get("http_status") != 200
             or not isinstance(row.get("record"), Mapping)
-            or set(record) != set(contract.COLUMNS)
+            or tuple(record) != contract.COLUMNS
             or any(
                 not isinstance(record[column], str)
                 or not record[column]

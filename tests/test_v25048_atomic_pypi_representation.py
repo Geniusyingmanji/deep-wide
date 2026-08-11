@@ -163,12 +163,7 @@ class V25048AtomicPyPIRepresentationTests(unittest.TestCase):
         self.assertFalse((ROOT / contract.EVALUATOR).exists())
 
     def test_readiness_go_recomputes_exact_counts_and_authorization(self) -> None:
-        with tempfile.TemporaryDirectory() as temporary, mock.patch.object(
-            runner, "ROOT", Path(temporary)
-        ):
-            value = runner.validate_readiness(
-                runner.build_readiness(self._prepared(), now=1)
-            )
+        value = runner.validate_readiness(runner.build_readiness(self._prepared(), now=1))
         self.assertTrue(value["passed"])
         self.assertEqual(value["parser_ready_tasks"], 20)
         self.assertEqual(value["bound_fields"], 80)
@@ -185,19 +180,13 @@ class V25048AtomicPyPIRepresentationTests(unittest.TestCase):
             "elapsed_seconds": 0.01,
             "ready": False,
         }
-        with tempfile.TemporaryDirectory() as temporary, mock.patch.object(
-            runner, "ROOT", Path(temporary)
-        ):
-            value = runner.validate_readiness(runner.build_readiness(prepared, now=1))
+        value = runner.validate_readiness(runner.build_readiness(prepared, now=1))
         self.assertFalse(value["passed"])
         self.assertFalse(value["authorization"]["paired_model_forward"])
         self.assertIn("all_exact_fetches_complete", value["findings"])
 
     def test_readiness_resealed_pass_or_authorization_tamper_is_rejected(self) -> None:
-        with tempfile.TemporaryDirectory() as temporary, mock.patch.object(
-            runner, "ROOT", Path(temporary)
-        ):
-            value = runner.build_readiness(self._prepared(), now=1)
+        value = runner.build_readiness(self._prepared(), now=1)
         for mutation in ("passed", "authorization", "checks"):
             changed = copy.deepcopy(value)
             if mutation == "passed":
