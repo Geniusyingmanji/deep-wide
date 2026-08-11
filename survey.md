@@ -1382,3 +1382,11 @@ V2.50.68 在20个历史literal-zero PyPI包上做了唯一一次20路外部门�
 对信息熵credit assignment，这一轮仍是负控制而不是支持证据。proposal合法、页面充足、模型调用成功，但admissible observation为0，所以realized epistemic/task credit必须为0。熵或IG最多作为“下一个inspect/fetch动作可能产生可采纳observation”的shadow predictor；正signed credit仍需`admissibility → identity/source binding → matched counterfactual prediction change → post-freeze outer utility`完整链条。当前项目最佳仍为V2.48.57的Exact `9/220`、Composite `0.457249`；无Avg@4、leaderboard或SOTA证据。
 
 V2.50.70–72 将下一假设实现为build-only的field-local verifier。与single-quote不同，每个字段保留自己的连续verbatim quote，但都必须包含同一页上唯一的record anchor；anchor又必须包含row identity。合成测试证明，当首末字段跨度超过1,200-character quote cap时仍能形成一个verified record，而cross-page、缺anchor、非唯一anchor、wrong identity、ambiguous label与same-anchor value conflict均fail closed。matched runtime继续共享plan、4 queries、最多10 fetch和proposal，并保持每臂3次有效模型调用、240秒、60k evidence与等长对照。67/67 clean-build tests和label-blind/evaluator/credential审计通过，但尚无external或quality证据；entropy/IG signed credit仍为0。
+
+V2.50.73 随后在fresh/disjoint的20个PyPI任务上做了唯一production external mechanism gate。20/20任务在`92.28s`内完成，双臂均20/20 model success，没有terminal transport、timeout、helper、model或outer failure；两臂查询、抓取、模型调用与evidence长度匹配。28条query-local mapping failure是coverage诊断，不是终端失败。这一结果排除了“field-local失败来自运行可靠性”的解释。
+
+但机制仍严格NO-GO：verified exposure只有`1/20`，低于8题门槛；prediction change为`3/20`，低于4题门槛。V2.50.74 content-free归因显示，20次proposal调用全部成功且返回严格JSON，18次主动给出空records，2次非空proposal中仅1条通过、另1条被field label/value binding拒绝。因此，field-local约束把自然reach从`0/20`推到`1/20`，却没有解决主要的proposal abstention。并且只有1题evidence改变，故3题prediction difference中至少2题不能归因于candidate，而应视为独立synthesis随机性。没有运行evaluator，也没有DeepWideBench或quality新结论。
+
+这一外部门进一步收紧了“信息熵用于credit assignment”的可识别条件。网页、模型调用和合法proposal格式本身都不是可计分observation；18个空proposal的realized credit必须为0，唯一verified observation在没有post-freeze outer utility前也只能保持shadow credit。熵或IG可以预测某个inspect/fetch/proposal动作产生admissible record的概率，但正signed credit必须来自matched intervention对终局utility的增量，而不是entropy drop、token量、网页量或两次随机rollout的差异。
+
+下一候选应把anchor从“每个field quote都必须复制包含的字符串”改为“同页record-region边界”。唯一anchor包含row identity，并确定一个有界region；每个field quote只需在该region内逐字唯一出现，同时机械验证source label与value。这样可提高字段远离anchor时的reach，却仍禁止跨页、跨identity、跨record/release和冲突拼接。该设计必须先在fresh production-isomorphic外部门证明非零自然exposure与treatment-caused prediction change，且不增加任何检索、模型、上下文或时间预算；通过前不应再消耗一次公开220。
