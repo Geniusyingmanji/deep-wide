@@ -1,0 +1,73 @@
+{
+  "artifact_version": 1,
+  "audit_payload_sha256": "ada30e4855c2476cc1b6cf008fa4553a0438756a173ea42925608bc4281092b7",
+  "audit_valid": true,
+  "authorization": {
+    "deepwidebench_dev64_exact220_or_sota": false,
+    "evaluator": false,
+    "execution_start_generation": true,
+    "external_forward": false
+  },
+  "build_audit_sha256": "e892071cc842abd37d963c7cc72b283ba3fde208ce41183bcb6fa00631eaeb60",
+  "checks": {
+    "conflicting_forward_or_evaluator_processes_absent": true,
+    "credential_literal_zero": true,
+    "evaluator_capability_absent": true,
+    "focused_tests_exact21": true,
+    "future_surface_pristine": true,
+    "keyless_gpt56_endpoint_reachable": true,
+    "privileged_runtime_field_access_zero": true,
+    "protected_watchers_exact": true,
+    "protocol_valid": true,
+    "public_snapshot_and_evaluator_physically_absent": true,
+    "shared_api_lease_inactive": true
+  },
+  "created_at_unix": 1786439765,
+  "findings": [],
+  "protocol_id": "v25048_atomic_shared_pypi_current_record_quality_v1",
+  "protocol_sha256": "5f689169484273b8553bb66730b69afd366fda83f28022fbcc80290e179c9e33",
+  "role": "v25048_atomic_pypi_representation_preactivation_audit",
+  "semantic_audit": {
+    "credential_literal_hits": [],
+    "dependency_closure": [
+      "scripts/deepwide_api_lease.py",
+      "scripts/run_v25048_atomic_pypi_representation.py",
+      "src/deepwide_agent/v25047_pypi_current_record_representation.py",
+      "src/deepwide_agent/v25048_atomic_pypi_representation_contract.py"
+    ],
+    "dependency_closure_sha256": "bc1a82bbf845ffd19873c82b4ab084f7b7f2903119b9bbf1bfa30f2fbbab3715",
+    "evaluator_capabilities": [],
+    "privileged_field_accesses": []
+  },
+  "tests": {
+    "expected": 21,
+    "observed": 21,
+    "passed": true,
+    "suites": [
+      {
+        "expected": 7,
+        "observed": 7,
+        "output_sha256": "f16b634b4a731e48d0aabb00357e0db230ba22d8f7b903a9466eb4562159f9ed",
+        "passed": true,
+        "pattern": "test_v25047_pypi_current_record_representation.py",
+        "returncode": 0
+      },
+      {
+        "expected": 12,
+        "observed": 12,
+        "output_sha256": "47d1f88dfb8243db25123a4ffea88363f97786ad6f280eb5704697ff28333db7",
+        "passed": true,
+        "pattern": "test_v25048_atomic_pypi_representation.py",
+        "returncode": 0
+      },
+      {
+        "expected": 2,
+        "observed": 2,
+        "output_sha256": "a94b07e781268c2fbcc587dd61d07990fe4ca34837ebd9d50a0c86887628648e",
+        "passed": true,
+        "pattern": "test_deepwide_api_lease.py",
+        "returncode": 0
+      }
+    ]
+  }
+}
