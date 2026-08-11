@@ -1,0 +1,67 @@
+{
+  "artifact_version": 1,
+  "role": "v25122_v25121_legacy_query_failure_diagnosis",
+  "created_at_unix": 1786485600,
+  "authorization": {
+    "append_only_visible_query_compatibility_successor": true,
+    "reuse_rerun_resume_or_selective_completion_of_v25121_population": false,
+    "evaluator_or_hidden_mapping_gold": false,
+    "deepwidebench_dev64_exact220_leaderboard_or_sota": false
+  },
+  "frozen_parent": {
+    "forward_result_path": "results/v25121_grounded_target_record_external_forward_result_v1_20260811.json",
+    "forward_result_sha256": "4a575d8c7286e855810722d02f2616b7cb6cfa607d5e82a2e8a31f64544808ef",
+    "forward_audit_path": "results/v25121_grounded_target_record_external_forward_audit_v1_20260811.json",
+    "forward_audit_sha256": "adaf5eef3cf4d52032261a0b08a3be93e1aa994a52672bdea797cd3468d40eb3",
+    "task_rows_sha256": "63b09bee77e62518aef63c7fd0cfc972ad7d6117e65f62dc5b1b513d09c16d17",
+    "prediction_freeze_sha256": "d1247c584802ce9f0c56bf78f7170286e6befc0cea54c71fd0dae0ba71844acd"
+  },
+  "content_free_observations": {
+    "fixed_task_count": 20,
+    "terminal_task_count": 20,
+    "runtime_completed_task_count": 0,
+    "failure_as_zero_task_count": 20,
+    "outer_failure_type_histogram": {
+      "ValueError": 20
+    },
+    "effect_health_failure_counter_sum": 0,
+    "forbidden_content_key_count": 0,
+    "credential_literal_hit_count": 0,
+    "mapping_gold_category_question_type_split_evaluator_score_reward_or_historical_result_read": false
+  },
+  "root_cause": {
+    "reproduced_on_disjoint_nonpopulation_hidden_clue_task": true,
+    "reproduced_exception_type": "ValueError",
+    "reproduced_exception_message_class": "v25117_legacy_query_invalid",
+    "reproduced_last_frame": "_legacy",
+    "first_wave_effects_before_exception": {
+      "model_requests": 1,
+      "search_provider_success_calls": 1,
+      "logical_first_wave_queries": 2,
+      "first_wave_fetch_calls": 6
+    },
+    "visible_identity_nonhidden_control_task_reached_terminal": true,
+    "code_path": {
+      "caller": "src/deepwide_agent/v25119_grounded_target_record_paired_runtime.py:729",
+      "strict_legacy_validator": "src/deepwide_agent/v25117_grounded_target_record_plan.py:158",
+      "unsafe_character_rejection": "src/deepwide_agent/v25117_grounded_target_record_plan.py:129"
+    },
+    "explanation": "The parent visible-only query completion can retain the visible tagged clue in a fallback query. After the first model, search, and fetch wave, V2.51.19 passes all four completed parent queries into V2.51.17 prepare_plan. V2.51.17 applies the stricter model-generated-query grammar to those already-authorized visible legacy queries, rejects tag characters, and raises outside V2.51.19 retrieval failure handling. This converts every task into an outer failure after effects have already occurred.",
+    "production_client_type_or_counter_incompatibility_is_root_cause": false,
+    "grounded_target_record_mechanism_was_reached": false
+  },
+  "interpretation": {
+    "mechanism_gate_passed": false,
+    "quality_or_entropy_credit_evidence": false,
+    "v25121_population_is_consumed_and_must_not_be_reused": true,
+    "aggregate_zero_effect_fields_do_not_prove_zero_effects_for_outer_failure_rows": true,
+    "next_successor_must_separately_validate_visible_legacy_queries_and_model_generated_queries": true,
+    "next_successor_must_account_prepare_plan_failure_without_losing_observed_effects": true,
+    "next_external_gate_requires_fresh_disjoint_population_and_frozen_protocol": true
+  },
+  "content_policy": {
+    "question_query_url_title_page_target_authority_column_prediction_or_credential_decoded_or_emitted": false,
+    "only_outer_failure_type_counts_frozen_hashes_and_code_locations_persisted": true,
+    "network_model_search_fetch_evaluator_or_benchmark_api_called_by_this_artifact": false
+  }
+}
