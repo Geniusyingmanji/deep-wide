@@ -1,0 +1,145 @@
+{
+  "artifact_version": 1,
+  "authorization": {
+    "deepwidebench_dev64_exact220_or_sota": false,
+    "evaluator_only_after_prediction_freeze_and_pushed_forward_audit": true,
+    "one_atomic_readiness_then_external_forward_after_clean_pushed_start": true,
+    "retry_resume_population_replacement_or_selective_revaluation": false
+  },
+  "build_audit_sha256": "e892071cc842abd37d963c7cc72b283ba3fde208ce41183bcb6fa00631eaeb60",
+  "created_at_unix": 1786439745,
+  "execution": {
+    "arms": [
+      "raw_pypi_json_prefix",
+      "identity_bound_current_release_record"
+    ],
+    "evidence_chars_per_arm": 12000,
+    "executor_concurrency": 20,
+    "fetch_timeout": [
+      5.0,
+      60.0
+    ],
+    "fetches_per_task": 1,
+    "max_response_bytes": 67108864,
+    "model": "gpt-5.6-sol",
+    "model_calls_per_arm": 1,
+    "model_concurrency": 8,
+    "model_endpoint": "http://127.0.0.1:9878/responses",
+    "model_output_tokens": 2400,
+    "only_treatment": "raw_prefix_vs_identity_bound_current_record_representation",
+    "task_deadline_seconds": 180.0
+  },
+  "freshness": {
+    "endpoint_page_answer_model_or_evaluator_opened_during_selection": false,
+    "parent_commit": "4a0017d81a105e10fae0778dcef858725771a136",
+    "parent_history_literal_zero_hit_projects": [
+      "gunicorn",
+      "granian",
+      "waitress",
+      "pyramid",
+      "litestar",
+      "starlite",
+      "connexion",
+      "fastapi-utils",
+      "fastapi-pagination",
+      "starlette-context",
+      "asgiref",
+      "chameleon",
+      "celery",
+      "dramatiq",
+      "huey",
+      "apscheduler",
+      "taskiq",
+      "kombu",
+      "amqp",
+      "billiard"
+    ]
+  },
+  "gates": {
+    "mechanism": {
+      "completed_tasks": 20,
+      "evidence_chars_per_arm": 240000,
+      "fallback_tasks": 0,
+      "minimum_prediction_changed_tasks": 8,
+      "model_attempts_per_arm": 20,
+      "model_successes_per_arm": 20,
+      "terminal_tasks": 20
+    },
+    "quality": {
+      "candidate_exact_strict_gain": true,
+      "entity_row_item_column_composite_nonregression": true,
+      "fixed_denominator": 20,
+      "invalid_and_fallback_nonincrease": true
+    },
+    "readiness": {
+      "bound_fields": 80,
+      "fetch_attempts": 20,
+      "fetch_successes": 20,
+      "maximum_unknown_bound_fields": 20,
+      "model_calls_before_go": 0,
+      "parser_ready_tasks": 20,
+      "tasks": 20
+    }
+  },
+  "population": {
+    "arm_order_vector_sha256": "214179254b6c92af99c1014f7844702f06a4290679e17831415b658d58971e92",
+    "endpoint_vector_sha256": "346359089cf53ba0bee70e452f44521cc4eb7e8faff250082ffc37e24e46d293",
+    "project_vector_sha256": "2af2907297b6471d83d843a8b823841dcf5f012506ffb0e811cae841d2197567",
+    "task_count": 20,
+    "task_vector_sha256": "6f770cd69471778d215e2c352881db551ab90fcefb3e9e61da266888d2c67faa"
+  },
+  "protected_watchers": [
+    {
+      "marker": "scripts/watch_v2415_r1_checkpoint_liveness.py",
+      "pid": 795336,
+      "start_ticks": 713986317
+    },
+    {
+      "marker": "scripts/watch_v24218_exact220_executor.py",
+      "pid": 3061652,
+      "start_ticks": 747569004
+    },
+    {
+      "marker": "scripts/watch_v24215_joint_package_recovery.py",
+      "pid": 2808901,
+      "start_ticks": 746680268
+    },
+    {
+      "marker": "scripts/watch_v24216_package_gate.py",
+      "pid": 2889939,
+      "start_ticks": 746969965
+    }
+  ],
+  "protocol_id": "v25048_atomic_shared_pypi_current_record_quality_v1",
+  "protocol_payload_sha256": "21667cb63857d2d7b806bf735afd433d577e3d091bb386618b54338bf6581636",
+  "role": "v25048_atomic_pypi_representation_preregistration",
+  "source_manifest": {
+    "scripts/control_v25048_atomic_pypi_representation.py": "9f60079decf084a35079f91b05a132f5e71852dcf1ac6c3967353314d358ada5",
+    "scripts/deepwide_api_lease.py": "8d9cffa78617b458172307d3558c76e9370f045f531c2f5aaaceb866f5a78c7d",
+    "scripts/run_v25048_atomic_pypi_representation.py": "cdd5d39e2e7f45104d5f41015d02f324d5c32f20939304d570813452c1c1cbab",
+    "src/deepwide_agent/v25047_pypi_current_record_representation.py": "f9d7fb8ceea349d06782aafa9016db1fb4e0c95d64d80d23a108d6ec9b886410",
+    "src/deepwide_agent/v25048_atomic_pypi_representation_contract.py": "e17a4d3ace481cc6409012ba3639f125e7ffdb6e149220b98bdeea47d290c24f",
+    "tests/test_v25048_atomic_pypi_representation.py": "9bf121805e1f9d3e3860a27533b1e2691bae54c15dddd6954e9e2305e333cd87"
+  },
+  "source_manifest_sha256": "034f91d88091742bec2c3efb4e2cdc348f901103d62a5fb952888b8632ebcc73",
+  "source_policy": {
+    "all_twenty_responses_fetched_and_parsed_before_any_model_call": true,
+    "candidate_is_identity_bound_current_record_then_same_raw_prefix": true,
+    "control_is_fixed_raw_json_prefix": true,
+    "deepwidebench_dev64_exact220_leaderboard_or_sota_authorized": false,
+    "entropy_or_information_gain_assigns_credit_or_routes": false,
+    "final_population_endpoint_page_answer_model_or_evaluator_not_probed_before_freeze": true,
+    "mapping_gold_category_question_type_split_evaluator_score_reward_read_by_forward": false,
+    "only_treatment_is_evidence_representation": true,
+    "parser_readiness_failure_stops_before_output_root_and_model": true,
+    "prediction_freeze_before_evaluator_module_or_quality_decision": true,
+    "public_snapshot_published_only_after_both_arm_predictions": true,
+    "runtime_boundary": [
+      "opaque_id",
+      "question",
+      "same_forward_public_pypi_bytes"
+    ],
+    "same_evidence_chars_prompt_model_output_cap_attempt_count_and_deadline": true,
+    "same_exact_response_bytes_underlie_both_arms": true
+  }
+}
