@@ -1,8 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.87
+> 版本：6.88
 >
-> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.87 覆盖。**
+> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.88 覆盖。**
+
+> **6.88 V2.50.59–61 version-qualified representation 与 fresh docs.rs 自然曝光门（2026-08-11）：V2.50.59要求URL path、title segment与独立正文heading三方形成唯一identity共识，并继续要求target field exact-label、unique-value、same-page与整记录原子绑定；11/11专项与父链通过。V2.50.60增加`<identity> <semantic-version>`和`<identity>-<semantic-version>`表面，identity仍必须是完整URL path component，title与独立heading必须只有同一版本；9/9专项与父链通过。开发探针仅使用随后永久排除的`serde/tokio/clap`，2页成功fetch、2页identity绑定、1页形成完整late record，0 model call。**
+
+> **V2.50.61为避免零模型机制门传递可达旧runtime中的`complete/search_many`，新增不导入V2.50.60/59/49/04、V2.42.86或`native_search`的capability-small纯表示模块。合成与docs.rs-shaped样例逐字段等价于V2.50.60；专项12/12、V2.50.60/59/49父链30/30，总计42/42通过。冻结后的forward dependency closure只有runner、contract、HTML surface与纯表示4个文件，privileged field、evaluator、credential及model/hosted-search call findings均为空。代码、build audit、protocol、preactivation audit与execution start分别以`bb652a93/ca29cd84/68ccbbcc/fc7e104d/f7d06b11`推送。**
+
+> **唯一固定20页、20-worker、每页一次fetch、无redirect/retry/replacement的零模型forward在`0.669643s`完成。20/20 fetch成功且failure-as-zero为0；20/20页面形成version-qualified identity，10/20形成完整record，8/20 decoded text超过5k，但只有4/20 target field位于5k之后，因此mechanism exposure与changed evidence均为4/20。projection failure与positive signed credit均为0。预注册要求至少8/20 exposure，唯一失败项为`minimum_natural_exposures`，结论为严格NO-GO。结果和审计已以`f1af2c34/7ab5d806`推送；审计`findings=[]`，且明确禁止同人口model/evaluator、补跑、替换人口、选择性重评或降低阈值。[`results/v25061_docsrs_late_record_forward_result_v1_20260811.json`](results/v25061_docsrs_late_record_forward_result_v1_20260811.json)与[`results/v25061_docsrs_late_record_forward_audit_v1_20260811.json`](results/v25061_docsrs_late_record_forward_audit_v1_20260811.json)是权威工件。**
+
+> **当前结论与下一路线：V2.50.61直接支持“version-qualified identity在这20个fresh docs.rs页面可达”，但只观察到10/20完整License record和4/20绝对5k后新字段，不能支持质量提升、DeepWideBench提分或entropy/IG credit。瓶颈已从identity surface收缩到target completeness与`absolute-late`门的低覆盖。不得把4/20事后改成GO，也不得回到同20页评价。下一候选必须更换fresh disjoint人口，并预注册区分两种机制：(a) `late-information recovery`只在prefix外出现新target时触发；(b) `salience/atomicity representation`允许同prefix内完整record重排，但必须用shared fetched bytes、相同模型/预算的paired prediction-change与post-freeze outer utility证明价值。二者不得混成一个credit。任何新候选仍先做零模型coverage gate，要求identity、complete record、candidate change分别报告；只有预注册覆盖门通过才开放fresh paired质量门，且Exact严格增加、Composite/Entity/Row/Item/Column全不退、invalid/fallback不增。当前完整DeepWideBench结果仍为V2.50.57 `6/220 / 0.449960`，低于V2.50.30 `7/220 / 0.450291`与项目单轮最佳V2.48.57 `9/220 / 0.457249`；无Avg@4、leaderboard或SOTA。entropy/IG继续shadow-only，signed credit=`0`。**
 
 > **6.87 V2.50.47–58 representation 外推失败、完整 220 冷运行与零 exposure 冻结（2026-08-11）：V2.50.48 在20个 fresh PyPI任务上完成 matched-cost representation gate。两臂逐题共享同一个 exact JSON snapshot、问题、12k evidence、GPT-5.6调用次数和arm-balanced顺序；control使用raw prefix，candidate确定性前置同一current-release record中的project identity、version、earliest upload date与Requires-Python。20/20任务在模型前parser-ready，candidate改变20/20 prediction；post-freeze fixed-20评价得到Exact `0→20/20`、Item F1 `0.483333→1.0`、Composite `0.870833→1.0`，其余Entity/Row/Column均为1且0 invalid/fallback。这个结果只支持“已经source/identity/target/coherence-bound的结构化记录表示可以改善该外部任务”，不支持普通网页可达性、DeepWideBench提分或entropy/IG credit。权威工件为[`results/v25048_atomic_pypi_result_v1_20260811.json`](results/v25048_atomic_pypi_result_v1_20260811.json)与[`results/v25048_atomic_pypi_postresult_audit_v1_20260811.json`](results/v25048_atomic_pypi_postresult_audit_v1_20260811.json)。**
 

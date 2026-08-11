@@ -1,6 +1,6 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
-> 检索截止：2026-08-07 14:10 UTC；项目证据更新：2026-08-11 UTC（至 V2.50.58）
+> 检索截止：2026-08-07 14:10 UTC；项目证据更新：2026-08-11 UTC（至 V2.50.61）
 >
 > 结论强度：这是基于公开文献的 novelty audit，不是“没有任何相关工作”的证明。2026 年文献多为尚未同行评审的 arXiv 预印本，文中将预印本结果视为作者报告，而非独立复现事实。
 
@@ -13,6 +13,12 @@ V2.50.48 给出了当前最强的表示层正结果，但后续实验限定了�
 V2.50.57随后把page-self representation接到生产fetch seam，并完成一次严格label-blind、固定220分母、failure-as-zero的冷运行。forward得到220/220 terminal predictions，其中214个model-generated、6个fallback，耗时`1058.769355s`；32-worker evaluator对全部220题各评一次，209 valid、11 error-as-zero，耗时`275.247622s`。完整指标为Exact `6/220=2.7273%`、Entity `0.686364`、Row/Item/Column F1 `0.230564/0.398949/0.483962`和Composite `0.449960`。该结果低于V2.50.30的`7/220 / 0.450291`和项目单轮最佳V2.48.57的`9/220 / 0.457249`，也没有Avg@4、leaderboard或SOTA证据。[`results/v25057_page_self_exact220_result_r2_20260811.json`](results/v25057_page_self_exact220_result_r2_20260811.json)与[`results/v25057_page_self_exact220_postresult_audit_r2_20260811.json`](results/v25057_page_self_exact220_postresult_audit_r2_20260811.json)给出结果与闭环审计。
 
 全集运行本身没有触发所测试的表示。1523个投影页面在5k prefix以后共有`30,104,588`字符，但natural mechanism exposure、changed evidence page和positive signed credit均为0，所有页面都精确回退到parent raw prefix。V2.50.57与V2.50.30只有12/220 prediction hash相同，208/220不同；Exact和Composite差值分别为`-1`与`-0.000331233`。由于treatment exposure为0，V2.50.58只能把这些差异归为独立冷搜索与模型rollout变化，不能归因于page-self表示。[`results/v25058_v25057_zero_exposure_diagnosis_v1_20260811.json`](results/v25058_v25057_zero_exposure_diagnosis_v1_20260811.json)因此禁止用同一binding重复220，并要求下一extractor先在全新普通网页外部门证明非零natural exposure、matched prediction change和post-freeze outer utility。
+
+V2.50.59与V2.50.60随后把身份识别面从显式row label扩展为同页共识。V2.50.59要求URL path、title segment和独立正文heading指向唯一同一identity；V2.50.60再允许title/heading写成`<identity> <semantic-version>`或`<identity>-<semantic-version>`，但版本必须在两个独立表面一致，identity仍须是完整URL path component。target field仍要求exact label、唯一安全值、同页完整record，且至少一个完整target observation位于5k之后。开发探针在永久排除的三个crate上观察到2/2 identity binding和1/2完整late record，但该probe没有模型或质量评价，只用于检查新路由是否可能触发。
+
+V2.50.61在20个fresh docs.rs页面上做了固定分母的零模型自然曝光检验。为保证零模型门的能力边界，生产runner改用与V2.50.60逐字段等价、但不导入历史runtime链的纯模块；42/42专项及父链测试通过，forward闭包只有4个文件，privileged、evaluator、credential与model/hosted-search findings均为空。唯一forward用20 workers对每个冻结endpoint请求一次，不redirect、不retry、不替换人口。20/20 fetch成功，20/20形成version-qualified identity，10/20形成完整record，8/20页面超过5k，但只有4/20 target field真正位于5k之后并改变candidate evidence。预注册门要求至少8/20 natural exposure，因此结果为NO-GO；projection failure和positive signed credit均为0。[`results/v25061_docsrs_late_record_forward_result_v1_20260811.json`](results/v25061_docsrs_late_record_forward_result_v1_20260811.json)与[`results/v25061_docsrs_late_record_forward_audit_v1_20260811.json`](results/v25061_docsrs_late_record_forward_audit_v1_20260811.json)记录结果及`findings=[]`的审计。
+
+这一结果把表示路线的瓶颈进一步分解。version-qualified identity在该固定人口上达到20/20，因此不能再把零曝光笼统归因于身份识别失败。完整target record只有10/20，而absolute-late target只有4/20，说明“页面长度超过5k”不等同于“5k之后包含任务所需新字段”。后续应把late-information recovery与salience/atomicity representation分开检验。前者只在prefix之外出现新target时触发；后者可以重排prefix内已经完整绑定的record，但必须在fresh disjoint人口上通过shared-page、matched-budget的prediction-change与post-freeze outer utility门。V2.50.61没有模型、evaluator或DeepWideBench运行，因此不提供质量、SOTA或entropy-credit证据，也不能用20/20 identity或4/20 exposure替代这些证据。
 
 这条证据链也收紧了信息熵与credit assignment的主张。结构化记录表示可以得到正的机制级outer credit，但本轮没有让entropy/IG选择动作或分配credit；普通网页和完整220又都没有产生可归因的observation。因而当前entropy/IG signed credit仍为0。下一实验可以用四层开放世界风险或expected information gain预测动作优先级，但credit的正负必须来自同状态删除、替换、suffix intervention，或与开发工件隔离的终局评价。单纯的后缀长度、局部熵下降、parser readiness或prediction change均不足以获得正credit。
 
