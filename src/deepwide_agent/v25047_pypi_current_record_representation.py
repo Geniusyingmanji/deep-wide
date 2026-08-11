@@ -22,9 +22,6 @@ from collections.abc import Mapping
 from datetime import date
 from typing import Any
 
-from .v24967_requirement_aware_source_allocation import normalize_project
-
-
 POLICY_ID = "v25047_identity_bound_pypi_current_release_record_v1"
 ROLE = "v25047_pypi_current_release_representation_result"
 RECEIPT_ROLE = "v25047_content_free_pypi_current_release_receipt"
@@ -34,6 +31,16 @@ VERSION = re.compile(r"[A-Za-z0-9][A-Za-z0-9.!+_-]{0,127}")
 PYTHON_SPEC = re.compile(r"[A-Za-z0-9.*<>=!~^,+_() ;:-]{1,256}")
 SAFE_NAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]{0,255}")
 UPLOAD_DATE = re.compile(r"\d{4}-\d{2}-\d{2}")
+PROJECT_NORMALIZER = re.compile(r"[-_.]+")
+
+
+def normalize_project(value: object) -> str:
+    """Normalize one visible PyPI identity without importing search policy."""
+
+    text = PROJECT_NORMALIZER.sub("-", str(value).strip().casefold()).strip("-")
+    if not text or len(text) > 128 or re.fullmatch(r"[a-z0-9-]+", text) is None:
+        raise ValueError("V2.50.47 invalid visible PyPI project identity")
+    return text
 
 
 def payload_sha256(value: object) -> str:
@@ -278,5 +285,5 @@ def validate_receipt(value: Mapping[str, Any]) -> dict[str, Any]:
 __all__ = [
     "MAX_EVIDENCE_CHARS", "MAX_RAW_BYTES", "POLICY_ID", "ROLE",
     "build_representations", "fixed_raw_prefix", "parse_current_record",
-    "payload_sha256", "render_record", "validate_receipt",
+    "normalize_project", "payload_sha256", "render_record", "validate_receipt",
 ]
