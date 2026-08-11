@@ -1,6 +1,6 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
-> 检索截止：2026-08-07 14:10 UTC；项目证据更新：2026-08-11 UTC（至 V2.50.62）
+> 检索截止：2026-08-07 14:10 UTC；项目证据更新：2026-08-11 UTC（至 V2.50.63）
 >
 > 结论强度：这是基于公开文献的 novelty audit，不是“没有任何相关工作”的证明。2026 年文献多为尚未同行评审的 arXiv 预印本，文中将预印本结果视为作者报告，而非独立复现事实。
 
@@ -23,6 +23,12 @@ V2.50.61在20个fresh docs.rs页面上做了固定分母的零模型自然曝光
 V2.50.62随后独立检验prefix-salience/atomicity，不再把late-information recovery算作同一机制。候选只在identity和全部target field已经位于父5k prefix内时前置一个原子record；任一target位于5k之后就逐字返回父prefix。20个fresh且与V2.50.59–61不交的docs.rs页面全部fetch成功并形成唯一identity，14页超过5k，但只有4页形成完整License record，且4个target全部位于5k之后。因此prefix-complete、candidate change与mechanism exposure均为`0/20`，低于预注册的`8/20`门；capacity、projection与transport failure均为0。[`results/v25062_prefix_salience_forward_result_v1_20260811.json`](results/v25062_prefix_salience_forward_result_v1_20260811.json)和[`results/v25062_prefix_salience_forward_audit_v1_20260811.json`](results/v25062_prefix_salience_forward_audit_v1_20260811.json)记录该NO-GO及`findings=[]`审计。
 
 V2.50.61与V2.50.62使用不同的fresh人口，不能把两轮计数相加或直接解释为同一个处理效应。两轮共同支持的是version-qualified identity route在各自20页上均达到20/20；target completeness与字段位置则明显依赖页面人口。V2.50.61为10个完整record、4个late target，V2.50.62为4个完整record且全部late。因而当前没有证据支持prefix-salience的稳定覆盖，也没有证据把late recovery迁移到DeepWideBench质量。后续不应继续通过更换docs.rs人口追逐覆盖率，而应先检查冻结220输出中的通用、label-blind结构错误，再为确定性变换建立全220开发评价和独立冷运行复现。
+
+V2.50.63对V2.48.57、V2.50.30和V2.50.57三轮冻结全集做了aggregate-only结构诊断。三轮共660份prediction全部各有一个可解析pipe table和至少一条data row，empty cell与malformed-width row均为0。规范化首列identity重复分别出现在`67/65/64`题，额外重复identity行分别为`1696/1793/1476`；完整重复行却只有`38/0/0`。首列重复因而通常对应同一entity下的不同记录，不能作为通用去重键。all-target-Unknown非主键行分别为`185/50/138`，但prediction结构无法判定这些行是无效输出还是任务要求的缺失占位，也不能安全删除。
+
+这些结构信号也没有定位evaluator错误。三轮evaluator error分别为`10/12/11`；duplicate-identity信号组内只有`0/1/1`个error，无该信号组则有`10/11/10`个。因此大多数internal/out-of-range错误不能由首列重复解释。诊断只解码prediction/instance ID与evaluator error状态的白名单字段，其他值以JSON词法边界跳过；结果没有输出逐题内容、score、gold或类别。[`results/v25063_three_run_output_structure_diagnosis_v1_20260811.json`](results/v25063_three_run_output_structure_diagnosis_v1_20260811.json)和[`results/v25063_three_run_output_structure_audit_v1_20260811.json`](results/v25063_three_run_output_structure_audit_v1_20260811.json)支持通用去重与Unknown行删除NO-GO，但不支持任何质量提升主张。
+
+三轮输出结构完整而Exact/Composite仍低，把优化重点重新指向事实选择与记录级grounding。后续候选应在同一source record内绑定row identity、target field与value，再由matched shared-page实验检验prediction和outer utility；不应通过删行或合并首列来提高表面precision。信息熵仍可表示候选证据对cell belief的增量，但signed credit必须来自record-bound intervention和post-freeze utility，而不是重复行计数、Unknown率或evaluator error状态。
 
 这条证据链也收紧了信息熵与credit assignment的主张。结构化记录表示可以得到正的机制级outer credit，但本轮没有让entropy/IG选择动作或分配credit；普通网页和完整220又都没有产生可归因的observation。因而当前entropy/IG signed credit仍为0。下一实验可以用四层开放世界风险或expected information gain预测动作优先级，但credit的正负必须来自同状态删除、替换、suffix intervention，或与开发工件隔离的终局评价。单纯的后缀长度、局部熵下降、parser readiness或prediction change均不足以获得正credit。
 

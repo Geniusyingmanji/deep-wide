@@ -1,8 +1,14 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.89
+> 版本：6.90
 >
-> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.89 覆盖。**
+> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.90 覆盖。**
+
+> **6.90 V2.50.63 三轮冻结220输出结构诊断与通用后处理NO-GO（2026-08-11）：V2.50.63只读V2.48.57、V2.50.30与V2.50.57三轮已经prediction-freeze、postresult-audit且推送的全集输出，共`3×220=660`题。脚本对prediction JSONL只解码顶层`instance_id/prediction`，对evaluator JSONL只解码`instance_id/error`，对freeze只解码`selected/terminal/label_blind`，对postaudit只解码`audit_valid/findings`；其余值以词法边界跳过，未物化question、gold、category、question_type、split、score或逐题metric。ID与prediction只用于内存结构计数和连接，结果不输出或单独哈希ID、表头、行/单元格、prediction或逐题标记。代码、结果和审计分别以`4d88052f/ba2036f4/3532ebd2`推送；8/8测试通过，audit `findings=[]`。**
+
+> **三轮660份prediction全部各有且仅有一个可解析pipe table、至少一条data row，empty cell与malformed-width row均为0。V2.48.57/V2.50.30/V2.50.57中，规范化首列identity重复分别出现在`67/65/64`题，额外重复identity行分别为`1696/1793/1476`；但完整重复行仅为`38/0/0`。这说明首列重复通常表示同一entity下不同记录，而非可安全删除的duplicate row。三轮all-target-Unknown非主键行分别为`185/50/138`，但这些行是否为任务要求的缺失占位无法从prediction结构判断。evaluator error为`10/12/11`；duplicate-identity信号组中的error仅`0/1/1`，无该信号组反而为`10/11/10`，因此结构信号不能解释大多数evaluator internal error。权威工件为[`results/v25063_three_run_output_structure_diagnosis_v1_20260811.json`](results/v25063_three_run_output_structure_diagnosis_v1_20260811.json)与[`results/v25063_three_run_output_structure_audit_v1_20260811.json`](results/v25063_three_run_output_structure_audit_v1_20260811.json)。**
+
+> **当前决策：禁止通用first-column dedup、通用all-Unknown row deletion、对现有220 postprocessor重评或据此直接启动新220。三轮输出格式完整，结构后处理不能解决当前低Exact/Composite；主瓶颈仍是事实选择、identity/record/target/value binding与evidence-grounded synthesis。下一候选必须在fresh benchmark-external matched gate中共享同一fetched bytes和模型预算，只改变“每个输出row/cell必须绑定同一source record”的synthesis表示；禁止删已生成row来制造precision提升，缺失必须保留Unknown。门仍要求natural prediction change、Exact严格增加、Composite/Entity/Row/Item/Column全不退且invalid/fallback不增，只有通过后才设计新冷220。最新完整V2.50.57仍为`6/220 / 0.449960`，项目单轮最佳V2.48.57仍为`9/220 / 0.457249`；无Avg@4、leaderboard或SOTA。entropy/IG只可作为selection feature，signed credit仍为0。**
 
 > **6.89 V2.50.62 prefix-salience/atomicity 独立覆盖门严格NO-GO（2026-08-11）：V2.50.62把V2.50.61中混在一起的两类机制拆开，只允许identity与全部target field已经位于父5k prefix内的完整record被原子前置；任何late target都不触发，因此该门不测试后缀恢复。20个fresh docs.rs crate在父提交逐项literal-zero，且与V2.50.59–61开发/确认人口完全不交。代码、build audit、protocol、preactivation audit与start分别以`8f571fd3/aa0cfbfc/645d8894/4977f1f1/a631a816`推送；9项纯表示、9项门控与V2.50.61/60/59/49父链合计60/60通过。forward闭包仅为runner、HTML surface、两个纯表示模块和contract共5文件，privileged/evaluator/credential/model/hosted-search findings均为空。**
 
