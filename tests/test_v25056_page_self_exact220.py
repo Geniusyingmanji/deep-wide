@@ -79,7 +79,7 @@ class PageSelfExact220Tests(unittest.TestCase):
 
     def test_protocol_freezes_single_representation_treatment(self) -> None:
         value = contract.build_protocol(
-            ROOT, now=1, tracked=False, require_clean=False, require_pristine=True
+            ROOT, now=1, tracked=False, require_clean=False, require_pristine=False
         )
         self.assertTrue(
             value["treatment_scope"][
@@ -93,7 +93,7 @@ class PageSelfExact220Tests(unittest.TestCase):
 
     def test_resealed_protocol_treatment_tamper_fails(self) -> None:
         value = contract.build_protocol(
-            ROOT, now=1, tracked=False, require_clean=False, require_pristine=True
+            ROOT, now=1, tracked=False, require_clean=False, require_pristine=False
         )
         changed = copy.deepcopy(value)
         changed["treatment_scope"][

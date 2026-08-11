@@ -85,6 +85,21 @@ PARENT_TESTS = (
 )
 RUNNER_MARKER = str(RUNNER)
 CHILD_MARKER = "v25056_no_child_process"
+BUILD_ROLE = "v25056_page_self_exact220_build_audit"
+PROTOCOL_ROLE = "v25056_page_self_exact220_preregistration"
+PREAUDIT_ROLE = "v25056_page_self_exact220_preactivation_audit"
+START_ROLE = "v25056_page_self_exact220_execution_start"
+PROGRESS_ROLE = "v25056_page_self_exact220_safe_progress"
+SLOT_ROLE = "v25056_model_slot"
+SUMMARY_ROLE = "v25056_page_self_exact220_run_summary"
+FREEZE_ROLE = "v25056_page_self_exact220_prediction_freeze"
+FORWARD_ROLE = "v25056_page_self_exact220_forward_result"
+FORWARD_AUDIT_NATIVE_ROLE = "v25056_page_self_exact220_forward_audit"
+EVALUATOR_OWNER = "v25056_page_self_exact220_evaluator_v1"
+EVALUATOR_PURPOSE = "postfreeze_fixed_partition_parallel_v25056_exact220_evaluator"
+EVALUATOR_FREEZE_BINDING_FIELD = (
+    "native_v25056_prediction_freeze_bound_by_role_projection"
+)
 FORWARD_SOURCES = (
     SOURCE,
     RUNTIME,
@@ -102,12 +117,12 @@ FORWARD_SOURCES = (
 LOCAL_SOURCES = (*FORWARD_SOURCES, CONTROL, FINALIZER, TEST, PARENT_TASK_PROTOCOL)
 
 _LEGACY_RUNNER_ROLES = {
-    "v25030_evidence_conditioned_exact220_build_audit": "v25056_page_self_exact220_build_audit",
-    "v25030_evidence_conditioned_exact220_preactivation_audit": "v25056_page_self_exact220_preactivation_audit",
-    "v25030_evidence_conditioned_exact220_execution_start": "v25056_page_self_exact220_execution_start",
-    "v25030_evidence_conditioned_exact220_safe_progress": "v25056_page_self_exact220_safe_progress",
-    "v25030_evidence_conditioned_exact220_prediction_freeze": "v25056_page_self_exact220_prediction_freeze",
-    "v25030_evidence_conditioned_exact220_forward_result": "v25056_page_self_exact220_forward_result",
+    "v25030_evidence_conditioned_exact220_build_audit": BUILD_ROLE,
+    "v25030_evidence_conditioned_exact220_preactivation_audit": PREAUDIT_ROLE,
+    "v25030_evidence_conditioned_exact220_execution_start": START_ROLE,
+    "v25030_evidence_conditioned_exact220_safe_progress": PROGRESS_ROLE,
+    "v25030_evidence_conditioned_exact220_prediction_freeze": FREEZE_ROLE,
+    "v25030_evidence_conditioned_exact220_forward_result": FORWARD_ROLE,
 }
 
 
@@ -238,7 +253,7 @@ def build_protocol(
     }
     value = {
         "artifact_version": 1,
-        "role": "v25056_page_self_exact220_preregistration",
+        "role": PROTOCOL_ROLE,
         "protocol_id": PROTOCOL_ID,
         "created_at_unix": int(now),
         "git_head": git(root, "rev-parse", "HEAD"),
@@ -310,7 +325,7 @@ def validate_protocol(root: Path, value: Mapping[str, Any], *, tracked: bool = T
         "visible_question_vector_sha256": payload_sha256([row["question"] for row in tasks]),
     }
     if (
-        copied.get("role") != "v25056_page_self_exact220_preregistration"
+        copied.get("role") != PROTOCOL_ROLE
         or copied.get("protocol_id") != PROTOCOL_ID
         or observed != payload_sha256(unsigned)
         or copied.get("task_contract") != expected_task

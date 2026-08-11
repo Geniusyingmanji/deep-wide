@@ -49,7 +49,7 @@ def validate_preaudit(value: Mapping[str, Any]) -> dict[str, Any]:
     copied = dict(value)
     protocol = parent._protocol()
     if (
-        copied.get("role") != "v25056_page_self_exact220_preactivation_audit"
+        copied.get("role") != contract.PREAUDIT_ROLE
         or copied.get("protocol_id") != contract.PROTOCOL_ID
         or copied.get("audit_valid") is not True
         or copied.get("findings") != []
@@ -72,7 +72,7 @@ def validate_preaudit(value: Mapping[str, Any]) -> dict[str, Any]:
 def validate_start(value: Mapping[str, Any]) -> dict[str, Any]:
     copied = dict(value)
     if (
-        copied.get("role") != "v25056_page_self_exact220_execution_start"
+        copied.get("role") != contract.START_ROLE
         or copied.get("protocol_id") != contract.PROTOCOL_ID
         or copied.get("status") != "authorized_not_started"
         or copied.get("findings") != []

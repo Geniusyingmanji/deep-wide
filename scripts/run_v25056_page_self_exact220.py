@@ -40,7 +40,7 @@ def _validate_start() -> tuple[dict[str, Any], dict[str, Any]]:
     )
     start = parent._read(ROOT / contract.EXECUTION_START)
     if (
-        start.get("role") != "v25056_page_self_exact220_execution_start"
+        start.get("role") != contract.START_ROLE
         or start.get("protocol_id") != contract.PROTOCOL_ID
         or start.get("status") != "authorized_not_started"
         or start.get("protocol_sha256") != contract.sha256(ROOT / contract.PROTOCOL)
@@ -69,7 +69,7 @@ def _prepare_output() -> None:
             slots / f"slot_{index:02d}.lock",
             {
                 "artifact_version": 1,
-                "role": "v25056_model_slot",
+                "role": contract.SLOT_ROLE,
                 "slot": index,
                 "slot_cap": contract.MODEL_SLOT_CAP,
                 "contains_credential_or_benchmark_content": False,
@@ -91,7 +91,7 @@ def _aggregate(rows: list[dict[str, Any]], wall: float) -> dict[str, Any]:
         )
         if isinstance(wave_receipt, dict)
     ]
-    value["role"] = "v25056_page_self_exact220_run_summary"
+    value["role"] = contract.SUMMARY_ROLE
     value["page_self_projection"] = {
         "projected_pages": sum(int(item["projected_page_count"]) for item in fetches),
         "mechanism_exposed_pages": sum(

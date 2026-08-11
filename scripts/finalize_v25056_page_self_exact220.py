@@ -81,7 +81,7 @@ def _native_forward_barrier() -> dict[str, Any]:
         and summary.get("all_tasks_within_resource_caps") is True
     )
     if (
-        forward.get("role") != "v25056_page_self_exact220_forward_result"
+        forward.get("role") != contract.FORWARD_ROLE
         or forward.get("protocol_id") != contract.PROTOCOL_ID
         or forward.get("selected") != 220
         or forward.get("terminal_predictions") != 220
@@ -94,7 +94,7 @@ def _native_forward_barrier() -> dict[str, Any]:
         or forward.get("mapping_gold_category_question_type_split_answer_evaluator_score_reward_read") is not False
         or forward.get("entropy_or_information_gain_assigns_signed_credit") is not False
         or not contract.sealed(forward, "result_payload_sha256")
-        or summary.get("role") != "v25056_page_self_exact220_run_summary"
+        or summary.get("role") != contract.SUMMARY_ROLE
         or summary.get("selected") != 220
         or summary.get("completed") != 220
         or summary.get("failed") != 0
@@ -108,7 +108,7 @@ def _native_forward_barrier() -> dict[str, Any]:
         or summary.get("page_self_projection") != projection
         or summary.get("page_self_mechanism_gate_passed") is not gate
         or not contract.sealed(summary, "summary_payload_sha256")
-        or freeze.get("role") != "v25056_page_self_exact220_prediction_freeze"
+        or freeze.get("role") != contract.FREEZE_ROLE
         or freeze.get("selected") != 220
         or freeze.get("terminal") != 220
         or freeze.get("mapping_gold_or_evaluator_opened_or_hashed") is not False
@@ -170,7 +170,7 @@ def _parent_evaluator_contract() -> dict[str, Any]:
         raise RuntimeError("V2.50.56 parent evaluator contract absent")
     value.pop("opened_only_after_v24635_exact220_prediction_freeze", None)
     value["opened_only_after_v24791_exact220_prediction_freeze"] = True
-    value["native_v25056_prediction_freeze_bound_by_role_projection"] = True
+    value[contract.EVALUATOR_FREEZE_BINDING_FIELD] = True
     value["mapping_query_answer_or_gold_bytes_opened_or_hashed"] = True
     value["evaluator_unconditional_on_page_self_mechanism_gate"] = True
     return value
@@ -216,7 +216,7 @@ def _build_native_forward_audit() -> dict[str, Any]:
         {
             "artifact_version": 1,
             "role": "v24791_exact220_forward_audit",
-            "native_role": "v25056_page_self_exact220_forward_audit",
+            "native_role": contract.FORWARD_AUDIT_NATIVE_ROLE,
             "protocol_id": contract.PROTOCOL_ID,
             "created_at_unix": int(time.time()),
             "protocol_sha256": contract.sha256(ROOT / contract.PROTOCOL),
@@ -258,10 +258,8 @@ def configure() -> None:
     parent._native_forward_barrier = _native_forward_barrier
     parent._parent_evaluator_contract = _parent_evaluator_contract
     _PARENT_CONFIGURE()
-    parent.base.EVALUATOR_OWNER = "v25056_page_self_exact220_evaluator_v1"
-    parent.base.EVALUATOR_PURPOSE = (
-        "postfreeze_fixed_partition_parallel_v25056_exact220_evaluator"
-    )
+    parent.base.EVALUATOR_OWNER = contract.EVALUATOR_OWNER
+    parent.base.EVALUATOR_PURPOSE = contract.EVALUATOR_PURPOSE
     parent.base.REFERENCES = {
         "v24857_best": Path(
             "results/v24857_pacing_aware_exact220_result_v1_20260808.json"
