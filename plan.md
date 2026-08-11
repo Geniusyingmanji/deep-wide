@@ -1,8 +1,14 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.83
+> 版本：6.84
 >
-> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.83 覆盖。**
+> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.84 覆盖。**
+
+> **6.84 V2.50.41 单response adaptive-search capability NO-GO（2026-08-11）：针对V2.50.39证明static one-shot成本低但质量退化的边界，V2.50.41只问一个更窄的接口能力问题：同一hosted-search response能否先执行两条冻结seed query，再根据首波可审计action-source title生成并执行两条follow-up，同时相对同四query的`2+2`降低token。人口固定为V2.42.81历史已执行且永久排除于confirmation的pair 5–8；candidate必须先运行，control只在内存复用candidate生成的同四query，故该门不测paired质量或稳定因果效应。两臂均0 fetch、0 standalone model、0 evaluator，candidate/control每题最多`1/2`次provider call。实现、build、protocol、preaudit、start、result和postaudit均分阶段推送；新primitive 8/8、控制面5/5、联合父链44/44通过，46-file运行闭包与52-file manifest的privileged/evaluator/credential findings均为空。四个protected watcher及仓库外既有任务均未停止、重启或复制。**
+
+> **唯一4题probe在`34.945920s`完成，4/4 terminal、0 failure/retry/fetch/recursive split/transport failure/hard timeout；candidate/control provider calls/attempts精确`4/4`与`8/8`。candidate trace出现16条distinct query与8条follow-up，8/8 follow-up含seed anchor；control完整观察8/8双query向量，并复用同一candidate-generated四query。candidate/control distinct action sources=`86/76=1.131579×`。然而64个首波action sources的title计数为0，故8条follow-up中可由首波title新token审计支持的为`0/8`，4题trace capability全部失败。即使忽略该provenance门，candidate input/total tokens=`67,879/68,649`，control=`67,566/67,952`，ratio=`1.004633/1.010257×`，未达到预注册`≤0.85×`且略高于control。严格NO-GO的failed checks为`all_candidate_trace_capability_passed`、`all_followups_have_seed_anchor_and_title_novelty`、`candidate_input_cost`、`candidate_total_cost`；post-audit九项checks全真，`audit_valid=true, findings=[]`。权威结果与审计为[`results/v25041_adaptive_single_request_development_probe_v1_20260811.json`](results/v25041_adaptive_single_request_development_probe_v1_20260811.json)和[`results/v25041_adaptive_single_request_postresult_audit_v1_20260811.json`](results/v25041_adaptive_single_request_postresult_audit_v1_20260811.json)。**
+
+> **路线更新：停止用prompt要求同response内部adaptive continuation，不重跑V2.50.41、不把URL或snippet临时当作title来放宽门。下一步先做零effect capability audit，确认本地GPT-5.6代理是否支持显式`previous_response_id`/cached-input或等价provider continuation，并能返回分wave可归因的source metadata；只读代码和接口schema即可，不能用新benchmark任务探测。若接口不支持，search-cost主线暂停，回到同pages/shared-prefix的evidence representation与synthesis可靠性；若支持，先在已消费中性任务上冻结一个显式两request continuation cost gate，要求第二请求input tokens实测下降、首波provenance可重放且同四query source yield不退，再考虑fresh external。任何情况都不授权dev64/220。当前完整口径仍为V2.50.30 `7/220 / 0.450291`，项目最佳V2.48.57 `9/220 / 0.457249`，无leaderboard/SOTA；entropy/IG继续shadow-only、signed credit=0。**
 
 > **6.83 V2.50.38–40 static `2+2` versus one-shot `4` 外部门闭环（2026-08-11）：V2.50.38 在任何 provider/search/fetch/model effect 前因 `max_page_chars=20000` 与冻结父 transport 的 `5000` 上限不一致而 fail closed；其零 effect 收据已封存，旧 start/output 永久禁止复用。V2.50.39 只把该值改为 `5000`，任务、四条 visible query、arm order、prompt、model、query/fetch/evidence/deadline预算和所有门均与 V2.50.38 字节等价，并使用新 protocol/output namespace。实现、build audit、protocol、preaudit、start、forward freeze、evaluator implementation/protocol、result 与 post-audit 均分阶段提交推送；新 evaluator 9/9、冻结 forward 父链 48/48 以独立进程通过，网络能力仅存在于 post-freeze `_fetch_gold`，privileged-field 与 credential findings 为空。四个 protected watcher 未停止、重启或复制。**
 
