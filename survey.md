@@ -1398,3 +1398,11 @@ V2.50.75/76实现并接入了这一anchor-bounded方案。模型只给唯一anch
 对检索系统设计，这个负结果支持把下一层从“让LLM更积极地提record”改成“先机械建立entity-specific page boundary”。visible row identity只能与同轮页面的唯一title/primary heading做精确或唯一规范化绑定；之后field verifier才在该identity-bound region内寻找source label/value。这个顺序与WebSwarm式search/inspect分工兼容，但共享产物必须是provenance-sealed record，而不是agent confidence或未绑定摘要。title/identity歧义、跨页拼接、字段坐标并列和冲突继续fail closed，且必须在fresh production-isomorphic人口先证明natural reach后再考虑公开220。
 
 对entropy credit assignment，V2.50.78是更严格的零对照：系统有40个retrieval wave、20个成功proposal call和5个终局prediction difference，但admissible treatment observation为0，所以所有signed credit必须为0。IG可以作为未来identity-binding或inspect动作的shadow value-of-computation预测量；只有`identity/source admissibility → matched evidence intervention → treatment-caused prediction change → post-freeze outer utility`完整成立，才能给正credit。当前benchmark分数仍是最新V2.50.57的`6/220 / 0.449960`，项目最佳V2.48.57的`9/220 / 0.457249`，没有SOTA证据。
+
+V2.50.80/81把下一层实现为identity-first page binding。visible identity只来自唯一singular uppercase tag；页面同时需要exact normalized URL segment和exact title/leading segment，正文共现或标题子串不算。只有唯一joint page进入field proposal，模型不再提出identity、anchor或quote。V2.50.82的64/64 clean-build审计无label/evaluator/credential finding；V2.50.83在另一组fresh 20 package上完成唯一paired forward，`78.81s`内20/20完成、双臂20/20 model success、零terminal hard failure，预算完全匹配。
+
+机制仍NO-GO：exposure=`0/20`、prediction change=`1/20`，且candidate evidence从未改变。V2.50.84的content-free funnel却给出有用的中间进展：20题都有visible identity，9题形成唯一joint page，3题因多个joint page拒绝，8题无joint page；9个unique-page题中8题返回非空proposal，累计8 records/11 fields。相较V2.50.78只有1个nonempty record，identity-first显著改善了proposal reach，但8条record全在field label/value binding处原子拒绝。
+
+这个结果把下一研究问题从“能否找到一个record”推进为“partial field evidence应如何安全保留”。现有receipt只给record级首个拒绝，不能推断11个field里哪些已通过。因此后继必须先输出逐字段content-free disposition，再允许verified subset：identity/page仍是原子边界，单个坏field不抹掉其他逐字通过字段；但同target冲突、坐标歧义、跨页或跨identity仍整record拒绝。只有至少一个field真正通过才形成active evidence，且external仍要满足exposure、prediction change和quality非退化门。
+
+对entropy credit，这里出现了更细的可识别单位：credit候选不应是整次search或整条model proposal，而应是通过identity/page/source-label/value/coordinate gate的field observation。即使partial observation获准进入evidence，它也只能先得到shadow epistemic value；正signed credit仍需matched deletion/replacement或paired treatment带来的post-freeze outer utility。当前没有新benchmark分数，项目最佳仍是V2.48.57的`9/220 / 0.457249`。
