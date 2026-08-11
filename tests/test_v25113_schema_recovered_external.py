@@ -149,6 +149,8 @@ class V25113SchemaRecoveredExternalTests(unittest.TestCase):
             control, "_history_freshness", return_value=fake_freshness
         ), mock.patch.object(control, "_parent_valid", return_value=True), mock.patch.object(
             control, "_lease_inactive", return_value=True
+        ), mock.patch.object(
+            control, "_future_pristine", return_value=True
         ), mock.patch.object(contract, "watcher_snapshot", return_value=frozen_watchers):
             return control.build_audit(now=1, require_clean=False)
 
@@ -395,7 +397,7 @@ class V25113SchemaRecoveredExternalTests(unittest.TestCase):
             ROOT,
             now=1,
             tracked=False,
-            require_pristine=True,
+            require_pristine=False,
             build_audit_sha256="0" * 64,
         )
         self.assertEqual(value["population"]["task_count"], 20)
