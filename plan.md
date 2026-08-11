@@ -1,8 +1,14 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.84
+> 版本：6.85
 >
-> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.84 覆盖。**
+> **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.85 覆盖。**
+
+> **6.85 V2.50.42 Responses continuation/cache零effect审计与成本路线终止（2026-08-11）：官方OpenAI Docs确认`previous_response_id`可传递前一response上下文，但链中全部历史input tokens仍按input计费，因此它不能解释为V2.50.30两波search的input-token省略机制。GPT-5.6 prompt caching只对breakpoint处至少1,024-token的exact prefix可用；cache write按uncached input费率的`1.25×`计，read/write分别由`usage.input_tokens_details.cached_tokens/cache_write_tokens`报告，必须计算净成本而不能只看total input。官方依据为[Conversation state](https://developers.openai.com/api/docs/guides/conversation-state#passing-context-from-the-previous-response)与[Prompt caching](https://developers.openai.com/api/docs/guides/prompt-caching)。**
+
+> **本地零模型审计现场核对三条active search source：`previous_response_id/prompt_cache_key/prompt_cache_options/prompt_cache_breakpoint` request字段命中均为0，`cached_tokens/cache_write_tokens/input_tokens_details` usage计量命中也均为0；这只说明当前客户端尚未实现或计量cache/continuation，不证明9878代理永远不支持。历史V2.42.79共32个请求、总input `5,888`、单请求`156–212` tokens、cached input合计0，但全部低于官方1,024-token最低门，因此只是cache-ineligible负控制。对`GET /openapi.json`与`OPTIONS /responses`的两个无body/无credential schema请求均返回404，未发现可读schema；这也只是capability未建立。V2.50.42全程model/search/fetch/evaluator/benchmark calls=0，权威审计[`results/v25042_continuation_cache_capability_audit_v1_20260811.json`](results/v25042_continuation_cache_capability_audit_v1_20260811.json)的seal有效。**
+
+> **决策：`previous_response_id` input-saving hypothesis严格NO-GO；本地prompt-cache support与net savings均`established=false`，prompt-cache effect probe、continuation/cache search-cost mainline、dev64/220/evaluator/SOTA授权全部false。由于hosted-search主要input来自动态tool context，而当前active客户端既不设置可复用prefix breakpoint也不记录cache write，暂不为低优先级cache假设再消耗provider effect。正式恢复同一fetched pages/shared-prefix的质量主线：先从V2.50.30与V2.48.57的冻结receipt/prediction做纯post-freeze、label-blind aggregate bottleneck audit，候选只改变evidence representation或synthesis/completion，不增加query/fetch/token/wall；必须在fresh external matched gate中自然改变prediction并使Exact/Composite/Entity/Row/Item/Column全不退，才考虑下一220。当前分数与entropy-credit口径不变。**
 
 > **6.84 V2.50.41 单response adaptive-search capability NO-GO（2026-08-11）：针对V2.50.39证明static one-shot成本低但质量退化的边界，V2.50.41只问一个更窄的接口能力问题：同一hosted-search response能否先执行两条冻结seed query，再根据首波可审计action-source title生成并执行两条follow-up，同时相对同四query的`2+2`降低token。人口固定为V2.42.81历史已执行且永久排除于confirmation的pair 5–8；candidate必须先运行，control只在内存复用candidate生成的同四query，故该门不测paired质量或稳定因果效应。两臂均0 fetch、0 standalone model、0 evaluator，candidate/control每题最多`1/2`次provider call。实现、build、protocol、preaudit、start、result和postaudit均分阶段推送；新primitive 8/8、控制面5/5、联合父链44/44通过，46-file运行闭包与52-file manifest的privileged/evaluator/credential findings均为空。四个protected watcher及仓库外既有任务均未停止、重启或复制。**
 

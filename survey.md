@@ -6,6 +6,12 @@
 
 ## 2026-08-11 实验更新：query batching 降低成本，但未通过质量门
 
+V2.50.42用官方文档和本地零模型审计封闭了两个容易混淆的成本假设。OpenAI的Responses文档说明，`previous_response_id`能延续上下文，但链中历史input tokens仍计费；它不是删除第二次请求历史input的机制。[Conversation state](https://developers.openai.com/api/docs/guides/conversation-state#passing-context-from-the-previous-response) Prompt caching则可降低精确重复prefix的读取成本，但GPT-5.6要求至少1,024-token exact prefix，cache write按uncached input的`1.25×`计，且需要同时报告`cached_tokens`与`cache_write_tokens`才能判断净成本。[Prompt caching](https://developers.openai.com/api/docs/guides/prompt-caching)
+
+当前DeepWide search客户端没有设置continuation/cache请求字段，也没有记录cache read/write usage；本地9878的标准OpenAPI与OPTIONS路径均返回404，因此代理能力尚未通过可读schema建立。历史V2.42.79虽记录过`cached_input_tokens`，32个请求合计均为0，但每个请求只有156–212 input tokens，低于官方最低门槛，不能作为cache支持或不支持的有效检验。V2.50.42据此把`previous_response_id`省input判为NO-GO，把本地prompt-cache support与net savings标为未建立，并禁止新的cache effect probe。该审计只发出两个无body schema请求，model/search/fetch/evaluator/benchmark effect为0；工件为[`results/v25042_continuation_cache_capability_audit_v1_20260811.json`](results/v25042_continuation_cache_capability_audit_v1_20260811.json)。
+
+成本路线因此暂时停止，而不是宣称缓存永远无用。对于当前pipeline，更可识别的下一步是固定同一批fetched pages、query/fetch/model/token/wall预算，只改变evidence representation或synthesis/completion，然后在fresh external shared-prefix任务上评价终局表格质量。这个顺序也适用于entropy credit：cache hit、token节省或上下文延续属于资源或执行信号，只有与admissible evidence和post-freeze outer utility结合后才能进入signed task credit。
+
 V2.50.41进一步检验了“在一个hosted-search response内保留适应性”的接口假设。四个历史已消费的中性文档pair各运行一次candidate：先执行两条精确seed query，再要求模型根据首波source title生成并执行两条follow-up。control随后用candidate在内存生成的同四query按`2+2`执行，因此该实验只比较capability、trace与成本，不是质量或随机化因果实验。唯一probe完成4/4题，candidate/control provider calls为`4/8`，0 retry/fetch/transport failure/timeout；candidate产生16条distinct query和8条follow-up，control完整观察8个双query向量。
 
 该接口形式没有通过预注册门。candidate的86个distinct action sources多于control的76个，但首波64个action sources均缺title，所以8条follow-up没有一条可由“首波title中新出现的token”审计支持。模型生成了follow-up不等于已证明它使用了首波可采纳证据。成本也没有下降：candidate/control input与total token比为`1.004633/1.010257×`，略高于control而非预注册的`≤0.85×`。结果因此是capability/cost NO-GO，不授权fresh external、DeepWideBench或evaluator。post-result audit为`audit_valid=true, findings=[]`；证据见[`results/v25041_adaptive_single_request_development_probe_v1_20260811.json`](results/v25041_adaptive_single_request_development_probe_v1_20260811.json)和[`results/v25041_adaptive_single_request_postresult_audit_v1_20260811.json`](results/v25041_adaptive_single_request_postresult_audit_v1_20260811.json)。
