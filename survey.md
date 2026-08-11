@@ -1,10 +1,16 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
-> 检索截止：2026-08-07 14:10 UTC；项目证据更新：2026-08-11 UTC（至 V2.50.46）
+> 检索截止：2026-08-07 14:10 UTC；项目证据更新：2026-08-11 UTC（至 V2.50.48）
 >
 > 结论强度：这是基于公开文献的 novelty audit，不是“没有任何相关工作”的证明。2026 年文献多为尚未同行评审的 arXiv 预印本，文中将预印本结果视为作者报告，而非独立复现事实。
 
 ## 2026-08-11 实验更新：query batching 降低成本，但未通过质量门
+
+V2.50.47–48 已把 V2.50.46 提出的“改变证据表示而非继续加重 prompt”假设做成完整 matched external gate。20 个 fresh PyPI 任务的两臂共享同一次 exact JSON response、同一问题、GPT-5.6、一次调用、12k evidence 和 arm-balanced order；control 只看 raw prefix，candidate 从完整响应确定性前置 `project identity / current version / current-release earliest upload date / Requires-Python` 的同记录绑定。atomic readiness 在模型前得到 20/20 fetch、20/20 parser-ready、80/80 fields、1 Unknown；之后两臂各 20/20 model success、0 fallback，candidate 自然改变 20/20 prediction，超过预注册 8 题机制门。
+
+prediction freeze 与 content-free audit 推送后，离线 evaluator 只使用同次 forward 后发布并冻结的 public snapshot，不 refetch、不联网、不调用模型或搜索。raw-prefix control 为 Exact `0/20`、Item F1 `0.483333`、Composite `0.870833`；identity-bound candidate 为 Exact `20/20`、Item F1/Composite 均 `1.0`，Exact `+20`、Item F1 `+0.516667`、Composite `+0.129167`，Entity/Row/Column 均保持 `1.0`。post-result audit 为 `audit_valid=true, findings=[]`。初次 audit 曾因 JSONL sort-key 后把对象键序误当 schema 顺序而 fail closed；append-only erratum 改用 exact key set，未改写或重跑预测、snapshot 或 forward，也未提前创建 evaluator。
+
+这给 entropy/credit 主张增加了一个清晰的正例与边界。正例是：当 observation 已经 source/identity/target/coherence-bound，且 representation-only intervention 在 matched cost 下产生 prediction change 和 post-freeze outer utility，它可以获得正的机制级 credit。边界是：本实验没有让 entropy/IG 选择动作或分配 credit，且 PyPI JSON 是稳定结构化 authority；因此不能把结果外推为“熵降越大 credit 越高”，也不能视为 DeepWideBench 提分。下一步需要在 production-isomorphic 普通网页证据上检验通用 record binding 的 natural reachability；在该 bridge gate strict GO 前，不应再次运行公开 220。权威结果与审计为 [`results/v25048_atomic_pypi_result_v1_20260811.json`](results/v25048_atomic_pypi_result_v1_20260811.json) 和 [`results/v25048_atomic_pypi_postresult_audit_v1_20260811.json`](results/v25048_atomic_pypi_postresult_audit_v1_20260811.json)。当前 DeepWideBench 最新完整结果仍为 V2.50.30 Exact `7/220`、Composite `0.450291`；项目单轮最佳仍为 V2.48.57 Exact `9/220`、Composite `0.457249`，未上榜、非 SOTA。
 
 V2.50.43进一步比较了最新V2.50.30与项目最佳V2.48.57的冻结输出形态。V2.50.30总行数多105，Unknown value cell多1,019，但Exact仍从9降到7；两轮只有2题表宽变化。4个Exact loss与2个gain几乎都发生在相同行数和表宽下，因此当前瓶颈主要是同形表格里的事实选择，而不是简单少输出行。这个结果也再次否定“Unknown越少或coverage越满就越好”：强制completion可能把不确定性换成错误事实，不能获得正entropy/task credit。该分析不输出题目、任务身份、prediction、gold或逐题metric，见[`results/v25043_v25030_v24857_output_shape_diagnosis_v1_20260811.json`](results/v25043_v25030_v24857_output_shape_diagnosis_v1_20260811.json)。
 
