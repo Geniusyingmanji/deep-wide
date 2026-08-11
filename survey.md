@@ -1,8 +1,18 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
-> 检索截止：2026-08-07 14:10 UTC；项目证据更新：2026-08-09 UTC（至 V2.49.54）
+> 检索截止：2026-08-07 14:10 UTC；项目证据更新：2026-08-11 UTC（至 V2.50.40）
 >
 > 结论强度：这是基于公开文献的 novelty audit，不是“没有任何相关工作”的证明。2026 年文献多为尚未同行评审的 arXiv 预印本，文中将预印本结果视为作者报告，而非独立复现事实。
+
+## 2026-08-11 实验更新：query batching 降低成本，但未通过质量门
+
+V2.50.39 在20个全新 PyPI 表格任务上比较同一组四条预先可见query的两种物理分组。control按`2+2`发出两次hosted-search请求，candidate把四条query合并为一次请求；两臂共享任务、query向量、deterministic fetch union、12k evidence预算、prompt、GPT-5.6和240秒上限。唯一forward完成20/20题、0 fallback，两臂均观察到`80/80`条exact action query。candidate将provider calls从40降至20，search input与total token降至control的`0.730468/0.730697×`；selected leads均为200、usable pages均为185，raw characters为`0.980566×`。这些直接计数支持“固定query的一次性batch摊薄hosted-search请求成本”，但不涉及V2.50.30根据首波页面生成第二波query的适应性。forward结果与audit见[`results/v25039_batching_external_forward_result_v1_20260810.json`](results/v25039_batching_external_forward_result_v1_20260810.json)和[`results/v25039_batching_external_forward_audit_v1_20260810.json`](results/v25039_batching_external_forward_audit_v1_20260810.json)。
+
+质量结果否定了直接替换。prediction freeze和content-free audit推送后，evaluator对20个固定PyPI endpoint各调用一次；20/20 gold有效，两臂共享同一snapshot，失败按固定20分母计零。`split_2_plus_2`与`one_shot_4`的Exact同为`12/20`，Entity、Row和Column均为`1.0`，但Item F1从`0.816667`降至`0.783333`，Composite从`0.954167`降至`0.945833`。预注册质量门因此为NO-GO，post-result audit为`audit_valid=true, findings=[]`。结果与审计见[`results/v25039_batching_external_result_v1_20260810.json`](results/v25039_batching_external_result_v1_20260810.json)和[`results/v25039_batching_external_postresult_audit_v1_20260810.json`](results/v25039_batching_external_postresult_audit_v1_20260810.json)。
+
+V2.50.40在结果冻结后做了counts-only paired diagnosis。4个prediction-change任务中，one-shot按正确字段数计有1题改善、3题退化；Exact gain/loss均为0，latest version、latest release date和Requires-Python的正确字段数净差分别为`-1/-1/0`。该分析没有重评、搜索或模型调用，也不保存任务身份、prediction、gold value或页面内容。[`results/v25040_v25039_paired_quality_diagnosis_v1_20260811.json`](results/v25040_v25039_paired_quality_diagnosis_v1_20260811.json)限定了可写结论：本次paired run观测到成本下降与局部字段质量退化，但20题和两臂独立生成不足以建立稳定因果效应。
+
+这一结果对信息熵和credit assignment有两个约束。第一，token下降、source数量不退和prediction change都不是正task credit；只有post-freeze outer utility不退时，成本收益才可进入最终decision credit。第二，V2.50.39没有实现或评价hidden anchor、未见实体质量、row eligibility与cell uncertainty四层风险，因此不能作为entropy-credit证据。下一实验应保留evidence-conditioned第二波，只研究如何减少两次hosted-search之间的重复上下文成本；entropy/IG仍只能作为shadow/VOC feature，signed credit保持0。完整DeepWideBench口径仍是最新V2.50.30 Exact `7/220`、Composite `0.450291`，项目单轮最佳V2.48.57 Exact `9/220`、Composite `0.457249`；二者均不是leaderboard或SOTA结果。
 
 ## 2026-08-09 实验更新：V2.49.54 完整 220 与机制可迁移性边界
 
