@@ -61,6 +61,60 @@ class V25212DualReceiptFailureProbeTests(unittest.TestCase):
         finally:
             target.end_task(token)
 
+    def test_each_wrapper_calls_observer_and_frozen_validator_exactly_once(self) -> None:
+        with mock.patch.object(
+            target.observer,
+            "observe_sparse_receipt",
+            wraps=target.observer.observe_sparse_receipt,
+        ) as observed, mock.patch.object(
+            target,
+            "_FROZEN_SPARSE_VALIDATE",
+            wraps=target._FROZEN_SPARSE_VALIDATE,
+        ) as frozen:
+            self.assertEqual(
+                target._observed_sparse_validate(self.sparse_receipt),
+                self.sparse_receipt,
+            )
+            observed.assert_called_once_with(self.sparse_receipt)
+            frozen.assert_called_once_with(self.sparse_receipt)
+
+        with mock.patch.object(
+            target.observer,
+            "observe_quote_receipt",
+            wraps=target.observer.observe_quote_receipt,
+        ) as observed, mock.patch.object(
+            target,
+            "_FROZEN_QUOTE_VALIDATE",
+            wraps=target._FROZEN_QUOTE_VALIDATE,
+        ) as frozen:
+            self.assertEqual(
+                target._observed_quote_validate(self.quote_receipt),
+                self.quote_receipt,
+            )
+            observed.assert_called_once_with(self.quote_receipt)
+            frozen.assert_called_once_with(
+                self.quote_receipt, parent_result=None
+            )
+
+    def test_exact_parent_exception_object_is_reraised(self) -> None:
+        changed = self._changed(
+            self.sparse_receipt, "physical_fetch_cap", 15
+        )
+        sentinel = ValueError(target.SPARSE_FAILURE)
+        token = target.begin_task()
+        try:
+            with mock.patch.object(
+                target, "_FROZEN_SPARSE_VALIDATE", side_effect=sentinel
+            ):
+                with self.assertRaises(ValueError) as caught:
+                    target._observed_sparse_validate(changed)
+            self.assertIs(caught.exception, sentinel)
+            self.assertEqual(
+                set(target.failure_observations()), {observer.SPARSE_KIND}
+            )
+        finally:
+            target.end_task(token)
+
     def test_sparse_static_exception_is_preserved_and_classified(self) -> None:
         changed = self._changed(
             self.sparse_receipt,
