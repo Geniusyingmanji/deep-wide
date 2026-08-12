@@ -1,5 +1,15 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
+## 2026-08-12 实验更新：结构没有丢，缺的是纵向 key-value 表到 record 的绑定
+
+V2.51.57在20个历史零引入CRAN identity上执行了唯一一次零模型结构层定位。population selection只做Git历史扫描；implementation/build、protocol、preaudit和execution-start逐阶段clean push后，每个固定endpoint恰好一次direct fetch，无redirect、retry、replacement、hosted search、GPT或evaluator。forward在`0.873327s`完成20/20 terminal：17页成功，3页HTTP failure-as-zero。预注册要求至少18页成功，因此整体严格NO-GO，不能补跑或事后更换三题。
+
+尽管可靠性门失败，冻结的content-free aggregate清楚定位了17个成功页面。16页在raw HTML、HTML-to-text和5k projected text三层都保留结构；raw共59个table、333行与666个data cells，extracted text产生333条pipe lines，其中332条是two-column key-value pipe，projected text仍完整保留333/332条。`raw→extracted total loss=0`且`extracted→projected total loss=0`。因此，对这组成功CRAN页，“HTML extraction或5k projector普遍抹掉结构”不是V2.51.53零candidate的主要解释。
+
+真正的不匹配是record形态。CRAN页面主要把一个package record写成多行纵向`field | value`表，package identity位于title/heading/URL等同页表面；V2.51.51的六类grammar则要求单个quote同时含production row identity、visible field label和new value。即使有332条key-value pipe，也没有一行同时携带package identity，因此raw observation仍可为0。下一候选应先唯一绑定same-page source/package identity，再把同一张纵向表中的唯一key映射到visible non-key columns，并以exact row quote承载value；重复key、多表歧义、identity/value冲突与跨页拼接必须fail closed。
+
+这仍不是entropy-credit正例。结构保留只说明转换管线没有擦掉一种可利用表示，不说明这些值正确、当前、同一record或能改善终局。只有vertical-table observation通过source/identity/field/value admission，并在matched intervention中产生可归因prediction change和post-freeze outer utility，才可能得到正signed credit。V2.51.57没有model、prediction或quality评价，当前DeepWideBench分数不变。
+
 ## 2026-08-12 实验更新：用三层无内容观察器区分 source 缺失与 projection 损失
 
 V2.51.54留下的关键不可识别性是：candidate extractor看到0条record，并不能说明原始网页没有结构。当前production fetch先在`AzureNativeSearchClient._fetch_url`中把HTML转成可见纯文本，之后V2.49.84再把最多3M字符的decoded text投影到5k；旧receipt只从projector邻域开始，无法看到HTML table、definition list或JSON-LD是否曾经存在。因此继续增加text grammar会把source selection、HTML extraction与bounded projection三个故障域混在一起。
