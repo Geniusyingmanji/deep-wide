@@ -1,5 +1,9 @@
 # OWIC-DeepWide 研究与实施计划
 
+> 版本：6.95
+>
+> **6.95 V2.51.58 vertical key-value binder（build-only，2026-08-12）：V2.51.57虽因`17<18`可靠性门严格NO-GO、且其population永久禁止model/evaluator/retry/reuse，但冻结aggregate仍显示17个成功页中16页把纵向结构完整保留到production 5k projection，累计332条`key | value`行。V2.51.58因此只在现有verified incremental pages与V2.51.51 candidate seam上增加一种grammar：允许空行分隔的连续两列pipe rows组成block；key去除尾部`:`/`=`后必须唯一规范化匹配visible schema；每个block必须恰有一个主键行，其value唯一匹配production row identity；每个非主键候选使用同页identity-row到field-row的唯一连续exact quote，长度不超过1200字符。重复key、多identity、同页多个identity-bound block、Unknown、跨页拼接、跨页冲突、非唯一/超长quote与shape/key修改全部fail closed；候选在selection前后继续由V2.51.43两次验证。production provider、selector、query/fetch/model/output-token/context/wall/network cap均未扩大；receipt只发布counts/booleans且signed entropy/IG credit保持0。专项11/11与首轮父链35/35已通过。当前只允许实现与测试，V2.51.59必须从clean pushed HEAD生成159-test依赖闭包审计；审计本身不得授权fresh protocol、launch、evaluator或DeepWideBench。**
+
 > 版本：6.94
 >
 > **6.94 V2.51.57 三层 structure-layer 零模型门结果（2026-08-12）：20个历史零引入CRAN identity在selection时未探测endpoint；build、protocol、preaudit、start均按clean commit/push分阶段冻结。唯一forward对每个固定endpoint恰好一次direct fetch，无redirect/retry/replacement，0 model/hosted-search/evaluator，`0.873327s`完成20/20 terminal。17页HTTP 200并形成完整三层receipt，3页HTTP failure-as-zero；因此预注册`≥18` fetch/observed-page可靠性门失败，整体严格NO-GO，不得补跑、换题或降低阈值。审计后可用的结构诊断为：17个成功页中16页raw HTML有结构、16页extracted text有结构、16页5k projected text仍有结构；raw table共59个、333行/666个data cells，HTML-to-text形成333条pipe lines，其中332条two-column key-value pipe；projected层仍保留相同333/332条。`raw→extracted total loss=0`、`extracted→projected total loss=0`，16个raw-table页均形成extracted pipe，16个extracted pipe页均在projection后保留。由此排除“CRAN结构在HTML extraction或V2.49.84 5k projection中普遍丢失”作为这轮六grammar零候选的主解释；剩余瓶颈更具体地位于**projected key-value pipe到visible-schema/production-row-bound candidate的语义绑定**。注意CRAN使用`key | value`两列，而V2.51.51 generic grammar要求同一record包含production row identity和visible field labels；332条key-value pipe的存在不等于admissible record。forward audit `audit_valid=true, findings=[]`；仍无quality/evaluator/DeepWideBench结果，entropy/IG signed credit=0。下一build-only候选应只增加same-page key-value-table→record binding：先唯一绑定package identity，再把key cell唯一规范化匹配visible non-key column，将同表value作为exact quote；identity/field冲突、重复key、多表歧义、Unknown与跨页拼接fail closed。必须在新人口先通过mechanism与post-freeze quality门，才考虑新220。**
@@ -3808,3 +3812,11 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 3. 该结果不证明332条pipe包含正确答案，也不授权把结构计数当evidence。V2.51.51六grammar仍为0，是因为生产CRAN页主要是**纵向key-value table**：每行只有一个field/value，row identity位于同页其他位置；现有grammar要求同一quote同时含production row identity与field/value，无法把多行同表聚合为同一identity-bound record。
 4. 下一build-only处理必须严格限定为same-page vertical key-value record binding：页面先由唯一source/identity route绑定一个production row；表内key必须唯一匹配visible非主键列，value保留exact contiguous row quote；同一表/页面的多个field可组成record。重复key、多个candidate tables、identity冲突、跨页、Unknown、value冲突和shape/key修改均fail closed；selection后仍重验exact quote。
 5. 由于结构门可靠性NO-GO，V2.51.57 population永久封存，不得在其上做model/evaluator。新候选须换fresh/disjoint人口，同时要求20/20或预注册可靠性、非零available/applied/prediction change，再开放独立post-freezequality gate；entropy/IG signed credit继续为0。
+
+### V2.51.58–59：vertical key-value candidate binder（build-only，2026-08-12 UTC）
+
+1. V2.51.58在V2.51.51 production provider上append-only增加vertical grammar，不修改V2.51.57历史代码、人口或工件。连续两列pipe rows可由空行分隔，但任何非空非pipe行都会结束block；key仅去除尾部`:`/`=`并做NFKC/spacing/casefold，必须唯一匹配visible schema。
+2. 每个可采纳block恰有一个主键行，主键value必须唯一匹配production table中的现有row identity；同页出现两个identity-bound blocks整页vertical候选为0。非主键value必须非Unknown且不改主键；跨页identity/field拼接永不发生。
+3. 每个field edit的证据是同一页从identity row到该field row的连续原文；必须全页exact unique且长度`<=1200`。随后复用V2.51.43 verifier做selection前单edit验证和selection后投影验证。coordinate冲突整coordinate拒绝，table shape、row order、key与未选择cell保持不变。
+4. receipt不含identity、field、value、page、URL、question、prediction或credential，只记录七类grammar、vertical block/ambiguity与candidate funnel counts。entropy/IG不参与selector或credit，positive signed credit仍为0。
+5. 当前是严格build-only。V2.51.59 clean-build audit绑定V2.51.57 result/audit的NO-GO权限，必须验证159项专项/父链测试、依赖闭包、label-blind/evaluator/credential边界、watcher identity与空闲lease；即使通过也只证明代码可审计，不授权fresh external protocol、activation、quality evaluator或public 220。
