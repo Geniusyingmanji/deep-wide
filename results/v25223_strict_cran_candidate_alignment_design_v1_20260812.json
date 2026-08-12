@@ -1,0 +1,83 @@
+{
+  "alignment_decision": {
+    "compose_existing_parser_after_strict_attestation": "no_go",
+    "legacy_parser_accepts_colon_without_required_space": true,
+    "legacy_parser_normalizes_bare_carriage_return": true,
+    "legacy_parser_omits_required_Version_predicate": true,
+    "strict_attestor_rejects_bare_carriage_return": true,
+    "strict_attestor_requires_Version": true,
+    "strict_attestor_requires_colon_space": true,
+    "strict_candidate_extractor_build_required": true,
+    "v25215_candidate_parser_and_v25222_attestor_semantics_aligned": false
+  },
+  "artifact_version": 1,
+  "authorization": {
+    "evaluator_deepwidebench_exact220_avg4_leaderboard_or_sota": false,
+    "probe_runtime_integration_external_forward_or_activation": false,
+    "public_snapshot_network_access_or_execution_start": false,
+    "real_identity_selection_or_population_freeze": false,
+    "runtime_compatibility_validator_relaxation_or_prediction_change": false,
+    "strict_cran_candidate_extractor_implementation_build_only": true,
+    "transport_or_content_type_acceptance_change": false,
+    "v25219_retry_refetch_backfill_replacement_or_second_batch": false
+  },
+  "created_at_unix": 1786558289,
+  "design_payload_sha256": "a05909b37fb99adbc776a3b4ffc688cdf9d65d7ec1ba67774283c19e82aa20a1",
+  "entropy_or_information_gain_assigns_signed_credit": false,
+  "fixed_artifact_hashes": {
+    "results/v25215_offline_candidate_discovery_build_audit_v1_20260812.json": "0793a619b853e2a69096bd199aa1c558da7299f704b8a201236fe3332ad171a5",
+    "results/v25219_snapshot_population_attempt_claim_v1_20260812.json": "815aa9bd1c29e6e128cde1e0cbdacf284cb6e7b6313213ae6cd753a35a1869fd",
+    "results/v25219_snapshot_population_freeze_v1_20260812.json": "d98abd021142f0f94b0afcf7f06ce4834c6337f04dbb51cccbd60fa5128617e1",
+    "results/v25221_cran_repository_format_evidence_v1_20260812.json": "d3e106735d70f9c827a9727f37eb9ad5162c33d31da98d54fcb84d0990fa59b9",
+    "results/v25222_strict_cran_dcf_attestation_build_audit_v1_20260812.json": "876e5f10cc0f86ba96549c1111d018df6d23625a628577d5667839b8a1bdcc5c",
+    "src/deepwide_agent/v25215_offline_candidate_discovery.py": "24a28f4fb85ca6a9bc7df5164813ab4ac823b3e31518ceb3e92818bc11682fab",
+    "src/deepwide_agent/v25222_strict_cran_dcf_attestation.py": "12665386ed26af983de2ccc2e0a209726dc95937609d53241c8590c1167af0a1"
+  },
+  "mapping_gold_category_question_type_split_evaluator_score_reward_or_historical_result_read": false,
+  "network_model_search_fetch_evaluator_benchmark_or_api_called": false,
+  "role": "v25223_strict_cran_candidate_alignment_design",
+  "successor_constraints": {
+    "append_only_new_module_without_modifying_v25215_or_v25222": true,
+    "candidate_extraction_uses_same_frozen_record_parser_and_predicate_as_attestation": true,
+    "candidate_identities_returned_in_memory_only": true,
+    "known_safe_alternate_mime_allowlist_remains_empty": true,
+    "parent_attestation_must_pass_before_any_candidate_is_returned": true,
+    "predicate_valid_and_distinct_candidate_counts_must_match_parent": true,
+    "receipt_contains_only_body_binding_aggregate_counts_and_finite_stage": true,
+    "transport_runtime_integration_requires_later_independent_audit": true,
+    "unknown_mime_not_relabelled_or_accepted_by_mime_alone": true,
+    "v25219_population_claim_or_result_not_reused": true
+  },
+  "synthetic_alignment_observation": {
+    "cases": [
+      {
+        "case": "missing_version_predicate",
+        "expected_strict_failure_stage": "minimum_candidate_coverage",
+        "legacy_candidate_count": 1,
+        "legacy_parse_completed": true,
+        "strict_attestation_passed": false,
+        "strict_failure_stage": "minimum_candidate_coverage"
+      },
+      {
+        "case": "colon_without_required_space",
+        "expected_strict_failure_stage": "dcf_syntax",
+        "legacy_candidate_count": 1,
+        "legacy_parse_completed": true,
+        "strict_attestation_passed": false,
+        "strict_failure_stage": "dcf_syntax"
+      },
+      {
+        "case": "bare_carriage_return_newlines",
+        "expected_strict_failure_stage": "newline",
+        "legacy_candidate_count": 1,
+        "legacy_parse_completed": true,
+        "strict_attestation_passed": false,
+        "strict_failure_stage": "newline"
+      }
+    ],
+    "legacy_accept_count": 3,
+    "strict_reject_count": 3,
+    "synthetic_body_identity_record_field_or_value_persisted": false,
+    "synthetic_case_count": 3
+  }
+}
