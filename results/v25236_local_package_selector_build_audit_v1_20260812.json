@@ -1,0 +1,158 @@
+{
+  "artifact_version": 1,
+  "audit_payload_sha256": "011c55c137c24f273d9fad123b6e6cd87bf0116f4e2633bc84d68db6d4b899e8",
+  "audit_valid": true,
+  "authorization": {
+    "candidate_activation_or_prediction_change": false,
+    "evaluator_deepwidebench_exact220_avg4_leaderboard_or_sota": false,
+    "retry_resume_replacement_selective_rerun_or_revaluation": false,
+    "shadow_external_activation_or_launch": false,
+    "shadow_reliability_protocol_design_after_valid_freeze": true,
+    "single_local_population_freeze": true
+  },
+  "checks": {
+    "all_fixed_selector_test_and_artifact_hashes_match": true,
+    "all_selector_test_and_parent_artifacts_tracked": true,
+    "corrected_design_and_shadow_audit_authority_bound": true,
+    "exactly_three_subprocess_run_call_sites": true,
+    "fixed_dpkg_argument_vector_and_history_paths": true,
+    "formal_dpkg_query_or_history_scan_not_run_by_build_audit": true,
+    "git_clean_head_equals_target_main": true,
+    "history_filter_deterministic_and_insufficient_capacity_fails_closed": true,
+    "morphologies_mutually_exclusive_and_boundary_tested": true,
+    "nested_exact_schema_count_conservation_and_tamper_rejection": true,
+    "network_model_evaluator_imports_zero": true,
+    "no_network_model_search_fetch_evaluator_benchmark_or_api_called": true,
+    "privileged_runtime_field_access_zero": true,
+    "protected_watchers_unchanged": true,
+    "selector_design_shadow_parent_chain_tests_exact37": true,
+    "shared_api_lease_inactive": true,
+    "shell_true_zero": true,
+    "task_vector_visible_only_interleaved_reconstructable_and_exact_schema_parseable": true
+  },
+  "created_at_unix": 1786563196,
+  "entropy_or_information_gain_assigns_signed_credit": false,
+  "findings": [],
+  "fixed_artifact_hashes": {
+    "results/v25233_header_totality_shadow_build_audit_v1_20260812.json": "eebbc5577f46998c5a97f75e0e76afac9aa7b3399f6f7a9a78d3256ced130fc2",
+    "results/v25234_local_package_shadow_population_design_r2_20260812.json": "5cae2cbf6842f49cd2b33180883dc6898a9dfcb598cfc0a4ed6f50ac01b28b3b",
+    "scripts/freeze_v25235_local_package_shadow_population.py": "757c6ea0cdfa8859e4ecaad023c12fe3dc26a945653bb4b8df6c59c033e7aed0",
+    "tests/test_freeze_v25235_local_package_shadow_population.py": "e6431875d7aaa775f711b5ed14b5f78bbc58268312cec685e9086f96c4769eb1"
+  },
+  "git": {
+    "clean": true,
+    "equal": true,
+    "head": "f2da6452ef047377bf9ff2b94e682ae496d99211",
+    "target_main": "f2da6452ef047377bf9ff2b94e682ae496d99211"
+  },
+  "mapping_gold_category_question_type_split_evaluator_score_reward_or_historical_result_read": false,
+  "network_model_search_fetch_evaluator_benchmark_or_api_called": false,
+  "process_capability_audit": {
+    "all_process_methods_are_subprocess_run": true,
+    "fixed_dpkg_argument_vector": [
+      "dpkg-query",
+      "-W",
+      "-f=${db:Status-Abbrev}\\t${Package}\\n"
+    ],
+    "fixed_history_paths": [
+      "src",
+      "evaluation",
+      "scripts",
+      "tests",
+      "results",
+      "outputs"
+    ],
+    "forbidden_network_model_imports": [],
+    "privileged_runtime_field_accesses": [],
+    "process_call_count": 3,
+    "process_calls": [
+      {
+        "line": 160,
+        "method": "run"
+      },
+      {
+        "line": 199,
+        "method": "run"
+      },
+      {
+        "line": 83,
+        "method": "run"
+      }
+    ],
+    "shell_true_lines": []
+  },
+  "role": "v25236_local_package_selector_clean_build_audit",
+  "runtime_state": {
+    "protected_watchers": {
+      "2808901": {
+        "matches_frozen_identity": true,
+        "present": true,
+        "start_ticks": 746680268
+      },
+      "2889939": {
+        "matches_frozen_identity": true,
+        "present": true,
+        "start_ticks": 746969965
+      },
+      "3061652": {
+        "matches_frozen_identity": true,
+        "present": true,
+        "start_ticks": 747569004
+      },
+      "795336": {
+        "matches_frozen_identity": true,
+        "present": true,
+        "start_ticks": 713986317
+      }
+    },
+    "shared_api_lease_inactive": true
+  },
+  "tests": {
+    "expected": 37,
+    "observed": 37,
+    "passed": true,
+    "suites": [
+      {
+        "expected": 7,
+        "observed": 7,
+        "output_sha256": "fdaa0fcc45c370287c63434a7267c240f156aa0d68790ee619eaebf6c70c84da",
+        "passed": true,
+        "pattern": "test_audit_v25236_local_package_selector_build.py",
+        "returncode": 0
+      },
+      {
+        "expected": 10,
+        "observed": 10,
+        "output_sha256": "3c01ee4ef03e05286a3572e7b21ccc4bc7edca4a1c9427418d5dcc7524002271",
+        "passed": true,
+        "pattern": "test_freeze_v25235_local_package_shadow_population.py",
+        "returncode": 0
+      },
+      {
+        "expected": 5,
+        "observed": 5,
+        "output_sha256": "b86fc86fcc287f0306623efa0277bf10b21a8610e0e33eff7a606e2cc1752f8c",
+        "passed": true,
+        "pattern": "test_revise_v25234_local_package_shadow_population_r2.py",
+        "returncode": 0
+      },
+      {
+        "expected": 8,
+        "observed": 8,
+        "output_sha256": "8c27d65f258fb06651359d133d94c48e62c23c079b734da543f8e2b755eb229a",
+        "passed": true,
+        "pattern": "test_design_v25234_local_package_shadow_population.py",
+        "returncode": 0
+      },
+      {
+        "expected": 7,
+        "observed": 7,
+        "output_sha256": "a63ec42cc3e91cc2ec2b7764eaa343954f906a703046aae13faf84d7263fc9d0",
+        "passed": true,
+        "pattern": "test_audit_v25233_header_totality_shadow_build.py",
+        "returncode": 0
+      }
+    ]
+  },
+  "untracked_sources": []
+}
