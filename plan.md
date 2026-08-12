@@ -3865,3 +3865,10 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 2. observer对每个block同时调用冻结V2.51.58 admission做bound/candidate-count parity，对每页校验block数、identity-bound数、ambiguity与最终vertical candidate数。任何parity漂移立即fail closed；reason bucket不进入admission、candidate ordering、selector、router或prediction。
 3. receipt只含页数、block数、互斥reason count、identity-bound/ambiguous/candidate count与固定policy flag，不含page text、key/value、identity、field、quote、URL、question、prediction或semantic hash。它不具备filesystem/process/environment/network/model/search/fetch/evaluator能力，entropy/IG signed credit保持0。
 4. 专项7/7覆盖各拒绝阶段、identity-bound终点、同页多block ambiguity、content-free等价、tamper与AST label-blind。V2.51.64 build audit必须从实现提交推送后的clean HEAD绑定V2.51.62诊断、V2.51.60 NO-GO result/audit并完成159/159父链；audit只证明build-only，不授权旧人口回放、binding policy改动、external launch、evaluator或DeepWideBench。
+
+### V2.51.65：behavior-preserving observed vertical runtime（build-only，2026-08-12 UTC）
+
+1. V2.51.65只在V2.51.58 verified-gain revision入口，对同一in-memory verified incremental pages先运行V2.51.63 observer；verified-page结果或异常只计算一次并由父路径复用同一cache。随后不论observer成功或失败，均调用冻结V2.51.58 provider完成原candidate extraction、selector和projection。observer不写prompt、不改变candidate、不增加model/search/fetch/network effect。
+2. 新envelope逐字绑定冻结父result；production/final prediction、hash、prediction kind、cost、sparse result与V2.51.58 receipt必须完全相同。observer成功时其page/block/identity-bound/ambiguity/candidate counts必须与父receipt逐项一致；observer失败只记录异常类型并继续父路径，不能触发fallback或覆盖prediction。
+3. no-gain任务仍3次model forward且observer不进入；verified-gain任务仍最多4次model forward。query/fetch/model/context/token/wall cap不变，entropy/IG signed credit保持0。当前严格build-only，不授权fresh protocol、旧V2.51.60人口回放、evaluator或DeepWideBench。
+4. V2.51.66 clean-build audit须绑定V2.51.64权威audit并覆盖observed runtime、observer、诊断与全部父链165项测试；依赖闭包的privileged/evaluator/credential finding必须全空。audit只能授权implementation build-only，fresh observer protocol仍需另一项独立授权，binding policy、旧人口effect和公开220保持禁止。
