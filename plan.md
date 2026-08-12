@@ -1,5 +1,19 @@
 # OWIC-DeepWide 研究与实施计划
 
+> 版本：6.105
+>
+> **6.105 V2.52.28–31 production header-totality 定位与纯实现（2026-08-12）：V2.52.28只从冻结V2.52.08 runtime JSONL解码`runtime_completed/failure_as_zero/prediction_kind/failure_types`和静态嵌套路径`parent_result.content_free_receipt.raw_normalizer_observation`；其他兄弟值均由lexical projector跳过。5个`production:ValueError`全部非truncated、非quote-aware activation：4个为`no_bindable_header_reject`，1个为`missing_data_rows_reject`；五题均有pipe group和separator，但只有1题到达header/width binding，且该题无data row。诊断未读取或输出task identity、question、page、prediction、gold、category、split、metric、score或credential；代码/权威工件以`943145ee / ed448872`推送，工件[`results/v25228_v25208_production_totality_diagnosis_v1_20260812.json`](results/v25228_v25208_production_totality_diagnosis_v1_20260812.json) SHA-256=`400cd12b...6f7`。**
+>
+> **该证据否定继续把这5个fallback归因于escaped pipe或quote-aware repair，但不证明任何具体successor能覆盖旧4题。V2.52.29因此只冻结通用、synthetic-first的单一结构操作：组合父normalizer已分别允许的“删除一个显式通用leading index列”和“剩余同宽header按位置替换为visible schema”。只有`source width = required width + 1`、leading header属于冻结generic-index词表、剩余header与required等宽、全部data row同宽、唯一候选、无escaped pipe/实体碰撞且输出通过冻结exact parser roundtrip时才可接受；missing data、非index extra column、多候选、混合行宽等全部fail closed。设计代码/工件以`36e30752 / 12db8a0e`推送，工件SHA-256=`bbf47a17...98291`。**
+>
+> **V2.52.30新增append-only纯helper，未修改V2.42.59父normalizer、V2.51.70 observer或任何runtime。receipt只含14类互斥disposition与18类结构计数；accepted行数/空值填充数与exact-parser roundtrip计数强绑定，重封篡改fail closed。300个随机字符串totality、positive roundtrip、10类邻近negative、content-free/tamper以及冻结父链均通过。V2.52.31从clean pushed HEAD完成59/59权威测试，依赖闭包精确5文件，privileged/evaluator/credential findings全空；唯一`clients.py:565:score`是既有provider-rank字段而非benchmark score。实现/audit分别以`65e3e17a / dda8b8ce`推送，权威audit [`results/v25231_header_totality_build_audit_v1_20260812.json`](results/v25231_header_totality_build_audit_v1_20260812.json) SHA-256=`459a275d...5fbd6`、`audit_valid=true, findings=[]`。**
+>
+> **当前权限仍仅为`header_totality_helper_build_only=true`和`fresh_artifact_disjoint_reliability_protocol_design=true`。helper未接入production provider，runtime/prediction未变化；旧V2.52.08不得retry/resume/replay/选择性重跑或重评。下一步必须先做behavior-preserving shadow integration：在冻结父normalizer已经reject后只计算V2.52.30 candidate/receipt，但仍返回原response，证明observer total、父prediction/cost/effect byte-identical；随后冻结全新history-disjoint population和单次可靠性门，先自然测量`no_bindable_header → safe candidate`覆盖。只有fresh gate证明非零自然覆盖、0邻近unsafe acceptance且production fallback减少，才可设计activation；activation通过独立fresh quality gate后，才考虑新完整220。**
+>
+> **完整DeepWideBench口径不变：最新V2.52.08=`5/220 / Composite 0.398669`，项目单轮最佳V2.48.57=`9/220 / 0.457249`；V2.52.28–31没有prediction、evaluator或benchmark effect，不是分数提升、Avg@4、leaderboard或SOTA。四个protected watcher identity保持不变，shared lease空闲；entropy/IG signed credit继续为0。**
+>
+> **阅读规则：本文件append-only；顶部6.105覆盖6.104及后文所有较早的当前权限、下一步与分数口径。**
+
 > 版本：6.104
 >
 > **6.104 V2.52.27 same-endpoint claim-scope NO-GO（2026-08-12）：V2.52.19永久attempt claim与冻结result证明CRAN `PACKAGES` URL hash=`93b3a9a7...813e0`已发生一次provider attempt，batch明确`public_snapshot_network_or_api_called=true`，且`retry_refetch_backfill_replacement_or_second_batch_authorized=false`。V2.52.26固定endpoint hash完全相同；新version/namespace和新的semantic policy不改变“再次GET同一物理endpoint就是refetch”这一事实，也不能追溯恢复effect authority。因此V2.52.26仍是有效synthetic/build证据，但同endpoint protocol/preactivation/execution-start严格NO-GO，不访问CRAN、不生成identity/population、不进入64-task gate。**
