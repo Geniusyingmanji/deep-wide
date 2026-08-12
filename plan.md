@@ -1,5 +1,19 @@
 # OWIC-DeepWide 研究与实施计划
 
+> 版本：6.103
+>
+> **6.103 V2.52.25–26 CRAN semantic transport（design/build-only，2026-08-12）：V2.52.25把新策略明确建模为独立namespace，而非给旧V2.52.17增加alternate MIME。固定endpoint仍为`https://cran.r-project.org/src/contrib/PACKAGES`；success必须同时满足literal endpoint、单次GET、0 redirect/retry/refetch、TLS hostname verification、public-address DNS预检、HTTP 200、非空stream+32MiB cap、body length/SHA绑定，以及V2.52.24 strict extraction完成、count parity和至少64个distinct candidate。`Content-Type`只进入`missing/accepted/unknown_disallowed`有限observer，原值/规范值/hash均不保存；unknown/missing不被重写为`text/plain`，known-safe alternate allowlist继续为空，MIME/HTTP 200/magic bytes都不能单独建立success。设计如实保留`dns_preflight_result_pinned_to_transport=false`，安全边界仍依赖固定hostname和TLS验证，并要求未来effect必须置于独立fork hard-deadline controller。设计代码与工件分别以`79bce63f / 4d0ae5cd`推送；权威工件[`results/v25225_cran_semantic_transport_design_v1_20260812.json`](results/v25225_cran_semantic_transport_design_v1_20260812.json) SHA-256=`d50633db...d50b`，只授权implementation build-only。**
+>
+> **V2.52.26实现该新策略但未调用真实endpoint。导入零effect；显式调用至多一次固定GET，复用冻结V2.52.17的DNS/public-address与bounded-stream helper、V2.52.20 value-free MIME disposition和V2.52.24 strict extractor。receipt准确区分DNS effect与HTTP attempt，不再沿用V2.52.17过宽的`model_search_evaluator_benchmark_or_api_effect=false`；DNS已调用即`public_snapshot_network_or_api_called=true`。有限失败覆盖clock/resolver/session/response/timeout/redirect/non-200/header/empty/oversize/stream/semantic exception/count gate/wall；所有异常文本不出receipt，failure不返回candidate，wall/clock状态清空body/semantic内容。success与post-body failure均强制transport/extractor共享length+SHA。**
+>
+> **实现冻结前完成顶层和nested receipt/state-machine tamper测试；build audit又锁定git/tests/suites/capability/semantic/runtime/watchers/checks/authorization exact schema。专项/父链`48/48`、compileall、secret scan与label-blind semantic audit通过；依赖闭包精确为V2.52.17/20/22/24/26五模块，唯一披露的network capability来自冻结V2.52.17的`requests/socket`，privileged/evaluator/credential findings全0。实现与audit分别以`d79bf12c / 87b02da8`推送，权威工件[`results/v25226_cran_semantic_transport_build_audit_v1_20260812.json`](results/v25226_cran_semantic_transport_build_audit_v1_20260812.json) SHA-256=`78dab9fa...b0cb`、`audit_valid=true, findings=[]`；四个watcher未变、lease空闲，build阶段真实network/API effect为0。**
+>
+> **当前新权限仅为`fresh_semantic_transport_protocol_design=true`，不是launch权限。public snapshot network/execution-start、identity selection/population freeze、probe integration、compatibility/prediction change、evaluator与DeepWideBench仍为false；V2.52.19 retry/refetch/backfill/replacement/second batch仍永久false。下一步必须先做V2.52.27 pre-effect claim-scope审查：如果再次请求同一`cran.r-project.org/src/contrib/PACKAGES`会构成V2.52.19禁止的refetch，则即使换namespace也必须NO-GO，转向官方不同endpoint/snapshot surface或停止该人口路线；不得用版本号规避claim。只有证明effect不是旧attempt重试且独立protocol/preactivation/start逐阶段冻结，才可能执行一次新observability effect。**
+>
+> **V2.52.25–26没有prediction、quality、population或benchmark结果。最新完整V2.52.08仍为`5/220 / 0.398669`，项目单轮最佳V2.48.57仍为`9/220 / 0.457249`；无Avg@4、leaderboard或SOTA，entropy/IG signed credit=`0`。**
+>
+> **阅读规则：本文件append-only；顶部6.103覆盖6.102及后文所有较早的当前权限、下一步与分数口径。**
+
 > 版本：6.102
 >
 > **6.102 V2.52.23–24 strict CRAN candidate 语义对齐（design/build-only，2026-08-12）：组合审查发现V2.52.22 attestor与冻结V2.52.15 CRAN parser并非同一语义。三个最小合成反例中，V2.52.15均完成parse并各返回1个candidate，而V2.52.22分别以`minimum_candidate_coverage / dcf_syntax / newline`拒绝：旧parser不要求`Version`、允许`Package:X`无冒号后空格、并把bare CR规范化为换行。故“V2.52.22先通过，再调用V2.52.15取candidate”的组合被正式判为NO-GO；不能用whole-body attestation掩盖downstream predicate更宽。V2.52.23设计/测试`45/45`父链通过，代码与权威工件分别以`0f2b2a85 / c5222f6e`推送；工件[`results/v25223_strict_cran_candidate_alignment_design_v1_20260812.json`](results/v25223_strict_cran_candidate_alignment_design_v1_20260812.json) SHA-256=`212d0c96...27ac`。**
