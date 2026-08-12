@@ -1,5 +1,19 @@
 # OWIC-DeepWide 研究与实施计划
 
+> 版本：6.102
+>
+> **6.102 V2.52.23–24 strict CRAN candidate 语义对齐（design/build-only，2026-08-12）：组合审查发现V2.52.22 attestor与冻结V2.52.15 CRAN parser并非同一语义。三个最小合成反例中，V2.52.15均完成parse并各返回1个candidate，而V2.52.22分别以`minimum_candidate_coverage / dcf_syntax / newline`拒绝：旧parser不要求`Version`、允许`Package:X`无冒号后空格、并把bare CR规范化为换行。故“V2.52.22先通过，再调用V2.52.15取candidate”的组合被正式判为NO-GO；不能用whole-body attestation掩盖downstream predicate更宽。V2.52.23设计/测试`45/45`父链通过，代码与权威工件分别以`0f2b2a85 / c5222f6e`推送；工件[`results/v25223_strict_cran_candidate_alignment_design_v1_20260812.json`](results/v25223_strict_cran_candidate_alignment_design_v1_20260812.json) SHA-256=`212d0c96...27ac`。**
+>
+> **V2.52.24新增append-only strict extractor，不修改V2.52.15或V2.52.22。它先调用并验证冻结attestor，再复用同一`_parse_records`，并对每条record调用同一`_candidate_counts`而不本地近似predicate；最终parsed/valid/distinct/extracted四组count必须与父attestation强parity。父attestation seal可从子receipt投影字段完整重建并重新验证；任何seal替换、count漂移或predicate drift均返回0 candidate并fail closed。identity仅在内存返回，receipt不保存identity/record/field/value/body，且不改变MIME/transport acceptance。**
+>
+> **冻结前又补齐V2.52.24 build-audit顶层与git/tests/suites/semantic/runtime/watchers/checks/authorization的exact-schema和逐层hidden-field tamper拒绝。实现/测试以`5ab30f7e`推送；完整父链`39/39`、compileall、secret scan与label-blind semantic audit通过，依赖闭包精确为V2.52.22+24两个纯模块。权威audit [`results/v25224_strict_cran_candidate_extractor_build_audit_v1_20260812.json`](results/v25224_strict_cran_candidate_extractor_build_audit_v1_20260812.json) SHA-256=`a0dad97a...5072c`、`audit_valid=true, findings=[]`，以`32fd890c`单文件推送；四个protected watcher identity未变，shared lease空闲，无外部effect。**
+>
+> **当前权限仍只有`strict_cran_candidate_extractor_build_only=true`。fresh semantic-transport protocol、content-type/transport acceptance change、public snapshot request/execution-start、V2.52.19 retry/refetch/backfill/replacement/second batch、identity selection/population freeze、probe runtime integration、compatibility/prediction change、evaluator或DeepWideBench全部为false。下一步若继续该路线，必须先独立设计V2.52.25的CRAN-only semantic transport：固定官方HTTPS host/path、public-address/no-redirect/单attempt/HTTP-200/byte-cap/length+SHA安全门与V2.52.24 strict extractor必须同时通过；unknown MIME只作为有限disposition如实记录，不能静默改写、不能加入alternate allowlist、不能单凭MIME或magic bytes接受。设计与build audit通过后也只可授权全新namespace的fresh protocol，绝不复用V2.52.19 claim/result。**
+>
+> **该路线的目标仍只是解锁64-task fresh receipt-reliability gate，定位并最终减少V2.52.08的11个outer receipt failure；它本身不是质量优化或DeepWideBench提升。最新完整V2.52.08仍为`5/220 / 0.398669`，项目单轮最佳V2.48.57仍为`9/220 / 0.457249`，无Avg@4、leaderboard或SOTA。entropy/IG signed credit继续为0。**
+>
+> **阅读规则：本文件append-only；顶部6.102覆盖6.101及后文所有较早的当前权限、下一步与分数口径。**
+
 > 版本：6.101
 >
 > **6.101 V2.52.21–22 官方格式证据与 strict CRAN DCF attestation（design/build-only，2026-08-12）：V2.52.21在不访问`PACKAGES` snapshot endpoint的前提下冻结R官方文档证据。R-admin明确repository `PACKAGES`是以空行分隔的DESCRIPTION records，R-exts明确DESCRIPTION采用DCF语法；但官方repository-format章节没有给出具体HTTP `Content-Type`/MIME合约。因此证据只支持严格body-format attestation，不支持把V2.52.19未保存的header猜成某个安全alternate MIME。`known_safe_alternate` allowlist继续为空，V2.52.19 attempt claim、NO-GO与禁止retry/refetch/backfill/replacement/second batch继续永久有效。权威证据为[`results/v25221_cran_repository_format_evidence_v1_20260812.json`](results/v25221_cran_repository_format_evidence_v1_20260812.json)，文件SHA-256=`d3e10673...a59b9`，design/result分别以`14b5e392 / 3acc3994`推送。**
