@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import copy
 import json
+import subprocess
 import sys
 import time
 from collections.abc import Mapping
@@ -34,7 +35,7 @@ EXPECTED_PARENT_DIAGNOSIS_HASH = (
     "7e37476e616acda8e4500e32768da6e798df1ea3fe8249369a871fbcbbbb331e"
 )
 TEST_SUITES = (
-    ("test_audit_v25178_quote_aware_normalizer_build.py", 5),
+    ("test_audit_v25178_quote_aware_normalizer_build.py", 6),
     ("test_v25177_quote_aware_pipe_normalizer.py", 9),
     ("test_diagnose_v25176_v25175_normalizer_representation.py", 5),
     ("test_v25170_production_normalizer_disposition_observer.py", 6),
@@ -42,6 +43,15 @@ TEST_SUITES = (
 )
 EXPECTED_TESTS = sum(expected for _pattern, expected in TEST_SUITES)
 payload_sha256 = base.payload_sha256
+NESTED_ROOT = ROOT / "external/Marco-Search-Agent"
+NESTED_PUBLIC_LOADER = Path(
+    "Marco-DeepResearch-Family/DeepWideSearch/eval/evaluation/data_loader.py"
+)
+EXPECTED_NESTED_HEAD = "f66004fe388e729bf55dd0a61c3891dfcf029472"
+EXPECTED_PUBLIC_LOADER_BLOB = "cb3e28f4ee5bededc870b9ff89d66d7a9be1fb55"
+EXPECTED_PUBLIC_LOADER_SHA256 = (
+    "71fd3788321a68dca0b6a3a8d1c30ec12d5f8167065b416dab2ad66a5eb9aa9a"
+)
 
 
 def _tests() -> dict[str, Any]:
@@ -87,6 +97,41 @@ def _parent_barrier() -> bool:
     )
 
 
+def _nested_loader_receipt() -> dict[str, Any]:
+    def git(*args: str, check: bool = True) -> subprocess.CompletedProcess[str]:
+        return subprocess.run(
+            ["git", *args],
+            cwd=NESTED_ROOT,
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            timeout=20,
+            check=check,
+        )
+
+    head = git("rev-parse", "HEAD").stdout.strip()
+    tracked = (
+        git("ls-files", "--error-unmatch", str(NESTED_PUBLIC_LOADER), check=False).returncode
+        == 0
+    )
+    blob = git("rev-parse", f"HEAD:{NESTED_PUBLIC_LOADER}").stdout.strip()
+    diff_clean = (
+        git("diff", "--quiet", "--", str(NESTED_PUBLIC_LOADER), check=False).returncode
+        == 0
+    )
+    path = ROOT / diagnosis.PUBLIC_LOADER
+    return {
+        "nested_repository_relative_path": "external/Marco-Search-Agent",
+        "nested_head": head,
+        "file_relative_path": str(NESTED_PUBLIC_LOADER),
+        "tracked_in_nested_repository": tracked,
+        "blob_sha1": blob,
+        "working_file_sha256": base.sha256(diagnosis.PUBLIC_LOADER),
+        "working_file_matches_nested_head": diff_clean,
+    }
+
+
 def build_audit(*, now: int | None = None, tracked: bool = True) -> dict[str, Any]:
     head = base._git("rev-parse", "HEAD")
     target = base._git("rev-parse", "target/main")
@@ -102,7 +147,6 @@ def build_audit(*, now: int | None = None, tracked: bool = True) -> dict[str, An
         diagnosis.SOURCE,
         diagnosis.TEST,
         PARENT_DIAGNOSIS,
-        diagnosis.PUBLIC_LOADER,
     )
     untracked = sorted(
         str(path)
@@ -112,12 +156,23 @@ def build_audit(*, now: int | None = None, tracked: bool = True) -> dict[str, An
     watchers = base._watchers()
     lease_inactive = base._lease_inactive()
     representation = diagnosis.representation_experiment()
+    nested_loader = _nested_loader_receipt()
     checks = {
-        "focused_quote_aware_diagnosis_observer_and_parent_tests_exact36": tests[
+        "focused_quote_aware_diagnosis_observer_and_parent_tests_exact37": tests[
             "passed"
         ],
         "v25176_frozen_representation_diagnosis_bound": _parent_barrier(),
-        "all_sources_parent_artifact_and_public_loader_tracked": not untracked,
+        "all_main_repository_sources_and_parent_artifact_tracked": not untracked,
+        "public_loader_nested_repository_commit_blob_and_bytes_bound": nested_loader
+        == {
+            "nested_repository_relative_path": "external/Marco-Search-Agent",
+            "nested_head": EXPECTED_NESTED_HEAD,
+            "file_relative_path": str(NESTED_PUBLIC_LOADER),
+            "tracked_in_nested_repository": True,
+            "blob_sha1": EXPECTED_PUBLIC_LOADER_BLOB,
+            "working_file_sha256": EXPECTED_PUBLIC_LOADER_SHA256,
+            "working_file_matches_nested_head": True,
+        },
         "git_clean_head_equals_target_main": (clean and head == target)
         if tracked
         else True,
@@ -175,6 +230,7 @@ def build_audit(*, now: int | None = None, tracked: bool = True) -> dict[str, An
             "sha256": base.sha256(PARENT_DIAGNOSIS),
         },
         "representation_experiment": representation,
+        "public_loader_nested_repository": nested_loader,
         "runtime_state": {
             "shared_api_lease_inactive": lease_inactive,
             "protected_watchers": watchers,
@@ -216,6 +272,16 @@ def validate_audit(value: Mapping[str, Any]) -> dict[str, Any]:
         or copied.get("tests", {}).get("passed") is not True
         or copied.get("parent_representation_diagnosis", {}).get("sha256")
         != EXPECTED_PARENT_DIAGNOSIS_HASH
+        or copied.get("public_loader_nested_repository")
+        != {
+            "nested_repository_relative_path": "external/Marco-Search-Agent",
+            "nested_head": EXPECTED_NESTED_HEAD,
+            "file_relative_path": str(NESTED_PUBLIC_LOADER),
+            "tracked_in_nested_repository": True,
+            "blob_sha1": EXPECTED_PUBLIC_LOADER_BLOB,
+            "working_file_sha256": EXPECTED_PUBLIC_LOADER_SHA256,
+            "working_file_matches_nested_head": True,
+        }
         or copied.get(
             "mapping_gold_category_question_type_split_evaluator_score_reward_or_historical_result_read"
         )

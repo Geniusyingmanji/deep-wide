@@ -29,8 +29,22 @@ class V25178QuoteAwareNormalizerBuildAuditTests(unittest.TestCase):
             target.base._direct_forbidden_imports(target.NORMALIZER_SOURCE), []
         )
 
+    def test_public_loader_is_bound_in_its_nested_repository(self) -> None:
+        self.assertEqual(
+            target._nested_loader_receipt(),
+            {
+                "nested_repository_relative_path": "external/Marco-Search-Agent",
+                "nested_head": target.EXPECTED_NESTED_HEAD,
+                "file_relative_path": str(target.NESTED_PUBLIC_LOADER),
+                "tracked_in_nested_repository": True,
+                "blob_sha1": target.EXPECTED_PUBLIC_LOADER_BLOB,
+                "working_file_sha256": target.EXPECTED_PUBLIC_LOADER_SHA256,
+                "working_file_matches_nested_head": True,
+            },
+        )
+
     def test_expected_suite_total_and_parent_barrier_are_exact(self) -> None:
-        self.assertEqual(target.EXPECTED_TESTS, 36)
+        self.assertEqual(target.EXPECTED_TESTS, 37)
         self.assertTrue(target._parent_barrier())
 
     def test_clean_dry_run_authorizes_integration_design_only(self) -> None:
