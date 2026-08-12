@@ -1,5 +1,15 @@
 # OWIC-DeepWide 研究与实施计划
 
+> 版本：6.100
+>
+> **6.100 V2.52.20 content-free MIME disposition observer（build-only，2026-08-12）：在V2.52.19因CRAN `content_type`严格NO-GO且永久禁止第二批后，新增纯函数observer，只镜像V2.52.17的`split(';',1)[0].strip().casefold()`规范化与冻结接受决策。有限disposition为`missing / accepted / known_safe_alternate / unknown_disallowed`；但本版本四个stratum的`known_safe_alternate` allowlist全部为空、count=`0`，公开入口不能注入alternate，任何unknown仍与父transport一样拒绝，observer successor acceptance逐状态等于parent acceptance。工件不保存原始/规范化header、header hash、URL/body/identity/value/question/prediction/evidence/exception/credential，且不导入filesystem/process/environment/network/model/search/evaluator能力。**
+>
+> **实现与audit分别以`9c935f0c / d64db289`从clean pushed HEAD提交推送。专项8/8、父transport/controller与build-audit全链共42/42通过；observer依赖闭包精确为自身1文件，privileged-field、evaluator-capability、credential-literal与provider-rank例外均为0。权威clean-build audit为[`results/v25220_content_type_disposition_build_audit_v1_20260812.json`](results/v25220_content_type_disposition_build_audit_v1_20260812.json)，文件SHA-256=`4ce79154...dcb5a`、payload seal=`d4fe5231...88de8`，`audit_valid=true, findings=[]`；它精确绑定V2.52.19 attempt claim/result和V2.52.17/18父链，确认V2.52.19没有retry/refetch/reuse，shared lease空闲、四个protected watcher identity未变，本阶段network/model/search/fetch/evaluator/benchmark/API effect为0。**
+>
+> **当前唯一权限是`content_type_disposition_observer_build_only=true`。fresh transport-observability protocol、alternate allowlist改变、public snapshot network/execution-start、V2.52.19 retry/refetch/backfill/replacement/second batch、identity selection/population freeze、probe正式接入、compatibility/validator放宽、prediction change、evaluator、DeepWideBench与SOTA全部为false。下一步不能直接把observer接入旧runner；必须先获得独立于V2.52.19未保存header的pre-effect证据，定义哪些具体alternate MIME由官方surface语义保证等价，并冻结有限常量、negative confusable cases与body parser/type agreement。若证据不足，alternate allowlist保持空且该路线NO-GO；若证据充分，也必须用全新version/namespace重新走build audit、fresh protocol、preactivation与execution-start，仍只允许一次all-or-nothing batch。当前DeepWideBench结果不变：最新完整V2.52.08 Exact=`5/220`、Composite=`0.398669`；项目单轮最佳V2.48.57=`9/220 / 0.457249`，无Avg@4、leaderboard或SOTA；entropy/IG signed credit仍为0。**
+>
+> **阅读规则：本文件append-only；顶部6.100覆盖6.99及后文所有较早的当前权限、下一步与分数口径。**
+
 > 版本：6.99
 >
 > **6.99 V2.52.13–19 fresh reliability population 冻结链与严格 transport NO-GO（2026-08-12）：V2.52.13 aggregate-only selector、V2.52.14 R2确定性预选、V2.52.15四源离线parser、V2.52.17单次bounded transport与V2.52.18 fork+anonymous-mmap hard-deadline controller均已冻结；V2.52.19再把正式effectful runtime闭包收敛为runner/parser/transport/controller精确4文件，内联实现与V2.52.13/14逐值parity。它补齐batch body对每个child receipt的`response_bytes + response_sha256`双绑定、task-vector反向重建到history-audit hash、顶层/嵌套exact schema、两段单文件commit-chain、四个protected watcher复核、shared API lease和crash-safe永久attempt claim。专项与父链共`47/47`通过，runtime privileged-field/evaluator/credential findings均为0；实现、preactivation、execution-start分别从clean pushed HEAD以`35975c1d / b2feafee / 0bbc8ea6`提交推送。preactivation SHA-256=`495453de...5a0cc`，execution-start SHA-256=`5464e026...648bb`；后者只授权一次四源batch，明确禁止retry/refetch/backfill/replacement/第二批、模型/hosted-search/Tavily、evaluator和DeepWideBench。**
