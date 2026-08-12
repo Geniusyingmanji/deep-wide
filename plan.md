@@ -3746,3 +3746,8 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 2. 每个候选先映射到production中的唯一row/非key field/old value，并调用V2.51.43 verifier验证exact unique quote与row/field/new value绑定。相同coordinate多值冲突全部删除，同值重复确定性去重，最多保留40个候选。
 3. 第4次模型调用只返回严格JSON candidate ID集合或空集，不可自由输出quote/edit；选中后再次经V2.51.43 verifier才投影。无gain仍3次、有gain最多4次model forward，query/fetch/context/output-token/wall/network cap不变，失败保留production。
 4. 专项12/12覆盖两种record、SBCL schema span、pipe span、冲突/重复、严格ID选择、no-gain、positive-gain、abstain/失败、post-effect、privileged/budget、receipt tamper与label-blind。当前仅build-only，尚未调用真实model/search/fetch/evaluator或授权新external/220；V2.51.48须在clean pushed HEAD完成141/141审计。
+
+### V2.51.49：deterministic quote-candidate fresh/disjoint gate（population freeze，2026-08-12 UTC）
+
+1. 再冻结20条与V2.51.41/45均不重叠的科学Python package描述clue；对应20个离线identity在父提交历史中均为零引入。selection只做本地Git扫描，artifact仅保存ordered-vector hash、数量和零命中计数。
+2. 后续唯一external forward必须使用V2.51.47，并预注册`available preverified candidate → selected candidate ID → reverified applied edit → attributable prediction change`机制链；不得降低V2.51.45的全终态、0 failure、资源、质量或label-blind门槛。
