@@ -6,6 +6,8 @@ V2.51.54留下的关键不可识别性是：candidate extractor看到0条record�
 
 V2.51.55把诊断面放进同一次bounded fetch，但不改变evidence。纯observer分别计算decoded raw HTML、HTML-to-text extracted text和5k projected text的结构事件：raw层含table/row/cell、definition-list与JSON-LD；text层含pipe rows、key-value pipes、JSON object lines、label-value blocks及相邻等宽pipe rows。receipt只保留计数和`raw→extracted`、`extracted→projected`的structure-loss/retention布尔，不保留page identity、URL、题面、label/value、正文、prediction或semantic content hash。新append-only helper/client承载该receipt；旧V2.49.81 helper协议不改，native fetch默认不开observer时返回schema也不变。
 
+实现与clean-build audit现已分别以`795d3821`和`aa971a16`推送；63/63测试与依赖闭包审计通过，`findings=[]`。V2.51.57又只用仓库祖先`git log -S`冻结20个历史零引入CRAN identity，selection artifact不含identity明文、逐项hash或endpoint，且没有访问任何页面。下一零模型门将在protocol/start冻结后对每页只做一次production-equivalent fetch/projection，并只发布三层aggregate；其目的不是选择“高结构”页面，而是识别结构最早消失的层。
+
 这个分解给出可操作的三叉决策。若fresh页面在raw层结构就是0，下一候选应改search/source selection；若raw非零而extracted归零，应修HTML/structured-data extraction；若extracted非零而projected归零，应修provenance-preserving projection；只有projected仍有结构而extractor为0，才有证据扩record grammar。结构事件本身不是可信事实、不是可采纳observation，也不应进入运行时route。当前63/63专项和父链测试通过，dry-run依赖闭包审计无label/evaluator/credential finding，但尚无真实页面运行或quality结论。
 
 对entropy credit assignment，这个observer只提供“信息可能在哪一层被丢弃”的机制诊断，不能获得正credit。table数量、JSON-LD存在、pipe retention或避免structure loss都不自动降低关于答案的校准熵；结构可能是导航、旧版本、无关实体或恶意内容。正signed credit仍要求结构经过source/identity/field/value admissibility，再用matched intervention产生可归因prediction change和post-freeze outer utility。V2.51.55当前只授权build与未来fresh结构定位门，不授权evaluator、DeepWideBench或SOTA主张。

@@ -3,6 +3,8 @@
 > 版本：6.93
 >
 > **6.93 V2.51.55–56 三层 projection-structure observer（build-only，2026-08-12）：V2.51.54 证明现有receipt无法区分“原始网页无结构”与“fetch/HTML-to-text/projector丢结构”。V2.51.55 因此不再添加record grammar，而新增纯content-free观察器及append-only helper/client：在同一次既有bounded fetch内分别计数decoded raw HTML、HTML-to-text extracted text与5k production projection的table/row/cell、definition-list、JSON-LD、pipe-line、JSON-object-line、label-value block等结构事件，并记录`raw→extracted`与`extracted→projected`的total-loss/retention布尔。输出不含page identity、URL、题面、label/value、正文、prediction或semantic content hash；结构信号明确不是admissible evidence，entropy/IG signed credit仍为0。旧V2.49.81 helper协议源码未改，native fetch默认不开observer时返回schema保持不变；query/fetch/model/output-token/context/wall/network cap均未扩大。专项、native seam及V2.49.80/81/84/85父链和V2.51.54诊断共63/63测试通过；V2.51.56 dry-run依赖闭包审计为`audit_valid=true, findings=[]`，privileged runtime access与evaluator/credential capability均为0。当前尚未提交clean-build权威audit、未冻结fresh population/protocol、未调用真实network/model/search/fetch/evaluator，也不授权新220。下一步必须先提交实现，随后在clean pushed HEAD生成V2.51.56权威build audit；只有之后才能设计fresh/disjoint零模型结构层定位门。**
+>
+> **后续冻结状态：V2.51.55实现已以`795d3821`推送；V2.51.56从clean pushed HEAD生成权威audit并以`aa971a16`推送，63/63、`audit_valid=true, findings=[]`，只授权fresh/disjoint structure-observer protocol design，不授权activation。V2.51.57 population selection随后仅在仓库祖先上对20个候选执行`git log -S`扫描，20/20 identity零引入；选择工件只保存ordered-vector hash、总数和零命中计数，不保存identity、逐项hash或endpoint，且未访问network/page/model/search/evaluator。下一步先提交该selection freeze，再构建protocol；在protocol/preaudit/start逐阶段clean push前不得fetch。**
 
 > 版本：6.92
 >
@@ -3787,3 +3789,10 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 3. `native_search.AzureNativeSearchClient`只增加默认`None`的可选in-memory callback；未启用时返回key set与旧行为完全不变。新append-only helper/client才激活observer，并在同一个既有hard-deadline fetch中产生preprojection receipt、运行V2.49.84 projection、再封装final receipt；父5k evidence与projection不被observer修改。
 4. 新client继承V2.49.85 effect boundary，保持3MB response cap、5k page cap、redirect/SSRF检查、deadline、fetch count及所有query/model/context/token预算。旧V2.49.81 helper schema和源码未修改；失败helper不得携带structure receipt，tamper或不闭合计数fail closed。
 5. observer aggregate只汇总页数、结构事件总数与loss/retention页数；结构信号不能进入router、evidence admission或credit。63/63专项和父链测试通过，dry-run dependency audit无privileged/evaluator/credential finding。当前严格build-only，下一步为实现提交推送后的clean-build V2.51.56 audit，不授权外部launch、evaluator或DeepWideBench 220。
+
+### V2.51.57：fresh/disjoint structure-layer gate population freeze（2026-08-12 UTC）
+
+1. 固定20个此前仓库祖先中从未引入的CRAN identity；每个identity在父提交`aa971a16`的`src/evaluation/scripts/tests/results/outputs`上执行`git log -S`均为零命中。选择过程只读Git历史，不探测endpoint/page/value，不调用model/search/evaluator/credential或benchmark。
+2. selection artifact只发布ordered identity vector hash、20个identity总数与20个zero-hit计数；不发布identity明文、逐项hash、clue mapping或endpoint。该artifact只冻结未来population，不授权任何fetch。
+3. 后续protocol应固定每页一次direct CRAN HTML fetch、20 workers、0 retry/redirect/replacement、3MB byte cap与production-equivalent decode/HTML extraction/V2.49.84 projection；只发布V2.51.55三层structure aggregate与固定20 failure-as-zero分母。
+4. 结构门不设“结构越多越好”的质量目标，而要求至少能定位一个非零层间事件：raw structured surface、raw→extracted loss、extracted structured surface、extracted→projected loss或projected structured surface之一非零，且20页receipt完整、无content leakage。结果只决定下一层工程修复，不授权同人口model/evaluator或公开220。
