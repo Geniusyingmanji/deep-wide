@@ -1,5 +1,19 @@
 # OWIC-DeepWide 研究与实施计划
 
+> 版本：6.110
+>
+> **6.110 V2.52.71–72 validated-production checkpoint 与 clean-build 审计（2026-08-12）：V2.52.70证明11个outer failure主要发生在完整search/model effect之后，V2.52.71据此新增append-only checkpoint runtime。它在冻结production normalizer返回后立即封存`prediction + sha256 + {validated_model_output|deterministic_fallback}`，随后以7个有限microstage拆开`boundary_validate → paired_parent_run_and_validate → effect_accounting → production_checkpoint_select → parent_prediction_binding → result_envelope_build → result_envelope_validate`。正常路径仍只调用原parent一次，provider/search/fetch/prompt不变；第二synthesis仍是local identity replay，revision provider=0。**
+>
+> **synthetic fault injection证明：正常路径的prediction、prediction kind、cost与provider/query/fetch/model effect和V2.52.65父路径一致；production后parent validation、primary envelope build或primary envelope validate故障时，独立recovery envelope丢弃失效父envelope并原样返回密封checkpoint，不新增模型/搜索/fetch effect；production provider失败仍密封deterministic visible-schema fallback；production effect前失败只生成visible-schema Unknown fallback；checkpoint本身无法验证则以`untrusted_checkpoint_rejected` fail closed，不恢复可疑table。checkpoint/receipt/result/stage/credit重封篡改均fail closed。实现与审计器分别以`cd962ada / e5d0749c`推送。**
+>
+> **V2.52.72从clean pushed `e5d0749c`重跑54/54相关测试，固定75文件依赖闭包（vector SHA-256=`44d76817...fc7`，path SHA-256=`4bf35bd0...d78`），runtime privileged-field/evaluator/credential finding全空；唯一允许例外仍是既存provider-rank `clients.py:565:score`。真实cap保持`4 query / 14 fetch / 4 model`，四个protected watcher identity未变、shared lease空闲、没有network/model/search/fetch/evaluator effect。权威audit SHA-256=`f7c7d16d...ace`，`audit_valid=true / findings=[]`，以`df8c1007`推送。**
+>
+> **当前权限只前进到`fresh_benchmark_external_reliability_protocol_design=true`：不得把V2.52.71直接接入公开220，不得重放V2.52.67。下一步必须构造全新、与V2.52.60 source-package 64和公开220均不重叠的benchmark-external population，预注册单次固定分母totality gate；GO要求所有task terminal、checkpoint tamper=0、post-checkpoint injected/natural failure均保留prediction、pre-checkpoint failure严格fail closed、正常臂prediction/cost/effect byte-identical、0 budget rejection。该gate只证明可靠性；之后仍需独立fresh shared-prefix quality gate，才能考虑新完整220。entropy/IG signed credit继续为0。**
+>
+> **DeepWideBench口径不变：最新完整V2.52.67=`5/220 / Composite 0.407328`；项目单轮峰值V2.48.57=`9/220 / 0.457249`但未稳定复制；无Avg@4、leaderboard或SOTA证据。**
+>
+> **阅读规则：本文件append-only；顶部6.110覆盖6.109及后文所有较早的当前权限、下一步、容量、预算与分数口径。**
+
 > 版本：6.109
 >
 > **6.109 V2.52.65–70 production-only 完整220、严格NO-GO与 post-effect totality 定位（2026-08-12）：V2.52.65只把第一份validated sparse production作为最终prediction；继承的第二synthesis入口只做本地identity replay，revision provider调用恒为0，quote/header/vertical treatment均未带回。V2.52.67按真实前置物理上限`4 query / 14 fetch / 4 model`、40 executor、16 model slot执行唯一一次固定公开220；runtime只接收`{opaque_id, question, same-forward public pages}`，mapping/gold/category/question-type/split/score/evaluator在220份prediction全部冻结并推送forward audit前保持关闭。**
