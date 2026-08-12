@@ -23,24 +23,24 @@ from . import v25180_quote_aware_production_runtime as runtime
 
 
 DATE = "20260812"
-PROTOCOL_ID = "v25183_quote_aware_external_mechanism_v1"
+PROTOCOL_ID = "v25183_quote_aware_external_mechanism_r2"
 BUILD_AUDIT = Path(
-    f"results/v25183_quote_aware_external_build_audit_v1_{DATE}.json"
+    f"results/v25183_quote_aware_external_build_audit_r2_{DATE}.json"
 )
 PROTOCOL = Path(
-    f"results/v25183_quote_aware_external_preregistration_v1_{DATE}.json"
+    f"results/v25183_quote_aware_external_preregistration_r2_{DATE}.json"
 )
 PREAUDIT = Path(
-    f"results/v25183_quote_aware_external_preactivation_audit_v1_{DATE}.json"
+    f"results/v25183_quote_aware_external_preactivation_audit_r2_{DATE}.json"
 )
 EXECUTION_START = Path(
-    f"results/v25183_quote_aware_external_execution_start_v1_{DATE}.json"
+    f"results/v25183_quote_aware_external_execution_start_r2_{DATE}.json"
 )
 FORWARD_RESULT = Path(
-    f"results/v25183_quote_aware_external_forward_result_v1_{DATE}.json"
+    f"results/v25183_quote_aware_external_forward_result_r2_{DATE}.json"
 )
 FORWARD_AUDIT = Path(
-    f"results/v25183_quote_aware_external_forward_audit_v1_{DATE}.json"
+    f"results/v25183_quote_aware_external_forward_audit_r2_{DATE}.json"
 )
 EVALUATOR = Path("scripts/evaluate_v25183_quote_aware_external.py")
 EVALUATOR_TEST = Path("tests/test_evaluate_v25183_quote_aware_external.py")
@@ -51,7 +51,7 @@ RESULT = Path(f"results/v25183_quote_aware_external_result_v1_{DATE}.json")
 POSTAUDIT = Path(
     f"results/v25183_quote_aware_external_postresult_audit_v1_{DATE}.json"
 )
-OUTPUT_ROOT = Path(f"outputs/v25183_quote_aware_external_v1_{DATE}")
+OUTPUT_ROOT = Path(f"outputs/v25183_quote_aware_external_r2_{DATE}")
 MODEL_SLOT_DIRECTORY = OUTPUT_ROOT / "model_slots"
 TASK_ROWS = OUTPUT_ROOT / "frozen_task_results.jsonl"
 PREDICTION_FREEZE = OUTPUT_ROOT / "prediction_freeze.json"
@@ -86,8 +86,8 @@ TASK_COUNT = 20
 EXECUTOR_CONCURRENCY = 20
 MODEL_SLOT_CAP = 8
 LEASE_PATH = base.LEASE_PATH
-LEASE_OWNER = "v25183_quote_aware_external_forward_v1"
-LEASE_PURPOSE = "fresh_label_blind_quote_aware_mechanism_gate_v1"
+LEASE_OWNER = "v25183_quote_aware_external_forward_r2"
+LEASE_PURPOSE = "fresh_label_blind_quote_aware_mechanism_gate_r2"
 MODEL = copy.deepcopy(base.MODEL)
 SEARCH = copy.deepcopy(base.SEARCH)
 LIMITS = copy.deepcopy(base.LIMITS)

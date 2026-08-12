@@ -217,7 +217,11 @@ class V25183QuoteAwareExternalTests(unittest.TestCase):
         }
         with mock.patch.object(
             control, "_tests", return_value=fake_tests
-        ), mock.patch.object(control, "_parents_valid", return_value=True):
+        ), mock.patch.object(
+            control, "_parents_valid", return_value=True
+        ), mock.patch.object(
+            control, "_future_pristine", return_value=True
+        ):
             value = control.build_audit(now=1, require_clean=False)
         checked = control.validate_build(value)
         self.assertTrue(checked["audit_valid"])
