@@ -3725,3 +3725,9 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 3. row identity、非 key field 与 old value 必须逐字对应 production table；new value 必须非空、非 Unknown、非原值且不能改变 Markdown shape。quote 内必须在1200字符有界范围机械包含 row、field 和完整 new value，substring、错页、仅 title、重复或冲突 cell edit 均拒绝。
 4. receipt 闭合约束为 `model_edit_count = applied_edit_count + rejected_edit_count`，并区分 schema-parsed、quote-attested（冲突处理前）和最终 applied。provider、JSON、projection 或父 post-effect 任一异常仍逐字保留 production prediction；entropy/IG signed credit 恒为0。
 5. 当前仅实现与本地测试阶段；V2.51.43 专项12/12及父链107/107已通过，尚未调用真实 model/search/fetch/evaluator。V2.51.44 必须在实现提交推送后的 clean HEAD 上完成113/113 dependency-closure audit，才允许设计全新 fresh/disjoint external protocol；audit 本身不授权 launch、DeepWideBench 220、retry/resume、leaderboard 或 SOTA。
+
+### V2.51.45：quote-attested fresh/disjoint external gate（population freeze，2026-08-12 UTC）
+
+1. 候选 population 固定为20条此前仓库历史 exact-literal-zero 的公开科学 Python package 描述 clue；对应20个离线推断 identity 在父提交历史的 `src/evaluation/scripts/tests/results/outputs` 中也均为零引入，且与 V2.51.41 population 不重叠。
+2. selection 阶段只做本地 Git 历史扫描，不访问 endpoint、page、model、search、evaluator 或 credential。冻结 artifact 仅保存 ordered identity vector hash、数量和零命中计数，不保存 identity 明文、逐项 hash 或 clue→identity mapping。
+3. 后续 protocol 仍须独立 build audit、protocol、preaudit、execution-start 分阶段 clean commit/push。唯一 external forward 只能在 strict label-blind、空闲 lease、GPT-5.6 端口可用、四个 watcher identity 不变且所有未来 surface pristine 时激活；不得复用或重跑 V2.51.41 的20题。
