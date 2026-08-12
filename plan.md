@@ -1,5 +1,19 @@
 # OWIC-DeepWide 研究与实施计划
 
+> 版本：6.106
+>
+> **6.106 V2.52.32–38 header-totality shadow、local population selector 与一次性 freeze 失败封存（2026-08-12）：V2.52.32把V2.52.30 helper接入behavior-preserving shadow，只在父normalizer已经给出`no_bindable_header_reject`且quote-aware未激活后观察；candidate/receipt随即丢弃，父response、prediction、cost与effect不变。V2.52.33从clean pushed HEAD完成62/62测试，72文件依赖向量固定，privileged/evaluator/credential findings全空；权威audit [`results/v25233_header_totality_shadow_build_audit_v1_20260812.json`](results/v25233_header_totality_shadow_build_audit_v1_20260812.json) SHA-256=`eebbc557...30fc2`。**
+>
+> **V2.52.34 R2与V2.52.35–36随后构建本地Debian binary-package selector：固定`dpkg-query`参数、四个互斥名称形态、SHA排名、父提交固定路径`git log -i -S`历史零过滤、每形态64包、每4包一题，共64题/256包；runtime任务仍只有`{opaque_id, question}`，morphology不进入runtime。修正后容量为`116/351/370/1122`，V2.52.36 clean-build audit为37/37、`findings=[]`，权威工件 [`results/v25236_local_package_selector_build_audit_v1_20260812.json`](results/v25236_local_package_selector_build_audit_v1_20260812.json) SHA-256=`966adf1b...23a4b`。**
+>
+> **V2.52.37 execution-start从clean pushed `265fb37a`冻结selector/test/design/audit哈希、唯一命令与唯一结果面，以单文件commit `df2c9307`推送。正式命令确实从该pushed HEAD调用，但调用者30秒wall deadline在selector完成串行Git历史扫描并发布结果前终止；结果路径为空、selector进程已退出、仓库仍clean、四个protected watcher identity未变、shared lease空闲。由于start明确`execute_exactly_once=true`且禁止retry/resume/replacement/second freeze，本次authority永久消耗，不能把“未写出结果”解释成未执行后重跑。V2.52.38 postattempt audit将其冻结为`terminal_no_result / caller_wall_deadline_before_result_publication`；本阶段没有network/model/search/fetch/evaluator/benchmark effect，也没有任务人口、prediction、质量或credit结果。**
+>
+> **下一步不用同命令或同binary-package人口重试。counts-only本地探针确认有564个source-package名称不等于任何已安装binary-package名称；`compact/single-hyphen/digit/(multi-hyphen+plus-dot-other)`四个新stratum容量为`274/116/92/82`，可构造与失败人口实体集合严格不交的64题successor。先冻结新的source-package selector设计与build audit，并把subprocess execution/return code/timeout作为正式receipt且给予足够wall；再按`population execution-start → unique freeze → post-freeze audit → shadow protocol → preactivation → execution-start`逐阶段clean commit/push。成功人口之后的唯一64题shadow gate仍固定32 executors、16 model slots、GPT-5.6与当前production search、不调用evaluator；GO要求64/64 terminal、shadow observer failure=0、父behavior drift=0、natural shadow entry≥1且safe candidate≥1。门通过前不activation、不赋entropy/IG正credit、不启动新220。**
+>
+> **DeepWideBench口径不变：最新完整V2.52.08=`5/220 / Composite 0.398669`，项目单轮最佳V2.48.57=`9/220 / 0.457249`；无Avg@4、leaderboard或SOTA。四个protected watcher保持原identity，entropy/IG signed credit继续为0。**
+>
+> **阅读规则：本文件append-only；顶部6.106覆盖6.105及后文所有较早的当前权限、下一步与分数口径。**
+
 > 版本：6.105
 >
 > **6.105 V2.52.28–31 production header-totality 定位与纯实现（2026-08-12）：V2.52.28只从冻结V2.52.08 runtime JSONL解码`runtime_completed/failure_as_zero/prediction_kind/failure_types`和静态嵌套路径`parent_result.content_free_receipt.raw_normalizer_observation`；其他兄弟值均由lexical projector跳过。5个`production:ValueError`全部非truncated、非quote-aware activation：4个为`no_bindable_header_reject`，1个为`missing_data_rows_reject`；五题均有pipe group和separator，但只有1题到达header/width binding，且该题无data row。诊断未读取或输出task identity、question、page、prediction、gold、category、split、metric、score或credential；代码/权威工件以`943145ee / ed448872`推送，工件[`results/v25228_v25208_production_totality_diagnosis_v1_20260812.json`](results/v25228_v25208_production_totality_diagnosis_v1_20260812.json) SHA-256=`400cd12b...6f7`。**
