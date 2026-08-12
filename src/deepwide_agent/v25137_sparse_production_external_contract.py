@@ -27,39 +27,39 @@ from . import v25135_sparse_production_runtime as runtime
 
 
 DATE = "20260812"
-PROTOCOL_ID = "v25137_sparse_production_external_matched_v1"
+PROTOCOL_ID = "v25137_sparse_production_external_matched_r2"
 BUILD_AUDIT = Path(
-    f"results/v25137_sparse_production_external_build_audit_v1_{DATE}.json"
+    f"results/v25137_sparse_production_external_build_audit_r2_{DATE}.json"
 )
 PROTOCOL = Path(
-    f"results/v25137_sparse_production_external_preregistration_v1_{DATE}.json"
+    f"results/v25137_sparse_production_external_preregistration_r2_{DATE}.json"
 )
 PREAUDIT = Path(
-    f"results/v25137_sparse_production_external_preactivation_audit_v1_{DATE}.json"
+    f"results/v25137_sparse_production_external_preactivation_audit_r2_{DATE}.json"
 )
 EXECUTION_START = Path(
-    f"results/v25137_sparse_production_external_execution_start_v1_{DATE}.json"
+    f"results/v25137_sparse_production_external_execution_start_r2_{DATE}.json"
 )
 FORWARD_RESULT = Path(
-    f"results/v25137_sparse_production_external_forward_result_v1_{DATE}.json"
+    f"results/v25137_sparse_production_external_forward_result_r2_{DATE}.json"
 )
 FORWARD_AUDIT = Path(
-    f"results/v25137_sparse_production_external_forward_audit_v1_{DATE}.json"
+    f"results/v25137_sparse_production_external_forward_audit_r2_{DATE}.json"
 )
 EVALUATOR = Path("scripts/evaluate_v25137_sparse_production_external.py")
 EVALUATOR_TEST = Path(
     "tests/test_evaluate_v25137_sparse_production_external.py"
 )
 EVALUATOR_PROTOCOL = Path(
-    f"results/v25137_sparse_production_external_evaluator_preregistration_v1_{DATE}.json"
+    f"results/v25137_sparse_production_external_evaluator_preregistration_r2_{DATE}.json"
 )
 RESULT = Path(
-    f"results/v25137_sparse_production_external_result_v1_{DATE}.json"
+    f"results/v25137_sparse_production_external_result_r2_{DATE}.json"
 )
 POSTAUDIT = Path(
-    f"results/v25137_sparse_production_external_postresult_audit_v1_{DATE}.json"
+    f"results/v25137_sparse_production_external_postresult_audit_r2_{DATE}.json"
 )
-OUTPUT_ROOT = Path(f"outputs/v25137_sparse_production_external_v1_{DATE}")
+OUTPUT_ROOT = Path(f"outputs/v25137_sparse_production_external_r2_{DATE}")
 MODEL_SLOT_DIRECTORY = OUTPUT_ROOT / "model_slots"
 TASK_ROWS = OUTPUT_ROOT / "frozen_task_results.jsonl"
 PREDICTION_FREEZE = OUTPUT_ROOT / "prediction_freeze.json"
@@ -78,6 +78,27 @@ PARENT_AUDIT = Path(
 PARENT_AUDIT_SHA256 = (
     "4860dbf3d9f81ea9983b66f121f52c2f86797a1cde9b2c9a2f8b5a268985ad92"
 )
+SUPERSEDED_BUILD_AUDIT = Path(
+    f"results/v25137_sparse_production_external_build_audit_v1_{DATE}.json"
+)
+SUPERSEDED_BUILD_AUDIT_SHA256 = (
+    "80fa745315e5f3cbda987f9b2638a6222161c7171e2f2bd293cf2e84ed818889"
+)
+SUPERSEDED_PROTOCOL = Path(
+    f"results/v25137_sparse_production_external_preregistration_v1_{DATE}.json"
+)
+SUPERSEDED_PROTOCOL_SHA256 = (
+    "81819cc5c3e72aaf67596a124274efe2f52dc0103a4e267f89f3a6cb93da55f8"
+)
+SUPERSEDED_PREAUDIT = Path(
+    f"results/v25137_sparse_production_external_preactivation_audit_v1_{DATE}.json"
+)
+SUPERSEDED_EXECUTION_START = Path(
+    f"results/v25137_sparse_production_external_execution_start_v1_{DATE}.json"
+)
+SUPERSEDED_FORWARD_RESULT = Path(
+    f"results/v25137_sparse_production_external_forward_result_v1_{DATE}.json"
+)
 FORWARD_SOURCES = (CONTRACT, RUNNER, HELPER)
 
 TASK_COUNT = 20
@@ -85,8 +106,8 @@ EXECUTOR_CONCURRENCY = 20
 MODEL_SLOT_CAP = 8
 FRESHNESS_PARENT_COMMIT = "ac0cdb79"
 LEASE_PATH = base.LEASE_PATH
-LEASE_OWNER = "v25137_sparse_production_external_forward_v1"
-LEASE_PURPOSE = "fresh_label_blind_sparse_production_matched_gate"
+LEASE_OWNER = "v25137_sparse_production_external_forward_r2"
+LEASE_PURPOSE = "fresh_label_blind_sparse_production_matched_gate_r2"
 MODEL = copy.deepcopy(base.MODEL)
 SEARCH = copy.deepcopy(base.SEARCH)
 LIMITS = copy.deepcopy(base.LIMITS)
@@ -208,6 +229,7 @@ def source_policy() -> dict[str, Any]:
         "mapping_gold_category_question_type_split_evaluator_score_reward_or_historical_result_read": False,
         "entropy_or_information_gain_assigns_signed_credit": False,
         "deepwidebench_dev64_exact220_leaderboard_or_sota_authorized": False,
+        "superseded_r1_protocol_never_reached_preaudit_start_or_forward": True,
     }
 
 
@@ -278,6 +300,8 @@ def dependency_manifest(root: Path, *, tracked: bool) -> dict[str, str]:
         CONTROL,
         TEST,
         PARENT_AUDIT,
+        SUPERSEDED_BUILD_AUDIT,
+        SUPERSEDED_PROTOCOL,
     }
     output: dict[str, str] = {}
     for relative in sorted(relatives, key=str):
@@ -315,6 +339,20 @@ def build_protocol(
         raise RuntimeError("V2.51.37 future surface is not pristine")
     if sha256(root / PARENT_AUDIT) != PARENT_AUDIT_SHA256:
         raise RuntimeError("V2.51.37 parent build audit drifted")
+    if (
+        sha256(root / SUPERSEDED_BUILD_AUDIT)
+        != SUPERSEDED_BUILD_AUDIT_SHA256
+        or sha256(root / SUPERSEDED_PROTOCOL) != SUPERSEDED_PROTOCOL_SHA256
+        or any(
+            (root / path).exists() or (root / path).is_symlink()
+            for path in (
+                SUPERSEDED_PREAUDIT,
+                SUPERSEDED_EXECUTION_START,
+                SUPERSEDED_FORWARD_RESULT,
+            )
+        )
+    ):
+        raise RuntimeError("V2.51.37 superseded r1 activation barrier drifted")
     manifest = dependency_manifest(root, tracked=tracked)
     tasks = task_vector()
     value: dict[str, Any] = {
@@ -326,6 +364,16 @@ def build_protocol(
         "parent": {
             "clean_build_audit_path": str(PARENT_AUDIT),
             "clean_build_audit_sha256": PARENT_AUDIT_SHA256,
+        },
+        "superseded_unactivated_protocol": {
+            "build_audit_path": str(SUPERSEDED_BUILD_AUDIT),
+            "build_audit_sha256": SUPERSEDED_BUILD_AUDIT_SHA256,
+            "protocol_path": str(SUPERSEDED_PROTOCOL),
+            "protocol_sha256": SUPERSEDED_PROTOCOL_SHA256,
+            "preaudit_created": False,
+            "execution_start_created": False,
+            "forward_created": False,
+            "population_consumed": False,
         },
         "freshness": {
             "parent_commit": FRESHNESS_PARENT_COMMIT,

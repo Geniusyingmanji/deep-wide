@@ -275,7 +275,9 @@ class SparseProductionExternalTests(unittest.TestCase):
             "passed": True,
             "suites": [],
         }
-        with mock.patch.object(control, "_tests", return_value=fake_tests):
+        with mock.patch.object(
+            control, "_tests", return_value=fake_tests
+        ), mock.patch.object(control, "_future_pristine", return_value=True):
             value = control.build_audit(now=1, require_clean=False)
         checked = control.validate_build(value)
         self.assertTrue(checked["audit_valid"])

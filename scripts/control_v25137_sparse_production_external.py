@@ -329,9 +329,25 @@ def build_audit(*, now: int | None = None, require_clean: bool = True) -> dict[s
         str(contract.CONTROL),
         str(contract.TEST),
         str(contract.PARENT_AUDIT),
+        str(contract.SUPERSEDED_BUILD_AUDIT),
+        str(contract.SUPERSEDED_PROTOCOL),
     }
     checks = {
         "v25136_clean_build_audit_bound": _parent_valid(),
+        "superseded_r1_never_activated_or_consumed": contract.sha256(
+            ROOT / contract.SUPERSEDED_BUILD_AUDIT
+        )
+        == contract.SUPERSEDED_BUILD_AUDIT_SHA256
+        and contract.sha256(ROOT / contract.SUPERSEDED_PROTOCOL)
+        == contract.SUPERSEDED_PROTOCOL_SHA256
+        and all(
+            not (ROOT / path).exists() and not (ROOT / path).is_symlink()
+            for path in (
+                contract.SUPERSEDED_PREAUDIT,
+                contract.SUPERSEDED_EXECUTION_START,
+                contract.SUPERSEDED_FORWARD_RESULT,
+            )
+        ),
         "focused_sparse_runtime_parent_and_gate_tests_exact83": tests["passed"],
         "source_manifest_complete": set(manifest) == expected_manifest,
         "parent_history_exact_clue_literal_freshness_zero_hit": freshness[
