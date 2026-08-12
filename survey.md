@@ -4,7 +4,7 @@
 
 V2.51.58把V2.51.57定位到的representation gap实现为一个窄的、可证伪的candidate grammar。它不从结构计数直接推断答案，而只在同一个verified incremental page内解析连续两列pipe block：visible key必须唯一匹配输出schema，block必须恰有一个主键行，主键value必须唯一匹配production table的现有row identity。每个field候选的evidence是identity row到field row之间不超过1200字符、在整页唯一出现的连续原文；selection前后仍由V2.51.43 verifier各验证一次。
 
-这个实现有意拒绝容易制造虚假coverage的路径：重复key、同一页多个identity-bound block、多个主键、Unknown、跨页identity/field拼接、不同页冲突、非唯一或超长quote以及key/shape修改全部fail closed。它复用既有检索、verified-gain、selector和投影链，未增加query、fetch、模型调用、上下文、token、时间或网络预算。专项11/11和首轮父链35/35通过；当前尚未形成fresh external population、prediction change或quality结果。
+这个实现有意拒绝容易制造虚假coverage的路径：重复key、同一页多个identity-bound block、多个主键、Unknown、跨页identity/field拼接、不同页冲突、非唯一或超长quote以及key/shape修改全部fail closed。它复用既有检索、verified-gain、selector和投影链，未增加query、fetch、模型调用、上下文、token、时间或网络预算。实现已以`5327a563`推送；随后从clean pushed HEAD完成V2.51.59权威审计，159/159测试通过、`findings=[]`，privileged/evaluator/credential/untracked findings均为0。当前尚未形成fresh external population、prediction change或quality结果，而且审计明确不授权外部门或DeepWideBench。
 
 对entropy credit assignment，这一阶段仍只建立`admissible observation`的候选单元，并没有建立正credit。纵向表被成功解析最多说明某个field observation通过了source/identity/field/value gate；只有后续fresh matched intervention产生可归因prediction change，并在prediction冻结后的独立outer evaluator上增加utility，才允许给正signed credit。因此V2.51.58的receipt继续固定entropy/IG signed credit为0，也不授权DeepWideBench或SOTA主张。
 

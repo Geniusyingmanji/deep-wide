@@ -3,6 +3,8 @@
 > 版本：6.95
 >
 > **6.95 V2.51.58 vertical key-value binder（build-only，2026-08-12）：V2.51.57虽因`17<18`可靠性门严格NO-GO、且其population永久禁止model/evaluator/retry/reuse，但冻结aggregate仍显示17个成功页中16页把纵向结构完整保留到production 5k projection，累计332条`key | value`行。V2.51.58因此只在现有verified incremental pages与V2.51.51 candidate seam上增加一种grammar：允许空行分隔的连续两列pipe rows组成block；key去除尾部`:`/`=`后必须唯一规范化匹配visible schema；每个block必须恰有一个主键行，其value唯一匹配production row identity；每个非主键候选使用同页identity-row到field-row的唯一连续exact quote，长度不超过1200字符。重复key、多identity、同页多个identity-bound block、Unknown、跨页拼接、跨页冲突、非唯一/超长quote与shape/key修改全部fail closed；候选在selection前后继续由V2.51.43两次验证。production provider、selector、query/fetch/model/output-token/context/wall/network cap均未扩大；receipt只发布counts/booleans且signed entropy/IG credit保持0。专项11/11与首轮父链35/35已通过。当前只允许实现与测试，V2.51.59必须从clean pushed HEAD生成159-test依赖闭包审计；审计本身不得授权fresh protocol、launch、evaluator或DeepWideBench。**
+>
+> **冻结状态：V2.51.58实现已以`5327a563`提交并推送。V2.51.59随后从该clean pushed HEAD生成权威build audit：159/159测试通过，`audit_valid=true, findings=[]`；runtime dependency closure的privileged field access、evaluator capability、credential literal与untracked source均为0，四个protected watcher identity未变，shared lease空闲，全程0 network/model/search/fetch/evaluator/benchmark/API。审计SHA-256为`2a8bb6b3...296a708d`。权限严格保持`implementation_build_only=true`，fresh protocol design/activation、V2.51.57 population复用、evaluator、DeepWideBench与SOTA全部为false。**
 
 > 版本：6.94
 >
@@ -3819,4 +3821,4 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 2. 每个可采纳block恰有一个主键行，主键value必须唯一匹配production table中的现有row identity；同页出现两个identity-bound blocks整页vertical候选为0。非主键value必须非Unknown且不改主键；跨页identity/field拼接永不发生。
 3. 每个field edit的证据是同一页从identity row到该field row的连续原文；必须全页exact unique且长度`<=1200`。随后复用V2.51.43 verifier做selection前单edit验证和selection后投影验证。coordinate冲突整coordinate拒绝，table shape、row order、key与未选择cell保持不变。
 4. receipt不含identity、field、value、page、URL、question、prediction或credential，只记录七类grammar、vertical block/ambiguity与candidate funnel counts。entropy/IG不参与selector或credit，positive signed credit仍为0。
-5. 当前是严格build-only。V2.51.59 clean-build audit绑定V2.51.57 result/audit的NO-GO权限，必须验证159项专项/父链测试、依赖闭包、label-blind/evaluator/credential边界、watcher identity与空闲lease；即使通过也只证明代码可审计，不授权fresh external protocol、activation、quality evaluator或public 220。
+5. 当前是严格build-only。V2.51.59已从clean pushed `5327a563`完成159/159专项/父链测试，依赖闭包的privileged/evaluator/credential/untracked findings均为0，watcher identity与空闲lease通过，权威工件为[`results/v25159_vertical_key_value_candidate_build_audit_v1_20260812.json`](results/v25159_vertical_key_value_candidate_build_audit_v1_20260812.json)。该结果只证明代码可审计，不授权fresh external protocol、activation、quality evaluator或public 220。
