@@ -3739,3 +3739,10 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 3. prediction/forward/audit均已冻结推送，forward audit `audit_valid=true, findings=[]`；evaluator/gold/result保持物理不存在，禁止retry/resume/rerun/换题或复用该population，也不授权DeepWideBench、leaderboard或SOTA。
 4. V2.51.46 counts-only诊断只解码V2.51.43与V2.51.35 receipts，结论是瓶颈已从verifier precision转为edit proposal recall：不是提出的edit被证据门拒绝，而是模型面对原始delta projection时不愿/不能复制满足逐字条件的quote。
 5. 下一build-only候选应在模型前从same-forward page中确定性提取`source + row identity + field + value + exact content quote`候选，再让模型只做候选选择或abstain；不得让模型自由复制任意网页文本，不得扩大query/fetch/model/context/token/wall/network cap。entropy/IG signed credit继续为0，未有post-freeze outer utility前不得分配正credit。
+
+### V2.51.47–48：deterministic quote-candidate selector（build-only，2026-08-12 UTC）
+
+1. V2.51.47 从same-forward verified delta page正文中只识别两类机械证据：明确`IDENTITY-TARGET-BOUND`区段内的原子JSON record，以及≤1200字符的连续pipe table header+row span；SBCL index record必须带显式schema。任意普通页面JSON、title、跨页或跨区段文本均不能成为候选。
+2. 每个候选先映射到production中的唯一row/非key field/old value，并调用V2.51.43 verifier验证exact unique quote与row/field/new value绑定。相同coordinate多值冲突全部删除，同值重复确定性去重，最多保留40个候选。
+3. 第4次模型调用只返回严格JSON candidate ID集合或空集，不可自由输出quote/edit；选中后再次经V2.51.43 verifier才投影。无gain仍3次、有gain最多4次model forward，query/fetch/context/output-token/wall/network cap不变，失败保留production。
+4. 专项12/12覆盖两种record、SBCL schema span、pipe span、冲突/重复、严格ID选择、no-gain、positive-gain、abstain/失败、post-effect、privileged/budget、receipt tamper与label-blind。当前仅build-only，尚未调用真实model/search/fetch/evaluator或授权新external/220；V2.51.48须在clean pushed HEAD完成141/141审计。
