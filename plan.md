@@ -1,5 +1,19 @@
 # OWIC-DeepWide 研究与实施计划
 
+> 版本：6.101
+>
+> **6.101 V2.52.21–22 官方格式证据与 strict CRAN DCF attestation（design/build-only，2026-08-12）：V2.52.21在不访问`PACKAGES` snapshot endpoint的前提下冻结R官方文档证据。R-admin明确repository `PACKAGES`是以空行分隔的DESCRIPTION records，R-exts明确DESCRIPTION采用DCF语法；但官方repository-format章节没有给出具体HTTP `Content-Type`/MIME合约。因此证据只支持严格body-format attestation，不支持把V2.52.19未保存的header猜成某个安全alternate MIME。`known_safe_alternate` allowlist继续为空，V2.52.19 attempt claim、NO-GO与禁止retry/refetch/backfill/replacement/second batch继续永久有效。权威证据为[`results/v25221_cran_repository_format_evidence_v1_20260812.json`](results/v25221_cran_repository_format_evidence_v1_20260812.json)，文件SHA-256=`d3e10673...a59b9`，design/result分别以`14b5e392 / 3acc3994`推送。**
+>
+> **V2.52.22新增纯内存、零filesystem/process/environment/network/model/search/fetch/evaluator capability的严格attestor。它先验证caller冻结的body byte length与SHA-256，再执行严格UTF-8、控制字符、CRLF/bare-CR、DCF field/continuation、重复字段检查；candidate必须同时含`Package/Version/License`与`SystemRequirements|Suggests`，且至少64个casefold唯一Package。9个失败阶段有限且fail closed，receipt只含whole-body hash/length与aggregate counts，不持久化identity/record/field/value/body/question/prediction/evidence/credential。attestor不修改MIME或transport acceptance，不能单独授权人口、runtime或benchmark。**
+>
+> **冻结前补强了build-audit validator：顶层以及git/tests/suites/capability/semantic/runtime/watchers/checks/authorization全部exact-schema，重封印后的hidden-field注入逐层拒绝；同时要求provider-rank例外为0。实现/测试以`13a62d68`推送，专项与父链`46/46`、compileall、secret scan、label-blind semantic audit全部通过。随后从clean pushed `13a62d68`生成权威工件[`results/v25222_strict_cran_dcf_attestation_build_audit_v1_20260812.json`](results/v25222_strict_cran_dcf_attestation_build_audit_v1_20260812.json)，文件SHA-256=`876e5f10...bdcc5c`、`audit_valid=true, findings=[]`，并以`19ef1da1`单文件推送；四个protected watcher identity未变，shared lease空闲，全程没有外部effect。**
+>
+> **当前权限仍严格只有`strict_cran_dcf_body_attestation_build_only=true`。MIME/transport acceptance change、public snapshot network/execution-start、V2.52.19复用或第二批、identity selection/population freeze、probe runtime integration、compatibility/validator relaxation、prediction change、evaluator、DeepWideBench/Avg@4/leaderboard/SOTA全部为false。下一步先做V2.52.23 design-only的双门语义审查：固定官方HTTPS endpoint、public-address/no-redirect/单attempt/HTTP-200/byte-cap等transport安全门与strict DCF body gate必须同时通过；unknown MIME继续如实报告，不能被静默重写为`text/plain`，也不能仅凭MIME或magic bytes接受。设计必须明确这是否构成新的semantic acceptance policy，并在任何实现、fresh namespace、preactivation或单次全新snapshot effect之前独立冻结。若无法证明安全等价，则该snapshot路线停止，不再消耗fresh population。**
+>
+> **DeepWideBench口径未变化：最新完整V2.52.08为Exact=`5/220`、Composite=`0.398669`；项目单轮最佳仍为V2.48.57的`9/220 / 0.457249`。V2.52.21–22没有prediction、quality或benchmark effect，不能声称提升。entropy/IG继续只能作为shadow/VOC；signed positive credit仍要求`admissible observation → matched intervention → attributable prediction change → post-freeze outer utility`，当前为0。**
+>
+> **阅读规则：本文件append-only；顶部6.101覆盖6.100及后文所有较早的当前权限、下一步与分数口径。**
+
 > 版本：6.100
 >
 > **6.100 V2.52.20 content-free MIME disposition observer（build-only，2026-08-12）：在V2.52.19因CRAN `content_type`严格NO-GO且永久禁止第二批后，新增纯函数observer，只镜像V2.52.17的`split(';',1)[0].strip().casefold()`规范化与冻结接受决策。有限disposition为`missing / accepted / known_safe_alternate / unknown_disallowed`；但本版本四个stratum的`known_safe_alternate` allowlist全部为空、count=`0`，公开入口不能注入alternate，任何unknown仍与父transport一样拒绝，observer successor acceptance逐状态等于parent acceptance。工件不保存原始/规范化header、header hash、URL/body/identity/value/question/prediction/evidence/exception/credential，且不导入filesystem/process/environment/network/model/search/evaluator能力。**
