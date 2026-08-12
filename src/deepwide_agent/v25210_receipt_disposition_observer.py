@@ -10,12 +10,10 @@ validate a compatibility, replace a validator, or change runtime behavior.
 from __future__ import annotations
 
 import copy
+import hashlib
+import json
 from collections.abc import Mapping
 from typing import Any
-
-from . import v25135_sparse_production_runtime as sparse
-from . import v25180_quote_aware_production_runtime as quote
-from .v24263_global_model_limiter import payload_sha256
 
 
 POLICY_ID = "v25210_receipt_disposition_observer_v1"
@@ -23,6 +21,50 @@ ROLE = "v25210_content_free_receipt_disposition_observation"
 SPARSE_KIND = "v25135_sparse_production_receipt"
 QUOTE_KIND = "v25180_quote_aware_receipt"
 RECEIPT_KINDS = (SPARSE_KIND, QUOTE_KIND)
+
+# These identifiers are frozen mirrors, not runtime imports.  The clean-build
+# audit binds their defining parent sources by SHA-256 and the tests compare
+# every observed disposition directly with the frozen validators.
+SPARSE_PARENT_POLICY_ID = "v25135_schema_total_sparse_production_runtime_v1"
+SPARSE_PARENT_RECEIPT_ROLE = "v25135_content_free_sparse_production_receipt"
+SPARSE_SCHEMA_SOURCES = frozenset(
+    {"exact_visible", "provider_plan", "generic_result"}
+)
+QUOTE_PARENT_POLICY_ID = "v25180_quote_aware_production_runtime_v1"
+QUOTE_PARENT_RECEIPT_ROLE = "v25180_content_free_quote_aware_production_receipt"
+QUOTE_INNER_PARENT_POLICY_ID = "v25165_observed_vertical_key_value_runtime_v1"
+QUOTE_INNER_PARENT_ROLE = "v25165_observed_vertical_key_value_runtime_result"
+
+_NORMALIZER_OBSERVATION_POLICY_ID = (
+    "v25170_production_normalizer_disposition_observer_v1"
+)
+_NORMALIZER_OBSERVATION_ROLE = (
+    "v25170_content_free_production_normalizer_disposition_observation"
+)
+_NORMALIZER_DISPOSITIONS = (
+    "exact_table_accepted",
+    "normalized_table_accepted",
+    "invalid_required_columns_reject",
+    "no_pipe_group_reject",
+    "no_separator_row_reject",
+    "no_bindable_header_reject",
+    "separator_width_mismatch_reject",
+    "missing_data_rows_reject",
+    "malformed_row_or_escaped_pipe_reject",
+)
+_NORMALIZER_COUNTS = (
+    "pipe_group_count",
+    "separator_row_count",
+    "header_bound_separator_count",
+    "width_bound_separator_count",
+    "data_bearing_separator_count",
+    "malformed_candidate_count",
+    "normalizer_candidate_count",
+)
+_QUOTE_REPAIR_POLICY_ID = "v25177_quote_aware_pipe_normalizer_v1"
+_QUOTE_REPAIR_RECEIPT_ROLE = (
+    "v25177_content_free_quote_aware_pipe_normalizer_receipt"
+)
 
 SPARSE_VIOLATION_CODES = (
     "schema_key_set",
@@ -93,6 +135,17 @@ QUOTE_VIOLATION_CODES = (
     "policy_false_flag",
     "payload_seal",
 )
+
+
+def payload_sha256(value: object) -> str:
+    return hashlib.sha256(
+        json.dumps(
+            value,
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        ).encode("utf-8")
+    ).hexdigest()
 
 
 def _integer(value: object, *, nonnegative: bool = True) -> bool:
@@ -205,11 +258,15 @@ def observe_sparse_receipt(value: Mapping[str, Any]) -> dict[str, Any]:
         violations.add("schema_key_set")
     if (
         copied.get("artifact_version") != 1
-        or copied.get("role") != sparse.RECEIPT_ROLE
-        or copied.get("policy_id") != sparse.POLICY_ID
+        or copied.get("role") != SPARSE_PARENT_RECEIPT_ROLE
+        or copied.get("policy_id") != SPARSE_PARENT_POLICY_ID
     ):
         violations.add("envelope_identity")
-    if copied.get("schema_source") not in sparse.SCHEMA_SOURCES:
+    schema_source = copied.get("schema_source")
+    if (
+        not isinstance(schema_source, str)
+        or schema_source not in SPARSE_SCHEMA_SOURCES
+    ):
         violations.add("schema_source")
     counts_valid = all(_integer(copied.get(name)) for name in counts)
     signed_valid = all(_integer(copied.get(name), nonnegative=False) for name in signed)
@@ -336,6 +393,161 @@ def observe_sparse_receipt(value: Mapping[str, Any]) -> dict[str, Any]:
     )
 
 
+def _normalizer_observation_valid(value: object) -> bool:
+    if not isinstance(value, Mapping):
+        return False
+    copied = copy.deepcopy(dict(value))
+    unsigned = dict(copied)
+    seal = unsigned.pop("receipt_payload_sha256", None)
+    dispositions = copied.get("disposition_counts")
+    count_names = ("required_column_count", *_NORMALIZER_COUNTS)
+    false_names = (
+        "observer_changes_response_fallback_prediction_candidate_routing_or_budget",
+        "contains_response_cell_column_question_identity_url_page_key_value_prediction_semantic_hash_or_credential",
+        "mapping_gold_category_question_type_split_evaluator_score_reward_or_historical_result_read",
+        "entropy_or_information_gain_assigns_signed_credit",
+        "benchmark_launch_or_evaluator_authorized",
+    )
+    booleans = (
+        "exact_parser_accepted",
+        "normalizer_accepted_after_exact_failure",
+        "frozen_synthesis_contract_accepted",
+        "provider_output_truncated",
+        *false_names,
+    )
+    active = (
+        {
+            name
+            for name, count in dispositions.items()
+            if count == 1
+        }
+        if isinstance(dispositions, Mapping)
+        else set()
+    )
+    accepted = {"exact_table_accepted", "normalized_table_accepted"}
+    return bool(
+        set(copied)
+        == {
+            "artifact_version",
+            "role",
+            "policy_id",
+            *count_names,
+            "disposition_counts",
+            *booleans,
+            "receipt_payload_sha256",
+        }
+        and copied.get("artifact_version") == 1
+        and copied.get("role") == _NORMALIZER_OBSERVATION_ROLE
+        and copied.get("policy_id") == _NORMALIZER_OBSERVATION_POLICY_ID
+        and all(_integer(copied.get(name)) for name in count_names)
+        and isinstance(dispositions, Mapping)
+        and set(dispositions) == set(_NORMALIZER_DISPOSITIONS)
+        and all(
+            _integer(count) and count in {0, 1}
+            for count in dispositions.values()
+        )
+        and sum(dispositions.values()) == 1
+        and all(isinstance(copied.get(name), bool) for name in booleans)
+        and copied["exact_parser_accepted"]
+        is (active == {"exact_table_accepted"})
+        and copied["normalizer_accepted_after_exact_failure"]
+        is (active == {"normalized_table_accepted"})
+        and copied["frozen_synthesis_contract_accepted"]
+        is bool(active.intersection(accepted))
+        and (
+            not copied["normalizer_accepted_after_exact_failure"]
+            or copied["normalizer_candidate_count"] > 0
+        )
+        and (
+            active != {"no_pipe_group_reject"}
+            or copied["pipe_group_count"] == 0
+        )
+        and (
+            active != {"no_separator_row_reject"}
+            or copied["separator_row_count"] == 0
+        )
+        and (
+            active != {"no_bindable_header_reject"}
+            or copied["header_bound_separator_count"] == 0
+        )
+        and (
+            active != {"separator_width_mismatch_reject"}
+            or copied["width_bound_separator_count"] == 0
+        )
+        and (
+            active != {"missing_data_rows_reject"}
+            or copied["data_bearing_separator_count"] == 0
+        )
+        and (
+            active != {"malformed_row_or_escaped_pipe_reject"}
+            or copied["data_bearing_separator_count"] > 0
+        )
+        and all(copied.get(name) is False for name in false_names)
+        and seal == payload_sha256(unsigned)
+    )
+
+
+def _quote_repair_receipt_valid(value: object) -> bool:
+    if not isinstance(value, Mapping):
+        return False
+    copied = copy.deepcopy(dict(value))
+    unsigned = dict(copied)
+    seal = unsigned.pop("receipt_payload_sha256", None)
+    counts = (
+        "row_count",
+        "escaped_pipe_cell_count",
+        "escaped_pipe_occurrence_count",
+        "internal_entity_cell_count",
+        "csv_quoted_cell_count",
+        "adjacent_pipe_whitespace_count",
+    )
+    true_flags = (
+        "repair_applied",
+        "single_exact_header_table_only",
+        "all_rows_nonempty_and_width_exact",
+        "internal_entity_collision_absent",
+        "internal_frozen_parser_compatible",
+        "internal_entity_roundtrip_exact_before_public_loader",
+        "final_public_loader_column_shape_compatible",
+        "public_loader_adjacent_pipe_whitespace_canonicalization_measured",
+        "header_row_count_row_order_nonpipe_cells_and_decoded_values_preserved",
+    )
+    false_flags = (
+        "question_response_cell_column_prediction_or_semantic_hash_emitted",
+        "mapping_gold_category_question_type_split_evaluator_score_reward_or_historical_result_read",
+        "entropy_or_information_gain_assigns_signed_credit",
+        "network_model_search_fetch_or_evaluator_effect",
+        "benchmark_launch_or_external_protocol_authorized",
+    )
+    return bool(
+        set(copied)
+        == {
+            "artifact_version",
+            "role",
+            "policy_id",
+            *counts,
+            *true_flags,
+            *false_flags,
+            "receipt_payload_sha256",
+        }
+        and copied.get("artifact_version") == 1
+        and copied.get("role") == _QUOTE_REPAIR_RECEIPT_ROLE
+        and copied.get("policy_id") == _QUOTE_REPAIR_POLICY_ID
+        and all(_integer(copied.get(name)) for name in counts)
+        and copied["row_count"] >= 1
+        and copied["escaped_pipe_cell_count"] >= 1
+        and copied["escaped_pipe_occurrence_count"]
+        >= copied["escaped_pipe_cell_count"]
+        and copied["internal_entity_cell_count"]
+        == copied["escaped_pipe_cell_count"]
+        and copied["csv_quoted_cell_count"]
+        >= copied["escaped_pipe_cell_count"]
+        and all(copied.get(name) is True for name in true_flags)
+        and all(copied.get(name) is False for name in false_flags)
+        and seal == payload_sha256(unsigned)
+    )
+
+
 def observe_quote_receipt(value: Mapping[str, Any]) -> dict[str, Any]:
     """Mirror the frozen V2.51.80 receipt predicates without parent binding."""
 
@@ -413,10 +625,10 @@ def observe_quote_receipt(value: Mapping[str, Any]) -> dict[str, Any]:
         violations.add("schema_key_set")
     if (
         copied.get("artifact_version") != 1
-        or copied.get("role") != quote.RECEIPT_ROLE
-        or copied.get("policy_id") != quote.POLICY_ID
-        or copied.get("parent_role") != quote.parent.ROLE
-        or copied.get("parent_policy_id") != quote.parent.POLICY_ID
+        or copied.get("role") != QUOTE_PARENT_RECEIPT_ROLE
+        or copied.get("policy_id") != QUOTE_PARENT_POLICY_ID
+        or copied.get("parent_role") != QUOTE_INNER_PARENT_ROLE
+        or copied.get("parent_policy_id") != QUOTE_INNER_PARENT_POLICY_ID
     ):
         violations.add("envelope_identity")
     parent_hash = copied.get("parent_result_payload_sha256")
@@ -465,16 +677,20 @@ def observe_quote_receipt(value: Mapping[str, Any]) -> dict[str, Any]:
         violations.add("observer_completion_failure_partition")
     if dynamics_valid:
         failure_type = copied.get("raw_normalizer_observer_failure_type")
-        if observer_failed is not bool(isinstance(failure_type, str) and failure_type):
+        failure_type_valid = bool(
+            isinstance(failure_type, str) and failure_type
+        )
+        if (observer_failed and not failure_type_valid) or (
+            not observer_failed and failure_type is not None
+        ):
             violations.add("observer_failure_type_contract")
 
     nested_observation_valid = False
     if completed:
         if isinstance(observation, Mapping):
             try:
-                nested_observation_valid = (
-                    quote.observer.validate_observation(observation)
-                    == dict(observation)
+                nested_observation_valid = _normalizer_observation_valid(
+                    observation
                 )
             except BaseException:
                 nested_observation_valid = False
@@ -510,19 +726,24 @@ def observe_quote_receipt(value: Mapping[str, Any]) -> dict[str, Any]:
         if export_fallback is not export_failed:
             violations.add("export_fallback_contract")
         export_type = copied.get("public_export_failure_type")
-        if export_failed is not bool(isinstance(export_type, str) and export_type):
+        export_type_valid = bool(isinstance(export_type, str) and export_type)
+        if (export_failed and not export_type_valid) or (
+            not export_failed and export_type is not None
+        ):
             violations.add("export_failure_type_contract")
         repair_type = copied.get("quote_aware_repair_failure_type")
-        if repair_failed is not bool(isinstance(repair_type, str) and repair_type):
+        repair_type_valid = bool(isinstance(repair_type, str) and repair_type)
+        if (repair_failed and not repair_type_valid) or (
+            not repair_failed and repair_type is not None
+        ):
             violations.add("repair_failure_type_contract")
 
     nested_repair_valid = False
     if applied:
         if isinstance(repair_receipt, Mapping):
             try:
-                nested_repair_valid = (
-                    quote.repair.validate_receipt(repair_receipt)
-                    == dict(repair_receipt)
+                nested_repair_valid = _quote_repair_receipt_valid(
+                    repair_receipt
                 )
             except BaseException:
                 nested_repair_valid = False

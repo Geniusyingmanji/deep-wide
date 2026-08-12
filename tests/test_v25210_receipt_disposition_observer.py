@@ -180,6 +180,64 @@ class V25210ReceiptDispositionObserverTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             target.observe_receipt_invariants({}, receipt_kind="unknown")
 
+    def test_representative_single_field_mutations_match_frozen_acceptance(self) -> None:
+        representatives = (None, False, True, -1, 0, 1, 2, "", "x", [], {})
+        groups = (
+            (
+                "sparse",
+                self.sparse_receipts,
+                target.observe_sparse_receipt,
+                sparse.validate_receipt,
+                set(target.SPARSE_VIOLATION_CODES),
+            ),
+            (
+                "quote",
+                self.quote_receipts,
+                target.observe_quote_receipt,
+                quote.validate_receipt,
+                set(target.QUOTE_VIOLATION_CODES),
+            ),
+        )
+        observed = 0
+        for kind, receipts, observer, validator, allowed_codes in groups:
+            for receipt_index, receipt in enumerate(receipts):
+                for field in receipt:
+                    if field == "receipt_payload_sha256":
+                        continue
+                    for replacement in representatives:
+                        if (
+                            type(receipt[field]) is type(replacement)
+                            and receipt[field] == replacement
+                        ):
+                            continue
+                        changed = copy.deepcopy(receipt)
+                        changed[field] = copy.deepcopy(replacement)
+                        changed = self._reseal(changed)
+                        observation = observer(changed)
+                        try:
+                            validator(changed)
+                        except BaseException:
+                            frozen_accepts = False
+                        else:
+                            frozen_accepts = True
+                        with self.subTest(
+                            kind=kind,
+                            receipt_index=receipt_index,
+                            field=field,
+                            replacement_type=type(replacement).__name__,
+                        ):
+                            self.assertEqual(
+                                observation["frozen_validator_expected_to_accept"],
+                                frozen_accepts,
+                            )
+                            self.assertTrue(
+                                set(observation["violation_codes"]).issubset(
+                                    allowed_codes
+                                )
+                            )
+                        observed += 1
+        self.assertEqual(observed, 2_411)
+
     def test_module_is_pure_label_blind_and_effect_free(self) -> None:
         path = ROOT / "src/deepwide_agent/v25210_receipt_disposition_observer.py"
         source = path.read_text(encoding="utf-8")
