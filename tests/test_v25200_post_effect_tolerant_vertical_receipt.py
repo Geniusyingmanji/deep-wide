@@ -3,7 +3,9 @@ from __future__ import annotations
 import ast
 import copy
 import sys
+import tempfile
 import threading
+import time
 import unittest
 from pathlib import Path
 
@@ -20,8 +22,15 @@ from deepwide_agent import (  # noqa: E402
     v25200_post_effect_tolerant_vertical_receipt as target,
 )
 from deepwide_agent.v24263_global_model_limiter import payload_sha256  # noqa: E402
+from deepwide_agent.v24312_deadline_reliability import (  # noqa: E402
+    DeadlineAwareGlobalModelSlotLimiter,
+)
 from test_v25158_vertical_key_value_candidate_runtime import (  # noqa: E402
+    CandidateModel,
+    GenericRecordSearch,
+    TASK,
     V25158VerticalKeyValueCandidateTests,
+    limits,
 )
 
 
@@ -136,6 +145,60 @@ class V25200PostEffectTolerantVerticalReceiptTests(unittest.TestCase):
             self.assertTrue(target.compatibility_applied())
         finally:
             target.end_task(token)
+
+    def test_real_parent_post_effect_fallback_is_terminal_without_candidate_entry(self) -> None:
+        target.install_compatibility()
+        with tempfile.TemporaryDirectory(dir=ROOT / "outputs") as raw:
+            output_root = Path(raw)
+            slots = output_root / "slots"
+            slots.mkdir()
+            for index in range(1, 5):
+                (slots / f"slot_{index:02d}.lock").write_text("{}\n")
+            inner = CandidateModel()
+            model = DeadlineAwareGlobalModelSlotLimiter(
+                inner,
+                slot_directory=slots,
+                output_root=output_root,
+                slot_cap=4,
+                absolute_deadline=time.monotonic() + 240,
+            )
+            searches = {
+                phase: GenericRecordSearch(
+                    TASK["question"],
+                    phase,
+                    content="Public background without requested fields.",
+                )
+                for phase in parent.PHASES
+            }
+            original = parent.sparse_parent.parent.validate_result
+
+            def fail_after_effect(value):
+                checked = original(value)
+                if checked["content_free_receipt"][
+                    "physical_model_logical_call_count"
+                ]:
+                    raise RuntimeError("synthetic post-effect failure")
+                return checked
+
+            parent.sparse_parent.parent.validate_result = fail_after_effect
+            token = target.begin_task()
+            try:
+                result = parent.run_task(
+                    TASK, model=model, searches=searches, limits=limits()
+                )
+                checked = parent.validate_result(result)
+                self.assertTrue(target.compatibility_applied())
+            finally:
+                target.end_task(token)
+                parent.sparse_parent.parent.validate_result = original
+        receipt = checked["content_free_receipt"]
+        sparse = checked["parent_result"]["content_free_receipt"]
+        self.assertEqual(receipt["candidate_revision_entry_count"], 0)
+        self.assertTrue(receipt["parent_post_effect_failure_present"])
+        self.assertTrue(receipt["production_prediction_preserved_on_failure"])
+        self.assertFalse(receipt["final_prediction_changed_from_production"])
+        self.assertEqual(checked["prediction"], checked["production_prediction"])
+        self.assertEqual(sparse["provider_forward_count"], inner.logical_calls)
 
     def test_task_contexts_are_thread_isolated(self) -> None:
         target.install_compatibility()
