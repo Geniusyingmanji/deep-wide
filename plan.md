@@ -3877,3 +3877,4 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 
 1. 下一observer gate固定另一组20个CRAN identity，必须在选择父提交的限定Git历史中20/20零引入，并与V2.51.41/45/49/53/57/60 population全部不重叠。selection只做本地Git历史扫描，不访问endpoint、page、model、search、evaluator、credential或benchmark。
 2. artifact只保留ordered identity vector hash、总数和zero-hit计数，不保存identity明文、逐项hash或clue mapping。该冻结不授权protocol、activation、binding policy change、evaluator或DeepWideBench；entropy/IG signed credit仍为0。
+3. V2.51.67已从选择父提交`7c66c70e`得到20/20 identity历史零命中，ordered vector SHA为`4d984773c19f09beb615d7e20ba01d288a07f8b735ad91f59d4beff0efbdc359`；冻结工件未持久化identity明文或clue mapping。V2.51.68必须绑定V2.51.65 runtime、V2.51.66 build audit与该population audit，完成26/26专项后才可授权protocol design；activation、policy change、evaluator与220仍为false。
