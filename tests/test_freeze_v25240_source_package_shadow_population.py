@@ -171,7 +171,11 @@ class V25240SourcePackagePopulationFreezeTests(unittest.TestCase):
         ), mock.patch.object(
             target, "_read_source_packages", return_value=(packages, source_counts(packages))
         ), mock.patch.object(target, "_history_probe", side_effect=successful_probe):
-            value = target.build_freeze(parent_commit="f" * 40, now=1)
+            value = target.build_freeze(
+                parent_commit="f" * 40,
+                attempt_claim_sha256="a" * 64,
+                now=1,
+            )
         self.assertEqual(target.validate_freeze(value), value)
         self.assertEqual(value["population"]["task_count"], 64)
         self.assertEqual(value["population"]["package_count"], 256)
@@ -191,6 +195,10 @@ class V25240SourcePackagePopulationFreezeTests(unittest.TestCase):
         events: list[str] = []
         fake = {"population": {"task_count": 64, "package_count": 256}, "authorization": {"shadow_reliability_protocol_design": True, "shadow_external_activation_or_launch": False}}
         with mock.patch.object(target, "publish_exclusive", side_effect=lambda path, value: events.append("claim" if value.get("role") == target.CLAIM_ROLE else "result")), mock.patch.object(
+            target.base,
+            "sha256",
+            return_value="a" * 64,
+        ), mock.patch.object(
             target, "build_freeze", side_effect=lambda **kwargs: events.append("build") or fake
         ):
             self.assertEqual(target.execute(parent_commit="f" * 40), fake)
@@ -203,13 +211,19 @@ class V25240SourcePackagePopulationFreezeTests(unittest.TestCase):
         ), mock.patch.object(
             target, "_read_source_packages", return_value=(packages, source_counts(packages))
         ), mock.patch.object(target, "_history_probe", side_effect=successful_probe):
-            value = target.build_freeze(parent_commit="f" * 40, now=1)
-        for kind in ("task", "history", "launch", "credit", "nested"):
+            value = target.build_freeze(
+                parent_commit="f" * 40,
+                attempt_claim_sha256="a" * 64,
+                now=1,
+            )
+        for kind in ("task", "history", "claim", "launch", "credit", "nested"):
             changed = copy.deepcopy(value)
             if kind == "task":
                 changed["population"]["task_vector"][0]["question"] += " drift"
             elif kind == "history":
                 changed["history_receipt"]["probe"]["completed_count"] -= 1
+            elif kind == "claim":
+                changed["attempt_claim"]["sha256"] = "not-a-hash"
             elif kind == "launch":
                 changed["authorization"]["shadow_external_activation_or_launch"] = True
             elif kind == "credit":

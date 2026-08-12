@@ -457,9 +457,16 @@ def validate_attempt_claim(value: Mapping[str, Any]) -> dict[str, Any]:
     return copied
 
 
-def build_freeze(*, parent_commit: str, now: int | None = None) -> dict[str, Any]:
+def build_freeze(
+    *,
+    parent_commit: str,
+    attempt_claim_sha256: str,
+    now: int | None = None,
+) -> dict[str, Any]:
     if not _design_barrier():
         raise RuntimeError("V2.52.40 design barrier failed")
+    if re.fullmatch(r"[0-9a-f]{64}", str(attempt_claim_sha256)) is None:
+        raise ValueError("V2.52.40 attempt claim hash drifted")
     resolved = _resolve_parent(parent_commit)
     packages, source_counts = _read_source_packages()
     snapshot = _snapshot_sha256(packages)
@@ -474,7 +481,10 @@ def build_freeze(*, parent_commit: str, now: int | None = None) -> dict[str, Any
         "status": "frozen",
         "created_at_unix": int(time.time()) if now is None else int(now),
         "design": {"path": str(DESIGN), "sha256": DESIGN_SHA256},
-        "attempt_claim": {"path": str(ATTEMPT_CLAIM)},
+        "attempt_claim": {
+            "path": str(ATTEMPT_CLAIM),
+            "sha256": attempt_claim_sha256,
+        },
         "selection_parent_commit": resolved,
         "source_receipt": {
             "argument_vector": list(DPKG_ARGUMENT_VECTOR),
@@ -573,7 +583,10 @@ def validate_freeze(value: Mapping[str, Any]) -> dict[str, Any]:
         or copied.get("role") != ROLE
         or copied.get("status") != "frozen"
         or copied.get("design") != {"path": str(DESIGN), "sha256": DESIGN_SHA256}
-        or copied.get("attempt_claim") != {"path": str(ATTEMPT_CLAIM)}
+        or not isinstance(copied.get("attempt_claim"), Mapping)
+        or set(copied["attempt_claim"]) != {"path", "sha256"}
+        or copied["attempt_claim"].get("path") != str(ATTEMPT_CLAIM)
+        or re.fullmatch(r"[0-9a-f]{64}", str(copied["attempt_claim"].get("sha256"))) is None
         or re.fullmatch(r"[0-9a-f]{40}", str(copied.get("selection_parent_commit"))) is None
         or set(source) != {
             "argument_vector", "shell", "returncode_zero", "stderr_empty",
@@ -682,7 +695,11 @@ def execute(*, parent_commit: str) -> dict[str, Any]:
         raise FileExistsError("V2.52.40 attempt or result surface is not pristine")
     claim = build_attempt_claim(parent_commit=parent_commit)
     publish_exclusive(ROOT / ATTEMPT_CLAIM, claim)
-    value = build_freeze(parent_commit=parent_commit)
+    claim_sha256 = base.sha256(ATTEMPT_CLAIM)
+    value = build_freeze(
+        parent_commit=parent_commit,
+        attempt_claim_sha256=claim_sha256,
+    )
     publish_exclusive(ROOT / OUTPUT, value)
     return value
 
