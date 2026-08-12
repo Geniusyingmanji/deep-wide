@@ -3731,3 +3731,11 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 1. 候选 population 固定为20条此前仓库历史 exact-literal-zero 的公开科学 Python package 描述 clue；对应20个离线推断 identity 在父提交历史的 `src/evaluation/scripts/tests/results/outputs` 中也均为零引入，且与 V2.51.41 population 不重叠。
 2. selection 阶段只做本地 Git 历史扫描，不访问 endpoint、page、model、search、evaluator 或 credential。冻结 artifact 仅保存 ordered identity vector hash、数量和零命中计数，不保存 identity 明文、逐项 hash 或 clue→identity mapping。
 3. 后续 protocol 仍须独立 build audit、protocol、preaudit、execution-start 分阶段 clean commit/push。唯一 external forward 只能在 strict label-blind、空闲 lease、GPT-5.6 端口可用、四个 watcher identity 不变且所有未来 surface pristine 时激活；不得复用或重跑 V2.51.41 的20题。
+
+### V2.51.45–46：quote-attested external 严格 NO-GO 与 edit-recall 诊断（2026-08-12 UTC）
+
+1. V2.51.45 唯一20题forward在48.451845秒完成20/20 terminal/model-generated，0 fallback、0 outer/revision/projection/provider/post-effect/prediction-loss failure；物理effect为80 query、224 fetch、67 model forwards、859,174 tokens。verified gain=7，另13题identity replay，相对dense 80 forward节省13次。
+2. 7/7 revision均完成production-conditioned prompt、strict JSON解析和有效projection，context/verified-delta violation均为0；但7次响应全部显式返回空`edits`，model/parsed/quote-attested/applied/rejected edit总数均为0，最终prediction change=0。机制门因此仅失败`minimum_quote_attested_projection_applied`与`minimum_attributable_prediction_changed`，严格NO-GO。
+3. prediction/forward/audit均已冻结推送，forward audit `audit_valid=true, findings=[]`；evaluator/gold/result保持物理不存在，禁止retry/resume/rerun/换题或复用该population，也不授权DeepWideBench、leaderboard或SOTA。
+4. V2.51.46 counts-only诊断只解码V2.51.43与V2.51.35 receipts，结论是瓶颈已从verifier precision转为edit proposal recall：不是提出的edit被证据门拒绝，而是模型面对原始delta projection时不愿/不能复制满足逐字条件的quote。
+5. 下一build-only候选应在模型前从same-forward page中确定性提取`source + row identity + field + value + exact content quote`候选，再让模型只做候选选择或abstain；不得让模型自由复制任意网页文本，不得扩大query/fetch/model/context/token/wall/network cap。entropy/IG signed credit继续为0，未有post-freeze outer utility前不得分配正credit。
