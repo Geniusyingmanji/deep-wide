@@ -1,5 +1,13 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
+## 2026-08-12 实验更新：deterministic candidate 的失败点在表示语法，不在 selector
+
+V2.51.49 完成了一次严格 label-blind、fresh/disjoint、fixed-20 的 matched forward。20/20任务都形成model-generated终态，耗时`52.790900s`，消耗`80 query / 204 fetch / 65 model forwards / 804,852 tokens`；5题出现same-forward verified gain并进入candidate selector，15题本地identity replay，0 fallback和0 hard/revision/post-effect failure。候选闭环要求`preverified candidate → selected ID → reverified edit → attributable prediction change`，但5个gain任务的7个增量页面上，atomic-bound JSON与pipe-table两种语法都提取到0 observation，所以available、selected、applied edit及prediction change均为0。机制门严格NO-GO，未创建evaluator或gold；这不是DeepWideBench提分实验。
+
+V2.51.50随后做counts-only诊断，只解码V2.51.47/V2.51.35的content-free receipts，其余题面、ID、URL、页面、值、prediction、gold和score均按JSON字符边界跳过。证据排除了两个猜测：不是模型selector选择过于保守，因为根本没有candidate进入selector；也不是verifier拒绝过严，因为raw observation在verifier之前已经为0。可归因瓶颈是representation grammar recall：真实投影页没有自然暴露两种极窄格式，不能把“有target-field page gain”等同于“有可引用row-field-value record”。
+
+这进一步约束信息熵credit assignment。verified gain、进入第4次调用、合法strict JSON和上下文缩短都不能获得正credit；在`admissible observation`为0时，realized signed credit必须为0。V2.51.51因此只扩展content-generic、exact-label、exact-quote的flat JSON、inline/multiline labelled record和row-heading record，并保持两次mechanical verification。该build在synthetic/adversarial与父链152项测试中通过，但尚无fresh natural reach或outer utility证据，因而仍不能把entropy/IG用于正credit或宣称benchmark提升。正credit继续要求`source/identity/field/value admissibility → matched intervention → attributable prediction change → post-freeze outer utility`完整成立。
+
 > 检索截止：2026-08-07 14:10 UTC；项目证据更新：2026-08-11 UTC（至 V2.50.63）
 >
 > 结论强度：这是基于公开文献的 novelty audit，不是“没有任何相关工作”的证明。2026 年文献多为尚未同行评审的 arXiv 预印本，文中将预印本结果视为作者报告，而非独立复现事实。

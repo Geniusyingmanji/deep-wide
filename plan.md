@@ -1,5 +1,13 @@
 # OWIC-DeepWide 研究与实施计划
 
+> 版本：6.91
+>
+> **6.91 V2.51.49–52 deterministic-candidate 外部门 NO-GO、counts-only 定位与 generic-record build（2026-08-12）：V2.51.49 已按 `build audit → protocol → preactivation → execution-start` 分阶段 clean commit/push，并完成唯一一次 fresh/disjoint 20 题 forward。运行 `20/20` terminal/model-generated、0 fallback、`52.790900s`；物理 effect 为 `80 query / 204 fetch / 65 model forwards / 804,852 tokens`。5 个 verified-gain 任务均进入第4次 candidate selector，另15题 identity replay；selector transport、strict JSON、空 projection、effect accounting、lease 与 watcher 闭环全部有效。但5题合计7个 verified incremental pages 上，V2.51.47 的 atomic-bound JSON 与 pipe-header-row 两种 grammar 均观察到0 candidate；故 available/selected/applied/prediction-change全为0，机制门失败 `minimum_candidate_availability_selection_and_reverified_application` 与 `minimum_attributable_prediction_changed`，严格 NO-GO。forward/audit已分别以 `d34b21ac/c3c9a59d` 推送，evaluator/gold/result未创建，不得retry/resume/rerun或复用人口。**
+>
+> **V2.51.50 只用JSON边界扫描解码 V2.51.47 与 V2.51.35 content-free receipts；题面、opaque ID、query、URL、page/value、prediction、mapping/gold/category/split/evaluator/score/credential均未解码。诊断确认5个gain任务、7个增量页确实到达extractor，但在preverifier/conflict/dedup/truncation/selector之前 raw observation 已为0；主瓶颈是representation grammar recall，而不是selector保守或verifier precision。该诊断以 `4cbb55bf` 推送，entropy/IG signed credit继续为0。**
+>
+> **V2.51.51 随后仅作build-only的通用精确record扩展：flat JSON object、同一行 exact-labelled record、连续多行 exact-labelled record、以及唯一production row heading+连续exact field labels。所有label必须规范化后唯一匹配visible output schema，row identity必须在production唯一；每条candidate仍在selector前和选中后两次经过V2.51.43 same-page exact-quote row/field/value verifier，冲突整coordinate fail closed。专项11/11、父链与V2.51.52 audit dry-run共152/152通过，privileged/evaluator/credential findings为空，未访问V2.51.49内容或扩大任何预算。下一步只可先冻结clean-build audit，再设计全新历史零交集external population；不得直接跑220。当前最新完整220仍为V2.50.57 `6/220 / 0.449960`，项目单轮最佳仍为V2.48.57 `9/220 / 0.457249`；无Avg@4、leaderboard或SOTA。**
+
 > 版本：6.90
 >
 > **阅读规则：本文件保留 append-only 历史。顶部最新版是当前授权与分数口径；后文较早版本中的“当前”“仍无结果”或旧前沿只描述当时状态，若冲突均由 6.90 覆盖。**
