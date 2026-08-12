@@ -46,8 +46,20 @@ class V25192ContentFreeOuterFailureObserverTests(unittest.TestCase):
                     and isinstance(node.exc.args[0].value, str)
                 ):
                     expected_messages.add(node.exc.args[0].value)
-        self.assertEqual(set(target.STATIC_MESSAGE_TO_CODE), expected_messages)
-        expected_versions = {message.split(" ", 1)[0] for message in expected_messages}
+        runner_messages = {
+            "V2.51.95 accounting search configuration drifted",
+            "V2.51.95 task identity drifted",
+            "V2.51.95 task row drifted",
+            "V2.51.95 bound runtime row drifted",
+            "V2.51.95 outer failure row drifted",
+        }
+        self.assertEqual(
+            set(target.STATIC_MESSAGE_TO_CODE), expected_messages | runner_messages
+        )
+        expected_versions = {
+            message.split(" ", 1)[0]
+            for message in expected_messages | runner_messages
+        }
         observed_versions = {
             message.split(" ", 1)[0]
             for message in target.STATIC_MESSAGE_TO_CODE

@@ -130,6 +130,12 @@ STATIC_MESSAGE_TO_CODE = {
     "V2.51.88 same-response receipt drifted": "v25188_receipt_validation",
     "V2.51.88 same-response result drifted": "v25188_result_envelope_validation",
     "V2.51.88 parent/counterfactual binding drifted": "v25188_parent_counterfactual_binding",
+    # V2.51.95 staged runner boundaries.
+    "V2.51.95 accounting search configuration drifted": "v25195_search_accounting_configuration",
+    "V2.51.95 task identity drifted": "v25195_conversion_task_identity",
+    "V2.51.95 task row drifted": "v25195_task_row_validation",
+    "V2.51.95 bound runtime row drifted": "v25195_bound_runtime_row_validation",
+    "V2.51.95 outer failure row drifted": "v25195_outer_failure_row_validation",
 }
 
 SAFE_EXCEPTION_TYPES = {
