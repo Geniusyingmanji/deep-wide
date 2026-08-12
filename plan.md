@@ -3717,3 +3717,11 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 3. 机制仍严格NO-GO：8次revision中7次`proposed_changed_cell_count=0`；唯一1次提出1个cell edit，但未通过本地value-support门而被拒绝。最终applied cell=0、prediction change=0，因此失败项为`minimum_targeted_projection_applied`与`minimum_attributable_prediction_changed`。forward audit所有安全检查为true、`findings=[]`，evaluator/gold/result物理不存在；不得retry/resume/rerun/替换或复用该population。
 4. V2.51.42只用JSON边界扫描解码V2.51.39外层与V2.51.35内层content-free receipts；opaque id、题面、query、URL、page/value、parent payload、prediction、mapping/gold/category/split/evaluator/score/credential均未解码。page gain证明页面含target/authority/field-name，但不机械证明新cell value存在；当前瓶颈已从revision actionability进一步定位为 **value-bearing cell-edit observation**。
 5. 下一build-only候选应让revision输出结构化cell edits而非完整表重生成：每条edit必须含`page ordinal + exact contiguous quote + row identity + field + old value + new value`，verifier要求quote逐字来自对应same-forward delta page，并在有界span内机械包含row/field/new value。key/row/shape改动、Unknown、unsupported、ambiguous或conflicting edit全部拒绝并保留production；不得扩大query/fetch/model/context/token/wall/network cap。entropy/IG signed credit继续为0，未有post-freeze outer utility前不得分配正credit。
+
+### V2.51.43–44：quote-attested cell edit（build-only，2026-08-12 UTC）
+
+1. V2.51.43 保留 V2.51.39 的 sparse gain gate、production prediction、检索轨迹、deadline 和资源上限；无 verified gain 仍为3次真实模型调用，有 gain 时第4次调用只输出结构化 edits，不再重生成完整表。
+2. 每条 edit 必须严格给出 `page_ordinal / exact_quote / row_identity / field / old_value / new_value`。响应必须是唯一严格 JSON object，拒绝 fence、前后缀、非标准常量和 duplicate keys；quote 必须在对应 supplied page 的正文中逐字且唯一出现，title 不构成可引用证据。
+3. row identity、非 key field 与 old value 必须逐字对应 production table；new value 必须非空、非 Unknown、非原值且不能改变 Markdown shape。quote 内必须在1200字符有界范围机械包含 row、field 和完整 new value，substring、错页、仅 title、重复或冲突 cell edit 均拒绝。
+4. receipt 闭合约束为 `model_edit_count = applied_edit_count + rejected_edit_count`，并区分 schema-parsed、quote-attested（冲突处理前）和最终 applied。provider、JSON、projection 或父 post-effect 任一异常仍逐字保留 production prediction；entropy/IG signed credit 恒为0。
+5. 当前仅实现与本地测试阶段；V2.51.43 专项12/12及父链107/107已通过，尚未调用真实 model/search/fetch/evaluator。V2.51.44 必须在实现提交推送后的 clean HEAD 上完成113/113 dependency-closure audit，才允许设计全新 fresh/disjoint external protocol；audit 本身不授权 launch、DeepWideBench 220、retry/resume、leaderboard 或 SOTA。
