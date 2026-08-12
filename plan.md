@@ -4057,3 +4057,22 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 6. 6个evaluator invalid由5个internal error和1个out-of-range metric组成。它们继续按预注册规则计零，不做补评；下一harness修复只能在新的artifact-disjoint evaluator fixture上验证，不能选择性重评本轮6题或改写本轮分数。
 7. 下一唯一实现项是V2.52.10 content-free receipt-disposition observer。它必须在冻结validator之前镜像V2.51.35/V2.51.80的结构不变量，发布有限、互斥违反项counts，且对每个已知valid/invalid synthetic状态与冻结validator结论一致。observer只提供定位，不授权兼容或策略改变。
 8. 只有observer定位到一个可由“已完成production、prediction保持、无candidate动态、邻近unsafe状态仍拒绝”完全刻画的状态，并在fresh/disjoint production-isomorphic reliability gate自然复现，才可设计窄compatibility。该门不评质、不运行DeepWideBench；production normalizer与evaluator invalid分别处理，避免一次版本同时改变三个failure surface。entropy/IG signed credit保持0。
+
+### V2.52.10–54：从全集 failure 定位到真实 `4/14/4` totality 外壳（2026-08-12 UTC）
+
+1. V2.52.10–28 将 V2.52.08 的 production fallback 与 outer failure 分开定位：5个已完成 production fallback 中4个停在 `no_bindable_header_reject`、1个无data row；11个 outer failure 的主因不是检索超时，而是后效应 receipt/envelope 验证。旧全集不能被选择性重评或补跑，这些诊断只授权新的 synthetic/fresh 可靠性工程。
+2. V2.52.29–52 依次检验 header positional normalizer、shadow、fresh local-package population 与外部门。所有 header/quote candidate 在外部自然数据中均未建立可归因 prediction change；因此这些 treatment 不得进入下一次公开220，也不得因 synthetic reach 或网页结构计数获得 entropy/IG 正credit。
+3. V2.52.53 在任何 provider/search/fetch effect 前共享一个 per-task budget，真实上限为 `4 query / 14 fetch / 4 model`。整批reservation若越界则在底层effect前原子拒绝；stage observer只输出有限stage/type与密封budget receipt，成功result bytes不变。专项与clean-build audit证明label-blind、fail-closed和父链兼容。
+4. `4/14/4` 是对冻结 sparse production 父链真实可达物理上限的诚实声明，不是扩预算：无verified gain仍最多3 model；只有同次、source/identity/field-bound verified gain才可到第4次。旧协议的逻辑 `3 model / 10 fetch` 与物理父链不一致，今后不得混用逻辑预算冒充物理cap。
+
+### V2.52.55–64：fresh64 observed reliability 严格 GO 与下一全集策略（2026-08-12 UTC）
+
+1. V2.52.55–59 冻结64题×2实体、128个唯一 Debian source package；485/485 Git history probe成功，与旧256实体交集为0，post-freeze audit `14/14`、`findings=[]`。selection不访问endpoint/model/search/evaluator，也不把历史outcome或clue mapping传入runtime。
+2. 唯一 V2.52.60 forward在严格边界 `{opaque_id, question, same-forward public pages}` 下完成 `64/64` runtime、`64/64` model-generated、0 fallback、0 failure-as-zero、0 stage failure、0 budget rejection；墙钟 `237.264510s`，物理effect为 `256 query / 663 fetch / 198 model forwards / 3,587,991 tokens`，单题最大严格为 `4/14/4`。reliability gate严格GO，但candidate activation、prediction change、quality evaluator与220权限均为false。
+3. V2.52.63 forward audit逐字绑定protocol/start/claim/task rows/prediction freeze，验证aggregate、receipt parity、物理cap、watcher identity、空闲lease与无evaluator，`audit_valid=true, findings=[]`。该人口永久封存，禁止retry/resume/rerun/replacement或复用。
+4. V2.52.64通过JSON边界只解码terminal/runtime flags、prediction kind、health/effect counters与密封stage/budget receipts。唯一3个health event均为3题各一次 `search_transport_failures`；三题仍完成 `12 query / 31 fetch / 10 model request-attempt-success`，无fetch/model/timeout/stage/budget failure。因此它们是可恢复检索传输噪声，不是totality blocker，也不构成重跑理由。
+5. fresh64只证明 **totality、真实物理cap、父prediction preservation与运行可靠性**，没有回答质量、DeepWideBench提分、Avg@4、leaderboard或SOTA证据。信息熵/IG `positive_signed_credit_count=0`；必须继续满足 `admissible source-bound observation → matched intervention/deletion effect → attributable prediction change → post-freeze outer utility` 才可能获得正credit。
+6. 当前完整220口径固定为：最新V2.52.08 `5/220 / Composite 0.398669`；单轮峰值V2.48.57 `9/220 / 0.457249`；其冷复制V2.49.69仅 `5/220 / 0.430226`。所以 `9/220` 只能称单轮观测峰值，不能称稳定可复现baseline，更没有SOTA结论。
+7. 下一次完整220固定为 **production-only totality successor**：复用V2.52.08的同一公开220 visible vector、GPT-5.6端口、高并发与post-freeze evaluator封装；评分输出只取冻结 sparse production 的第一份已验证table，并接入V2.52.53前置 `4/14/4` budget/stage外壳。不得带回全集零激活的quote/header/vertical candidate，不得扩大query/fetch/model/context/token/wall cap，不得使用task ID、category、split、历史score/correctness或evaluator metadata路由。
+8. successor必须先通过 synthetic/adversarial totality、parent-prediction preservation、label-blind AST、dependency closure与clean-build audit；随后按 `implementation push → build audit push → protocol push → preactivation audit push → execution-start push` 分阶段冻结。只允许一次冷启动完整220，40 task workers/16 model slots，禁止retry/resume/skip/backfill/replacement。
+9. 220 prediction freeze与forward result必须先提交推送，再做content-free forward audit；只有audit确认220/220终态、budget/stage receipt完整、watcher不变、lease释放、runtime无privileged signal且无选择性重跑，才允许另建post-freeze evaluator protocol。固定32连续分区对每个冻结prediction恰评一次，invalid按零，不补评；最后报告Exact、Entity、Row/Item/Column、Composite、fallback、token、墙钟以及相对V2.52.08/V2.49.69/V2.48.57的差值。
