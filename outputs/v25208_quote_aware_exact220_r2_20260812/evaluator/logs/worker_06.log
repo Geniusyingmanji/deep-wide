@@ -1,0 +1,63 @@
+INFO: Pandarallel will run on 8 workers.
+INFO: Pandarallel will use Memory file system to transfer data between the main process and workers.
+{"event": "eval_start", "selected": 7, "resume_committed": 0, "committed_errors": 0, "crash_only_resume": false}
+{"event": "eval_done", "idx": 1, "instance_id": "deep2wide_result_49_山西省", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.712, "running_n": 1}
+2026-08-12 15:26:00.066 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 姓名 | 字 | 号 | 祖籍 |
+| --- | --- | --- | --- |
+| 郑燮 | 克柔 | 板桥 |  ...
+2026-08-12 15:26:02.097 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "郑燮": "郑燮",
+  "金农": "金农",
+  "黄慎": "黄慎",
+  "李鱓": "李鱓",
+  "李方膺": "李方膺",
+  "汪士慎": "汪士慎",
+  "罗聘": "罗聘",
+  "高翔": "高翔"
+}
+```
+2026-08-12 15:26:02.098 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 姓名, primary_key_map {'郑燮': '郑燮', '金农': '金农', '黄慎': '黄慎', '李鱓': '李鱓', '李方膺': '李方膺', '汪士慎': '汪士慎', '罗聘': '罗聘', '高翔': '高翔'}
+2026-08-12 15:26:02.104 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_50_扬州八怪, df_inner shape: (8, 8), answer_df shape: (8, 4), response_df shape: (8, 5)
+2026-08-12 15:26:07.332 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_50_扬州八怪, col 字, metric_func_name llm_judge, score [1, 0, 0, 1, 1, 1, 1, 1]
+2026-08-12 15:26:11.792 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_50_扬州八怪, col 号, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 1, 1]
+2026-08-12 15:26:17.393 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_50_扬州八怪, col 祖籍, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 0, 1]
+2026-08-12 15:26:17.398 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_50_扬州八怪, P/R/F1 by unique_columns: 1.0000/1.0000/1.0000
+2026-08-12 15:26:17.398 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_50_扬州八怪, P/R/F1 by row: 0.6250/0.6250/0.6250
+2026-08-12 15:26:17.398 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_50_扬州八怪, P/R/F1 by item: 0.9062/0.9062/0.9062
+2026-08-12 15:26:17.400 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_50_扬州八怪, final table score: 0.0
+{"event": "eval_done", "idx": 2, "instance_id": "deep2wide_result_50_扬州八怪", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.625, "f1_by_item": 0.90625, "column_f1": 1.0, "error": null, "elapsed_seconds": 20.104, "running_n": 2}
+{"event": "eval_done", "idx": 3, "instance_id": "deep2wide_result_52_乐清市知临中学", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 5.294, "running_n": 3}
+{"event": "eval_done", "idx": 4, "instance_id": "deep2wide_result_53_潘虹", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 3.024, "running_n": 4}
+2026-08-12 15:26:28.264 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 剧名 | 年份 | 饰演者 | 总集数 | 导演 |
+| --- | --- | --- | --- | --- |
+|  ...
+2026-08-12 15:26:31.662 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "三国演义": "《三国演义》",
+  "三国英雄传之关公": "《关公》",
+  "三国": "《三国》"
+}
+```
+2026-08-12 15:26:31.662 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 剧名, primary_key_map {'三国演义': '《三国演义》', '三国英雄传之关公': '《关公》', '三国': '《三国》'}
+2026-08-12 15:26:31.704 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_54_庞德, df_inner shape: (3, 10), answer_df shape: (4, 5), response_df shape: (3, 6)
+2026-08-12 15:26:31.707 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 1996-08-01 00:00:00, target: 1992-08-01 00:00:00
+2026-08-12 15:26:31.709 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 1.0 msg date near, response: 1994-08-01 00:00:00, target: 1994-08-01 00:00:00
+2026-08-12 15:26:31.711 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 2010-05-02 00:00:00, target: 2010-08-01 00:00:00
+2026-08-12 15:26:31.712 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_54_庞德, col 年份, metric_func_name date_near, score [0.0, 1.0, 0.0]
+2026-08-12 15:26:35.245 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_54_庞德, col 饰演者, metric_func_name llm_judge, score [0, 0, 0]
+2026-08-12 15:26:35.245 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 54.0, target: 14.0
+2026-08-12 15:26:35.245 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 84.0, target: 84.0
+2026-08-12 15:26:35.245 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 95.0, target: 95.0
+2026-08-12 15:26:35.246 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_54_庞德, col 总集数, metric_func_name number_near, score [0.0, 1.0, 1.0]
+2026-08-12 15:26:40.037 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_54_庞德, col 导演, metric_func_name llm_judge, score [0, 0, 1]
+2026-08-12 15:26:40.042 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_54_庞德, P/R/F1 by unique_columns: 1.0000/0.7500/0.8571
+2026-08-12 15:26:40.042 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_54_庞德, P/R/F1 by row: 0.0000/0.0000/0.0000
+2026-08-12 15:26:40.042 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_54_庞德, P/R/F1 by item: 0.4667/0.3500/0.4000
+2026-08-12 15:26:40.043 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_54_庞德, final table score: 0.0
+{"event": "eval_done", "idx": 5, "instance_id": "deep2wide_result_54_庞德", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0, "f1_by_item": 0.4, "column_f1": 0.8571428571428571, "error": null, "elapsed_seconds": 14.25, "running_n": 5}
+{"event": "eval_done", "idx": 6, "instance_id": "deep2wide_result_56_中原麻衣", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 9.33, "running_n": 6}
+{"event": "eval_done", "idx": 7, "instance_id": "deep2wide_result_57_GDC", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 5.679, "running_n": 7}
+SUMMARY {"n": 7, "valid_n": 7, "errors": 0, "complete": true, "judge_calls_current_process": 14, "score": 0.0, "entity_acc": 0.2857142857142857, "precision_by_row": 0.08928571428571429, "recall_by_row": 0.08928571428571429, "f1_by_row": 0.08928571428571429, "precision_by_item": 0.1961309523809524, "recall_by_item": 0.17946428571428572, "f1_by_item": 0.18660714285714283, "column_precision": 0.2857142857142857, "column_recall": 0.25, "column_f1": 0.2653061224489796}
