@@ -1,0 +1,129 @@
+{
+  "artifact_version": 1,
+  "authorization": {
+    "deepwidebench_dev64_exact220_leaderboard_or_sota_now": false,
+    "deepwidebench_exact220_only_after_pushed_postresult_audit_go": true,
+    "one_postfreeze_external_evaluation": true,
+    "retry_refetch_selective_revaluation": false
+  },
+  "created_at_unix": 1786539540,
+  "evaluation": {
+    "exact_http_get_calls": 1,
+    "fixed_denominator_failure_as_zero": true,
+    "gold_endpoint_sha256": "bfa817df67cd30ad9804d236f15316519a80748f9decee4e79567e23301441db",
+    "gold_rule": {
+      "all_twenty_records_required": true,
+      "fields": [
+        "Package",
+        "Version",
+        "License",
+        "NeedsCompilation"
+      ],
+      "record_parser": "strict_unique_dcf_record_with_continuation_unfolding",
+      "source": "official_cran_src_contrib_PACKAGES_gz"
+    },
+    "maximum_compressed_bytes": 67108864,
+    "maximum_decompressed_bytes": 134217728,
+    "metrics": [
+      "exact_table_successes",
+      "exact_table_accuracy",
+      "entity_recall",
+      "row_f1",
+      "item_f1",
+      "column_f1",
+      "composite"
+    ],
+    "quality_rule": {
+      "all_postfreeze_gold_tasks_valid": true,
+      "candidate_entity_row_item_column_composite_nonregression": true,
+      "candidate_exact_gain_at_least_ten": true,
+      "candidate_exact_strictly_greater": true,
+      "candidate_exact_successes_at_least_ten": true,
+      "deepwidebench_exact220_launch_only_after_pushed_postresult_audit_go": true,
+      "entity_row_item_column_composite_nonregression": true,
+      "fallback_and_invalid_nonincrease": true,
+      "fixed_denominator_all_valid": true,
+      "minimum_candidate_exact_gain": 10,
+      "minimum_candidate_exact_successes": 10,
+      "scope_is_mechanism_enriched_cran_cohort_only": true
+    },
+    "redirects": 0,
+    "retries_refetches_or_selective_revaluation": 0,
+    "same_postfreeze_snapshot_for_both_arms": true
+  },
+  "evaluator_protocol_payload_sha256": "0c7f951985623284c006d127d628abd5afbcedba9fa4f9e3544df63e7550446c",
+  "implementation_audit": {
+    "audit_valid": true,
+    "checks": {
+      "credential_literal_zero": true,
+      "evaluator_and_test_are_ordinary": true,
+      "independent_test_count_at_least_nine": true,
+      "network_capability_only_in_fetch_gold_snapshot": true,
+      "privileged_benchmark_field_access_zero": true,
+      "runner_capability_limited_to_frozen_validation": true
+    },
+    "evaluator_sha256": "552745f948919489f85fdf15070c0aa9d40a4648a085a3b5b5bb57189a1b5793",
+    "findings": [],
+    "privileged_accesses": [],
+    "request_calls": [
+      {
+        "function": "_fetch_gold_snapshot",
+        "method": "get"
+      }
+    ],
+    "runner_attributes": [
+      "validate_compatibility_aggregate",
+      "validate_forward_result",
+      "validate_task_row"
+    ],
+    "test_count": 10,
+    "test_sha256": "1ac7bbf37492989f1b2f9bf2f8ece2c7fac92f9473aa3865b1775ec9e97d1158"
+  },
+  "parents": {
+    "compatibility_aggregate_sha256": "db11fd715bf7527e687a57456a31ab5d7f122d1c7539c79222c32e74b95bebba",
+    "evaluator_sha256": "552745f948919489f85fdf15070c0aa9d40a4648a085a3b5b5bb57189a1b5793",
+    "evaluator_test_sha256": "1ac7bbf37492989f1b2f9bf2f8ece2c7fac92f9473aa3865b1775ec9e97d1158",
+    "forward_audit_sha256": "bb455f2ea4f7de8f7bc04eb9e0f62423fbc4cd461e8675b8ae77a995ef1b08b2",
+    "forward_protocol_sha256": "10972012b6719a9d0f57316f6c913b5fcd791e4873bdf7fa7e0a3d882d31cd26",
+    "forward_result_sha256": "237a4f45a62ce4a67f61b51a42c6c426c1e306a33700ace3b948da2984f3f2b1",
+    "prediction_freeze_sha256": "6707c005ee7899905a88e55324b696acd41242f8d9607ab67e2c6fb01d722e89",
+    "task_rows_sha256": "131300dea4537c8b9e6dcb866e5cd75a3a615ed08250636d97d24c2901a10ed8"
+  },
+  "population": {
+    "fixed_denominator": 20,
+    "package_vector_sha256": "0abe93a7723345a71719b9442195612d4d19c910d0e98b841f6a65a0487eec16",
+    "prediction_rows": 20
+  },
+  "protected_watchers": [
+    {
+      "marker": "scripts/watch_v2415_r1_checkpoint_liveness.py",
+      "pid": 795336,
+      "start_ticks": 713986317
+    },
+    {
+      "marker": "scripts/watch_v24218_exact220_executor.py",
+      "pid": 3061652,
+      "start_ticks": 747569004
+    },
+    {
+      "marker": "scripts/watch_v24215_joint_package_recovery.py",
+      "pid": 2808901,
+      "start_ticks": 746680268
+    },
+    {
+      "marker": "scripts/watch_v24216_package_gate.py",
+      "pid": 2889939,
+      "start_ticks": 746969965
+    }
+  ],
+  "protocol_id": "v25203_post_effect_tolerant_quality_external_v1",
+  "role": "v25203_post_effect_tolerant_quality_evaluator_preregistration",
+  "source_policy": {
+    "category_question_type_split_or_deepwidebench_gold_read": false,
+    "created_only_after_pushed_prediction_freeze_and_forward_audit": true,
+    "entropy_or_information_gain_assigns_signed_credit": false,
+    "forward_files_are_read_only": true,
+    "gold_or_evaluator_feedback_to_forward": false,
+    "one_fixed_official_cran_snapshot_only": true
+  }
+}
