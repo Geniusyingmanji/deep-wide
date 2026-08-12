@@ -1,5 +1,17 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
+## 2026-08-12 增量文献：信息增益不能决定 credit 符号，下一管线先做可归因性与可学习性门
+
+2026-08-06 至 08-11 发布或更新的十项工作进一步收紧了本项目的创新边界。[192–201] HERALD 用同题反事实干预审计 proof-of-retrieval reward，表明一个奖励可以拒绝删除搜索和伪造 ID，却仍被 citation laundering 绕过；补强后的 reward、训练中信号出现频率和训练后 policy transfer 又是三个不同问题。[192] CIPO 对同一个已生成动作比较 evidence-visible 与 evidence-masked 条件下的 log-likelihood，形成 Evidence-Access Log-Likelihood Ratio。其消融中，EALR-only 同时提高 supportive 与 irrelevant evidence utilization，只有与 terminal outcome reward 联合时才抑制无关证据使用。[193] 因而，“动作受证据影响”不是“证据改善任务”的充分条件，masked-context likelihood、熵降或 surprisal 都不能单独决定 signed credit。
+
+新的 credit-assignment 工作也否定了把所有中间步骤直接稠密计分。Gated-BEPO 只在同一状态存在多个已观察 successor 时引入局部 Bellman credit，否则退回 episode-level credit。[194] FACTOR 把“一个 action 应得多少 credit”与“credit 如何分配给该 action 的 token”分开，并要求 action credit telescope 回 trajectory advantage，token allocation 不能翻转 action-level sign。[195] EFCA 把即时环境反馈和近期无进展窗口作为原 return 的有界修正；作者消融显示过大的 reweighting 或 history coefficient 会退化。[196] BOUND 只在同一个 student-visible state 上构造经验证的纠偏或停止 continuation，用于处理 wrong-anchor、constraint 和 local-topic drift。[198] 这些结果支持本项目继续把 entropy/IG 限定为候选动作排序或已确认 credit 的有界幅度特征，而不允许它创造或翻转 credit 符号。
+
+搜索侧的增量工作把下一工程步骤从“更多 agent、更多页面、更多上下文”改成“先净化和绑定，再生成”。Not Worth Another Token 的阶段比较显示 pruning 放置位置通常比具体评分器更影响端到端成本，早期控制节省最多，但质量、成本与 faithfulness 没有单一支配策略。[197] Context Interference 将主要干扰定位到最新检索文档，并报告 refine-context-then-generate 优于盲目累积；简单 ranking 又可能删掉 ground-truth document。[201] ReTree 用 source-linked evidence tree 定位冲突引入点、重生成 summary 并回滚后继；作者同时承认 ancestry 只是依赖代理，硬剪枝会误删独立事实，并报告相对 flat update 增加 7–11% model calls 与 10–13% tokens。[200] 因此，本项目下一管线应是 admission 后的 verified-record context refinement，以及 cell/record 级显式依赖回滚，而不是整树盲剪或直接扩展 WebSwarm 式自由 Markdown experience。
+
+Reward-SNR Floor 又增加了训练前的可学习性门。[199] 该工作区分“平均干预有效”与“能逐实例学习何时干预”，并给出必要的均值检测条件 `rho >= 2.8/sqrt(N)`。若把本项目的一题 paired outer-utility delta 视为一个近似独立单位，`N=20` 时阈值约为 `0.626`，`N=220` 时约为 `0.189`；这只是必要条件，来源相关、cluster dependence、selection 和 policy shift 还会降低有效样本量。故20题机制门即使出现平均收益，也不能据此训练逐题 entropy router。低于检测下界时只能冻结 design-time regime gate；只有跨 fresh task cluster 的干预 SNR、placebo 与 held-out routing 都通过后，才讨论 per-instance policy。
+
+上述文献把当前可检验贡献收敛为五层顺序。第一层是 V2.51.58 的 source/record identity、field 与 value admission。第二层只把已 admission 的 compact verified record 放入 active context，并与 raw latest pages 做 shared-prefix 对照。第三层在冲突时只撤回显式依赖该 observation 的 cell、record 或 summary。第四层用 matched successor、deletion/replacement continuation 或 artifact-disjoint outer utility确定 action credit 的符号；entropy/IG 只预测优先级或调节已确认幅度。第五层先估计 intervention reward SNR，再决定使用全局 regime gate 还是学习逐题 router。正 credit 的最小链条仍是 `admissible observation → matched intervention → attributable prediction change → post-freeze outer utility`。
+
 ## 2026-08-12 实验更新：纵向 key-value binder 已进入 build-only 验证
 
 V2.51.58把V2.51.57定位到的representation gap实现为一个窄的、可证伪的candidate grammar。它不从结构计数直接推断答案，而只在同一个verified incremental page内解析连续两列pipe block：visible key必须唯一匹配输出schema，block必须恰有一个主键行，主键value必须唯一匹配production table的现有row identity。每个field候选的evidence是identity row到field row之间不超过1200字符、在整页唯一出现的连续原文；selection前后仍由V2.51.43 verifier各验证一次。
@@ -48,7 +60,7 @@ V2.51.50随后做counts-only诊断，只解码V2.51.47/V2.51.35的content-free r
 
 这进一步约束信息熵credit assignment。verified gain、进入第4次调用、合法strict JSON和上下文缩短都不能获得正credit；在`admissible observation`为0时，realized signed credit必须为0。V2.51.51因此只扩展content-generic、exact-label、exact-quote的flat JSON、inline/multiline labelled record和row-heading record，并保持两次mechanical verification。该build在synthetic/adversarial与父链152项测试中通过，但尚无fresh natural reach或outer utility证据，因而仍不能把entropy/IG用于正credit或宣称benchmark提升。正credit继续要求`source/identity/field/value admissibility → matched intervention → attributable prediction change → post-freeze outer utility`完整成立。
 
-> 检索截止：2026-08-07 14:10 UTC；项目证据更新：2026-08-11 UTC（至 V2.50.63）
+> 检索截止：2026-08-12 05:41 UTC；项目证据更新：2026-08-12 UTC（至 V2.51.59）
 >
 > 结论强度：这是基于公开文献的 novelty audit，不是“没有任何相关工作”的证明。2026 年文献多为尚未同行评审的 arXiv 预印本，文中将预印本结果视为作者报告，而非独立复现事实。
 
@@ -163,7 +175,7 @@ V2.48.02 在 V2.48.00 的 220 个预测与评价全部终态后，使用 WebSwar
 | AgentOPSD [190] | teacher–student log-probability gap 的递归 Bayesian log-odds 更新与边际 belief revision | belief delta 形成 turn credit | belief 是 teacher-relative proxy，不是经过校准的四层任务损失，也没有 source/identity gate |
 | TurnSight [191] | execution-conditioned multi-horizon hindsight，经 sibling normalization 后只调节原 advantage 幅度 | state-aligned hindsight 与 sign-preserving credit | 不估计网页证据的开放集合覆盖或 target–value provenance |
 
-这六项工作使三个宽泛主张不再成立。shared-prefix credit、belief revision credit，以及用 surprisal 选择 counterfactual 都已有直接近邻；单独把“熵降大的步骤给更多 credit”也会把错误来源导致的过度确信、重复证据与无终局作用的局部变化记成正贡献。当前仍可检验的组合是四层开放世界风险，即 hidden anchor、未见实体质量、row eligibility 与 cell value uncertainty，经校准后投影到 terminal task loss；每个 observation 还必须先通过 primary-identity、target–value 与 source-dependency gate。entropy 或 expected information gain 可以预测动作排序和 credit 幅度，但 credit 的正负应来自同状态 suffix/deletion/replacement，或 artifact-disjoint outer utility。限定到本综述当前核验的 191 篇公开工作，没有发现同时实现这四层风险、上述证据门和 terminal-utility signed credit 的系统；这仍是检索范围内的 gap，而不是不存在相关工作的证明。
+这六项工作使三个宽泛主张不再成立。shared-prefix credit、belief revision credit，以及用 surprisal 选择 counterfactual 都已有直接近邻；单独把“熵降大的步骤给更多 credit”也会把错误来源导致的过度确信、重复证据与无终局作用的局部变化记成正贡献。当前仍可检验的组合是四层开放世界风险，即 hidden anchor、未见实体质量、row eligibility 与 cell value uncertainty，经校准后投影到 terminal task loss；每个 observation 还必须先通过 primary-identity、target–value 与 source-dependency gate。entropy 或 expected information gain 可以预测动作排序和 credit 幅度，但 credit 的正负应来自同状态 suffix/deletion/replacement，或 artifact-disjoint outer utility。限定到本综述当前核验的 201 篇公开工作，没有发现同时实现这四层风险、上述证据门、reward-SNR learnability gate 和 terminal-utility signed credit 的系统；这仍是检索范围内的 gap，而不是不存在相关工作的证明。
 
 以下各节按日期保留历史证据。凡与本节当前分数、版本或下一实验授权冲突的旧陈述，均由 V2.48.00–02 覆盖。
 
@@ -1008,11 +1020,11 @@ V2.19 针对这两个 label-blind 机制做了 evidence-continuity 修复。它�
 
 ## 11. 结论
 
-信息熵适合作为这项工作的理论主线，但不能作为孤立 novelty。已有文献已经覆盖语义熵、信息增益奖励、EIG 动作选择、熵驱动证据选择、校准停止、未知 denominator 审计、belief–coverage 分离、POMDP acquisition、gold-conditioned contextual-IG credit、answer-graph credit、shared-prefix suffix credit、verifier score-to-credit、Bayesian belief revision、execution hindsight、Shapley attribution 与 sign-preserving advantage modulation。[140,149–151,157–191] 限定到本次 191 篇公开文献核验范围，可辩护的候选问题是：DeepWide 的隐藏 anchor、开放集合遗漏、行资格和格值能否形成一个经校准且不简单相加的任务风险模型；该模型能否在相同动作菜单、共享前缀、预算、证据等价与来源依赖约束下改善 terminal task loss；若进一步训练策略，四层风险变化能否预测由同状态 suffix 或 artifact-disjoint outer continuation 确认的 signed step contribution。
+信息熵适合作为这项工作的理论主线，但不能作为孤立 novelty。已有文献已经覆盖语义熵、信息增益奖励、EIG 动作选择、熵驱动证据选择、校准停止、未知 denominator 审计、belief–coverage 分离、POMDP acquisition、gold-conditioned contextual-IG credit、evidence-access likelihood credit、answer-graph credit、shared-prefix suffix credit、matched-successor Bellman credit、action-to-token credit conservation、verifier score-to-credit、Bayesian belief revision、execution hindsight、Shapley attribution 与 sign-preserving advantage modulation。[140,149–151,157–201] 限定到本次 201 篇公开文献核验范围，可辩护的候选问题是：DeepWide 的隐藏 anchor、开放集合遗漏、行资格和格值能否形成一个经校准且不简单相加的任务风险模型；该模型能否在相同动作菜单、共享前缀、预算、证据等价与来源依赖约束下改善 terminal task loss；若进一步训练策略，四层风险变化能否预测由同状态 suffix 或 artifact-disjoint outer continuation 确认、且 reward SNR 足以学习的 signed step contribution。
 
-V2.48.00 当前是仓库内单轮完整 220 的联合前沿，whole-table 为 `8/220`、Composite 为 `0.456834`。V2.48.01 的 95% task-bootstrap 区间跨 0，且成本增加约 `40.86%`，所以这份内部提升不能被解释为固定 full budget 的普遍因果收益。V2.48.02 又表明，在 WebSwarm 的精确 76-task manifest 上，两者 SR 在论文报告精度下相同，而 Row F1 与 Item F1 各有胜负；由于模型、工具、预算与 evaluator 不匹配，这也不是 SOTA 对照。
+仓库内单轮完整 220 的项目最佳目前是 V2.48.57，whole-table 为 `9/220`、Composite 为 `0.457249`。最新正常完整轮 V2.50.57 为 `6/220 / 0.449960`；之后的 V2.51.30 为 `1/220 / 0.377865`，严格 NO-GO。三者均为 single rollout，没有 Avg@4、leaderboard 或 SOTA 证据。V2.51.59 只证明 vertical key-value binder 的 clean build 与 label-blind 依赖闭包，不是新的 benchmark 结果。
 
-下一步应在 benchmark-external、task-cluster-disjoint 人口上冻结共享前缀三臂：first-wave only、fixed full budget，以及 coverage-risk/terminal-loss VOC adaptive。三臂必须共享模型、renderer、候选证据顺序与 hard caps，并报告固定分母质量、成本、evaluator health 与 task-cluster bootstrap。四层 entropy/VOC 只有在该候选优于两个强控制，且 step sign 又由 same-state suffix/deletion/replacement 或独立 outer utility 支持时，才可升级为经验核心；否则保留为 uncertainty diagnostic。真实四层 calibration、正式 outer-valid step-credit 数据与 credit-training 收益目前仍为空。
+下一步应先在 benchmark-external、task-cluster-disjoint 人口上冻结 V2.51.58 的 shared-prefix paired gate：production prediction 为 control，candidate 只应用 same-forward、source/identity/field/value-bound vertical edits。机制门要求非零 preverified candidate、applied edit 与 attributable prediction change；只有机制 GO 才允许 post-freeze evaluator，质量门要求 Exact 严格增加且 Composite、Entity、Row、Item、Column、invalid、fallback 和资源均不退。随后才能比较 raw latest pages 与 compact verified-record context、加入 dependency-aware rollback，并收集足够的 matched intervention delta 估计 reward SNR。四层 entropy/VOC 只有在优于 deterministic/no-entropy 与 matched-cost control、step sign 由 outer continuation 支持且 held-out router 通过可学习性门时，才可升级为经验核心；否则保留为 uncertainty diagnostic。真实四层 calibration、outer-valid step-credit 数据和 credit-training 收益目前仍为空。
 
 ## 参考文献
 
@@ -1207,6 +1219,16 @@ V2.48.00 当前是仓库内单轮完整 220 的联合前沿，whole-table 为 `8
 189. Huang, Y., Xu, B., Cao, H. & Zhu, C. **BiCAA: Bidirectional Credit Assignment for Search-Augmented Agent.** arXiv:2608.01321v1 (2026). https://arxiv.org/abs/2608.01321
 190. Wang, Z.-H. et al. **AgentOPSD: Recursive Self-Distillation for Agentic Reinforcement Learning.** arXiv:2608.05987v1 (2026). https://arxiv.org/abs/2608.05987
 191. Qu, C., Dai, S., Cai, H., Zhou, Y., Chen, X., Simon & Xu, J. **TurnSight: Turn-Level Hindsight Self-Distillation for Tool-Integrated Reasoning.** arXiv:2608.04007v1 (2026). https://arxiv.org/abs/2608.04007
+192. Liu, Z., Cui, B., Guo, Y., Wang, Y. & Li, H. **HERALD: Counterfactual Audits and Minimal Repairs for Proof-of-Retrieval Rewards.** arXiv:2608.06012v1 (2026). https://arxiv.org/abs/2608.06012
+193. Guo, X., Chen, W., Yang, L. & Zhang, B. **Contextual Information Policy Optimization for Search Agents.** arXiv:2608.06128v3 (2026). https://arxiv.org/abs/2608.06128
+194. Yan, H., Huang, Z., Fan, S. & Liu, Q. **Gated-BEPO: Confidence-Gated Bellman Credit Assignment for Large Language Model Agents.** arXiv:2608.06861v1 (2026). https://arxiv.org/abs/2608.06861
+195. Ma, L. et al. **How Much, Then Where: Credit-Conserving Action-to-Token Allocation for Multi-Turn Agent Reinforcement Learning.** arXiv:2608.07118v1 (2026). https://arxiv.org/abs/2608.07118
+196. Huo, Y. et al. **Learning from Environmental Feedback: Credit Assignment across Multiple Timescales for Agentic Reinforcement Learning.** arXiv:2608.08255v1 (2026). https://arxiv.org/abs/2608.08255
+197. Kolukuluru, H. et al. **Not Worth Another Token: Marginal Value Estimation for Efficient Deep Research Agents.** arXiv:2608.08389v1 (2026). https://arxiv.org/abs/2608.08389
+198. Niu, Q., Ren, R., Zhao, W. X. & Li, Y. **BOUND: Brief-Guided Corrective Preference Distillation at Search-Control Boundaries.** arXiv:2608.08768v1 (2026). https://arxiv.org/abs/2608.08768
+199. Yuan, Y. **Detecting an Effect Is Not Learning to Act on It: A Reward-SNR Floor for LLM Acquisition Agents.** arXiv:2608.10441v1 (2026). https://arxiv.org/abs/2608.10441
+200. Yang, A., Guo, Q., Huang, Z., Chen, Y., Qian, S. & Cao, J. **Self-Correcting Long-Horizon Search Agents via Tree-Structured Memory.** arXiv:2608.10676v1 (2026). https://arxiv.org/abs/2608.10676
+201. Xue, B. et al. **Mitigating Context Interference for Reliable and Efficient Search Agents.** arXiv:2608.10743v1 (2026). https://arxiv.org/abs/2608.10743
 ## 2026-08-04 补充：source-volume 不是 verifier coverage，entropy 必须对齐 utility
 
 V2.43.70 的真实外部门提供了一个对 Deep/Wide 搜索设计很重要的反例：发现 559 个 registrable hosts 并不保证最终验证覆盖。若系统先按返回顺序截取前 10 个来源，再随机保留两个 verifier，则后发现的 query/batch strata 可能完全没有进入 proposal 或 verifier 集。这个失败和近期工作中的几个观点相互印证：Diverse Query Initialization 强调初始化分散性，但分散 query 若在 source selection 处被 first-k 截断，其收益不会传到下游；conjunctive cross-page retrieval 关注“所需证据是否共同覆盖”，而非单纯 source 数；Bridge Evidence 区分静态检索相关性与对最终决策的因果 utility；Context Gathering Decision Process 则提示 acquisition policy 应按下游 belief/decision value 设计，而不能把更多网页当作目标本身。
