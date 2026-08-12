@@ -1,5 +1,15 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
+## 2026-08-12 实验更新：generic grammar 仍零召回，下一步改查投影层结构损失
+
+V2.51.53把V2.51.51新增的四类通用record语法放到另一组fresh/disjoint CRAN package-description任务上，与原有atomic-bound JSON和pipe-table合计六类。唯一20题forward全部terminal且由模型生成，0 fallback，耗时`52.937635s`；总计`80 query / 214 fetch / 62 model forwards / 830,367 tokens`。只有2题产生same-forward verified gain、合计3个增量页，低于预注册的4题下界；18题走本地identity replay。两次selector调用、strict JSON解析和空projection均正常，但六类grammar observation、raw/preverified/available/supplied/selected/applied candidate及prediction change全部为0。机制门因此失败三项，严格NO-GO；没有创建evaluator、gold或quality result，也没有DeepWideBench新分数。[`results/v25153_generic_record_candidate_external_forward_result_v1_20260812.json`](results/v25153_generic_record_candidate_external_forward_result_v1_20260812.json)与[`results/v25153_generic_record_candidate_external_forward_audit_v1_20260812.json`](results/v25153_generic_record_candidate_external_forward_audit_v1_20260812.json)是权威工件。
+
+V2.51.54随后只通过JSON字符边界读取V2.51.51与V2.51.35的content-free receipts，未物化题面、ID、query、URL、页面、值、prediction、mapping、gold、类别、score或credential。固定funnel确认3个增量页确实到达candidate extractor，但六类observation在preverifier阶段已经全部为0；冲突、重复、截断和rejection也全为0。[`results/v25154_v25153_generic_record_candidate_diagnosis_v1_20260812.json`](results/v25154_v25153_generic_record_candidate_diagnosis_v1_20260812.json)因此否定了“再多加几种文本grammar即可”的当前证据基础。现有receipt只能把问题定位到extractor之前，不能区分原始网页没有结构记录，还是fetch、HTML-to-text或projector把表格、definition list、JSON-LD或label-value布局压平成了不可恢复文本。
+
+下一实验的可识别处理应是层间observer，而不是又一轮公开220或更宽grammar。它在raw-fetch/preprojection、postprojection和extractor入口只记录content-free结构事件数与保留关系，不保存或输出identity、题面、URL、页面、值或prediction。若结构在raw层已经为0，应改进search/source selection；若raw有而projection后归零，应修复provenance-preserving HTML/structured-data projection；若postprojection有而extractor为0，才有证据继续扩grammar。结构存在本身仍不等于admissible observation，更不等于task utility。
+
+这轮也是信息熵credit的又一个零点：verified retrieval gain、三张增量页、两次额外模型调用、strict JSON和更短prompt都没有形成可采纳candidate，因此realized signed credit必须保持0。即使未来observer证明某层保留了结构，正credit仍须经过source/identity/field/value绑定、matched intervention、可归因prediction change和post-freeze outer utility；“结构更多”或“entropy下降”不能单独决定credit符号。当前最新正常完整220仍为V2.50.57的`6/220 / 0.449960`，项目单轮最佳仍为V2.48.57的`9/220 / 0.457249`，没有Avg@4、leaderboard或SOTA证据。
+
 ## 2026-08-12 实验更新：deterministic candidate 的失败点在表示语法，不在 selector
 
 V2.51.49 完成了一次严格 label-blind、fresh/disjoint、fixed-20 的 matched forward。20/20任务都形成model-generated终态，耗时`52.790900s`，消耗`80 query / 204 fetch / 65 model forwards / 804,852 tokens`；5题出现same-forward verified gain并进入candidate selector，15题本地identity replay，0 fallback和0 hard/revision/post-effect failure。候选闭环要求`preverified candidate → selected ID → reverified edit → attributable prediction change`，但5个gain任务的7个增量页面上，atomic-bound JSON与pipe-table两种语法都提取到0 observation，所以available、selected、applied edit及prediction change均为0。机制门严格NO-GO，未创建evaluator或gold；这不是DeepWideBench提分实验。
