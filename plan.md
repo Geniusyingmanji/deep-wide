@@ -1,5 +1,19 @@
 # OWIC-DeepWide 研究与实施计划
 
+> 版本：6.104
+>
+> **6.104 V2.52.27 same-endpoint claim-scope NO-GO（2026-08-12）：V2.52.19永久attempt claim与冻结result证明CRAN `PACKAGES` URL hash=`93b3a9a7...813e0`已发生一次provider attempt，batch明确`public_snapshot_network_or_api_called=true`，且`retry_refetch_backfill_replacement_or_second_batch_authorized=false`。V2.52.26固定endpoint hash完全相同；新version/namespace和新的semantic policy不改变“再次GET同一物理endpoint就是refetch”这一事实，也不能追溯恢复effect authority。因此V2.52.26仍是有效synthetic/build证据，但同endpoint protocol/preactivation/execution-start严格NO-GO，不访问CRAN、不生成identity/population、不进入64-task gate。**
+>
+> **审查同时处理了父链的3个旧control ERROR：冻结V2.52.19 preactivation工件 SHA=`495453de...5a0cc`在effect前已完成`47/47`、`audit_valid=true, findings=[]`，并要求未来claim/start/result surfaces pristine；当前三者已按授权合法存在，所以事后重建旧preactivation必然在3个依赖`_preaudit()`的测试报错。当前旧control固定表现为3 ok + 3 stage-sensitive ERROR，旧runner语义13/13仍通过；V2.52.27把旧control/test hash、冻结47/47工件、当前三个surface和分类`historical_preactivation_absence_assertion_after_authorized_effect`全部绑定，明确`v25227_regression=false`，没有修改旧测试或伪装全绿。**
+>
+> **V2.52.27相关当前green链为45项，compileall、secret scan与label-blind semantic audit通过。设计与权威工件分别以`97700c50 / 08e2731f`推送；工件[`results/v25227_cran_claim_scope_no_go_v1_20260812.json`](results/v25227_cran_claim_scope_no_go_v1_20260812.json) SHA-256=`120a63d9...f6cd`，same-endpoint effect=`no_go`、network authorization=false。四个protected watcher identity未变，shared lease空闲，本阶段没有外部effect。**
+>
+> **主线立即转回不依赖该endpoint的可靠性工作：先用V2.52.08冻结aggregate与content-free receipts比较5个production normalizer fallback和6个evaluator invalid，优先选择能在artifact-disjoint synthetic fixture验证、且不读取旧题identity/question/prediction/gold/category/score的修复。任何修复只能先build-only，再通过fresh production-isomorphic reliability gate；不得选择性补评、重评或重跑V2.52.08，也不得直接启动新220。alternative official endpoint/surface仅保留design-only可能性，未授权network。**
+>
+> **当前完整分数不变：V2.52.08=`5/220 / 0.398669`，项目单轮最佳V2.48.57=`9/220 / 0.457249`；无Avg@4、leaderboard或SOTA。entropy/IG signed credit继续为0。**
+>
+> **阅读规则：本文件append-only；顶部6.104覆盖6.103及后文所有较早的当前权限、下一步与分数口径。**
+
 > 版本：6.103
 >
 > **6.103 V2.52.25–26 CRAN semantic transport（design/build-only，2026-08-12）：V2.52.25把新策略明确建模为独立namespace，而非给旧V2.52.17增加alternate MIME。固定endpoint仍为`https://cran.r-project.org/src/contrib/PACKAGES`；success必须同时满足literal endpoint、单次GET、0 redirect/retry/refetch、TLS hostname verification、public-address DNS预检、HTTP 200、非空stream+32MiB cap、body length/SHA绑定，以及V2.52.24 strict extraction完成、count parity和至少64个distinct candidate。`Content-Type`只进入`missing/accepted/unknown_disallowed`有限observer，原值/规范值/hash均不保存；unknown/missing不被重写为`text/plain`，known-safe alternate allowlist继续为空，MIME/HTTP 200/magic bytes都不能单独建立success。设计如实保留`dns_preflight_result_pinned_to_transport=false`，安全边界仍依赖固定hostname和TLS验证，并要求未来effect必须置于独立fork hard-deadline controller。设计代码与工件分别以`79bce63f / 4d0ae5cd`推送；权威工件[`results/v25225_cran_semantic_transport_design_v1_20260812.json`](results/v25225_cran_semantic_transport_design_v1_20260812.json) SHA-256=`d50633db...d50b`，只授权implementation build-only。**
