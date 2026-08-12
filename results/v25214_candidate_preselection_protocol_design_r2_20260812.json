@@ -1,0 +1,103 @@
+{
+  "artifact_version": 1,
+  "authorization": {
+    "deterministic_candidate_discovery_implementation_build_only": true,
+    "evaluator_deepwidebench_exact220_avg4_leaderboard_or_sota": false,
+    "probe_runtime_integration_external_forward_or_activation": false,
+    "public_index_snapshot_network_access": false,
+    "real_identity_selection_or_population_freeze": false,
+    "retry_resume_replacement_selective_rerun_or_revaluation": false,
+    "runtime_compatibility_validator_relaxation_or_prediction_change": false
+  },
+  "correction": {
+    "all_other_fields_and_authority_unchanged": true,
+    "field": "source_specs.single_authority_exact_record.selection_predicate",
+    "new_predicate": "nonempty_max_version_and_nonempty_description",
+    "old_predicate": "non_yanked_current_version_and_nonempty_description",
+    "reason": "crates_io_list_snapshot_exposes_max_version_and_description_but_not_selected_version_yanked_state"
+  },
+  "created_at_unix": 1786552265,
+  "design_payload_sha256": "6b38486cd949be204c10932b1de4cdff0c2dd73d4815b9492e46c0689d292bcc",
+  "entropy_or_information_gain_assigns_signed_credit": false,
+  "epistemic_risk_variables": [
+    "hidden_anchor_A",
+    "unseen_mass_M",
+    "row_eligibility_Re",
+    "cell_value_uncertainty_Yec"
+  ],
+  "mapping_gold_category_question_type_split_evaluator_score_reward_or_historical_result_read": false,
+  "network_model_search_fetch_evaluator_benchmark_or_api_called": false,
+  "parent_design": {
+    "path": "results/v25214_candidate_preselection_protocol_design_v1_20260812.json",
+    "sha256": "e54ce2aa7adcdf37afa2dbf85dd2d9455c9eb32a0ba13b8597133f741b8ea785"
+  },
+  "parent_selector_build_audit": {
+    "path": "results/v25213_population_selector_build_audit_v1_20260812.json",
+    "sha256": "7a052cb9c2d976862701167b58047beb53d7d05f18b00a33fa2f125629b93154"
+  },
+  "role": "v25214_candidate_preselection_protocol_design_r2",
+  "sampling_contract": {
+    "cross_stratum_identity_collision_fails_closed": true,
+    "http_redirects_retries_and_conditional_refetches": 0,
+    "manual_reordering_replacement_or_selective_backfill": false,
+    "minimum_predicate_valid_oversample_per_stratum": 64,
+    "one_get_only_per_frozen_public_index_snapshot": true,
+    "predicate_may_not_read_model_prediction_evaluator_quality_or_benchmark": true,
+    "predicate_may_read_only_public_index_record_fields": true,
+    "selection_order": "sha256_v25214_stratum_snapshot_identity_then_identity",
+    "snapshot_bytes_sha256_and_retrieval_receipt_required": true,
+    "snapshot_selected_before_identity_history_scan": true,
+    "task_count": 64,
+    "tasks_per_stratum": 16
+  },
+  "sampling_strata": [
+    "single_authority_exact_record",
+    "single_authority_multivalue_record",
+    "same_identity_multipage_record",
+    "sparse_ambiguous_open_web_record"
+  ],
+  "sampling_strata_are_not_epistemic_risk_estimates_or_benchmark_labels": true,
+  "separation_contract": {
+    "A_M_Re_Yec_not_estimated_calibrated_routed_or_credited_by_this_gate": true,
+    "candidate_discovery_artifact_persists_no_identity_plaintext_or_item_hash": true,
+    "candidate_discovery_may_persist_snapshot_hash_counts_and_transport_status_only": true,
+    "risk_stratum_removed_before_runtime_task_vector": true,
+    "runtime_boundary_future_exactly_opaque_id_and_visible_question": true,
+    "selector_proves_repository_history_disjointness_not_candidate_provenance": true,
+    "selector_receives_candidates_in_memory_then_persists_aggregate_only": true
+  },
+  "source_specs": {
+    "same_identity_multipage_record": {
+      "identity_type": "doi",
+      "index": "crossref_public_works_snapshot",
+      "selection_predicate": "doi_title_publisher_and_container_title_nonempty",
+      "topology": "registry_record_plus_publisher_landing_page"
+    },
+    "single_authority_exact_record": {
+      "identity_type": "crate_name",
+      "index": "crates_io_public_crates_index_snapshot",
+      "selection_predicate": "nonempty_max_version_and_nonempty_description",
+      "topology": "single_canonical_registry_record"
+    },
+    "single_authority_multivalue_record": {
+      "identity_type": "package_name",
+      "index": "cran_public_packages_index_snapshot",
+      "selection_predicate": "nonempty_license_and_system_requirements_or_suggests",
+      "topology": "single_registry_record_with_multivalue_fields"
+    },
+    "sparse_ambiguous_open_web_record": {
+      "identity_type": "project_name",
+      "index": "pypi_public_simple_index_snapshot",
+      "selection_predicate": "normalized_name_length_3_to_8_and_valid_pep503_project_anchor",
+      "topology": "short_visible_identity_with_open_web_name_collision_risk"
+    }
+  },
+  "stop_rules": {
+    "fewer_than_64_predicate_valid_candidates_in_any_stratum": "no_population_selection",
+    "history_hit_after_deterministic_selection": "entire_population_no_go_no_backfill",
+    "identity_collision_across_strata": "entire_population_no_go",
+    "manual_identity_choice_after_snapshot_read": "quarantine_as_invalid",
+    "model_search_api_evaluator_or_quality_access": "quarantine_as_invalid",
+    "transport_or_snapshot_failure": "no_population_selection_and_no_refetch"
+  }
+}
