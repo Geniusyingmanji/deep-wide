@@ -1,5 +1,21 @@
 # OWIC-DeepWide 研究与实施计划
 
+> 版本：6.108
+>
+> **6.108 V2.52.44–54 fresh64 shadow、撤销安全链、真实预算口径与机制NO-GO（2026-08-12）：V2.52.44 build/protocol/preaudit/start虽完整冻结，但runner入口exact-schema遗漏合法`git_head`字段；运行在attempt claim、endpoint probe、model/search/fetch/output之前fail closed，旧start永久撤销。V2.52.47 revocation SHA-256=`2d986b23...31be`固定`pre_effect_no_go`、旧claim/result/output全空、禁止retry/reseal/reuse，只授权全新namespace successor。**
+>
+> **V2.52.48 successor在contract runtime authority、control parent barrier和runner入口同时验证revocation hash/完整语义；runner新增execution-start必须为当前pushed HEAD唯一单文件子提交的内生边界，回归覆盖合法、缺失、非法和重封但父提交不匹配的`git_head`。implementation `b1786c7d`、build audit `b9bc9454`、protocol `458d317f`、launch-control/auditor `496be8e0`、preaudit `8277df0b`、start `35d445d8`逐阶段推送；build为53/53、76文件闭包、零privileged/evaluator/credential finding，preaudit为66/66且endpoint/lease/watcher/future surface全绿。start入口零effect复验通过，claim/result/audit/output前后均空。**
+>
+> **唯一fresh64 shadow forward随后自然完成，未signal/restart/resume/rerun：64/64 terminal，63 runtime completed + 1 `ValueError` failure-as-zero；63 model-generated + 1 fallback；墙钟`182.518111s`，物理effect为256 query、646 fetch、195 model forwards、3,830,838 system tokens。63个completed receipt中`parent_raw_no_bindable_header_reject=0`，故shadow eligibility/entry/completed/safe candidate全0；observer failure、parent behavior drift、shadow prediction change和positive signed credit均0。预注册门严格NO-GO：all-runtime-completed、fetch/model budget、natural entry与safe candidate失败；不授权activation、quality、evaluator或DeepWideBench 220。forward固定21文件提交`359d21a4`，V2.52.51权威audit SHA-256=`19d674ba...a68b0`为`audit_valid=true / mechanism_gate_passed=false`，没有把机制失败伪写成审计失败。**
+>
+> **V2.52.52 content-free诊断（SHA-256=`f9c0eb55...e4ec`）定位协议预算口径错误：冻结V2.51.35父链真实允许4 model/14 fetch，V2.52.48却声明3/10。61题为3-model/10-fetch，2题为4/11，1题为4/14；3个超声明任务恰好都是verified-gain→revision-eligible，revision provider均成功，但本轮最终与attributable prediction change均0。该关联不能证明第4次call一般无用：父链synthetic fixture明确证明verified-gain第4次model可改变prediction，因此不得为省预算强切3/10，也不得把协议悄悄放宽而不承认。下一runtime必须如实预注册4 query/14 fetch/4 model，并在第5次model/第15次fetch之前硬拒绝。单个`ValueError`发生在3-model/10-fetch、effect-health全零之后，精确post-effect stage仍未知，不能归因transport。**
+>
+> **V2.52.53–54据此实现兼容子类+per-task共享物理cap与六阶段content-free observer：`boundary → sparse_parent_run_and_validate → effect_rebuild → parent_freeze → shadow_receipt → result_envelope_validate`。fetch越界整批在network前原子拒绝，model越界在slot/provider前拒绝；保留第4次verified-gain revision质量路径。专项7/7、相关父链63/63；V2.52.54 clean-build audit从pushed HEAD完成71/71、73文件闭包，零privileged/evaluator/credential finding，权威SHA-256=`84ac0911...ff87`。当前只授权fresh artifact-disjoint observed reliability protocol设计，不授权external launch。下一实验必须换全新不重叠人口，机制目标仅为64/64 runtime totality、物理effect≤4/14/4和把任何failure定位到有限stage；不得再测试已证63/63零入口的header-totality机制，也不得用同人口换题/改阈值。可靠性GO后，刷榜候选回到具有自然覆盖且可能改变prediction的verified-gain/record-binding路径，并要求独立post-freeze quality delta后才给entropy/IG正credit。**
+>
+> **DeepWideBench口径不变：最新完整V2.52.08=`5/220 / Composite 0.398669`；项目单轮最佳V2.48.57=`9/220 / 0.457249`。当前没有Avg@4、leaderboard或SOTA证据；V2.52.48是fresh64机制/可靠性实验，不是DeepWideBench分数。四个protected watcher identity未变，shared lease已释放，entropy/IG signed credit=0。**
+>
+> **阅读规则：本文件append-only；顶部6.108覆盖6.107及后文所有较早的当前权限、下一步、容量、预算与分数口径。**
+
 > 版本：6.107
 >
 > **6.107 V2.52.39–43 entity-disjoint source-package 人口成功冻结（2026-08-12）：V2.52.38中把`multi-hyphen + plus/dot`直接相加为82的粗探针口径不成立；严格互斥复核后，binary名称集合之外的564个source-package名称分为`short-alpha=173 / long-alpha=101 / single-hyphen=119 / digit-bearing=92 / excluded=79`，四个admitted stratum均真实≥64。V2.52.39据此冻结全新设计，source名称必须不等于任何本机installed binary名称，故与失败的V2.52.35 binary-package人口实体集合按构造严格不交；stratum只用于人口平衡，不进入runtime。设计代码/工件以`bcf5e2ab / c2965f2f`推送。**
