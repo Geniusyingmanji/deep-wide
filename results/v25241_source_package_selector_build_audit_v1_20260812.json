@@ -1,0 +1,179 @@
+{
+  "artifact_version": 1,
+  "audit_payload_sha256": "bf8b399dae93da1e306b64374d004073554f406e35ccb327c147b046ed052320",
+  "audit_valid": true,
+  "authorization": {
+    "candidate_activation_or_prediction_change": false,
+    "evaluator_deepwidebench_exact220_avg4_leaderboard_or_sota": false,
+    "retry_resume_replacement_selective_rerun_or_revaluation": false,
+    "shadow_external_activation_or_launch": false,
+    "shadow_reliability_protocol_design_after_valid_freeze": true,
+    "single_source_package_population_freeze": true
+  },
+  "checks": {
+    "all_candidates_checked_once_and_any_process_failure_fails_closed": true,
+    "all_fixed_selector_test_and_artifact_hashes_match": true,
+    "all_selector_test_and_parent_artifacts_tracked": true,
+    "attempt_and_result_surfaces_pristine": true,
+    "attempt_claim_precedes_effect_and_is_result_hash_bound": true,
+    "entity_disjoint_design_shadow_authority_bound": true,
+    "exactly_three_subprocess_run_call_sites": true,
+    "fixed_dpkg_vector_history_paths_and_bounded_concurrency": true,
+    "formal_dpkg_query_or_history_scan_not_run_by_build_audit": true,
+    "git_clean_head_equals_target_main": true,
+    "nested_exact_schema_count_conservation_and_tamper_rejection": true,
+    "network_model_evaluator_imports_zero": true,
+    "no_network_model_search_fetch_evaluator_benchmark_or_api_called": true,
+    "privileged_runtime_field_access_zero": true,
+    "protected_watchers_unchanged": true,
+    "selector_design_shadow_helper_parent_tests_exact60": true,
+    "shared_api_lease_inactive": true,
+    "shell_true_zero": true,
+    "task_vector_visible_only_interleaved_reconstructable_and_exact_schema_parseable": true
+  },
+  "created_at_unix": 1786564700,
+  "entropy_or_information_gain_assigns_signed_credit": false,
+  "findings": [],
+  "fixed_artifact_hashes": {
+    "results/v25233_header_totality_shadow_build_audit_v1_20260812.json": "eebbc5577f46998c5a97f75e0e76afac9aa7b3399f6f7a9a78d3256ced130fc2",
+    "results/v25239_source_package_shadow_population_design_v1_20260812.json": "0e9001197709453f8ade48a499f51c189887212885f75b107da1b05406fcb6f7",
+    "scripts/freeze_v25240_source_package_shadow_population.py": "0697cb23edf2c8ce7f737e0b5e0ba94a0372281ecc2aad23b4467479b4167937",
+    "tests/test_freeze_v25240_source_package_shadow_population.py": "a04acf4a5a9842f3cde8ab8a2cb3309d9d339f27b41f10111fddb2ff61c38f6f"
+  },
+  "git": {
+    "clean": true,
+    "equal": true,
+    "head": "ab59e1f3f30ffb82261d47141da50bb93754113d",
+    "target_main": "ab59e1f3f30ffb82261d47141da50bb93754113d"
+  },
+  "mapping_gold_category_question_type_split_evaluator_score_reward_or_historical_result_read": false,
+  "network_model_search_fetch_evaluator_benchmark_or_api_called": false,
+  "process_capability_audit": {
+    "all_process_methods_are_subprocess_run": true,
+    "fixed_dpkg_argument_vector": [
+      "dpkg-query",
+      "-W",
+      "-f=${db:Status-Abbrev}\\t${Package}\\t${source:Package}\\n"
+    ],
+    "fixed_history_paths": [
+      "src",
+      "evaluation",
+      "scripts",
+      "tests",
+      "results",
+      "outputs"
+    ],
+    "forbidden_network_model_imports": [],
+    "history_worker_cap": 16,
+    "per_candidate_timeout_seconds": 30,
+    "privileged_runtime_field_accesses": [],
+    "process_call_count": 3,
+    "process_calls": [
+      {
+        "line": 84,
+        "method": "run"
+      },
+      {
+        "line": 163,
+        "method": "run"
+      },
+      {
+        "line": 199,
+        "method": "run"
+      }
+    ],
+    "shell_true_lines": [],
+    "whole_selection_wall_ceiling_seconds": 240
+  },
+  "role": "v25241_source_package_selector_clean_build_audit",
+  "runtime_state": {
+    "attempt_and_result_surfaces_pristine": true,
+    "protected_watchers": {
+      "2808901": {
+        "matches_frozen_identity": true,
+        "present": true,
+        "start_ticks": 746680268
+      },
+      "2889939": {
+        "matches_frozen_identity": true,
+        "present": true,
+        "start_ticks": 746969965
+      },
+      "3061652": {
+        "matches_frozen_identity": true,
+        "present": true,
+        "start_ticks": 747569004
+      },
+      "795336": {
+        "matches_frozen_identity": true,
+        "present": true,
+        "start_ticks": 713986317
+      }
+    },
+    "shared_api_lease_inactive": true
+  },
+  "tests": {
+    "expected": 60,
+    "observed": 60,
+    "passed": true,
+    "suites": [
+      {
+        "expected": 7,
+        "observed": 7,
+        "output_sha256": "7fa5a5b517b799e621fbeaa450bb91eb03f56db7c0fc66a85f0db1affa84e660",
+        "passed": true,
+        "pattern": "test_audit_v25241_source_package_selector_build.py",
+        "returncode": 0
+      },
+      {
+        "expected": 11,
+        "observed": 11,
+        "output_sha256": "d7abdbad4777c19326f008f87c8f04ac7d1a408989734266ab49d06e73954632",
+        "passed": true,
+        "pattern": "test_freeze_v25240_source_package_shadow_population.py",
+        "returncode": 0
+      },
+      {
+        "expected": 8,
+        "observed": 8,
+        "output_sha256": "f5d871977c23e4e45e3ae1180054b0cfd4a78724d4726c8d3b50aaefafc1af57",
+        "passed": true,
+        "pattern": "test_design_v25239_source_package_shadow_population.py",
+        "returncode": 0
+      },
+      {
+        "expected": 7,
+        "observed": 7,
+        "output_sha256": "84a608a89530e240b6bf838bee64ad599043883f282be2af1d0a986282cc270e",
+        "passed": true,
+        "pattern": "test_audit_v25233_header_totality_shadow_build.py",
+        "returncode": 0
+      },
+      {
+        "expected": 8,
+        "observed": 8,
+        "output_sha256": "407c70d90dd3697d99ebe5b56dbcb0b45e7bca95328701bf54a386d306dbb982",
+        "passed": true,
+        "pattern": "test_v25232_header_totality_shadow_runtime.py",
+        "returncode": 0
+      },
+      {
+        "expected": 12,
+        "observed": 12,
+        "output_sha256": "0f32b3e946572203892c8d2bf19965e1ea6b9dc3b2a541f4b71207074f3add36",
+        "passed": true,
+        "pattern": "test_v25230_index_positional_header_normalizer.py",
+        "returncode": 0
+      },
+      {
+        "expected": 7,
+        "observed": 7,
+        "output_sha256": "b9aabad70ec7808d9f5b811b4968290e31265d9d4738cb605a45dd0b788ef218",
+        "passed": true,
+        "pattern": "test_audit_v25231_header_totality_build.py",
+        "returncode": 0
+      }
+    ]
+  },
+  "untracked_sources": []
+}
