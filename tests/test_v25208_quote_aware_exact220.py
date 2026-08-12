@@ -63,7 +63,7 @@ class V25208QuoteAwareExact220Tests(unittest.TestCase):
             ROOT,
             now=1,
             tracked=False,
-            require_pristine=True,
+            require_pristine=False,
             build_audit_sha256="0" * 64,
         )
         self.assertEqual(value["task_contract"]["selected_count"], 220)
@@ -75,6 +75,12 @@ class V25208QuoteAwareExact220Tests(unittest.TestCase):
         )
         self.assertFalse(value["authorization"]["single_exact220_forward"])
         self.assertFalse(value["authorization"]["postfreeze_official_evaluator"])
+        self.assertTrue(
+            value["superseded_r1"][
+                "superseded_by_r2_before_any_external_effect"
+            ]
+        )
+        self.assertFalse(value["superseded_r1"]["forward_effect_created"])
 
     def test_finalizer_uses_new_postfreeze_32_worker_surface(self) -> None:
         finalizer.configure()

@@ -21,22 +21,22 @@ from . import v25206_cran_dcf_quality_contract as quality_parent
 
 
 DATE = "20260812"
-PROTOCOL_ID = "v25208_quote_aware_keyless_exact220_v1"
-BUILD_AUDIT = Path(f"results/v25208_quote_aware_exact220_build_audit_v1_{DATE}.json")
-PROTOCOL = Path(f"results/v25208_quote_aware_exact220_preregistration_v1_{DATE}.json")
-PREAUDIT = Path(f"results/v25208_quote_aware_exact220_preactivation_audit_v1_{DATE}.json")
-EXECUTION_START = Path(f"results/v25208_quote_aware_exact220_execution_start_v1_{DATE}.json")
-FORWARD_RESULT = Path(f"results/v25208_quote_aware_exact220_forward_result_v1_{DATE}.json")
-FORWARD_AUDIT = Path(f"results/v25208_quote_aware_exact220_forward_audit_v1_{DATE}.json")
+PROTOCOL_ID = "v25208_quote_aware_keyless_exact220_r2"
+BUILD_AUDIT = Path(f"results/v25208_quote_aware_exact220_build_audit_r2_{DATE}.json")
+PROTOCOL = Path(f"results/v25208_quote_aware_exact220_preregistration_r2_{DATE}.json")
+PREAUDIT = Path(f"results/v25208_quote_aware_exact220_preactivation_audit_r2_{DATE}.json")
+EXECUTION_START = Path(f"results/v25208_quote_aware_exact220_execution_start_r2_{DATE}.json")
+FORWARD_RESULT = Path(f"results/v25208_quote_aware_exact220_forward_result_r2_{DATE}.json")
+FORWARD_AUDIT = Path(f"results/v25208_quote_aware_exact220_forward_audit_r2_{DATE}.json")
 EVALUATOR_PROTOCOL = Path(
-    f"results/v25208_quote_aware_exact220_evaluator_preregistration_v1_{DATE}.json"
+    f"results/v25208_quote_aware_exact220_evaluator_preregistration_r2_{DATE}.json"
 )
-RESULT = Path(f"results/v25208_quote_aware_exact220_result_v1_{DATE}.json")
+RESULT = Path(f"results/v25208_quote_aware_exact220_result_r2_{DATE}.json")
 POSTAUDIT = Path(
-    f"results/v25208_quote_aware_exact220_postresult_audit_v1_{DATE}.json"
+    f"results/v25208_quote_aware_exact220_postresult_audit_r2_{DATE}.json"
 )
 
-OUTPUT_ROOT = Path(f"outputs/v25208_quote_aware_exact220_v1_{DATE}")
+OUTPUT_ROOT = Path(f"outputs/v25208_quote_aware_exact220_r2_{DATE}")
 MODEL_SLOT_DIRECTORY = OUTPUT_ROOT / "model_slots"
 TASK_ROWS = OUTPUT_ROOT / "frozen_task_results.jsonl"
 RUNTIME_RESULTS = TASK_ROWS
@@ -73,6 +73,28 @@ PARENT_RECOVERY_AUDIT = Path(
 PARENT_RECOVERY_AUDIT_SHA256 = (
     "fe71ec6417a9ce9cf7bb6a6eee3a1f995c771ebb2130f34a63c3419f33d99b67"
 )
+SUPERSEDED_BUILD_AUDIT = Path(
+    f"results/v25208_quote_aware_exact220_build_audit_v1_{DATE}.json"
+)
+SUPERSEDED_BUILD_AUDIT_SHA256 = (
+    "3647b9007a070b5b514714933c831a0518c61bbc8bcc88bf3a72155ab6323126"
+)
+SUPERSEDED_PROTOCOL = Path(
+    f"results/v25208_quote_aware_exact220_preregistration_v1_{DATE}.json"
+)
+SUPERSEDED_PROTOCOL_SHA256 = (
+    "8fe49a69211f72fc784c004a62d7c795e9f8cdd0e06877121cd84e6d54263744"
+)
+SUPERSEDED_PREAUDIT = Path(
+    f"results/v25208_quote_aware_exact220_preactivation_audit_v1_{DATE}.json"
+)
+SUPERSEDED_EXECUTION_START = Path(
+    f"results/v25208_quote_aware_exact220_execution_start_v1_{DATE}.json"
+)
+SUPERSEDED_FORWARD_RESULT = Path(
+    f"results/v25208_quote_aware_exact220_forward_result_v1_{DATE}.json"
+)
+SUPERSEDED_OUTPUT_ROOT = Path(f"outputs/v25208_quote_aware_exact220_v1_{DATE}")
 BASELINE_RESULT = Path("results/v24857_pacing_aware_exact220_result_v1_20260808.json")
 LATEST_COMPLETE_RESULT = Path(
     "results/v25132_v25130_terminal_summary_exact220_result_v1_20260811.json"
@@ -83,9 +105,9 @@ SELECTED_COUNT = TASK_COUNT
 EXECUTOR_CONCURRENCY = 40
 MODEL_SLOT_CAP = 16
 LEASE_PATH = quality_parent.LEASE_PATH
-LEASE_OWNER = "v25208_quote_aware_exact220_forward_v1"
+LEASE_OWNER = "v25208_quote_aware_exact220_forward_r2"
 LEASE_PURPOSE = "single_label_blind_quote_aware_exact220"
-EVALUATOR_OWNER = "v25208_quote_aware_exact220_evaluator_v1"
+EVALUATOR_OWNER = "v25208_quote_aware_exact220_evaluator_r2"
 EVALUATOR_PURPOSE = "postfreeze_fixed_partition_parallel_v25208_exact220"
 MODEL = copy.deepcopy(quality_parent.MODEL)
 SEARCH = copy.deepcopy(quality_parent.SEARCH)
@@ -238,6 +260,53 @@ def quality_parent_receipt(root: Path, *, tracked: bool) -> dict[str, Any]:
     }
 
 
+def superseded_r1_receipt(root: Path, *, tracked: bool) -> dict[str, Any]:
+    build_path = ordinary(root, SUPERSEDED_BUILD_AUDIT, tracked=tracked)
+    protocol_path = ordinary(root, SUPERSEDED_PROTOCOL, tracked=tracked)
+    build = json.loads(build_path.read_text(encoding="utf-8"))
+    protocol = json.loads(protocol_path.read_text(encoding="utf-8"))
+    effect_surfaces = (
+        SUPERSEDED_PREAUDIT,
+        SUPERSEDED_EXECUTION_START,
+        SUPERSEDED_FORWARD_RESULT,
+        SUPERSEDED_OUTPUT_ROOT,
+    )
+    if (
+        sha256(build_path) != SUPERSEDED_BUILD_AUDIT_SHA256
+        or sha256(protocol_path) != SUPERSEDED_PROTOCOL_SHA256
+        or build.get("role") != "v25208_quote_aware_exact220_build_audit"
+        or build.get("audit_valid") is not True
+        or build.get("findings") != []
+        or not sealed(build, "audit_payload_sha256")
+        or protocol.get("role") != "v25208_quote_aware_exact220_preregistration"
+        or protocol.get("protocol_id") != "v25208_quote_aware_keyless_exact220_v1"
+        or protocol.get("authorization", {}).get("single_exact220_forward")
+        is not False
+        or protocol.get("authorization", {}).get("postfreeze_official_evaluator")
+        is not False
+        or not sealed(protocol, "protocol_payload_sha256")
+        or any((root / path).exists() or (root / path).is_symlink() for path in effect_surfaces)
+    ):
+        raise RuntimeError("V2.52.08 superseded R1 disposition drifted")
+    return {
+        "build_audit": {
+            "path": str(SUPERSEDED_BUILD_AUDIT),
+            "sha256": SUPERSEDED_BUILD_AUDIT_SHA256,
+        },
+        "protocol": {
+            "path": str(SUPERSEDED_PROTOCOL),
+            "sha256": SUPERSEDED_PROTOCOL_SHA256,
+        },
+        "failure_stage": "preactivation_stage_sensitive_self_test",
+        "preactivation_audit_created": False,
+        "execution_start_created": False,
+        "forward_effect_created": False,
+        "output_root_created": False,
+        "retry_resume_or_selective_rerun": False,
+        "superseded_by_r2_before_any_external_effect": True,
+    }
+
+
 def _module_candidates(relative: Path, node: ast.AST) -> list[Path]:
     return task_parent._module_candidates(relative, node)
 
@@ -271,6 +340,8 @@ def dependency_manifest(root: Path, *, tracked: bool) -> dict[str, str]:
         PARENT_QUALITY_AUDIT,
         PARENT_BUILD_AUDIT,
         PARENT_RECOVERY_AUDIT,
+        SUPERSEDED_BUILD_AUDIT,
+        SUPERSEDED_PROTOCOL,
     }
     output: dict[str, str] = {}
     for relative in sorted(relatives, key=str):
@@ -326,6 +397,7 @@ def build_protocol(
         },
         "input_bindings": task_parent._input_bindings(root),
         "parent_quality_gate": quality_parent_receipt(root, tracked=tracked),
+        "superseded_r1": superseded_r1_receipt(root, tracked=tracked),
         "execution": {
             "arms": list(ARMS),
             "only_treatment": "same_raw_v25206_validated_quote_aware_production_export",
@@ -383,6 +455,7 @@ __all__ = [name for name in globals() if name.isupper()] + [
     "sealed",
     "sha256",
     "source_policy",
+    "superseded_r1_receipt",
     "task_vector",
     "validate_protocol",
     "watcher_snapshot",

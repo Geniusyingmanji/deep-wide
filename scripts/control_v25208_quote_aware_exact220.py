@@ -431,6 +431,9 @@ def build_audit(
     )
     policy = contract.source_policy()
     quality = contract.quality_parent_receipt(ROOT, tracked=require_clean)
+    superseded = contract.superseded_r1_receipt(
+        ROOT, tracked=require_clean
+    )
     expected_manifest = {
         *(str(path) for path in contract.forward_dependency_closure(ROOT)),
         str(contract.CONTROL),
@@ -440,11 +443,21 @@ def build_audit(
         str(contract.PARENT_QUALITY_AUDIT),
         str(contract.PARENT_BUILD_AUDIT),
         str(contract.PARENT_RECOVERY_AUDIT),
+        str(contract.SUPERSEDED_BUILD_AUDIT),
+        str(contract.SUPERSEDED_PROTOCOL),
     }
     checks = {
         "v25206_quality_go_parent_bound": quality["quality_gate_go"] is True
         and quality["candidate_exact_successes"] == 19
         and quality["control_exact_successes"] == 0,
+        "superseded_r1_has_no_external_effect": superseded[
+            "superseded_by_r2_before_any_external_effect"
+        ]
+        is True
+        and superseded["preactivation_audit_created"] is False
+        and superseded["execution_start_created"] is False
+        and superseded["forward_effect_created"] is False
+        and superseded["output_root_created"] is False,
         "public_exact220_task_vector_bound": len(tasks) == 220
         and len({task["opaque_id"] for task in tasks}) == 220,
         "visible_schema_or_conservative_unknown_fallback_total": len(schemas) == 220
