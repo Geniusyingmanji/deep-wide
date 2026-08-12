@@ -3872,3 +3872,8 @@ V2.43.73 build-only audit 已冻结：93/93 tests，通过；runtime privileged-
 2. 新envelope逐字绑定冻结父result；production/final prediction、hash、prediction kind、cost、sparse result与V2.51.58 receipt必须完全相同。observer成功时其page/block/identity-bound/ambiguity/candidate counts必须与父receipt逐项一致；observer失败只记录异常类型并继续父路径，不能触发fallback或覆盖prediction。
 3. no-gain任务仍3次model forward且observer不进入；verified-gain任务仍最多4次model forward。query/fetch/model/context/token/wall cap不变，entropy/IG signed credit保持0。当前严格build-only，不授权fresh protocol、旧V2.51.60人口回放、evaluator或DeepWideBench。
 4. V2.51.66 clean-build audit须绑定V2.51.64权威audit并覆盖observed runtime、observer、诊断与全部父链165项测试；依赖闭包的privileged/evaluator/credential finding必须全空。audit只能授权implementation build-only，fresh observer protocol仍需另一项独立授权，binding policy、旧人口effect和公开220保持禁止。
+
+### V2.51.67：fresh observed-vertical population freeze（selection-only，2026-08-12 UTC）
+
+1. 下一observer gate固定另一组20个CRAN identity，必须在选择父提交的限定Git历史中20/20零引入，并与V2.51.41/45/49/53/57/60 population全部不重叠。selection只做本地Git历史扫描，不访问endpoint、page、model、search、evaluator、credential或benchmark。
+2. artifact只保留ordered identity vector hash、总数和zero-hit计数，不保存identity明文、逐项hash或clue mapping。该冻结不授权protocol、activation、binding policy change、evaluator或DeepWideBench；entropy/IG signed credit仍为0。
