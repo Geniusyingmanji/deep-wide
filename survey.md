@@ -1,5 +1,15 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
+## 2026-08-12 实验更新：用三层无内容观察器区分 source 缺失与 projection 损失
+
+V2.51.54留下的关键不可识别性是：candidate extractor看到0条record，并不能说明原始网页没有结构。当前production fetch先在`AzureNativeSearchClient._fetch_url`中把HTML转成可见纯文本，之后V2.49.84再把最多3M字符的decoded text投影到5k；旧receipt只从projector邻域开始，无法看到HTML table、definition list或JSON-LD是否曾经存在。因此继续增加text grammar会把source selection、HTML extraction与bounded projection三个故障域混在一起。
+
+V2.51.55把诊断面放进同一次bounded fetch，但不改变evidence。纯observer分别计算decoded raw HTML、HTML-to-text extracted text和5k projected text的结构事件：raw层含table/row/cell、definition-list与JSON-LD；text层含pipe rows、key-value pipes、JSON object lines、label-value blocks及相邻等宽pipe rows。receipt只保留计数和`raw→extracted`、`extracted→projected`的structure-loss/retention布尔，不保留page identity、URL、题面、label/value、正文、prediction或semantic content hash。新append-only helper/client承载该receipt；旧V2.49.81 helper协议不改，native fetch默认不开observer时返回schema也不变。
+
+这个分解给出可操作的三叉决策。若fresh页面在raw层结构就是0，下一候选应改search/source selection；若raw非零而extracted归零，应修HTML/structured-data extraction；若extracted非零而projected归零，应修provenance-preserving projection；只有projected仍有结构而extractor为0，才有证据扩record grammar。结构事件本身不是可信事实、不是可采纳observation，也不应进入运行时route。当前63/63专项和父链测试通过，dry-run依赖闭包审计无label/evaluator/credential finding，但尚无真实页面运行或quality结论。
+
+对entropy credit assignment，这个observer只提供“信息可能在哪一层被丢弃”的机制诊断，不能获得正credit。table数量、JSON-LD存在、pipe retention或避免structure loss都不自动降低关于答案的校准熵；结构可能是导航、旧版本、无关实体或恶意内容。正signed credit仍要求结构经过source/identity/field/value admissibility，再用matched intervention产生可归因prediction change和post-freeze outer utility。V2.51.55当前只授权build与未来fresh结构定位门，不授权evaluator、DeepWideBench或SOTA主张。
+
 ## 2026-08-12 实验更新：generic grammar 仍零召回，下一步改查投影层结构损失
 
 V2.51.53把V2.51.51新增的四类通用record语法放到另一组fresh/disjoint CRAN package-description任务上，与原有atomic-bound JSON和pipe-table合计六类。唯一20题forward全部terminal且由模型生成，0 fallback，耗时`52.937635s`；总计`80 query / 214 fetch / 62 model forwards / 830,367 tokens`。只有2题产生same-forward verified gain、合计3个增量页，低于预注册的4题下界；18题走本地identity replay。两次selector调用、strict JSON解析和空projection均正常，但六类grammar observation、raw/preverified/available/supplied/selected/applied candidate及prediction change全部为0。机制门因此失败三项，严格NO-GO；没有创建evaluator、gold或quality result，也没有DeepWideBench新分数。[`results/v25153_generic_record_candidate_external_forward_result_v1_20260812.json`](results/v25153_generic_record_candidate_external_forward_result_v1_20260812.json)与[`results/v25153_generic_record_candidate_external_forward_audit_v1_20260812.json`](results/v25153_generic_record_candidate_external_forward_audit_v1_20260812.json)是权威工件。

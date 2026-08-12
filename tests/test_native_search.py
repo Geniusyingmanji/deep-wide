@@ -287,6 +287,54 @@ class NativeSearchTests(unittest.TestCase):
             "https://example.com/about/",
         )
 
+    def test_fetch_structure_observer_receives_raw_html_and_extracted_text(self) -> None:
+        response = Mock()
+        response.status_code = 200
+        response.headers = {"Content-Type": "text/html; charset=utf-8"}
+        response.encoding = "utf-8"
+        raw = b"<html><body><table><tr><td>A:</td><td>B</td></tr></table></body></html>"
+        response.iter_content.return_value = [raw]
+        response.close = Mock()
+        session = Mock()
+        session.get.return_value = response
+        observed: list[tuple[str, str]] = []
+
+        def observer(raw_markup: str, extracted_text: str) -> dict:
+            observed.append((raw_markup, extracted_text))
+            return {"content_free": True}
+
+        client = self.client(content_free_structure_observer=observer)
+        client._thread_local.session = session
+        with patch(
+            "deepwide_agent.native_search._public_http_url",
+            return_value=(True, "ok"),
+        ):
+            result = client._fetch_url("https://example.com/structure/")
+        self.assertEqual(len(observed), 1)
+        self.assertEqual(observed[0][0], raw.decode())
+        self.assertEqual(observed[0][1], "A: | B")
+        self.assertEqual(
+            result["content_free_structure_receipt"], {"content_free": True}
+        )
+
+    def test_default_fetch_result_schema_is_unchanged_without_observer(self) -> None:
+        response = Mock()
+        response.status_code = 200
+        response.headers = {"Content-Type": "text/html; charset=utf-8"}
+        response.encoding = "utf-8"
+        response.iter_content.return_value = [b"<html><body>page body</body></html>"]
+        response.close = Mock()
+        session = Mock()
+        session.get.return_value = response
+        client = self.client()
+        client._thread_local.session = session
+        with patch(
+            "deepwide_agent.native_search._public_http_url",
+            return_value=(True, "ok"),
+        ):
+            result = client._fetch_url("https://example.com/default/")
+        self.assertEqual(set(result), {"status", "url", "title", "text", "links"})
+
     def test_page_enrichment_uses_exact_fetch_url_but_stores_canonical_url(self) -> None:
         client = self.client()
         client.fetch_pages = True

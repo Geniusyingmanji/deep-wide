@@ -440,6 +440,7 @@ class AzureNativeSearchClient:
         fetch_timeout: int = 45,
         max_page_bytes: int = 3_000_000,
         max_page_chars: int = 80_000,
+        content_free_structure_observer: Any | None = None,
     ) -> None:
         if batch_size <= 0:
             raise ValueError("batch_size must be positive")
@@ -460,6 +461,11 @@ class AzureNativeSearchClient:
         self.fetch_timeout = fetch_timeout
         self.max_page_bytes = max_page_bytes
         self.max_page_chars = max_page_chars
+        if content_free_structure_observer is not None and not callable(
+            content_free_structure_observer
+        ):
+            raise TypeError("content_free_structure_observer must be callable")
+        self._content_free_structure_observer = content_free_structure_observer
         self.calls = 0
         self.failures = 0
         self.tool_calls = 0
@@ -731,6 +737,7 @@ Do this once for every supplied query. Do not add an introduction or conclusion.
                 title = ""
                 text = ""
                 links: list[dict[str, str]] = []
+                decoded_markup = ""
                 if raw.startswith(b"%PDF") or content_type == "application/pdf":
                     try:
                         converted = subprocess.run(
@@ -750,22 +757,31 @@ Do this once for every supplied query. Do not add an introduction or conclusion.
                 ):
                     decoded = decode_web_text(raw, encoding)
                     if "html" in content_type or re.search(r"<html\b|<!doctype\s+html", decoded[:1000], re.I):
+                        decoded_markup = decoded
                         title, text, links = html_to_document(decoded, current)
                     else:
                         text = decoded
                 text = re.sub(r"\x00+", "", text)
                 text = re.sub(r"[ \t]+\n", "\n", text)
                 text = re.sub(r"\n{4,}", "\n\n", text).strip()[: self.max_page_chars]
+                structure_receipt = None
+                if self._content_free_structure_observer is not None:
+                    structure_receipt = self._content_free_structure_observer(
+                        decoded_markup, text
+                    )
                 if not text:
                     self._increment("fetch_failures")
                     return {"status": "empty_extraction", "url": current, "title": title, "text": ""}
-                return {
+                output = {
                     "status": "ok",
                     "url": current,
                     "title": title,
                     "text": text,
                     "links": links,
                 }
+                if structure_receipt is not None:
+                    output["content_free_structure_receipt"] = structure_receipt
+                return output
             except (requests.ConnectionError, requests.Timeout, OSError):
                 self._increment("fetch_failures")
                 return {"status": "transport_error", "url": current, "title": "", "text": ""}
