@@ -1,0 +1,99 @@
+INFO: Pandarallel will run on 8 workers.
+INFO: Pandarallel will use Memory file system to transfer data between the main process and workers.
+{"event": "eval_start", "selected": 7, "resume_committed": 0, "committed_errors": 0, "crash_only_resume": false}
+2026-08-12 23:13:28.613 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 作品名字 | 上映时间 | 作品类型 | 扮演者 |
+| --- | --- | --- | --- |
+| 孔夫子 |  ...
+2026-08-12 23:13:32.116 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "孔夫子": "《孔夫子》",
+  "孔子": "《孔子》",
+  "孔子春秋": "《孔子春秋》"
+}
+```
+2026-08-12 23:13:32.117 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 作品名字, primary_key_map {'孔夫子': '《孔夫子》', '孔子': '《孔子》', '孔子春秋': '《孔子春秋》'}
+2026-08-12 23:13:32.241 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_34_孔子, df_inner shape: (3, 8), answer_df shape: (5, 4), response_df shape: (3, 5)
+2026-08-12 23:13:32.245 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 1940-08-01 00:00:00, target: 1986-08-12 00:00:00
+2026-08-12 23:13:32.247 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 1991-08-01 00:00:00, target: 2041-08-12 00:00:00
+2026-08-12 23:13:32.249 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 2011-07-25 00:00:00, target: 2012-08-15 00:00:00
+2026-08-12 23:13:32.250 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_34_孔子, col 上映时间, metric_func_name date_near, score [0.0, 0.0, 0.0]
+2026-08-12 23:13:35.120 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_34_孔子, col 作品类型, metric_func_name llm_judge, score [1, 0, 1]
+2026-08-12 23:13:38.430 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_34_孔子, col 扮演者, metric_func_name llm_judge, score [1, 0, 1]
+2026-08-12 23:13:38.437 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_34_孔子, P/R/F1 by unique_columns: 1.0000/0.6000/0.7500
+2026-08-12 23:13:38.437 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_34_孔子, P/R/F1 by row: 0.0000/0.0000/0.0000
+2026-08-12 23:13:38.437 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_34_孔子, P/R/F1 by item: 0.5833/0.3500/0.4375
+2026-08-12 23:13:38.439 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_34_孔子, final table score: 0.0
+{"event": "eval_done", "idx": 1, "instance_id": "deep2wide_result_34_孔子", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0, "f1_by_item": 0.4375, "column_f1": 0.7499999999999999, "error": null, "elapsed_seconds": 12.854, "running_n": 1}
+2026-08-12 23:13:42.141 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 歌曲名字 | 发行时间 | 作曲 |
+| --- | --- | --- |
+| Don't you wanna see  ...
+2026-08-12 23:13:46.148 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "花篝り": "花篝",
+  "I still believe 〜ため息〜": "I still believe～叹息～",
+  "TAKE ME TAKE ME": "TAKE ME TAKE ME"
+}
+```
+2026-08-12 23:13:46.148 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 歌曲名字, primary_key_map {'花篝り': '花篝', 'I still believe 〜ため息〜': 'I still believe～叹息～', 'TAKE ME TAKE ME': 'TAKE ME TAKE ME'}
+2026-08-12 23:13:48.256 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_35_滴草由实, df_inner shape: (3, 6), answer_df shape: (4, 3), response_df shape: (8, 4)
+2026-08-12 23:13:48.308 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 2007-05-30, target: 39232
+2026-08-12 23:13:48.360 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 2005-02-09, target: 38777
+2026-08-12 23:13:48.411 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 2003-08-06, target: 37889
+2026-08-12 23:13:48.412 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_35_滴草由实, col 发行时间, metric_func_name date_near, score [0.0, 0.0, 0.0]
+2026-08-12 23:13:52.138 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_35_滴草由实, col 作曲, metric_func_name llm_judge, score [1, 1, 0]
+2026-08-12 23:13:52.142 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_35_滴草由实, P/R/F1 by unique_columns: 0.3750/0.7500/0.5000
+2026-08-12 23:13:52.142 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_35_滴草由实, P/R/F1 by row: 0.0000/0.0000/0.0000
+2026-08-12 23:13:52.142 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_35_滴草由实, P/R/F1 by item: 0.2083/0.4167/0.2778
+2026-08-12 23:13:52.143 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_35_滴草由实, final table score: 0.0
+{"event": "eval_done", "idx": 2, "instance_id": "deep2wide_result_35_滴草由实", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0, "f1_by_item": 0.2777777777777778, "column_f1": 0.5, "error": null, "elapsed_seconds": 13.688, "running_n": 2}
+2026-08-12 23:13:57.333 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 姓名 | 籍贯 | 作品名称 | 发表时间 | 颁奖嘉宾 |
+| --- | --- | --- | --- | ---  ...
+2026-08-12 23:14:00.289 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "贾平凹": "贾平凹",
+  "迟子建": "迟子建",
+  "周大新": "周大新",
+  "麦家": "麦家"
+}
+```
+2026-08-12 23:14:00.289 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 姓名, primary_key_map {'贾平凹': '贾平凹', '迟子建': '迟子建', '周大新': '周大新', '麦家': '麦家'}
+2026-08-12 23:14:00.305 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_36_第七届茅盾文学奖, df_inner shape: (4, 10), answer_df shape: (4, 5), response_df shape: (4, 6)
+2026-08-12 23:14:07.790 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_36_第七届茅盾文学奖, col 籍贯, metric_func_name llm_judge, score [1, 0, 0, 1]
+2026-08-12 23:14:10.432 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_36_第七届茅盾文学奖, col 作品名称, metric_func_name llm_judge, score [1, 1, 1, 1]
+2026-08-12 23:14:10.436 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 2005-08-01 00:00:00, target: 2012-08-21 00:00:00
+2026-08-12 23:14:10.438 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 2005-08-01 00:00:00, target: 2012-08-21 00:00:00
+2026-08-12 23:14:10.440 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 2003-08-01 00:00:00, target: 2012-08-20 00:00:00
+2026-08-12 23:14:10.442 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 2006-08-01 00:00:00, target: 2012-08-20 00:00:00
+2026-08-12 23:14:10.443 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_36_第七届茅盾文学奖, col 发表时间, metric_func_name date_near, score [0.0, 0.0, 0.0, 0.0]
+2026-08-12 23:14:14.934 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_36_第七届茅盾文学奖, col 颁奖嘉宾, metric_func_name llm_judge, score [0, 0, 0, 0]
+2026-08-12 23:14:14.940 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_36_第七届茅盾文学奖, P/R/F1 by unique_columns: 1.0000/1.0000/1.0000
+2026-08-12 23:14:14.940 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_36_第七届茅盾文学奖, P/R/F1 by row: 0.0000/0.0000/0.0000
+2026-08-12 23:14:14.940 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_36_第七届茅盾文学奖, P/R/F1 by item: 0.5000/0.5000/0.5000
+2026-08-12 23:14:14.941 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_36_第七届茅盾文学奖, final table score: 0.0
+{"event": "eval_done", "idx": 3, "instance_id": "deep2wide_result_36_第七届茅盾文学奖", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0, "f1_by_item": 0.5, "column_f1": 1.0, "error": null, "elapsed_seconds": 22.776, "running_n": 3}
+2026-08-12 23:14:17.536 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 姓名 | 出生日期 | 籍贯 |
+| --- | --- | --- |
+| 王国京 | -, 1945 | 安徽省池州市 ...
+2026-08-12 23:14:19.285 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "谭学朝": "谭学朝"
+}
+```
+2026-08-12 23:14:19.285 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 姓名, primary_key_map {'谭学朝': '谭学朝'}
+2026-08-12 23:14:19.397 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_38_傩戏, df_inner shape: (1, 6), answer_df shape: (5, 3), response_df shape: (8, 4)
+2026-08-12 23:14:19.492 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not convertable, response: 1944-08-01, target: 100-08-12
+2026-08-12 23:14:19.493 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_38_傩戏, col 出生日期, metric_func_name date_near, score [0.0]
+2026-08-12 23:14:22.575 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_38_傩戏, col 籍贯, metric_func_name llm_judge, score [0]
+2026-08-12 23:14:22.579 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_38_傩戏, P/R/F1 by unique_columns: 0.1250/0.2000/0.1538
+2026-08-12 23:14:22.579 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_38_傩戏, P/R/F1 by row: 0.0000/0.0000/0.0000
+2026-08-12 23:14:22.579 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_38_傩戏, P/R/F1 by item: 0.0417/0.0667/0.0513
+2026-08-12 23:14:22.580 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_38_傩戏, final table score: 0.0
+{"event": "eval_done", "idx": 4, "instance_id": "deep2wide_result_38_傩戏", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0, "f1_by_item": 0.05128205128205127, "column_f1": 0.15384615384615385, "error": null, "elapsed_seconds": 7.62, "running_n": 4}
+{"event": "eval_done", "idx": 5, "instance_id": "deep2wide_result_41_英国", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 3.384, "running_n": 5}
+{"event": "eval_done", "idx": 6, "instance_id": "deep2wide_result_45_着色性干皮病", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 1.003, "running_n": 6}
+{"event": "eval_done", "idx": 7, "instance_id": "deep2wide_result_47_阿莫西林", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.64, "running_n": 7}
+SUMMARY {"n": 7, "valid_n": 7, "errors": 0, "complete": true, "judge_calls_current_process": 18, "score": 0.0, "entity_acc": 0.5714285714285714, "precision_by_row": 0.0, "recall_by_row": 0.0, "f1_by_row": 0.0, "precision_by_item": 0.1904761904761905, "recall_by_item": 0.19047619047619047, "f1_by_item": 0.18093711843711843, "column_precision": 0.35714285714285715, "column_recall": 0.36428571428571427, "column_f1": 0.3434065934065934}

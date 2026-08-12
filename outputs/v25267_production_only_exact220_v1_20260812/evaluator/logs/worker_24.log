@@ -1,0 +1,68 @@
+INFO: Pandarallel will run on 8 workers.
+INFO: Pandarallel will use Memory file system to transfer data between the main process and workers.
+{"event": "eval_start", "selected": 7, "resume_committed": 0, "committed_errors": 0, "crash_only_resume": false}
+2026-08-12 23:13:27.696 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 章数 | 章节名称 | 法律条数 |
+| --- | --- | --- |
+| 第一章 | 总则 | 5条 |
+| 第二 ...
+2026-08-12 23:13:27.706 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_72_中华人民共和国治安管理处罚法, df_inner shape: (6, 5), answer_df shape: (6, 3), response_df shape: (7, 3)
+2026-08-12 23:13:31.457 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_72_中华人民共和国治安管理处罚法, col 章节名称, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1]
+2026-08-12 23:13:31.458 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 5.0, target: 9.0
+2026-08-12 23:13:31.458 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 17.0, target: 16.0
+2026-08-12 23:13:31.458 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 54.0, target: 64.0
+2026-08-12 23:13:31.458 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 35.0, target: 41.0
+2026-08-12 23:13:31.458 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 6.0, target: 10.0
+2026-08-12 23:13:31.458 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 2.0, target: 4.0
+2026-08-12 23:13:31.459 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_72_中华人民共和国治安管理处罚法, col 法律条数, metric_func_name number_near, score [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+2026-08-12 23:13:31.465 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_72_中华人民共和国治安管理处罚法, P/R/F1 by unique_columns: 0.8571/1.0000/0.9231
+2026-08-12 23:13:31.465 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_72_中华人民共和国治安管理处罚法, P/R/F1 by row: 0.0000/0.0000/0.0000
+2026-08-12 23:13:31.465 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_72_中华人民共和国治安管理处罚法, P/R/F1 by item: 0.5714/0.6667/0.6154
+2026-08-12 23:13:31.467 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_72_中华人民共和国治安管理处罚法, final table score: 0.0
+{"event": "eval_done", "idx": 1, "instance_id": "deep2wide_result_72_中华人民共和国治安管理处罚法", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0, "f1_by_item": 0.6153846153846153, "column_f1": 0.923076923076923, "error": null, "elapsed_seconds": 5.95, "running_n": 1}
+2026-08-12 23:13:35.261 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| startdate | contractexpirationdate | transfertype | outgoingc ...
+2026-08-12 23:13:36.691 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_81_Amr Zaki, df_inner shape: (3, 13), answer_df shape: (4, 7), response_df shape: (14, 7)
+2026-08-12 23:13:36.695 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 1.0 msg date near, response: 2010-06-30 00:00:00, target: 2010-06-30 00:00:00
+2026-08-12 23:13:36.697 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 2012-06-30 00:00:00, target: 2010-06-30 00:00:00
+2026-08-12 23:13:36.699 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 1.0 msg date near, response: 2007-06-30 00:00:00, target: 2007-06-30 00:00:00
+2026-08-12 23:13:36.700 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_81_Amr Zaki, col contractexpirationdate, metric_func_name date_near, score [1.0, 0.0, 1.0]
+2026-08-12 23:13:36.700 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 租借, target: loan
+2026-08-12 23:13:36.700 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 永久转会, target: transfer
+2026-08-12 23:13:36.700 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 永久转会, target: transfer
+2026-08-12 23:13:36.701 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_81_Amr Zaki, col transfertype, metric_func_name exact_match, score [0.0, 0.0, 0.0]
+2026-08-12 23:13:40.653 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_81_Amr Zaki, col outgoingclub, metric_func_name llm_judge, score [1, 1, 0]
+2026-08-12 23:13:42.411 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_81_Amr Zaki, col incomingclub, metric_func_name llm_judge, score [1, 1, 1]
+2026-08-12 23:13:42.411 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1904.0, target: 1904.0
+2026-08-12 23:13:42.411 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1911.0, target: 1905.0
+2026-08-12 23:13:42.411 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1922.0, target: 1905.0
+2026-08-12 23:13:42.412 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_81_Amr Zaki, col foundingyearoftheincomingclub, metric_func_name number_near, score [1.0, 1.0, 1.0]
+2026-08-12 23:13:45.663 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_81_Amr Zaki, col incomingclub'sregion, metric_func_name llm_judge, score [1, 0, 1]
+2026-08-12 23:13:45.669 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_81_Amr Zaki, P/R/F1 by unique_columns: 0.2143/0.7500/0.3333
+2026-08-12 23:13:45.669 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_81_Amr Zaki, P/R/F1 by row: 0.0000/0.0000/0.0000
+2026-08-12 23:13:45.669 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_81_Amr Zaki, P/R/F1 by item: 0.1531/0.5357/0.2381
+2026-08-12 23:13:45.671 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_81_Amr Zaki, final table score: 0.0
+{"event": "eval_done", "idx": 2, "instance_id": "deep2wide_result_81_Amr Zaki", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0, "f1_by_item": 0.23809523809523814, "column_f1": 0.3333333333333333, "error": null, "elapsed_seconds": 14.184, "running_n": 2}
+{"event": "eval_done", "idx": 3, "instance_id": "deep2wide_result_82_Lush Life", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.803, "running_n": 3}
+{"event": "eval_done", "idx": 4, "instance_id": "deep2wide_result_86_Lillian Karabaic", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.678, "running_n": 4}
+{"event": "eval_done", "idx": 5, "instance_id": "deep2wide_result_87_South Korea", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.914, "running_n": 5}
+{"event": "eval_done", "idx": 6, "instance_id": "deep2wide_result_88_South Pacific", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 1.536, "running_n": 6}
+2026-08-12 23:13:58.456 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| A区地区 | 学校 | 2025年复试分数线 |
+| --- | --- | --- |
+| 北京 | 北京大学 | 36 ...
+2026-08-12 23:14:04.369 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "北京大学": "北京大学"
+}
+```
+2026-08-12 23:14:04.369 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 学校, primary_key_map {'北京大学': '北京大学'}
+2026-08-12 23:14:04.375 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - wide2deep_ws_zh_003, df_inner shape: (1, 6), answer_df shape: (60, 3), response_df shape: (1, 4)
+2026-08-12 23:14:07.329 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_003, col a区地区, metric_func_name llm_judge, score [1]
+2026-08-12 23:14:10.120 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_003, col 2025年复试分数线, metric_func_name llm_judge, score [1]
+2026-08-12 23:14:10.124 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - wide2deep_ws_zh_003, P/R/F1 by unique_columns: 1.0000/0.0167/0.0328
+2026-08-12 23:14:10.125 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - wide2deep_ws_zh_003, P/R/F1 by row: 1.0000/0.0167/0.0328
+2026-08-12 23:14:10.125 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - wide2deep_ws_zh_003, P/R/F1 by item: 1.0000/0.0167/0.0328
+2026-08-12 23:14:10.125 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - wide2deep_ws_zh_003, final table score: 0.0
+{"event": "eval_done", "idx": 7, "instance_id": "wide2deep_ws_zh_003", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.03278688524590164, "f1_by_item": 0.03278688524590164, "column_f1": 0.03278688524590164, "error": null, "elapsed_seconds": 14.391, "running_n": 7}
+SUMMARY {"n": 7, "valid_n": 7, "errors": 0, "complete": true, "judge_calls_current_process": 14, "score": 0.0, "entity_acc": 0.42857142857142855, "precision_by_row": 0.14285714285714285, "recall_by_row": 0.0023809523809523807, "f1_by_row": 0.00468384074941452, "precision_by_item": 0.24635568513119535, "recall_by_item": 0.17414965986394557, "f1_by_item": 0.1266095341036793, "column_precision": 0.2959183673469387, "column_recall": 0.2523809523809524, "column_f1": 0.184171020236594}
