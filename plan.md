@@ -1,5 +1,21 @@
 # OWIC-DeepWide 研究与实施计划
 
+> 版本：6.109
+>
+> **6.109 V2.52.65–70 production-only 完整220、严格NO-GO与 post-effect totality 定位（2026-08-12）：V2.52.65只把第一份validated sparse production作为最终prediction；继承的第二synthesis入口只做本地identity replay，revision provider调用恒为0，quote/header/vertical treatment均未带回。V2.52.67按真实前置物理上限`4 query / 14 fetch / 4 model`、40 executor、16 model slot执行唯一一次固定公开220；runtime只接收`{opaque_id, question, same-forward public pages}`，mapping/gold/category/question-type/split/score/evaluator在220份prediction全部冻结并推送forward audit前保持关闭。**
+>
+> **唯一forward在`545.188219s`得到220/220 terminal prediction：209 runtime-completed、11 failure-as-zero，202 model-generated、18 total fallback；物理effect为`880 query / 2212 fetch / 657 model`，单题最大`4/14/3`、budget rejection=0，总token=`13,196,934`。固定32个连续分区随后对每份冻结prediction exactly once评测，214 valid、6 evaluator error固定按零、并行墙钟`221.910477s`。all-220为Exact `5/220=2.2727%`、Entity `0.640909091`、Row/Item/Column F1 `0.193782845/0.356198019/0.438423261`、Composite `0.407328304`。相对V2.52.08 Exact持平、Composite `+0.008659104`；相对V2.49.69 Composite `-0.022897357`；相对单轮峰值V2.48.57为Exact `-4`、Composite `-0.049920674`。所以本轮严格NO-GO，不是项目最佳、Avg@4、leaderboard或SOTA证据。**
+>
+> **evaluator冻结与post-result audit分别以`28df6adc / f34720d8`推送；审计固定220分母、32 worker全零returncode、6 error terminal-zero、无选择性重评、lease释放、forward/evaluator进程为0、四个protected watcher identity未变，`audit_valid=true / findings=[]`。权威结果与审计为[`results/v25267_production_only_exact220_result_v1_20260812.json`](results/v25267_production_only_exact220_result_v1_20260812.json)和[`results/v25267_production_only_exact220_postresult_audit_v1_20260812.json`](results/v25267_production_only_exact220_postresult_audit_v1_20260812.json)。本人口永久封存：不得retry/resume/replay/backfill、换题、选择性重跑或重评。**
+>
+> **V2.52.70随后只用lexical JSON boundary解码有限runtime flags/exception types与密封stage、budget、health、effect、production receipt；task identity/question/query/page/prediction/answer、mapping/gold/category/split、evaluator文件与逐题correctness均未物化。匿名聚合把18个fallback拆为11个outer failure与7个runtime-completed production fallback：11个outer failure全为`sparse_production:ValueError`，11/11模型请求全部成功、10/11已有3次模型成功、9/11 health全零，effect signature为`9×q4/f10/m3 + 1×q4/f11/m3 + 1×q4/f10/m1`；因此主因是post-effect内部envelope/validation totality，不是搜索慢、预算拒绝或模型transport。7个completed fallback均为`q4/f10/m3`，其中production为`5×ValueError + 2×ModelRequestError`；它们是独立的parser/provider totality问题。19个health event分布在18题，其中13题仍model-generated，不能把health event数当失败题数。代码/测试8/8与冻结工件以`20056d65 / 76f228b1`推送，权威诊断为[`results/v25270_v25267_production_only_reliability_diagnosis_v1_20260812.json`](results/v25270_v25267_production_only_reliability_diagnosis_v1_20260812.json)。**
+>
+> **下一步权限仅为append-only synthetic build：在production normalizer成功后建立独立validated-production checkpoint，并把`sparse_production`细分为有限microstage；只有checkpoint后发生的parent/envelope辅助失败才可丢弃失效父envelope并原样保留已独立验证的production table，checkpoint前失败仍只允许visible-schema Unknown fallback。必须证明正常路径prediction/cost/effect byte-identical、checkpoint/receipt篡改fail closed、无label/evaluator/network能力，并通过全新benchmark-external population的totality gate后，才可设计新的quality gate。当前不授权新公开220；entropy/IG仍只作shadow/VOC，signed credit=0。**
+>
+> **DeepWideBench当前口径：最新完整V2.52.67=`5/220 / Composite 0.407328`；项目单轮观测峰值V2.48.57=`9/220 / 0.457249`，但冷复制V2.49.69仅`5/220 / 0.430226`，峰值未稳定复现。无Avg@4、leaderboard或SOTA证据。四个protected watcher identity未变，共享lease已释放。**
+>
+> **阅读规则：本文件append-only；顶部6.109覆盖6.108及后文所有较早的当前权限、下一步、容量、预算与分数口径。**
+
 > 版本：6.108
 >
 > **6.108 V2.52.44–54 fresh64 shadow、撤销安全链、真实预算口径与机制NO-GO（2026-08-12）：V2.52.44 build/protocol/preaudit/start虽完整冻结，但runner入口exact-schema遗漏合法`git_head`字段；运行在attempt claim、endpoint probe、model/search/fetch/output之前fail closed，旧start永久撤销。V2.52.47 revocation SHA-256=`2d986b23...31be`固定`pre_effect_no_go`、旧claim/result/output全空、禁止retry/reseal/reuse，只授权全新namespace successor。**
