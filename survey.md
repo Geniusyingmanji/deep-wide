@@ -1,5 +1,15 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
+## 2026-08-12 实验更新：observer 零暴露来自上游生成门的完全截断
+
+V2.51.67 在实现、186/186 clean-build、protocol、preactivation 和 execution-start 分阶段推送后，对另一组20个历史零引入 CRAN clue 完成了唯一一次严格 label-blind forward。20/20 题均形成 terminal runtime result，墙钟 `58.337763s`，没有 outer、transport、hard-deadline、fetch-helper 或 model-request failure；实际 effect 为 `80 query / 208 fetch / 60 model forwards / 786,402 tokens`。但是只有9题 production table 通过冻结的 Markdown contract，另外11题在三次 provider call 都成功后由 production normalizer 抛出 `ValueError` 并使用 fallback。verified retrieval gain 只有3题，低于预注册下界4；candidate、observer、vertical block、disposition、edit和prediction change均为0，localization gate严格 NO-GO。forward与独立content-free audit分别见[`results/v25167_observed_vertical_external_forward_result_v1_20260812.json`](results/v25167_observed_vertical_external_forward_result_v1_20260812.json)和[`results/v25167_observed_vertical_external_forward_audit_v1_20260812.json`](results/v25167_observed_vertical_external_forward_audit_v1_20260812.json)，后者为`audit_valid=true, findings=[]`，并明确禁止evaluator、binding successor、policy change和DeepWideBench 220。
+
+V2.51.69随后只按JSON字符边界解码终态布尔、粗粒度failure type、effect/health counters以及V2.51.65/V2.51.58/V2.51.35三层密封content-free receipt；opaque ID、题面、query、URL、page、key/value、parent payload、prediction、mapping、gold、score和credential均未解码。`verified gain × production valid`的2×2表为：`false/false=8`、`false/true=9`、`true/false=3`、`true/true=0`。换言之，全部3个retrieval-gain任务都恰好落在11个invalid-production任务中；冻结revision gate要求`gain ∧ valid production`，所以20题revision eligibility、candidate entry与observer entry必然全为0。权威诊断为[`results/v25169_v25167_observer_censoring_diagnosis_v1_20260812.json`](results/v25169_v25167_observer_censoring_diagnosis_v1_20260812.json)。
+
+因此，本轮不能写成“自然网页没有vertical block”或“identity binder零召回”；observer根本没有看到任何verified delta page。下一可识别步骤也不是放宽binding、增加搜索或重跑人口，而是在第一份production response进入fallback之前增加behavior-preserving、content-free normalizer disposition observer：只报告exact/normalized acceptance以及no pipe group、separator、header binding、row width、escaped pipe等互斥结构原因，并记录provider的`output_truncated`布尔；原response、fallback、prediction、candidate与预算必须逐字不变。只有在新的fresh/disjoint人口上先恢复可靠production并让observer真正进入，才能继续判断vertical reachability。
+
+这也是credit assignment中的“可观测性先于credit”反例。3个retrieval-gain动作没有通过上游生成有效性门，既没有admissible intervention，也没有可归因prediction change或outer utility；它们的signed credit仍必须是0。熵降、网页增量、provider成功或结构猜测都不能绕过这个缺失链条。当前DeepWideBench口径仍为最新正常完整轮V2.50.57的`6/220 / 0.449960`，项目单轮观测最佳V2.48.57的`9/220 / 0.457249`；无Avg@4、leaderboard或SOTA证据。
+
 ## 2026-08-12 增量文献：信息增益不能决定 credit 符号，下一管线先做可归因性与可学习性门
 
 2026-08-06 至 08-11 发布或更新的十项工作进一步收紧了本项目的创新边界。[192–201] HERALD 用同题反事实干预审计 proof-of-retrieval reward，表明一个奖励可以拒绝删除搜索和伪造 ID，却仍被 citation laundering 绕过；补强后的 reward、训练中信号出现频率和训练后 policy transfer 又是三个不同问题。[192] CIPO 对同一个已生成动作比较 evidence-visible 与 evidence-masked 条件下的 log-likelihood，形成 Evidence-Access Log-Likelihood Ratio。其消融中，EALR-only 同时提高 supportive 与 irrelevant evidence utilization，只有与 terminal outcome reward 联合时才抑制无关证据使用。[193] 因而，“动作受证据影响”不是“证据改善任务”的充分条件，masked-context likelihood、熵降或 surprisal 都不能单独决定 signed credit。
