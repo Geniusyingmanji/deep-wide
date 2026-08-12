@@ -1,5 +1,19 @@
 # OWIC-DeepWide 研究与实施计划
 
+> 版本：6.107
+>
+> **6.107 V2.52.39–43 entity-disjoint source-package 人口成功冻结（2026-08-12）：V2.52.38中把`multi-hyphen + plus/dot`直接相加为82的粗探针口径不成立；严格互斥复核后，binary名称集合之外的564个source-package名称分为`short-alpha=173 / long-alpha=101 / single-hyphen=119 / digit-bearing=92 / excluded=79`，四个admitted stratum均真实≥64。V2.52.39据此冻结全新设计，source名称必须不等于任何本机installed binary名称，故与失败的V2.52.35 binary-package人口实体集合按构造严格不交；stratum只用于人口平衡，不进入runtime。设计代码/工件以`bcf5e2ab / c2965f2f`推送。**
+>
+> **V2.52.40 selector对全部admitted candidate做一次16-worker、每process 30s、整批240s的固定`git log -i -S`历史扫描；任何timeout/nonzero/stderr/incomplete均整批fail closed，并在dpkg/history effect前create-exclusive写attempt claim。实现补齐claim文件SHA与最终freeze绑定，专项/设计/shadow/helper矩阵共60/60；V2.52.41 clean-build audit从pushed `ab59e1f3`生成，`audit_valid=true, findings=[]`，权威工件SHA-256=`eff75a43...0cd67`，以`1f71e7ce`推送。V2.52.42 execution-start又以单文件commit `2c25d51b`推送，明确caller不得施加短于内部240s的wall。**
+>
+> **唯一正式freeze随后成功：attempt claim SHA-256=`a5206b2d...18952`先于effect落盘；485/485 admitted candidate全部完成且timeout/nonzero/stderr/incomplete/coordinator-cancel均为0。四stratum history-zero容量为`151/93/115/90`，各按新salt的确定性排序选64，总计64题、256个全局唯一source-package；task vector只含`{opaque_id, question}`，不保存hidden identity map、stratum、gold或evaluator。freeze SHA-256=`45604e8e...dcdf`，claim+freeze以`4b9c1028`推送。V2.52.43只做结构/计数/seal审计，不输出包名或题面；从clean pushed `ce8a2481`得到`audit_valid=true, findings=[]`，权威audit [`results/v25243_source_package_population_postfreeze_audit_v1_20260812.json`](results/v25243_source_package_population_postfreeze_audit_v1_20260812.json) SHA-256=`b53609e6...1fa2`。**
+>
+> **旧V2.52.40/V2.52.41测试在正式effect后有3个stage-sensitive ERROR：它们仍断言claim/result surface pristine；冻结前权威V2.52.41的60/60有效，当前surface合法存在由V2.52.43覆盖，不修改旧冻结测试伪造全绿。下一步只授权fresh64 shadow reliability protocol设计，不是launch：复用GPT-5.6 keyless production search、32 executors、16 model slots、64固定分母、failure-as-zero且不调用evaluator；runtime仍只接收`{opaque_id, question}`。GO要求64/64 terminal、shadow observer failure=0、parent behavior drift=0、natural `no_bindable_header` shadow entry≥1且safe candidate≥1；任一失败即NO-GO且不重跑/换题。只有机制门通过才设计独立activation/quality gate；门通过前不改变prediction、不赋entropy/IG正credit、不启动新220。**
+>
+> **DeepWideBench口径仍为：最新完整V2.52.08=`5/220 / Composite 0.398669`，项目单轮最佳V2.48.57=`9/220 / 0.457249`；无Avg@4、leaderboard或SOTA。四个protected watcher identity未变，shared lease空闲，entropy/IG signed credit=0。**
+>
+> **阅读规则：本文件append-only；顶部6.107覆盖6.106及后文所有较早的当前权限、下一步、容量与分数口径。**
+
 > 版本：6.106
 >
 > **6.106 V2.52.32–38 header-totality shadow、local population selector 与一次性 freeze 失败封存（2026-08-12）：V2.52.32把V2.52.30 helper接入behavior-preserving shadow，只在父normalizer已经给出`no_bindable_header_reject`且quote-aware未激活后观察；candidate/receipt随即丢弃，父response、prediction、cost与effect不变。V2.52.33从clean pushed HEAD完成62/62测试，72文件依赖向量固定，privileged/evaluator/credential findings全空；权威audit [`results/v25233_header_totality_shadow_build_audit_v1_20260812.json`](results/v25233_header_totality_shadow_build_audit_v1_20260812.json) SHA-256=`eebbc557...30fc2`。**
