@@ -123,6 +123,13 @@ class V25294WorldBankMonotoneFillGateDesignTests(unittest.TestCase):
         self.assertEqual(mechanism["supported_unknown_fill_tasks_minimum"], 2)
         self.assertEqual(mechanism["attributable_prediction_change_tasks_minimum"], 2)
         self.assertEqual(
+            mechanism[
+                "parent_exactly_two_model_calls_and_baseline_unknown_tasks_minimum"
+            ],
+            2,
+        )
+        self.assertEqual(mechanism["complete_eight_page_prefix_tasks_minimum"], 2)
+        self.assertEqual(
             mechanism["zero_supported_fill_or_prediction_change"],
             "strict_no_go_without_evaluator",
         )
