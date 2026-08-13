@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Append-only post-forward audit adapter for frozen V2.54.06.
+"""Append-only post-forward control adapter for frozen V2.54.06.
 
 The frozen V2.54.06 finalizer delegates its native forward audit to the
 V2.52.67 shell.  That inherited function reads its own module-level
@@ -7,16 +7,24 @@ V2.52.67 shell.  That inherited function reads its own module-level
 directory legitimately exists, so the inherited future-surface check reports
 a false positive even though every V2.54.06 evaluator surface is pristine.
 
-This adapter changes no frozen forward dependency, task, prediction, budget,
-or protocol.  It binds only the inherited read-only audit function's evaluator
-root to the already-frozen V2.54.06 output root, restores the old module value
-afterward, and records its own hash in the sealed audit artifact.  It does not
-open mapping, gold, answer, score, or evaluator resources.
+The same inheritance layer also leaves the bottom V2.47.91 validator's
+``contract`` global bound to V2.47.91.  The frozen V2.54.06 finalizer correctly
+binds its paths and barrier but its eventual validator therefore compares a
+V2.54.06 artifact with historical V2.47.91 hashes.  This adapter explicitly
+binds that post-forward shell to V2.54.06 in-process.
+
+It changes no frozen forward dependency, task, prediction, budget, or
+protocol.  The ``audit`` command does not open mapping, gold, answer, score,
+or evaluator resources.  Only after a pushed valid forward audit may the
+``protocol`` command open and hash evaluator resources; ``evaluate`` then
+uses the fixed 32-way exactly-once shell, and ``postaudit`` is read-only except
+for its new audit artifact.
 """
 
 from __future__ import annotations
 
 import copy
+import argparse
 import json
 import sys
 from pathlib import Path
@@ -33,6 +41,9 @@ from scripts import finalize_v25406_grounded_membership_exact220 as frozen  # no
 
 
 ADAPTER = Path("scripts/audit_v25409_v25406_grounded_membership_exact220_forward.py")
+ADAPTER_TEST = Path(
+    "tests/test_audit_v25409_v25406_grounded_membership_exact220_forward.py"
+)
 FROZEN_FINALIZER_SHA256 = (
     "b5429cf703d3e0e871c07b9a87498eb17e24ca63184b79ef6bfbd49d95819e20"
 )
@@ -64,10 +75,24 @@ def _future_pristine() -> bool:
     )
 
 
+def configure_postforward() -> None:
+    """Bind every inherited post-forward global to frozen V2.54.06."""
+
+    frozen.configure()
+    bottom = frozen.base.base
+    bottom.contract = contract
+    bottom._forward_barrier = frozen._forward_barrier
+    controls = tuple(bottom.CONTROL_FILES)
+    additions = (str(ADAPTER), str(ADAPTER_TEST))
+    bottom.CONTROL_FILES = controls + tuple(
+        path for path in additions if path not in controls
+    )
+
+
 def _native_with_v25406_evaluator_root() -> tuple[dict[str, Any], Path]:
     """Temporarily bind only the inherited audit's module-level root."""
 
-    frozen.configure()
+    configure_postforward()
     inherited_root = frozen.base.EVALUATOR_ROOT
     try:
         frozen.base.EVALUATOR_ROOT = frozen.EVALUATOR_ROOT
@@ -130,29 +155,72 @@ def build_forward_audit() -> dict[str, Any]:
         }
     )
     sealed = contract.seal(copied, "audit_payload_sha256")
-    frozen.configure()
+    configure_postforward()
     frozen.base.base.validate_forward_audit(sealed)
     return sealed
 
 
+def build_evaluator_protocol() -> dict[str, Any]:
+    configure_postforward()
+    value = frozen.base.base.build_evaluator_protocol()
+    return frozen.base.base.validate_evaluator_protocol(value)
+
+
+def evaluate() -> dict[str, Any]:
+    configure_postforward()
+    return frozen.base.base.evaluate()
+
+
+def build_postresult_audit() -> dict[str, Any]:
+    configure_postforward()
+    value = frozen.base.base.build_postresult_audit()
+    return frozen.base.base.validate_postresult_audit(value)
+
+
 def main() -> None:
-    value = build_forward_audit()
-    if not value["audit_valid"]:
-        raise RuntimeError(value["findings"])
-    frozen.base._publish_new(ROOT / contract.FORWARD_AUDIT, value)
-    print(
-        json.dumps(
-            {
-                "path": str(contract.FORWARD_AUDIT),
-                "audit_valid": True,
-                "findings": [],
-                "postfreeze_exact220_evaluator_protocol": value["authorization"][
-                    "postfreeze_exact220_evaluator_protocol"
-                ],
-            },
-            sort_keys=True,
+    parser = argparse.ArgumentParser()
+    parser.add_argument("command", choices=("audit", "protocol", "evaluate", "postaudit"))
+    args = parser.parse_args()
+    if args.command == "audit":
+        value = build_forward_audit()
+        if not value["audit_valid"]:
+            raise RuntimeError(value["findings"])
+        path = contract.FORWARD_AUDIT
+        output = {
+            "path": str(path),
+            "audit_valid": True,
+            "findings": [],
+            "postfreeze_exact220_evaluator_protocol": value["authorization"][
+                "postfreeze_exact220_evaluator_protocol"
+            ],
+        }
+    elif args.command == "protocol":
+        value = build_evaluator_protocol()
+        path = contract.EVALUATOR_PROTOCOL
+        output = {"path": str(path), "authorization": value["authorization"]}
+    elif args.command == "evaluate":
+        value = evaluate()
+        print(
+            json.dumps(
+                {
+                    "path": str(contract.RESULT),
+                    "status": value["status"],
+                    "metrics": value["metrics"]["all_220"],
+                },
+                sort_keys=True,
+            )
         )
-    )
+        return
+    else:
+        value = build_postresult_audit()
+        path = contract.POSTAUDIT
+        output = {
+            "path": str(path),
+            "audit_valid": value["audit_valid"],
+            "findings": value["findings"],
+        }
+    frozen.base._publish_new(ROOT / path, value)
+    print(json.dumps(output, sort_keys=True))
 
 
 if __name__ == "__main__":
