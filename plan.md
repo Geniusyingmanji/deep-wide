@@ -1,5 +1,19 @@
 # OWIC-DeepWide 研究与实施计划
 
+> 版本：6.112
+>
+> **6.112 V2.52.76–77 第三组不重叠人口唯一冻结与 post-freeze audit（2026-08-13）：V2.52.76 execution-start从clean pushed `09477546`生成，并作为唯一单文件子提交`63fb08e7`推送；start固定V2.52.73 design、V2.52.75 build audit、selector源码/测试哈希、四个protected watcher identity、空闲shared lease、240秒内部selection ceiling以及create-exclusive attempt claim。start本身不调用dpkg/history/network/model/search/fetch/evaluator/benchmark。**
+>
+> **唯一local selector在claim SHA-256=`bf829bdb...eb7`消费后完成，不存在retry/resume/replacement/backfill。564/564 canonical source候选各完成一次限定Git literal-history probe，timeout/nonzero/stderr/incomplete/cancelled均0；history-zero且与前两组384实体不重叠的容量为short=35、long=5、single-hyphen=19，固定选中20/4/16，共20题/40唯一实体，旧实体交集0。claim/result共同以`ec680793`推送，result SHA-256=`f23c6490...b5ad`；network/model/search/fetch/evaluator/benchmark effect为0，entropy/IG signed credit为0。**
+>
+> **V2.52.77 post-freeze audit显式验证start是单文件子提交、freeze是其仅含claim/result的两文件子提交、start→claim→result哈希与父提交链、564次probe守恒、20×2任务边界、40实体唯一、384实体排除、分层容量/选择、四个watcher和空闲lease。历史V2.52.75的future-surface-pristine测试在freeze后不重跑；其已冻结权威audit仍按SHA严格验证。post-freeze专项+selector为13/13，19项检查全绿；实现/权威audit以`25f09091 / 8eb38358`推送，audit SHA-256=`deeaac00...4457`，`audit_valid=true / findings=[]`。**
+>
+> **当前权限只到20题paired checkpoint reliability protocol设计：control必须保留冻结parent正常路径，candidate使用V2.52.71 validated-production checkpoint；两臂共享同一可见任务人口、预算和label-blind边界，必须预注册正常路径prediction/cost/effect一致、post-checkpoint故障保留同一checkpoint、pre-checkpoint故障fail closed、checkpoint/tamper拒绝、全部任务终态、0 budget rejection。该门不读取mapping/gold/category/question-type/split/evaluator/score，不评质量，不授权candidate activation、DeepWideBench 220、Avg@4、leaderboard或SOTA。可靠性GO后仍需另一组fresh/disjoint shared-prefix quality gate；只有post-freeze outer utility成立，entropy/IG才可能获得正credit。**
+>
+> **DeepWideBench口径不变：最新完整V2.52.67=`5/220 / Composite 0.407328`；项目单轮峰值V2.48.57=`9/220 / 0.457249`但未稳定复制；无Avg@4、leaderboard或SOTA证据。四个protected watcher保持原identity，shared lease空闲，当前没有benchmark/model/evaluator运行。**
+>
+> **阅读规则：本文件append-only；顶部6.112覆盖6.111及后文所有较早的当前权限、下一步、人口与分数口径。**
+
 > 版本：6.111
 >
 > **6.111 V2.52.73–75 第三组不重叠 checkpoint 人口设计、selector 与 clean-build 审计（2026-08-13）：为避免在 V2.52.60 的64题/128实体或更早 V2.52.40 的128题/256实体上重放，V2.52.73只用本机 Debian source-package 名称与限定 Git literal-history aggregate 做容量设计。564个 canonical source 候选全部完成一次 bounded probe；历史零容量为 short-alpha=35、long-alpha=5、single-hyphen-alpha=19、digit-bearing=1。固定选择20题/40实体：short 20、single-hyphen 16、long 4；不使用容量仅1的digit层，不跨层补位。runtime仍只暴露`{opaque_id, question}`，stratum不进入forward。设计/冻结工件以`aff730bd / 078a88e4`推送。**
