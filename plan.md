@@ -1,5 +1,19 @@
 # OWIC-DeepWide 研究与实施计划
 
+> 版本：6.125
+>
+> **6.125 V2.53.45 三版本事实选择漏斗与下一机制收敛（2026-08-13）：在不解码 task identity、题面、query/URL/page、prediction、逐题 metric、gold 或 evaluator 内容的前提下，新增 lexical content-free aggregate 诊断；V2.52.67/V2.53.42 的冻结 task row 只选择并用原 runtime validator 重放 sealed receipts，V2.48.57 因年代更早、没有 record/observation receipt，只使用已发布 aggregate forward，明确标记 `not_instrumented`，不得把不可观测误报为0。源码/测试以 `670dd231` 从 clean pushed HEAD 冻结推送；8/8专项通过，AST无 network/process/evaluator capability，四个protected watcher身份未变，未获取shared lease、未调用model/search/fetch/evaluator。**
+>
+> **同代可比漏斗显示：V2.52.67 的208个可观测parent在`1,444`个projected pages、`23,992,669`输入字符（5k前缀后`18,906,635`字符）、`5,295`个unique search URLs和`63,714`个page links之后，得到`0 discovered/admissible/retained record`与`0 observation`；V2.53.42 的209个可观测parent在`1,506`个projected pages、`21,067,007`输入字符（5k后`15,822,013`字符）、`5,272`个search URLs和`71,296`个page links之后，只得到`1 discovered/admissible/retained record`与`2 retained observations`。两轮retrieval mechanism均仅4题engaged，attributable prediction change均为0。V2.53.42另有11题在production checkpoint之后安全恢复，因此parent funnel不可观测；它们不能被误记为零检索。权威工件为[`results/v25345_exact220_fact_selection_funnel_diagnosis_v1_20260813.json`](results/v25345_exact220_fact_selection_funnel_diagnosis_v1_20260813.json)。**
+>
+> **第4模型槽复核不支持直接恢复：V2.51.37有`6/6` revision provider valid但仅`1`次attributable change；V2.51.41有`8/8` valid、只提出1个cell edit且因缺少局部value support被拒，最终0 change；V2.52.52的3个真实overshoot revision也全部0 final/attributable change。当前production-only runtime又把第二synthesis入口固定为local identity replay，所以全集中的0 prediction change不能单独证明retrieval失败；但海量页面到1条record/2条observation的转换率足以把首要瓶颈定位在`page → identity-bound record → admissible row-field-value observation`。**
+>
+> **下一successor只授权build：共享完全相同的search responses与page bytes，在首次production synthesis之前生成紧凑、source-bound、visible-schema-bound的`row–field–value`事实记录；缺少唯一row identity、可见field、局部value span或source binding时fail closed并保留父prefix。不得增加query/fetch/model/token/context/wall cap，不得用历史correctness、category/question_type/split/gold/score路由。先在全新benchmark-external production-shaped shared-prefix人口上要求retained admissible observations显著增加且产生attributable prediction change；门不过不跑公开220。entropy/IG继续shadow-only，positive signed credit=`0`，只有`admissible observation → matched intervention → attributable prediction change → post-freeze outer utility`完整成立后才可调节credit幅度。**
+>
+> **DeepWideBench口径不变：最新完整V2.53.42为Exact `6/220=0.027273`、Composite `0.436202`；项目单轮观测峰值V2.48.57仍为`9/220 / 0.457249`。没有Avg@4、leaderboard或SOTA证据。**
+>
+> **阅读规则：本文件append-only；顶部6.125覆盖6.124及后文所有较早的当前权限、下一步与分数口径。**
+
 > 版本：6.124
 >
 > **6.124 V2.53.42–44 checkpoint-protected production 完整220、可靠性成功与质量提升（2026-08-13）：停止 World Bank transport 重试后，主线直接回到V2.52.67完整220正常路径。append-only adapter把已审计V2.52.71七阶段checkpoint runtime接入既有exact-220 runner：正常路径仍使用同一plan/grounded-plan/production provider、search/fetch/prompt与first validated production prediction；只有production checkpoint之后的parent/envelope失败才丢弃无效辅助envelope并返回同一密封prediction。adapter完整保留microstage receipt，并把“checkpoint恢复后返回有效prediction”与“无可信结果的outer failure”分开；恢复不增加query/fetch/model/token，也不获得entropy/IG signed credit。**
