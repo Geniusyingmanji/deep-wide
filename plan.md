@@ -1,5 +1,19 @@
 # OWIC-DeepWide 研究与实施计划
 
+> 版本：6.115
+>
+> **6.115 V2.52.86–88 legacy-outcome checkpoint、权威审计与质量可识别性NO-GO（2026-08-13）：V2.52.86在V2.48.57旧主链的`IntegratedExact220TaskOutcome`通过`validate_cross_artifacts`后、legacy envelope构建前密封完整outcome；正常路径仍返回原`build_envelope(outcome)`，envelope build/validate后置失败才从同一checkpoint恢复prediction、cost与全部parent receipts。candidate额外query/fetch/model/token与signed credit均为0；pre-checkpoint不可信outcome、checkpoint/receipt/recovery重封篡改以及顶层与nested failure stage/type不一致全部fail closed。专项与直接父runtime为`6+7+5+7=25/25`，实现以`10ae6f83`推送。**
+>
+> **V2.48.57历史contract suite仍诚实记录为`12 ok + 1 error`：唯一错误是V2.46.35冻结依赖要求`native_search.py` SHA-256=`cd0d6bfc...e50`，而当前文件自更早提交`795d3821`起为`685f5413...a51`。V2.52.86只新增runtime与test两文件，未触碰该依赖，故这是historical protocol closure drift，不是V2.52.86行为回归，也不得伪装成全绿。V2.52.87审计实现以`d91102f4`推送；随后从clean pushed HEAD生成权威audit：当前链`31/31`全绿、历史suite精确复现上述单一error、33文件runtime closure无privileged/evaluator/credential finding、25/25 checks、`audit_valid=true / findings=[]`，audit以`ff14b2b0`推送。其授权仅到fresh/disjoint protocol design，external launch/evaluator/220/质量声明全为false。**
+>
+> **V2.52.88进一步做content-free identifiability诊断：只绑定V2.52.87、V2.52.70、V2.48.57 forward aggregate与四个源码hash，不打开runtime task rows、题目、prediction、mapping/gold/category/question-type/split/evaluator或逐题score。源码调用序证明V2.52.86的可恢复surface仅是所有query/fetch/model effect完成、parent cross-artifact再次验证后的两个纯内存确定性操作`legacy_envelope_build / legacy_envelope_validate`；V2.48.57冻结220题为`220 parent success / 220 model-generated / 0 fallback / 0 outer failure`，因此该surface观测自然recovery为`0/220`。V2.52.65较宽production链的11个`sparse_production:ValueError`属于不同runtime family和更早stage，其`11/220`或聚合`15/300`绝不能转移为V2.52.86事件率。专项+父诊断链`6+8+6=20/20`，implementation/result以`a6fee1dc / d5786f86`推送；权威decision=`no_go_without_launch`、9/9 checks、`diagnosis_valid=true / findings=[]`。**
+>
+> **因此V2.52.86保留为工程可靠性safeguard，但退出刷榜主质量门：不再为几乎不可达的checkpoint-only treatment冻结或消费新人口，也不通过fault injection制造quality gain。下一build-only候选转向正常路径的V2.48.57空闲第三模型槽：共享同一次visible-only question、queries、search responses、fetched pages与baseline table，让第三槽输出完整修订表；纯本地monotone merger只允许`Unknown → same-forward page-supported value`，已知cell、schema、row key/order与行数均不可改变，任何解析/支持/冲突/receipt失败逐字identity handoff。仍固定`4 query / 10 fetch / 3 model / 240s`和20 executor/8 model/12 search slot；entropy/IG仅记录Unknown-resolution shadow，不参与admission或credit sign。必须先通过synthetic/adversarial build audit，再在fresh/disjoint shared-prefix external gate证明非零supported fill、attributable prediction change、Exact严格增加且Entity/Row/Item/Column/Composite、fallback/invalid与资源全不退，之后才允许新的public220。**
+>
+> **当前DeepWideBench口径不变：最新完整V2.52.67=`5/220 / Composite 0.407328`；项目单轮峰值V2.48.57=`9/220 / 0.457249`但未稳定复制；没有Avg@4、leaderboard或SOTA证据。四个protected watcher保持原PID/start-ticks，当前没有新benchmark/model/evaluator运行。**
+>
+> **阅读规则：本文件append-only；顶部6.115覆盖6.114及后文所有较早的当前权限、下一步、功效与分数口径。**
+
 > 版本：6.114
 >
 > **6.114 V2.52.84–85 natural checkpoint quality seam、clean-build audit与刷榜主线纠偏（2026-08-13）：V2.52.84只调用V2.52.71一次，不注入故障。clean result与pre-checkpoint visible fallback均把control/candidate投影为逐字identity；只有同一次真实forward自然记录可信post-checkpoint recovery时，control才使用由未来external contract注入且只读`{opaque_id, question}`的真实legacy failure-as-zero projector，candidate保留同一trusted checkpoint prediction。projector在生成和验证时重算，result/stage receipt对checkpoint kind、disposition、parent-retained、failure-count和effect budget逐项绑定；普通result只允许早期parent/binding recovery stage，独立recovery envelope只允许envelope build/validate stage；任何`InjectedCheckpointReliabilityFault`、role/stage/receipt/projector/credit重封篡改均fail closed。candidate额外query/fetch/model/token与signed credit恒为0。**
