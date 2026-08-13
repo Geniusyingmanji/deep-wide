@@ -186,6 +186,7 @@ def mechanism_gate() -> dict[str, Any]:
         "minimum_attributable_prediction_changed_tasks": 3,
         "maximum_unattributable_prediction_changed_tasks": 0,
         "maximum_outer_accounting_or_budget_rejection_tasks": 0,
+        "maximum_transport_search_fetch_or_model_hard_failures": 0,
         "exact_physical_queries_per_completed_task": 4,
         "maximum_physical_fetches_per_completed_task": 14,
         "exact_physical_model_forwards_per_completed_task": 4,
