@@ -1,5 +1,21 @@
 # OWIC-DeepWide 研究与实施计划
 
+> 版本：6.124
+>
+> **6.124 V2.53.42–44 checkpoint-protected production 完整220、可靠性成功与质量提升（2026-08-13）：停止 World Bank transport 重试后，主线直接回到V2.52.67完整220正常路径。append-only adapter把已审计V2.52.71七阶段checkpoint runtime接入既有exact-220 runner：正常路径仍使用同一plan/grounded-plan/production provider、search/fetch/prompt与first validated production prediction；只有production checkpoint之后的parent/envelope失败才丢弃无效辅助envelope并返回同一密封prediction。adapter完整保留microstage receipt，并把“checkpoint恢复后返回有效prediction”与“无可信结果的outer failure”分开；恢复不增加query/fetch/model/token，也不获得entropy/IG signed credit。**
+>
+> **实现与控制面以`e4cdf15b`推送；权威build audit从clean pushed HEAD完成`50/50`测试、91文件依赖闭包、privileged runtime field/evaluator capability/credential literal均为0，`audit_valid=true / findings=[]`，以`34caf4ee`冻结。protocol `1ef88340`固定公开220可见向量、40 task workers、16 model slots、每题真实上限`4 query / 14 fetch / 4 model`、failure-as-zero、禁retry/resume/backfill/replacement/selective rerun；preactivation `50/50`与14项安全检查全绿，以`f8e87689`推送；单文件execution-start以`1f0b0c64`推送。runtime输入严格为`{opaque_id, question}`，mapping/gold/category/question_type/split/evaluator/score在全部prediction冻结并完成pushed forward audit前保持关闭。**
+>
+> **唯一完整forward在`513.478357s`完成`220/220` terminal，`220/220` runtime-completed、0 outer failure、0 budget rejection；214个model-generated、6个deterministic fallback。物理effect为`880 query / 2220 fetch / 659 model forwards / 13,976,586 system tokens`，单题最大`4/14/3`，没有扩大预注册cap。checkpoint disposition为203个`clean_validated_production`、6个`clean_deterministic_fallback`和11个`validated_production_preserved_after_post_checkpoint_failure`；因此V2.52.67中11个effect后outer failure在同类surface上全部被安全保留为model-generated prediction，且没有额外模型调用。forward与审计分别以`6f146eb9 / b4c9215d`推送，forward audit所有10项检查全绿。**
+>
+> **固定32-worker evaluator对220份冻结prediction各评一次，213 valid、7 evaluator error按固定分母计零，耗时`223.958221s`。all-220结果为Exact `6/220=0.027273`、Entity `0.659091`、Row/Item/Column F1 `0.223652/0.391253/0.470813`、Composite `0.436202`；result与post-audit以`15896b4d / 38a2dc91`推送，post-audit `audit_valid=true / findings=[]`，确认220 join、32 worker、无选择性重评、lease/进程闭合和四个protected watcher不变。权威结果为[`results/v25342_checkpoint_exact220_result_v1_20260813.json`](results/v25342_checkpoint_exact220_result_v1_20260813.json)，审计为[`results/v25344_checkpoint_exact220_postresult_audit_v1_20260813.json`](results/v25344_checkpoint_exact220_postresult_audit_v1_20260813.json)。**
+>
+> **与此前最新完整V2.52.67相比，本轮Exact `+1`、Composite `+0.028874`、Entity `+0.018182`、Row/Item/Column F1分别`+0.029869/+0.035055/+0.032390`，model-generated `202→214`、fallback `18→6`、outer failure `11→0`，forward还从`545.188s`降至`513.478s`。这是可靠性修复在一次完整冷rollout上的正向结果，但不同冷rollout包含search/model/judge随机性，不能把全部质量差值因果归给checkpoint；可确定归因的是11个密封production没有再因post-effect envelope失败而丢失。**
+>
+> **当前最新完整口径更新为V2.53.42的`6/220 / Composite 0.436202`。它仍低于项目单轮观测峰值V2.48.57的`9/220 / 0.457249`（Exact `-3`、Composite `-0.021047`），且无Avg@4、leaderboard或SOTA证据。下一优化优先级从transport/totality转为正常路径事实选择质量：先做content-free输出形态与证据利用诊断，区分同形表格中的错误事实、Unknown与row/column coverage；任何新quality机制必须在共享prefix、相同预算下证明可归因prediction change与post-freeze outer utility。不得重跑本220、不得按逐题correctness路由或调参；entropy/IG继续shadow-only，positive signed credit=`0`。**
+>
+> **阅读规则：本文件append-only；顶部6.124覆盖6.123及后文所有较早的当前权限、下一步与分数口径。**
+
 > 版本：6.123
 >
 > **6.123 V2.53.37–41 concurrency-3 World Bank 人口严格 NO-GO 与主线回收（2026-08-13）：V2.53.37 在排除前四轮共96个target、144个entity和169份成功response SHA后，按固定顺序对24个新target的48个分页URL各执行一次真实请求；只把最大并发从6降为3，未加额外pacing，禁止retry/resume/refetch/backfill/replacement。catalog `1/1`成功，但target仅`36/48`成功；10份约15.18秒`transport_error`，另2份HTTP response failure。target wall=`130.213729s`超过预注册110秒，whole wall=`131.422414s`；all-or-nothing门使selected target/entity/task/page全部为0，未生成private population，也未调用model/search/evaluator/benchmark。**
