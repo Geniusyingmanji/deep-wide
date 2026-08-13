@@ -54,7 +54,10 @@ class V25353FreshPepGroundedFactExternalControlTests(unittest.TestCase):
         )
 
     def test_build_audit_authorizes_protocol_generation_only(self) -> None:
-        with mock.patch.object(target, "_tests", return_value=_fake_tests()):
+        with (
+            mock.patch.object(target, "_tests", return_value=_fake_tests()),
+            mock.patch.object(target, "_future_pristine", return_value=True),
+        ):
             value = target.build_audit(now=1, require_clean=False)
         self.assertEqual(target.validate_build(value), value)
         authorization = value["authorization"]
@@ -63,8 +66,12 @@ class V25353FreshPepGroundedFactExternalControlTests(unittest.TestCase):
         self.assertFalse(authorization["evaluator"])
 
     def test_resealed_build_launch_credit_or_parent_tamper_fails(self) -> None:
-        with mock.patch.object(target, "_tests", return_value=_fake_tests("b")):
+        with (
+            mock.patch.object(target, "_tests", return_value=_fake_tests("b")),
+            mock.patch.object(target, "_future_pristine", return_value=True),
+        ):
             value = target.build_audit(now=1, require_clean=False)
+        self.assertEqual(target.validate_build(value), value)
         for kind in ("launch", "credit", "parent"):
             changed = copy.deepcopy(value)
             if kind == "launch":

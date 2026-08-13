@@ -25,26 +25,26 @@ from . import v25351_fresh_pep_grounded_fact_population as population
 
 
 DATE = "20260813"
-PROTOCOL_ID = "v25353_fresh_pep_shared_prefix_grounded_fact_external_v1"
+PROTOCOL_ID = "v25353_fresh_pep_shared_prefix_grounded_fact_external_v2"
 BUILD_AUDIT = Path(
-    f"results/v25353_fresh_pep_grounded_fact_external_build_audit_v1_{DATE}.json"
+    f"results/v25353_fresh_pep_grounded_fact_external_build_audit_v2_{DATE}.json"
 )
 PROTOCOL = Path(
-    f"results/v25353_fresh_pep_grounded_fact_external_preregistration_v1_{DATE}.json"
+    f"results/v25353_fresh_pep_grounded_fact_external_preregistration_v2_{DATE}.json"
 )
 PREAUDIT = Path(
-    f"results/v25353_fresh_pep_grounded_fact_external_preactivation_audit_v1_{DATE}.json"
+    f"results/v25353_fresh_pep_grounded_fact_external_preactivation_audit_v2_{DATE}.json"
 )
 EXECUTION_START = Path(
-    f"results/v25353_fresh_pep_grounded_fact_external_execution_start_v1_{DATE}.json"
+    f"results/v25353_fresh_pep_grounded_fact_external_execution_start_v2_{DATE}.json"
 )
 FORWARD_RESULT = Path(
-    f"results/v25353_fresh_pep_grounded_fact_external_forward_result_v1_{DATE}.json"
+    f"results/v25353_fresh_pep_grounded_fact_external_forward_result_v2_{DATE}.json"
 )
 FORWARD_AUDIT = Path(
-    f"results/v25353_fresh_pep_grounded_fact_external_forward_audit_v1_{DATE}.json"
+    f"results/v25353_fresh_pep_grounded_fact_external_forward_audit_v2_{DATE}.json"
 )
-OUTPUT_ROOT = Path(f"outputs/v25353_fresh_pep_grounded_fact_external_v1_{DATE}")
+OUTPUT_ROOT = Path(f"outputs/v25353_fresh_pep_grounded_fact_external_v2_{DATE}")
 MODEL_SLOT_DIRECTORY = OUTPUT_ROOT / "model_slots"
 TASK_ROWS = OUTPUT_ROOT / "frozen_task_results.jsonl"
 PREDICTION_FREEZE = OUTPUT_ROOT / "prediction_freeze.json"
@@ -88,8 +88,8 @@ CONTROL_ARM, CANDIDATE_ARM = ARMS
 PHASES = runtime.PHASES
 COLUMNS = population.COLUMNS
 LEASE_PATH = base.LEASE_PATH
-LEASE_OWNER = "v25353_fresh_pep_grounded_fact_external_forward_v1"
-LEASE_PURPOSE = "fresh_visible_pep_shared_prefix_grounded_fact_gate_v1"
+LEASE_OWNER = "v25353_fresh_pep_grounded_fact_external_forward_v2"
+LEASE_PURPOSE = "fresh_visible_pep_shared_prefix_grounded_fact_gate_v2"
 EXPECTED_WATCHERS = base.EXPECTED_WATCHERS
 
 MODEL = {
