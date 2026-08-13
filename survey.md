@@ -1,5 +1,23 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
+## 2026-08-13 实验更新：changed-safe 干预可归因，但完整220严格 NO-GO
+
+V2.53.68首先否定了旧的双synthesis处理效应解释。V2.53.67的20题中有49个verified fields，16题的treatment prompt发生变化，但这16题的treatment与control输出全部相同。因此，该实验不能区分原始页面冗余与模型对附加事实不敏感。[`results/v25368_v25367_treatment_identifiability_diagnosis_v1_20260813.json`](results/v25368_v25367_treatment_identifiability_diagnosis_v1_20260813.json)据此要求一个不受第二次采样噪声影响的estimand。V2.53.69–70改为一次共享synthesis生成control/base table；candidate只对唯一quote-verified row/column坐标、且verified value与base cell不同时做确定性编辑。冲突、Unknown、缺行、重复行、缺列和多来源坐标全部no-op，candidate没有额外模型调用。V2.53.71的`89/89`测试和80文件闭包审计通过，见[`results/v25371_shared_synthesis_changed_safe_build_audit_v1_20260813.json`](results/v25371_shared_synthesis_changed_safe_build_audit_v1_20260813.json)。
+
+新的matched intervention在benchmark-external RFC人口上具备自然可达性。V2.53.74的20题均完成base synthesis，得到56个verified fields、14个changed-safe坐标和7个可归因prediction changes，0 unattributable change；实际成本为`80 query / 201 fetch / 60 model forwards / 1,054,724 tokens`，wall为`78.552387s`。该结果只说明“共享基础表→确定性verified edit”能够把source evidence转成可归因输出变化，不包含终局quality evaluator，也不是DeepWideBench分数或entropy-credit证据。权威结果与审计为[`results/v25374_rfc_changed_safe_external_forward_result_v1_20260813.json`](results/v25374_rfc_changed_safe_external_forward_result_v1_20260813.json)和[`results/v25374_rfc_changed_safe_external_forward_audit_v1_20260813.json`](results/v25374_rfc_changed_safe_external_forward_audit_v1_20260813.json)。
+
+V2.53.75随后补齐公开220的schema totality。原runtime只能在effect前解析194题；task-local hierarchy在运行时使用194个exact schema、21个expanded explicit schema、4个同一次plan的安全provider schema和1个generic key/value schema，单列schema只允许identity no-op。首次V2.53.76在preactivation发现控制面自测错误后停止，未生成execution start、attempt或forward；V2.53.79使用新的namespace与输出面完整重走冻结流程。唯一forward在`556.317173s`完成220/220 terminal，214个model-generated、6个fallback，物理effect为`880 query / 2,218 fetch / 656 model forwards / 14,061,441 tokens`，单题最大`4/14/3`。32-worker evaluator对每份冻结prediction恰评一次，214 valid、6 invalid按零。最终Exact为`4/220`，Entity为`0.659091`，Row/Item/Column F1为`0.201578/0.367813/0.454000`，Composite为`0.420620`。post-result audit全部检查通过。[`results/v25379_changed_safe_exact220_result_v1_20260813.json`](results/v25379_changed_safe_exact220_result_v1_20260813.json)与[`results/v25381_changed_safe_exact220_postresult_audit_v1_20260813.json`](results/v25381_changed_safe_exact220_postresult_audit_v1_20260813.json)是权威工件。
+
+V2.53.79相对上一完整V2.53.42少2个Exact，Composite低`0.015582`；相对项目单轮峰值V2.48.57少5个Exact，Composite低`0.036629`。这是一次完整冷rollout的NO-GO结果，不是SOTA。不同rollout的检索、生成与judge随机性阻止我们把整体差值归因于changed-safe机制；本轮能直接归因的处理面只有1题、1个verified coordinate和1次prediction change。
+
+## 2026-08-13 机制诊断：瓶颈是 record proposal 与 base-row overlap，不是熵不足
+
+V2.53.82对220份密封content-free receipt做aggregate-only重放。209题进入record proposal，只有12题产出strict records，共13个records和31个fields；6题通过连续quote、row identity、visible field与verbatim value验证，共6个records和9个fields。9个verified coordinates中，7个因base table没有对应row而fail closed，1个已与base相同，最终只有1个changed-safe edit。editor validation failure与unattributable change均为0。[`results/v25382_v25379_changed_safe_funnel_diagnosis_v1_20260813.json`](results/v25382_v25379_changed_safe_funnel_diagnosis_v1_20260813.json)因此把首个转换损失定位在`page → source-bound record proposal`，把第二个损失定位在`verified source row → generated base row`的surface overlap。
+
+这个漏斗进一步限制了信息熵作为credit assignment核心的可辩护范围。较大的entropy reduction或information gain不能为缺少row binding的observation创造正credit；即使一个verified edit改变prediction，也仍需post-freeze outer utility确定credit符号。本轮没有对唯一changed task构造matched control quality评价，因此positive signed credit保持0。当前证据支持把entropy/IG用于候选动作优先级、value-of-computation或已确认credit的有界幅度调节，不支持“熵增益越大，credit越高”的直接规则。
+
+下一可检验设计应把第三次共享production response约束为`base table + source quote records`联合envelope。record proposal由此看到完整两波页面，并只能引用同一响应base table中实际存在的row key；确定性verifier仍要求同页连续quote、exact visible field、verbatim value与唯一坐标。新设计保持`4 query / 14 fetch / 3 model`。新的benchmark-external fixed-20人口先要求至少8题产出record、4题通过quote verification、4题产生changed-safe prediction change，随后才做post-freeze quality gate；这些门通过后才考虑另一轮公开220。它不能使用V2.53.79的逐题correctness或7个missing-row事件写定制规则。
+
 ## 2026-08-12 实验更新：V2.52.08 完整220已封存，当前瓶颈转向可靠性
 
 V2.52.08 R2 已完成一次完整的 DeepWideBench 220 题 single rollout。运行时只接收`opaque_id`、可见问题和同次forward抓取的公开页面，220个预测在mapping、gold和official evaluator打开前全部冻结。forward用时`602.754175s`，得到204个model-generated table和16个fallback，总token为`13,401,918`。随后32个固定连续分区对每个预测exactly once评测，214个结果有效，6个错误按零，evaluator并行墙钟为`350.950363s`。最终Exact为`5/220`，Entity为`0.6181818182`，Row/Item/Column F1为`0.1899928736/0.3523669339/0.4341351733`，Composite为`0.3986691997`。相对V2.51.30，Exact增加4、Composite增加`0.0208037760`；相对项目单轮最佳V2.48.57，Exact少4、Composite低`0.0585797785`。因此这是一份可复核的全集结果，但不是项目最佳、Avg@4、leaderboard结果或SOTA。权威结果与post-result audit分别为[`results/v25208_quote_aware_exact220_result_r2_20260812.json`](results/v25208_quote_aware_exact220_result_r2_20260812.json)和[`results/v25208_quote_aware_exact220_postresult_audit_r2_20260812.json`](results/v25208_quote_aware_exact220_postresult_audit_r2_20260812.json)。
@@ -80,7 +98,7 @@ V2.51.50随后做counts-only诊断，只解码V2.51.47/V2.51.35的content-free r
 
 这进一步约束信息熵credit assignment。verified gain、进入第4次调用、合法strict JSON和上下文缩短都不能获得正credit；在`admissible observation`为0时，realized signed credit必须为0。V2.51.51因此只扩展content-generic、exact-label、exact-quote的flat JSON、inline/multiline labelled record和row-heading record，并保持两次mechanical verification。该build在synthetic/adversarial与父链152项测试中通过，但尚无fresh natural reach或outer utility证据，因而仍不能把entropy/IG用于正credit或宣称benchmark提升。正credit继续要求`source/identity/field/value admissibility → matched intervention → attributable prediction change → post-freeze outer utility`完整成立。
 
-> 检索截止：2026-08-12 05:41 UTC；项目证据更新：2026-08-12 UTC（至 V2.51.59）
+> 检索截止：2026-08-12 05:41 UTC；项目证据更新：2026-08-13 UTC（至 V2.53.82）
 >
 > 结论强度：这是基于公开文献的 novelty audit，不是“没有任何相关工作”的证明。2026 年文献多为尚未同行评审的 arXiv 预印本，文中将预印本结果视为作者报告，而非独立复现事实。
 
