@@ -26,7 +26,7 @@ from scripts import run_v25297_worldbank_population_freeze as runner  # noqa: E4
 
 
 DATE = "20260813"
-ROLE = "v25302_worldbank_population_repair_preactivation_audit"
+ROLE = "v25306_worldbank_population_supervisor_preactivation_audit"
 OUTPUT = runner.PREACTIVATION
 SOURCE = Path("scripts/audit_v25298_worldbank_population_preactivation.py")
 TEST = Path("tests/test_audit_v25298_worldbank_population_preactivation.py")
@@ -37,22 +37,25 @@ PARENT_AUDIT = parent.OUTPUT
 DESIGN = Path("results/v25294_worldbank_monotone_fill_gate_design_r2_20260813.json")
 INITIAL_IMPLEMENTATION_COMMIT = "bac1aa8f8d55229d2d9bb9e97ae3970bac770c6d"
 REPAIR_COMMIT = "3f9c1db0a024e795d662d11d942eb9b570094142"
+SUPERVISOR_REPAIR_COMMIT = "47ef2740c7c50b5afc606455bf49b5386ae6c746"
 INITIAL_IMPLEMENTATION_PATHS = sorted(str(path) for path in (RUNNER, HELPER, RUNNER_TEST))
 REPAIR_PATHS = sorted(str(path) for path in (RUNNER, RUNNER_TEST))
+SUPERVISOR_REPAIR_PATHS = REPAIR_PATHS
 OLD_PREACTIVATION = Path("results/v25298_worldbank_population_preactivation_audit_v1_20260813.json")
 EXPECTED_FIXED = {
-    RUNNER: "1430b366c97d2b9d96624fce8b0621094c8b250fed7f4dac0f401eea72766f99",
+    RUNNER: "d6cac9b0393018fac13a9899219b0a22ebd4493e783b0fb434cc47bcb1854be0",
     HELPER: "a8049e892669d17bcc940f0c13b029207aa68d8f6677552ab7a5347f19c88ce4",
-    RUNNER_TEST: "d3c71b07b6419d66e512a7eaf39013b3a0678a726fd6548ad8282c4990be4214",
+    RUNNER_TEST: "dd861223851df0712913d8e9cb802a32d0ed0d3d932b88d4cc332467fdaaaa91",
     PARENT_AUDIT: "6a07c8459175660374a0cdb32e09bffa314f2c0fa0088ab9c19374e765ba6de8",
     DESIGN: "92e1ad85f8a363243abd64676c3149eef0266b1acb5c7196e7d8b5061c03ead4",
     OLD_PREACTIVATION: "2e048177002281d5d214672e6ff5234a6def20a1635abfa4c7e4a8834d13bf39",
     runner.REVOKED_START: runner.REVOKED_START_SHA256,
     runner.REVOCATION: runner.REVOCATION_SHA256,
+    runner.PRIOR_NOGO_AUDIT: runner.PRIOR_NOGO_AUDIT_SHA256,
 }
 TEST_SUITES = (
     ("test_audit_v25298_worldbank_population_preactivation.py", 6),
-    ("test_run_v25297_worldbank_population_freeze.py", 13),
+    ("test_run_v25297_worldbank_population_freeze.py", 14),
     ("test_v25295_worldbank_monotone_fill_gate.py", 10),
     ("test_audit_v25296_worldbank_monotone_fill_build.py", 6),
     ("test_revise_v25294_worldbank_monotone_fill_gate_r2.py", 5),
@@ -60,7 +63,7 @@ TEST_SUITES = (
 )
 EXPECTED_TESTS = sum(value for _pattern, value in TEST_SUITES)
 EXPECTED_CLOSURE_COUNT = 94
-EXPECTED_CLOSURE_VECTOR_SHA256 = "01a1dd4d21ff13ed0aed25f5d95b82b92b91192813a23d72c4525d9acbd14678"
+EXPECTED_CLOSURE_VECTOR_SHA256 = "911f5120a3a4e3dce5be529edbc125e978256208dbaff0931d9f908c62625cca"
 EXPECTED_CLOSURE_PATH_SHA256 = "9ae6818a28537584a5c19d25a2a03cd0dd6319d3ee87f9b79a09401f183463ef"
 EXPECTED_WATCHERS = {str(row["pid"]): row["start_ticks"] for row in runner.EXPECTED_WATCHERS}
 FUTURE_SURFACES = (
@@ -74,7 +77,7 @@ CHECK_NAMES = frozenset(
     {
         "fixed_sources_and_parent_artifacts_exact",
         "initial_and_repair_commits_exact_and_ancestors",
-        "tests_exact47_green",
+        "tests_exact48_green",
         "runtime_dependency_closure_exact94_and_hash_bound",
         "all_explicit_and_closure_files_tracked",
         "privileged_runtime_field_access_zero",
@@ -96,6 +99,7 @@ CHECK_NAMES = frozenset(
         "no_network_model_search_fetch_evaluator_benchmark_or_api_called",
         "entropy_information_gain_shadow_and_positive_credit_zero",
         "revoked_v25299_pre_effect_and_new_namespace_bound",
+        "v25301_zero_provider_nogo_and_supervisor_fix_bound",
     }
 )
 
@@ -180,6 +184,8 @@ def _source_invariants() -> dict[str, bool]:
         "hard_walls_fixed": (runner.CATALOG_PHASE_HARD_WALL_SECONDS, runner.TARGET_PHASE_HARD_WALL_SECONDS, runner.WHOLE_FREEZE_HARD_WALL_SECONDS) == (30.0, 110.0, 145.0),
         "helper_zero_redirect_and_trust_env": "session.trust_env = False" in helper and "allow_redirects=False" in helper,
         "helper_parent_death_bound": "libc.prctl(1, signal.SIGKILL)" in helper,
+        "helper_supervisor_input_without_stdin_conflict": "input=json.dumps(" in source
+        and "stdin=subprocess.PIPE" not in source,
         "claim_published_before_execute": main_source.index("publish_json_exclusive(ROOT / ATTEMPT_CLAIM") < main_source.index("execute_freeze("),
         "lease_wraps_claim_execute_and_result": main_source.index("with acquire_deepwide_api_lease(") < main_source.index("publish_json_exclusive(ROOT / ATTEMPT_CLAIM") < main_source.index("execute_freeze(") < main_source.index("publish_json_exclusive(ROOT / RESULT"),
         "raw_success_published_before_selector": execute_source.index("publish_exclusive(ROOT / relative, body)") < execute_source.index("runtime.select_and_render_population("),
@@ -227,9 +233,11 @@ def build_audit(*, now: int | None = None, tracked: bool = True) -> dict[str, An
         "initial_and_repair_commits_exact_and_ancestors": _changed_paths(INITIAL_IMPLEMENTATION_COMMIT)
         == INITIAL_IMPLEMENTATION_PATHS
         and _changed_paths(REPAIR_COMMIT) == REPAIR_PATHS
+        and _changed_paths(SUPERVISOR_REPAIR_COMMIT) == SUPERVISOR_REPAIR_PATHS
         and _ancestor(INITIAL_IMPLEMENTATION_COMMIT, head)
-        and _ancestor(REPAIR_COMMIT, head),
-        "tests_exact47_green": tests["passed"],
+        and _ancestor(REPAIR_COMMIT, head)
+        and _ancestor(SUPERVISOR_REPAIR_COMMIT, head),
+        "tests_exact48_green": tests["passed"],
         "runtime_dependency_closure_exact94_and_hash_bound": len(vector) == EXPECTED_CLOSURE_COUNT and runner.payload_sha256(vector) == EXPECTED_CLOSURE_VECTOR_SHA256 and runner.payload_sha256([row["path"] for row in vector]) == EXPECTED_CLOSURE_PATH_SHA256,
         "all_explicit_and_closure_files_tracked": not untracked,
         "privileged_runtime_field_access_zero": semantic["privileged_runtime_field_accesses"] == [],
@@ -257,6 +265,8 @@ def build_audit(*, now: int | None = None, tracked: bool = True) -> dict[str, An
         != Path("results/v25297_worldbank_population_freeze_v1_20260813.json")
         and runner.OUTPUT_ROOT
         != Path("outputs/v25297_worldbank_population_v1_20260813"),
+        "v25301_zero_provider_nogo_and_supervisor_fix_bound": runner._prior_nogo_barrier()
+        and invariants["helper_supervisor_input_without_stdin_conflict"],
     }
     findings = sorted(name for name, passed in checks.items() if not passed)
     value: dict[str, Any] = {
@@ -265,7 +275,11 @@ def build_audit(*, now: int | None = None, tracked: bool = True) -> dict[str, An
         "created_at_unix": int(time.time()) if now is None else int(now),
         "git": {"head": head, "target_main": target, "equal": head == target, "clean": clean},
         "fixed_inputs": _fixed_inputs(),
-        "implementation_commits": [INITIAL_IMPLEMENTATION_COMMIT, REPAIR_COMMIT],
+        "implementation_commits": [
+            INITIAL_IMPLEMENTATION_COMMIT,
+            REPAIR_COMMIT,
+            SUPERVISOR_REPAIR_COMMIT,
+        ],
         "source_manifest": runner._source_manifest(),
         "tests": tests,
         "runtime_dependency_vector": vector,
@@ -313,7 +327,7 @@ def validate_audit(value: Mapping[str, Any]) -> dict[str, Any]:
         or copied.get("role") != ROLE
         or copied.get("fixed_inputs") != {str(path): digest for path, digest in EXPECTED_FIXED.items()}
         or copied.get("implementation_commits")
-        != [INITIAL_IMPLEMENTATION_COMMIT, REPAIR_COMMIT]
+        != [INITIAL_IMPLEMENTATION_COMMIT, REPAIR_COMMIT, SUPERVISOR_REPAIR_COMMIT]
         or copied.get("source_manifest") != runner._source_manifest()
         or not _tests_exact(copied.get("tests"))
         or not isinstance(vector, list)
