@@ -40,17 +40,21 @@ from scripts import v25297_worldbank_get_helper as helper  # noqa: E402
 
 
 DATE = "20260813"
-ROLE = "v25297_worldbank_population_freeze"
-CLAIM_ROLE = "v25297_worldbank_population_attempt_claim"
-OUTPUT_ROOT = Path(f"outputs/v25297_worldbank_population_v1_{DATE}")
+ROLE = "v25301_worldbank_population_freeze"
+CLAIM_ROLE = "v25301_worldbank_population_attempt_claim"
+OUTPUT_ROOT = Path(f"outputs/v25301_worldbank_population_v1_{DATE}")
 CATALOG_RESPONSE = OUTPUT_ROOT / "catalog_response.bin"
 TARGET_RESPONSE_ROOT = OUTPUT_ROOT / "target_responses"
 POPULATION = OUTPUT_ROOT / "population.json"
-ATTEMPT_CLAIM = Path(f"results/v25297_worldbank_population_attempt_claim_v1_{DATE}.json")
-RESULT = Path(f"results/v25297_worldbank_population_freeze_v1_{DATE}.json")
-PREACTIVATION = Path(f"results/v25298_worldbank_population_preactivation_audit_v1_{DATE}.json")
-EXECUTION_START = Path(f"results/v25299_worldbank_population_execution_start_v1_{DATE}.json")
-POSTFREEZE_AUDIT = Path(f"results/v25300_worldbank_population_postfreeze_audit_v1_{DATE}.json")
+ATTEMPT_CLAIM = Path(f"results/v25301_worldbank_population_attempt_claim_v1_{DATE}.json")
+RESULT = Path(f"results/v25301_worldbank_population_freeze_v1_{DATE}.json")
+PREACTIVATION = Path(f"results/v25302_worldbank_population_repair_preactivation_audit_v1_{DATE}.json")
+EXECUTION_START = Path(f"results/v25303_worldbank_population_execution_start_v1_{DATE}.json")
+POSTFREEZE_AUDIT = Path(f"results/v25304_worldbank_population_postfreeze_audit_v1_{DATE}.json")
+REVOKED_START = Path(f"results/v25299_worldbank_population_execution_start_v1_{DATE}.json")
+REVOCATION = Path(f"results/v25300_v25299_worldbank_population_execution_start_revocation_v1_{DATE}.json")
+REVOKED_START_SHA256 = "0466629c5a2cf93313bb9e180595e2b94c187a5cc01b3dd31519f913dbf9a4e3"
+REVOCATION_SHA256 = "9d141608dd03d9bc24533643a6385738b4915977c005b6731ffdbea6b794f70f"
 SOURCE = Path("scripts/run_v25297_worldbank_population_freeze.py")
 HELPER = Path("scripts/v25297_worldbank_get_helper.py")
 TEST = Path("tests/test_run_v25297_worldbank_population_freeze.py")
@@ -163,6 +167,47 @@ def _git(*args: str) -> str:
         timeout=20,
         check=True,
     ).stdout.strip()
+
+
+def _revocation_barrier() -> bool:
+    try:
+        value = json.loads(_ordinary(REVOCATION).read_text(encoding="utf-8"))
+        effects = value.get("effect_boundary") or {}
+        root_cause = value.get("root_cause") or {}
+        return bool(
+            sha256(_ordinary(REVOKED_START)) == REVOKED_START_SHA256
+            and sha256(_ordinary(REVOCATION)) == REVOCATION_SHA256
+            and value.get("role")
+            == "v25300_v25299_worldbank_population_execution_start_revocation"
+            and value.get("status") == "pre_effect_revoked"
+            and value.get("revoked_execution_start", {}).get("sha256")
+            == REVOKED_START_SHA256
+            and effects
+            == {
+                "attempt_claim_created": False,
+                "catalog_or_target_provider_attempt_count": 0,
+                "model_search_evaluator_or_benchmark_effect_count": 0,
+                "output_root_created": False,
+                "population_result_created": False,
+                "shared_api_lease_acquired": False,
+            }
+            and root_cause.get("execution_start_records_git_parent_not_git_head")
+            is True
+            and root_cause.get(
+                "runner_read_missing_start_git_head_after_valid_parent_and_single_file_checks"
+            )
+            is True
+            and root_cause.get(
+                "successor_must_use_new_claim_result_output_preactivation_start_and_postaudit_paths"
+            )
+            is True
+            and value.get("authorization", {}).get(
+                "replacement_retry_resume_or_reuse_v25299"
+            )
+            is False
+        )
+    except (FileNotFoundError, OSError, TypeError, ValueError, json.JSONDecodeError):
+        return False
 
 
 def _protected_watchers_match() -> bool:
@@ -567,7 +612,7 @@ def execute_freeze(
     if population_value is not None and failure is None:
         envelope = {
             "artifact_version": 1,
-            "role": "v25297_private_frozen_worldbank_population",
+            "role": "v25301_private_frozen_worldbank_population",
             "candidate_target_keys": candidate_keys,
             "historical_indicator_manifest_sha256": payload_sha256(sorted(historical)),
             "population": population_value,
@@ -905,7 +950,8 @@ def _preactivation_authority() -> bool:
         authorization = value.get("authorization") or {}
         return bool(
             value.get("artifact_version") == 1
-            and value.get("role") == "v25298_worldbank_population_preactivation_audit"
+            and value.get("role")
+            == "v25302_worldbank_population_repair_preactivation_audit"
             and value.get("audit_valid") is True
             and value.get("findings") == []
             and value.get("source_manifest") == _source_manifest()
@@ -945,7 +991,7 @@ def _validate_execution_start(value: Mapping[str, Any], *, current_head: str) ->
     if (
         set(copied) != expected_keys
         or copied.get("artifact_version") != 1
-        or copied.get("role") != "v25299_worldbank_population_execution_start"
+        or copied.get("role") != "v25303_worldbank_population_execution_start"
         or isinstance(copied.get("created_at_unix"), bool)
         or not isinstance(copied.get("created_at_unix"), int)
         or re.fullmatch(r"[0-9a-f]{40}", current_head) is None
@@ -978,6 +1024,7 @@ def _validate_execution_start(value: Mapping[str, Any], *, current_head: str) ->
         or copied.get("mapping_gold_category_question_type_split_evaluator_score_reward_or_historical_correctness_read") is not False
         or copied.get("entropy_or_information_gain_assigns_signed_credit") is not False
         or not _preactivation_authority()
+        or not _revocation_barrier()
         or signature != payload_sha256(unsigned)
     ):
         raise ValueError("V2.52.99 execution start drifted")
@@ -1005,11 +1052,9 @@ def main() -> None:
     if not _protected_watchers_match():
         raise RuntimeError("V2.52.97 protected watcher identity drifted")
     start_sha = sha256(start_path)
-    if start.get("git_head") != head:
-        raise RuntimeError("V2.52.97 start/head boundary drifted")
     with acquire_deepwide_api_lease(
         ROOT,
-        owner="v25297_worldbank_population_freeze",
+        owner="v25301_worldbank_population_freeze",
         purpose="single_catalog_and_single_48_target_response_population_freeze",
     ):
         claim = build_attempt_claim(head=head, execution_start_sha256=start_sha)

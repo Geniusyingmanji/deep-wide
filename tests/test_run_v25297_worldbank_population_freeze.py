@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import contextlib
 import hashlib
 import json
 import os
@@ -230,7 +231,7 @@ class V25297WorldBankPopulationFreezeTests(unittest.TestCase):
             fake.write_text("{}\n", encoding="utf-8")
             value = {
                 "artifact_version": 1,
-                "role": "v25299_worldbank_population_execution_start",
+                "role": "v25303_worldbank_population_execution_start",
                 "created_at_unix": 1,
                 "git_parent": "b" * 40,
                 "preactivation_audit": {
@@ -274,7 +275,7 @@ class V25297WorldBankPopulationFreezeTests(unittest.TestCase):
 
             with mock.patch.object(target, "_ordinary", side_effect=ordinary), mock.patch.object(
                 target, "_preactivation_authority", return_value=True
-            ):
+            ), mock.patch.object(target, "_revocation_barrier", return_value=True):
                 checked = target._validate_execution_start(value, current_head="a" * 40)
             self.assertEqual(checked, value)
             changed = copy.deepcopy(value)
@@ -283,8 +284,78 @@ class V25297WorldBankPopulationFreezeTests(unittest.TestCase):
             changed["start_payload_sha256"] = target.payload_sha256(changed)
             with mock.patch.object(target, "_ordinary", side_effect=ordinary), mock.patch.object(
                 target, "_preactivation_authority", return_value=True
-            ), self.assertRaises(ValueError):
+            ), mock.patch.object(target, "_revocation_barrier", return_value=True), self.assertRaises(ValueError):
                 target._validate_execution_start(changed, current_head="a" * 40)
+
+    def test_revocation_barrier_proves_old_start_failed_before_all_effects(self) -> None:
+        self.assertTrue(target._revocation_barrier())
+        self.assertNotEqual(
+            target.ATTEMPT_CLAIM,
+            Path("results/v25297_worldbank_population_attempt_claim_v1_20260813.json"),
+        )
+        self.assertNotEqual(
+            target.RESULT,
+            Path("results/v25297_worldbank_population_freeze_v1_20260813.json"),
+        )
+        self.assertNotEqual(
+            target.OUTPUT_ROOT,
+            Path("outputs/v25297_worldbank_population_v1_20260813"),
+        )
+
+    def test_main_valid_single_file_start_reaches_claim_then_execute_without_git_head_field(self) -> None:
+        head = "a" * 40
+        parent = "b" * 40
+        with tempfile.TemporaryDirectory(dir=ROOT) as directory:
+            fake_root = Path(directory)
+            start = fake_root / "start.json"
+            start.write_text("{}\n", encoding="utf-8")
+            published = []
+
+            def git(*args: str) -> str:
+                if args in {("rev-parse", "HEAD"), ("rev-parse", "target/main")}:
+                    return head
+                if args == ("status", "--porcelain"):
+                    return ""
+                if args == ("rev-parse", f"{head}^"):
+                    return parent
+                if args == ("diff-tree", "--no-commit-id", "--name-only", "-r", head):
+                    return str(target.EXECUTION_START)
+                raise AssertionError(args)
+
+            result = {
+                "decision": "go",
+                "failure_code": None,
+                "effect_accounting": {
+                    "catalog_provider_attempt_count": 1,
+                    "target_provider_attempt_count": 48,
+                },
+                "target_transport": {"successful_response_count": 48},
+                "population": {"selected_target_count": 4, "task_count": 12},
+            }
+            with mock.patch.object(target, "ROOT", fake_root), mock.patch.object(
+                target, "_git", side_effect=git
+            ), mock.patch.object(target, "_ordinary", return_value=start), mock.patch.object(
+                target, "_validate_execution_start", return_value={"git_parent": parent}
+            ), mock.patch.object(
+                target, "_protected_watchers_match", return_value=True
+            ), mock.patch.object(
+                target, "sha256", return_value="c" * 64
+            ), mock.patch.object(
+                target,
+                "acquire_deepwide_api_lease",
+                return_value=contextlib.nullcontext({}),
+            ), mock.patch.object(
+                target, "build_attempt_claim", return_value={"claim": True}
+            ), mock.patch.object(
+                target,
+                "publish_json_exclusive",
+                side_effect=lambda path, value: published.append((path, value)),
+            ), mock.patch.object(
+                target, "execute_freeze", return_value=result
+            ) as execute:
+                target.main()
+            self.assertEqual([path for path, _value in published], [fake_root / target.ATTEMPT_CLAIM, fake_root / target.RESULT])
+            execute.assert_called_once()
 
     def test_raw_and_json_publish_are_create_exclusive(self) -> None:
         with tempfile.TemporaryDirectory(dir=ROOT) as directory:
