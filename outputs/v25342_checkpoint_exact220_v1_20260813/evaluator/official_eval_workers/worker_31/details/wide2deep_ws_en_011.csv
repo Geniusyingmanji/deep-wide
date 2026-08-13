@@ -1,0 +1,273 @@
+awardtype,awardtype_before_map,exist_flag_gt,exist_flag_response,awardtype_exact_match,awardtype_exact_match_eval_msg,bodystyle_llm_judge,bodystyle_llm_judge_eval_msg,bodystyle_query,bodystyle_response,doors_exact_match,doors_exact_match_eval_msg,doors_query,doors_response,drivetrain(s)_llm_judge,drivetrain(s)_llm_judge_eval_msg,drivetrain(s)_query,drivetrain(s)_response,drivingexperiencescore2025_exact_match,drivingexperiencescore2025_exact_match_eval_msg,drivingexperiencescore2025_query,drivingexperiencescore2025_response,fueltype(s)_llm_judge,fueltype(s)_llm_judge_eval_msg,fueltype(s)_query,fueltype(s)_response,majortrims_llm_judge,majortrims_llm_judge_eval_msg,majortrims_query,majortrims_response,model_llm_judge,model_llm_judge_eval_msg,model_query,model_response,overallratings2025_exact_match,overallratings2025_exact_match_eval_msg,overallratings2025_query,overallratings2025_response,passengers_exact_match,passengers_exact_match_eval_msg,passengers_query,passengers_response,quality&reliabilityscore2025_exact_match,quality&reliabilityscore2025_exact_match_eval_msg,quality&reliabilityscore2025_query,quality&reliabilityscore2025_response,resalevaluescore2025_exact_match,resalevaluescore2025_exact_match_eval_msg,resalevaluescore2025_query,resalevaluescore2025_response,vehiclemake_llm_judge,vehiclemake_llm_judge_eval_msg,vehiclemake_query,vehiclemake_response,year_exact_match,year_exact_match_eval_msg,year_query,year_response
+compactcar,Compact Sedan,,,1.0,key_match,1.0,"- idx_0: Response exactly matches the target “sedan” → 1
+- idx_1: Response exactly matches the target “sedan” → 1
+- idx_2: Response exactly matches the target “suv” → 1
+- idx_3: Response exactly matches the target “suv” → 1
+
+```json
+{
+  ""idx_0"": 1,
+  ""idx_1"": 1,
+  ""idx_2"": 1,
+  ""idx_3"": 1
+}
+```",sedan,sedan,1.0,"exact match, response: 4, target: 4",4,4,0.0,"```json
+{
+  ""idx_0"": 0,
+  ""idx_1"": 1,
+  ""idx_2"": 0,
+  ""idx_3"": 1
+}
+```",fwd,"fwd,awd",0.0,"exact not match, response: 78, target: 77",77,78,1.0,"- **idx_0:** Response exactly matches the target: gasoline and hybrid. **Score: 1**
+- **idx_1:** Response omits hybrid. **Score: 0**
+- **idx_2:** Response omits mild-hybrid; gasoline alone is incomplete. **Score: 0**
+- **idx_3:** Response omits hybrid. **Score: 0**
+
+```json
+{
+  ""idx_0"": 1,
+  ""idx_1"": 0,
+  ""idx_2"": 0,
+  ""idx_3"": 0
+}
+```","gasoline,hybrid","gasoline,hybrid",0.0,"- **idx_0:** Response lists different trims and omits several target trims; entities do not match. **Score: 0**
+- **idx_1:** Response gives generic luxury/sport/V-Series trims rather than the specified 330i, 330e, and M340i models. **Score: 0**
+- **idx_2:** Response gives generic trim categories rather than the specified GLC models. **Score: 0**
+- **idx_3:** Response lists LT, Activ, and RS, which are different from the target trims. **Score: 0**
+
+```json
+{
+  ""idx_0"": 0,
+  ""idx_1"": 0,
+  ""idx_2"": 0,
+  ""idx_3"": 0
+}
+```","l,le,se,xle,xse,apexedition,hybridle/se","le,se,fx,xse,hybridle,hybridse,hybridnightshade,hybridxle",1.0,"- **idx_0:** “corolla” exactly matches “corolla” → **1**
+- **idx_1:** “ct4” and “3series” are different vehicle models → **0**
+- **idx_2:** “xt4” and “glc” are different vehicle models → **0**
+- **idx_3:** “equinox” and “rav4” are different vehicle models → **0**
+
+```json
+{
+  ""idx_0"": 1,
+  ""idx_1"": 0,
+  ""idx_2"": 0,
+  ""idx_3"": 0
+}
+```",corolla,corolla,0.0,"exact not match, response: 81, target: 80",80,81,1.0,"exact match, response: 5, target: 5",5,5,0.0,"exact not match, response: 84, target: 85",85,84,0.0,"exact not match, response: 82, target: 75",75,82,1.0,"- **idx_0**: “toyota” exactly matches “toyota” → **1**
+- **idx_1**: “cadillac” and “bmw” are different entities → **0**
+- **idx_2**: “cadillac” and “mercedes-benz” are different entities → **0**
+- **idx_3**: “chevrolet” and “toyota” are different entities → **0**
+
+```json
+{
+  ""idx_0"": 1,
+  ""idx_1"": 0,
+  ""idx_2"": 0,
+  ""idx_3"": 0
+}
+```",toyota,toyota,0.0,"exact not match, response: 2025, target: 2022",2022,2025
+compactpremiumcar,Compact Luxury Sedan,,,1.0,key_match,1.0,"- idx_0: Response exactly matches the target “sedan” → 1
+- idx_1: Response exactly matches the target “sedan” → 1
+- idx_2: Response exactly matches the target “suv” → 1
+- idx_3: Response exactly matches the target “suv” → 1
+
+```json
+{
+  ""idx_0"": 1,
+  ""idx_1"": 1,
+  ""idx_2"": 1,
+  ""idx_3"": 1
+}
+```",sedan,sedan,1.0,"exact match, response: 4, target: 4",4,4,1.0,"```json
+{
+  ""idx_0"": 0,
+  ""idx_1"": 1,
+  ""idx_2"": 0,
+  ""idx_3"": 1
+}
+```",rwd/awd,"rwd,awd",0.0,"exact not match, response: 85, target: 81",81,85,0.0,"- **idx_0:** Response exactly matches the target: gasoline and hybrid. **Score: 1**
+- **idx_1:** Response omits hybrid. **Score: 0**
+- **idx_2:** Response omits mild-hybrid; gasoline alone is incomplete. **Score: 0**
+- **idx_3:** Response omits hybrid. **Score: 0**
+
+```json
+{
+  ""idx_0"": 1,
+  ""idx_1"": 0,
+  ""idx_2"": 0,
+  ""idx_3"": 0
+}
+```","gasoline,hybrid",gasoline,0.0,"- **idx_0:** Response lists different trims and omits several target trims; entities do not match. **Score: 0**
+- **idx_1:** Response gives generic luxury/sport/V-Series trims rather than the specified 330i, 330e, and M340i models. **Score: 0**
+- **idx_2:** Response gives generic trim categories rather than the specified GLC models. **Score: 0**
+- **idx_3:** Response lists LT, Activ, and RS, which are different from the target trims. **Score: 0**
+
+```json
+{
+  ""idx_0"": 0,
+  ""idx_1"": 0,
+  ""idx_2"": 0,
+  ""idx_3"": 0
+}
+```","330i,330e(phev),m340i","luxury,premiumluxury,sport,v-series,v-seriesblackwing",0.0,"- **idx_0:** “corolla” exactly matches “corolla” → **1**
+- **idx_1:** “ct4” and “3series” are different vehicle models → **0**
+- **idx_2:** “xt4” and “glc” are different vehicle models → **0**
+- **idx_3:** “equinox” and “rav4” are different vehicle models → **0**
+
+```json
+{
+  ""idx_0"": 1,
+  ""idx_1"": 0,
+  ""idx_2"": 0,
+  ""idx_3"": 0
+}
+```",3series,ct4,0.0,"exact not match, response: 85, target: 81",81,85,1.0,"exact match, response: 5, target: 5",5,5,0.0,"exact not match, response: 87, target: 81",81,87,1.0,"exact match, response: 83, target: 83",83,83,0.0,"- **idx_0**: “toyota” exactly matches “toyota” → **1**
+- **idx_1**: “cadillac” and “bmw” are different entities → **0**
+- **idx_2**: “cadillac” and “mercedes-benz” are different entities → **0**
+- **idx_3**: “chevrolet” and “toyota” are different entities → **0**
+
+```json
+{
+  ""idx_0"": 1,
+  ""idx_1"": 0,
+  ""idx_2"": 0,
+  ""idx_3"": 0
+}
+```",bmw,cadillac,0.0,"exact not match, response: 2025, target: 2022",2022,2025
+compactpremiumsuv,Compact Luxury SUV,,,1.0,key_match,1.0,"- idx_0: Response exactly matches the target “sedan” → 1
+- idx_1: Response exactly matches the target “sedan” → 1
+- idx_2: Response exactly matches the target “suv” → 1
+- idx_3: Response exactly matches the target “suv” → 1
+
+```json
+{
+  ""idx_0"": 1,
+  ""idx_1"": 1,
+  ""idx_2"": 1,
+  ""idx_3"": 1
+}
+```",suv,suv,1.0,"exact match, response: 4, target: 4",4,4,0.0,"```json
+{
+  ""idx_0"": 0,
+  ""idx_1"": 1,
+  ""idx_2"": 0,
+  ""idx_3"": 1
+}
+```",rwd/awd,"fwd,awd",0.0,"exact not match, response: 77, target: 79",79,77,0.0,"- **idx_0:** Response exactly matches the target: gasoline and hybrid. **Score: 1**
+- **idx_1:** Response omits hybrid. **Score: 0**
+- **idx_2:** Response omits mild-hybrid; gasoline alone is incomplete. **Score: 0**
+- **idx_3:** Response omits hybrid. **Score: 0**
+
+```json
+{
+  ""idx_0"": 1,
+  ""idx_1"": 0,
+  ""idx_2"": 0,
+  ""idx_3"": 0
+}
+```","gasoline,mild-hybrid",gasoline,0.0,"- **idx_0:** Response lists different trims and omits several target trims; entities do not match. **Score: 0**
+- **idx_1:** Response gives generic luxury/sport/V-Series trims rather than the specified 330i, 330e, and M340i models. **Score: 0**
+- **idx_2:** Response gives generic trim categories rather than the specified GLC models. **Score: 0**
+- **idx_3:** Response lists LT, Activ, and RS, which are different from the target trims. **Score: 0**
+
+```json
+{
+  ""idx_0"": 0,
+  ""idx_1"": 0,
+  ""idx_2"": 0,
+  ""idx_3"": 0
+}
+```","glc300,glc3004matic,amgglc43","luxury,premiumluxury,sport",0.0,"- **idx_0:** “corolla” exactly matches “corolla” → **1**
+- **idx_1:** “ct4” and “3series” are different vehicle models → **0**
+- **idx_2:** “xt4” and “glc” are different vehicle models → **0**
+- **idx_3:** “equinox” and “rav4” are different vehicle models → **0**
+
+```json
+{
+  ""idx_0"": 1,
+  ""idx_1"": 0,
+  ""idx_2"": 0,
+  ""idx_3"": 0
+}
+```",glc,xt4,0.0,"exact not match, response: 81, target: 79",79,81,1.0,"exact match, response: 5, target: 5",5,5,0.0,"exact not match, response: 86, target: 81",81,86,0.0,"exact not match, response: 80, target: 75",75,80,0.0,"- **idx_0**: “toyota” exactly matches “toyota” → **1**
+- **idx_1**: “cadillac” and “bmw” are different entities → **0**
+- **idx_2**: “cadillac” and “mercedes-benz” are different entities → **0**
+- **idx_3**: “chevrolet” and “toyota” are different entities → **0**
+
+```json
+{
+  ""idx_0"": 1,
+  ""idx_1"": 0,
+  ""idx_2"": 0,
+  ""idx_3"": 0
+}
+```",mercedes-benz,cadillac,0.0,"exact not match, response: 2025, target: 2022",2022,2025
+compactsuv,Compact SUV,,,1.0,key_match,1.0,"- idx_0: Response exactly matches the target “sedan” → 1
+- idx_1: Response exactly matches the target “sedan” → 1
+- idx_2: Response exactly matches the target “suv” → 1
+- idx_3: Response exactly matches the target “suv” → 1
+
+```json
+{
+  ""idx_0"": 1,
+  ""idx_1"": 1,
+  ""idx_2"": 1,
+  ""idx_3"": 1
+}
+```",suv,suv,1.0,"exact match, response: 4, target: 4",4,4,1.0,"```json
+{
+  ""idx_0"": 0,
+  ""idx_1"": 1,
+  ""idx_2"": 0,
+  ""idx_3"": 1
+}
+```",fwd/awd,"fwd,awd",0.0,"exact not match, response: 75, target: 81",81,75,0.0,"- **idx_0:** Response exactly matches the target: gasoline and hybrid. **Score: 1**
+- **idx_1:** Response omits hybrid. **Score: 0**
+- **idx_2:** Response omits mild-hybrid; gasoline alone is incomplete. **Score: 0**
+- **idx_3:** Response omits hybrid. **Score: 0**
+
+```json
+{
+  ""idx_0"": 1,
+  ""idx_1"": 0,
+  ""idx_2"": 0,
+  ""idx_3"": 0
+}
+```","gasoline,hybrid",gasoline,0.0,"- **idx_0:** Response lists different trims and omits several target trims; entities do not match. **Score: 0**
+- **idx_1:** Response gives generic luxury/sport/V-Series trims rather than the specified 330i, 330e, and M340i models. **Score: 0**
+- **idx_2:** Response gives generic trim categories rather than the specified GLC models. **Score: 0**
+- **idx_3:** Response lists LT, Activ, and RS, which are different from the target trims. **Score: 0**
+
+```json
+{
+  ""idx_0"": 0,
+  ""idx_1"": 0,
+  ""idx_2"": 0,
+  ""idx_3"": 0
+}
+```","le,xle,xlepremium,adventure,trdoff-road,limited,hybridxle/limited","lt,activ,rs",0.0,"- **idx_0:** “corolla” exactly matches “corolla” → **1**
+- **idx_1:** “ct4” and “3series” are different vehicle models → **0**
+- **idx_2:** “xt4” and “glc” are different vehicle models → **0**
+- **idx_3:** “equinox” and “rav4” are different vehicle models → **0**
+
+```json
+{
+  ""idx_0"": 1,
+  ""idx_1"": 0,
+  ""idx_2"": 0,
+  ""idx_3"": 0
+}
+```",rav4,equinox,0.0,"exact not match, response: 82, target: 79",79,82,1.0,"exact match, response: 5, target: 5",5,5,0.0,"exact not match, response: 88, target: 81",81,88,0.0,"exact not match, response: 82, target: 75",75,82,0.0,"- **idx_0**: “toyota” exactly matches “toyota” → **1**
+- **idx_1**: “cadillac” and “bmw” are different entities → **0**
+- **idx_2**: “cadillac” and “mercedes-benz” are different entities → **0**
+- **idx_3**: “chevrolet” and “toyota” are different entities → **0**
+
+```json
+{
+  ""idx_0"": 1,
+  ""idx_1"": 0,
+  ""idx_2"": 0,
+  ""idx_3"": 0
+}
+```",toyota,chevrolet,0.0,"exact not match, response: 2025, target: 2022",2022,2025

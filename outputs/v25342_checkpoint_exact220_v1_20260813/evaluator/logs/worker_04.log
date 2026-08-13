@@ -1,0 +1,74 @@
+INFO: Pandarallel will run on 8 workers.
+INFO: Pandarallel will use Memory file system to transfer data between the main process and workers.
+{"event": "eval_start", "selected": 7, "resume_committed": 0, "committed_errors": 0, "crash_only_resume": false}
+{"event": "eval_done", "idx": 1, "instance_id": "deep2wide_result_27_澳门", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 9.332, "running_n": 1}
+{"event": "eval_done", "idx": 2, "instance_id": "deep2wide_result_28_延边朝鲜族自治州", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.664, "running_n": 2}
+2026-08-13 08:58:22.543 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 街道名称 | 总面积 | 政府驻地 | 下辖社区数量 | 地理位置 |
+| --- | --- | --- | --- | ...
+2026-08-13 08:58:26.432 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{}
+```
+2026-08-13 08:58:26.433 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 街道名称, primary_key_map {}
+2026-08-13 08:58:26.440 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_29_浙江省东阳市, df_inner shape: (0, 10), answer_df shape: (6, 5), response_df shape: (1, 6)
+2026-08-13 08:58:26.444 | ERROR    | eval.evaluation.evaluation:evaluate_single_query:401 - evaluator error: 
+Traceback (most recent call last):
+  File "/home/azureuser/workspace-gzy/zyf/deep/external/Marco-Search-Agent/Marco-DeepResearch-Family/DeepWideSearch/eval/evaluation/evaluation.py", line 315, in evaluate_single_query
+    df_inner_score[f"{col}_{metric_func_name}"] = (
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/azureuser/workspace-gzy/zyf/deep/.venv-eval/lib/python3.12/site-packages/pandas/core/frame.py", line 4312, in __setitem__
+    self._set_item_frame_value(key, value)
+  File "/home/azureuser/workspace-gzy/zyf/deep/.venv-eval/lib/python3.12/site-packages/pandas/core/frame.py", line 4470, in _set_item_frame_value
+    raise ValueError(
+ValueError: Cannot set a DataFrame with multiple columns to the single column 总面积_number_near
+
+{"event": "eval_done", "idx": 3, "instance_id": "deep2wide_result_29_浙江省东阳市", "score": null, "entity_acc": null, "f1_by_row": null, "f1_by_item": null, "column_f1": null, "error": "RuntimeError: official evaluator reported an internal error", "elapsed_seconds": 6.399, "running_n": 3}
+{"event": "eval_done", "idx": 4, "instance_id": "deep2wide_result_30_犹格索托斯的庭院", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.69, "running_n": 4}
+{"event": "eval_done", "idx": 5, "instance_id": "deep2wide_result_31_四川省九大高原湖泊", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 1.03, "running_n": 5}
+{"event": "eval_done", "idx": 6, "instance_id": "deep2wide_result_32_海南省", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.386, "running_n": 6}
+2026-08-13 08:58:37.063 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 名称 | 行政类别 | 面积 | 政府驻地 | 火车站 |
+| --- | --- | --- | --- | --- | ...
+2026-08-13 08:58:39.613 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "蕉城区": "蕉城区",
+  "霞浦县": "霞浦县",
+  "古田县": "古田县",
+  "屏南县": "屏南县",
+  "寿宁县": "寿宁县",
+  "周宁县": "周宁县",
+  "柘荣县": "柘荣县",
+  "福安市": "福安市",
+  "福鼎市": "福鼎市"
+}
+```
+2026-08-13 08:58:39.613 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 名称, primary_key_map {'蕉城区': '蕉城区', '霞浦县': '霞浦县', '古田县': '古田县', '屏南县': '屏南县', '寿宁县': '寿宁县', '周宁县': '周宁县', '柘荣县': '柘荣县', '福安市': '福安市', '福鼎市': '福鼎市'}
+2026-08-13 08:58:39.620 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_33_宁德市, df_inner shape: (9, 10), answer_df shape: (9, 5), response_df shape: (9, 6)
+2026-08-13 08:58:39.621 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 县, target: 县
+2026-08-13 08:58:39.621 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 县, target: 县
+2026-08-13 08:58:39.621 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 县, target: 县
+2026-08-13 08:58:39.621 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 县, target: 县
+2026-08-13 08:58:39.621 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 县, target: 县
+2026-08-13 08:58:39.621 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 县, target: 县
+2026-08-13 08:58:39.621 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 市辖区, target: 市辖区
+2026-08-13 08:58:39.621 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 县级市, target: 县级市
+2026-08-13 08:58:39.621 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 县级市, target: 县级市
+2026-08-13 08:58:39.622 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_33_宁德市, col 行政类别, metric_func_name exact_match, score [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-13 08:58:39.622 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 1716.0, target: 1489.6
+2026-08-13 08:58:39.622 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 2373.0, target: 2373.0
+2026-08-13 08:58:39.622 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1487.0, target: 1487.0
+2026-08-13 08:58:39.622 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1424.0, target: 1432.97
+2026-08-13 08:58:39.622 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1047.0, target: 1035.0
+2026-08-13 08:58:39.622 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 538.0, target: 543.9
+2026-08-13 08:58:39.622 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1505.0, target: 1505.0
+2026-08-13 08:58:39.623 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1880.0, target: 1880.0
+2026-08-13 08:58:39.623 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 1526.0, target: 1526.31
+2026-08-13 08:58:39.623 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_33_宁德市, col 面积, metric_func_name number_near, score [0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-13 08:58:48.902 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_33_宁德市, col 政府驻地, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 0, 1, 1]
+2026-08-13 08:58:54.721 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_33_宁德市, col 火车站, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 0, 0, 1]
+2026-08-13 08:58:54.730 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_33_宁德市, P/R/F1 by unique_columns: 1.0000/1.0000/1.0000
+2026-08-13 08:58:54.730 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_33_宁德市, P/R/F1 by row: 0.6667/0.6667/0.6667
+2026-08-13 08:58:54.730 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_33_宁德市, P/R/F1 by item: 0.9111/0.9111/0.9111
+2026-08-13 08:58:54.732 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_33_宁德市, final table score: 0.0
+{"event": "eval_done", "idx": 7, "instance_id": "deep2wide_result_33_宁德市", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.6666666666666666, "f1_by_item": 0.9111111111111111, "column_f1": 1.0, "error": null, "elapsed_seconds": 22.111, "running_n": 7}
+SUMMARY {"n": 7, "valid_n": 6, "errors": 1, "complete": false, "judge_calls_current_process": 11, "score": 0.0, "entity_acc": 0.16666666666666666, "precision_by_row": 0.1111111111111111, "recall_by_row": 0.1111111111111111, "f1_by_row": 0.1111111111111111, "precision_by_item": 0.15185185185185185, "recall_by_item": 0.15185185185185185, "f1_by_item": 0.15185185185185185, "column_precision": 0.16666666666666666, "column_recall": 0.16666666666666666, "column_f1": 0.16666666666666666}
