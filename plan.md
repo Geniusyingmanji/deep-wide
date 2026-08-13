@@ -1,5 +1,19 @@
 # OWIC-DeepWide 研究与实施计划
 
+> 版本：6.117
+>
+> **6.117 V2.52.92 第三槽自然入口与历史转化风险诊断（2026-08-13）：为避免仅凭synthetic正例就消费fresh人口，诊断先绑定V2.52.91权威audit、V2.48.57冻结runtime/summary/forward audit、220个task result envelope的路径+内容SHA向量，以及V2.48.84历史coverage forward/result audit。诊断器逐一通过冻结父validator验证220/220 envelope，并只在内存中用V2.52.89当前语义重算Unknown；输出不保存或发出task identity、prediction、逐题Unknown、题面、query、URL、page、gold、category、score或credential。实现与权威aggregate-only结果分别以`1e649288 / 6694fe68`推送；结果`diagnosis_valid=true / findings=[]`、14/14 checks、payload SHA-256=`9c2a01d0...d1bc`。**
+>
+> **V2.48.57冻结220题中218题恰用2次model，42题按V2.52.89当前词表含至少一个可修改value-cell Unknown；交集为41题，即pre-page eligibility上界`41/220=18.636%`，总Unknown value cells为1465。旧telemetry与当前语义在217/220题一致；3题差异来自旧telemetry把首列row key也计数且不识别`none`，当前V2.52.90只统计非首列可修改value cell并识别`none`。因此eligibility使用当前冻结语义，不把旧telemetry当authority。**
+>
+> **`41/220`不是完整机制覆盖率：V2.48.57旧task surface没有持久化same-forward page bytes，无法重建完整page-prefix、revision prompt长度、same-page support、conflict、supported fill或prediction change。历史V2.48.84虽然有160 valid bundle、956 usable pages和153次revision call，却得到57 invalid proposal、96 no-supported-change、0 admitted change、0 prediction change；该不同runtime/threshold结果不能转移成V2.52.90事件率或效应估计，但构成material conversion-risk prior。**
+>
+> **下一步仍只授权fresh/disjoint shared-prefix population与protocol design，不授权external launch/evaluator/220。新门必须首先在同一次parent forward和同一page bytes上观测`prepage eligible → complete prefix → prompt within cap → supported fill → attributable prediction change`漏斗；supported fill或prediction change为0则严格NO-GO且不打开evaluator。只有机制非零、query/fetch完全相等、总model≤3、caps不变后，才允许独立post-freeze固定分母评价；质量GO继续要求Exact严格增加、Entity/Row/Item/Column/Composite全不退且fallback/invalid/outer failure不增。**
+>
+> **DeepWideBench口径不变：最新完整V2.52.67=`5/220 / Composite 0.407328`；单轮峰值V2.48.57=`9/220 / 0.457249`但未稳定复制。无Avg@4、leaderboard或SOTA证据，当前没有新benchmark/model/evaluator运行。**
+>
+> **阅读规则：本文件append-only；顶部6.117覆盖6.116及后文所有较早的当前权限、下一步与分数口径。**
+
 > 版本：6.116
 >
 > **6.116 V2.52.89–91 normal-path monotone Unknown fill、第三槽集成与 clean-build 审计（2026-08-13）：V2.52.89新增纯本地merger，只允许将baseline中的Unknown替换为same-forward完整页面中机械绑定的值；headers、row key/order/count、已知cell必须逐字不变，任一已知修改或结构漂移整份proposal拒绝，非integral/缺失支持拒绝对应fill，检测到同一row/field的不同bound value时拒绝该fill。零admission保持baseline原始bytes；entropy/IG只记录shadow information gain，不参与admission或credit sign。初始实现与exact-preservation加固分别以`35e153cf / 0ae68de3`推送。**
