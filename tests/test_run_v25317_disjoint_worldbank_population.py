@@ -106,6 +106,7 @@ class V25317DisjointWorldBankPopulationTests(unittest.TestCase):
         fail_one: bool = False,
         overlap_one: bool = False,
         mismatch_one: bool = False,
+        catalog_mismatch: bool = False,
     ):
         authority = target._build_authority()
         catalog = _catalog(authority)
@@ -122,7 +123,10 @@ class V25317DisjointWorldBankPopulationTests(unittest.TestCase):
             del timeout
             calls.append(url)
             if url == target.CATALOG_URL:
-                return _receipt(url, maximum, catalog)
+                body, receipt = _receipt(url, maximum, catalog)
+                if catalog_mismatch:
+                    receipt["response_sha256"] = "e" * 64
+                return body, receipt
             indicator = url.split("/indicator/", 1)[1].split("?", 1)[0]
             page = int(url.split("page=", 1)[1].split("&", 1)[0])
             body = _page(indicator, page, consumed_entities)
@@ -213,6 +217,21 @@ class V25317DisjointWorldBankPopulationTests(unittest.TestCase):
         self.assertEqual(
             value["target_transport"]["response_body_receipt_mismatch_count"], 1
         )
+
+    def test_catalog_body_receipt_mismatch_stops_before_target_batch(self) -> None:
+        get, calls = self._get(catalog_mismatch=True)
+        value = target.execute_freeze(
+            head="a" * 40,
+            execution_start_sha256="b" * 64,
+            attempt_claim_sha256="c" * 64,
+            get=get,
+            persist=False,
+            now=1,
+        )
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(value["decision"], "no_go")
+        self.assertEqual(value["failure_code"], "catalog_body_receipt_mismatch")
+        self.assertEqual(value["target_transport"]["provider_attempt_count"], 0)
 
     def test_claim_and_result_tamper_fail_closed(self) -> None:
         claim = target.build_attempt_claim(

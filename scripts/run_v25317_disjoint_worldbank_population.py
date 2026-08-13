@@ -351,6 +351,10 @@ def execute_freeze(
         publish_exclusive(ROOT / CATALOG_RESPONSE, catalog_body)
     if catalog_body is None:
         failure = "catalog_transport"
+    elif hashlib.sha256(catalog_body).hexdigest() != str(
+        catalog_receipt.get("response_sha256")
+    ):
+        failure = "catalog_body_receipt_mismatch"
     elif catalog_elapsed > CATALOG_PHASE_HARD_WALL_SECONDS:
         failure = "catalog_hard_wall"
     else:
@@ -977,8 +981,39 @@ def _preactivation_authority() -> bool:
         signature = unsigned.pop("audit_payload_sha256", None)
         authorization = value.get("authorization") or {}
         return bool(
-            value.get("role")
+            set(value)
+            == {
+                "artifact_version",
+                "role",
+                "created_at_unix",
+                "git",
+                "fixed_inputs",
+                "implementation_commit",
+                "source_manifest",
+                "tests",
+                "runtime_dependency_vector",
+                "runtime_dependency_vector_sha256",
+                "runtime_dependency_path_sha256",
+                "semantic_audit",
+                "runtime_invariants",
+                "disjointness_contract",
+                "protected_watchers",
+                "shared_api_lease_inactive",
+                "active_conflicts",
+                "future_surfaces_pristine",
+                "checks",
+                "findings",
+                "audit_valid",
+                "mapping_gold_category_question_type_split_evaluator_score_reward_or_historical_correctness_read",
+                "network_model_search_fetch_evaluator_benchmark_or_api_called",
+                "entropy_or_information_gain_assigns_signed_credit",
+                "authorization",
+                "audit_payload_sha256",
+            }
+            and value.get("role")
             == "v25318_disjoint_worldbank_population_preactivation_audit"
+            and isinstance(value.get("created_at_unix"), int)
+            and not isinstance(value.get("created_at_unix"), bool)
             and value.get("audit_valid") is True
             and value.get("findings") == []
             and value.get("source_manifest") == _source_manifest()
