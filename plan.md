@@ -1,5 +1,19 @@
 # OWIC-DeepWide 研究与实施计划
 
+> 版本：6.113
+>
+> **6.113 V2.52.78–83 paired checkpoint reliability 唯一20题forward与严格GO（2026-08-13）：V2.52.78把candidate定义为同一次真实control forward的本地固定`result_envelope_validate`故障投影；每题只执行一次真实检索/模型路径，control使用clean V2.52.71 validated-production checkpoint，candidate只能从同一checkpoint恢复，额外query/fetch/model/token必须全为0。无可信checkpoint或control自然恢复时整题不可配对并使门fail closed；deterministic production fallback仍可作为可信checkpoint。V2.52.79/81分别完成runtime/build与external closure审计，V2.52.80 protocol固定20题、20 executor、16 model slot、真实上限`4 query / 14 fetch / 4 model`、0 outer failure和0 budget rejection。**
+>
+> **V2.52.82 launch与V2.52.83 post-forward auditor实现的四组回归为`8+5+12+7=32/32`；人工label-blind复核确认`category/question_type/split/gold/score/evaluator`只出现在fail-closed声明、测试与forward完成后的receipt拒绝清单，不进入runtime路由、prompt、memory或candidate。implementation、32/32 preactivation、单文件execution-start依次以`ac2eac6a / 411a917f / 8b353758`推送；preaudit 17/17检查全绿，start前claim/result/audit/output均pristine，GPT-5.6端口可达、shared lease空闲、四个protected watcher identity不变。**
+>
+> **唯一forward在`63.521865s`完成20/20 terminal/model-generated，0 fallback、0 outer failure、0 budget rejection、0 terminal effect-health failure；物理effect为`80 query / 209 fetch / 60 model forwards / 1,118,077 system tokens`，单题最大`4/13/3`。20/20 control均有clean trusted checkpoint，20/20 candidate均从固定故障恢复；prediction/checkpoint/cost/budget-receipt equality均为20/20，fixed fault identity为20/20，candidate额外query/fetch/model/token与positive signed credit全为0。固定21-file forward surface以`d3bb8b7f`推送；权威result文件SHA-256=`14134eb9...0f7`。V2.52.83又从clean pushed forward commit重算aggregate/decision并验证父提交链、hash binding、receipt禁用键、caps、lease与watcher，18/18检查全绿、`audit_valid=true / findings=[] / reliability_gate_passed=true`，单文件audit以`cd5b7750`推送，文件SHA-256=`8c1bd6cd...bc2a`。该人口永久禁止retry/resume/rerun/replacement或复用。**
+>
+> **证据边界：这个GO证明V2.52.71 checkpoint能把已验证production table安全穿过固定post-checkpoint envelope故障，并消除了V2.52.67所见11个post-effect outer-failure任务的结构性风险；它没有调用gold/evaluator，不比较answer quality，不证明candidate改善prediction，也不授权DeepWideBench 220、Avg@4、leaderboard或SOTA。最新完整DeepWideBench仍是V2.52.67的Exact `5/220`、Composite `0.407328`；项目单轮观测峰值仍是V2.48.57的`9/220 / 0.457249`，未稳定复制。**
+>
+> **下一步只授权V2.52.84 fresh/disjoint shared-prefix quality gate的设计与build：control与candidate必须共享同一次visible-only plan、queries、search responses、fetched page bytes和validated-production checkpoint；candidate只能在checkpoint后使用同状态、可验证的target-record intervention，不能再把域名数、页面数、entropy drop或evidence重排当质量代理。机制门先要求可信intervention自然出现、candidate实际改变prediction且0 checkpoint/prediction-loss failure；prediction与forward audit冻结推送后才可由独立evaluator比较固定分母。质量GO必须是candidate Exact严格增加，Entity/Row/Item/Column/Composite全不退，invalid/fallback/outer failure不增；否则严格NO-GO且不得消耗新公开220。entropy/IG只可作为shadow VOC或在outer utility已确定符号后有界调节幅度，继续不能创建或翻转credit符号。**
+>
+> **阅读规则：本文件append-only；顶部6.113覆盖6.112及后文所有较早的当前权限、下一步、可靠性与分数口径。**
+
 > 版本：6.112
 >
 > **6.112 V2.52.76–77 第三组不重叠人口唯一冻结与 post-freeze audit（2026-08-13）：V2.52.76 execution-start从clean pushed `09477546`生成，并作为唯一单文件子提交`63fb08e7`推送；start固定V2.52.73 design、V2.52.75 build audit、selector源码/测试哈希、四个protected watcher identity、空闲shared lease、240秒内部selection ceiling以及create-exclusive attempt claim。start本身不调用dpkg/history/network/model/search/fetch/evaluator/benchmark。**
