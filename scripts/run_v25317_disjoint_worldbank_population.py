@@ -980,6 +980,9 @@ def _preactivation_authority() -> bool:
         unsigned = dict(value)
         signature = unsigned.pop("audit_payload_sha256", None)
         authorization = value.get("authorization") or {}
+        git = value.get("git") or {}
+        checks = value.get("checks") or {}
+        semantic = value.get("semantic_audit") or {}
         return bool(
             set(value)
             == {
@@ -1014,9 +1017,35 @@ def _preactivation_authority() -> bool:
             == "v25318_disjoint_worldbank_population_preactivation_audit"
             and isinstance(value.get("created_at_unix"), int)
             and not isinstance(value.get("created_at_unix"), bool)
+            and isinstance(git, Mapping)
+            and git.get("head") == git.get("target_main")
+            and git.get("equal") is True
+            and git.get("clean") is True
             and value.get("audit_valid") is True
             and value.get("findings") == []
+            and isinstance(checks, Mapping)
+            and checks
+            and all(item is True for item in checks.values())
             and value.get("source_manifest") == _source_manifest()
+            and semantic.get("privileged_runtime_field_accesses") == []
+            and semantic.get("evaluator_capabilities") == []
+            and semantic.get("credential_literal_hits") == []
+            and semantic.get("auditor_or_explicit_file_credential_literal_hits")
+            == []
+            and semantic.get("untracked_sources") == []
+            and value.get("disjointness_contract")
+            == {
+                "consumed_target_count": 24,
+                "consumed_entity_count": 144,
+                "consumed_response_count": 48,
+                "preferred_entity_count": 108,
+                "minimum_entity_count": 96,
+                "task_count": 12,
+                "all_overlap_counts_must_be_zero": True,
+            }
+            and value.get("active_conflicts") == []
+            and value.get("future_surfaces_pristine") is True
+            and value.get("shared_api_lease_inactive") is True
             and value.get(
                 "mapping_gold_category_question_type_split_evaluator_score_reward_or_historical_correctness_read"
             )

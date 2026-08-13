@@ -314,6 +314,74 @@ class V25317DisjointWorldBankPopulationTests(unittest.TestCase):
                     target.main()
             helper.assert_not_called()
 
+    def test_preactivation_authority_rejects_resealed_disjointness_relaxation(self) -> None:
+        with tempfile.TemporaryDirectory(dir=ROOT) as directory:
+            fake = Path(directory) / "preactivation.json"
+            value = {
+                "artifact_version": 1,
+                "role": "v25318_disjoint_worldbank_population_preactivation_audit",
+                "created_at_unix": 1,
+                "git": {
+                    "head": "a" * 40,
+                    "target_main": "a" * 40,
+                    "equal": True,
+                    "clean": True,
+                },
+                "fixed_inputs": {},
+                "implementation_commit": {},
+                "source_manifest": target._source_manifest(),
+                "tests": {},
+                "runtime_dependency_vector": [],
+                "runtime_dependency_vector_sha256": "a" * 64,
+                "runtime_dependency_path_sha256": "b" * 64,
+                "semantic_audit": {
+                    "privileged_runtime_field_accesses": [],
+                    "evaluator_capabilities": [],
+                    "credential_literal_hits": [],
+                    "allowed_provider_rank_access": [],
+                    "auditor_or_explicit_file_credential_literal_hits": [],
+                    "untracked_sources": [],
+                },
+                "runtime_invariants": {},
+                "disjointness_contract": {
+                    "consumed_target_count": 24,
+                    "consumed_entity_count": 144,
+                    "consumed_response_count": 48,
+                    "preferred_entity_count": 108,
+                    "minimum_entity_count": 96,
+                    "task_count": 12,
+                    "all_overlap_counts_must_be_zero": True,
+                },
+                "protected_watchers": {},
+                "shared_api_lease_inactive": True,
+                "active_conflicts": [],
+                "future_surfaces_pristine": True,
+                "checks": {"all": True},
+                "findings": [],
+                "audit_valid": True,
+                "mapping_gold_category_question_type_split_evaluator_score_reward_or_historical_correctness_read": False,
+                "network_model_search_fetch_evaluator_benchmark_or_api_called": False,
+                "entropy_or_information_gain_assigns_signed_credit": False,
+                "authorization": {
+                    "execution_start_generation": True,
+                    "single_disjoint_worldbank_population_freeze": False,
+                    "external_forward_or_evaluator": False,
+                    "deepwidebench_dev64_exact220_forward_or_evaluator": False,
+                    "retry_resume_backfill_replacement_or_second_attempt": False,
+                },
+            }
+            value["audit_payload_sha256"] = target.payload_sha256(value)
+            fake.write_text(json.dumps(value) + "\n", encoding="utf-8")
+            with mock.patch.object(
+                target, "PREACTIVATION", fake.relative_to(ROOT)
+            ):
+                self.assertTrue(target._preactivation_authority())
+                value["disjointness_contract"]["minimum_entity_count"] = 95
+                value.pop("audit_payload_sha256")
+                value["audit_payload_sha256"] = target.payload_sha256(value)
+                fake.write_text(json.dumps(value) + "\n", encoding="utf-8")
+                self.assertFalse(target._preactivation_authority())
+
 
 if __name__ == "__main__":
     unittest.main()
