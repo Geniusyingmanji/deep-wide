@@ -1,5 +1,19 @@
 # OWIC-DeepWide 研究与实施计划
 
+> 版本：6.114
+>
+> **6.114 V2.52.84–85 natural checkpoint quality seam、clean-build audit与刷榜主线纠偏（2026-08-13）：V2.52.84只调用V2.52.71一次，不注入故障。clean result与pre-checkpoint visible fallback均把control/candidate投影为逐字identity；只有同一次真实forward自然记录可信post-checkpoint recovery时，control才使用由未来external contract注入且只读`{opaque_id, question}`的真实legacy failure-as-zero projector，candidate保留同一trusted checkpoint prediction。projector在生成和验证时重算，result/stage receipt对checkpoint kind、disposition、parent-retained、failure-count和effect budget逐项绑定；普通result只允许早期parent/binding recovery stage，独立recovery envelope只允许envelope build/validate stage；任何`InjectedCheckpointReliabilityFault`、role/stage/receipt/projector/credit重封篡改均fail closed。candidate额外query/fetch/model/token与signed credit恒为0。**
+>
+> **V2.52.84实现与visible projector补强分别以`8e8be162 / 1de0b86c`推送；专项11/11、V2.52.78父链7/7、V2.52.71父链9/9。既有V2.52.80真实projector在冻结20题上验证为20×2个可见实体行，不用内部单行Unknown近似。V2.52.85随后以`6a7c8b8c`提交audit实现，从clean pushed HEAD完成`5+11+7+9=32/32`测试，固定76文件依赖闭包（vector SHA-256=`f1b0f406...42631`，path SHA-256=`e7f0f91a...c398c`），privileged runtime field/evaluator/credential finding全空，仅保留既有provider-rank `clients.py:565:score`例外；四个watcher exact PID/start-ticks/marker派生身份通过，shared lease空闲。权威audit 26/26检查全绿、SHA-256=`3341a6e5...09ea`，以`218d6af8`推送。该audit只授权fresh/disjoint population与protocol设计，不授权external forward、post-freeze evaluator、dev64/220、质量或SOTA声明。**
+>
+> **功效审计改变优先级：只读冻结aggregate得到近期自然post-effect/outer failure共`15/300=5%`；在20题中期望仅1个自然事件，`P(event≥2)=0.264`。再用V2.52.67的model-generated whole-table命中率`5/202`作明确的粗proxy，20题出现至少1个Exact recovery gain的概率约`2.45%`，即使220题也只有约`23.85%`。因此V2.52.84适合证明自然故障下的条件效用与可靠性，不适合作为冲击SOTA的主质量门；不得通过固定故障注入人为制造Exact收益，也不得用零自然事件人口打开evaluator或给entropy/IG正credit。**
+>
+> **刷榜主线转向简化而非继续堆层：项目单轮峰值V2.48.57在`3,781,060` tokens得到Exact `9/220`、Composite `0.457248978`、220 model-generated/0 fallback；最新V2.52.67在`13,196,934` tokens仅得`5/220 / 0.407328304`、202 model-generated/18 fallback。后者token为前者`3.490×`，Exact少4、Composite低`0.049921`。跨冷rollout差异不能建立因果提分，V2.48.57的pacing admission本身也未解释9个Exact；但证据足以停止把更复杂、更贵、低覆盖revision当默认主干。**
+>
+> **下一唯一build方向是V2.52.86 legacy-outcome checkpoint successor：保持V2.48.57的`run_v24630_task`搜索、prompt、model、pacing、`4 query / 10 fetch / 3 model`、20 executor/8 model slot与prediction完全不变；只在`IntegratedExact220TaskOutcome`已通过`validate_cross_artifacts`之后密封完整outcome/checkpoint，再让后续task-envelope/export失败丢弃失效辅助envelope并恢复同一prediction。正常路径必须证明prediction、cost、search/model/fetch effect和all parent receipts逐字相等；checkpoint前失败仍按既有failure-as-zero；checkpoint/receipt/result tamper fail closed。先在fresh benchmark-external shared-prefix gate比较`legacy outcome + checkpoint totality`，不得重跑V2.48.57公开220或直接宣称其峰值可复现。只有fixed-denominator全终态、0 extra effect、自然failure recovery与post-freeze quality non-regression同时GO，才设计一次新的public220。entropy/IG仍只作shadow VOC，不能决定符号。**
+>
+> **阅读规则：本文件append-only；顶部6.114覆盖6.113及后文所有较早的当前权限、下一步、功效与分数口径。**
+
 > 版本：6.113
 >
 > **6.113 V2.52.78–83 paired checkpoint reliability 唯一20题forward与严格GO（2026-08-13）：V2.52.78把candidate定义为同一次真实control forward的本地固定`result_envelope_validate`故障投影；每题只执行一次真实检索/模型路径，control使用clean V2.52.71 validated-production checkpoint，candidate只能从同一checkpoint恢复，额外query/fetch/model/token必须全为0。无可信checkpoint或control自然恢复时整题不可配对并使门fail closed；deterministic production fallback仍可作为可信checkpoint。V2.52.79/81分别完成runtime/build与external closure审计，V2.52.80 protocol固定20题、20 executor、16 model slot、真实上限`4 query / 14 fetch / 4 model`、0 outer failure和0 budget rejection。**
