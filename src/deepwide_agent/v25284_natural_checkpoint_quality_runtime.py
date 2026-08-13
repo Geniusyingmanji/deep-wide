@@ -174,7 +174,9 @@ def _projection(
             }
             if (
                 not failures
-                or not active.issubset(set(parent.RECOVERABLE_POST_CHECKPOINT_STAGES))
+                or not active.issubset(
+                    set(parent.RECOVERABLE_POST_CHECKPOINT_STAGES)
+                )
                 or checked["role"] == parent.ROLE
                 and (
                     not active.issubset(early_recoverable)

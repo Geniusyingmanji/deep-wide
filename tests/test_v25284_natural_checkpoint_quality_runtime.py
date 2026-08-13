@@ -11,7 +11,7 @@ from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[1]
-for path in (ROOT / "src", ROOT / "tests"):
+for path in (ROOT, ROOT / "src", ROOT / "tests"):
     if str(path) not in sys.path:
         sys.path.insert(0, str(path))
 
@@ -330,6 +330,32 @@ class V25284NaturalCheckpointQualityRuntimeTests(unittest.TestCase):
                     result,
                     task=TASK,
                     failure_as_zero_projector=bad,
+                )
+
+    def test_existing_external_projector_matches_visible_two_row_contract(self) -> None:
+        from deepwide_agent import (  # noqa: PLC0415
+            v25280_paired_checkpoint_reliability_external_contract as contract,
+        )
+        from scripts import (  # noqa: PLC0415
+            run_v25280_paired_checkpoint_reliability_external as runner,
+        )
+
+        tasks = contract.task_vector(ROOT)
+        self.assertEqual(len(tasks), 20)
+        for task in tasks:
+            visible = {
+                "opaque_id": task["opaque_id"],
+                "question": task["question"],
+            }
+            projected = runner._fallback_table(visible)
+            packages = contract.packages_from_question(visible["question"])
+            self.assertEqual(len(packages), 2)
+            self.assertEqual(
+                projected.count("| Unknown | Unknown | Unknown |"), 2
+            )
+            for package in packages:
+                self.assertIn(
+                    f"| {package} | Unknown | Unknown | Unknown |", projected
                 )
 
     def test_source_is_label_blind_and_has_no_effect_or_evaluator_capability(self) -> None:
