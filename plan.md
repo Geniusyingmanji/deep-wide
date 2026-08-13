@@ -1,5 +1,23 @@
 # OWIC-DeepWide 研究与实施计划
 
+> 版本：6.118
+>
+> **6.118 V2.52.93–96 World Bank 可达性诊断、分页勘误、真实父链集成与 clean-build 审计（2026-08-13）：V2.52.93只读重放已封存 World Bank official JSON 与其冻结 Markdown 表示，不重放第三槽proposal、不读gold/evaluator/score。V2.52.89 binder对raw JSON为0可达，对Markdown则在parent arm的`9/12题、128/176 Unknown cells`及target-value arm的`10/12题、136/164 cells`有唯一无冲突机械支持；因此只建立representation-level support reachability，不建立supported fill、prediction change、quality或DeepWideBench transfer。诊断implementation/result以`deabcd9f / 3b2079ae`推送，权威结果SHA-256=`acf96d5d...111`、13/13 checks、`diagnosis_valid=true / findings=[]`。**
+>
+> **V2.52.94 V1冻结12题×12行×4 value columns=`576` fresh cells、4个fresh indicator-year target、control/candidate共享parent prediction/search/fetch bytes/rendered pages、`4 query / 10 fetch / 3 model / 240s`，机制门要求至少2题supported fill及2题attributable prediction change；mechanism为0则不开evaluator，entropy/IG继续shadow且positive signed credit=0。实现后对旧封存raw metadata核验发现official total=`265`，故V1的`per_page=120 × 2页`实际需要3页并不完整。没有静默偏离：append-only R2将其修正为`per_page=200 × 2页`，同时新增`metadata pages=ceil(total/per_page)`及两页record count之和等于total的硬门；仍保持4 target×2 page=8个共享Markdown页面与原fetch cap。R2以`14ab44c9`推送，artifact SHA-256=`92e1ad85...ead4`，人口选择/冻结、network/model/evaluator/benchmark均未授权也未发生。**
+>
+> **V2.52.95实现pure official-JSON parser/renderer、24-target deterministic selector、no-network frozen snapshot search facade、V2.48.57两波父链与V2.52.90第三槽paired runtime。parser精确绑定HTTPS World Bank host/path、indicator/year/page/per_page、metadata total/pages、全记录覆盖、页内及跨页entity唯一性；selector只用fresh target key、complete public records与固定SHA rank，runtime只接收`{opaque_id, question}`。control/candidate共享同一次parent、queries、snapshot responses与8页bytes；candidate只可消费未用第三model槽，所有失败逐字保留parent。结果密封并重放parent envelope、candidate proposal/receipt、snapshot、pacing/rate/direct content-free receipts以及实际query/fetch/model计数；synthetic正常路径证明1个supported Unknown fill会产生prediction change，no-Unknown与parent fallback路径保持identity和fixed denominator，但该synthetic正例不是外部效应证据。实现/totality与依赖边界硬化以`a74753ef / b2a35d03`推送。**
+>
+> **V2.52.96审计器以`a47d7abc`先从clean pushed implementation提交；随后在`HEAD==target/main`且worktree clean时执行16 suites、`143/143` tests，固定40文件实际runtime closure（vector SHA-256=`06bd4055...1652`、path SHA-256=`5c1d1f7c...a8c9`），privileged runtime field/evaluator capability/credential literal均为0，仅保留既有provider-rank `clients.py:565:score`。四个protected watcher PID/start-ticks不变，shared lease inactive。权威audit `audit_valid=true / findings=[]`、payload SHA-256=`a4531171...f8be`、文件SHA-256=`6a07c845...6de8`，以`60cff589`推送。**
+>
+> **历史closure限制诚实保留：V2.48.57/V2.46.35旧manifest要求`native_search.py=cd0d6bfc...e50`，当前文件自`795d3821`为`685f5413...a51`，因此不得宣称整个旧V2.48.57 dependency manifest仍pristine。精确diff只新增默认`None`的content-free structure observer；V2.52.95 snapshot class自行拥有`__init__ / search_many / _fetch_url`且不传observer，当前执行路径通过MRO与测试证明绕过该变化。V2.52.95又把所需V2.48.57 caps/two-wave values本地冻结并由测试与权威contract逐项相等，移除runtime对完整V2.48.57 protocol contract的导入，使实际closure从48降至40；这支持当前snapshot路径，不恢复旧manifest的全仓pristine声明。**
+>
+> **当前证据与权限：尚未选择或冻结fresh World Bank人口，尚未观测真实external supported fill/prediction change，尚未打开post-freeze evaluator，也没有新的DeepWideBench结果。下一步必须先完成独立population-freeze preactivation audit；在其通过前仍禁止network population selection/freeze、external activation、evaluator、dev64/220、retry/resume/backfill/replacement/selective rerun以及质量/Avg@4/leaderboard/SOTA声明。后续唯一12题机制门仍须固定分母、失败计0；至少2题supported fill且2题attributable prediction change、query/fetch arms相等、总model≤3才可打开独立post-freeze quality gate。**
+>
+> **DeepWideBench口径不变：最新完整V2.52.67=`5/220 / Score 0.022727 / Composite 0.407328`；单轮峰值V2.48.57=`9/220 / Score 0.040909 / Composite 0.457249`但未稳定复制。无Avg@4、leaderboard或SOTA证据，当前没有本项目benchmark/model/evaluator运行。**
+>
+> **阅读规则：本文件append-only；顶部6.118覆盖6.117及后文所有较早的当前权限、下一步与分数口径。**
+
 > 版本：6.117
 >
 > **6.117 V2.52.92 第三槽自然入口与历史转化风险诊断（2026-08-13）：为避免仅凭synthetic正例就消费fresh人口，诊断先绑定V2.52.91权威audit、V2.48.57冻结runtime/summary/forward audit、220个task result envelope的路径+内容SHA向量，以及V2.48.84历史coverage forward/result audit。诊断器逐一通过冻结父validator验证220/220 envelope，并只在内存中用V2.52.89当前语义重算Unknown；输出不保存或发出task identity、prediction、逐题Unknown、题面、query、URL、page、gold、category、score或credential。实现与权威aggregate-only结果分别以`1e649288 / 6694fe68`推送；结果`diagnosis_valid=true / findings=[]`、14/14 checks、payload SHA-256=`9c2a01d0...d1bc`。**
