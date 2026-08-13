@@ -1,5 +1,21 @@
 # OWIC-DeepWide 研究与实施计划
 
+> 版本：6.119
+>
+> **6.119 V2.52.97→V2.53.08 World Bank fresh population 控制面、两次前置失败与最终可审计 GO（2026-08-13）：V2.52.97 首先实现严格 label-blind 的一次性 population runner：唯一 source-2 indicator catalog GET 必须自证 `page=1 / pages=1 / total=record_count / per_page=50000`；从11份固定历史来源复算35个已使用/探测 indicator 的排除集合，以既定 SHA rank 选24个 fresh 2022 indicators，再固定12并发、每个恰抓`page=1,2&per_page=200`，共48 responses。helper禁redirect、禁environment session、绑定父进程；runner固定30/110/145秒 catalog/target/whole hard wall、shared API lease、claim-before-effect、create-exclusive raw bytes/result，禁止retry/resume/refetch/backfill/replacement。synthetic/adversarial、入口级与父链测试证明完整48响应可重建12题人口，任一响应失败则全人口NO-GO，成功bytes仍冻结，runtime/selection不读取category/question-type/split/gold/score/evaluator/历史correctness，entropy/IG signed credit恒为0。初始implementation、审计器与首个权威preactivation依次以`bac1aa8f / 8b1adf00 / f8bed596`推送；审计为45/45、94文件closure、`findings=[]`。**
+>
+> **首个V2.52.99 execution-start `83f0bb7f`在lease/claim/network前因runner错误读取start中不存在的`git_head`而fail closed；claim/result/output均不存在。零效应撤销以`5642cc88`推送，永久禁止复用旧start。V2.53.01修复后新审计/新start为`3f9c1db0 / f4e2b867 / 3c5a7971`；但唯一attempt在永久claim后、helper provider启动前因`subprocess.run`同时传`input`与`stdin`触发本地`ValueError`。该attempt严格封存为`catalog=0 / target=0 / network=false / output root absent`的NO-GO，claim/result与post-attempt audit分别以`0639153e / f5b71d2b`推送；旧V2.53.01禁止retry/resume/reuse。**
+>
+> **V2.53.05仅移除冲突的`stdin=`并新增明确的supervisor参数回归，切换全新claim/result/output/preactivation/start namespace；repair、48/48 preactivation和单文件start依次以`47ef2740 / c7e784ac / b0021b65`推送。唯一真实population freeze在`10.709051s`完成：catalog provider attempt=`1`、target provider attempts=`48`、成功响应=`48/48`、redirect/retry/refetch/resume/backfill/replacement=`0`、model/search/evaluator/benchmark effect=`0`。完整catalog bytes与48份target response bytes在selection前create-exclusive冻结；24个fresh candidates中确定性首个可行quartet为`FI.RES.XGLD.CD@2022 / SL.IND.EMPL.MA.ZS@2022 / ER.H2O.FWIN.ZS@2022 / SL.EMP.TOTL.SP.ZS@2022`，公共交集确定性选择144实体，形成8个全局rendered pages与12个×12行任务。claim/result/raw bytes/private population共52文件以`2499cdbd`推送。**
+>
+> **V2.53.08 post-freeze audit先以`ce047fe5`推送实现，再从clean pushed HEAD逐份重读catalog与48 raw responses，复验response size/SHA、24×2 metadata/record coverage、35-indicator排除、target rank、quartet selector、144实体、8 pages、12 tasks、private payload seal及start/freeze commit边界。权威audit `audit_valid=true / findings=[]`，response vector SHA-256=`ae0a678e...c12ef`、task vector SHA-256=`a1185cd7...ba4e`、文件SHA-256=`eb699da3...4b09`，以`97e4da32`推送；shared lease释放、四个protected watcher identity不变。该GO只证明fresh population完整且机制实验可设计，不是supported fill、prediction change、quality或DeepWideBench提升。**
+>
+> **当前权限与下一步：只授权为这12题设计一次性 shared-prefix monotone-fill mechanism protocol；不得重抓catalog/48 responses，不得替换target/entity，不得直接启动forward。新protocol必须把V2.53.08、V2.52.96 runtime audit与private population hashes固定，control/candidate共享同一parent prediction/search/fetch/rendered page bytes，固定12任务、20 executor、8 model slots、`4 query / 10 fetch / ≤3 model / 240s`。只有preactivation与单文件start推送后才允许唯一forward；mechanism至少2题supported Unknown fill且2题attributable prediction change、12/12终态、query/fetch equality、0 known-cell/schema/row mutation、0 unsupported/conflicting admission才可打开独立post-freeze evaluator。否则永久NO-GO。**
+>
+> **DeepWideBench分数未变化：最新完整V2.52.67=`5/220 / Score 0.022727 / Composite 0.407328`；单轮观测峰值V2.48.57=`9/220 / 0.457249`但未稳定复制。当前没有本项目benchmark/model/evaluator运行，无Avg@4、leaderboard或SOTA证据；entropy/IG仍仅shadow，positive signed credit=`0`。**
+>
+> **阅读规则：本文件append-only；顶部6.119覆盖6.118及后文所有较早的当前权限、下一步与分数口径。**
+
 > 版本：6.118
 >
 > **6.118 V2.52.93–96 World Bank 可达性诊断、分页勘误、真实父链集成与 clean-build 审计（2026-08-13）：V2.52.93只读重放已封存 World Bank official JSON 与其冻结 Markdown 表示，不重放第三槽proposal、不读gold/evaluator/score。V2.52.89 binder对raw JSON为0可达，对Markdown则在parent arm的`9/12题、128/176 Unknown cells`及target-value arm的`10/12题、136/164 cells`有唯一无冲突机械支持；因此只建立representation-level support reachability，不建立supported fill、prediction change、quality或DeepWideBench transfer。诊断implementation/result以`deabcd9f / 3b2079ae`推送，权威结果SHA-256=`acf96d5d...111`、13/13 checks、`diagnosis_valid=true / findings=[]`。**
