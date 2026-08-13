@@ -1153,6 +1153,7 @@ def _source_manifest() -> dict[str, str]:
             PRIOR_AUDIT_SOURCE,
             DIAGNOSIS_SOURCE,
             LEASE_SOURCE,
+            second.PARENT_TRANSPORT,
         )
     }
 
