@@ -1,5 +1,19 @@
 # OWIC-DeepWide 研究与实施计划
 
+> 版本：6.123
+>
+> **6.123 V2.53.37–41 concurrency-3 World Bank 人口严格 NO-GO 与主线回收（2026-08-13）：V2.53.37 在排除前四轮共96个target、144个entity和169份成功response SHA后，按固定顺序对24个新target的48个分页URL各执行一次真实请求；只把最大并发从6降为3，未加额外pacing，禁止retry/resume/refetch/backfill/replacement。catalog `1/1`成功，但target仅`36/48`成功；10份约15.18秒`transport_error`，另2份HTTP response failure。target wall=`130.213729s`超过预注册110秒，whole wall=`131.422414s`；all-or-nothing门使selected target/entity/task/page全部为0，未生成private population，也未调用model/search/evaluator/benchmark。**
+>
+> **V2.53.41从clean pushed freeze重放start→claim→result、`1+48` provider effect、36份成功body SHA、12份失败粗状态、零历史response overlap、零retry/redirect/refetch/resume/backfill/replacement、lease释放、活动人口进程为0和四个protected watcher身份；21/21检查全绿，`audit_valid=true / findings=[]`。两个HTTP response failure不能在不读取/重试失败body的前提下作内容归因；同target另一页成功且自证`pages=2,total=265`也只说明provider非平稳，不证明URL非法。部分成功永久不可复用。**
+>
+> **World Bank transport 路线至此停止：并发12、6、带1秒pacing的6和并发3都未达到固定48/48，最后一轮还突破wall。不得继续以新人口、降低并发、延长wall或复用部分响应重试该门；V2.53.13 monotone-fill实现及synthetic整链证据保留为工程资产，但不能从零真实人口曝光推断质量、credit或DeepWideBench迁移。entropy/IG继续shadow-only，positive signed credit=`0`。**
+>
+> **刷榜主线立即回到公开220的正常路径可靠性与简化：V2.52.70已把V2.52.67的11个outer failure定位为effect完成后的`ValueError` totality，V2.52.71 checkpoint及V2.52.78–83 matched gate已经证明可在零额外query/fetch/model/token下保留validated production；V2.52.88又证明checkpoint自然事件在V2.48.57表面为`0/220`，因此它只作为可靠性safeguard，不再作为质量门。下一步不得重复实现checkpoint或再做World Bank人口；只做V2.52.67与V2.48.57的content-free日志/管线差异审计，选择一个可离线验证的简化successor，然后按用户要求执行一次strict label-blind、fixed-denominator、failure-as-zero的完整220高并发冷运行。不得用category/question_type/split/gold/score/evaluator或历史correctness路由、选题或调参。**
+>
+> **当前DeepWideBench权威口径不变：最新完整V2.52.67为Exact `5/220=0.022727`、Entity `0.640909`、Row/Item/Column F1 `0.193783/0.356198/0.438423`、Composite `0.407328`；202个model-generated、18个fallback，forward约`545.19s`。项目单轮观测峰值V2.48.57仍为`9/220 / 0.457249`，但未稳定复制；无Avg@4、leaderboard或SOTA证据。**
+>
+> **阅读规则：本文件append-only；顶部6.123覆盖6.122及后文所有较早的当前权限、下一步与分数口径。**
+
 > 版本：6.122
 >
 > **6.122 V2.53.23–35 transport 三次失败、1秒 pacing 反证与并发3 successor（2026-08-13）：V2.53.23 将 target 并发从12降至6，固定48 URL 各一次、禁retry/resume/backfill，在`27.927238s`内得到`43/48`成功；5份失败均为约15.18秒、status/bytes为空的`transport_error`。V2.53.27 post-audit为`audit_valid=true / findings=[]`，部分成功永久不可复用。V2.53.28由前42项全成功、末6项5失败的时序只提出“burst/rate capacity一致但非唯一因果证明”，授权下一步仅改变请求启动调度。**
