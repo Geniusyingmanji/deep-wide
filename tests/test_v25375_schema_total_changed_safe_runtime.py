@@ -44,6 +44,10 @@ NO_EXPLICIT_QUESTION = (
     "Identify the country matching capital New Delhi and currency INR, then "
     "return the requested IANA Root Zone Database facts in one table."
 )
+ONE_COLUMN_QUESTION = (
+    "Identify the country matching capital New Delhi and currency INR. "
+    "Return one table. Columns exactly: Result. Preserve spelling."
+)
 
 
 class TotalModel:
@@ -105,10 +109,16 @@ class TotalModel:
                 }
             )
         else:
-            columns = self.plan_columns or ["Domain", "Type", "TLD Manager"]
+            columns = (
+                self.plan_columns
+                if self.plan_columns is not None
+                else ["Domain", "Type", "TLD Manager"]
+            )
             if self.invalid_plan:
                 columns = ["Result", "Value"]
-            if columns == ["Result", "Value"]:
+            if columns == ["Result"]:
+                text = "| Result |\n|---|\n| India |"
+            elif columns == ["Result", "Value"]:
                 text = "| Result | Value |\n|---|---|\n| India | Unknown |"
             else:
                 text = (
@@ -190,6 +200,19 @@ class V25375SchemaTotalChangedSafeRuntimeTests(unittest.TestCase):
         schema = result["schema_totality_receipt"]
         self.assertEqual(schema["selected_schema_source"], "generic_result")
         self.assertEqual(schema["selected_column_count"], 2)
+        self.assertEqual(result["prediction_kind"], "model_generated")
+        self.assertFalse(result["prediction_changed"])
+        self.assertFalse(stage["failure_present"])
+
+    def test_one_column_schema_is_model_generated_identity_noop(self) -> None:
+        result, stage = run(
+            ONE_COLUMN_QUESTION,
+            TotalModel(plan_columns=["Result"]),
+        )
+        schema = result["schema_totality_receipt"]
+        self.assertEqual(schema["selected_schema_source"], "exact_visible")
+        self.assertEqual(schema["selected_column_count"], 1)
+        self.assertTrue(schema["single_column_changed_safe_identity_noop"])
         self.assertEqual(result["prediction_kind"], "model_generated")
         self.assertFalse(result["prediction_changed"])
         self.assertFalse(stage["failure_present"])

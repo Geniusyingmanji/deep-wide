@@ -129,10 +129,96 @@ class _TaskLocalProjector:
         return completed, observation
 
 
+def _one_column_identity_editor(
+    *,
+    base_prediction: object,
+    columns: Sequence[str],
+    prepared: Mapping[str, Any],
+    record_output: object,
+    model_call_attempted: bool,
+) -> dict[str, Any]:
+    """Return a sealed no-op when no non-key coordinate can exist."""
+
+    del prepared, record_output
+    required = tuple(str(value).strip() for value in columns)
+    if len(required) != 1 or not required[0]:
+        raise ValueError("V2.53.75 one-column identity boundary drifted")
+    base = str(base_prediction)
+    canonical, _errors = score.extract_valid_markdown_table(base, required)
+    receipt = parent.editor._receipt(
+        {
+            **{name: 0 for name in parent.editor._COUNT_FIELDS},
+            "model_call_attempted": bool(model_call_attempted),
+            "record_output_strictly_valid": False,
+            "base_table_exact_canonical": canonical == base,
+            "candidate_prediction_changed": False,
+            "candidate_identity_handoff": True,
+        }
+    )
+    value: dict[str, Any] = {
+        "artifact_version": 1,
+        "role": parent.editor.ROLE,
+        "policy_id": parent.editor.POLICY_ID,
+        "control_prediction": base,
+        "candidate_prediction": base,
+        "control_prediction_sha256": hashlib.sha256(base.encode()).hexdigest(),
+        "candidate_prediction_sha256": hashlib.sha256(base.encode()).hexdigest(),
+        "content_free_receipt": receipt,
+        "entropy_or_information_gain_assigns_signed_credit": False,
+        "mapping_gold_category_question_type_split_evaluator_score_reward_or_historical_result_read": False,
+        "benchmark_launch_or_evaluator_authorized": False,
+    }
+    value["artifact_payload_sha256"] = payload_sha256(value)
+    return parent.editor.validate_result(value)
+
+
+class _TaskLocalVerifier:
+    def prepare_record_proposal(
+        self, question: str, columns: Sequence[str], pages: Sequence[Mapping[str, Any]]
+    ) -> dict[str, Any]:
+        if len(columns) == 1:
+            del question, pages
+            return {"v25375_one_column_identity_noop": True}
+        return parent.verifier.prepare_record_proposal(question, columns, pages)
+
+
+class _TaskLocalEditor:
+    def apply_changed_safe_verified_coordinates(self, **kwargs: Any) -> dict[str, Any]:
+        columns = kwargs.get("columns")
+        if isinstance(columns, Sequence) and not isinstance(columns, (str, bytes)) and len(columns) == 1:
+            return _one_column_identity_editor(**kwargs)
+        return parent.editor.apply_changed_safe_verified_coordinates(**kwargs)
+
+    @staticmethod
+    def validate_result(value: Mapping[str, Any]) -> dict[str, Any]:
+        return parent.editor.validate_result(value)
+
+    @staticmethod
+    def validate_receipt(value: Mapping[str, Any]) -> dict[str, Any]:
+        return parent.editor.validate_receipt(value)
+
+
 def _isolated_parent(projector: _TaskLocalProjector) -> Callable[..., dict[str, Any]]:
+    verifier = _TaskLocalVerifier()
+    editor = _TaskLocalEditor()
+    empty_namespace = dict(parent._empty_editor.__globals__)
+    empty_namespace.update({"verifier": verifier, "editor": editor})
+    empty_editor = types.FunctionType(
+        parent._empty_editor.__code__,
+        empty_namespace,
+        name="v25375_task_local_empty_editor",
+        argdefs=parent._empty_editor.__defaults__,
+        closure=parent._empty_editor.__closure__,
+    )
+    empty_editor.__kwdefaults__ = dict(parent._empty_editor.__kwdefaults__ or {})
     namespace = dict(parent.run_paired_task.__globals__)
-    namespace["query_parent"] = SimpleNamespace(
-        projected_plan=projector.projected_plan
+    namespace.update(
+        {
+            "query_parent": SimpleNamespace(projected_plan=projector.projected_plan),
+            "verifier": verifier,
+            "editor": editor,
+            "_empty_editor": empty_editor,
+        }
     )
     cloned = types.FunctionType(
         parent.run_paired_task.__code__,
@@ -163,6 +249,7 @@ def _schema_receipt(projector: _TaskLocalProjector, question: str) -> dict[str, 
         "expanded_visible_schema_incremental": bool(not exact and expanded),
         "provider_or_generic_schema_selected": projector.sources[-1]
         in {"provider_plan", "generic_result"},
+        "single_column_changed_safe_identity_noop": projector.column_counts[-1] == 1,
         "frozen_exact_schema_preserved_when_nonempty": True,
         "expanded_parser_is_explicit_declaration_only": True,
         "provider_columns_are_from_same_planning_effect": True,
@@ -211,6 +298,7 @@ def validate_schema_receipt(value: Mapping[str, Any]) -> dict[str, Any]:
         "exact_visible_schema_available",
         "expanded_visible_schema_incremental",
         "provider_or_generic_schema_selected",
+        "single_column_changed_safe_identity_noop",
         *true_flags,
         *false_flags,
         "receipt_payload_sha256",
@@ -235,6 +323,7 @@ def validate_schema_receipt(value: Mapping[str, Any]) -> dict[str, Any]:
         or expanded and source != "expanded_visible"
         or copied.get("provider_or_generic_schema_selected")
         is not (source in {"provider_plan", "generic_result"})
+        or copied.get("single_column_changed_safe_identity_noop") is not (count == 1)
         or any(copied.get(name) is not True for name in true_flags)
         or any(copied.get(name) is not False for name in false_flags)
         or seal != payload_sha256(unsigned)
