@@ -322,7 +322,7 @@ class V25349SharedPrefixGroundedFactPairedRuntimeTests(unittest.TestCase):
 
     def test_resealed_nested_counter_credit_or_prediction_tamper_fails(self) -> None:
         _inner, _budget, _searches, result = self._run(joint=True)
-        for kind in ("fact", "counter", "credit", "prediction"):
+        for kind in ("fact", "counter", "credit", "prediction", "arms"):
             changed = copy.deepcopy(result)
             receipt = changed["content_free_receipt"]
             if kind == "fact":
@@ -334,6 +334,8 @@ class V25349SharedPrefixGroundedFactPairedRuntimeTests(unittest.TestCase):
                 receipt["model_provider_request_count"] -= 1
             elif kind == "credit":
                 receipt["positive_signed_credit_count"] = 1
+            elif kind == "arms":
+                receipt["arm_metrics"].pop(target.CANDIDATE_ARM)
             else:
                 changed["predictions"][target.CANDIDATE_ARM] += "x"
                 changed["prediction_sha256"][target.CANDIDATE_ARM] = hashlib.sha256(

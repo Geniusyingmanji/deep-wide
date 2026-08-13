@@ -321,6 +321,7 @@ def validate_receipt(value: Mapping[str, Any]) -> dict[str, Any]:
         > copied["physical_model_forward_count"]
         or copied["model_provider_attempt_count"]
         < copied["model_provider_request_count"]
+        or set(arms or {}) != set(ARMS)
         or copied["physical_model_forward_count"]
         != 1
         + int(copied["grounded_plan_model_call_attempted"])
@@ -360,7 +361,6 @@ def validate_receipt(value: Mapping[str, Any]) -> dict[str, Any]:
         + budget["fetch_rejected_count"]
         + budget["model_rejected_count"]
         != 0
-        or set(arms or {}) != set(ARMS)
         or any(
             not isinstance(arms[arm], Mapping)
             or set(arms[arm]) != metric_keys
