@@ -1035,7 +1035,10 @@ def _validate_execution_start(
         or copied.get("artifact_version") != 1
         or copied.get("role")
         != "v25319_disjoint_worldbank_population_execution_start"
+        or isinstance(copied.get("created_at_unix"), bool)
+        or not isinstance(copied.get("created_at_unix"), int)
         or re.fullmatch(r"[0-9a-f]{40}", current_head) is None
+        or re.fullmatch(r"[0-9a-f]{40}", str(copied.get("git_parent"))) is None
         or copied.get("preactivation_audit")
         != {
             "path": str(PREACTIVATION),
