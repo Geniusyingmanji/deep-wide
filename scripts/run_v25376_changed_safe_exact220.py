@@ -24,10 +24,10 @@ from deepwide_agent import v25376_changed_safe_exact220_contract as contract  # 
 from scripts import run_v25267_production_only_exact220 as base  # noqa: E402
 
 
-TASK_ROLE = "v25376_changed_safe_exact220_task_result"
-ATTEMPT_ROLE = "v25376_changed_safe_exact220_attempt_claim"
-START_ROLE = "v25377_changed_safe_exact220_execution_start"
-PROGRESS_ROLE = "v25376_changed_safe_exact220_safe_progress"
+TASK_ROLE = "v25379_changed_safe_exact220_task_result"
+ATTEMPT_ROLE = "v25379_changed_safe_exact220_attempt_claim"
+START_ROLE = "v25380_changed_safe_exact220_execution_start"
+PROGRESS_ROLE = "v25379_changed_safe_exact220_safe_progress"
 
 
 def _validate_start() -> tuple[dict[str, Any], dict[str, Any]]:

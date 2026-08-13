@@ -86,7 +86,7 @@ def _build_native_forward_audit():
     value = base._build_native_forward_audit()
     copied = dict(value)
     copied.pop("audit_payload_sha256", None)
-    copied["native_role"] = "v25378_changed_safe_exact220_forward_audit"
+    copied["native_role"] = "v25381_changed_safe_exact220_forward_audit"
     aggregate = copied.get("aggregate") or {}
     if aggregate and aggregate.get("maximum_model_forwards_on_one_task", 4) > 3:
         raise RuntimeError("V2.53.76 forward exceeded three model effects")

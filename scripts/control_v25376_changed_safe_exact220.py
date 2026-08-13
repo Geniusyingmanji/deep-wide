@@ -24,9 +24,9 @@ from scripts import control_v25267_production_only_exact220 as base  # noqa: E40
 from scripts import audit_v25136_sparse_production_build as semantic  # noqa: E402
 
 
-BUILD_ROLE = "v25376_changed_safe_exact220_build_audit"
-PREAUDIT_ROLE = "v25377_changed_safe_exact220_preactivation_audit"
-START_ROLE = "v25377_changed_safe_exact220_execution_start"
+BUILD_ROLE = "v25379_changed_safe_exact220_build_audit"
+PREAUDIT_ROLE = "v25380_changed_safe_exact220_preactivation_audit"
+START_ROLE = "v25380_changed_safe_exact220_execution_start"
 TEST_SUITES = (
     ("test_v25376_changed_safe_exact220.py", 10),
     ("test_v25375_schema_total_changed_safe_runtime.py", 10),
@@ -105,6 +105,13 @@ def build_audit(
     checks.update(
         {
             "changed_safe_mechanism_parent_bound": bool(parent),
+            "v25376_unactivated_protocol_preserved_and_superseded": (
+                (ROOT / contract.SUPERSEDED_BUILD_AUDIT).is_file()
+                and (ROOT / contract.SUPERSEDED_PROTOCOL).is_file()
+                and not (ROOT / Path("outputs/v25376_changed_safe_exact220_v1_20260813")).exists()
+                and not (ROOT / Path("results/v25376_changed_safe_exact220_attempt_claim_v1_20260813.json")).exists()
+                and not (ROOT / Path("results/v25376_changed_safe_exact220_forward_result_v1_20260813.json")).exists()
+            ),
             "schema_total_projected_plan_reachable_220_of_220": sum(counts.values()) == 220,
             "schema_sources_exact194_expanded21_generic5": counts
             == {

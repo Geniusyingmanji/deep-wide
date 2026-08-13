@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import ast
 import copy
+import json
 import sys
 import unittest
 from pathlib import Path
@@ -134,7 +135,6 @@ class V25376ChangedSafeExact220Tests(unittest.TestCase):
     def test_successor_surfaces_are_fresh(self) -> None:
         self.assertFalse((ROOT / contract.OUTPUT_ROOT).exists())
         for path in (
-            contract.PROTOCOL,
             contract.PREAUDIT,
             contract.EXECUTION_START,
             contract.ATTEMPT_CLAIM,
@@ -145,6 +145,12 @@ class V25376ChangedSafeExact220Tests(unittest.TestCase):
             contract.POSTAUDIT,
         ):
             self.assertFalse((ROOT / path).exists())
+        protocol_path = ROOT / contract.PROTOCOL
+        if protocol_path.exists():
+            protocol = json.loads(protocol_path.read_text(encoding="utf-8"))
+            self.assertEqual(
+                contract.validate_protocol(ROOT, protocol), protocol
+            )
 
     def test_finalizer_configures_fixed_evaluator_shell(self) -> None:
         finalizer.configure()

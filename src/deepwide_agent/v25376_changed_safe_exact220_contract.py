@@ -16,19 +16,19 @@ from . import v25253_outer_physical_cap_observed_runtime as cap
 
 
 DATE = "20260813"
-PROTOCOL_ID = "v25376_schema_total_changed_safe_exact220_v1"
-BUILD_AUDIT = Path(f"results/v25376_changed_safe_exact220_build_audit_v1_{DATE}.json")
-PROTOCOL = Path(f"results/v25376_changed_safe_exact220_preregistration_v1_{DATE}.json")
-PREAUDIT = Path(f"results/v25377_changed_safe_exact220_preactivation_audit_v1_{DATE}.json")
-EXECUTION_START = Path(f"results/v25377_changed_safe_exact220_execution_start_v1_{DATE}.json")
-ATTEMPT_CLAIM = Path(f"results/v25376_changed_safe_exact220_attempt_claim_v1_{DATE}.json")
-FORWARD_RESULT = Path(f"results/v25376_changed_safe_exact220_forward_result_v1_{DATE}.json")
-FORWARD_AUDIT = Path(f"results/v25378_changed_safe_exact220_forward_audit_v1_{DATE}.json")
-EVALUATOR_PROTOCOL = Path(f"results/v25376_changed_safe_exact220_evaluator_preregistration_v1_{DATE}.json")
-RESULT = Path(f"results/v25376_changed_safe_exact220_result_v1_{DATE}.json")
-POSTAUDIT = Path(f"results/v25378_changed_safe_exact220_postresult_audit_v1_{DATE}.json")
+PROTOCOL_ID = "v25379_schema_total_changed_safe_exact220_v1"
+BUILD_AUDIT = Path(f"results/v25379_changed_safe_exact220_build_audit_v1_{DATE}.json")
+PROTOCOL = Path(f"results/v25379_changed_safe_exact220_preregistration_v1_{DATE}.json")
+PREAUDIT = Path(f"results/v25380_changed_safe_exact220_preactivation_audit_v1_{DATE}.json")
+EXECUTION_START = Path(f"results/v25380_changed_safe_exact220_execution_start_v1_{DATE}.json")
+ATTEMPT_CLAIM = Path(f"results/v25379_changed_safe_exact220_attempt_claim_v1_{DATE}.json")
+FORWARD_RESULT = Path(f"results/v25379_changed_safe_exact220_forward_result_v1_{DATE}.json")
+FORWARD_AUDIT = Path(f"results/v25381_changed_safe_exact220_forward_audit_v1_{DATE}.json")
+EVALUATOR_PROTOCOL = Path(f"results/v25379_changed_safe_exact220_evaluator_preregistration_v1_{DATE}.json")
+RESULT = Path(f"results/v25379_changed_safe_exact220_result_v1_{DATE}.json")
+POSTAUDIT = Path(f"results/v25381_changed_safe_exact220_postresult_audit_v1_{DATE}.json")
 
-OUTPUT_ROOT = Path(f"outputs/v25376_changed_safe_exact220_v1_{DATE}")
+OUTPUT_ROOT = Path(f"outputs/v25379_changed_safe_exact220_v1_{DATE}")
 MODEL_SLOT_DIRECTORY = OUTPUT_ROOT / "model_slots"
 TASK_ROWS = OUTPUT_ROOT / "frozen_task_results.jsonl"
 RUNTIME_RESULTS = TASK_ROWS
@@ -55,6 +55,12 @@ PARENT_MECHANISM_AUDIT = Path(
 PARENT_MECHANISM_AUDIT_SHA256 = (
     "1de31b1d22831ef55428d25672706ca61d6ff201a66651d9cbe40f9c901cbff1"
 )
+SUPERSEDED_BUILD_AUDIT = Path(
+    "results/v25376_changed_safe_exact220_build_audit_v1_20260813.json"
+)
+SUPERSEDED_PROTOCOL = Path(
+    "results/v25376_changed_safe_exact220_preregistration_v1_20260813.json"
+)
 # Compatibility names used by the inherited fixed-denominator control shell.
 DIAGNOSIS = PARENT_MECHANISM_AUDIT
 CAP_BUILD_AUDIT = PARENT_MECHANISM_AUDIT
@@ -67,10 +73,10 @@ SELECTED_COUNT = TASK_COUNT
 EXECUTOR_CONCURRENCY = 40
 MODEL_SLOT_CAP = 16
 LEASE_PATH = shell.LEASE_PATH
-LEASE_OWNER = "v25376_schema_total_changed_safe_exact220_forward_v1"
-LEASE_PURPOSE = "single_label_blind_schema_total_changed_safe_exact220"
-EVALUATOR_OWNER = "v25376_schema_total_changed_safe_exact220_evaluator_v1"
-EVALUATOR_PURPOSE = "postfreeze_fixed_partition_parallel_v25376_exact220"
+LEASE_OWNER = "v25379_schema_total_changed_safe_exact220_forward_v1"
+LEASE_PURPOSE = "single_label_blind_schema_total_changed_safe_exact220_v25379"
+EVALUATOR_OWNER = "v25379_schema_total_changed_safe_exact220_evaluator_v1"
+EVALUATOR_PURPOSE = "postfreeze_fixed_partition_parallel_v25379_exact220"
 MODEL = copy.deepcopy(shell.MODEL)
 SEARCH = copy.deepcopy(shell.SEARCH)
 LIMITS = copy.deepcopy(shell.LIMITS)
@@ -84,9 +90,9 @@ PHYSICAL_CAPS = {
     "model_forwards_per_task": 3,
 }
 
-FORWARD_ROLE = "v25376_changed_safe_exact220_forward_result"
-SUMMARY_ROLE = "v25376_changed_safe_exact220_run_summary"
-FREEZE_ROLE = "v25376_changed_safe_exact220_prediction_freeze"
+FORWARD_ROLE = "v25379_changed_safe_exact220_forward_result"
+SUMMARY_ROLE = "v25379_changed_safe_exact220_run_summary"
+FREEZE_ROLE = "v25379_changed_safe_exact220_prediction_freeze"
 
 task_parent = shell.task_parent
 payload_sha256 = shell.payload_sha256
@@ -162,6 +168,7 @@ def source_policy() -> dict[str, Any]:
         "entropy_or_information_gain_assigns_signed_credit_or_routes": False,
         "positive_signed_credit_count": 0,
         "fixed_public_exact220_task_set_reexecuted": True,
+        "v25376_unactivated_protocol_superseded_before_any_forward_effect": True,
         "new_or_disjoint_task_population_claimed": False,
         "cross_version_public_benchmark_feedback_overfitting_remains_a_limitation": True,
         "retry_resume_skip_backfill_replacement_or_selective_rerun": False,
@@ -275,7 +282,7 @@ def build_protocol(
     manifest = dependency_manifest(root, tracked=tracked)
     value: dict[str, Any] = {
         "artifact_version": 1,
-        "role": "v25376_changed_safe_exact220_preregistration",
+        "role": "v25379_changed_safe_exact220_preregistration",
         "protocol_id": PROTOCOL_ID,
         "created_at_unix": int(now),
         "build_audit_sha256": build_audit_sha256,
