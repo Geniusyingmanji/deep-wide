@@ -1,5 +1,19 @@
 # OWIC-DeepWide 研究与实施计划
 
+> 版本：6.111
+>
+> **6.111 V2.52.73–75 第三组不重叠 checkpoint 人口设计、selector 与 clean-build 审计（2026-08-13）：为避免在 V2.52.60 的64题/128实体或更早 V2.52.40 的128题/256实体上重放，V2.52.73只用本机 Debian source-package 名称与限定 Git literal-history aggregate 做容量设计。564个 canonical source 候选全部完成一次 bounded probe；历史零容量为 short-alpha=35、long-alpha=5、single-hyphen-alpha=19、digit-bearing=1。固定选择20题/40实体：short 20、single-hyphen 16、long 4；不使用容量仅1的digit层，不跨层补位。runtime仍只暴露`{opaque_id, question}`，stratum不进入forward。设计/冻结工件以`aff730bd / 078a88e4`推送。**
+>
+> **V2.52.74 selector对全部564候选恰扫描一次，并在每层以新salt确定性排序；候选必须同时满足history-zero且与前两组共384个可见实体严格不重叠，任一层容量不足、timeout、nonzero、stderr、incomplete或cancelled都使整次freeze fail closed。attempt claim必须在任何dpkg/history effect之前create-exclusive发布，并绑定execution-start、选择父提交与唯一result路径；没有CLI入口，不能在build提交时意外执行。专项7/7通过，实现以`0acbd4bb`推送。**
+>
+> **V2.52.75修复初版审计错误地期待`matches_frozen_identity`派生字段的问题，改为精确验证四组冻结`PID + marker + /proc start_ticks`；同时封闭tests suite、dependency row、capability和watcher的嵌套额外字段篡改。专项5/5、selector/design/checkpoint父链共31/31通过；实现以`17bb1c07`推送。权威audit随后从clean pushed HEAD生成，8文件selector闭包固定、21项检查全绿，effect源码仅有3个bounded local subprocess.run，network/model/evaluator import为0，privileged runtime/evaluator/credential finding为0；唯一closure例外是既有离线诊断`diagnose_v25209...:319:score`，不属于runtime。audit SHA-256=`123bd8f2...7189`，`audit_valid=true / findings=[]`，以`7aa18b95`推送。**
+>
+> **当前只授权创建并推送一个单文件V2.52.76 execution-start，然后在该pushed start HEAD上恰执行一次local population freeze；start、claim、result必须相互哈希绑定，所有未来surface在start时保持pristine。该步骤不调用network/model/search/fetch/evaluator/benchmark，不授权external forward、DeepWideBench、retry/resume/replacement或正entropy/IG credit。freeze完成后还必须独立post-freeze audit并推送，之后才可设计20题paired checkpoint reliability protocol；可靠性GO后仍需另一组fresh shared-prefix quality gate，不能直接运行新220。**
+>
+> **DeepWideBench口径不变：最新完整V2.52.67=`5/220 / Composite 0.407328`；项目单轮峰值V2.48.57=`9/220 / 0.457249`但未稳定复制；无Avg@4、leaderboard或SOTA证据。四个protected watcher保持原identity，shared lease空闲。**
+>
+> **阅读规则：本文件append-only；顶部6.111覆盖6.110及后文所有较早的当前权限、下一步、人口与分数口径。**
+
 > 版本：6.110
 >
 > **6.110 V2.52.71–72 validated-production checkpoint 与 clean-build 审计（2026-08-12）：V2.52.70证明11个outer failure主要发生在完整search/model effect之后，V2.52.71据此新增append-only checkpoint runtime。它在冻结production normalizer返回后立即封存`prediction + sha256 + {validated_model_output|deterministic_fallback}`，随后以7个有限microstage拆开`boundary_validate → paired_parent_run_and_validate → effect_accounting → production_checkpoint_select → parent_prediction_binding → result_envelope_build → result_envelope_validate`。正常路径仍只调用原parent一次，provider/search/fetch/prompt不变；第二synthesis仍是local identity replay，revision provider=0。**
