@@ -1,5 +1,21 @@
 # OWIC-DeepWide 研究与实施计划
 
+> 版本：6.120
+>
+> **6.120 V2.53.09→12 World Bank monotone-fill 唯一机制门、启动前 schema 修复、零效应 NO-GO 与 deadline-identity 根因（2026-08-13）：V2.53.09先发现冻结题面的5个pipe列中3个官方指标名含顶层逗号且长度`95–100`，继承的两层visible-schema parser会把它们分别误拆成9列和2列，使父表与same-page binder确定性不可达。append-only adapter只从可见题面的精确` | `声明提取`1主键+4指标`，并在隔离的score-first plan normalization中仅当模型plan schema与该可见投影逐字一致时接受最长160字符列名；未修改V2.52.95冻结源码或历史SHA。真实V2.53.05页面上的synthetic整链随后证明父链`primary`、精确5列、2次parent model、第三槽第3次model、1个机械支持Unknown fill和prediction change。runtime/runner专项10/10、旧V2.52.95为10/10、V2.52.90为16/16；实现以`c26fbc60`推送。**
+>
+> **V2.53.09 clean-build control以`54af729c`推送；权威audit从clean pushed HEAD完成83/83 tests、89文件runtime closure，privileged runtime field/evaluator capability/credential literal均为0，仅保留既有provider-rank `clients.py:565:score`，端口可达、shared lease空闲、四个protected watcher identity不变；audit `audit_valid=true / findings=[]`以`464518f4`推送。protocol以`7a8d60ff`固定12题、8页、20 executor、8 model slots、`4 query / 10 fetch / 3 model / 240s`，机制门要求至少2题/2 cells supported fill和2题attributable prediction change、12/12 query/fetch equality、0 known/schema/row mutation与0 unsupported/conflicting admission。launch/auditor及11项安全回归以`8a06802c`推送；26/26 preactivation和单文件start依次以`c1ab184e / 912f2730`推送，start只授权一次fresh12 forward，evaluator/220仍为false。**
+>
+> **唯一forward没有发生任何provider/query/fetch effect：12/12在首次model-slot acquisition前统一`ValidationError`并按固定分母failure-as-zero，batch wall=`0.109322s`，model requests/attempts、physical query/fetch/model、tokens均为0；supported fill、prediction change和所有机制漏斗项均为0，故严格NO-GO。13个固定forward工件以`f27a3119`原样冻结推送；V2.53.11从clean pushed forward commit重算aggregate/decision、验证start→forward单文件边界、hash、receipt禁用键、caps、lease和watcher，`audit_valid=true / findings=[]`但`mechanism_gate_passed=false / postfreeze_evaluator=false`，audit以`feeb8561`推送。V2.53.05人口永久封存，禁止retry/resume/rerun/backfill/replacement/reuse。**
+>
+> **V2.53.12 content-free诊断只读取冻结aggregate、粗异常类和slot receipts并审计静态调用链，不读题面、页面、prediction、gold、evaluator或逐题quality。12份slot receipt均为`acquisitions=0 / slot_timeouts=0 / provider_deadline_failures=0 / deadline_exhausted=false`；`run_v24319_task`要求model/search的absolute deadline、cleanup reserve和minimum-attempt完全一致，本轮absolute与cleanup均相等，但runner model minimum=`0.05s`，V2.52.95 frozen snapshot search minimum=`0.01s`，所以`_aligned_deadlines=false`并在首次effect前拒绝。该结果证明本轮NO-GO是runner deadline-identity integration bug，不是模型、检索、mechanical binder或信息熵机制的质量证据。**
+>
+> **当前权限与下一步：只授权fresh/disjoint deadline-aligned successor的build，不授权复用V2.53.05、不授权external launch、post-freeze evaluator或DeepWideBench。successor必须把model/search `absolute_deadline / cleanup_reserve_seconds / minimum_attempt_seconds` parity提升为构造、专项测试、clean-build和preactivation四重硬门，并在provider前证明`_aligned_deadlines=true`；随后另冻fresh World Bank target/entity人口，仍使用同一12题机制门且禁止retry/resume。只有新人口真实supported fill与attributable prediction change均≥2并完成pushed forward audit，才允许独立post-freeze evaluator。entropy/IG仍shadow-only，positive signed credit=`0`。**
+>
+> **DeepWideBench分数未变化：最新完整V2.52.67=`5/220 / Score 0.022727 / Composite 0.407328`；单轮峰值V2.48.57=`9/220 / 0.457249`但未稳定复制。当前没有本项目benchmark/model/evaluator运行，无Avg@4、leaderboard或SOTA证据。**
+>
+> **阅读规则：本文件append-only；顶部6.120覆盖6.119及后文所有较早的当前权限、下一步与分数口径。**
+
 > 版本：6.119
 >
 > **6.119 V2.52.97→V2.53.08 World Bank fresh population 控制面、两次前置失败与最终可审计 GO（2026-08-13）：V2.52.97 首先实现严格 label-blind 的一次性 population runner：唯一 source-2 indicator catalog GET 必须自证 `page=1 / pages=1 / total=record_count / per_page=50000`；从11份固定历史来源复算35个已使用/探测 indicator 的排除集合，以既定 SHA rank 选24个 fresh 2022 indicators，再固定12并发、每个恰抓`page=1,2&per_page=200`，共48 responses。helper禁redirect、禁environment session、绑定父进程；runner固定30/110/145秒 catalog/target/whole hard wall、shared API lease、claim-before-effect、create-exclusive raw bytes/result，禁止retry/resume/refetch/backfill/replacement。synthetic/adversarial、入口级与父链测试证明完整48响应可重建12题人口，任一响应失败则全人口NO-GO，成功bytes仍冻结，runtime/selection不读取category/question-type/split/gold/score/evaluator/历史correctness，entropy/IG signed credit恒为0。初始implementation、审计器与首个权威preactivation依次以`bac1aa8f / 8b1adf00 / f8bed596`推送；审计为45/45、94文件closure、`findings=[]`。**
