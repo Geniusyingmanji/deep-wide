@@ -365,6 +365,7 @@ def validate_result(value: Mapping[str, Any]) -> dict[str, Any]:
 
 validate_parent_receipt = parent.validate_receipt
 validate_parent_result = parent.validate_result
+validate_receipt = parent.validate_receipt
 
 
 __all__ = [
@@ -382,6 +383,7 @@ __all__ = [
     "run_paired_task",
     "validate_parent_receipt",
     "validate_parent_result",
+    "validate_receipt",
     "validate_result",
     "validate_stage_receipt",
 ]

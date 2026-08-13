@@ -89,6 +89,17 @@ class V25356SecondFreshPepGroundedFactPopulationTests(unittest.TestCase):
         self.assertFalse(
             policy["deepwidebench_forward_evaluator_leaderboard_or_sota_authorized"]
         )
+        gate = target.mechanism_gate()
+        self.assertEqual(
+            gate["maximum_outer_failure_tasks"],
+            gate["maximum_failure_as_zero_tasks"],
+        )
+        self.assertEqual(gate["maximum_budget_rejection_tasks"], 0)
+        self.assertTrue(
+            gate[
+                "recoverable_search_request_failures_reported_but_not_signed_credit"
+            ]
+        )
 
 
 if __name__ == "__main__":
