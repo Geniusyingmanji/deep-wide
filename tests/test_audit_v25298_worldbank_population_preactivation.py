@@ -34,7 +34,7 @@ class V25298WorldBankPopulationPreactivationAuditTests(unittest.TestCase):
     @staticmethod
     def _clean_git(*args: str) -> str:
         if args in {("rev-parse", "HEAD"), ("rev-parse", "target/main")}:
-            return target.IMPLEMENTATION_COMMIT
+            return target.REPAIR_COMMIT
         if args == ("status", "--porcelain"):
             return ""
         return REAL_GIT(*args)
@@ -47,7 +47,11 @@ class V25298WorldBankPopulationPreactivationAuditTests(unittest.TestCase):
 
     def test_fixed_inputs_commit_and_dependency_closure_are_exact(self) -> None:
         self.assertEqual(target._fixed_inputs(), {str(path): digest for path, digest in target.EXPECTED_FIXED.items()})
-        self.assertEqual(target._changed_paths(target.IMPLEMENTATION_COMMIT), target.IMPLEMENTATION_PATHS)
+        self.assertEqual(
+            target._changed_paths(target.INITIAL_IMPLEMENTATION_COMMIT),
+            target.INITIAL_IMPLEMENTATION_PATHS,
+        )
+        self.assertEqual(target._changed_paths(target.REPAIR_COMMIT), target.REPAIR_PATHS)
         closure, vector = target._closure()
         self.assertEqual(len(closure), target.EXPECTED_CLOSURE_COUNT)
         self.assertEqual(target.runner.payload_sha256(vector), target.EXPECTED_CLOSURE_VECTOR_SHA256)
@@ -57,6 +61,7 @@ class V25298WorldBankPopulationPreactivationAuditTests(unittest.TestCase):
         historical, rows = target.runner.historical_indicator_manifest()
         self.assertEqual(len(historical), 35)
         self.assertEqual(len(rows), 11)
+        self.assertTrue(target.runner._revocation_barrier())
 
     def test_closure_is_label_blind_without_evaluator_or_credentials(self) -> None:
         closure, _vector = target._closure()
