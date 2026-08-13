@@ -231,7 +231,7 @@ class V25297WorldBankPopulationFreezeTests(unittest.TestCase):
             fake.write_text("{}\n", encoding="utf-8")
             value = {
                 "artifact_version": 1,
-                "role": "v25303_worldbank_population_execution_start",
+                "role": "v25307_worldbank_population_execution_start",
                 "created_at_unix": 1,
                 "git_parent": "b" * 40,
                 "preactivation_audit": {
@@ -276,7 +276,8 @@ class V25297WorldBankPopulationFreezeTests(unittest.TestCase):
             with mock.patch.object(target, "_ordinary", side_effect=ordinary), mock.patch.object(
                 target, "_preactivation_authority", return_value=True
             ), mock.patch.object(target, "_revocation_barrier", return_value=True):
-                checked = target._validate_execution_start(value, current_head="a" * 40)
+                with mock.patch.object(target, "_prior_nogo_barrier", return_value=True):
+                    checked = target._validate_execution_start(value, current_head="a" * 40)
             self.assertEqual(checked, value)
             changed = copy.deepcopy(value)
             changed["source_manifest"][str(target.SOURCE)] = "0" * 64
@@ -284,11 +285,14 @@ class V25297WorldBankPopulationFreezeTests(unittest.TestCase):
             changed["start_payload_sha256"] = target.payload_sha256(changed)
             with mock.patch.object(target, "_ordinary", side_effect=ordinary), mock.patch.object(
                 target, "_preactivation_authority", return_value=True
-            ), mock.patch.object(target, "_revocation_barrier", return_value=True), self.assertRaises(ValueError):
+            ), mock.patch.object(target, "_revocation_barrier", return_value=True), mock.patch.object(
+                target, "_prior_nogo_barrier", return_value=True
+            ), self.assertRaises(ValueError):
                 target._validate_execution_start(changed, current_head="a" * 40)
 
     def test_revocation_barrier_proves_old_start_failed_before_all_effects(self) -> None:
         self.assertTrue(target._revocation_barrier())
+        self.assertTrue(target._prior_nogo_barrier())
         self.assertNotEqual(
             target.ATTEMPT_CLAIM,
             Path("results/v25297_worldbank_population_attempt_claim_v1_20260813.json"),
@@ -356,6 +360,27 @@ class V25297WorldBankPopulationFreezeTests(unittest.TestCase):
                 target.main()
             self.assertEqual([path for path, _value in published], [fake_root / target.ATTEMPT_CLAIM, fake_root / target.RESULT])
             execute.assert_called_once()
+
+    def test_helper_supervisor_uses_input_without_conflicting_stdin_argument(self) -> None:
+        completed = mock.Mock(returncode=0, stdout=json.dumps({
+            "kind": "transport_error",
+            "provider_attempt_count": 1,
+            "status_code": None,
+            "content_type": "",
+            "final_url": "",
+            "body_base64": "",
+        }))
+        with mock.patch.object(target.subprocess, "run", return_value=completed) as call:
+            body, receipt = target.invoke_helper(
+                target.CATALOG_URL,
+                target.CATALOG_MAXIMUM_BYTES,
+                target.CATALOG_SOCKET_TIMEOUT_SECONDS,
+            )
+        kwargs = call.call_args.kwargs
+        self.assertIn("input", kwargs)
+        self.assertNotIn("stdin", kwargs)
+        self.assertIsNone(body)
+        self.assertEqual(receipt["provider_attempt_count"], 1)
 
     def test_raw_and_json_publish_are_create_exclusive(self) -> None:
         with tempfile.TemporaryDirectory(dir=ROOT) as directory:
