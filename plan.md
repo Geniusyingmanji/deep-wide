@@ -1,5 +1,19 @@
 # OWIC-DeepWide 研究与实施计划
 
+> 版本：6.116
+>
+> **6.116 V2.52.89–91 normal-path monotone Unknown fill、第三槽集成与 clean-build 审计（2026-08-13）：V2.52.89新增纯本地merger，只允许将baseline中的Unknown替换为same-forward完整页面中机械绑定的值；headers、row key/order/count、已知cell必须逐字不变，任一已知修改或结构漂移整份proposal拒绝，非integral/缺失支持拒绝对应fill，检测到同一row/field的不同bound value时拒绝该fill。零admission保持baseline原始bytes；entropy/IG只记录shadow information gain，不参与admission或credit sign。初始实现与exact-preservation加固分别以`35e153cf / 0ae68de3`推送。**
+>
+> **V2.52.90把该merger接到V2.48.60旧父链的空闲第三model槽：只有parent正常恰用2/3 calls、baseline含Unknown、same-forward page prefix完整、prompt仍在原evidence cap内且limits与parent逐项一致时才允许第三call。模型失败、slot timeout、空或truncated response、局部gate失败、unsupported/conflicting proposal全部逐字保留parent prediction；私有visible task、prepared pages和model proposal随result密封，validator重建prompt、prefix、core receipt、support replay、prediction、budget/cost和slot conservation。query/fetch/model/wall仍为`4/10/3/240s`，20 executor、8 model slot、12 search-key slot；无额外search/fetch，entropy/IG signed credit保持0。专项及父链`16+17+11+20+7=71/71`，实现以`47865f74`推送。**
+>
+> **V2.52.91审计器先以`96857b4c`从独立implementation commit推送，再从clean且`HEAD==target/main`的该提交生成权威audit。审计固定V2.52.89/90四个源码/测试hash、V2.52.88父诊断和25文件transitive runtime closure；closure vector SHA-256=`b12eb37c...98cb0`、path SHA-256=`7c6ff5e7...0fcb`。`77/77`测试与23/23 checks全绿，privileged runtime field、evaluator capability、credential literal、untracked finding全空，仅保留既知provider-rank `clients.py:565:score`；四个protected watcher PID/start-ticks不变，shared lease inactive。权威audit `audit_valid=true / findings=[]`、payload SHA-256=`64355bed...ad9c`，以`6addb980`推送。**
+>
+> **当前只授权fresh/disjoint benchmark-external shared-prefix population与protocol design，不授权external activation/launch、post-freeze evaluator、dev64/220或质量/SOTA声明。下一门必须让control/candidate共享同一次visible question、parent prediction、queries、search responses与fetched page bytes；先在不打开mapping/gold/category/question-type/split/score/evaluator的情况下证明`nonzero supported Unknown fill + nonzero attributable prediction change + query/fetch equality + ≤3 model calls + caps不变`。机制为零则不打开evaluator；机制通过后才可独立post-freeze固定分母比较，GO要求candidate Exact严格增加，Entity/Row/Item/Column/Composite全不退且fallback/invalid/outer failure不增。禁止retry/resume/skip/backfill/replacement或选择性重跑。**
+>
+> **DeepWideBench口径仍为最新完整V2.52.67=`5/220 / Composite 0.407328`；项目单轮峰值V2.48.57=`9/220 / 0.457249`但未稳定复现。当前没有新benchmark/model/evaluator运行，没有Avg@4、leaderboard或SOTA证据。**
+>
+> **阅读规则：本文件append-only；顶部6.116覆盖6.115及后文所有较早的当前权限、下一步与分数口径。**
+
 > 版本：6.115
 >
 > **6.115 V2.52.86–88 legacy-outcome checkpoint、权威审计与质量可识别性NO-GO（2026-08-13）：V2.52.86在V2.48.57旧主链的`IntegratedExact220TaskOutcome`通过`validate_cross_artifacts`后、legacy envelope构建前密封完整outcome；正常路径仍返回原`build_envelope(outcome)`，envelope build/validate后置失败才从同一checkpoint恢复prediction、cost与全部parent receipts。candidate额外query/fetch/model/token与signed credit均为0；pre-checkpoint不可信outcome、checkpoint/receipt/recovery重封篡改以及顶层与nested failure stage/type不一致全部fail closed。专项与直接父runtime为`6+7+5+7=25/25`，实现以`10ae6f83`推送。**
