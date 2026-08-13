@@ -288,9 +288,10 @@ def apply_monotone_unknown_fill(
     baseline_keys = [parent._identity_key(row[0]) for row in baseline_rows]
     candidate_keys = [parent._identity_key(row[0]) for row in candidate_rows]
     structure_exact = bool(
-        [parent._identity_key(value) for value in candidate_columns]
-        == [parent._identity_key(value) for value in columns]
+        candidate_columns == columns
         and len(candidate_rows) == len(baseline_rows)
+        and [row[0] for row in candidate_rows]
+        == [row[0] for row in baseline_rows]
         and candidate_keys == baseline_keys
         and all(baseline_keys)
         and len(set(baseline_keys)) == len(baseline_keys)
@@ -309,12 +310,12 @@ def apply_monotone_unknown_fill(
     forbidden = 0
     proposed_fills = 0
     for old_row, new_row in zip(baseline_rows, candidate_rows, strict=True):
-        if parent._identity_key(old_row[0]) != parent._identity_key(new_row[0]):
+        if old_row[0] != new_row[0]:
             forbidden += 1
         for index in range(1, len(columns)):
             old = old_row[index]
             new = new_row[index]
-            if parent._identity_key(old) == parent._identity_key(new):
+            if old == new:
                 continue
             if parent._is_unknown(old) and not parent._is_unknown(new):
                 proposed_fills += 1
@@ -348,10 +349,7 @@ def apply_monotone_unknown_fill(
         for column_index in range(1, len(columns)):
             old = old_row[column_index]
             new = new_row[column_index]
-            if (
-                parent._identity_key(old) == parent._identity_key(new)
-                or parent._is_unknown(new)
-            ):
+            if old == new or parent._is_unknown(new):
                 continue
             support, conflict = _support_and_conflict(
                 evidence,
@@ -396,7 +394,10 @@ def apply_monotone_unknown_fill(
         admitted_support_counts=admitted_support_counts,
         shadow_information_gain_nats=shadow_gain,
     )
-    return {"candidate_table": candidate, "receipt": receipt}
+    return {
+        "candidate_table": candidate if admitted > 0 else baseline,
+        "receipt": receipt,
+    }
 
 
 def validate_receipt(value: Mapping[str, Any]) -> dict[str, Any]:

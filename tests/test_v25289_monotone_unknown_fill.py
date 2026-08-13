@@ -100,6 +100,32 @@ class V25289MonotoneUnknownFillTests(unittest.TestCase):
             value["receipt"]["rejected_by_whole_proposal_count"], 2
         )
 
+    def test_normalized_but_not_exact_header_key_or_known_cell_rejects(self) -> None:
+        candidates = (
+            """```markdown
+| name | Year | City |
+| --- | --- | --- |
+| Alpha | 2025 | Paris |
+| Beta | 2024 | Rome |
+```""",
+            table((" alpha ", "2025", "Paris"), ("Beta", "2024", "Rome")),
+            table(("Alpha", "2025", " paris "), ("Beta", "2024", "Rome")),
+        )
+        for candidate in candidates:
+            with self.subTest(candidate=candidate):
+                value = target.apply_monotone_unknown_fill(
+                    baseline=BASELINE,
+                    proposed=candidate,
+                    pages=[
+                        page(1, "Alpha record. Year: 2025. City: Paris."),
+                        page(2, "Beta record. Year: 2024. City: Rome."),
+                    ],
+                )
+                self.assertEqual(value["candidate_table"], BASELINE)
+                self.assertFalse(
+                    value["receipt"]["prediction_changed"]
+                )
+
     def test_row_reorder_addition_or_deletion_rejects_whole_proposal(self) -> None:
         candidates = (
             table(("Beta", "2024", "Rome"), ("Alpha", "2025", "Paris")),
@@ -147,6 +173,23 @@ class V25289MonotoneUnknownFillTests(unittest.TestCase):
                 self.assertEqual(
                     value["receipt"]["rejected_unsupported_fill_count"], 1
                 )
+
+    def test_zero_admission_preserves_noncanonical_baseline_bytes(self) -> None:
+        baseline = """| Name|Year |City|
+|---|---|---|
+|Alpha|Unknown|Paris|"""
+        proposed = """```markdown
+| Name | Year | City |
+| --- | --- | --- |
+| Alpha | 2025 | Paris |
+```"""
+        value = target.apply_monotone_unknown_fill(
+            baseline=baseline,
+            proposed=proposed,
+            pages=[page(1, "Alpha record. City: Paris.")],
+        )
+        self.assertEqual(value["candidate_table"], baseline)
+        self.assertTrue(value["receipt"]["candidate_identity_handoff"])
 
     def test_distant_or_substring_evidence_does_not_fill(self) -> None:
         for content in (
