@@ -1,5 +1,19 @@
 # Entropy-DeepWide：信息熵、信息增益与 Credit Assignment 驱动 Deep-and-Wide Search 文献综述
 
+## 2026-08-13 实验更新：hybrid恢复record coverage，但生成row overlap仍是主漏斗
+
+V2.53.83–87检验了“第三次模型同时输出base table与source records”。新的strict JSON envelope保持`4 query / 14 fetch / 3 model`，records只能引用同响应base table的first-column row，并继续通过同页连续quote、exact visible field与verbatim value验证。全新RFC 9600–9679人口的唯一20题forward在`81.816325s`内完成`80 query / 200 fetch / 60 model / 986,629 tokens`，20个base table都正常，但第三响应的records全部为空，因此parsed、verified和changed均为0。这个结果否定了“把record schema放进最后一次回答即可自然解决proposal recall”的假设，并严格NO-GO。
+
+V2.53.88对密封receipt做aggregate-only诊断，发现第二次grounded-plan response并非没有record：`8/20`题共11条。V2.53.89因此采用预验证、不可事后择优的固定source priority：joint raw list非空时无条件选joint；只有joint raw list严格为空时才可选grounded；否则none。joint与grounded永不merge，joint后续验证失败也不得fall through到有效grounded。这个边界很重要：它恢复已支付、同forward的proposal coverage，同时避免依据verification outcome挑选更有利source。84/84测试与84-file closure审计通过，且label/evaluator/credential finding全零。
+
+全新RFC 9680–9759人口上的V2.53.93唯一forward给出更细的漏斗：20/20 terminal/runtime、0 fallback、0 outer/budget/editor failure，成本为`80 query / 203 fetch / 60 model / 1,049,486 tokens`，墙钟`70.964732s`。joint仍为0，但9题进入grounded source，11条selected raw records中10条records、27个fields通过quote verification；3题共6个changed-safe坐标产生3次可归因prediction change，0 unattributable。机制仍NO-GO，因为变化题`3<4`，missing-row rejection为`10>2`。权威结果与审计见[`results/v25393_rfc_hybrid_external_forward_result_v1_20260813.json`](results/v25393_rfc_hybrid_external_forward_result_v1_20260813.json)和[`results/v25393_rfc_hybrid_external_forward_audit_v1_20260813.json`](results/v25393_rfc_hybrid_external_forward_audit_v1_20260813.json)。
+
+V2.53.94证明27个verified fields的editor disposition完全闭合为`10 missing-row + 11 unchanged + 6 changed`；没有table/schema、ambiguous row、missing column、multi-source conflict或unsafe-value残差。missing-row只发生在4题，计数分布为`2,2,3,3`。这把主瓶颈从`page → record proposal`推进到`verified source row → generated base row`：record/quote链已可达，但第三次生成器仍遗漏部分source identity。不能用生成后强制append Unknown row来“修复”，因为field evidence不自动证明集合membership，且追加行会改变当前changed-safe estimand。
+
+V2.53.95采取更窄的生成前约束：只有题面本身以严格tag/vector或明确“row for X”表达答案membership时，才把完整row vector作为untrusted JSON data加入同一次第三模型调用。网页实体、grounded/joint record、task ID、历史结果都不能创建membership；没有显式membership时父prompt和prediction路径保持byte-exact。provider若忽略约束，runtime仍不得在生成后加行；原normalizer、quote verifier和changed-safe editor继续fail closed。synthetic 7/7证明该约束可在三次调用内把一个遗漏row带回base并触发原verified edit，同时忽略约束时仍保留missing-row no-op。V2.53.96 clean-build为99/99、91-file closure、零privileged/evaluator/credential finding。visible-only扫描公开220只发现`11/220`个严格单行membership任务，其余209题父行为不变，因此它是低覆盖安全candidate，不是全集通用解法。审计见[`results/v25396_visible_membership_synthesis_build_audit_v1_20260813.json`](results/v25396_visible_membership_synthesis_build_audit_v1_20260813.json)。
+
+这些实验进一步限制了entropy/IG credit：V2.53.93的3次可归因prediction change仍没有post-freeze outer quality，因此signed credit必须保持0。proposal数量、verified fields、missing-row减少、entropy drop与prediction change可以作为funnel诊断或VOC特征，但不能确定credit符号。下一步必须在全新人口上先做matched mechanism gate，再在prediction freeze后独立评价outer utility；只有两者都GO才可能讨论正credit。
+
 ## 2026-08-13 实验更新：changed-safe 干预可归因，但完整220严格 NO-GO
 
 V2.53.68首先否定了旧的双synthesis处理效应解释。V2.53.67的20题中有49个verified fields，16题的treatment prompt发生变化，但这16题的treatment与control输出全部相同。因此，该实验不能区分原始页面冗余与模型对附加事实不敏感。[`results/v25368_v25367_treatment_identifiability_diagnosis_v1_20260813.json`](results/v25368_v25367_treatment_identifiability_diagnosis_v1_20260813.json)据此要求一个不受第二次采样噪声影响的estimand。V2.53.69–70改为一次共享synthesis生成control/base table；candidate只对唯一quote-verified row/column坐标、且verified value与base cell不同时做确定性编辑。冲突、Unknown、缺行、重复行、缺列和多来源坐标全部no-op，candidate没有额外模型调用。V2.53.71的`89/89`测试和80文件闭包审计通过，见[`results/v25371_shared_synthesis_changed_safe_build_audit_v1_20260813.json`](results/v25371_shared_synthesis_changed_safe_build_audit_v1_20260813.json)。
@@ -98,7 +112,7 @@ V2.51.50随后做counts-only诊断，只解码V2.51.47/V2.51.35的content-free r
 
 这进一步约束信息熵credit assignment。verified gain、进入第4次调用、合法strict JSON和上下文缩短都不能获得正credit；在`admissible observation`为0时，realized signed credit必须为0。V2.51.51因此只扩展content-generic、exact-label、exact-quote的flat JSON、inline/multiline labelled record和row-heading record，并保持两次mechanical verification。该build在synthetic/adversarial与父链152项测试中通过，但尚无fresh natural reach或outer utility证据，因而仍不能把entropy/IG用于正credit或宣称benchmark提升。正credit继续要求`source/identity/field/value admissibility → matched intervention → attributable prediction change → post-freeze outer utility`完整成立。
 
-> 检索截止：2026-08-12 05:41 UTC；项目证据更新：2026-08-13 UTC（至 V2.53.82）
+> 检索截止：2026-08-12 05:41 UTC；项目证据更新：2026-08-13 UTC（至 V2.53.96）
 >
 > 结论强度：这是基于公开文献的 novelty audit，不是“没有任何相关工作”的证明。2026 年文献多为尚未同行评审的 arXiv 预印本，文中将预印本结果视为作者报告，而非独立复现事实。
 
