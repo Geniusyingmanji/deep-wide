@@ -32,7 +32,6 @@ from . import v24273_two_wave_task_runtime as retrieval_runtime
 from . import v24318_deadline_conservation_runtime as conservation_runtime
 from . import v24319_runner_integration as runner_integration
 from . import v24630_exact220_task_integration as task_integration
-from . import v24857_pacing_aware_exact220_contract as parent_contract
 from . import v25290_monotone_unknown_fill_integration as candidate
 from .clients import canonicalize_url
 from .v24257_score_first_runtime import ScoreFirstLimits, validate_visible_task
@@ -85,6 +84,35 @@ MAXIMUM_PAGE_CHARS = 5_000
 MAXIMUM_EVIDENCE_CHARS = 40_000
 SELECTION_SEED = "v25294-fresh-worldbank-monotone-fill-v1"
 INDICATOR = re.compile(r"[A-Z][A-Z0-9.]{4,40}")
+PARENT_LIMITS = {
+    "wall_seconds": 240,
+    "search_queries": 4,
+    "fetch_targets": 10,
+    "model_calls": 3,
+    "plan_output_tokens": 4_000,
+    "synthesis_output_tokens": 30_000,
+    "repair_output_tokens": 12_000,
+    "evidence_chars": 60_000,
+    "page_chars": 5_000,
+    "search_results_per_query": 3,
+}
+PARENT_TWO_WAVE_POLICY = {
+    "wave1_queries": 2,
+    "wave1_fetches": 6,
+    "wave2_queries": 2,
+    "wave2_fetches": 4,
+    "minimum_usable_pages": 6,
+    "minimum_novel_pages": 6,
+    "minimum_unique_hosts": 6,
+    "content_chars_per_column": 1_000_000_000,
+    "maximum_wave1_seconds": 30.0,
+    "beta_prior_alpha": 1.0,
+    "beta_prior_beta": 1.0,
+    "information_gain_weight": 0.0,
+    "latency_loss_per_second": 0.0,
+    "minimum_net_value": -1.0,
+}
+PARENT_TAVILY_KEY_SLOT_CAP = 12
 
 
 @dataclass(frozen=True)
@@ -502,7 +530,7 @@ class FrozenWorldBankSnapshotSearchClient(
         return empty_rate_aware_receipt()
 
     def direct_search_receipt(self) -> dict[str, Any]:
-        return empty_direct_receipt(parent_contract.TAVILY_KEY_SLOT_CAP)
+        return empty_direct_receipt(PARENT_TAVILY_KEY_SLOT_CAP)
 
     def snapshot_transport_receipt(self) -> dict[str, Any]:
         value: dict[str, Any] = {
@@ -940,6 +968,8 @@ def validate_result(value: Mapping[str, Any]) -> dict[str, Any]:
         != integration["logical_parent_model_calls"]
         or receipt["final_logical_model_calls"]
         != integration["logical_final_model_calls"]
+        or receipt["physical_query_count"]
+        != parent_result["budget"]["admitted_search_queries"]
         or receipt["physical_fetch_count"]
         != parent_result["evidence"]["fetch_target_count"]
     ):
@@ -965,8 +995,8 @@ def run_paired_task(
     if not isinstance(search, ThinSameResponseCitationTitleBackfillSearchClient):
         raise ValueError("V2.52.95 requires the inherited thin search client")
     if (
-        limits.__dict__ != parent_contract.LIMITS
-        or two_wave_policy.__dict__ != parent_contract.TWO_WAVE_POLICY
+        limits.__dict__ != PARENT_LIMITS
+        or two_wave_policy.__dict__ != PARENT_TWO_WAVE_POLICY
     ):
         raise ValueError("V2.52.95 inherited budget or two-wave policy drifted")
     validate_isolation()
@@ -1017,6 +1047,9 @@ __all__ = [
     "MAXIMUM_EVIDENCE_CHARS",
     "MAXIMUM_PAGE_CHARS",
     "PAGE_COUNT",
+    "PARENT_LIMITS",
+    "PARENT_TAVILY_KEY_SLOT_CAP",
+    "PARENT_TWO_WAVE_POLICY",
     "POLICY_ID",
     "RESULT_ROLE",
     "ROWS_PER_TASK",

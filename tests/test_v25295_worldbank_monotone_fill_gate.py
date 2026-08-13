@@ -143,6 +143,11 @@ class V25295WorldBankMonotoneFillGateTests(unittest.TestCase):
         self.assertEqual(len(first["tasks"]), 12)
         self.assertTrue(all(len(page["content"]) <= 5_000 for page in first["pages"]))
         self.assertLessEqual(sum(len(page["content"]) for page in first["pages"]), 40_000)
+        self.assertEqual(target.PARENT_LIMITS, contract.LIMITS)
+        self.assertEqual(target.PARENT_TWO_WAVE_POLICY, contract.TWO_WAVE_POLICY)
+        self.assertEqual(
+            target.PARENT_TAVILY_KEY_SLOT_CAP, contract.TAVILY_KEY_SLOT_CAP
+        )
 
     def test_parser_rejects_target_pagination_value_or_duplicate_drift(self) -> None:
         spec = TARGETS[0]
@@ -282,8 +287,8 @@ class V25295WorldBankMonotoneFillGateTests(unittest.TestCase):
             visible,
             model=model,
             search=search,
-            limits=ScoreFirstLimits(**contract.LIMITS),
-            two_wave_policy=TwoWavePolicy(**contract.TWO_WAVE_POLICY),
+            limits=ScoreFirstLimits(**target.PARENT_LIMITS),
+            two_wave_policy=TwoWavePolicy(**target.PARENT_TWO_WAVE_POLICY),
             monotonic=clock,
         )
         return inner, search, result
@@ -335,8 +340,8 @@ class V25295WorldBankMonotoneFillGateTests(unittest.TestCase):
                 visible,
                 model=object(),
                 search=object(),
-                limits=ScoreFirstLimits(**contract.LIMITS),
-                two_wave_policy=TwoWavePolicy(**contract.TWO_WAVE_POLICY),
+                limits=ScoreFirstLimits(**target.PARENT_LIMITS),
+                two_wave_policy=TwoWavePolicy(**target.PARENT_TWO_WAVE_POLICY),
                 monotonic=clock,
             )
 
