@@ -1,5 +1,23 @@
 # OWIC-DeepWide 研究与实施计划
 
+> 版本：6.121
+>
+> **6.121 V2.53.13–20 deadline 对齐、真实 disjoint 人口控制面与 transport-capacity NO-GO（2026-08-13）：V2.53.13 仅在无 effect 构造后、进入父 runtime 前把 frozen snapshot search 的 `minimum_attempt_seconds` 从 `0.01` 对齐 model limiter 的 `0.05`；`absolute_deadline / cleanup_reserve / minimum_attempt` 三项由 content-free receipt 强制完全相同。专项5/5、V2.53.09回归10/10、V2.52.95回归10/10；实现以`1a7022e7`推送。V2.53.14 从 clean pushed HEAD 绑定 V2.53.12 diagnosis、实现提交与42文件闭包，权威39/39、privileged/evaluator/credential findings均为0、pre-effect witness `_aligned_deadlines=true` 且model/search/fetch effect均为0；审计实现/工件以`aa799711 / 15cf5f5b`推送。**
+>
+> **V2.53.15 纠正“fresh”定义：V2.53.05实际探测了24个target/48份response，不只是最终选中的4个，因此全部24个target和48份body SHA永久consumed；旧人口144个entity也不得复用。World Bank `country/all`总体约265个代码，旧144之外最多116个，故不可能再做144-entity零交集人口。新selector保持12题，预注册确定性容量梯级为优先`12×9=108`个全新共同entity，否则只接受`12×8=96`，低于96严格NO-GO；旧24 target、144 entity、48 response SHA与新48 response内部重复均在选择前fail closed。专项6/6和父回归10/10，源码以`80fb8c45`推送。V2.53.16逐项重放旧24/144/48 manifest并绑定41文件闭包，权威37/37、`findings=[]`，审计实现/工件以`0bbc07fb / d2197997`推送。**
+>
+> **V2.53.17–19 构建并冻结全新one-shot population supervisor：复用既有无凭据、禁redirect/retry、`trust_env=false`的World Bank GET helper，但使用新selector、新seed、新claim/result/output/start namespace。claim永久先于任何API effect；共享lease覆盖`claim → 1 catalog → fixed 48 target responses → result`；任何target failure、body/receipt SHA不一致、旧response重叠、共同新entity不足96或wall超限均整批NO-GO，禁止retry/resume/backfill/replacement/第二批。runner及三次窄hardening依次以`430cc9d1 / 5eb6dd48 / 054c4f16 / b568f7df`推送；最终11/11 synthetic覆盖GO、单请求失败、旧body复用、catalog/target body-receipt mismatch、无start零effect及重封preactivation拒绝。V2.53.18 preactivation从clean pushed HEAD完成48/48、96文件闭包、语义findings全0、未来surface pristine，只授权execution-start generation；审计实现/工件以`c8cca227 / 12a6bf3a`推送。V2.53.19单文件start绑定preactivation工件提交`12a6bf3a`，以`2017ae5d`推送。**
+>
+> **唯一V2.53.17人口冻结用时`23.081895s`：catalog `1/1`成功并从1498项中预排序24个与历史及V2.53.05零交集的新target；固定48个target provider attempt全部执行一次，36成功、12失败。12个失败全部为`transport_error / status=None / response bytes=0 / provider_attempts=1`，耗时集中`15.180–15.197s`，且恰为candidate ordinal 7–12的两页；ordinal 1–6与13–24成功，呈现第二个12-request burst的capacity/queue故障，而不是selector、deadline identity、model、entropy或quality证据。成功36份body及catalog与receipt SHA逐字一致，body-receipt mismatch=0、旧response overlap=0；但all-or-nothing门使selected target/entity/task/page全部为0，private population不存在。claim、NO-GO result、catalog和36份成功body原样以`abc34151`冻结推送，禁止把部分响应用于人口、successor或质量判断。**
+>
+> **V2.53.20 post-freeze audit逐项验证start→claim→result、单次`1+48` effect守恒、36份成功文件绑定、12份失败粗状态、零retry/redirect/refetch/resume/backfill/replacement、lease释放、活动进程为0与四个protected watcher不变；`audit_valid=true / findings=[]`，审计实现/工件以`a06f2689 / ef2c71a0`推送。V2.53.17人口永久封存，external mechanism protocol/forward、postfreeze evaluator、DeepWideBench与partial-response reuse权限全部false。**
+>
+> **下一步只授权transport-capacity successor build：新人口必须排除V2.53.05与V2.53.17两轮已实际探测的全部48个target，排除旧144 entity，并排除两轮已保存的84个target-response body SHA；不得复用本轮catalog或36份成功body。候选只改变transport调度，不改变selector、schema、页面、模型或机制：把12并发burst降为固定6（或由synthetic/官方限流证据支持的更低值），保持每URL一次attempt、总48请求和≤145s whole wall，目标是在不retry/backfill的前提下取得48/48 terminal success。必须重新走`build audit → preactivation → single-file start → unique population attempt → postfreeze audit`；只有新人口真正GO才可接回V2.53.13 deadline-aligned 12题机制门。**
+>
+> **DeepWideBench口径仍未变化：最新完整V2.52.67=`5/220 / Score 0.022727 / Composite 0.407328`；单轮峰值V2.48.57=`9/220 / 0.457249`但未稳定复制。V2.53.13–20没有benchmark prediction或evaluator，不是分数提升；无Avg@4、leaderboard或SOTA证据。entropy/IG继续shadow-only，positive signed credit=`0`。**
+>
+> **阅读规则：本文件append-only；顶部6.121覆盖6.120及后文所有较早的当前权限、下一步与分数口径。**
+
 > 版本：6.120
 >
 > **6.120 V2.53.09→12 World Bank monotone-fill 唯一机制门、启动前 schema 修复、零效应 NO-GO 与 deadline-identity 根因（2026-08-13）：V2.53.09先发现冻结题面的5个pipe列中3个官方指标名含顶层逗号且长度`95–100`，继承的两层visible-schema parser会把它们分别误拆成9列和2列，使父表与same-page binder确定性不可达。append-only adapter只从可见题面的精确` | `声明提取`1主键+4指标`，并在隔离的score-first plan normalization中仅当模型plan schema与该可见投影逐字一致时接受最长160字符列名；未修改V2.52.95冻结源码或历史SHA。真实V2.53.05页面上的synthetic整链随后证明父链`primary`、精确5列、2次parent model、第三槽第3次model、1个机械支持Unknown fill和prediction change。runtime/runner专项10/10、旧V2.52.95为10/10、V2.52.90为16/16；实现以`c26fbc60`推送。**
