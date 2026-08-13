@@ -1,5 +1,19 @@
 # OWIC-DeepWide 研究与实施计划
 
+> 版本：6.122
+>
+> **6.122 V2.53.23–35 transport 三次失败、1秒 pacing 反证与并发3 successor（2026-08-13）：V2.53.23 将 target 并发从12降至6，固定48 URL 各一次、禁retry/resume/backfill，在`27.927238s`内得到`43/48`成功；5份失败均为约15.18秒、status/bytes为空的`transport_error`。V2.53.27 post-audit为`audit_valid=true / findings=[]`，部分成功永久不可复用。V2.53.28由前42项全成功、末6项5失败的时序只提出“burst/rate capacity一致但非唯一因果证明”，授权下一步仅改变请求启动调度。**
+>
+> **V2.53.29 把三次已探测人口合并为严格 consumed manifest：72个唯一target、144个entity、127份唯一成功response SHA；V2.53.30 runner固定最大并发6、实际provider start ticket有序且间隔至少1秒，48 URL仍各一次，target/whole wall仍110/145秒。synthetic虚拟时钟仅允许`persist=False`且在authority/provider前拒绝持久执行；runner、build audit、preactivation与单文件start依次以`2c6672da / ff6f26ad / 2d49d1df / b79ae4fd / 10a94c4d / 1ab65312`推送。V2.53.31 clean-build=`42/42`、103文件闭包、`findings=[]`；V2.53.32 preactivation=`49/49`、`findings=[]`，只授权唯一人口尝试。**
+>
+> **唯一V2.53.30真实尝试严格NO-GO：catalog `1/1`，48个target provider attempt全部一次执行；实际最小启动间隔`1.000114s`、最大并发6、target wall`64.632713s`、whole wall`65.451684s`，仅`42/48`成功。6份失败为`[9,2]/[10,1]/[14,2]/[15,1]/[15,2]/[23,2]`，均为`transport_error / status=None / bytes=0 / provider_attempts=1 / 15.177–15.190s`；body-receipt mismatch与历史response overlap均0。全有或全无门使selected target/entity/task/page全0；claim、result、catalog与42份成功body共45文件以`384829b5`原样冻结，禁止retry、复用或质量推断。V2.53.34重放全部SHA、effect守恒、lease释放、进程和watcher，`audit_valid=true / findings=[]`，审计实现/工件以`a5a474ac / f2132bfd`推送。**
+>
+> **结论修正：1秒启动节流没有把失败降到无节流并发6的5次以下，反而观察到6次；因此不再把request-start rate作为下一主假设。V2.53.35只用本轮48份去内容elapsed receipt做固定顺序list-scheduling反事实：并发3 makespan=`93.911180s`，在110秒wall内留`16.088820s`；并发2=`139.981309s`，不可行。该重放不是未来成功保证或provider唯一因果证明。下一候选只把最大并发`6→3`并移除额外pacing，保持48 URL一次、无retry/backfill、110/145秒wall；必须使用全新命名空间，并排除四轮共96个target、144个entity与169份成功response SHA。仍需重新走`build audit → preactivation → single-file start → unique population attempt → postfreeze audit`。**
+>
+> **刷榜策略保持机制先行：人口未GO，所以V2.53.13的12题deadline-aligned monotone-fill门、external evaluator和新的220题均未授权。下一人口只有48/48且真正生成12题后，才跑固定12题机制门；至少2题有supported fill且2题有attributable prediction change、审计通过后才进入独立quality gate，最后才允许新的完整220。不得用人口transport实验声称提分。DeepWideBench最新完整仍为V2.52.67：Exact `5/220=0.022727`，Entity `0.640909`，Row/Item/Column F1 `0.193783/0.356198/0.438423`，Composite `0.407328`；单轮峰值V2.48.57=`9/220 / 0.457249`但未稳定复现。无Avg@4、leaderboard或SOTA证据；entropy/IG继续shadow-only，positive signed credit=`0`。**
+>
+> **阅读规则：本文件append-only；顶部6.122覆盖6.121及后文所有较早的当前权限、下一步与分数口径。**
+
 > 版本：6.121
 >
 > **6.121 V2.53.13–20 deadline 对齐、真实 disjoint 人口控制面与 transport-capacity NO-GO（2026-08-13）：V2.53.13 仅在无 effect 构造后、进入父 runtime 前把 frozen snapshot search 的 `minimum_attempt_seconds` 从 `0.01` 对齐 model limiter 的 `0.05`；`absolute_deadline / cleanup_reserve / minimum_attempt` 三项由 content-free receipt 强制完全相同。专项5/5、V2.53.09回归10/10、V2.52.95回归10/10；实现以`1a7022e7`推送。V2.53.14 从 clean pushed HEAD 绑定 V2.53.12 diagnosis、实现提交与42文件闭包，权威39/39、privileged/evaluator/credential findings均为0、pre-effect witness `_aligned_deadlines=true` 且model/search/fetch effect均为0；审计实现/工件以`aa799711 / 15cf5f5b`推送。**
