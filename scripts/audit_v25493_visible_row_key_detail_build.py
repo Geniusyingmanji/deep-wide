@@ -54,8 +54,8 @@ TEST_SUITES = (
     ("test_v25471_qualified_source_label_candidate.py", 7),
     ("test_v25465_row_key_bound_structured_source_runtime.py", 6),
     ("test_v25464_row_key_bound_structured_source_candidate.py", 9),
-    ("test_v25010_attested_child_detail_selection.py", 8),
-    ("test_v25001_page_visible_link_selection.py", 8),
+    ("test_v25010_attested_child_detail_selection.py", 10),
+    ("test_v25001_page_visible_link_selection.py", 7),
     ("test_v25253_outer_physical_cap_observed_runtime.py", 7),
 )
 EXPECTED_TESTS = sum(expected for _pattern, expected in TEST_SUITES)
@@ -70,7 +70,7 @@ CHECK_NAMES = frozenset(
     {
         "fixed_successor_source_and_test_hashes_match",
         "implementation_commits_in_head_history",
-        "focused_successor_parent_and_audit_tests_exact76",
+        "focused_successor_parent_and_audit_tests_exact77",
         "git_clean_head_equals_target_main",
         "all_audit_runtime_test_and_closure_files_tracked",
         "runtime_dependency_vector_exact93_and_hash_bound",
@@ -148,7 +148,7 @@ def build_audit(*, now: int | None = None, tracked: bool = True) -> dict[str, An
         "implementation_commits_in_head_history": all(
             commit in history for commit in IMPLEMENTATION_COMMITS
         ),
-        "focused_successor_parent_and_audit_tests_exact76": tests_green,
+        "focused_successor_parent_and_audit_tests_exact77": tests_green,
         "git_clean_head_equals_target_main": reported_clean and head == target,
         "all_audit_runtime_test_and_closure_files_tracked": not untracked,
         "runtime_dependency_vector_exact93_and_hash_bound": (
