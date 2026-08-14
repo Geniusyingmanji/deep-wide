@@ -104,12 +104,16 @@ def _git_at_parent(*args: str, input_text: str | None = None) -> subprocess.Comp
 
 def _parent_barrier() -> dict[str, Any]:
     value = json.loads(base._ordinary(PARENT_AUDIT).read_text(encoding="utf-8"))
-    parent_audit.validate_audit(value)
+    unsigned = dict(value)
+    seal = unsigned.pop("audit_payload_sha256", None)
     authorization = value.get("authorization") or {}
     if (
         base.sha256(PARENT_AUDIT) != FIXED_HASHES[PARENT_AUDIT]
+        or value.get("role") != parent_audit.ROLE
+        or value.get("implementation_commit") != parent_audit.IMPLEMENTATION_COMMIT
         or value.get("audit_valid") is not True
         or value.get("findings") != []
+        or seal != base.payload_sha256(unsigned)
         or authorization.get("fresh_task_disjoint_shared_parent_population_design")
         is not True
         or authorization.get("external_population_protocol_or_forward") is not False
