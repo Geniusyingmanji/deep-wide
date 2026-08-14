@@ -706,6 +706,24 @@ def validate_candidate(
     return copied
 
 
+def integration_contract() -> dict[str, Any]:
+    return {
+        "policy_id": POLICY_ID,
+        "maximum_direct_requests": MAXIMUM_DIRECT_REQUESTS,
+        "official_url_derived_only_from_completed_parent_row_key": True,
+        "visible_iana_authority_phrase_required": True,
+        "exact_https_host_path_and_nonredirected_page_required": True,
+        "row_key_binds_url_path_and_title_or_leading_page_surface": True,
+        "exact_separate_or_fused_complete_field_token_grammar_only": True,
+        "same_line_or_bounded_adjacent_exact_source_value_only": True,
+        "country_tld_mapping_synonym_ontology_host_ranking_or_model_inference": False,
+        "runtime_mapping_gold_category_question_type_split_evaluator_score_reward_or_historical_result_read": False,
+        "entropy_or_information_gain_assigns_signed_credit": False,
+        "file_environment_process_network_model_search_fetch_or_evaluator_accessed": False,
+        "benchmark_launch_or_evaluator_authorized": False,
+    }
+
+
 __all__ = [
     "IANA_HOST",
     "IANA_PATH_PREFIX",
@@ -715,6 +733,7 @@ __all__ = [
     "RECEIPT_ROLE",
     "ROLE",
     "build_candidate",
+    "integration_contract",
     "request_vector",
     "validate_candidate",
     "validate_receipt",
