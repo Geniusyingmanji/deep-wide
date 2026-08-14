@@ -1,6 +1,18 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.132
+> 版本：6.133
+
+> **6.133 V2.55.47–51 deterministic visible-constraint 机制 GO、质量信号为正但严格 NO-GO（2026-08-14）：V2.55.47/48 冻结了全新且与既有 population、固定 DeepWideBench 220 的 identity/question/opaque-id 均零重叠的 20 题：10 个 PyPI 双项目日期任务与 10 个 Hugging Face 双模型参数量任务。V2.55.49 修复了 scale conversion 后错误按字符串排序的真实 bug：一旦同列做过 scale conversion，该列不再进行 lexical sort；clean build 为 `71/71` tests、95-file closure，权威工件 SHA256=`fe72a1db83b946fbae056851fd43679d41169fc4399c57617ab3fde12515b5cb`。**
+
+> **V2.55.50 唯一 shared-parent forward 在 `92.069634s` 完成：`20/20` terminal/model-generated，0 fallback、outer failure、budget rejection、parent loss 或 unattributable change；物理 effect 为 `80 query / 228 fetch / 60 model / 1,116,684 tokens`。candidate 仅在同一 parent prediction 上做纯确定性 projection，没有额外 provider/sampling effect；12/20 prediction 改变，其中2题日期、9题scale、1题稳定排序自然作用，机制门全部通过。prediction freeze与content-free audit分别以 `5cbcc2d7/e261a97a`推送，forward audit为 `audit_valid=true, findings=[]`；entropy/IG positive signed credit保持0。**
+
+> **V2.55.51 在 evaluator 源码、10/10 tests、clean-build audit与quality protocol依次提交推送后，才对冻结的40份prediction做唯一一次post-freeze评估。协议固定40个authority endpoint（20 PyPI JSON + 20 Hugging Face model API）、每个恰好一次、20并发、无redirect/retry/refetch/replacement；千位逗号对million数值按语义等价，不能制造虚假Exact，日期whole-table Exact则要求题面指定格式与稳定降序。正式结果为 control Exact `5/20`、candidate `7/20`，Exact `+2`；Entity/Row/Item/Column/Composite 两臂均为 `0.95 / 0.45 / 0.70 / 0.95 / 0.7625`，2 win / 18 tie / 0 loss，0 fallback。**
+
+> **但严格质量结论仍为 NO-GO：40个endpoint虽全部attempt exactly once，只有39个valid truth、19/20 complete tasks，唯一失败为PyPI HTTP 200后的ParseFailure；预注册的 `truth_valid_for_all_fixed_tasks` 因此失败。prediction freeze后对已冻结raw response做非评分离线根因检查，确认该项目所有现存release均为PEP 440 prerelease；“没有stable release”本应是可验证的 `Unknown`，旧parser却把它当作无真值。这是 evaluator totality/eligibility bug，不得事后补抓、重评、删除该题或把本轮改写成GO。权威质量result/audit为 [`results/v25550_visible_constraint_quality_result_v1_20260814.json`](results/v25550_visible_constraint_quality_result_v1_20260814.json) 与 [`results/v25550_visible_constraint_quality_audit_v1_20260814.json`](results/v25550_visible_constraint_quality_audit_v1_20260814.json)，audit=`audit_valid=true, findings=[]`且明确不授权220。**
+
+> **下一步只允许 fresh/disjoint successor：先修 evaluator 使“官方endpoint完整、身份绑定、稳定版本集合为空”成为valid `Unknown`，并把Unknown排序语义预先固定；不得复用V2.55.47人口、raw truth或任何逐题score。新人口应提高真正有质量信号的日期格式/排序treatment占比，scale千位分隔符只计语义等价、不得计Exact增益；仍共享同一个production parent forward，机制门要求全终态、0 parent-loss/预算/stage failure及非零可归因change，post-freeze质量门继续要求candidate Exact严格增加且全部soft metrics/invalid/fallback不退。只有fresh机制与quality双GO，才授权production successor build，再按40 task workers/16 model slots、fresh roots、no-resume、failure-as-zero运行完整220。当前DeepWideBench权威口径仍为最新V2.54.06 Exact `6/220`、Composite `0.385731`；单轮观测峰值V2.48.57 Exact `9/220`、Composite `0.457249`，无Avg@4、leaderboard或SOTA证据。**
+
+> **阅读规则：本文件 append-only；顶部 6.133 覆盖 6.132 及后文所有较早的当前权限、下一步与分数口径。**
 
 > **6.132 V2.55.44–46 deterministic shared-parent visible constraint build GO（2026-08-14）：V2.55.42 的 prompt suffix 会让 candidate 产生独立第三次模型采样，不能把生成差异识别为 constraint effect。V2.55.44/45 因此改为单次 V2.54.01 parent forward：control byte-exact 使用 parent prediction，candidate 只对同一 prediction 做纯确定性 projection；两臂共享 visible task、plan、queries、search/fetch bytes、page order、三次模型响应、deadline 与所有 provider/sampling effect。candidate 没有独立模型、搜索、抓取或采样。**
 
