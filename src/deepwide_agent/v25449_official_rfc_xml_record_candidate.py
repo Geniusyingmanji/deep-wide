@@ -85,8 +85,7 @@ def _text(value: object) -> str:
     return " ".join(str(value or "").split())
 
 
-def _visible_numbers(question: str) -> tuple[int, ...]:
-    values, _source = membership.visible_membership(str(question))
+def _identity_numbers(values: Sequence[object]) -> tuple[int, ...]:
     output: list[int] = []
     for value in values:
         match = _RFC.fullmatch(_text(value))
@@ -96,10 +95,13 @@ def _visible_numbers(question: str) -> tuple[int, ...]:
     return tuple(output) if len(output) == MAXIMUM_PAGES and len(set(output)) == len(output) else ()
 
 
-def request_vector(question: str) -> list[dict[str, str]]:
-    """Return four deterministic official URLs from strict visible membership."""
+def _visible_numbers(question: str) -> tuple[int, ...]:
+    values, _source = membership.visible_membership(str(question))
+    return _identity_numbers(values)
 
-    numbers = _visible_numbers(question)
+
+def request_vector_for_identities(values: Sequence[object]) -> list[dict[str, str]]:
+    numbers = _identity_numbers(values)
     if not numbers:
         return []
     return [
@@ -111,6 +113,13 @@ def request_vector(question: str) -> list[dict[str, str]]:
         }
         for number in numbers
     ]
+
+
+def request_vector(question: str) -> list[dict[str, str]]:
+    """Return four deterministic official URLs from strict visible membership."""
+
+    values, _source = membership.visible_membership(str(question))
+    return request_vector_for_identities(values)
 
 
 def _url_number(value: object) -> int | None:
@@ -262,13 +271,14 @@ def _pages(values: Sequence[Mapping[str, Any]]) -> dict[int, Mapping[str, Any]]:
     return output
 
 
-def build_candidate(
+def build_candidate_for_identities(
     base_prediction: str,
     *,
-    question: str,
+    identities: Sequence[object],
     pages: Sequence[Mapping[str, Any]],
 ) -> dict[str, Any]:
-    numbers = _visible_numbers(question)
+    numbers = _identity_numbers(identities)
+    visible_identities = [f"RFC {number}" for number in numbers]
     required, rows = parent._canonical_table(base_prediction, COLUMNS)
     base_keys = tuple(parent._key(row[0]) for row in rows)
     expected_keys = tuple(parent._key(f"RFC {number}") for number in numbers)
@@ -318,8 +328,9 @@ def build_candidate(
         "candidate_prediction_sha256": hashlib.sha256(
             candidate.encode("utf-8")
         ).hexdigest(),
+        "visible_identities": visible_identities,
         "visible_identity_count": len(numbers),
-        "requested_page_count": len(request_vector(question)),
+        "requested_page_count": len(request_vector_for_identities(visible_identities)),
         "provided_page_count": len(pages),
         "valid_record_count": counts["valid_record_count"],
         "missing_page_count": counts["missing_page_count"],
@@ -378,7 +389,19 @@ def build_candidate(
     receipt["receipt_payload_sha256"] = payload_sha256(receipt)
     value["content_free_receipt"] = validate_receipt(receipt)
     value["artifact_payload_sha256"] = payload_sha256(value)
-    return validate_candidate(value, question=question, pages=pages, replay=False)
+    return validate_candidate(value, pages=pages, replay=False)
+
+
+def build_candidate(
+    base_prediction: str,
+    *,
+    question: str,
+    pages: Sequence[Mapping[str, Any]],
+) -> dict[str, Any]:
+    identities, _source = membership.visible_membership(str(question))
+    return build_candidate_for_identities(
+        base_prediction, identities=identities, pages=pages
+    )
 
 
 def validate_receipt(value: Mapping[str, Any]) -> dict[str, Any]:
@@ -446,8 +469,8 @@ def validate_receipt(value: Mapping[str, Any]) -> dict[str, Any]:
 def validate_candidate(
     value: Mapping[str, Any],
     *,
-    question: str,
     pages: Sequence[Mapping[str, Any]],
+    question: str | None = None,
     replay: bool = True,
 ) -> dict[str, Any]:
     copied = copy.deepcopy(dict(value))
@@ -455,6 +478,7 @@ def validate_candidate(
     seal = unsigned.pop("artifact_payload_sha256", None)
     base = copied.get("base_prediction")
     candidate = copied.get("candidate_prediction")
+    identities = copied.get("visible_identities")
     receipt = copied.get("content_free_receipt")
     if (
         copied.get("artifact_version") != 1
@@ -462,6 +486,10 @@ def validate_candidate(
         or copied.get("policy_id") != POLICY_ID
         or not isinstance(base, str)
         or not isinstance(candidate, str)
+        or not isinstance(identities, list)
+        or any(not isinstance(identity, str) for identity in identities)
+        or [f"RFC {number}" for number in _identity_numbers(identities)]
+        != identities
         or copied.get("base_prediction_sha256")
         != hashlib.sha256(base.encode("utf-8")).hexdigest()
         or copied.get("candidate_prediction_sha256")
@@ -480,7 +508,13 @@ def validate_candidate(
             and copied[name] != receipt[name]
         ):
             raise ValueError("V2.54.49 receipt/result drifted")
-    if replay and copied != build_candidate(base, question=question, pages=pages):
+    if question is not None:
+        visible, _source = membership.visible_membership(str(question))
+        if list(visible) != identities:
+            raise ValueError("V2.54.49 visible membership replay drifted")
+    if replay and copied != build_candidate_for_identities(
+        base, identities=identities, pages=pages
+    ):
         raise ValueError("V2.54.49 candidate replay drifted")
     return copied
 
@@ -508,9 +542,11 @@ __all__ = [
     "RFC_EDITOR_HOST",
     "ROLE",
     "build_candidate",
+    "build_candidate_for_identities",
     "integration_contract",
     "parse_page",
     "request_vector",
+    "request_vector_for_identities",
     "validate_candidate",
     "validate_receipt",
 ]
