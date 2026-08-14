@@ -1,0 +1,117 @@
+{
+  "artifact_version": 1,
+  "authorization": {
+    "deepwidebench_successor_build_or_forward": false,
+    "leaderboard_or_sota": false,
+    "one_truth_fetch_and_fixed_evaluation": true,
+    "retry_refetch_revaluation_or_selective_replacement": false
+  },
+  "base_and_candidate_share_one_parent_forward": true,
+  "created_at_unix": 1786668586,
+  "entropy_or_information_gain_assigns_signed_credit": false,
+  "evaluator_source_sha256": "3ef0d338c44a7a2e8dbc1aa2878919e52cdebc755439fc4172feec1b88452e32",
+  "evaluator_test_sha256": "e7f35cd5b47e88efcb3c96f20fad2fc740b43f2118e05fa089f134e30b2debfb",
+  "fixed_prediction_count": 40,
+  "fixed_truth_identity_count": 80,
+  "fixed_truth_identity_vector_sha256": "653b9eff246dbd77c2549bd5b5764ba9ee8a28abb091fd550a3b1bee7b45e7e0",
+  "forward_audit_sha256": "92ed9dbc8a90bb583945f06d94277a6c5a776204cb9d4e773318060e9a1170b1",
+  "forward_result_sha256": "094d218250c226d2dd5bcfca9db7b0b4ca3323f06aa1af8fd3ad9bfcf22f72ef",
+  "frozen_task_count": 20,
+  "git_head": "289b225db0f6ae452a352067c2fb4d417fb3ee69",
+  "official_truth_url": "https://www.rfc-editor.org/rfc-index.xml",
+  "parser": {
+    "accepted_fixed_identity_node_types": [
+      "rfc-entry",
+      "rfc-not-issued-entry"
+    ],
+    "all_eighty_fixed_identities_required": true,
+    "not_issued_count_not_opened_before_protocol": true,
+    "not_issued_non_key_field_value": "Unknown",
+    "not_issued_structural_contract": "exactly_one_doc_id_child",
+    "parser_id": "namespace_qualified_rfc_and_not_issued_v2",
+    "required_namespace": "https://www.rfc-editor.org/rfc-index",
+    "required_root_tag": "{https://www.rfc-editor.org/rfc-index}rfc-index"
+  },
+  "prediction_freeze_and_pushed_forward_audit_precede_truth_open": true,
+  "prediction_freeze_sha256": "63051894e25331bc2b954a269bfa09d1d25ff1e3f16e6e1e24b17ee5134c13ea",
+  "protected_watchers": [
+    {
+      "marker": "scripts/watch_v2415_r1_checkpoint_liveness.py",
+      "pid": 795336,
+      "start_ticks": 713986317
+    },
+    {
+      "marker": "scripts/watch_v24218_exact220_executor.py",
+      "pid": 3061652,
+      "start_ticks": 747569004
+    },
+    {
+      "marker": "scripts/watch_v24215_joint_package_recovery.py",
+      "pid": 2808901,
+      "start_ticks": 746680268
+    },
+    {
+      "marker": "scripts/watch_v24216_package_gate.py",
+      "pid": 2889939,
+      "start_ticks": 746969965
+    }
+  ],
+  "protocol_id": "v25447_v25446_key_anchored_metadata_shared_effect_quality_v1",
+  "protocol_payload_sha256": "e61ea821366ef20cafbe0ea133d90efcb070f19eb23d19eebb4afd30430cb865",
+  "quality_build_audit_sha256": "852cc00e7e86f8f39444911e6aab699cd90c476388b87dacd37f39db3d401b74",
+  "quality_gate": {
+    "base_and_candidate_share_one_parent_forward": true,
+    "candidate_cell_accuracy_not_lower_than_base": true,
+    "candidate_column_accuracy_not_lower_than_base": true,
+    "candidate_entity_coverage_not_lower_than_base": true,
+    "candidate_fallback_count_not_greater_than_base": true,
+    "candidate_invalid_count_not_greater_than_base": true,
+    "candidate_quality_composite_not_lower_than_base": true,
+    "candidate_row_exact_not_lower_than_base": true,
+    "candidate_whole_table_exact_strictly_greater_than_base": true,
+    "each_base_and_candidate_prediction_evaluated_exactly_once": true,
+    "fixed_task_denominator": 20,
+    "invalid_or_unavailable_truth_is_failure_as_zero_without_retry": true,
+    "official_rfc_editor_truth_opened_only_after_prediction_freeze_and_forward_audit": true,
+    "positive_signed_credit_count": 0
+  },
+  "role": "v25447_key_anchored_metadata_shared_effect_quality_preregistration",
+  "scoring": {
+    "arms": [
+      "shared_base_table",
+      "key_anchored_metadata_candidate"
+    ],
+    "both_predictions_evaluated_once": true,
+    "cell_accuracy": "correct non-key cells divided by twenty",
+    "column_accuracy": "macro mean of ordered key and five field accuracies",
+    "columns": [
+      "RFC",
+      "Title",
+      "Authors",
+      "Status",
+      "Stream",
+      "Published"
+    ],
+    "entity_coverage": "expected RFC identities present divided by four",
+    "exact": "exact RFC order and all twenty non-key cells correct",
+    "fixed_task_denominator": 20,
+    "invalid_prediction_or_missing_truth": "all metrics zero",
+    "positive_signed_credit_count": 0,
+    "primary_comparison": "key_anchored_metadata_candidate_minus_shared_base_table",
+    "quality_composite": "mean(entity,row,cell,column)",
+    "row_exact": "rows with all five non-key fields correct divided by four",
+    "rows_per_task": 4
+  },
+  "target_main": "289b225db0f6ae452a352067c2fb4d417fb3ee69",
+  "task_rows_sha256": "43ba523c1f8a846fe1c8a72bc78e7c7f330405e5850c641d67b76968de130431",
+  "truth_fetch": {
+    "connect_timeout_seconds": 5.0,
+    "failure_is_fixed_denominator_zero_without_refetch": true,
+    "maximum_attempts": 1,
+    "maximum_response_bytes": 20000000,
+    "read_timeout_seconds": 60.0,
+    "redirects": false,
+    "retries": 0,
+    "shared_one_snapshot_for_both_arms": true
+  }
+}
