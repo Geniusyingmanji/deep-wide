@@ -1,6 +1,14 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.133
+> 版本：6.134
+
+> **6.134 V2.55.52–57 valid-Unknown totality、fresh date population 与 pre-effect pool NO-GO（2026-08-14）：V2.55.52 将 evaluator 的“官方 PyPI 身份有效但全部 file-bearing 版本均为 prerelease/dev”定义为 valid `Unknown`，而非 truth failure；known date 按最新 stable release 的文件最早 UTC 日确定，排序固定为 known dates descending、随后 Unknown 且 Unknown 保持题面输入顺序。该纯 evaluator primitive 与V2.55.53 fresh population共12/12测试；20个全新双项目日期任务的40个identity在选择父提交tree与全部ancestry patch中均零命中，和固定220的question/opaque overlap均为0。V2.55.54 clean audit为12/12、`audit_valid=true/findings=[]`。**
+
+> **V2.55.55 随后以同一 V2.54.01 parent forward、同一 `4 query / 14 fetch / 3 model / 240s` cap、20 task workers / 16 model slots接入date-only shared-parent gate；40/40正式测试和133-file closure无privileged/evaluator/credential finding，truth primitive明确不在forward closure。implementation/build/protocol/preactivation/execution-start均从各自clean pushed HEAD依次冻结。但唯一forward在`0.116560s`内20/20 fail-closed：20 fallback、20裸ValueError、0 runtime completed，物理effect严格为`0 query / 0 fetch / 0 model / 0 tokens`；机制门NO-GO且quality权限为false。该人口永久封存，禁止retry/resume/replay/replacement或post-freeze truth。**
+
+> **V2.55.57只读密封的content-free row/aggregate和冻结源码合同，确认根因位于任何effect之前：successor runner把`POOL_ID`覆盖为`v25555_fresh_date_external_model_pool_v1`，而`DeadlineAwareGlobalModelSlotLimiter`构造器硬性要求冻结常量`v24263_score_first_global_model_slots_v1`，两者不等即抛ValueError。诊断audit=`true/findings=[]`，只授权successor pool-contract修复build，不授权旧人口重跑、quality或220。修复必须使用构造器实际常量并增加真实constructor smoke，不能只检查clone namespace name resolution。修复后仍须换另一组fresh/disjoint人口，重新走build→protocol→preactivation→start→唯一forward；fresh机制与quality双GO前不得运行完整220。当前DeepWideBench仍为最新V2.54.06 `6/220 / 0.385731`，单轮峰值V2.48.57 `9/220 / 0.457249`，无Avg@4、leaderboard或SOTA。**
+
+> **阅读规则：本文件 append-only；顶部 6.134 覆盖 6.133 及后文所有较早的当前权限、下一步与分数口径。**
 
 > **6.133 V2.55.47–51 deterministic visible-constraint 机制 GO、质量信号为正但严格 NO-GO（2026-08-14）：V2.55.47/48 冻结了全新且与既有 population、固定 DeepWideBench 220 的 identity/question/opaque-id 均零重叠的 20 题：10 个 PyPI 双项目日期任务与 10 个 Hugging Face 双模型参数量任务。V2.55.49 修复了 scale conversion 后错误按字符串排序的真实 bug：一旦同列做过 scale conversion，该列不再进行 lexical sort；clean build 为 `71/71` tests、95-file closure，权威工件 SHA256=`fe72a1db83b946fbae056851fd43679d41169fc4399c57617ab3fde12515b5cb`。**
 
