@@ -1,6 +1,18 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.131
+> 版本：6.132
+
+> **6.132 V2.55.44–46 deterministic shared-parent visible constraint build GO（2026-08-14）：V2.55.42 的 prompt suffix 会让 candidate 产生独立第三次模型采样，不能把生成差异识别为 constraint effect。V2.55.44/45 因此改为单次 V2.54.01 parent forward：control byte-exact 使用 parent prediction，candidate 只对同一 prediction 做纯确定性 projection；两臂共享 visible task、plan、queries、search/fetch bytes、page order、三次模型响应、deadline 与所有 provider/sampling effect。candidate 没有独立模型、搜索、抓取或采样。**
+
+> **projection 仅允许三类题面显式、局部且可逆审计的操作：完整合法日期重格式化、单数字且单一显式源尺度的换算、以及整列同类型且全可比较时的稳定排序。它明确禁止按年份范围删除行、创建/删除/重标 rank slots、补造日期精度、处理含糊 scale、混合类型排序、schema 或 row-count 改动；任何不安全条件均保留 parent prediction byte-exact。runtime 输入仍严格为 `{opaque_id, question}`，上限保持 `4 query / 14 fetch / 3 model`，entropy/IG positive signed credit=`0`。**
+
+> **V2.55.46 首轮定向审计暴露并修复一个真实 seal 漏洞：旧 validator 会接受重新封印后的 `primitive_contract.operation` 篡改。修复后 validator 将 artifact version、clean/equal Git state、95-file closure 向量与 path hash、primitive/runtime integration contracts、protected watcher identities、effect/authorization 和已知 provider-rank 例外全部重新绑定；新增 operation/runtime/watcher/closure 重封篡改回归。正式 clean pushed `4e8197b6` build 为 `70/70` tests、95-file closure，vector SHA256=`6758818c955f75d9e958a2f25f1a5d0ef41b5cb2a77638cac1b9f0e190c812a7`、path SHA256=`b846c90ee70bc04cba09cf290bd9322bf304b573f423507b67d30cc6ab476241`，privileged/evaluator/credential findings 全空。权威工件 `results/v25546_deterministic_visible_constraint_build_audit_v1_20260814.json` SHA256=`e1d781250a83f3e049cc1cf3ec709acee237c7e4928ab9de53516cddb942b0f6`，`audit_valid=true / findings=[]`。**
+
+> **当前授权只到全新、task-disjoint、outcome-blind population design；不授权 external protocol/forward、truth/quality、DeepWideBench 220/evaluator、retry/resume/backfill/replacement、leaderboard 或 SOTA。下一 population 必须在选择时不访问 endpoint/page/value/model/evaluator/outcome，并与全部已消费 identity/question/opaque id 零重叠；优先覆盖 date-format、explicit-scale 与 total-sort 三个 treatment family。随后按 build audit → population freeze → preregistration → preactivation → execution-start 分阶段提交。机制门要求全终态、0 parent-loss/预算/stage failure、nonzero safe projection 与 attributable prediction change；prediction freeze/content-free audit 推送后才可做一次 post-freeze paired quality。只有机制与 quality 双 GO，才授权 fresh-root、no-resume、failure-as-zero 的完整 220。**
+
+> **DeepWideBench 权威口径未变：最新完整 single rollout V2.54.06 为 Exact `6/220`、Composite `0.385731`；单轮观测峰值 V2.48.57 为 Exact `9/220`、Composite `0.457249`，未稳定复现且不是 Avg@4。当前没有新的 220 forward 或 SOTA 证据；四个 protected watcher identity 未变、shared API lease inactive。**
+
+> **阅读规则：本文件 append-only；顶部 6.132 覆盖 6.131 及后文所有较早的当前权限、下一步与分数口径。**
 
 > **6.131 V2.55.41–43 visible output constraint contract 与 clean-build GO（2026-08-14）：V2.55.41 没有把旧 monolithic `runtime.py` 整体接回 production，而是 append-only 提取五类保守 visible-only 约束：唯一显式 year range、日期格式、唯一明确 numeric scale、无 ties 的 Top-K×唯一 rank column、以及绑定 exact column 的显式升/降序。含糊/冲突约束 fail closed；合同只接收 visible question 与 exact selected columns，不读取 task label、mapping/gold/truth/evaluator/score/history，也不产生 provider effect。content-free observer 只检查表示/域遵循，不判断事实正确性、不修改 prediction，entropy/IG signed credit 恒为0。**
 
