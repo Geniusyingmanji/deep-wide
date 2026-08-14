@@ -1,0 +1,76 @@
+{
+  "artifact_version": 1,
+  "role": "v25563_v25562_poolfixed_date_quality_no_go_diagnosis",
+  "created_at_unix": 1786719191,
+  "source_artifacts": {
+    "quality_audit": {
+      "path": "results/v25562_poolfixed_date_quality_audit_v1_20260814.json",
+      "sha256": "ca40866c768aeab784430195ed73c5ca35205c0de2a9ffd6b8a9a11d7cb488db"
+    },
+    "quality_result": {
+      "path": "results/v25562_poolfixed_date_quality_result_v1_20260814.json",
+      "sha256": "9660b07afdd3e05bb993ec4da4752ea36c18f150b9ea222f7c6d9fa6ee1a68ff"
+    },
+    "truth": {
+      "path": "outputs/v25561_poolfixed_date_v1_20260814/postfreeze_pypi_truth_v25562.json",
+      "sha256": "a6f95ee219aeaac46409b869928d35a0f04e7e1906d08fb1d6943e35ea8bf040"
+    }
+  },
+  "diagnosis": {
+    "quality_gate_status": "strict_no_go",
+    "sole_failed_quality_check": "truth_valid_for_all_fixed_tasks",
+    "fixed_endpoint_attempt_count": 40,
+    "successful_transport_count": 39,
+    "valid_truth_identity_count": 39,
+    "paired_complete_task_count": 19,
+    "failed_endpoint_count": 1,
+    "failed_endpoint_http_status": 404,
+    "failed_endpoint_failure_type": "HTTP404",
+    "failed_endpoint_raw_response_bytes": 24,
+    "transport_timeout_count": 0,
+    "parse_failure_count": 0,
+    "valid_unknown_count": 0,
+    "candidate_exact_table_successes_fixed20": 14,
+    "control_exact_table_successes_fixed20": 5,
+    "candidate_minus_control_exact": 9,
+    "candidate_exact_wins": 9,
+    "candidate_exact_losses": 0,
+    "candidate_exact_ties": 11,
+    "soft_metric_delta_all_zero": true,
+    "invalid_and_fallback_delta_zero": true,
+    "discordant_complete_pairs": 9,
+    "exact_sign_test_one_sided_p": 0.001953125,
+    "exact_sign_test_two_sided_p": 0.00390625,
+    "missingness_is_arm_blind_and_precommitted": true,
+    "missingness_is_independent_of_control_or_candidate_prediction": true,
+    "observed_treatment_effect_is_strong_but_does_not_retroactively_change_gate": true
+  },
+  "strategy_update": {
+    "old_brittle_condition": "all_40_truth_identities_required",
+    "new_preregistered_condition": "fixed20_failure_as_zero_plus_minimum_18_paired_complete_tasks",
+    "paired_complete_subset_selected_only_by_frozen_truth_availability": true,
+    "prediction_arm_outcome_or_score_used_for_completeness_selection": false,
+    "minimum_candidate_exact_gain_fixed20": 1,
+    "maximum_candidate_exact_losses": 0,
+    "maximum_two_sided_exact_sign_test_p": 0.05,
+    "all_soft_metrics_nonregression_on_fixed20": true,
+    "invalid_and_fallback_nonincrease_on_fixed20": true,
+    "new_population_required": true,
+    "same_population_refetch_retry_revaluation_or_gate_reinterpretation": false
+  },
+  "label_blind": {
+    "benchmark_mapping_category_question_type_split_gold_answer_evaluator_or_score_read": false,
+    "benchmark_forward_or_evaluator_called": false,
+    "runtime_routing_changed_from_evaluator_feedback": false,
+    "entropy_or_information_gain_assigns_signed_credit": false,
+    "positive_signed_credit_count": 0
+  },
+  "authorization": {
+    "fresh_disjoint_population_build": true,
+    "fresh_external_protocol_design": false,
+    "same_population_refetch_retry_revaluation_or_selective_replacement": false,
+    "deepwidebench_successor_build_or_forward": false,
+    "leaderboard_or_sota": false
+  },
+  "diagnosis_payload_sha256": "84da480c6906afc305a40024a2887ca62bb2e71de37aab69bdcfc3b3fdf55797"
+}
