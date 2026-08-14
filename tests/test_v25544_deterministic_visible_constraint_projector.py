@@ -87,6 +87,25 @@ class V25544DeterministicVisibleConstraintProjectorTests(unittest.TestCase):
             rejected["content_free_receipt"]["sort_rejected_count"], 1
         )
 
+    def test_scale_and_order_on_same_column_never_lexically_misorder(self) -> None:
+        columns = ["Model", "Parameter Count"]
+        contract = contracts.build_contract(
+            "Express Parameter Count in millions. Sort by Parameter Count in descending order.",
+            columns,
+        )
+        base = table(
+            columns,
+            [["large", "1.7 billion"], ["small", "360 million"]],
+        )
+        value = target.build_projection(base, contract)
+        prediction = value["candidate_prediction"]
+        receipt = value["content_free_receipt"]
+        self.assertIn("| large | 1700 million |", prediction)
+        self.assertLess(prediction.find("| large |"), prediction.find("| small |"))
+        self.assertEqual(receipt["scale_cell_changed_count"], 1)
+        self.assertEqual(receipt["sort_applied_count"], 0)
+        self.assertEqual(receipt["sort_rejected_count"], 1)
+
     def test_temporal_range_and_rank_slot_never_mutate_rows(self) -> None:
         columns = ["Year", "Rank", "Team"]
         contract = contracts.build_contract(

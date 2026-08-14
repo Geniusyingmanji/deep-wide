@@ -256,11 +256,27 @@ def apply_projection(
     if order_contract is not None:
         sort_attempted = 1
         index = column_index[order_contract["target_column"]]
-        values = [
-            _sort_value(row[index], order_contract["value_kind"])
-            for row in rows
-        ]
-        if (
+        # A scale conversion deliberately retains its explicit unit token.
+        # The generic sort grammar cannot compare those rendered values as
+        # quantities, so sorting the same converted column lexically would be
+        # unsafe (for example, ``360 million`` versus ``1700 million``).
+        scale_order_coupled = bool(
+            scale_contract is not None
+            and order_contract["target_column"]
+            in (
+                list(scale_contract["target_columns"])
+                or list(columns[1:])
+            )
+        )
+        values = (
+            []
+            if scale_order_coupled
+            else [
+                _sort_value(row[index], order_contract["value_kind"])
+                for row in rows
+            ]
+        )
+        if scale_order_coupled or (
             not values
             or any(value is None for value in values)
             or len({value[0] for value in values if value is not None}) != 1
