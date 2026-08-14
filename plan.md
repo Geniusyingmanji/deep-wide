@@ -1,6 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.130
+> 版本：6.131
+
+> **6.131 V2.55.41–43 visible output constraint contract 与 clean-build GO（2026-08-14）：V2.55.41 没有把旧 monolithic `runtime.py` 整体接回 production，而是 append-only 提取五类保守 visible-only 约束：唯一显式 year range、日期格式、唯一明确 numeric scale、无 ties 的 Top-K×唯一 rank column、以及绑定 exact column 的显式升/降序。含糊/冲突约束 fail closed；合同只接收 visible question 与 exact selected columns，不读取 task label、mapping/gold/truth/evaluator/score/history，也不产生 provider effect。content-free observer 只检查表示/域遵循，不判断事实正确性、不修改 prediction，entropy/IG signed credit 恒为0。**
+
+> **V2.55.42 以 task-local subclass 接在 V2.54.01 的已付费第三次 shared synthesis call 前；有 active contract 时追加 bounded trusted JSON，0 active 时 parent third-call system/user bytes 与 prediction 均 byte-exact。provider response 继续走冻结 normalizer、joint/grounded record priority、visible membership、quote verifier 与 changed-safe editor；query/fetch/model 上限仍为 `4/14/3`，没有额外 token/context/wall/network budget。新增 synthetic/adversarial 覆盖 temporal/format/scale/rank/order、含糊 fail-closed、format/domain observer、重封篡改、混合并发 task-local state、privileged input pre-effect reject 和 parent no-op。**
+
+> **新保守 parser 在冻结 visible 220 上的 aggregate reach 为 `95/220`，其中 `94/220` 同时有显式 schema；family reach 为 year-range `43`、date-format `46`、numeric-scale `19`、rank-slots `6`、explicit-order `3`，active-family histogram 为 `0:125 / 1:74 / 2:20 / 3:1`。这比 V2.55.40 的宽筛 `145/220` 更低，是 precision-first 排除含糊表达的预期结果；仍只证明可达，不是错误率、prediction change 或 quality 证据。逐题 feature 未持久化。**
+
+> **V2.55.43 从 clean pushed `d486e59c` 执行正式 clean-build：`66/66` tests、94-file runtime dependency closure，privileged field/evaluator/credential findings 全空，仅保留已知 provider-rank `clients.py:565:score` 例外；四个 protected watcher identity 未变、shared API lease inactive。权威工件 `results/v25543_visible_constraint_synthesis_build_audit_v1_20260814.json` SHA256=`d6526cb5bc7690ea121a640b57404b925cb93355197036d9e1e60a5c0c6ef688`，`audit_valid=true / findings=[]`。当前只授权设计 fresh/task-disjoint shared-parent population，不授权 population freeze 之外的 protocol/forward、truth/quality、DeepWideBench 220/evaluator、retry/resume/backfill/replacement、leaderboard 或 SOTA。**
+
+> **下一门必须隔离 contract 的真实作用：同一次 parent forward 共享 visible task、plan、queries、search/fetch bytes、page order、三次 model sampling预算与 base pipeline；control third call 不含 constraint suffix，candidate third call含 suffix会形成独立 sampling，故必须预注册 arm order/randomization 或更强的同响应可识别设计，不能把独立生成差异直接全归因于合同。population 必须与既有 external task/identity/clue 零重叠，且在 selection 时不访问 endpoint/page/value/model/evaluator/outcome。机制门至少要求全终态、0 parent-loss、0 budget/stage failure、nonzero contract engagement、每个优先 family 的预注册 reach、nonzero mechanically verified adherence delta 与 prediction change；只有 prediction freeze/content-free audit 推送后才开 post-freeze paired truth，要求 candidate Exact 严格增加且 Entity/Row/Item/Column/Composite、invalid/fallback 全不退。两门未同时 GO 前不启动新220。**
 
 > **6.130 V2.55.40 frozen-220 可见约束迁移审计（2026-08-14）：在 V2.55.39 停止 IANA-only 路线后，先对冻结 DeepWideBench 220 的唯一 runtime-visible `{opaque_id, question}` 向量做 aggregate-only transfer-reach 审计；没有读取 mapping/gold/category/question_type/split/truth/evaluator/score、历史逐题 correctness、prediction、URL 或 page，也没有 model/search/fetch/evaluator/network effect。输出只保留固定向量 hash 与计数。7/7 单测、AST label-blind/evaluator-capability audit 和防篡改重封测试通过，权威工件为 `results/v25540_visible_constraint_transfer_reach_audit_v1_20260814.json`，SHA256=`7df97cf8aa3a5f92a67fb70ad7f5dfe85915868c5c35dc6bdc0a74aa07453159`，`audit_valid=true / findings=[]`。**
 
@@ -24,7 +34,7 @@
 >
 > **当前 DeepWideBench 权威口径不变：最新完整 single rollout 为 V2.54.06，Exact `6/220=2.7273%`、Composite `0.385731`；项目单轮观测峰值为 V2.48.57，Exact `9/220=4.0909%`、Composite `0.457249`，但未稳定复现。没有 Avg@4、leaderboard submission 或 SOTA 证据。当前没有新的 220 forward；四个 protected watcher 保持原 PID/start-ticks。只有新的 production-visible 通用机制先通过 transfer reach、task-disjoint mechanism gate 和 post-freeze paired quality 双 GO，才可按 `40 task workers / 16 model slots`、fresh roots、no-resume、failure-as-zero 启动完整 220。**
 >
-> **阅读规则：本文件 append-only；顶部 6.130 覆盖 6.129 及后文所有较早的当前权限、下一步与分数口径。**
+> **阅读规则：本文件 append-only；顶部 6.131 覆盖 6.130 及后文所有较早的当前权限、下一步与分数口径。**
 
 > 版本：6.128
 >
