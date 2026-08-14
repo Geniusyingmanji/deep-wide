@@ -1,0 +1,140 @@
+{
+  "artifact_version": 1,
+  "role": "v25448_v25446_key_anchored_quality_diagnosis",
+  "created_at_unix": 1786669455,
+  "source_artifacts": {
+    "quality_result": {
+      "path": "results/v25446_key_anchored_metadata_shared_effect_quality_result_v1_20260813.json",
+      "sha256": "ca53e8798b08efaccaf4ff7221e154f006138892663c6ca2353c409eaf372125"
+    },
+    "quality_audit": {
+      "path": "results/v25446_key_anchored_metadata_shared_effect_quality_audit_v1_20260813.json",
+      "sha256": "a2091a982de537bf487e69cfc3142ec2aabd4d39ed0924040f9c5f0fa0ce9a2e"
+    },
+    "truth": {
+      "path": "outputs/v25446_key_anchored_metadata_shared_effect_external_v1_20260813/postfreeze_rfc_truth_v25447.json",
+      "sha256": "6e28fc94dc40cb7559fcbc2d168cf9f96159edfe3125cb16b5047017f4b2bb2a"
+    },
+    "task_rows": {
+      "path": "outputs/v25446_key_anchored_metadata_shared_effect_external_v1_20260813/frozen_task_results.jsonl",
+      "sha256": "43ba523c1f8a846fe1c8a72bc78e7c7f330405e5850c641d67b76968de130431"
+    }
+  },
+  "formal_result": {
+    "quality_gate_passed": false,
+    "base_exact_table_successes": 4,
+    "candidate_exact_table_successes": 4,
+    "base_quality_composite": 0.69625,
+    "candidate_quality_composite": 0.69625,
+    "candidate_vs_base_exact_disposition": {
+      "candidate_win": 0,
+      "tie": 20,
+      "candidate_loss": 0
+    },
+    "candidate_vs_base_composite_disposition": {
+      "candidate_win": 0,
+      "tie": 20,
+      "candidate_loss": 0
+    },
+    "failed_checks": [
+      "candidate_whole_table_exact_strict_gain"
+    ]
+  },
+  "candidate_funnel": {
+    "available_candidates": 12,
+    "selected_candidates": 12,
+    "applied_coordinates": 12,
+    "changed_tasks": 10,
+    "candidate_field_histogram": {
+      "Authors": 12
+    },
+    "candidate_normalization_histogram": {
+      "ascii_multi_space_list_atomic": 12
+    },
+    "candidate_semantic_metric_change_count": 0,
+    "candidate_metric_improvement_count": 0,
+    "candidate_metric_regression_count": 0,
+    "root_cause": "all_applied_candidates_only_changed_author_separator_surface_from_comma_to_semicolon_and_the_frozen_evaluator_normalizes_both_to_the_same_author_sequence"
+  },
+  "base_error_census": {
+    "non_key_cell_count": 400,
+    "incorrect_non_key_cell_count": 126,
+    "incorrect_by_field": {
+      "Title": 17,
+      "Authors": 17,
+      "Status": 42,
+      "Stream": 23,
+      "Published": 27
+    },
+    "same_rfc_identity_bound_fetched_page_contains_truth_surface": {
+      "Title": 0,
+      "Authors": 0,
+      "Status": 13,
+      "Stream": 6,
+      "Published": 0,
+      "total": 19
+    },
+    "selection_failure": false,
+    "candidate_generation_target_failure": true
+  },
+  "posthoc_oracle_diagnostic": {
+    "label": "posthoc_oracle_not_an_experiment_or_runtime_policy",
+    "operation": "replace_Title_Authors_Status_and_Published_with_frozen_truth_while_preserving_base_Stream",
+    "base": {
+      "exact_table_successes": 4,
+      "entity_coverage": 1.0,
+      "row_exact": 0.3625,
+      "cell_accuracy": 0.6849999999999999,
+      "column_accuracy": 0.7375,
+      "quality_composite": 0.69625
+    },
+    "oracle": {
+      "exact_table_successes": 4,
+      "entity_coverage": 1.0,
+      "row_exact": 0.7125,
+      "cell_accuracy": 0.9425000000000001,
+      "column_accuracy": 0.9520833333333334,
+      "quality_composite": 0.9017708333333333
+    },
+    "conclusion": "four_field_recovery_has_large_soft_metric_headroom_but_cannot_satisfy_the_preregistered_exact_gain_without_safe_Stream_recovery"
+  },
+  "next_design_constraints": {
+    "use_only_visible_question_membership_and_same_forward_public_pages": true,
+    "preferred_official_per_identity_endpoint": "https://www.rfc-editor.org/rfc/rfcNNNN.json",
+    "official_json_direct_fields": [
+      "doc_id",
+      "title",
+      "authors",
+      "status",
+      "pub_date"
+    ],
+    "official_json_source_is_not_Stream": true,
+    "category_to_status_alias_forbidden": true,
+    "workgroup_or_draft_prefix_to_stream_inference_forbidden": true,
+    "Stream_may_change_only_from_explicit_same_identity_official_stream_evidence": true,
+    "preserve_query_cap": 4,
+    "preserve_model_cap": 3,
+    "preserve_physical_fetch_cap": 14,
+    "reserve_or_atomically_admit_four_official_record_fetches_before_effect": true,
+    "candidate_fetch_failure_preserves_shared_base": true,
+    "fresh_structurally_disjoint_population_required": true,
+    "postfreeze_shared_parent_quality_gate_required": true,
+    "positive_signed_credit_count": 0
+  },
+  "label_blind_audit": {
+    "runtime_mapping_gold_category_question_type_split_evaluator_score_reward_or_historical_result_read": false,
+    "diagnosis_is_postfreeze_offline_only": true,
+    "diagnosis_may_not_feed_values_identities_or_per_task_outcomes_into_future_forward": true,
+    "future_runtime_may_use_only_generic_visible_membership_grammar_and_official_record_schema": true,
+    "entropy_or_information_gain_assigns_signed_credit": false
+  },
+  "authorization": {
+    "structured_official_record_candidate_build": true,
+    "new_fresh_population_design": false,
+    "new_external_forward": false,
+    "deepwidebench_successor_build_or_forward": false,
+    "truth_refetch_replay_revaluation_or_prediction_mutation": false,
+    "leaderboard_or_sota": false
+  },
+  "diagnosis_payload_sha256": "2fb03efed5a3de65f7eb4060676c7fd0242fc39271ccde62ab46676290f915ba"
+}
