@@ -154,8 +154,13 @@ def _author(author: ET.Element) -> str | None:
     return parent._safe_cell(value)
 
 
+def _xml_attribute(element: ET.Element, name: str) -> str:
+    matches = [value for key, value in element.attrib.items() if key == name]
+    return _text(matches[0]) if len(matches) == 1 else ""
+
+
 def _status(root: ET.Element, front: ET.Element) -> str | None:
-    category = _text(root.attrib.get("category")).casefold()
+    publication_class = _xml_attribute(root, "category").casefold()
     series = {
         _text(node.attrib.get("name")).upper()
         for node in front.findall("seriesInfo")
@@ -165,7 +170,7 @@ def _status(root: ET.Element, front: ET.Element) -> str | None:
         return "INTERNET STANDARD"
     if "BCP" in series:
         return "BEST CURRENT PRACTICE"
-    return STATUS_BY_CATEGORY.get(category)
+    return STATUS_BY_CATEGORY.get(publication_class)
 
 
 def _front_document(content: str) -> str | None:
