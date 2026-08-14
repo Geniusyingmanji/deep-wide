@@ -3,7 +3,7 @@
 V2.55.09 consumed one whole static block of twenty pairs spanning forty gTLD
 row identities from ``.aaa`` through ``.americanfamily``.  This module freezes
 the immediately following whole lexical block of twenty pairs, from
-``.amex`` through ``.autos``.  It is selected before any forward and has zero
+``.amex`` through ``.bank``.  It is selected before any forward and has zero
 row-identity, question, or opaque-id overlap with V2.55.09.
 
 Each question exposes exactly two row keys and the requested schema, but no
