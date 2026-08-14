@@ -1,0 +1,147 @@
+INFO: Pandarallel will run on 8 workers.
+INFO: Pandarallel will use Memory file system to transfer data between the main process and workers.
+{"event": "eval_start", "selected": 7, "resume_committed": 0, "committed_errors": 0, "crash_only_resume": false}
+{"event": "eval_done", "idx": 1, "instance_id": "wide2deep_ws_zh_007", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 4.703, "running_n": 1}
+2026-08-14 16:10:13.142 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 医疗机构名称 | 机构地址 | 医疗机构等级 | 联系电话 | 准入技术 |
+| --- | --- | --- | -- ...
+2026-08-14 16:10:24.926 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "北京大学第三医院": "北京大学第三医院",
+  "中国人民解放军总医院第六医学中心": "解放军总医院第六医学中心",
+  "中国人民解放军总医院第一医学中心": "解放军总医院第一医学中心",
+  "中国医学科学院北京协和医院": "中国医学科学院北京协和医院",
+  "首都医科大学附属北京妇产医院": "首都医科大学附属北京妇产医院",
+  "北京大学第一医院": "北京大学第一医院",
+  "首都医科大学附属北京朝阳医院": "首都医科大学附属北京朝阳医院",
+  "北京市海淀区妇幼保健院": "北京市海淀区妇幼保健院",
+  "北京大学人民医院": "北京大学人民医院",
+  "中国人民解放军总医院第七医学中心": "解放军总医院第七医学中心",
+  "中国人民解放军战略支援部队特色医学中心": "战略支援部队特色医学中心",
+  "中国人民解放军空军特色医学中心": "空军特色医学中心",
+  "中国人民解放军火箭军特色医学中心": "火箭军特色医学中心",
+  "国家卫生健康委科学技术研究所门诊部": "国家卫生健康委科学技术研究所门诊部"
+}
+```
+2026-08-14 16:10:24.927 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 医疗机构名称, primary_key_map {'北京大学第三医院': '北京大学第三医院', '中国人民解放军总医院第六医学中心': '解放军总医院第六医学中心', '中国人民解放军总医院第一医学中心': '解放军总医院第一医学中心', '中国医学科学院北京协和医院': '中国医学科学院北京协和医院', '首都医科大学附属北京妇产医院': '首都医科大学附属北京妇产医院', '北京大学第一医院': '北京大学第一医院', '首都医科大学附属北京朝阳医院': '首都医科大学附属北京朝阳医院', '北京市海淀区妇幼保健院': '北京市海淀区妇幼保健院', '北京大学人民医院': '北京大学人民医院', '中国人民解放军总医院第七医学中心': '解放军总医院第七医学中心', '中国人民解放军战略支援部队特色医学中心': '战略支援部队特色医学中心', '中国人民解放军空军特色医学中心': '空军特色医学中心', '中国人民解放军火箭军特色医学中心': '火箭军特色医学中心', '国家卫生健康委科学技术研究所门诊部': '国家卫生健康委科学技术研究所门诊部'}
+2026-08-14 16:10:30.024 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "夫精人工授精技术": "夫精人工授精技术",
+  "供精人工授精技术": "供精人工授精技术",
+  "常规体外受精-胚胎移植技术": "常规体外受精-胚胎移植技术",
+  "卵胞浆内单精子显微注射技术": "卵胞浆内单精子显微注射技术",
+  "植入前胚胎遗传学诊断技术": "植入前胚胎遗传学诊断技术"
+}
+```
+2026-08-14 16:10:30.024 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 准入技术, primary_key_map {'夫精人工授精技术': '夫精人工授精技术', '供精人工授精技术': '供精人工授精技术', '常规体外受精-胚胎移植技术': '常规体外受精-胚胎移植技术', '卵胞浆内单精子显微注射技术': '卵胞浆内单精子显微注射技术', '植入前胚胎遗传学诊断技术': '植入前胚胎遗传学诊断技术'}
+2026-08-14 16:10:30.033 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - wide2deep_ws_zh_018, df_inner shape: (47, 10), answer_df shape: (58, 5), response_df shape: (49, 7)
+2026-08-14 16:10:41.624 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_018, col 机构地址, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1]
+2026-08-14 16:10:53.223 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_018, col 医疗机构等级, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+2026-08-14 16:11:04.250 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_018, col 联系电话, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+2026-08-14 16:11:04.262 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - wide2deep_ws_zh_018, P/R/F1 by unique_columns: 0.9592/0.8103/0.8785
+2026-08-14 16:11:04.263 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - wide2deep_ws_zh_018, P/R/F1 by row: 0.5102/0.4310/0.4673
+2026-08-14 16:11:04.263 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - wide2deep_ws_zh_018, P/R/F1 by item: 0.8367/0.7069/0.7664
+2026-08-14 16:11:04.266 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - wide2deep_ws_zh_018, final table score: 0.0
+{"event": "eval_done", "idx": 2, "instance_id": "wide2deep_ws_zh_018", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.4672897196261682, "f1_by_item": 0.7663551401869159, "column_f1": 0.8785046728971961, "error": null, "elapsed_seconds": 55.983, "running_n": 2}
+{"event": "eval_done", "idx": 3, "instance_id": "wide2deep_ws_zh_023", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.598, "running_n": 3}
+{"event": "eval_done", "idx": 4, "instance_id": "wide2deep_ws_zh_030", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 5.0, "running_n": 4}
+2026-08-14 16:11:13.370 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 饭店名称 | 市区 | 星级标牌号 | 具体地址 |
+| --- | --- | --- | --- |
+| 北京王府半岛 ...
+2026-08-14 16:11:19.357 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "北京王府半岛酒店": "王府饭店",
+  "北京天伦王朝饭店": "北京天伦王朝饭店",
+  "北京中国大饭店": "中国大饭店",
+  "北京人卫酒店": "人卫酒店",
+  "北京富力万丽酒店": "北京富力万丽酒店",
+  "北京鹏润国际大酒店": "鹏润国际大酒店",
+  "北京丰大国际大酒店": "北京丰大国际大酒店",
+  "北京瑞麟湾温泉度假酒店": "北京瑞麟湾温泉度假酒店"
+}
+```
+2026-08-14 16:11:19.357 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 饭店名称, primary_key_map {'北京王府半岛酒店': '王府饭店', '北京天伦王朝饭店': '北京天伦王朝饭店', '北京中国大饭店': '中国大饭店', '北京人卫酒店': '人卫酒店', '北京富力万丽酒店': '北京富力万丽酒店', '北京鹏润国际大酒店': '鹏润国际大酒店', '北京丰大国际大酒店': '北京丰大国际大酒店', '北京瑞麟湾温泉度假酒店': '北京瑞麟湾温泉度假酒店'}
+2026-08-14 16:11:19.363 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - wide2deep_ws_zh_039, df_inner shape: (8, 8), answer_df shape: (57, 4), response_df shape: (8, 5)
+2026-08-14 16:11:19.364 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 东城区, target: 东城区
+2026-08-14 16:11:19.364 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 东城区, target: 东城区
+2026-08-14 16:11:19.364 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 朝阳区, target: 朝阳区
+2026-08-14 16:11:19.364 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 朝阳区, target: 朝阳区
+2026-08-14 16:11:19.364 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 经开区, target: 大兴区
+2026-08-14 16:11:19.364 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 朝阳区, target: 朝阳区
+2026-08-14 16:11:19.364 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 朝阳区, target: 朝阳区
+2026-08-14 16:11:19.364 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 顺义区, target: 顺义区
+2026-08-14 16:11:19.365 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_039, col 市区, metric_func_name exact_match, score [1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0]
+2026-08-14 16:11:19.365 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 1150002, target: 1150001
+2026-08-14 16:11:19.365 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 1150018, target: 1150004
+2026-08-14 16:11:19.365 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 1150006, target: 1150010
+2026-08-14 16:11:19.365 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 1150063, target: 1150067
+2026-08-14 16:11:19.365 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 1150064, target: 1150068
+2026-08-14 16:11:19.365 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 1150057, target: 1150069
+2026-08-14 16:11:19.365 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 1150059, target: 1150070
+2026-08-14 16:11:19.365 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 1150061, target: 1150071
+2026-08-14 16:11:19.366 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_039, col 星级标牌号, metric_func_name exact_match, score [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+2026-08-14 16:11:27.224 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_039, col 具体地址, metric_func_name llm_judge, score [1, 1, 0, 1, 1, 1, 1, 1]
+2026-08-14 16:11:27.228 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - wide2deep_ws_zh_039, P/R/F1 by unique_columns: 1.0000/0.1404/0.2462
+2026-08-14 16:11:27.228 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - wide2deep_ws_zh_039, P/R/F1 by row: 0.0000/0.0000/0.0000
+2026-08-14 16:11:27.228 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - wide2deep_ws_zh_039, P/R/F1 by item: 0.6875/0.0965/0.1692
+2026-08-14 16:11:27.230 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - wide2deep_ws_zh_039, final table score: 0.0
+{"event": "eval_done", "idx": 5, "instance_id": "wide2deep_ws_zh_039", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0, "f1_by_item": 0.16923076923076924, "column_f1": 0.24615384615384614, "error": null, "elapsed_seconds": 15.301, "running_n": 5}
+2026-08-14 16:11:33.642 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 作品名称 | 导演 | 类型 | 制片国家/地区 | 片长 |
+| --- | --- | --- | --- | --- ...
+2026-08-14 16:11:43.288 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "《小丑》（金狮奖获奖作品）": "小丑",
+  "《真相》": "真相",
+  "《完美候选人》": "完美候选人",
+  "《关于无尽》": "关于无尽 ",
+  "《黄蜂网络》": "黄蜂网络 ",
+  "《婚姻故事》": "婚姻故事 ",
+  "《等待野蛮人》": "等待野蛮人 ",
+  "《自助洗衣店》": "自助洗衣店",
+  "《星际探索》": "星际探索 ",
+  "《兰心大剧院》": "兰心大剧院",
+  "《厄玛》": "厄玛",
+  "《我控诉》": "我控诉 ",
+  "《马丁·伊登》": "马丁·伊登 ",
+  "《被涂污的鸟》": "被涂污的鸟 ",
+  "《乳牙》": "乳牙",
+  "《世界的胜利》": "世界的胜利 ",
+  "《庄园》": "庄园 ",
+  "《荣誉之客》": "荣誉之客 ",
+  "《继园台七号》": "继园台七号 "
+}
+```
+2026-08-14 16:11:43.288 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 作品名称, primary_key_map {'《小丑》（金狮奖获奖作品）': '小丑', '《真相》': '真相', '《完美候选人》': '完美候选人', '《关于无尽》': '关于无尽 ', '《黄蜂网络》': '黄蜂网络 ', '《婚姻故事》': '婚姻故事 ', '《等待野蛮人》': '等待野蛮人 ', '《自助洗衣店》': '自助洗衣店', '《星际探索》': '星际探索 ', '《兰心大剧院》': '兰心大剧院', '《厄玛》': '厄玛', '《我控诉》': '我控诉 ', '《马丁·伊登》': '马丁·伊登 ', '《被涂污的鸟》': '被涂污的鸟 ', '《乳牙》': '乳牙', '《世界的胜利》': '世界的胜利 ', '《庄园》': '庄园 ', '《荣誉之客》': '荣誉之客 ', '《继园台七号》': '继园台七号 '}
+2026-08-14 16:11:43.294 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - wide2deep_ws_zh_042, df_inner shape: (19, 10), answer_df shape: (21, 5), response_df shape: (21, 6)
+2026-08-14 16:11:48.394 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_042, col 导演, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+2026-08-14 16:12:00.441 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_042, col 类型, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1]
+2026-08-14 16:12:06.490 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_042, col 制片国家/地区, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+2026-08-14 16:12:06.490 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 102.0, target: 102.0
+2026-08-14 16:12:06.490 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 105.0, target: 104.0
+2026-08-14 16:12:06.490 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 106.0, target: 106.0
+2026-08-14 16:12:06.490 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 106.0, target: 107.0
+2026-08-14 16:12:06.490 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 112.0, target: 112.0
+2026-08-14 16:12:06.491 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 122.0, target: 118.0
+2026-08-14 16:12:06.491 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 118.0, target: 120.0
+2026-08-14 16:12:06.491 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 123.0, target: 123.0
+2026-08-14 16:12:06.491 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 124.0, target: 124.0
+2026-08-14 16:12:06.491 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 125.0, target: 125.0
+2026-08-14 16:12:06.491 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 132.0, target: 132.0
+2026-08-14 16:12:06.491 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 126.0, target: 126.0
+2026-08-14 16:12:06.491 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 129.0, target: 129.0
+2026-08-14 16:12:06.491 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 136.0, target: 135.0
+2026-08-14 16:12:06.491 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 166.0, target: 164.0
+2026-08-14 16:12:06.491 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 169.0, target: 169.0
+2026-08-14 16:12:06.491 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 78.0, target: 76.0
+2026-08-14 16:12:06.491 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 96.0, target: 96.0
+2026-08-14 16:12:06.491 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 101.0, target: 101.0
+2026-08-14 16:12:06.492 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_042, col 片长, metric_func_name number_near, score [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-14 16:12:06.496 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - wide2deep_ws_zh_042, P/R/F1 by unique_columns: 0.9048/0.9048/0.9048
+2026-08-14 16:12:06.496 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - wide2deep_ws_zh_042, P/R/F1 by row: 0.7143/0.7143/0.7143
+2026-08-14 16:12:06.496 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - wide2deep_ws_zh_042, P/R/F1 by item: 0.8667/0.8667/0.8667
+2026-08-14 16:12:06.498 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - wide2deep_ws_zh_042, final table score: 0.0
+{"event": "eval_done", "idx": 6, "instance_id": "wide2deep_ws_zh_042", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.7142857142857143, "f1_by_item": 0.8666666666666667, "column_f1": 0.9047619047619048, "error": null, "elapsed_seconds": 39.252, "running_n": 6}
+{"event": "eval_done", "idx": 7, "instance_id": "wide2deep_ws_zh_050", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 1.461, "running_n": 7}
+SUMMARY {"n": 7, "valid_n": 7, "errors": 0, "complete": true, "judge_calls_current_process": 18, "score": 0.0, "entity_acc": 0.42857142857142855, "precision_by_row": 0.1749271137026239, "recall_by_row": 0.16361717100633358, "f1_by_row": 0.16879649055884036, "precision_by_item": 0.34155733722060255, "recall_by_item": 0.23857920663728288, "f1_by_item": 0.257464653726336, "column_precision": 0.40913508260447035, "column_recall": 0.2650653727915849, "column_f1": 0.28991720340184957}

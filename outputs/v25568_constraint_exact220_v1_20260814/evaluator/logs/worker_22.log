@@ -1,0 +1,118 @@
+INFO: Pandarallel will run on 8 workers.
+INFO: Pandarallel will use Memory file system to transfer data between the main process and workers.
+{"event": "eval_start", "selected": 7, "resume_committed": 0, "committed_errors": 0, "crash_only_resume": false}
+{"event": "eval_done", "idx": 1, "instance_id": "wide2deep_ws_en_091", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.118, "running_n": 1}
+2026-08-14 16:10:10.603 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| Event | Primary State Affected | Death Toll | Acres Burned |  ...
+2026-08-14 16:10:15.109 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "2003-10": "2003-10",
+  "2013-06": "2013-06",
+  "2017-10": "2017-10",
+  "2018-11": "2018-11",
+  "2020-08": "2020-08",
+  "2023-08": "2023-08"
+}
+```
+2026-08-14 16:10:15.110 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: startmonth, primary_key_map {'2003-10': '2003-10', '2013-06': '2013-06', '2017-10': '2017-10', '2018-11': '2018-11', '2020-08': '2020-08', '2023-08': '2023-08'}
+2026-08-14 16:10:15.119 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - wide2deep_ws_en_099, df_inner shape: (6, 14), answer_df shape: (11, 7), response_df shape: (7, 8)
+2026-08-14 16:10:20.562 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_099, col event, metric_func_name llm_judge, score [1, 1, 0, 1, 1, 1]
+2026-08-14 16:10:27.116 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_099, col primarystateaffected, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1]
+2026-08-14 16:10:27.117 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 15.0, target: 15.0
+2026-08-14 16:10:27.117 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 19.0, target: 19.0
+2026-08-14 16:10:27.117 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 22.0, target: 44.0
+2026-08-14 16:10:27.117 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 85.0, target: 85.0
+2026-08-14 16:10:27.117 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 102.0, target: 102.0
+2026-08-14 16:10:27.117 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 16.0, target: 16.0
+2026-08-14 16:10:27.117 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_099, col deathtoll, metric_func_name number_near, score [1.0, 1.0, 0.0, 1.0, 1.0, 1.0]
+2026-08-14 16:10:27.118 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 273246.0, target: 273246.0
+2026-08-14 16:10:27.118 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 8400.0, target: 8400.0
+2026-08-14 16:10:27.118 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 36807.0, target: 245000.0
+2026-08-14 16:10:27.118 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 153336.0, target: 153336.0
+2026-08-14 16:10:27.118 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 2170.0, target: 17000.0
+2026-08-14 16:10:27.118 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 318935.0, target: 318935.0
+2026-08-14 16:10:27.119 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_099, col acresburned, metric_func_name number_near, score [1.0, 1.0, 0.0, 1.0, 0.0, 1.0]
+2026-08-14 16:10:27.119 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 2820.0, target: 2826.0
+2026-08-14 16:10:27.119 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 127.0, target: 129.0
+2026-08-14 16:10:27.119 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 5636.0, target: 8900.0
+2026-08-14 16:10:27.119 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 18804.0, target: 188804.0
+2026-08-14 16:10:27.119 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 2200.0, target: 2207.0
+2026-08-14 16:10:27.119 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 2455.0, target: 2352.0
+2026-08-14 16:10:27.120 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_099, col structuredestroyed, metric_func_name number_near, score [1.0, 1.0, 0.0, 0.0, 1.0, 1.0]
+2026-08-14 16:10:27.120 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 1.3, target: 1.3
+2026-08-14 16:10:27.120 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 0.000664, target: 0.9
+2026-08-14 16:10:27.120 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 8.7, target: 14.5
+2026-08-14 16:10:27.120 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 16.65, target: 16.6
+2026-08-14 16:10:27.120 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 5.5, target: 5.5
+2026-08-14 16:10:27.120 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 1.3, target: 1.2
+2026-08-14 16:10:27.121 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_099, col damage(billion), metric_func_name number_near, score [1.0, 0.0, 0.0, 1.0, 1.0, 1.0]
+2026-08-14 16:10:27.127 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - wide2deep_ws_en_099, P/R/F1 by unique_columns: 0.8571/0.5455/0.6667
+2026-08-14 16:10:27.127 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - wide2deep_ws_en_099, P/R/F1 by row: 0.2857/0.1818/0.2222
+2026-08-14 16:10:27.127 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - wide2deep_ws_en_099, P/R/F1 by item: 0.6939/0.4416/0.5397
+2026-08-14 16:10:27.131 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - wide2deep_ws_en_099, final table score: 0.0
+{"event": "eval_done", "idx": 2, "instance_id": "wide2deep_ws_en_099", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.2222222222222222, "f1_by_item": 0.5396825396825397, "column_f1": 0.6666666666666665, "error": null, "elapsed_seconds": 21.365, "running_n": 2}
+{"event": "eval_done", "idx": 3, "instance_id": "wide2deep_ws_zh_008", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.85, "running_n": 3}
+2026-08-14 16:10:33.053 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 届数 | 奖项名称 | 获奖歌曲/专辑 | 演唱者 |
+| --- | --- | --- | --- |
+| 第67届  ...
+2026-08-14 16:10:37.677 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "第67届": "67"
+}
+```
+2026-08-14 16:10:37.677 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 届数, primary_key_map {'第67届': '67'}
+2026-08-14 16:10:40.250 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "Best Rap Performance": "Best Rap Performance",
+  "Best Melodic Rap Performance": "Best Melodic Rap Performance",
+  "Best Rap Song": "Best Rap Song",
+  "Best Rap Album": "Best Rap Album"
+}
+```
+2026-08-14 16:10:40.250 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 奖项名称, primary_key_map {'Best Rap Performance': 'Best Rap Performance', 'Best Melodic Rap Performance': 'Best Melodic Rap Performance', 'Best Rap Song': 'Best Rap Song', 'Best Rap Album': 'Best Rap Album'}
+2026-08-14 16:10:40.256 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - wide2deep_ws_zh_013, df_inner shape: (4, 8), answer_df shape: (124, 4), response_df shape: (4, 6)
+2026-08-14 16:10:44.067 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_013, col 获奖歌曲/专辑, metric_func_name llm_judge, score [1, 1, 1, 1]
+2026-08-14 16:10:50.308 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_013, col 演唱者, metric_func_name llm_judge, score [1, 1, 1, 1]
+2026-08-14 16:10:50.313 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - wide2deep_ws_zh_013, P/R/F1 by unique_columns: 1.0000/0.0323/0.0625
+2026-08-14 16:10:50.313 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - wide2deep_ws_zh_013, P/R/F1 by row: 1.0000/0.0323/0.0625
+2026-08-14 16:10:50.313 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - wide2deep_ws_zh_013, P/R/F1 by item: 1.0000/0.0323/0.0625
+2026-08-14 16:10:50.314 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - wide2deep_ws_zh_013, final table score: 0.0
+{"event": "eval_done", "idx": 4, "instance_id": "wide2deep_ws_zh_013", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0625, "f1_by_item": 0.0625, "column_f1": 0.0625, "error": null, "elapsed_seconds": 20.291, "running_n": 4}
+{"event": "eval_done", "idx": 5, "instance_id": "wide2deep_ws_zh_014", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.911, "running_n": 5}
+{"event": "eval_done", "idx": 6, "instance_id": "wide2deep_ws_zh_024", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.969, "running_n": 6}
+2026-08-14 16:11:03.424 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 赛季 | 所属联赛 | 冠军俱乐部名称 | MVP球员 | 所属俱乐部 | 评分 |
+| --- | --- | ---  ...
+2026-08-14 16:11:07.232 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "2020-21": "2020-21",
+  "2021-22": "2021-22",
+  "2022-23": "2022-23",
+  "2023-24": "2023-24",
+  "2024-25": "2024-25"
+}
+```
+2026-08-14 16:11:07.233 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 赛季, primary_key_map {'2020-21': '2020-21', '2021-22': '2021-22', '2022-23': '2022-23', '2023-24': '2023-24', '2024-25': '2024-25'}
+2026-08-14 16:11:12.216 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "英格兰足球超级联赛": "英格兰足球超级联赛"
+}
+```
+2026-08-14 16:11:12.216 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 所属联赛, primary_key_map {'英格兰足球超级联赛': '英格兰足球超级联赛'}
+2026-08-14 16:11:12.223 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - wide2deep_ws_zh_036, df_inner shape: (5, 12), answer_df shape: (25, 6), response_df shape: (5, 8)
+2026-08-14 16:11:17.309 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_036, col 冠军俱乐部名称, metric_func_name llm_judge, score [1, 1, 1, 1, 1]
+2026-08-14 16:11:24.864 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_036, col mvp球员, metric_func_name llm_judge, score [1, 1, 1, 1, 1]
+2026-08-14 16:11:31.559 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_036, col 所属俱乐部, metric_func_name llm_judge, score [1, 1, 1, 1, 1]
+2026-08-14 16:11:31.559 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 7.63, target: 7.63
+2026-08-14 16:11:31.559 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 7.78, target: 7.78
+2026-08-14 16:11:31.559 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 7.78, target: 7.78
+2026-08-14 16:11:31.559 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 8.01, target: 8.01
+2026-08-14 16:11:31.559 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 7.78, target: 7.78
+2026-08-14 16:11:31.560 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_036, col 评分, metric_func_name number_near, score [1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-14 16:11:31.564 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - wide2deep_ws_zh_036, P/R/F1 by unique_columns: 1.0000/0.2000/0.3333
+2026-08-14 16:11:31.564 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - wide2deep_ws_zh_036, P/R/F1 by row: 1.0000/0.2000/0.3333
+2026-08-14 16:11:31.564 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - wide2deep_ws_zh_036, P/R/F1 by item: 1.0000/0.2000/0.3333
+2026-08-14 16:11:31.566 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - wide2deep_ws_zh_036, final table score: 0.0
+{"event": "eval_done", "idx": 7, "instance_id": "wide2deep_ws_zh_036", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.33333333333333337, "f1_by_item": 0.33333333333333337, "column_f1": 0.33333333333333337, "error": null, "elapsed_seconds": 35.233, "running_n": 7}
+SUMMARY {"n": 7, "valid_n": 7, "errors": 0, "complete": true, "judge_calls_current_process": 19, "score": 0.0, "entity_acc": 0.42857142857142855, "precision_by_row": 0.32653061224489793, "recall_by_row": 0.05915374947633012, "f1_by_row": 0.0882936507936508, "precision_by_item": 0.3848396501457726, "recall_by_item": 0.09625950086779579, "f1_by_item": 0.1336451247165533, "column_precision": 0.40816326530612246, "column_recall": 0.11110180142438207, "column_f1": 0.15178571428571427}

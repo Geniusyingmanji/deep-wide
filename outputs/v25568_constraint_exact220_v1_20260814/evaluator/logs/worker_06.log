@@ -1,0 +1,101 @@
+INFO: Pandarallel will run on 8 workers.
+INFO: Pandarallel will use Memory file system to transfer data between the main process and workers.
+{"event": "eval_start", "selected": 7, "resume_committed": 0, "committed_errors": 0, "crash_only_resume": false}
+{"event": "eval_done", "idx": 1, "instance_id": "deep2wide_result_49_山西省", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 5.076, "running_n": 1}
+2026-08-14 16:10:14.601 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 姓名 | 字 | 号 | 祖籍 |
+| --- | --- | --- | --- |
+| 郑燮 | 克柔 | 板桥 |  ...
+2026-08-14 16:10:18.962 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "郑燮": "郑燮",
+  "金农": "金农",
+  "黄慎": "黄慎",
+  "李鱓": "李鱓",
+  "李方膺": "李方膺",
+  "汪士慎": "汪士慎",
+  "罗聘": "罗聘",
+  "高翔": "高翔"
+}
+```
+2026-08-14 16:10:18.962 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 姓名, primary_key_map {'郑燮': '郑燮', '金农': '金农', '黄慎': '黄慎', '李鱓': '李鱓', '李方膺': '李方膺', '汪士慎': '汪士慎', '罗聘': '罗聘', '高翔': '高翔'}
+2026-08-14 16:10:18.970 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_50_扬州八怪, df_inner shape: (8, 8), answer_df shape: (8, 4), response_df shape: (8, 5)
+2026-08-14 16:10:31.053 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_50_扬州八怪, col 字, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 1, 1]
+2026-08-14 16:10:39.743 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_50_扬州八怪, col 号, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 1, 1]
+2026-08-14 16:10:47.278 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_50_扬州八怪, col 祖籍, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 1, 1]
+2026-08-14 16:10:47.284 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_50_扬州八怪, P/R/F1 by unique_columns: 1.0000/1.0000/1.0000
+2026-08-14 16:10:47.285 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_50_扬州八怪, P/R/F1 by row: 1.0000/1.0000/1.0000
+2026-08-14 16:10:47.285 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_50_扬州八怪, P/R/F1 by item: 1.0000/1.0000/1.0000
+2026-08-14 16:10:47.287 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_50_扬州八怪, final table score: 1
+{"event": "eval_done", "idx": 2, "instance_id": "deep2wide_result_50_扬州八怪", "score": 1, "entity_acc": 1.0, "f1_by_row": 1.0, "f1_by_item": 1.0, "column_f1": 1.0, "error": null, "elapsed_seconds": 38.494, "running_n": 2}
+2026-08-14 16:11:08.855 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 姓名 | 年份 | 奖项 | 大学名称 | 专业 |
+| --- | --- | --- | --- | --- |
+|  ...
+2026-08-14 16:11:11.793 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{}
+```
+2026-08-14 16:11:11.793 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 姓名, primary_key_map {}
+2026-08-14 16:11:11.919 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_52_乐清市知临中学, df_inner shape: (0, 10), answer_df shape: (6, 5), response_df shape: (4, 6)
+2026-08-14 16:11:11.920 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 1.0 msg date near, response: nan, target: nan
+2026-08-14 16:11:11.921 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_52_乐清市知临中学, col 年份, metric_func_name date_near, score []
+2026-08-14 16:11:11.923 | ERROR    | eval.evaluation.evaluation:evaluate_single_query:401 - evaluator error: 
+Traceback (most recent call last):
+  File "/home/azureuser/workspace-gzy/zyf/deep/external/Marco-Search-Agent/Marco-DeepResearch-Family/DeepWideSearch/eval/evaluation/evaluation.py", line 315, in evaluate_single_query
+    df_inner_score[f"{col}_{metric_func_name}"] = (
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/azureuser/workspace-gzy/zyf/deep/.venv-eval/lib/python3.12/site-packages/pandas/core/frame.py", line 4312, in __setitem__
+    self._set_item_frame_value(key, value)
+  File "/home/azureuser/workspace-gzy/zyf/deep/.venv-eval/lib/python3.12/site-packages/pandas/core/frame.py", line 4470, in _set_item_frame_value
+    raise ValueError(
+ValueError: Cannot set a DataFrame with multiple columns to the single column 奖项_exact_match
+
+{"event": "eval_done", "idx": 3, "instance_id": "deep2wide_result_52_乐清市知临中学", "score": null, "entity_acc": null, "f1_by_row": null, "f1_by_item": null, "column_f1": null, "error": "RuntimeError: official evaluator reported an internal error", "elapsed_seconds": 24.62, "running_n": 3}
+2026-08-14 16:11:23.496 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 电影名称 | 上映时间 | 饰演角色 | 导演 | 主演 |
+| --- | --- | --- | --- | ---  ...
+2026-08-14 16:11:34.137 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "苦恼人的笑": "苦恼人的笑",
+  "杜十娘": "杜十娘",
+  "人到中年": "人到中年",
+  "寒夜": "寒夜",
+  "末代皇后": "末代皇后",
+  "井": "井",
+  "最后的贵族": "最后的贵族",
+  "股疯": "股疯",
+  "泥鳅也是鱼": "泥鳅也是鱼",
+  "谁主沉浮": "谁主沉浮",
+  "钱学森": "钱学森",
+  "致我们终将逝去的青春": "致我们终将逝去的青春",
+  "剩者为王": "剩者为王"
+}
+```
+2026-08-14 16:11:34.137 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 电影名称, primary_key_map {'苦恼人的笑': '苦恼人的笑', '杜十娘': '杜十娘', '人到中年': '人到中年', '寒夜': '寒夜', '末代皇后': '末代皇后', '井': '井', '最后的贵族': '最后的贵族', '股疯': '股疯', '泥鳅也是鱼': '泥鳅也是鱼', '谁主沉浮': '谁主沉浮', '钱学森': '钱学森', '致我们终将逝去的青春': '致我们终将逝去的青春', '剩者为王': '剩者为王'}
+2026-08-14 16:11:34.198 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_53_潘虹, df_inner shape: (13, 10), answer_df shape: (36, 5), response_df shape: (15, 6)
+2026-08-14 16:11:34.207 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 1.0 msg date near, response: 2015-11-06 00:00:00, target: 2015-11-06 00:00:00
+2026-08-14 16:11:34.211 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 1.0 msg date near, response: 2013-04-26 00:00:00, target: 2013-04-26 00:00:00
+2026-08-14 16:11:34.213 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 1.0 msg date near, response: 2012-03-02 00:00:00, target: 2012-03-02 00:00:00
+2026-08-14 16:11:34.215 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 1.0 msg date near, response: 2009-09-13 00:00:00, target: 2009-09-13 00:00:00
+2026-08-14 16:11:34.217 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 2006-07-15 00:00:00, target: 2006-04-15 00:00:00
+2026-08-14 16:11:34.220 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 1994-08-01 00:00:00, target: 1994-05-13 00:00:00
+2026-08-14 16:11:34.222 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 1.0 msg date near, response: 1989-08-01 00:00:00, target: 1989-08-19 00:00:00
+2026-08-14 16:11:34.224 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 1988-08-01 00:00:00, target: 1988-09-16 00:00:00
+2026-08-14 16:11:34.226 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 0.0 msg date not near, response: 1987-08-01 00:00:00, target: 1987-11-05 00:00:00
+2026-08-14 16:11:34.228 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 1.0 msg date near, response: 1984-08-01 00:00:00, target: 1984-08-01 00:00:00
+2026-08-14 16:11:34.231 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 1.0 msg date near, response: 1982-08-01 00:00:00, target: 1982-08-01 00:00:00
+2026-08-14 16:11:34.233 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 1.0 msg date near, response: 1981-08-01 00:00:00, target: 1981-08-01 00:00:00
+2026-08-14 16:11:34.235 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 1.0 msg date near, response: 1979-08-01 00:00:00, target: 1979-08-01 00:00:00
+2026-08-14 16:11:34.239 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_53_潘虹, col 上映时间, metric_func_name date_near, score [1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-14 16:11:44.249 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_53_潘虹, col 饰演角色, metric_func_name llm_judge, score [1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1]
+2026-08-14 16:11:54.258 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_53_潘虹, col 导演, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0]
+2026-08-14 16:12:05.801 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_53_潘虹, col 主演, metric_func_name llm_judge, score [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+2026-08-14 16:12:05.808 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_53_潘虹, P/R/F1 by unique_columns: 0.8667/0.3611/0.5098
+2026-08-14 16:12:05.808 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_53_潘虹, P/R/F1 by row: 0.0000/0.0000/0.0000
+2026-08-14 16:12:05.808 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_53_潘虹, P/R/F1 by item: 0.6000/0.2500/0.3529
+2026-08-14 16:12:05.810 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_53_潘虹, final table score: 0.0
+{"event": "eval_done", "idx": 4, "instance_id": "deep2wide_result_53_潘虹", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0, "f1_by_item": 0.35294117647058826, "column_f1": 0.5098039215686274, "error": null, "elapsed_seconds": 53.869, "running_n": 4}
+{"event": "eval_done", "idx": 5, "instance_id": "deep2wide_result_54_庞德", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 7.919, "running_n": 5}
+{"event": "eval_done", "idx": 6, "instance_id": "deep2wide_result_56_中原麻衣", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 19.737, "running_n": 6}
+{"event": "eval_done", "idx": 7, "instance_id": "deep2wide_result_57_GDC", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 3.703, "running_n": 7}
+SUMMARY {"n": 7, "valid_n": 6, "errors": 1, "complete": false, "judge_calls_current_process": 16, "score": 0.16666666666666666, "entity_acc": 0.3333333333333333, "precision_by_row": 0.16666666666666666, "recall_by_row": 0.16666666666666666, "f1_by_row": 0.16666666666666666, "precision_by_item": 0.26666666666666666, "recall_by_item": 0.20833333333333334, "f1_by_item": 0.22549019607843138, "column_precision": 0.3111111111111111, "column_recall": 0.22685185185185186, "column_f1": 0.25163398692810457}
