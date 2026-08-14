@@ -141,6 +141,7 @@ class V25544DeterministicVisibleConstraintProjectorTests(unittest.TestCase):
         self.assertFalse(integration["temporal_range_row_filtering"])
         self.assertFalse(integration["rank_slot_row_insertion_deletion_or_relabeling"])
         self.assertFalse(integration["partial_date_precision_invention"])
+        self.assertFalse(integration["scale_converted_column_sorting"])
         self.assertFalse(
             integration[
                 "additional_model_search_fetch_token_context_wall_or_network_budget"

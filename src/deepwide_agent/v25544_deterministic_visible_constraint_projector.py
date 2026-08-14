@@ -527,6 +527,7 @@ def integration_contract() -> dict[str, Any]:
         "rank_slot_row_insertion_deletion_or_relabeling": False,
         "partial_date_precision_invention": False,
         "ambiguous_value_or_mixed_sort_type_mutation": False,
+        "scale_converted_column_sorting": False,
         "schema_or_row_count_mutation": False,
         "additional_model_search_fetch_token_context_wall_or_network_budget": False,
         "mapping_gold_category_question_type_split_evaluator_score_reward_or_historical_result_read": False,
