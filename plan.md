@@ -1,6 +1,16 @@
 # OWIC-DeepWide 研究与实施计划
 
-> 版本：6.129
+> 版本：6.130
+
+> **6.130 V2.55.40 frozen-220 可见约束迁移审计（2026-08-14）：在 V2.55.39 停止 IANA-only 路线后，先对冻结 DeepWideBench 220 的唯一 runtime-visible `{opaque_id, question}` 向量做 aggregate-only transfer-reach 审计；没有读取 mapping/gold/category/question_type/split/truth/evaluator/score、历史逐题 correctness、prediction、URL 或 page，也没有 model/search/fetch/evaluator/network effect。输出只保留固定向量 hash 与计数。7/7 单测、AST label-blind/evaluator-capability audit 和防篡改重封测试通过，权威工件为 `results/v25540_visible_constraint_transfer_reach_audit_v1_20260814.json`，SHA256=`7df97cf8aa3a5f92a67fb70ad7f5dfe85915868c5c35dc6bdc0a74aa07453159`，`audit_valid=true / findings=[]`。**
+
+> **可见作用面显著非零：exact schema=`194/220`、expanded-only=`21/220`、任意显式 schema=`215/220`、多列 schema=`212/220`、严格 visible membership=`11/220`；保守 visible-only grammar 得到 temporal year-range/date-format 并集=`122/220`、numeric-scale=`23/220`、Top-K/rank-column/显式排序并集=`48/220`，三族并集=`145/220`，其中 `144/220` 同时有显式 schema、`142/220` 同时为多列表。此处只证明候选 intervention 的 transfer reach，不证明这些任务当前答错、约束修复必然改预测或质量必然提升。**
+
+> **当前 production 等价能力不存在：V2.54.06 的真实 forward dependency closure 为108个文件，不含旧 `src/deepwide_agent/runtime.py`；对 `requested_output_unit / visible_date_output_style / visible_year_ranges / visible_top_k_claims / normalize_supported_numeric_units / promote_fixed_rank_slot_domain` 六个 primitive 的 AST 引用总数为0。当前 synthesis 确实看到完整 visible question，schema 与少数 strict membership 有机械合同，但 temporal/unit/rank-order 仅依赖模型遵循题面，没有 post-generation validator 或 deterministic renderer。仓库中旧代码存在不能冒充现行 pipeline capability。**
+
+> **下一候选因此固定为 build-only `visible constraint contract for shared production synthesis`，优先级为 temporal year-range/date-format → numeric scale → rank/Top-K/explicit order。第一版不得把旧大 runtime 整体接回 production，也不得把题面出现某个年份机械解释为完整 closed domain；必须只复用纯、保守、visible-only parser，并在同一次已支付第三模型调用前追加 bounded data contract。无可解析约束时 parent prompt 必须 byte-exact；有约束时只约束输出表示/域，不增加 query/fetch/model/token/context/wall cap。随后先以 synthetic/adversarial 测试证明 parser precision、parent no-op、格式/单位/rank totality 与 label blindness，再在 fresh/disjoint shared-parent population 上证明 nonzero contract engagement、0 parent-loss、可归因 prediction change；prediction freeze 和 content-free audit 推送后才允许独立 post-freeze quality。当前只授权 successor build，不授权 external population/protocol/forward、DeepWideBench 220/evaluator、retry/resume/backfill/replacement、leaderboard 或 SOTA。**
+
+> **信息熵/IG 继续只作 shadow/VOC，positive signed credit=`0`。visible constraint exposure、prompt constraint engagement、entropy reduction、格式修复或 prediction change 都不能决定 credit 符号；正 credit 仍必须来自 `visible constraint → matched shared-parent intervention/deletion → attributable prediction delta → post-freeze outer utility`，并在 held-out population 上验证信号可学习性。最新完整220仍为 V2.54.06 Exact `6/220`、Composite `0.385731`；项目单轮观测峰值仍为 V2.48.57 Exact `9/220`、Composite `0.457249`，没有 Avg@4、leaderboard 或 SOTA 证据。**
 >
 > **6.129 V2.55.25–39 source-bound 漏斗、IANA layout 修复与迁移停止决策（2026-08-14）：V2.55.25 在全新两行 gTLD population 上完成唯一 shared-parent forward，20/20 terminal/runtime、0 fallback/outer/budget/application failure，成本为 `80 query / 220 fetch / 60 model / 955,758 tokens / 128.295378s`。15 题形成 detail request，16 题有 evidence-deficit candidate，8 题抓到 exact IANA URL 且 URL、visible row key 与 page identity surface 全部绑定，但旧 parser 得到 `0` raw field surface、`0` observation、`0` edit，机制门 NO-GO。V2.55.26 的 aggregate-only 诊断把损失定位在绑定之后、materiality 之前；没有打开逐题 rows/pages/predictions/truth。**
 >
@@ -14,7 +24,7 @@
 >
 > **当前 DeepWideBench 权威口径不变：最新完整 single rollout 为 V2.54.06，Exact `6/220=2.7273%`、Composite `0.385731`；项目单轮观测峰值为 V2.48.57，Exact `9/220=4.0909%`、Composite `0.457249`，但未稳定复现。没有 Avg@4、leaderboard submission 或 SOTA 证据。当前没有新的 220 forward；四个 protected watcher 保持原 PID/start-ticks。只有新的 production-visible 通用机制先通过 transfer reach、task-disjoint mechanism gate 和 post-freeze paired quality 双 GO，才可按 `40 task workers / 16 model slots`、fresh roots、no-resume、failure-as-zero 启动完整 220。**
 >
-> **阅读规则：本文件 append-only；顶部 6.129 覆盖 6.128 及后文所有较早的当前权限、下一步与分数口径。**
+> **阅读规则：本文件 append-only；顶部 6.130 覆盖 6.129 及后文所有较早的当前权限、下一步与分数口径。**
 
 > 版本：6.128
 >
