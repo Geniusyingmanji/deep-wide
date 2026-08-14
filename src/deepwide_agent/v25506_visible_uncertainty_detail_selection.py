@@ -327,8 +327,13 @@ def validate_selection(
             or isinstance(item.get("unknown_cell_count"), bool)
             or not isinstance(item.get("unknown_cell_count"), int)
             or item["unknown_cell_count"] < 0
+            or item["unknown_cell_count"] > len(copied["columns"]) - 1
+            or item["row_index"] >= receipt["base_row_count"]
             for item in candidates
         )
+        or len({item["url"] for item in candidates}) != len(candidates)
+        or len({item["row_index"] for item in candidates}) != len(candidates)
+        or {item["url"] for item in candidates} != set(parent_by_url)
         or candidates
         != sorted(
             candidates,
@@ -367,6 +372,17 @@ def validate_selection(
         != len(checked_parent["private_candidates"])
         or receipt["candidate_unknown_cell_count_total"]
         != sum(item["unknown_cell_count"] for item in candidates)
+        or receipt["positive_uncertainty_candidate_count"]
+        != sum(item["unknown_cell_count"] > 0 for item in candidates)
+        or receipt["maximum_unknown_cell_count"]
+        != max((item["unknown_cell_count"] for item in candidates), default=0)
+        or receipt["maximum_unknown_tie_count"]
+        != sum(
+            item["unknown_cell_count"]
+            == receipt["maximum_unknown_cell_count"]
+            and item["unknown_cell_count"] > 0
+            for item in candidates
+        )
         or seal != payload_sha256(unsigned)
     ):
         raise ValueError("V2.55.06 visible uncertainty selection drifted")
