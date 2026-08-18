@@ -1,0 +1,225 @@
+INFO: Pandarallel will run on 8 workers.
+INFO: Pandarallel will use Memory file system to transfer data between the main process and workers.
+{"event": "eval_start", "selected": 7, "resume_committed": 0, "committed_errors": 0, "crash_only_resume": false}
+2026-08-18 14:46:05.944 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 场景名称 | 具体事项 | 实施方式 | 牵头部门 | 配合部门 | 完成时限 |
+| --- | --- | --- | ...
+2026-08-18 14:46:21.634 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "社会保险登记": "社会保险登记或参保信息变更",
+  "基本医疗保险参保和变更登记": "社会保险登记或参保信息变更",
+  "环境影响评价文件审批或备案管理": "建设项目环境影响评价",
+  "企业营业执照信息核验": "企业营业执照信息核验",
+  "高新技术企业营业执照信息核验": "企业营业执照信息核验",
+  "知识产权支持资金申请": "知识产权支持资金申请",
+  "个人身份信息核验，包括户籍信息、居住证信息": "个人身份信息核验",
+  "个人身份信息核验": "个人身份信息核验"
+}
+```
+2026-08-18 14:46:21.634 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 具体事项, primary_key_map {'社会保险登记': '社会保险登记或参保信息变更', '基本医疗保险参保和变更登记': '社会保险登记或参保信息变更', '环境影响评价文件审批或备案管理': '建设项目环境影响评价', '企业营业执照信息核验': '企业营业执照信息核验', '高新技术企业营业执照信息核验': '企业营业执照信息核验', '知识产权支持资金申请': '知识产权支持资金申请', '个人身份信息核验，包括户籍信息、居住证信息': '个人身份信息核验', '个人身份信息核验': '个人身份信息核验'}
+2026-08-18 14:46:21.644 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - wide2deep_ws_zh_062, df_inner shape: (8, 12), answer_df shape: (128, 6), response_df shape: (81, 7)
+2026-08-18 14:46:26.271 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_062, col 场景名称, metric_func_name llm_judge, score [0, 0, 0, 0, 0, 0, 0, 0]
+2026-08-18 14:46:26.272 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 以北京市实施为主，线上线下集成办理, target: 优化
+2026-08-18 14:46:26.272 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 以北京市实施为主，线上线下集成办理, target: 优化
+2026-08-18 14:46:26.272 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 以北京市实施为主，线上线下集成办理, target: 新建
+2026-08-18 14:46:26.272 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 以北京市实施为主，线上线下集成办理, target: 新建
+2026-08-18 14:46:26.272 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 以北京市实施为主，通过数据共享核验, target: 新建
+2026-08-18 14:46:26.272 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 以北京市实施为主，通过数据共享核验, target: 新建
+2026-08-18 14:46:26.273 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 以北京市实施为主，通过数据共享核验, target: 新建
+2026-08-18 14:46:26.273 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 以北京市实施为主，通过数据共享核验, target: 新建
+2026-08-18 14:46:26.273 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_062, col 实施方式, metric_func_name exact_match, score [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+2026-08-18 14:46:26.274 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 市民政局, target: 市市场监管局
+2026-08-18 14:46:26.274 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 市民政局, target: 市市场监管局
+2026-08-18 14:46:26.274 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 市知识产权局, target: 市科委、中关村管委会
+2026-08-18 14:46:26.274 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 市民政局, target: 市发展改革委
+2026-08-18 14:46:26.274 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 市民政局, target: 市公安局
+2026-08-18 14:46:26.274 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 市科委、中关村管委会；市经济和信息化局, target: 市公安局
+2026-08-18 14:46:26.274 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 市卫生健康委, target: 市商务局
+2026-08-18 14:46:26.274 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 市教委, target: 市商务局
+2026-08-18 14:46:26.275 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_062, col 牵头部门, metric_func_name exact_match, score [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+2026-08-18 14:46:33.021 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_062, col 配合部门, metric_func_name llm_judge, score [1, 0, 0, 1, 1, 1, 1, 0]
+2026-08-18 14:46:33.021 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 2025年底前, target: 2025年7月底
+2026-08-18 14:46:33.021 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 2025年底前, target: 2025年7月底
+2026-08-18 14:46:33.021 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 2025年底前, target: 2025年7月底
+2026-08-18 14:46:33.021 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 2025年底前, target: 2025年7月底
+2026-08-18 14:46:33.021 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 2025年底前, target: 2025年7月底
+2026-08-18 14:46:33.022 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 2025年底前, target: 2025年7月底
+2026-08-18 14:46:33.022 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 2025年底前, target: 2025年7月底
+2026-08-18 14:46:33.022 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 2025年底前, target: 2025年7月底
+2026-08-18 14:46:33.022 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_062, col 完成时限, metric_func_name exact_match, score [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+2026-08-18 14:46:33.031 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - wide2deep_ws_zh_062, P/R/F1 by unique_columns: 0.0988/0.0625/0.0766
+2026-08-18 14:46:33.031 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - wide2deep_ws_zh_062, P/R/F1 by row: 0.0000/0.0000/0.0000
+2026-08-18 14:46:33.031 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - wide2deep_ws_zh_062, P/R/F1 by item: 0.0267/0.0169/0.0207
+2026-08-18 14:46:33.034 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - wide2deep_ws_zh_062, final table score: 0.0
+{"event": "eval_done", "idx": 1, "instance_id": "wide2deep_ws_zh_062", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0, "f1_by_item": 0.02073365231259968, "column_f1": 0.07655502392344497, "error": null, "elapsed_seconds": 32.484, "running_n": 1}
+2026-08-18 14:46:37.612 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 期刊名称 | 论文名称 | 论文关键词 | 论文作者 |
+| --- | --- | --- | --- |
+| 体育科学 ...
+2026-08-18 14:46:46.389 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{}
+```
+2026-08-18 14:46:46.389 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 论文名称, primary_key_map {}
+2026-08-18 14:46:46.395 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - wide2deep_ws_zh_098, df_inner shape: (0, 8), answer_df shape: (208, 4), response_df shape: (1, 5)
+2026-08-18 14:46:52.480 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_098, col 期刊名称, metric_func_name llm_judge, score []
+2026-08-18 14:46:55.249 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_098, col 论文关键词, metric_func_name llm_judge, score []
+2026-08-18 14:46:58.684 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_098, col 论文作者, metric_func_name llm_judge, score []
+2026-08-18 14:46:58.690 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - wide2deep_ws_zh_098, P/R/F1 by unique_columns: 0.0000/0.0000/0.0000
+2026-08-18 14:46:58.690 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - wide2deep_ws_zh_098, P/R/F1 by row: 0.0000/0.0000/0.0000
+2026-08-18 14:46:58.690 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - wide2deep_ws_zh_098, P/R/F1 by item: 0.0000/0.0000/0.0000
+2026-08-18 14:46:58.690 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - wide2deep_ws_zh_098, final table score: 0.0
+{"event": "eval_done", "idx": 2, "instance_id": "wide2deep_ws_zh_098", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 25.637, "running_n": 2}
+2026-08-18 14:47:04.012 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 歌名 | 作词 | 作曲 |
+| --- | --- | --- |
+| 青梦湖 | 蓉子 | 李泰祥 |
+| 爱之死 | ...
+2026-08-18 14:47:09.521 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "爱之死": "爱之死",
+  "答案": "答案",
+  "我在梦中哭泣了": "我在梦中哭泣了",
+  "摇篮曲": "摇篮曲",
+  "欢颜": "欢颜",
+  "走在雨中": "走在雨中",
+  "爱的世界": "爱的世界",
+  "预感": "预感"
+}
+```
+2026-08-18 14:47:09.522 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 歌名, primary_key_map {'爱之死': '爱之死', '答案': '答案', '我在梦中哭泣了': '我在梦中哭泣了', '摇篮曲': '摇篮曲', '欢颜': '欢颜', '走在雨中': '走在雨中', '爱的世界': '爱的世界', '预感': '预感'}
+2026-08-18 14:47:09.527 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_22_橄榄树, df_inner shape: (8, 6), answer_df shape: (9, 3), response_df shape: (9, 4)
+2026-08-18 14:47:16.376 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_22_橄榄树, col 作词, metric_func_name llm_judge, score [0, 0, 1, 1, 1, 0, 1, 0]
+2026-08-18 14:47:26.071 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_22_橄榄树, col 作曲, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 1, 1]
+2026-08-18 14:47:26.075 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_22_橄榄树, P/R/F1 by unique_columns: 0.8889/0.8889/0.8889
+2026-08-18 14:47:26.075 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_22_橄榄树, P/R/F1 by row: 0.4444/0.4444/0.4444
+2026-08-18 14:47:26.075 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_22_橄榄树, P/R/F1 by item: 0.7407/0.7407/0.7407
+2026-08-18 14:47:26.076 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_22_橄榄树, final table score: 0.0
+{"event": "eval_done", "idx": 3, "instance_id": "deep2wide_result_22_橄榄树", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.4444444444444444, "f1_by_item": 0.7407407407407407, "column_f1": 0.8888888888888888, "error": null, "elapsed_seconds": 27.371, "running_n": 3}
+2026-08-18 14:47:31.285 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 名称 | 面积 | 政府驻地首府 |
+| --- | --- | --- |
+| 安达卢西亚自治区 | 87,599平方千 ...
+2026-08-18 14:47:36.809 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "名称": "名称",
+  "面积": "面积",
+  "政府驻地首府": "政府驻地/首府"
+}
+```
+2026-08-18 14:47:36.809 | INFO     | eval.evaluation.evaluation:evaluate_single_query:172 - column map: {'名称': '名称', '面积': '面积', '政府驻地首府': '政府驻地/首府'}
+2026-08-18 14:47:36.809 | INFO     | eval.evaluation.evaluation:evaluate_single_query:173 - befor mapping: Index(['名称', '面积', '政府驻地首府'], dtype='object')
+2026-08-18 14:47:36.810 | INFO     | eval.evaluation.evaluation:evaluate_single_query:175 - after mapping: Index(['名称', '面积', '政府驻地/首府'], dtype='object')
+2026-08-18 14:47:44.661 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "安达卢西亚自治区": "安达卢西亚自治区",
+  "阿拉贡自治区": "阿拉贡自治区",
+  "阿斯图里亚斯公国": "阿斯图里亚斯自治区",
+  "巴利阿里群岛自治区": "巴利阿里群岛",
+  "巴斯克自治区": "巴斯克自治区",
+  "加那利群岛自治区": "加那利群岛",
+  "坎塔布里亚自治区": "坎塔布里亚自治区",
+  "卡斯蒂利亚-拉曼恰自治区": "卡斯蒂利亚-拉曼恰自治区",
+  "卡斯蒂利亚-莱昂自治区": "卡斯蒂利亚－莱昂",
+  "加泰罗尼亚自治区": "加泰罗尼亚",
+  "埃斯特雷马杜拉自治区": "埃斯特雷马杜拉自治区",
+  "加利西亚自治区": "加利西亚自治区",
+  "马德里自治区": "马德里自治区",
+  "穆尔西亚自治区": "穆尔西亚省",
+  "纳瓦拉特许共同体": "纳瓦拉自治区",
+  "拉里奥哈自治区": "拉里奥哈自治区",
+  "瓦伦西亚自治区": "巴伦西亚省"
+}
+```
+2026-08-18 14:47:44.661 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 名称, primary_key_map {'安达卢西亚自治区': '安达卢西亚自治区', '阿拉贡自治区': '阿拉贡自治区', '阿斯图里亚斯公国': '阿斯图里亚斯自治区', '巴利阿里群岛自治区': '巴利阿里群岛', '巴斯克自治区': '巴斯克自治区', '加那利群岛自治区': '加那利群岛', '坎塔布里亚自治区': '坎塔布里亚自治区', '卡斯蒂利亚-拉曼恰自治区': '卡斯蒂利亚-拉曼恰自治区', '卡斯蒂利亚-莱昂自治区': '卡斯蒂利亚－莱昂', '加泰罗尼亚自治区': '加泰罗尼亚', '埃斯特雷马杜拉自治区': '埃斯特雷马杜拉自治区', '加利西亚自治区': '加利西亚自治区', '马德里自治区': '马德里自治区', '穆尔西亚自治区': '穆尔西亚省', '纳瓦拉特许共同体': '纳瓦拉自治区', '拉里奥哈自治区': '拉里奥哈自治区', '瓦伦西亚自治区': '巴伦西亚省'}
+2026-08-18 14:47:44.667 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_40_西班牙, df_inner shape: (17, 6), answer_df shape: (17, 3), response_df shape: (17, 4)
+2026-08-18 14:47:44.667 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 87599.0, target: 87268.0
+2026-08-18 14:47:44.668 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 47720.0, target: 47720.0
+2026-08-18 14:47:44.668 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not convertable, response: 10604.0, target: None
+2026-08-18 14:47:44.668 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 4992.0, target: 5014.0
+2026-08-18 14:47:44.668 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 7234.0, target: 7233.0
+2026-08-18 14:47:44.668 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 7447.0, target: 7273.0
+2026-08-18 14:47:44.668 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not convertable, response: 5321.0, target: None
+2026-08-18 14:47:44.668 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 94226.0, target: 94223.0
+2026-08-18 14:47:44.668 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 79463.0, target: 79409.0
+2026-08-18 14:47:44.668 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 32108.0, target: 32108.0
+2026-08-18 14:47:44.668 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 41635.0, target: 41634.0
+2026-08-18 14:47:44.668 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 29574.0, target: 29574.0
+2026-08-18 14:47:44.668 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 8028.0, target: 607.0
+2026-08-18 14:47:44.668 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 11314.0, target: 11314.0
+2026-08-18 14:47:44.668 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not convertable, response: 10391.0, target: None
+2026-08-18 14:47:44.668 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 5.0%, response: 5045.0, target: 5045.0
+2026-08-18 14:47:44.668 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 23255.0, target: 10.563
+2026-08-18 14:47:44.669 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_40_西班牙, col 面积, metric_func_name number_near, score [1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0]
+2026-08-18 14:47:44.669 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 塞维利亚, target: 塞维利亚
+2026-08-18 14:47:44.669 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 萨拉戈萨, target: 萨拉戈萨
+2026-08-18 14:47:44.669 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 奥维耶多, target: 奥维耶多
+2026-08-18 14:47:44.669 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 帕尔马, target: 帕尔马
+2026-08-18 14:47:44.669 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 维多利亚-加斯特伊斯, target: 维多利亚-加斯泰斯
+2026-08-18 14:47:44.669 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 圣克鲁斯-德特内里费、拉斯帕尔马斯（共同首府）, target: 圣克鲁斯-德特内里费、拉斯帕尔马斯
+2026-08-18 14:47:44.669 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 桑坦德, target: 桑坦德
+2026-08-18 14:47:44.669 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 巴利亚多利德（政府驻地）, target: 巴利亚多利德
+2026-08-18 14:47:44.669 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 托莱多, target: 托莱多市
+2026-08-18 14:47:44.669 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 巴塞罗那, target: 巴塞罗那
+2026-08-18 14:47:44.669 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 梅里达, target: 梅里达
+2026-08-18 14:47:44.669 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 圣地亚哥-德孔波斯特拉, target: 圣地亚哥德孔波斯特拉
+2026-08-18 14:47:44.669 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 马德里, target: 马德里
+2026-08-18 14:47:44.670 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 穆尔西亚, target: 穆尔西亚
+2026-08-18 14:47:44.670 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 潘普洛纳, target: 潘普洛纳
+2026-08-18 14:47:44.670 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 洛格罗尼奥, target: 洛格罗尼奥
+2026-08-18 14:47:44.670 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 0.0 msg exact not match, response: 瓦伦西亚, target: 巴伦西亚
+2026-08-18 14:47:44.670 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_40_西班牙, col 政府驻地/首府, metric_func_name exact_match, score [1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0]
+2026-08-18 14:47:44.674 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_40_西班牙, P/R/F1 by unique_columns: 1.0000/1.0000/1.0000
+2026-08-18 14:47:44.674 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_40_西班牙, P/R/F1 by row: 0.4118/0.4118/0.4118
+2026-08-18 14:47:44.674 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_40_西班牙, P/R/F1 by item: 0.7843/0.7843/0.7843
+2026-08-18 14:47:44.675 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_40_西班牙, final table score: 0.0
+{"event": "eval_done", "idx": 4, "instance_id": "deep2wide_result_40_西班牙", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.4117647058823529, "f1_by_item": 0.7843137254901961, "column_f1": 1.0, "error": null, "elapsed_seconds": 18.528, "running_n": 4}
+{"event": "judge_retry", "status": 429, "attempt": 1, "delay_seconds": 4.0}
+{"event": "judge_retry", "status": 429, "attempt": 2, "delay_seconds": 1.0}
+{"event": "judge_retry", "status": 429, "attempt": 3, "delay_seconds": 7.0}
+2026-08-18 14:48:01.902 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 姓名 | 字 | 籍贯 |
+| --- | --- | --- |
+| 张机 | 仲景 | 南阳郡涅阳县（今河南省邓州市穰 ...
+2026-08-18 14:48:07.691 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "张机": "张仲景",
+  "华佗": "华佗",
+  "董奉": "董奉"
+}
+```
+2026-08-18 14:48:07.691 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 姓名, primary_key_map {'张机': '张仲景', '华佗': '华佗', '董奉': '董奉'}
+2026-08-18 14:48:07.696 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_42_建安三神医, df_inner shape: (3, 6), answer_df shape: (3, 3), response_df shape: (3, 4)
+2026-08-18 14:48:11.403 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_42_建安三神医, col 字, metric_func_name llm_judge, score [1, 1, 1]
+2026-08-18 14:48:17.626 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_42_建安三神医, col 籍贯, metric_func_name llm_judge, score [0, 1, 1]
+2026-08-18 14:48:17.630 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - deep2wide_result_42_建安三神医, P/R/F1 by unique_columns: 1.0000/1.0000/1.0000
+2026-08-18 14:48:17.630 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - deep2wide_result_42_建安三神医, P/R/F1 by row: 0.6667/0.6667/0.6667
+2026-08-18 14:48:17.630 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - deep2wide_result_42_建安三神医, P/R/F1 by item: 0.8889/0.8889/0.8889
+2026-08-18 14:48:17.631 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - deep2wide_result_42_建安三神医, final table score: 0.0
+{"event": "eval_done", "idx": 5, "instance_id": "deep2wide_result_42_建安三神医", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.6666666666666666, "f1_by_item": 0.8888888888888888, "column_f1": 1.0, "error": null, "elapsed_seconds": 32.933, "running_n": 5}
+{"event": "judge_retry", "status": 429, "attempt": 1, "delay_seconds": 7.0}
+2026-08-18 14:48:34.346 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 姓名 | 参加年份 | 奖项 |
+| --- | --- | --- |
+| 胡苏凯 | -, 2018 | 金牌 |
+| ...
+2026-08-18 14:48:36.923 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{}
+```
+2026-08-18 14:48:36.924 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 姓名, primary_key_map {}
+2026-08-18 14:48:37.045 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - deep2wide_result_48_乐清市知临中学, df_inner shape: (0, 6), answer_df shape: (6, 3), response_df shape: (1, 4)
+2026-08-18 14:48:37.045 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name date_near score 1.0 msg date near, response: nan, target: nan
+2026-08-18 14:48:37.046 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - deep2wide_result_48_乐清市知临中学, col 参加年份, metric_func_name date_near, score []
+2026-08-18 14:48:37.049 | ERROR    | eval.evaluation.evaluation:evaluate_single_query:401 - evaluator error: 
+Traceback (most recent call last):
+  File "/home/azureuser/workspace-gzy/zyf/deep/external/Marco-Search-Agent/Marco-DeepResearch-Family/DeepWideSearch/eval/evaluation/evaluation.py", line 315, in evaluate_single_query
+    df_inner_score[f"{col}_{metric_func_name}"] = (
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/azureuser/workspace-gzy/zyf/deep/.venv-eval/lib/python3.12/site-packages/pandas/core/frame.py", line 4312, in __setitem__
+    self._set_item_frame_value(key, value)
+  File "/home/azureuser/workspace-gzy/zyf/deep/.venv-eval/lib/python3.12/site-packages/pandas/core/frame.py", line 4470, in _set_item_frame_value
+    raise ValueError(
+ValueError: Cannot set a DataFrame with multiple columns to the single column 奖项_exact_match
+
+{"event": "eval_done", "idx": 6, "instance_id": "deep2wide_result_48_乐清市知临中学", "score": null, "entity_acc": null, "f1_by_row": null, "f1_by_item": null, "column_f1": null, "error": "RuntimeError: official evaluator reported an internal error", "elapsed_seconds": 19.4, "running_n": 6}
+{"event": "eval_done", "idx": 7, "instance_id": "deep2wide_result_51_安提帕特王朝", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 2.821, "running_n": 7}
+SUMMARY {"n": 7, "valid_n": 6, "errors": 1, "complete": false, "judge_calls_current_process": 23, "score": 0.0, "entity_acc": 0.8333333333333334, "precision_by_row": 0.2538126361655773, "recall_by_row": 0.2538126361655773, "f1_by_row": 0.2538126361655773, "precision_by_item": 0.4067820543855402, "recall_by_item": 0.40514507307552644, "f1_by_item": 0.4057795012387375, "column_precision": 0.49794238683127573, "column_recall": 0.49189814814814814, "column_f1": 0.494240652135389}
