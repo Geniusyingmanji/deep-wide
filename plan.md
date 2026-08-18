@@ -1,5 +1,19 @@
 # OWIC-DeepWide 研究与实施计划
 
+> 版本：6.137
+>
+> **6.137 V2.55.79 fresh canonical-column 机制 strict GO（2026-08-18）：新 external contract 明确区分 outer `predecessor_failure_as_zero_control` 与 `v25575_successor_candidate`，每题只执行一次 V2.55.75 forward；provider effect 全部完成后，才用同一 parent prediction 的 raw columns 与空 page vector纯本地调用冻结 V2.53.95 verifier。canonical-drift control 使用预注册 visible-schema Unknown fallback，ordinary control 与 candidate byte-exact 相同；counterfactual 不产生第二次 model/search/fetch/network/sampling effect，也不读取 exposure 改变 routing。implementation 为 `1de15413`，审计 timeout 修复为 `b05ccda0`，均已推送。**
+>
+> **clean pushed build audit 为 `48/48` tests、136-file forward closure，privileged runtime access/evaluator capability/credential literal均为空，仅保留已知 provider-rank `clients.py:565:score`；truth/evaluator 与历史 outputs 不在 closure。权威工件 [`results/v25579_fresh_canonical_totality_build_audit_v1_20260818.json`](results/v25579_fresh_canonical_totality_build_audit_v1_20260818.json) SHA-256=`95759431b941aeb7b51159e0de0e4657fe3482e4d8c0920716bd4b541d73252d`，`audit_valid=true / findings=[]`，由 `9dde4b21` 冻结。protocol、preactivation 与 execution-start 随后分别以 `8f0ee4ad / 6ae66493 / ee2b5a4f` 从 clean pushed HEAD 单独冻结；preactivation 确认 GPT-5.6 endpoint reachable、lease idle、无冲突进程、所有 execution/output/quality surfaces pristine，唯一 watcher 身份不变且三个历史 watcher 仍 absent。**
+>
+> **唯一 fixed20 forward 在 `210.342220s` 完成 `20/20` terminal/runtime-completed/model-generated，0 fallback、outer failure、budget rejection、parent-prediction loss、unsafe handoff或result/stage binding failure。物理 effect 为 `80 query / 212 fetch / 60 model forwards / 865,076 system tokens`，逐题严格 `4 query / ≤14 fetch / 3 model`；counterfactual 增量 effect=`0`。10/10 drift 题精确重放 `ValueError: V2.53.95 selected verifier state drifted` 且由 V2.55.75 canonical-column handoff保留 parent prediction；10/10 ordinary题旧 verifier不失败、successor为canonical projection且outer两臂逐字相同；10/10 drift fallback→candidate prediction改变。prediction/forward以 `6b66a2a3`冻结，content-free audit [`results/v25579_fresh_canonical_totality_forward_audit_v1_20260818.json`](results/v25579_fresh_canonical_totality_forward_audit_v1_20260818.json) SHA-256=`9472c7fc62315c891b30d165124865624604f7de9fd5b3310e7576832df8d6ca`，`audit_valid=true / findings=[] / mechanism_gate_passed=true`，由 `7f181032`推送。**
+>
+> **当前授权仅升级为 V2.55.80 post-freeze quality protocol/evaluator build：可对同一冻结20题的40份prediction各评一次，truth只能来自预注册、identity-bound PyPI JSON endpoint；stable release按PEP 440且至少一文件，合法无stable release为valid `Unknown`。固定20 failure-as-zero与arm-blind truth completeness同时报告；ordinary negative control必须预测逐字相同。quality strict GO仍要求 candidate Exact严格增加、paired-complete Exact至少6 win/0 loss且two-sided sign-test `p≤0.05`，Entity/Row/Item/Column/Composite全不退、invalid/fallback不增。quality protocol、truth snapshot和结果必须分别从 clean pushed HEAD 冻结；结果不得反馈同一forward。机制与质量双 GO 前仍禁止DeepWideBench 220。**
+>
+> **当前 DeepWideBench 权威口径不变：最新完整 single rollout 是 V2.55.73 的 Exact `4/220`、Composite `0.375319`；项目单轮观测峰值仍是 V2.48.57 的 Exact `9/220`、Composite `0.457249`。V2.55.79 是 benchmark-external mechanism gate，不是 DeepWideBench 分数、leaderboard 或 SOTA 证据；positive signed credit仍为0。**
+>
+> **阅读规则：本文件 append-only；顶部 6.137 覆盖 6.136 及后文所有较早的当前权限、下一步与分数口径。**
+
 > 版本：6.136
 >
 > **6.136 V2.55.77–78 fresh canonical-column population 冻结与 outcome-blind 审计（2026-08-18）：V2.55.77 预先固定一个不可拆分的 20 题 PyPI latest-stable-version block；前 10 题使用 visible full-width columns `Ｐackage | Latest Stable Ｖersion`，后 10 题使用语义相同的 ASCII columns `Package | Latest Stable Version`。两组各含 20 个互不重复 project identity、事实目标和 `4 query / ≤14 fetch / 3 model / 240s` 上限相同，旧 visible-constraint family 的 active count 均预期为 0；exposure 只由 forward 前冻结的 visible column bytes 决定，不能由 provider output、truth、score 或历史 outcome 改写。runtime 输入仍严格为 `{opaque_id, question}`。identity/task vector SHA-256 分别为 `547d9653b39da50b489e02da8a71bd05ee2a432d7403d8dd89e50e647e17623a` 与 `bcdc904936891f3acd0b0db4364a964077ad9508d4d650c84df81bd1a8cee49c`，实现提交 `9054ab84` 已推送。**
