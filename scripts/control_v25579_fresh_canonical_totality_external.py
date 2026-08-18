@@ -142,7 +142,11 @@ def _active_conflicts() -> list[int]:
 
 def _tests() -> dict[str, Any]:
     suites = [
-        base_audit._test(pattern, expected)
+        # V2.55.75 includes a complete 220-task synthetic runtime replay.  Its
+        # clean predecessor audit deliberately grants each suite 900 seconds;
+        # reuse that frozen local-only harness instead of the older 300-second
+        # sparse-build helper.
+        runtime_audit._test(pattern, expected)
         for pattern, expected in TEST_SUITES
     ]
     observed = sum(row["observed"] for row in suites)
