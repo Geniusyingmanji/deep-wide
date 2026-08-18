@@ -1,5 +1,17 @@
 # OWIC-DeepWide 研究与实施计划
 
+> 版本：6.138
+>
+> **6.138 V2.55.80 post-freeze quality strict GO 与 exact220 successor 授权（2026-08-18）：V2.55.80 新增 evaluator-only PyPI stable-version truth primitive：从identity-bound官方JSON取得canonical project name与最高file-bearing、非pre/dev的PEP 440 release；只有pre/dev时为valid `Unknown`，nonempty invalid version或equal-version alias冲突fail closed。soft metrics接受PEP 440语义等价与Unknown大小写，whole-table Exact仍要求题面原始列字节、官方canonical project name、官方raw version及题面项目顺序。implementation `c60a76a2`、18/18 clean quality build audit `2bd7c460`、quality protocol `fd74d50d`均已分阶段推送；build audit SHA-256=`a89ead65b9e1738387b896a74d3f19a1cc02530d5889970c3c1af342afb3b0f5`。**
+>
+> **唯一quality execution对40个固定PyPI endpoint各做一次no-redirect/no-retry请求，40/40 transport成功、40/40 truth record有效、20/20 paired-complete，0 valid-Unknown。两臂40份冻结prediction各评一次：predecessor failure-as-zero control Exact=`9/20`、Entity=`0.50`、Row/Item/Column=`0.475/0.4875/1.0`、Composite=`0.615625`、fallback=`10`；V2.55.75 candidate Exact=`18/20`、Entity=`1.0`、Row/Item/Column=`0.95/0.975/1.0`、Composite=`0.98125`、fallback=`0`。candidate为`+9 Exact`，9 win / 11 tie / 0 loss，two-sided sign-test `p=0.00390625`；10个ordinary negative controls逐字相同且两臂均Exact 9/10，全部增益只发生在预注册canonical-drift组（0/10→9/10）。truth/result以 `3000568c`冻结，离线audit [`results/v25580_fresh_canonical_totality_quality_audit_v1_20260818.json`](results/v25580_fresh_canonical_totality_quality_audit_v1_20260818.json) SHA-256=`053c910d1c99755f4bc3cac2ee1254affff30d0fe1971513120c238edfc45dd9`，`audit_valid=true / findings=[] / quality_gate_passed=true`，由 `c89e65ec`推送。**
+>
+> **机制与质量现已双strict GO，当前权限升级为新的DeepWideBench exact220 successor build与protocol design，但仍不得直接复用V2.55.73人口输出、resume/backfill/replacement/selective rerun或在未冻结控制面前启动。下一版本必须从V2.55.75 runtime和固定visible220 task vector新建fresh output root，runtime边界仅 `{opaque_id, question}`，保持每题 `4 query / ≤14 fetch / 3 model / 240s`，使用大并发但共享model-slot cap；outer failure固定分母降级，禁止读取mapping/gold/category/question_type/split/evaluator/score。必须按implementation → clean-build audit → evaluator preregistration → execution protocol → preactivation → execution-start逐提交推送，唯一220 forward prediction freeze后才允许固定 evaluator；完整post-result audit前不得声称benchmark提升、leaderboard或SOTA。**
+>
+> **当前DeepWideBench权威分数仍未改变：最新完整single rollout V2.55.73 Exact `4/220`、Composite `0.375319`；项目单轮峰值V2.48.57 Exact `9/220`、Composite `0.457249`。V2.55.80是benchmark-external paired quality证据，不是DeepWideBench分数；positive signed credit仍为0。**
+>
+> **阅读规则：本文件 append-only；顶部 6.138 覆盖 6.137 及后文所有较早的当前权限、下一步与分数口径。**
+
 > 版本：6.137
 >
 > **6.137 V2.55.79 fresh canonical-column 机制 strict GO（2026-08-18）：新 external contract 明确区分 outer `predecessor_failure_as_zero_control` 与 `v25575_successor_candidate`，每题只执行一次 V2.55.75 forward；provider effect 全部完成后，才用同一 parent prediction 的 raw columns 与空 page vector纯本地调用冻结 V2.53.95 verifier。canonical-drift control 使用预注册 visible-schema Unknown fallback，ordinary control 与 candidate byte-exact 相同；counterfactual 不产生第二次 model/search/fetch/network/sampling effect，也不读取 exposure 改变 routing。implementation 为 `1de15413`，审计 timeout 修复为 `b05ccda0`，均已推送。**
