@@ -1,5 +1,13 @@
 # OWIC-DeepWide 研究与实施计划
 
+> 版本：6.141
+>
+> **6.141 V2.55.83–84 same-response structural table recovery 原语与 clean-build（2026-08-18）：依据 V2.55.82 中6个“第三次 provider success + exact joint envelope，但 frozen table normalizer unrecoverable”的 aggregate 事件，新建纯本地、append-only recovery 原语。冻结 V2.49.86 normalizer 永远先运行且其成功输出逐字保留；仅 parent unrecoverable 后，才允许解析同一第三响应中唯一、矩形、可无歧义映射到 visible required columns 的结构。支持 missing/weak Markdown separator、strict CSV/TSV、strict JSON records/matrix；必须全行保序、injective header mapping，非空 cell 只允许格式解码与外层空白去除，null/empty 才可按题面语言变为 Unknown/未知。ragged row、额外列/键、非字符串JSON值、多表、尾随文本、含pipe/newline cell、超cap或多解析候选一律fail closed；不得从page补fact、推断membership、创建row，增量model/search/fetch/network/token/context/wall effect=`0`，entropy/IG positive signed credit=`0`。实现与测试提交 `8d5a647d` 已推送。**
+>
+> **V2.55.84 从 clean pushed HEAD 绑定 V2.55.82 诊断、V2.55.83 实现/测试与45文件 dependency closure；29/29 tests通过，privileged runtime field、evaluator capability、credential literal findings均为空，仅保留已知 `clients.py:565:score` provider-rank例外。权威工件 [`results/v25584_same_response_table_recovery_build_audit_v1_20260818.json`](results/v25584_same_response_table_recovery_build_audit_v1_20260818.json) SHA-256=`440a1d8516c52dbe2cc521fa30f736dbd091bec02c292bea528a13673b029110`，`audit_valid=true / findings=[]`。唯一健康 watcher PID `2808901` / ticks `746680268` 身份不变，shared lease inactive，未调用外部API。**
+>
+> **当前授权只扩展为：把 V2.55.83 接入一个 task-local synthetic full-chain successor，并设计全新、与固定220和全部已消费人口零重叠的 task-disjoint population/gate；仍不授权 external forward、post-freeze evaluator、DeepWideBench、retry/resume/backfill/replacement、leaderboard或SOTA。下一机制门必须共享同一provider response bytes，control为frozen normalizer、candidate仅加V2.55.83；要求预注册 exposed representation 组有确定性 recovery 与candidate prediction change，ordinary exact/normalized negative controls逐字相同，0 row loss/semantic rewrite/额外effect。只有机制 strict GO 后才冻结 independent truth/quality evaluator；quality strict GO 后才讨论新220。阅读规则：本文件append-only；顶部6.141覆盖6.140及后文较早的当前权限与下一步。**
+
 > 版本：6.140
 >
 > **6.140 V2.55.82 post-freeze aggregate diagnosis（2026-08-18）：在 V2.55.81 prediction/result/post-audit 全部冻结后，仅以离线内存 join 读取固定 forward receipts 与 evaluator 输出；公开诊断不含 task ID、题面、prediction、answer、evaluator message、逐题 score/correctness，也未调用 model/search/fetch/network/evaluator。实现与7项专项测试已分别由 `61908686 / 115fa037` 推送；冻结工件 [`results/v25582_v25581_exact220_diagnosis_v1_20260818.json`](results/v25582_v25581_exact220_diagnosis_v1_20260818.json) SHA-256=`bc99b914f09b0de333a247d2ce6ab89f0492d5878ca2dc25901abe7d8f0020f4`，`diagnosis_valid=true / findings=[]`。**
