@@ -1,5 +1,19 @@
 # OWIC-DeepWide 研究与实施计划
 
+> 版本：6.140
+>
+> **6.140 V2.55.82 post-freeze aggregate diagnosis（2026-08-18）：在 V2.55.81 prediction/result/post-audit 全部冻结后，仅以离线内存 join 读取固定 forward receipts 与 evaluator 输出；公开诊断不含 task ID、题面、prediction、answer、evaluator message、逐题 score/correctness，也未调用 model/search/fetch/network/evaluator。实现与7项专项测试已分别由 `61908686 / 115fa037` 推送；冻结工件 [`results/v25582_v25581_exact220_diagnosis_v1_20260818.json`](results/v25582_v25581_exact220_diagnosis_v1_20260818.json) SHA-256=`bc99b914f09b0de333a247d2ce6ab89f0492d5878ca2dc25901abe7d8f0020f4`，`diagnosis_valid=true / findings=[]`。**
+>
+> **10个 fallback 不是 search 未执行：全部完成 `4 query / 10 fetch / 3 model logical requests`，grounded-plan model 为 `10/10` success，但第三次 base synthesis 为 `0/10` success、normalizer=`unrecoverable`。细分为6个 provider response 已成功但本地 table normalization 不可恢复，3个 synthesis `ModelRequestError`，1个 plan 与 synthesis 均 `ModelRequestError`；provider success 分布为 `3次×6 / 2次×3 / 1次×1`。因此首选可靠性候选是“同一响应、零额外 effect、确定性且 fail-closed 的 robust envelope/table recovery”，不是继续增加搜索。5个 evaluator-invalid 中4个为 official internal error、1个为 official out-of-range metric，均继续按固定分母计零，禁止重评。**
+>
+> **主要质量瓶颈是 row/value completeness：210个 model-generated 固定分母的 Entity=`0.666667`、Row/Item/Column F1=`0.206851 / 0.380837 / 0.465651`；215个 evaluator-valid 中 Entity=0 有75题、Row F1=0 有125题、Row F1<0.2 有147题，仅41题 Row F1≥0.5。record correction 没有形成 treatment：grounded-plan active `63/220`，target-record frontier eligible/engaged=`10/9`，grounded source=`8`、selected raw records=`12`、verified records/fields=`3/3`，但3个 field 全因 base row missing 被拒；joint raw record=`0`、changed-safe coordinate=`0`、attributable prediction change=`0`。不能把 V2.55.81 提升归因于 record correction。**
+>
+> **发现一个需外部门验证的 membership 语义回归：固定220仅11题触发，全部来源于中文 `explicit_row_phrase` coverage fallback，均为 singleton；V2.53.95 把“返回/包括/查找…行/记录”的 coverage cue 升格成 exact closed-set membership，9题强制1行、2题输出0行。该固定11题在 V2.53.79 的 Entity/Row/Item/Column=`0.818182 / 0.383273 / 0.559605 / 0.664618`，从 V2.54.06 到 V2.55.81 四项均为0。跨版本是强 regression signal，但因均为独立 cold rollout，不能宣称因果 effect；下一机制必须只允许真正 declarative、无歧义的 closed-set membership，普通 coverage cue 不得升级成闭集约束。**
+>
+> **跨版本描述性结论：V2.55.73 的11个 outer failure 中，V2.55.81 有10个成为 canonical-column model-generated handoff、1个仍 fallback；该11题 Exact `0→1`，其余209题 Exact仍为4，最终转移为215个 `0→0`、1个 `0→1`、4个 `1→1`。这支持 canonical totality 的可靠性贡献，但不能把其余 soft-metric冷波动因果归于 wrapper。V2.55.81 仍为最新完整结果 `5/220 / Composite 0.410456`，低于项目峰值 V2.48.57 的 `9/220 / 0.457249`，非 Avg@4、非 leaderboard、非 SOTA。**
+>
+> **当前只授权全新、与已消费人口 task/identity/question/opaque-id disjoint 的 external gate design 与本地 synthetic replay，不授权 external forward、post-freeze quality evaluator 或新 DeepWideBench 220。候选顺序：（1）same-response robust table recovery；（2）provenance-bound record→table completion，但 verified record 不能在缺少独立 membership provenance 时创建新行；（3）declarative-only closed-set membership。每个候选必须先共享相同 provider bytes/预算做 mechanism gate，再 prediction freeze 后做独立 quality gate；门不过不跑220。entropy/IG继续 shadow-only，positive signed credit=`0`；只有 same-state terminal utility 与 provenance 闭环后才讨论 credit。唯一健康 watcher PID `2808901`、start ticks `746680268` 保持不变，未 signal/stop/restart。阅读规则：本文件 append-only；顶部6.140覆盖6.139及后文较早的当前权限与下一步。**
+
 > 版本：6.139
 >
 > **6.139 V2.55.81 canonical-column totality exact220 完整闭环（2026-08-18）：已从 V2.55.80 双 strict-GO 权限新建 append-only successor，runtime 绑定 V2.55.75，固定公开 visible 220 向量，输入仅 `{opaque_id, question}`。runner 同时识别普通 V2.55.69-compatible canonical projection 与 V2.55.75 canonical-column handoff 两种 sealed result/stage schema，后者作为 safe byte-exact handoff 单独聚合；outer failure 仍 failure-as-zero。每题上限固定 `4 query / ≤14 fetch / 3 model / 240s`，40 task workers / 16 global model slots；禁止 retry/resume/backfill/replacement/selective rerun，entropy/IG positive signed credit=`0`。implementation `a71cd289`、111/111 clean-build audit `eb4841af`、preregistration `23a1234e`、preactivation `da4bf792`、execution-start `751ab2f9` 均已逐阶段推送。**

@@ -1,0 +1,355 @@
+{
+  "artifact_version": 1,
+  "authorization": {
+    "deepwidebench_forward_or_evaluator": false,
+    "external_forward": false,
+    "fresh_task_disjoint_external_gate_design": true,
+    "leaderboard_or_sota": false,
+    "local_synthetic_replay": true,
+    "postfreeze_quality_evaluator": false,
+    "retry_resume_backfill_replacement_or_selective_rerun": false
+  },
+  "checks": {
+    "all_cross_version_vectors_align_exact220": true,
+    "entropy_or_information_gain_positive_signed_credit_zero": true,
+    "evaluator_invalid_taxonomy_exact": true,
+    "exact_transition_is_four_stable_plus_one_new": true,
+    "fallback_count_exact10": true,
+    "fallback_grounded_plan_success_and_base_synthesis_failure_exact": true,
+    "fallback_search_fetch_model_effects_complete": true,
+    "fallback_taxonomy_exact": true,
+    "fixed_source_and_artifact_hashes_exact": true,
+    "membership_active_subset_collapses_after_v25379": true,
+    "membership_grammar_exact11_singleton_chinese_fallback": true,
+    "quality_bands_exact": true,
+    "record_funnel_exact_and_zero_treatment": true,
+    "v25573_failure_recovery_exact10_plus1": true
+  },
+  "contains_task_identity_question_prediction_answer_evaluator_message_or_per_task_correctness": false,
+  "created_at_unix": 1787067550,
+  "cross_version_descriptive_not_causal": {
+    "exact_transition_histogram": {
+      "00": 215,
+      "01": 1,
+      "11": 4
+    },
+    "exact_transition_order": [
+      "v25573",
+      "v25581"
+    ],
+    "independent_cold_rollouts_do_not_identify_wrapper_causality": true,
+    "published_all220_metrics": {
+      "v24857_project_peak": {
+        "column_f1": 0.48539230822852186,
+        "entity_acc": 0.7136363636363636,
+        "evaluator_invalid_or_not_run": 10,
+        "evaluator_valid": 210,
+        "f1_by_item": 0.400228047737325,
+        "f1_by_row": 0.2297391933902937,
+        "fallback_tables": 0,
+        "model_generated_tables": 220,
+        "quality_composite": 0.45724897824812605,
+        "score": 0.04090909090909091,
+        "selected": 220,
+        "system_total_tokens": 3781060,
+        "whole_table_successes": 9
+      },
+      "v25573_predecessor": {
+        "column_f1": 0.39707178412345756,
+        "entity_acc": 0.5909090909090909,
+        "evaluator_invalid_or_not_run": 7,
+        "evaluator_valid": 213,
+        "f1_by_item": 0.32819770681816834,
+        "f1_by_row": 0.1850960974841365,
+        "fallback_tables": 19,
+        "model_generated_tables": 201,
+        "quality_composite": 0.3753186698337133,
+        "score": 0.01818181818181818,
+        "selected": 220,
+        "system_total_tokens": 13424475,
+        "whole_table_successes": 4
+      },
+      "v25581_current": {
+        "column_f1": 0.4444854136379952,
+        "entity_acc": 0.6363636363636364,
+        "evaluator_invalid_or_not_run": 5,
+        "evaluator_valid": 215,
+        "f1_by_item": 0.3635261985154636,
+        "f1_by_row": 0.19744882537031236,
+        "fallback_tables": 10,
+        "model_generated_tables": 210,
+        "quality_composite": 0.41045601847185187,
+        "score": 0.022727272727272728,
+        "selected": 220,
+        "system_total_tokens": 13835763,
+        "whole_table_successes": 5
+      }
+    },
+    "remaining_209_metrics_v25573": {
+      "column_f1": 0.41797029907732375,
+      "entity_acc": 0.6220095693779905,
+      "evaluator_valid": 202,
+      "f1_by_item": 0.34547127033491404,
+      "f1_by_row": 0.19483799735172264,
+      "fixed_denominator": 209,
+      "quality_composite": 0.3950722840354877,
+      "whole_table_successes": 4
+    },
+    "remaining_209_metrics_v25581": {
+      "column_f1": 0.4463548967282749,
+      "entity_acc": 0.6363636363636364,
+      "evaluator_valid": 206,
+      "f1_by_item": 0.3640605671231753,
+      "f1_by_row": 0.19504998875233787,
+      "fixed_denominator": 209,
+      "quality_composite": 0.41045727224185613,
+      "whole_table_successes": 4
+    },
+    "same_tasks_metrics_v25573": {
+      "column_f1": 0.0,
+      "entity_acc": 0.0,
+      "evaluator_valid": 11,
+      "f1_by_item": 0.0,
+      "f1_by_row": 0.0,
+      "fixed_denominator": 11,
+      "quality_composite": 0.0,
+      "whole_table_successes": 0
+    },
+    "same_tasks_metrics_v25581": {
+      "column_f1": 0.4089652349226817,
+      "entity_acc": 0.6363636363636364,
+      "evaluator_valid": 9,
+      "f1_by_item": 0.35337319496893965,
+      "f1_by_row": 0.24302672111182752,
+      "fixed_denominator": 11,
+      "quality_composite": 0.4104321968417713,
+      "whole_table_successes": 1
+    },
+    "same_tasks_v25581_fallback": 1,
+    "same_tasks_v25581_model_generated_canonical_handoff": 10,
+    "v25573_outer_failure_tasks": 11
+  },
+  "decision": {
+    "candidate_designs_for_fresh_task_disjoint_gate": [
+      "same_response_zero_extra_effect_robust_table_recovery",
+      "provenance_bound_record_to_table_completion",
+      "declarative_only_closed_set_membership_contract"
+    ],
+    "coverage_cue_may_not_be_promoted_to_closed_set_membership": true,
+    "deepwidebench_retry_resume_backfill_or_selective_rerun": false,
+    "entropy_or_information_gain_signed_credit_authorized": false,
+    "fresh_disjoint_mechanism_gate_before_postfreeze_quality_gate": true,
+    "historical_per_task_outcome_runtime_routing": false,
+    "primary_bottleneck": "row_and_value_completeness_not_search_nonexecution",
+    "same_response_recovery_must_be_deterministic_and_fail_closed": true,
+    "v25581_exact220_quality": "no_go_below_project_peak",
+    "verified_record_may_not_create_a_row_without_independent_membership_provenance": true
+  },
+  "diagnosis_payload_sha256": "9e9a1bc745efecfebe2ecda97b58990980e671221f4ab2054d4fabda47d301aa",
+  "diagnosis_valid": true,
+  "entropy_or_information_gain_assigns_signed_credit": false,
+  "external_network_model_provider_search_fetch_or_evaluator_called": false,
+  "fallback_diagnosis": {
+    "all_completed_search_and_fetch": true,
+    "base_normalizer_status_histogram": {
+      "unrecoverable": 10
+    },
+    "base_synthesis_success_tasks": 0,
+    "failure_taxonomy": {
+      "local_unrecoverable_table_normalization": 6,
+      "plan_and_synthesis_model_request_error": 1,
+      "synthesis_model_request_error": 3
+    },
+    "fallback_tasks": 10,
+    "grounded_plan_model_success_tasks": 10,
+    "joint_envelope_exact_tasks": 6,
+    "joint_table_normalizable_tasks": 0,
+    "provider_success_histogram": {
+      "1": 1,
+      "2": 3,
+      "3": 6
+    },
+    "query_fetch_model_histogram": {
+      "query4_fetch10_model3": 10
+    },
+    "search_nonexecution_is_supported_as_root_cause": false
+  },
+  "findings": [],
+  "fixed_sha256": {
+    "outputs/v25379_changed_safe_exact220_v1_20260813/evaluator/conservative_summary.json": "d5185ea9bda82940a1f9954dbe47f2e8b54e670b126779de4f300a07723ba0aa",
+    "outputs/v25379_changed_safe_exact220_v1_20260813/frozen_task_results.jsonl": "f080bf3283319c6633ba58bb59ebd9bd8b14998b9e2624c0c218574653c7564d",
+    "outputs/v25406_grounded_membership_exact220_v1_20260813/evaluator/conservative_summary.json": "aef52158373540ca0fa9422d287f7a7fcabc52a5d634fd7f363148e72ec820ac",
+    "outputs/v25406_grounded_membership_exact220_v1_20260813/frozen_task_results.jsonl": "b40436dc45ec801adb8569ef890715eff1a0054642d98d482e5793dad11bfd75",
+    "outputs/v25573_totality_exact220_v1_20260814/evaluator/conservative_summary.json": "3327d063b33ba1959df43b1c26c33c928f2e86f105e3b7ec9c89ef8ee923b68a",
+    "outputs/v25573_totality_exact220_v1_20260814/frozen_task_results.jsonl": "550438d284b2290de66df6fde2fbb924145d92392b6c47df9a28ab60bb37d7fa",
+    "outputs/v25581_canonical_totality_exact220_v1_20260818/evaluator/conservative_summary.json": "3b75bc100b5403d585b525d4c618a588a29179cb5ad4a08deb913bfcb7591c21",
+    "outputs/v25581_canonical_totality_exact220_v1_20260818/frozen_task_results.jsonl": "249fd9fb229e998f28a5e08bc773d75cde6c40120df6f933db074de9cdb5d1bf",
+    "outputs/v25581_canonical_totality_exact220_v1_20260818/run_summary.json": "5d25c3264ec57f471fef1dfbee64f6e79ba8c148e074e51c2828b7367bc4ed78",
+    "outputs/v25581_canonical_totality_exact220_v1_20260818/runtime_predictions.jsonl": "e79f0d7bb2551ef6b97606d7634492c4c267aed6ee1480ef62d1901a3e46ed4e",
+    "results/v24857_pacing_aware_exact220_postresult_audit_v1_20260808.json": "cf49f952533656d805ca13e807689ea1cd07215553b3f3f9b2dbbf11c115ca20",
+    "results/v24857_pacing_aware_exact220_result_v1_20260808.json": "a9e51c5c479a79e46f74574dac905bc607032be501b8a21a696106172f59f1d9",
+    "results/v25379_changed_safe_exact220_result_v1_20260813.json": "4669c0d725699a5e57b205a23a74c151a5f08980aa69629d57437795fd0b8338",
+    "results/v25381_changed_safe_exact220_postresult_audit_v1_20260813.json": "ca776c6b65f1eb1f5a552fd745aa920db5469e1fb78b0c860b16cab1f33c1869",
+    "results/v25406_grounded_membership_exact220_postresult_audit_v1_20260813.json": "833ea45d69f3c664003ce9e67708af96e842c087889fb53342fe64f2c9636cf9",
+    "results/v25406_grounded_membership_exact220_result_v1_20260813.json": "2f986c1307e97d5c65bcd7eb68e46f7660d383f708f1a01ce0bc11fb89b9f0e1",
+    "results/v25573_totality_exact220_postresult_audit_v1_20260814.json": "a1ed547e02b849dd2999019d5ae998c06dc49df5682bbbaf71569c0a4f495b15",
+    "results/v25573_totality_exact220_result_v1_20260814.json": "eb20492548f73234947bbff8c8ab08a3e9ba7903741e39029e5aea6d039e26ef",
+    "results/v25581_canonical_totality_exact220_forward_result_v1_20260818.json": "277f07830baa5604f5f0d0b35177753cfaaa4a2c6a8eee45cf6d604de61d4aab",
+    "results/v25581_canonical_totality_exact220_postresult_audit_v1_20260818.json": "9e1bbd5e14f0de07a4427c15938072668a272b487dfe2e026c3096c6f305d696",
+    "results/v25581_canonical_totality_exact220_result_v1_20260818.json": "91adc409db05298fc0dd1fdbca8c73c31ae06e7e33927c649755a2bcdd395987",
+    "src/deepwide_agent/v24921_target_value_coverage_projector.py": "4579affb4bbff7c84da5404bb233b41bd7e2a259ad49c635f756b262e7d2369d",
+    "src/deepwide_agent/v25117_grounded_target_record_plan.py": "f159fb853e73444494c84b9385b0997366e466be591138356f3ef3f5ce436a5d",
+    "src/deepwide_agent/v25118_target_record_frontier_selection.py": "a4fd91cb9c6beaa2e3dc6177addba14eb306e3c16086d45a89d7097a6ed612d9",
+    "src/deepwide_agent/v25370_shared_synthesis_changed_safe_runtime.py": "cc173d39d2fc85098ac87297c4247fb93d4d954c00fefb3aaee056c75e03ce2e",
+    "src/deepwide_agent/v25389_hybrid_record_fallback_runtime.py": "cb881bc40332f2e8727b9437fbd1ea158dd6ce7e41dbe3d1a3e3a4a915cc92d8",
+    "src/deepwide_agent/v25395_visible_membership_synthesis_runtime.py": "b875c992b0c238281490b459cc4dad6baac7165c48a52f8b19eb4a0cfbfa0a19",
+    "src/deepwide_agent/v25581_canonical_totality_exact220_contract.py": "eb55a3e3984aa693cd742fbe1dc90ac2eba7b819068ea3c738160810fba87d9c"
+  },
+  "implementation_commit": "61908686f88b78122aa05cbce9dda83285dd17be",
+  "positive_signed_credit_count": 0,
+  "postfreeze_offline_analysis_only": true,
+  "quality_diagnosis": {
+    "dominant_observed_quality_bottleneck": "row_and_value_completeness",
+    "evaluator_invalid_or_not_run": 5,
+    "evaluator_terminal_error_taxonomy": {
+      "official_internal_error": 4,
+      "official_out_of_range_metrics": 1
+    },
+    "evaluator_valid_quality_bands": {
+      "column_f1": {
+        "at_least_0_5": 103,
+        "below_0_2": 95,
+        "equal_zero": 82
+      },
+      "entity_acc": {
+        "at_least_0_5": 140,
+        "below_0_2": 75,
+        "equal_zero": 75
+      },
+      "evaluator_valid_denominator": 215,
+      "f1_by_item": {
+        "at_least_0_5": 88,
+        "below_0_2": 103,
+        "equal_zero": 82
+      },
+      "f1_by_row": {
+        "at_least_0_5": 41,
+        "below_0_2": 147,
+        "equal_zero": 125
+      }
+    },
+    "invalid_rows_remain_failure_as_zero_without_revaluation": true,
+    "model_generated_fixed_denominator": {
+      "column_f1": 0.46565138571599496,
+      "entity_acc": 0.6666666666666666,
+      "evaluator_valid": 205,
+      "f1_by_item": 0.3808369698733428,
+      "f1_by_row": 0.20685115038794627,
+      "fixed_denominator": 210,
+      "quality_composite": 0.43000154316098765,
+      "whole_table_successes": 5
+    },
+    "published_all220": {
+      "column_f1": 0.4444854136379952,
+      "entity_acc": 0.6363636363636364,
+      "evaluator_invalid_or_not_run": 5,
+      "evaluator_valid": 215,
+      "f1_by_item": 0.3635261985154636,
+      "f1_by_row": 0.19744882537031236,
+      "fallback_tables": 10,
+      "model_generated_tables": 210,
+      "quality_composite": 0.41045601847185187,
+      "score": 0.022727272727272728,
+      "selected": 220,
+      "system_total_tokens": 13835763,
+      "whole_table_successes": 5
+    }
+  },
+  "record_correction_funnel": {
+    "attributable_prediction_change_tasks": 0,
+    "changed_safe_coordinates": 0,
+    "grounded_record_source_tasks": 8,
+    "grounded_target_plan_strategy_tasks": 63,
+    "joint_raw_records": 0,
+    "missing_base_row_rejected_fields": 3,
+    "record_correction_identified_as_quality_treatment": false,
+    "selected_grounded_raw_records": 12,
+    "target_record_frontier_eligible_tasks": 10,
+    "target_record_frontier_engaged_tasks": 9,
+    "verified_fields": 3,
+    "verified_records": 3
+  },
+  "role": "v25582_v25581_exact220_postfreeze_aggregate_diagnosis",
+  "visible_membership_regression": {
+    "base_table_row_count_histogram": {
+      "0": 2,
+      "1": 9
+    },
+    "base_visible_membership_exact_tasks": 9,
+    "cold_cross_version_metrics_are_regression_signal_not_causal_effect": true,
+    "constraint_applied_tasks": 11,
+    "constraint_source": "explicit_row_phrase",
+    "coverage_parser_vector_size_histogram": {
+      "0": 209,
+      "1": 11
+    },
+    "fallback_cue_histogram": {
+      "chinese_return_include_find_row_record": 11,
+      "english_return_include_find_row_for": 0
+    },
+    "grammar_source_and_size_histogram": {
+      "explicit_row_phrase:1": 11,
+      "none:0": 209
+    },
+    "grammar_source_histogram": {
+      "explicit_row_phrase": 11,
+      "none": 209
+    },
+    "implementation_semantic_finding": "coverage_only_explicit_row_fallback_is_promoted_to_exact_closed_set_membership",
+    "same_fixed_grammar_subset_metrics": {
+      "v25379": {
+        "column_f1": 0.6646182893486551,
+        "entity_acc": 0.8181818181818182,
+        "evaluator_valid": 9,
+        "f1_by_item": 0.5596045221929806,
+        "f1_by_row": 0.3832729268843716,
+        "fixed_denominator": 11,
+        "quality_composite": 0.6064193891519564,
+        "whole_table_successes": 0
+      },
+      "v25406": {
+        "column_f1": 0.0,
+        "entity_acc": 0.0,
+        "evaluator_valid": 11,
+        "f1_by_item": 0.0,
+        "f1_by_row": 0.0,
+        "fixed_denominator": 11,
+        "quality_composite": 0.0,
+        "whole_table_successes": 0
+      },
+      "v25573": {
+        "column_f1": 0.0,
+        "entity_acc": 0.0,
+        "evaluator_valid": 11,
+        "f1_by_item": 0.0,
+        "f1_by_row": 0.0,
+        "fixed_denominator": 11,
+        "quality_composite": 0.0,
+        "whole_table_successes": 0
+      },
+      "v25581": {
+        "column_f1": 0.0,
+        "entity_acc": 0.0,
+        "evaluator_valid": 10,
+        "f1_by_item": 0.0,
+        "f1_by_row": 0.0,
+        "fixed_denominator": 11,
+        "quality_composite": 0.0,
+        "whole_table_successes": 0
+      }
+    },
+    "visible_member_count_histogram": {
+      "1": 11
+    }
+  }
+}
