@@ -42,6 +42,7 @@ ROLE = "v25582_v25581_exact220_postfreeze_aggregate_diagnosis"
 SOURCE = Path("scripts/diagnose_v25582_v25581_exact220.py")
 TEST = Path("tests/test_diagnose_v25582_v25581_exact220.py")
 OUTPUT = Path(f"results/v25582_v25581_exact220_diagnosis_v1_{DATE}.json")
+IMPLEMENTATION_COMMIT = "61908686f88b78122aa05cbce9dda83285dd17be"
 
 V25581_ROOT = contract.OUTPUT_ROOT
 V25573_ROOT = Path("outputs/v25573_totality_exact220_v1_20260814")
@@ -225,6 +226,8 @@ def _quality_bands(
 
 
 def _artifact_barrier() -> None:
+    if IMPLEMENTATION_COMMIT not in contract.git(ROOT, "rev-list", "HEAD").splitlines():
+        raise RuntimeError("V2.55.82 implementation commit is not in history")
     drifted = [
         str(path)
         for path, digest in FIXED_SHA256.items()
@@ -687,6 +690,7 @@ def _build_unsigned(*, now: int) -> dict[str, Any]:
             str(path): digest
             for path, digest in sorted(FIXED_SHA256.items(), key=lambda item: str(item[0]))
         },
+        "implementation_commit": IMPLEMENTATION_COMMIT,
         "fallback_diagnosis": fallback_diagnosis,
         "quality_diagnosis": quality_diagnosis,
         "record_correction_funnel": record_funnel,
