@@ -1,0 +1,204 @@
+INFO: Pandarallel will run on 8 workers.
+INFO: Pandarallel will use Memory file system to transfer data between the main process and workers.
+{"event": "eval_start", "selected": 7, "resume_committed": 0, "committed_errors": 0, "crash_only_resume": false}
+{"event": "eval_done", "idx": 1, "instance_id": "wide2deep_ws_en_091", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 3.001, "running_n": 1}
+2026-08-18 08:26:18.341 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| Event | Primary State Affected | Death Toll | Acres Burned |  ...
+2026-08-18 08:26:21.979 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "2003-10": "2003-10",
+  "2013-06": "2013-06",
+  "2017-10": "2017-10",
+  "2018-11": "2018-11",
+  "2020-08": "2020-08",
+  "2023-08": "2023-08"
+}
+```
+2026-08-18 08:26:21.995 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: startmonth, primary_key_map {'2003-10': '2003-10', '2013-06': '2013-06', '2017-10': '2017-10', '2018-11': '2018-11', '2020-08': '2020-08', '2023-08': '2023-08'}
+2026-08-18 08:26:22.011 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - wide2deep_ws_en_099, df_inner shape: (6, 14), answer_df shape: (11, 7), response_df shape: (6, 8)
+2026-08-18 08:26:43.637 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_099, col event, metric_func_name llm_judge, score [1, 1, 0, 1, 1, 1]
+2026-08-18 08:26:48.257 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_099, col primarystateaffected, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1]
+2026-08-18 08:26:48.258 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 15.0, target: 15.0
+2026-08-18 08:26:48.258 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 19.0, target: 19.0
+2026-08-18 08:26:48.258 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 22.0, target: 44.0
+2026-08-18 08:26:48.259 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 85.0, target: 85.0
+2026-08-18 08:26:48.259 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 102.0, target: 102.0
+2026-08-18 08:26:48.259 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 16.0, target: 16.0
+2026-08-18 08:26:48.260 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_099, col deathtoll, metric_func_name number_near, score [1.0, 1.0, 0.0, 1.0, 1.0, 1.0]
+2026-08-18 08:26:48.260 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 273246.0, target: 273246.0
+2026-08-18 08:26:48.260 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 8400.0, target: 8400.0
+2026-08-18 08:26:48.260 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 36807.0, target: 245000.0
+2026-08-18 08:26:48.260 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 153336.0, target: 153336.0
+2026-08-18 08:26:48.260 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 2170.0, target: 17000.0
+2026-08-18 08:26:48.260 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 318935.0, target: 318935.0
+2026-08-18 08:26:48.261 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_099, col acresburned, metric_func_name number_near, score [1.0, 1.0, 0.0, 1.0, 0.0, 1.0]
+2026-08-18 08:26:48.261 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 2820.0, target: 2826.0
+2026-08-18 08:26:48.261 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 127.0, target: 129.0
+2026-08-18 08:26:48.261 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 5636.0, target: 8900.0
+2026-08-18 08:26:48.261 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 18804.0, target: 188804.0
+2026-08-18 08:26:48.261 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 2200.0, target: 2207.0
+2026-08-18 08:26:48.261 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 2455.0, target: 2352.0
+2026-08-18 08:26:48.262 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_099, col structuredestroyed, metric_func_name number_near, score [1.0, 1.0, 0.0, 0.0, 1.0, 1.0]
+2026-08-18 08:26:48.262 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 1.3, target: 1.3
+2026-08-18 08:26:48.262 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 0.07, target: 0.9
+2026-08-18 08:26:48.262 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 0.0 msg number not near, response: 1.3, target: 14.5
+2026-08-18 08:26:48.262 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 16.5, target: 16.6
+2026-08-18 08:26:48.262 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 5.5, target: 5.5
+2026-08-18 08:26:48.263 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 1.3, target: 1.2
+2026-08-18 08:26:48.263 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_en_099, col damage(billion), metric_func_name number_near, score [1.0, 0.0, 0.0, 1.0, 1.0, 1.0]
+2026-08-18 08:26:48.270 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - wide2deep_ws_en_099, P/R/F1 by unique_columns: 1.0000/0.5455/0.7059
+2026-08-18 08:26:48.270 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - wide2deep_ws_en_099, P/R/F1 by row: 0.3333/0.1818/0.2353
+2026-08-18 08:26:48.270 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - wide2deep_ws_en_099, P/R/F1 by item: 0.8095/0.4416/0.5714
+2026-08-18 08:26:48.273 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - wide2deep_ws_en_099, final table score: 0.0
+{"event": "eval_done", "idx": 2, "instance_id": "wide2deep_ws_en_099", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.23529411764705885, "f1_by_item": 0.5714285714285715, "column_f1": 0.7058823529411764, "error": null, "elapsed_seconds": 32.523, "running_n": 2}
+{"event": "eval_done", "idx": 3, "instance_id": "wide2deep_ws_zh_008", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 4.867, "running_n": 3}
+2026-08-18 08:26:56.343 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 届数 | 奖项名称 | 获奖歌曲/专辑 | 演唱者 |
+| --- | --- | --- | --- |
+| 第67届  ...
+2026-08-18 08:26:59.231 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "第67届": "67"
+}
+```
+2026-08-18 08:26:59.232 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 届数, primary_key_map {'第67届': '67'}
+2026-08-18 08:27:16.008 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "Best Rap Performance": "Best Rap Performance",
+  "Best Melodic Rap Performance": "Best Melodic Rap Performance",
+  "Best Rap Song": "Best Rap Song",
+  "Best Rap Album": "Best Rap Album"
+}
+```
+2026-08-18 08:27:16.008 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 奖项名称, primary_key_map {'Best Rap Performance': 'Best Rap Performance', 'Best Melodic Rap Performance': 'Best Melodic Rap Performance', 'Best Rap Song': 'Best Rap Song', 'Best Rap Album': 'Best Rap Album'}
+2026-08-18 08:27:16.017 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - wide2deep_ws_zh_013, df_inner shape: (4, 8), answer_df shape: (124, 4), response_df shape: (4, 6)
+2026-08-18 08:27:22.245 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_013, col 获奖歌曲/专辑, metric_func_name llm_judge, score [1, 1, 1, 1]
+2026-08-18 08:27:24.738 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_013, col 演唱者, metric_func_name llm_judge, score [1, 1, 1, 1]
+2026-08-18 08:27:24.747 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - wide2deep_ws_zh_013, P/R/F1 by unique_columns: 1.0000/0.0323/0.0625
+2026-08-18 08:27:24.747 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - wide2deep_ws_zh_013, P/R/F1 by row: 1.0000/0.0323/0.0625
+2026-08-18 08:27:24.747 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - wide2deep_ws_zh_013, P/R/F1 by item: 1.0000/0.0323/0.0625
+2026-08-18 08:27:24.748 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - wide2deep_ws_zh_013, final table score: 0.0
+{"event": "eval_done", "idx": 4, "instance_id": "wide2deep_ws_zh_013", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.0625, "f1_by_item": 0.0625, "column_f1": 0.0625, "error": null, "elapsed_seconds": 31.556, "running_n": 4}
+2026-08-18 08:27:34.071 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 具体日期 | 演唱会中文名 | 演唱会英文名 | 举办国家 | 举办城市 | 举办场馆 |
+| --- | --- | - ...
+2026-08-18 08:27:42.152 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "2024年05月24日": "2024年5月24日",
+  "2024年05月25日": "2024年5月25日",
+  "2024年05月26日": "2024年5月26日",
+  "2024年04月18日": "2024年4月18日",
+  "2024年04月19日": "2024年4月19日",
+  "2024年04月20日": "2024年4月20日",
+  "2024年04月21日": "2024年4月21日",
+  "2017年04月08日": "2017年4月8日",
+  "2017年04月15日": "2017年4月15日",
+  "2024年01月20日": "2024年1月20日",
+  "2024年01月21日": "2024年1月21日",
+  "2024年03月30日": "2024年3月30日",
+  "2024年03月31日": "2024年3月31日",
+  "2024年05月18日": "2024年5月18日",
+  "2024年05月19日": "2024年5月19日",
+  "2023年12月07日": "2023年12月7日",
+  "2023年12月08日": "2023年12月8日",
+  "2023年12月09日": "2023年12月9日",
+  "2017年04月01日": "2017年4月1日",
+  "2017年04月02日": "2017年4月2日",
+  "2024年04月13日": "2024年4月13日",
+  "2024年04月14日": "2024年4月14日",
+  "2024年01月06日": "2024年1月6日",
+  "2024年01月07日": "2024年1月7日",
+  "2023年12月23日": "2023年12月23日",
+  "2023年12月24日": "2023年12月24日",
+  "2011年05月14日": "2011年5月14日",
+  "2011年05月15日": "2011年5月15日",
+  "2011年05月16日": "2011年5月16日",
+  "2013年04月12日": "2013年4月12日",
+  "2013年04月13日": "2013年4月13日",
+  "2013年04月14日": "2013年4月14日",
+  "2013年04月15日": "2013年4月15日",
+  "2013年04月16日": "2013年4月16日"
+}
+```
+2026-08-18 08:27:42.152 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 具体日期, primary_key_map {'2024年05月24日': '2024年5月24日', '2024年05月25日': '2024年5月25日', '2024年05月26日': '2024年5月26日', '2024年04月18日': '2024年4月18日', '2024年04月19日': '2024年4月19日', '2024年04月20日': '2024年4月20日', '2024年04月21日': '2024年4月21日', '2017年04月08日': '2017年4月8日', '2017年04月15日': '2017年4月15日', '2024年01月20日': '2024年1月20日', '2024年01月21日': '2024年1月21日', '2024年03月30日': '2024年3月30日', '2024年03月31日': '2024年3月31日', '2024年05月18日': '2024年5月18日', '2024年05月19日': '2024年5月19日', '2023年12月07日': '2023年12月7日', '2023年12月08日': '2023年12月8日', '2023年12月09日': '2023年12月9日', '2017年04月01日': '2017年4月1日', '2017年04月02日': '2017年4月2日', '2024年04月13日': '2024年4月13日', '2024年04月14日': '2024年4月14日', '2024年01月06日': '2024年1月6日', '2024年01月07日': '2024年1月7日', '2023年12月23日': '2023年12月23日', '2023年12月24日': '2023年12月24日', '2011年05月14日': '2011年5月14日', '2011年05月15日': '2011年5月15日', '2011年05月16日': '2011年5月16日', '2013年04月12日': '2013年4月12日', '2013年04月13日': '2013年4月13日', '2013年04月14日': '2013年4月14日', '2013年04月15日': '2013年4月15日', '2013年04月16日': '2013年4月16日'}
+2026-08-18 08:27:42.160 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - wide2deep_ws_zh_014, df_inner shape: (34, 12), answer_df shape: (224, 6), response_df shape: (38, 7)
+2026-08-18 08:27:54.795 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_014, col 演唱会中文名, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+2026-08-18 08:28:04.445 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_014, col 演唱会英文名, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+2026-08-18 08:28:04.445 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-18 08:28:04.445 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-18 08:28:04.445 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-18 08:28:04.445 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-18 08:28:04.445 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-18 08:28:04.445 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-18 08:28:04.445 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-18 08:28:04.446 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-18 08:28:04.446 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-18 08:28:04.446 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-18 08:28:04.446 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-18 08:28:04.446 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-18 08:28:04.446 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-18 08:28:04.446 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-18 08:28:04.446 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-18 08:28:04.446 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-18 08:28:04.446 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-18 08:28:04.446 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-18 08:28:04.446 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-18 08:28:04.446 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-18 08:28:04.446 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-18 08:28:04.446 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-18 08:28:04.446 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-18 08:28:04.446 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-18 08:28:04.446 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-18 08:28:04.446 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-18 08:28:04.446 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-18 08:28:04.446 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-18 08:28:04.446 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-18 08:28:04.446 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-18 08:28:04.446 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-18 08:28:04.446 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-18 08:28:04.446 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-18 08:28:04.446 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name exact_match score 1.0 msg exact match, response: 中国, target: 中国
+2026-08-18 08:28:04.447 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_014, col 举办国家, metric_func_name exact_match, score [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-18 08:28:10.629 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_014, col 举办城市, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1]
+2026-08-18 08:28:16.806 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_014, col 举办场馆, metric_func_name llm_judge, score [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1]
+2026-08-18 08:28:16.813 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - wide2deep_ws_zh_014, P/R/F1 by unique_columns: 0.8947/0.1518/0.2595
+2026-08-18 08:28:16.813 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - wide2deep_ws_zh_014, P/R/F1 by row: 0.5789/0.0982/0.1679
+2026-08-18 08:28:16.813 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - wide2deep_ws_zh_014, P/R/F1 by item: 0.7895/0.1339/0.2290
+2026-08-18 08:28:16.816 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - wide2deep_ws_zh_014, final table score: 0.0
+{"event": "eval_done", "idx": 5, "instance_id": "wide2deep_ws_zh_014", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.16793893129770993, "f1_by_item": 0.22900763358778625, "column_f1": 0.25954198473282436, "error": null, "elapsed_seconds": 52.042, "running_n": 5}
+{"event": "eval_done", "idx": 6, "instance_id": "wide2deep_ws_zh_024", "score": 0.0, "entity_acc": 0.0, "f1_by_row": 0.0, "f1_by_item": 0.0, "column_f1": 0.0, "error": null, "elapsed_seconds": 15.58, "running_n": 6}
+2026-08-18 08:28:35.604 | DEBUG    | eval.evaluation.data_loader:extract_dataframe:167 - find markdown_str 
+| 赛季 | 所属联赛 | 冠军俱乐部名称 | MVP球员 | 所属俱乐部 | 评分 |
+| --- | --- | ---  ...
+2026-08-18 08:28:39.439 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "2020-21": "2020-21",
+  "2021-22": "2021-22",
+  "2022-23": "2022-23",
+  "2023-24": "2023-24",
+  "2024-25": "2024-25"
+}
+```
+2026-08-18 08:28:39.440 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 赛季, primary_key_map {'2020-21': '2020-21', '2021-22': '2021-22', '2022-23': '2022-23', '2023-24': '2023-24', '2024-25': '2024-25'}
+2026-08-18 08:28:44.765 | INFO     | eval.evaluation.metric_utils:primary_key_preprocess:246 - primary_key_preprocess result: ```json
+{
+  "英格兰超级联赛": "英格兰足球超级联赛"
+}
+```
+2026-08-18 08:28:44.765 | INFO     | eval.evaluation.evaluation:evaluate_single_query:223 - col: 所属联赛, primary_key_map {'英格兰超级联赛': '英格兰足球超级联赛'}
+2026-08-18 08:28:44.774 | INFO     | eval.evaluation.evaluation:evaluate_single_query:275 - wide2deep_ws_zh_036, df_inner shape: (5, 12), answer_df shape: (25, 6), response_df shape: (5, 8)
+2026-08-18 08:28:50.890 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_036, col 冠军俱乐部名称, metric_func_name llm_judge, score [1, 1, 1, 1, 1]
+2026-08-18 08:28:54.057 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_036, col mvp球员, metric_func_name llm_judge, score [1, 0, 0, 1, 1]
+2026-08-18 08:29:00.076 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_036, col 所属俱乐部, metric_func_name llm_judge, score [1, 0, 1, 1, 1]
+2026-08-18 08:29:00.077 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 7.79, target: 7.63
+2026-08-18 08:29:00.077 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 7.71, target: 7.78
+2026-08-18 08:29:00.077 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 7.76, target: 7.78
+2026-08-18 08:29:00.077 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 7.91, target: 8.01
+2026-08-18 08:29:00.077 | DEBUG    | eval.evaluation.evaluation:metric_call:77 - metric_func_name number_near score 1.0 msg number near in range 10.0%, response: 7.78, target: 7.78
+2026-08-18 08:29:00.077 | DEBUG    | eval.evaluation.evaluation:evaluate_single_query:321 - wide2deep_ws_zh_036, col 评分, metric_func_name number_near, score [1.0, 1.0, 1.0, 1.0, 1.0]
+2026-08-18 08:29:00.083 | INFO     | eval.evaluation.evaluation:evaluate_single_query:380 - wide2deep_ws_zh_036, P/R/F1 by unique_columns: 1.0000/0.2000/0.3333
+2026-08-18 08:29:00.083 | INFO     | eval.evaluation.evaluation:evaluate_single_query:383 - wide2deep_ws_zh_036, P/R/F1 by row: 0.6000/0.1200/0.2000
+2026-08-18 08:29:00.083 | INFO     | eval.evaluation.evaluation:evaluate_single_query:386 - wide2deep_ws_zh_036, P/R/F1 by item: 0.9000/0.1800/0.3000
+2026-08-18 08:29:00.085 | INFO     | eval.evaluation.evaluation:evaluate_single_query:398 - wide2deep_ws_zh_036, final table score: 0.0
+{"event": "eval_done", "idx": 7, "instance_id": "wide2deep_ws_zh_036", "score": 0.0, "entity_acc": 1.0, "f1_by_row": 0.19999999999999998, "f1_by_item": 0.3, "column_f1": 0.33333333333333337, "error": null, "elapsed_seconds": 27.633, "running_n": 7}
+SUMMARY {"n": 7, "valid_n": 7, "errors": 0, "complete": true, "judge_calls_current_process": 24, "score": 0.0, "entity_acc": 0.5714285714285714, "precision_by_row": 0.3588972431077694, "recall_by_row": 0.061755790292656654, "f1_by_row": 0.09510472127782411, "precision_by_item": 0.4998567848191908, "recall_by_item": 0.11253501107187744, "f1_by_item": 0.1661337435737654, "column_precision": 0.556390977443609, "column_recall": 0.13278547489376982, "column_f1": 0.1944653815724763}
